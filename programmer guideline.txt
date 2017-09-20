@@ -1,0 +1,111 @@
+-------------------------------------------Main Menu
+ 
+
+ 	--Settings
+
+    (Folders are organized in order. Use it as a guide for the full Main menu.)	
+
+
+	--In the character selection screen, once they choose a character it should appear on the selection platform with an idle animation of the selcted character,							
+	and the class name will appear under the player's name plate.
+ 	(You can only see what your teammates choose. Enemy classes are hidden, you can only see their name plates.) 			
+
+	
+	--Move spells to buttons(1,2,3,4,5) Note: for the phone UI - there are 6 buttons, one is for basic attack.
+	Basic attack on the computer remains as [spacebar] rest is moved to 1,2,3,4,5 
+
+	--At this point, allow one person to choose all the characters depending on whether you are playing 1v1, 2v2, or 3v3. as well as whichever map they want to play on.
+	--Once those are chosen, when the player presses ready, the loading screen should come up if needed. The player should then be loaded into the game with the map and character/teammates/enemies of their choice.
+
+
+--------------------------------------Animations 
+
+	--Use "all spells" photoshop file as a guide.
+	--The file will provide you with the spell icons, and a brief explanation of what should happen when that
+ability is pressed.
+	--Dash will be set to buttons "q" and "e". no matter which direction the character is facing, "q" will always
+allow the character to dash to the LEFT, and "e" will always allow the character to dash to the RIGHT.
+	--Pressing "s" or DOWN will put the character in a blocking animation. The classes that wield a shield are
+able to move while they are blocking(currently under debate, will likely be changed.) This walking animation should be named
+"defend walking" in the Spriter file. 
+	--Pressing attack while the player is jumping or in the air will place the character in a "jump attack" animation.
+	--Some classes have 2 basic attacks, meaning that if you continuously use the basic attack, after about to 
+of the first basic animation, the player will switch to "basic 2" animation. The acception is the assassin class. He has a 
+fourth attack which is "bleed". This will cause the enemy player to receive a bleed effect, causing damage over time.
+	
+
+
+	--Trinkets animations are under developement (Save for later)
+
+---------------------------------------Ablities
+
+	----damage numbers, effect timers, and cooldown timers can be placed at your best judgement for now.
+They will be adjusted with the final fixes.
+	--Other then that, just make sure the spells and abilities do what they are supposed to, as referred
+to the "all spells.psd"
+
+------------------------------------------UI
+
+	--set up computer UI only for now.
+	--Main healthbar(top left) and secondary health bar(above player)
+	--computer version UI for spells
+	--Have spells cooldown timers workign properly
+	--hit effect
+	--damage numbers
+	--camera shake and angle
+	--Move spells to buttons(1,2,3,4,5) Note: for the phone UI - there are 6 buttons, one is for basic attack.
+	Basic attack on the computer remains as [spacebar] rest is moved to 1,2,3,4,5 
+
+
+--------------------------------------Sound
+
+       --Match the sound files to the animations and UI.
+
+
+------------------------------------------AI
+
+	--have a fluid ai working for Arena, endurance, and survival modes.
+	--details will come closer towards the deadline.
+
+--------------------------------------Map edits
+
+	--Under development
+
+------------------------------------Game Modes
+
+	--1v1, 2v2, 3v3 for Arena, endurance, and survival game modes.
+
+
+----------------------------------------------------------connection
+
+server list (player hosted)
+	
+	--Once the select a play online is selected, the player will be brought to the server list. Once the server is selected, they will be brought to server lobby. 
+	Once they select ready, the host can then launch the game. Server list will be a mix of 1v1s, 2v2s, 3v3s, and endurance. 
+
+	--In the server selection screen, players should be able to create servers.
+
+	--create name screen (after you press play online)//only once
+						        // if they want to change, they could in the options menu
+	--On "right click" you can pass host, and kick players.
+
+	--ready button 
+
+	--once players join and select a class, they can click a ready button.
+	 (which will put a ready sign next to their name) 				    
+         the host can then "launch" the game once everyone is ready.			  
+										
+	--Host - the first person to join the server becomes host. 
+
+	--They can give host to someone else by right clicking another player's name.
+	
+	--Chat Box. - seperate one for server list, and a seperate one for lobby and the selection screen.
+		      divided into 2 sections - team/all. 
+					   
+
+----------------------------------Final fixes and Ideas
+
+	--this time-frame will be left out for any final ideas or fixes that we wish to implement or change.
+
+
+
