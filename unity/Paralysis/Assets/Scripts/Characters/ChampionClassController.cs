@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class ChampionClassController : MonoBehaviour
 {
 
+    [Header("Movement Variables")]
     [SerializeField]
     protected float m_MaxSpeed = 10f;                                     // The fastest the player can travel in the x axis.
     [SerializeField]
@@ -21,6 +22,7 @@ public abstract class ChampionClassController : MonoBehaviour
     protected float m_ComboCounterMax = 1;                                // How long the next combostage is reachable (seconds)
     [SerializeField]
     protected float m_jumpAttackForce = 10f;
+    public LayerMask whatToHit;                                           // What to hit when checking for hits while attacking
     protected MyTimer timer;
 
     protected Transform m_GroundCheck;                                    // A position marking where to check if the player is grounded.

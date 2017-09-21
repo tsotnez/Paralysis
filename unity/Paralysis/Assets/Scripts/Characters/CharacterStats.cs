@@ -8,6 +8,7 @@ public class CharacterStats : MonoBehaviour {
     private Rigidbody2D rigid;
     private ChampionClassController controller;
 
+    [Header("Stats")]
     public int maxHealth = 100;
     public int currentHealth;
     public int maxStamina = 100;
@@ -15,12 +16,17 @@ public class CharacterStats : MonoBehaviour {
 
     public int staminaRegRate = 10;
 
+    [Header("Statusses")]
     public bool stunned = false;
+    public Coroutine stunnedRoutine = null; //Stores the stunned Coroutine
     public bool bleeding = false;
+    public Coroutine bleedingRoutine = null; //Stores the bleeding Coroutine
     public bool defensive = false;
     public bool knockedBack = false;
+    public Coroutine knockBackRoutine = null; //Stores the knockBack Coroutine
     public float slowFactor = 1; //Setting this to a value below 1 will slow down the character
 
+    [Header("Knock Back")]
     [SerializeField]
     private float knockBackDuration = 1; //How long the knockedBack status is set (character cant move)
     [SerializeField]
@@ -43,13 +49,12 @@ public class CharacterStats : MonoBehaviour {
 
     private void Update()
     {
-        regenerateStamina();
-
         // Lock character in defensive animation, if necessary
         anim.SetBool("defensive", defensive);
         if (defensive) rigid.velocity = new Vector2(0, rigid.velocity.y);
     }
 
+    // Is called repeatetly to regenerate stamina value
     private void regenerateStamina()
     {
         if(currentStamina > maxStamina)
@@ -59,21 +64,22 @@ public class CharacterStats : MonoBehaviour {
         }
     }
 
-    private void bleedDamage()
-    {
-        takeDamage(1);
-        if (bleeding) Invoke("bleedDamage", 1);
-    }
-
+    //Substract damage from current health.
     public void takeDamage(int amount)
     {
         currentHealth -= amount;
         if (currentHealth <= 0) die();
     }
 
-    public IEnumerator stun(float time)
+    public void startStunned(int time)
     {
-        rigid.velocity = new Vector2(0, 0);
+        if (stunnedRoutine != null) StopCoroutine(stunnedRoutine);
+        stunnedRoutine = StartCoroutine(stun(time));
+    }
+
+    //Sets the stunned value for fiven amount of time.
+    private IEnumerator stun(float time)
+    {
         stunned = true;
         anim.SetBool("stunned", true);
         yield return new WaitForSeconds(time);
@@ -81,8 +87,14 @@ public class CharacterStats : MonoBehaviour {
         stunned = false;
     }
 
+    public void startKnockBack(Vector3 origin)
+    {
+        if (knockBackRoutine != null) StopCoroutine(knockBackRoutine);
+        knockBackRoutine = StartCoroutine(knockBack(new Vector2(origin.x, origin.y)));
+    }
+
     //Knocks back the character from the passed origin 
-    public IEnumerator knockBack(float force, Vector2 origin)
+    public IEnumerator knockBack(Vector2 origin)
     {
         knockedBack = true;
 
@@ -98,15 +110,21 @@ public class CharacterStats : MonoBehaviour {
         rigid.velocity = Vector2.zero;
 
         //Adding force and setting status variable
-        rigid.AddForce(new Vector2(knockBackForceX * direction, knockBackForceY));
+        rigid.AddForce(new Vector2(knockBackForceX * direction, knockBackForceY), ForceMode2D.Impulse);
         anim.SetBool("knockedBack", true);
         yield return new WaitForSeconds(knockBackDuration);
         anim.SetBool("knockedBack", false);
         knockedBack = false;
     }
 
+    public void startBleeding(int time)
+    {
+        if(bleedingRoutine != null) StopCoroutine(bleedingRoutine);
+        bleedingRoutine = StartCoroutine(bleed(time));
+    }
+    
     // Set bleeding for time
-    public IEnumerator bleed(float time)
+    private IEnumerator bleed(float time)
     {
         bleeding = true;
         bleedDamage();
@@ -114,6 +132,14 @@ public class CharacterStats : MonoBehaviour {
         bleeding = false;
     }
 
+    //Repeats itself as long as bleeding is true
+    private void bleedDamage()
+    {
+        takeDamage(1);
+        if (bleeding) Invoke("bleedDamage", 1);
+    }
+
+    //Slows down the character by the given factor for the given time
     public IEnumerator slow(float time, float factor)
     {
         slowFactor = factor;
@@ -121,6 +147,7 @@ public class CharacterStats : MonoBehaviour {
         slowFactor = 1;
     }
 
+    //Calles when health equals or is less than zero
     private void die()
     {
         Destroy(gameObject);
@@ -138,7 +165,7 @@ public class CharacterStats : MonoBehaviour {
     }
     public void deKnock(float time)
     {
-        StartCoroutine(knockBack(time, Vector2.zero));
+        startKnockBack(Vector3.zero);
     }
     public void deBleed(float time)
     {

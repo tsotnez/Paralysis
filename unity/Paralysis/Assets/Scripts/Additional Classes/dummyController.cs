@@ -5,31 +5,17 @@ using UnityEngine.UI;
 
 public class dummyController : MonoBehaviour {
 
-    public int maxHealth = 100;
-    public int currentHealth;
-    Rigidbody2D rigid;
+    CharacterStats stats;
     Text textAboveHead;
 
     // Use this for initialization
     void Awake () {
-        currentHealth = maxHealth;
-        rigid = GetComponent<Rigidbody2D>();
+        stats = GetComponent<CharacterStats>();
         textAboveHead = GetComponentInChildren<Text>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        textAboveHead.text = currentHealth + "/" + maxHealth;
+        textAboveHead.text = stats.currentHealth + "/" + stats.maxHealth;
 	}
-
-    public void takeDamage(int amount)
-    {
-        currentHealth -= amount;
-        if (currentHealth <= 0) die();
-    }
-
-    private void die()
-    {
-        Destroy(gameObject);
-    }
 }
