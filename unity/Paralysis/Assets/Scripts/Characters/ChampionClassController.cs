@@ -91,7 +91,7 @@ public abstract class ChampionClassController : MonoBehaviour
     public virtual void Move(float move)
     {
         //only control the player if grounded or airControl is turned on and not jump attacking and not dashing
-        if ((m_Grounded || m_AirControl) && !jumpAttacking && !dashing && !dontMove)
+        if (!jumpAttacking && !dashing && !dontMove)
         {
             //Slow down the player if he's attacking
             float maxSpeed;
