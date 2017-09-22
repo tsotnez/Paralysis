@@ -273,7 +273,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 208815056}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.3880858, y: -5.76, z: 3.5683594}
+  m_LocalPosition: {x: -2.3880858, y: -5.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1255172578}
@@ -625,7 +625,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 441922266}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3.5683594}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 800912668}
@@ -1394,7 +1394,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1257394421}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 3054e506f64279f4b846defcd6acf01e, type: 2}
+  m_Material: {fileID: 6200000, guid: 6ca2f3d30bcc2d1429597abaf78ee1d2, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -1461,10 +1461,10 @@ MonoBehaviour:
   - 0.72
   m_DoubleJumpForce: 600
   invisible: 0
-  delay_BasicAttack1: 0
-  delay_BasicAttack2: 0
-  delay_BasicAttack3: 0
-  delay_StunAttack: 0
+  delay_BasicAttack1: 0.5
+  delay_BasicAttack2: 0.55
+  delay_BasicAttack3: 0.5
+  delay_StunAttack: 0.5
   delay_ShadowStep: 0
   delay_AmbushAttack: 0
   delay_Shoot: 0

@@ -92,6 +92,7 @@ public class AssassinController : ChampionClassController
         if (!attacking)
         {
             if (invisible) stopInvisible();
+            shadowStepHit();
             attackingRoutine = StartCoroutine(setAttacking(attackLength[6]));
             m_Anim.SetTrigger("shadowstep");
         }
@@ -243,6 +244,37 @@ public class AssassinController : ChampionClassController
             target = hit.transform.gameObject.GetComponent<CharacterStats>();
             target.startStunned(3);
             target.takeDamage(9);
+        }
+    }
+
+    private void shadowStepHit()
+    {
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right,  1000f, whatToHit);
+        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, Vector2.left, 1000f, whatToHit);
+
+        if(hit == true && hitLeft == true)
+        {
+            Debug.Log("both hit");
+            if (hit.distance < hitLeft.distance)
+            {
+                //Teleport to target on the right
+                transform.position = hit.transform.position + Vector3.left;
+            }
+            else
+            {
+                //Teleport to target on the left
+                transform.position = hitLeft.transform.position + Vector3.right;
+            }
+        }
+        else if(hit == true && hitLeft == false) transform.position = hit.transform.position + Vector3.left;
+        else if(hit == false && hitLeft == true) transform.position = hitLeft.transform.position + Vector3.right;
+
+        CharacterStats target;
+
+        if(hit == true)
+        {
+
         }
     }
 
