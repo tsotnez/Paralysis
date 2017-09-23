@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 208815061}
   m_Layer: 12
   m_Name: Dummy
-  m_TagString: Enemy
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1457,7 +1457,7 @@ MonoBehaviour:
   - 0.6
   - 0.52
   - 0.533
-  - 0.636
+  - 0.591
   - 0.72
   m_DoubleJumpForce: 600
   invisible: 0
@@ -1465,7 +1465,7 @@ MonoBehaviour:
   delay_BasicAttack2: 0.55
   delay_BasicAttack3: 0.5
   delay_StunAttack: 0.5
-  delay_ShadowStep: 0
+  delay_ShadowStep: 0.5
   delay_AmbushAttack: 0
   delay_Shoot: 0
 --- !u!50 &1257394425

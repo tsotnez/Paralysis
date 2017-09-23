@@ -14,19 +14,19 @@ public class AssassinController : ChampionClassController
     Coroutine attackingRoutine = null;
     [Header("Attack Delays")]
     [SerializeField]
-    private float delay_BasicAttack1;
+    private float delay_BasicAttack1 = 0;
     [SerializeField]
-    private float delay_BasicAttack2;
+    private float delay_BasicAttack2 = 0;
     [SerializeField]
-    private float delay_BasicAttack3;
+    private float delay_BasicAttack3 = 0;
     [SerializeField]
-    private float delay_StunAttack;
+    private float delay_StunAttack = 0;
     [SerializeField]
-    private float delay_ShadowStep;
+    private float delay_ShadowStep = 0;
     [SerializeField]
-    private float delay_AmbushAttack;
+    private float delay_AmbushAttack = 0;
     [SerializeField]
-    private float delay_Shoot;
+    private float delay_Shoot = 0;
 
     public override void jump(bool jump)
     {
@@ -60,7 +60,7 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill1()
     {
-        if (!attacking)
+        if (!attacking && m_Grounded)
         {
             if (invisible) stopInvisible();
             attackingRoutine = StartCoroutine(setAttacking(attackLength[4]));
@@ -74,7 +74,7 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill2()
     {
-        if (!attacking)
+        if (!attacking && m_Grounded)
         {
             if (invisible) stopInvisible();
             attackingRoutine = StartCoroutine(setAttacking(attackLength[5]));
@@ -89,10 +89,10 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill3()
     {
-        if (!attacking)
+        if (!attacking && m_Grounded)
         {
             if (invisible) stopInvisible();
-            shadowStepHit();
+            StartCoroutine(shadowStepHit());
             attackingRoutine = StartCoroutine(setAttacking(attackLength[6]));
             m_Anim.SetTrigger("shadowstep");
         }
@@ -103,7 +103,7 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill4()
     {
-        if (!attacking)
+        if (!attacking && m_Grounded)
         {
             if (invisible) stopInvisible();
             attackingRoutine = StartCoroutine(setAttacking(attackLength[7]));
@@ -247,34 +247,51 @@ public class AssassinController : ChampionClassController
         }
     }
 
-    private void shadowStepHit()
+    private IEnumerator shadowStepHit()
     {
+        //Add walls and Ground to layermask so they are an obstacle for the raycast
+        LayerMask temp = whatToHit;
+        temp |= (1 << LayerMask.NameToLayer("Walls"));
+        temp |= (1 << LayerMask.NameToLayer("Ground"));
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right,  1000f, whatToHit);
-        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, Vector2.left, 1000f, whatToHit);
 
-        if(hit == true && hitLeft == true)
+        int targetLocation = 0;
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right,  1000f,temp); //Right hit
+        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, Vector2.left, 1000f, temp); //Left hit
+
+        if ((hit == true && hit.transform.tag == "Player") && (hitLeft == true && hitLeft.transform.gameObject.tag == "Player"))
         {
-            Debug.Log("both hit");
-            if (hit.distance < hitLeft.distance)
-            {
-                //Teleport to target on the right
-                transform.position = hit.transform.position + Vector3.left;
-            }
-            else
-            {
-                //Teleport to target on the left
-                transform.position = hitLeft.transform.position + Vector3.right;
-            }
+            //There is a target on both sides, check for distance
+            if (hit.distance <= hitLeft.distance) targetLocation = 1; //Teleport to target on the right   
+            else targetLocation = -1; //Teleport to target on the left
         }
-        else if(hit == true && hitLeft == false) transform.position = hit.transform.position + Vector3.left;
-        else if(hit == false && hitLeft == true) transform.position = hitLeft.transform.position + Vector3.right;
+        else if (hit == true && hit.transform.gameObject.tag == "Player") targetLocation = 1;
+        else if (hitLeft == true && hitLeft.transform.gameObject.tag == "Player") targetLocation = -1;
 
-        CharacterStats target;
-
-        if(hit == true)
+        if (targetLocation != 0)
         {
-
+            dontMove = true;
+            if (targetLocation == 1)
+            {
+                transform.position = hit.transform.position + Vector3.left; //Viable target on the right
+                m_Rigidbody2D.velocity = Vector2.zero;
+                yield return new WaitForSeconds(delay_ShadowStep); //Deal damage at correct point in animation
+                hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(5);
+                hit.transform.gameObject.GetComponent<CharacterStats>().startStunned(3);
+                if (!m_FacingRight) Flip();
+            }
+            else if (targetLocation == -1)
+            {
+                transform.position = hitLeft.transform.position + Vector3.right; //Viable target on the left
+                m_Rigidbody2D.velocity = Vector2.zero;
+                yield return new WaitForSeconds(delay_ShadowStep); //Deal damage at correct point in animation
+                hitLeft.transform.gameObject.GetComponent<CharacterStats>().takeDamage(5);
+                hitLeft.transform.gameObject.GetComponent<CharacterStats>().startStunned(3);
+                if (m_FacingRight) Flip();
+            }
+            yield return new WaitForSeconds(attackLength[6] - delay_ShadowStep);
+            dontMove = false;
         }
     }
 
