@@ -151,6 +151,10 @@ public class AssassinController : ChampionClassController
                 timer.timerStop();
                 timer.reset();
             }
+            else if (m_Grounded && invisible)
+            {
+                attackCount = 4;
+            }
             // Determining the attackCount
             else if (m_Grounded && attackCount == 0 && !inCombo)
             {
@@ -158,14 +162,12 @@ public class AssassinController : ChampionClassController
                 attackCount++;
                 timer.timerStart();
                 inCombo = true;
-                if (invisible) stopInvisible();
             }
             else if (m_Grounded && inCombo)
             {
                 //Already in combo
                 attackCount++;
                 timer.reset();
-                if (invisible) stopInvisible();
             }
 
             //Playing the correct animation depending on the attackCount and setting attacking status
@@ -193,6 +195,19 @@ public class AssassinController : ChampionClassController
                     timer.timerStop();
                     timer.reset();
                     break;
+                case 4:
+                    //Ambush attack
+                    m_Anim.SetTrigger("shadowstep");
+                    if (attackingRoutine != null) StopCoroutine(attackingRoutine);
+                    attackingRoutine = StartCoroutine(setAttacking(attackLength[6] - 0.08f));
+                    Invoke("ambushAttackHit", delay_ShadowStep);
+                    //Stop combo
+                    inCombo = false;
+                    attackCount = 0;
+                    timer.timerStop();
+                    timer.reset();
+                    stopInvisible();
+                    break;
             }
         }
     }
@@ -214,6 +229,12 @@ public class AssassinController : ChampionClassController
     {
         RaycastHit2D hit = tryToHit(1.5f);
         if(hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(9); //Let the hit character take damage
+    }
+
+    private void ambushAttackHit()
+    {
+        RaycastHit2D hit = tryToHit(1.5f);
+        if (hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(15); //Let the hit character take damage
     }
 
     private void bleedAttackHit()
