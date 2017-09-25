@@ -1520,7 +1520,7 @@ MonoBehaviour:
   currentHealth: 0
   maxStamina: 100
   currentStamina: 0
-  staminaRegRate: 10
+  staminaRegRate: 2
   stunned: 0
   bleeding: 0
   defensive: 0

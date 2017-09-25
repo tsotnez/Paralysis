@@ -66,6 +66,7 @@ public class AssassinController : ChampionClassController
             attackingRoutine = StartCoroutine(setAttacking(attackLength[4]));
             m_Anim.SetTrigger("stunAttack");
             Invoke("stunAttackHit", delay_StunAttack); //Invoke damage function
+            stats.loseStamina(10);
         }
     }
 
@@ -81,6 +82,7 @@ public class AssassinController : ChampionClassController
             m_Anim.SetTrigger("vanish");
             if (invisRoutine != null) StopCoroutine(invisRoutine);
             invisRoutine = StartCoroutine(manageInvisibility());
+            stats.loseStamina(10);
         }
     }
 
@@ -95,6 +97,7 @@ public class AssassinController : ChampionClassController
             StartCoroutine(shadowStepHit());
             attackingRoutine = StartCoroutine(setAttacking(attackLength[6]));
             m_Anim.SetTrigger("shadowstep");
+            stats.loseStamina(10);
         }
     }
 
@@ -109,6 +112,7 @@ public class AssassinController : ChampionClassController
             attackingRoutine = StartCoroutine(setAttacking(attackLength[7]));
             m_Anim.SetTrigger("shoot");
             Invoke("shootAttackHit", delay_Shoot);
+            stats.loseStamina(10);
         }
     }
 
@@ -213,7 +217,7 @@ public class AssassinController : ChampionClassController
     }
 
     /// <summary>
-    /// Checks if the basic attack hit anything
+    /// Checks if the character hit anything
     /// </summary>
     private RaycastHit2D tryToHit(float range)
     {
@@ -228,13 +232,19 @@ public class AssassinController : ChampionClassController
     private void basicAttackHit()
     {
         RaycastHit2D hit = tryToHit(1.5f);
-        if(hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(9); //Let the hit character take damage
+
+        //Dealing damage accordingly
+        int dmg = 0;
+        if (attackCount == 1) dmg = 5;
+        else if (attackCount == 2) dmg = 7;
+
+        if(hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(dmg); //Let the hit character take damage
     }
 
     private void ambushAttackHit()
     {
         RaycastHit2D hit = tryToHit(1.5f);
-        if (hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(15); //Let the hit character take damage
+        if (hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(13); //Let the hit character take damage
     }
 
     private void bleedAttackHit()
@@ -244,8 +254,8 @@ public class AssassinController : ChampionClassController
         if (hit == true)
         {
             target = hit.transform.gameObject.GetComponent<CharacterStats>();
-            target.startBleeding(10);
-            target.takeDamage(9);
+            target.startBleeding(6);
+            target.takeDamage(5);
             target.GetComponent<Rigidbody2D>().AddForce(Vector2.right);
         }
     }
@@ -253,7 +263,11 @@ public class AssassinController : ChampionClassController
     private void shootAttackHit()
     {
         RaycastHit2D hit = tryToHit(3f);
-        if (hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().startKnockBack(transform.position);
+        if (hit == true)
+        {
+            hit.transform.gameObject.GetComponent<CharacterStats>().startKnockBack(transform.position);
+            hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(20);
+        }
     }
 
     private void stunAttackHit()
@@ -264,7 +278,7 @@ public class AssassinController : ChampionClassController
         {
             target = hit.transform.gameObject.GetComponent<CharacterStats>();
             target.startStunned(3);
-            target.takeDamage(9);
+            target.takeDamage(5);
         }
     }
 

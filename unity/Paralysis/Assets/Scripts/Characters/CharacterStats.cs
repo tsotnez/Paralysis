@@ -57,11 +57,17 @@ public class CharacterStats : MonoBehaviour {
     // Is called repeatetly to regenerate stamina value
     private void regenerateStamina()
     {
-        if(currentStamina > maxStamina)
+        if(currentStamina < maxStamina)
         {
             if (currentStamina + staminaRegRate > maxStamina) currentStamina = maxStamina;
             else currentStamina += staminaRegRate;
         }
+    }
+
+    public void loseStamina(int amount)
+    {
+        if ((currentStamina - amount) < 0) currentStamina = 0;
+        else currentStamina -= amount;
     }
 
     //Substract damage from current health.
@@ -127,7 +133,7 @@ public class CharacterStats : MonoBehaviour {
     private IEnumerator bleed(float time)
     {
         bleeding = true;
-        bleedDamage();
+        if(!IsInvoking("bleedDamage")) bleedDamage();
         yield return new WaitForSeconds(time);
         bleeding = false;
     }
