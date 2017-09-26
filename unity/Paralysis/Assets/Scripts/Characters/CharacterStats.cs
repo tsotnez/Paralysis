@@ -71,9 +71,10 @@ public class CharacterStats : MonoBehaviour {
     }
 
     //Substract damage from current health.
-    public void takeDamage(int amount)
+    public void takeDamage(int amount, bool playAnimation)
     {
-        currentHealth -= amount;
+        currentHealth -= amount; //Substract health
+        if(playAnimation)anim.SetTrigger("hit"); //Play hit animation
         if (currentHealth <= 0) die();
     }
 
@@ -141,7 +142,7 @@ public class CharacterStats : MonoBehaviour {
     //Repeats itself as long as bleeding is true
     private void bleedDamage()
     {
-        takeDamage(1);
+        takeDamage(1, false);
         if (bleeding) Invoke("bleedDamage", 1);
     }
 

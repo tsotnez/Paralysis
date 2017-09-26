@@ -238,13 +238,13 @@ public class AssassinController : ChampionClassController
         if (attackCount == 1) dmg = 5;
         else if (attackCount == 2) dmg = 7;
 
-        if(hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(dmg); //Let the hit character take damage
+        if(hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(dmg, true); //Let the hit character take damage
     }
 
     private void ambushAttackHit()
     {
         RaycastHit2D hit = tryToHit(1.5f);
-        if (hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(13); //Let the hit character take damage
+        if (hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(13, true); //Let the hit character take damage
     }
 
     private void bleedAttackHit()
@@ -255,7 +255,7 @@ public class AssassinController : ChampionClassController
         {
             target = hit.transform.gameObject.GetComponent<CharacterStats>();
             target.startBleeding(6);
-            target.takeDamage(5);
+            target.takeDamage(5, true);
             target.GetComponent<Rigidbody2D>().AddForce(Vector2.right);
         }
     }
@@ -266,7 +266,7 @@ public class AssassinController : ChampionClassController
         if (hit == true)
         {
             hit.transform.gameObject.GetComponent<CharacterStats>().startKnockBack(transform.position);
-            hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(20);
+            hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(20, false);
         }
     }
 
@@ -278,7 +278,7 @@ public class AssassinController : ChampionClassController
         {
             target = hit.transform.gameObject.GetComponent<CharacterStats>();
             target.startStunned(3);
-            target.takeDamage(5);
+            target.takeDamage(5, false);
         }
     }
 
@@ -312,7 +312,7 @@ public class AssassinController : ChampionClassController
                 transform.position = hit.transform.position + Vector3.left; //Viable target on the right
                 m_Rigidbody2D.velocity = Vector2.zero;
                 yield return new WaitForSeconds(delay_ShadowStep); //Deal damage at correct point in animation
-                hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(5);
+                hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(5, false);
                 hit.transform.gameObject.GetComponent<CharacterStats>().startStunned(3);
                 if (!m_FacingRight) Flip();
             }
@@ -321,7 +321,7 @@ public class AssassinController : ChampionClassController
                 transform.position = hitLeft.transform.position + Vector3.right; //Viable target on the left
                 m_Rigidbody2D.velocity = Vector2.zero;
                 yield return new WaitForSeconds(delay_ShadowStep); //Deal damage at correct point in animation
-                hitLeft.transform.gameObject.GetComponent<CharacterStats>().takeDamage(5);
+                hitLeft.transform.gameObject.GetComponent<CharacterStats>().takeDamage(5, false);
                 hitLeft.transform.gameObject.GetComponent<CharacterStats>().startStunned(3);
                 if (m_FacingRight) Flip();
             }
