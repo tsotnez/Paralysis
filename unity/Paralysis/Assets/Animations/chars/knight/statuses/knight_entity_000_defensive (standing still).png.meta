@@ -1,0 +1,364 @@
+fileFormatVersion: 2
+guid: ac7e79087afb3cf4abcc9e5645d11c94
+timeCreated: 1506511256
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: knight_entity_000_defensive (standing still)_0
+    21300002: knight_entity_000_defensive (standing still)_1
+    21300004: knight_entity_000_defensive (standing still)_2
+    21300006: knight_entity_000_defensive (standing still)_3
+    21300008: knight_entity_000_defensive (standing still)_4
+    21300010: knight_entity_000_defensive (standing still)_5
+    21300012: knight_entity_000_defensive (standing still)_6
+    21300014: knight_entity_000_defensive (standing still)_7
+    21300016: knight_entity_000_defensive (standing still)_8
+    21300018: knight_entity_000_defensive (standing still)_9
+    21300020: knight_entity_000_defensive (standing still)_10
+    21300022: knight_entity_000_defensive (standing still)_11
+    21300024: knight_entity_000_defensive (standing still)_12
+    21300026: knight_entity_000_defensive (standing still)_13
+    21300028: knight_entity_000_defensive (standing still)_14
+    21300030: knight_entity_000_defensive (standing still)_15
+    21300032: knight_entity_000_defensive (standing still)_16
+    21300034: knight_entity_000_defensive (standing still)_17
+    21300036: knight_entity_000_defensive (standing still)_18
+    21300038: knight_entity_000_defensive (standing still)_19
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 0
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 525
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 8192
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 8192
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2811
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_1
+      rect:
+        serializedVersion: 2
+        x: 874
+        y: 2811
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_2
+      rect:
+        serializedVersion: 2
+        x: 1748
+        y: 2811
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_3
+      rect:
+        serializedVersion: 2
+        x: 2622
+        y: 2811
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_4
+      rect:
+        serializedVersion: 2
+        x: 3496
+        y: 2811
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1874
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_6
+      rect:
+        serializedVersion: 2
+        x: 874
+        y: 1874
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_7
+      rect:
+        serializedVersion: 2
+        x: 1748
+        y: 1874
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_8
+      rect:
+        serializedVersion: 2
+        x: 2622
+        y: 1874
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_9
+      rect:
+        serializedVersion: 2
+        x: 3496
+        y: 1874
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 937
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_11
+      rect:
+        serializedVersion: 2
+        x: 874
+        y: 937
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_12
+      rect:
+        serializedVersion: 2
+        x: 1748
+        y: 937
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_13
+      rect:
+        serializedVersion: 2
+        x: 2622
+        y: 937
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_14
+      rect:
+        serializedVersion: 2
+        x: 3496
+        y: 937
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_16
+      rect:
+        serializedVersion: 2
+        x: 874
+        y: 0
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_17
+      rect:
+        serializedVersion: 2
+        x: 1748
+        y: 0
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_18
+      rect:
+        serializedVersion: 2
+        x: 2622
+        y: 0
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_defensive (standing still)_19
+      rect:
+        serializedVersion: 2
+        x: 3496
+        y: 0
+        width: 874
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
