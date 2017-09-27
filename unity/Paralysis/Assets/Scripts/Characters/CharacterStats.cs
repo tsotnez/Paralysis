@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class CharacterStats : MonoBehaviour {
 
@@ -13,8 +15,9 @@ public class CharacterStats : MonoBehaviour {
     public int currentHealth;
     public int maxStamina = 100;
     public int currentStamina;
-
-    public int staminaRegRate = 10;
+	public GameObject Hp;
+    public GameObject Stamina;
+	public int staminaRegRate = 10;
 
     [Header("Statusses")]
     public bool stunned = false;
@@ -38,7 +41,10 @@ public class CharacterStats : MonoBehaviour {
     {
         currentHealth = maxHealth;
         currentStamina = maxStamina;
-        anim = GetComponentInChildren<Animator>();
+        this.Hp.GetComponent<Text>().text = this.currentHealth + "/" + this.maxHealth;
+        this.Stamina.GetComponent<Text>().text = this.currentStamina + "/" + this.maxStamina;
+
+		anim = GetComponentInChildren<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         controller = GetComponent<ChampionClassController>();
     }
@@ -52,23 +58,31 @@ public class CharacterStats : MonoBehaviour {
         // Lock character in defensive animation, if necessary
         anim.SetBool("defensive", defensive);
         if (defensive) rigid.velocity = new Vector2(0, rigid.velocity.y);
-    }
+		this.Hp.GetComponent<Text>().text = this.currentHealth + "/" + this.maxHealth;
+		this.Stamina.GetComponent<Text>().text = this.currentStamina + "/" + this.maxStamina;
+
+	}
 
     // Is called repeatetly to regenerate stamina value
     private void regenerateStamina()
     {
         if(currentStamina < maxStamina)
         {
-            if (currentStamina + staminaRegRate > maxStamina) currentStamina = maxStamina;
-            else currentStamina += staminaRegRate;
-        }
+            if (currentStamina + staminaRegRate > maxStamina) this.currentStamina = this.maxStamina;
+            else this.currentStamina += this.staminaRegRate;
+            
+			this.Stamina.GetComponent<Text>().text = this.currentStamina + "/" + this.maxStamina;
+
+		}
     }
 
     public void loseStamina(int amount)
     {
-        if ((currentStamina - amount) < 0) currentStamina = 0;
-        else currentStamina -= amount;
-    }
+        if ((currentStamina - amount) < 0) this.currentStamina = 0;
+        else this.currentStamina -= amount;
+		this.Stamina.GetComponent<Text>().text = this.currentStamina + "/" + this.maxStamina;
+
+	}
 
     //Substract damage from current health.
     public void takeDamage(int amount, bool playAnimation)
@@ -178,4 +192,11 @@ public class CharacterStats : MonoBehaviour {
     {
         StartCoroutine(bleed(time));
     }
+
+
+
+
+
 }
+
+

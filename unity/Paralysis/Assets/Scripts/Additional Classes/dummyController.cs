@@ -5,17 +5,19 @@ using UnityEngine.UI;
 
 public class dummyController : MonoBehaviour {
 
-    CharacterStats stats;
-    Text textAboveHead;
+	CharacterStats stats;
+	Text textAboveHead;
 
-    // Use this for initialization
-    void Awake () {
-        stats = GetComponent<CharacterStats>();
-        textAboveHead = GetComponentInChildren<Text>();
-    }
-	
+	// Use this for initialization
+	void Awake()
+	{
+		stats = GetComponent<CharacterStats>();
+		textAboveHead = GetComponentInChildren<Text>();
+	}
+
 	// Update is called once per frame
-	void Update () {
-        textAboveHead.text = stats.currentHealth + "/" + stats.maxHealth;
+	void Update()
+	{
+		textAboveHead.text = stats.currentHealth + "/" + stats.maxHealth;
 	}
 }

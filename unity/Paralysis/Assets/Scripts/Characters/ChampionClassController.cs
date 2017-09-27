@@ -42,8 +42,10 @@ public abstract class ChampionClassController : MonoBehaviour
     protected bool jumpAttacking = false;                                 // True while the character is jump attacking
     public bool dashing = false;                                          // true while dashing
     public bool dontMove = false;                                         // Character cannot move while true
+    //public GameObject Hp;
+    //public GameObject Stamina;
 
-    [SerializeField]
+	[SerializeField]
     protected float[] attackLength;                                       // Stores the length of the characters attack animations in seconds. Order: [Basic Attack 1] [Basic Attack 2] [Basic Attack 3] [jump Attack] [Skill1] [Skill2] [Skill3] [Skill4]
 
 
