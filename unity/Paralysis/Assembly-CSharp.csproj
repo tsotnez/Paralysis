@@ -54,6 +54,7 @@
      <Compile Include="Assets\debug.cs" />
      <Compile Include="Assets\Scripts\Additional Classes\dummyController.cs" />
      <Compile Include="Assets\Scripts\Additional Classes\MyTimer.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraBehaviour.cs" />
      <Compile Include="Assets\Scripts\Characters\Archer\ArcherController.cs" />
      <Compile Include="Assets\Scripts\Characters\Assassin\AssassinController.cs" />
      <Compile Include="Assets\Scripts\Characters\Assassin\AssassinUserControl.cs" />
