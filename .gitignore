@@ -10,6 +10,7 @@
 [Uu]nityGenerated/
 # file on crash reports
 sysinfo.txt
+CurrentLayout
 # Unity3D generated meta files
 *.pidb.meta
 
