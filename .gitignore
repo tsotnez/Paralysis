@@ -1,40 +1,40 @@
 ###
 # Unity folders and files
 ###
-[Aa]ssets/AssetStoreTools*
-[Bb]uild/
-[Ll]ibrary/
-[Ll]ocal[Cc]ache/
-[Oo]bj/
-[Tt]emp/
-[Uu]nityGenerated/
+unity/Paralysis/[Aa]ssets/AssetStoreTools*
+unity/Paralysis/[Bb]uild/
+unity/Paralysis/[Ll]ibrary/
+unity/Paralysis/[Ll]ocal[Cc]ache/
+unity/Paralysis/[Oo]bj/
+unity/Paralysis/[Tt]emp/
+unity/Paralysis/[Uu]nityGenerated/
 # file on crash reports
-sysinfo.txt
-CurrentLayout
+unity/Paralysis/sysinfo.txt
+unity/Paralysis/CurrentLayout
 # Unity3D generated meta files
-*.pidb.meta
+unity/Paralysis/*.pidb.meta
 
 ###
 # VS/MD solution and project files
 ###
-[Ee]xportedObj/
-*.booproj
-*.csproj
-*.sln
-*.suo
-*.svd
-*.unityproj
-*.user
-*.userprefs
-*.pidb
-.DS_Store
+unity/Paralysis/[Ee]xportedObj/
+unity/Paralysis/*.booproj
+unity/Paralysis/*.csproj
+unity/Paralysis/*.sln
+unity/Paralysis/*.suo
+unity/Paralysis/*.svd
+unity/Paralysis/*.unityproj
+unity/Paralysis/*.user
+unity/Paralysis/*.userprefs
+unity/Paralysis/*.pidb
+unity/Paralysis/.DS_Store
 
 ###
 # OS generated
 ###
 .DS_Store
 .DS_Store?
-._*
+# ._*
 .Spotlight-V100
 .Trashes
 Icon?
