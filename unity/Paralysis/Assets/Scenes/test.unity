@@ -208,19 +208,9 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2e42d35c0d5244db08c073c1927e4462, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &18257074 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1414761858189358, guid: 2e42d35c0d5244db08c073c1927e4462,
-    type: 2}
-  m_PrefabInternal: {fileID: 18257073}
---- !u!224 &18257075 stripped
+--- !u!224 &18257074 stripped
 RectTransform:
-  m_PrefabParentObject: {fileID: 224219404085823036, guid: 2e42d35c0d5244db08c073c1927e4462,
-    type: 2}
-  m_PrefabInternal: {fileID: 18257073}
---- !u!1 &18257076 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1227431883202560, guid: 2e42d35c0d5244db08c073c1927e4462,
+  m_PrefabParentObject: {fileID: 224487791458853198, guid: 2e42d35c0d5244db08c073c1927e4462,
     type: 2}
   m_PrefabInternal: {fileID: 18257073}
 --- !u!1 &33478040
@@ -394,7 +384,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1255172578}
-  - {fileID: 18257075}
+  - {fileID: 18257074}
   - {fileID: 441922267}
   - {fileID: 1506481526}
   m_Father: {fileID: 0}
@@ -460,8 +450,8 @@ MonoBehaviour:
   currentHealth: 0
   maxStamina: 100
   currentStamina: 0
-  Hp: {fileID: 18257076}
-  Stamina: {fileID: 18257074}
+  Hp: {fileID: 0}
+  Stamina: {fileID: 0}
   staminaRegRate: 10
   stunned: 0
   bleeding: 0
@@ -1538,7 +1528,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f94f502f5327619499963911c0499c48, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 537f14d033e0f8c499eef4e2f900f7dd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -1570,7 +1560,7 @@ Animator:
   m_GameObject: {fileID: 1255172574}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 055687346d0c76c4786fee8317ed5c77, type: 2}
+  m_Controller: {fileID: 9100000, guid: 113cd116203f13f428b33bd63780efc7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 1
   m_ApplyRootMotion: 0
