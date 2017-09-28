@@ -42,6 +42,8 @@ public abstract class ChampionClassController : MonoBehaviour
     protected bool jumpAttacking = false;                                 // True while the character is jump attacking
     public bool dashing = false;                                          // true while dashing
     public bool dontMove = false;                                         // Character cannot move while true
+    //public GameObject Hp;
+    //public GameObject Stamina;
 
 	[SerializeField]
     protected float[] attackLength;                                       // Stores the length of the characters attack animations in seconds. Order: [Basic Attack 1] [Basic Attack 2] [Basic Attack 3] [jump Attack] [Skill1] [Skill2] [Skill3] [Skill4]
@@ -134,9 +136,8 @@ public abstract class ChampionClassController : MonoBehaviour
     protected virtual IEnumerator jumpAttack()
     {
         jumpAttacking = true; //Set status variable
-        m_Rigidbody2D.velocity = new Vector2(0, -m_jumpAttackForce); //Add downwards force
-        yield return new WaitUntil(() => m_Grounded); //Jump attacking as long as not grounded
-        //Get hit enemies
+        m_Rigidbody2D.velocity = new Vector2(0, -m_jumpAttackForce);
+        yield return new WaitForSeconds(attackLength[3]);
         jumpAttacking = false;
     }
 
