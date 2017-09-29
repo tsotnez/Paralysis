@@ -137,6 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   champions:
   - {fileID: 1083024026309572, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}
+  - {fileID: 1083024026309572, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}
 --- !u!4 &33478042
 Transform:
   m_ObjectHideFlags: 0

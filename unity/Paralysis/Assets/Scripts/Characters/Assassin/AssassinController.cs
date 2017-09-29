@@ -256,7 +256,6 @@ public class AssassinController : ChampionClassController
             target = hit.transform.gameObject.GetComponent<CharacterStats>();
             target.startBleeding(6);
             target.takeDamage(5, true);
-            target.GetComponent<Rigidbody2D>().AddForce(Vector2.right);
         }
     }
 
