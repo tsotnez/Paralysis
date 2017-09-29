@@ -17,6 +17,8 @@ public abstract class ChampionClassController : MonoBehaviour
     [SerializeField]
     protected float m_dashForce = 400f;                                   // Force applied when dashing
     [SerializeField]
+    protected float m_jumpAttackRadius = 10f;                            // Radius of jump Attack damage
+    [SerializeField]
     protected LayerMask m_WhatIsGround;                                   // A mask determining what is ground to the character
     [SerializeField]
     protected float m_ComboCounterMax = 1;                                // How long the next combostage is reachable (seconds)
@@ -136,7 +138,16 @@ public abstract class ChampionClassController : MonoBehaviour
         jumpAttacking = true; //Set status variable
         m_Rigidbody2D.velocity = new Vector2(0, -m_jumpAttackForce); //Add downwards force
         yield return new WaitUntil(() => m_Grounded); //Jump attacking as long as not grounded
+        
         //Get hit enemies
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(m_GroundCheck.position, m_jumpAttackRadius, Vector2.up, 0.01f, whatToHit);
+        foreach(RaycastHit2D hit in hits)
+        {
+            //Deal damage to each
+            hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(3, true);
+        }
+
+        Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
         jumpAttacking = false;
     }
 
