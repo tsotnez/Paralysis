@@ -310,20 +310,20 @@ public class AssassinController : ChampionClassController
             if (targetLocation == 1)
             {
                 transform.position = hit.transform.position + Vector3.left; //Viable target on the right
-                if (!m_FacingRight) Flip();
                 m_Rigidbody2D.velocity = Vector2.zero;
                 yield return new WaitForSeconds(delay_ShadowStep); //Deal damage at correct point in animation
                 hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(5, false);
                 hit.transform.gameObject.GetComponent<CharacterStats>().startStunned(3);
+                if (!m_FacingRight) Flip();
             }
             else if (targetLocation == -1)
             {
                 transform.position = hitLeft.transform.position + Vector3.right; //Viable target on the left
-                if (m_FacingRight) Flip();
                 m_Rigidbody2D.velocity = Vector2.zero;
                 yield return new WaitForSeconds(delay_ShadowStep); //Deal damage at correct point in animation
                 hitLeft.transform.gameObject.GetComponent<CharacterStats>().takeDamage(5, false);
                 hitLeft.transform.gameObject.GetComponent<CharacterStats>().startStunned(3);
+                if (m_FacingRight) Flip();
             }
             yield return new WaitForSeconds(attackLength[6] - delay_ShadowStep);
             dontMove = false;
