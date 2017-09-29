@@ -45,7 +45,9 @@ public abstract class ChampionClassController : MonoBehaviour
     public bool dashing = false;                                          // true while dashing
     public bool dontMove = false;                                         // Character cannot move while true
 
-	[SerializeField]
+    public bool defensive = false;                                        //Is the character defensive?
+
+    [SerializeField]
     protected float[] attackLength;                                       // Stores the length of the characters attack animations in seconds. Order: [Basic Attack 1] [Basic Attack 2] [Basic Attack 3] [jump Attack] [Skill1] [Skill2] [Skill3] [Skill4]
 
 
@@ -64,6 +66,7 @@ public abstract class ChampionClassController : MonoBehaviour
     {
         timer.Update();
         m_Anim.SetBool("jumpAttack", jumpAttacking);
+        m_Anim.SetBool("defensive", defensive);
 
         //Move the character if dashing
         if (dashing && m_Grounded) transform.position += new Vector3(m_dashForce * Time.deltaTime, 0, 0);
@@ -124,7 +127,7 @@ public abstract class ChampionClassController : MonoBehaviour
     public virtual void jump(bool jump)
     {
         // If the player should jump...
-        if (m_Grounded && jump && m_Anim.GetBool("Ground"))
+        if (m_Grounded && jump && !dashing && !attacking)
         {
             // Add a vertical force to the player.
             m_Grounded = false;
@@ -159,30 +162,44 @@ public abstract class ChampionClassController : MonoBehaviour
     //Dashes in the given direction
     public IEnumerator dash(int direction)
     {
-        if (direction != 0 && !dashing)
+        if (m_Grounded && !attacking && !dashing)
         {
-            //flip if necessary
-            if (direction < 0 && !m_FacingRight) Flip();
-            else if (direction > 0 && m_FacingRight) Flip();
+            if (direction != 0 && !dashing)
+            {
+                //flip if necessary
+                if (direction < 0 && !m_FacingRight) Flip();
+                else if (direction > 0 && m_FacingRight) Flip();
 
-            //Calculate new dashForce
-            m_dashForce = Mathf.Abs(m_dashForce) * direction;
-            m_Rigidbody2D.velocity = Vector2.zero;
+                //Calculate new dashForce
+                m_dashForce = Mathf.Abs(m_dashForce) * direction;
+                m_Rigidbody2D.velocity = Vector2.zero;
 
-            //Start animation
-            m_Anim.SetTrigger("dash");
+                //Start animation
+                m_Anim.SetTrigger("dash");
 
-            dashing = true;
-            dontMove = true;
+                dashing = true;
+                dontMove = true;
 
-            yield return new WaitForSeconds(0.5f);
-            dashing = false;
+                yield return new WaitForSeconds(0.5f);
+                dashing = false;
 
-            yield return new WaitForSeconds(0.2f);
-            dontMove = false;
+                yield return new WaitForSeconds(0.2f);
+                dontMove = false;
+            }
         }
     }
 
+    public void manageDefensive(bool pDefensive)
+    {
+        if (pDefensive)
+        {
+            //Start being defensive only if not defensive already   
+            if (!defensive) m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); //Stop moving
+            defensive = true;
+        }
+        else defensive = false;
+
+    }
     public abstract void skill1();
     public abstract void skill2();
     public abstract void skill3();

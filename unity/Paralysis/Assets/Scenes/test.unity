@@ -349,7 +349,6 @@ MonoBehaviour:
   staminaRegRate: 10
   stunned: 0
   bleeding: 0
-  defensive: 0
   knockedBack: 0
   slowFactor: 1
   knockBackDuration: 1
@@ -395,6 +394,7 @@ MonoBehaviour:
   m_FacingRight: 0
   dashing: 0
   dontMove: 0
+  defensive: 0
   attackLength: []
 --- !u!58 &208815063
 CircleCollider2D:
@@ -1889,6 +1889,16 @@ Prefab:
         type: 2}
       propertyPath: m_jumpAttackRadius
       value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114636547733299674, guid: fb4da503da42c0c48809cac878c3cc5a,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+        type: 2}
+      propertyPath: delay_Shoot
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}

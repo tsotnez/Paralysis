@@ -64,14 +64,19 @@ public abstract class UserControl : MonoBehaviour {
             // Read the jump input in Update so button presses aren't missed.
             m_Jump = Input.GetButtonDown("Jump");
         }
+        if(!defensive)
+        {
+            if (!m_Stats.stunned && !m_Stats.knockedBack) defensive = Input.GetButton("Defensive");
+            else defensive = false;
+        }
     }
 
 
     protected void FixedUpdate()
     {
         //Do things only when not stunned, defensive or being knocked back
-        if (!m_Stats.stunned && !m_Stats.defensive && !m_Stats.knockedBack)
-        {
+        if (!m_Stats.stunned && !m_Stats.knockedBack && !defensive)
+        { 
             float h = Input.GetAxis("Horizontal");
             // Pass all parameters to the character control script.
             m_Character.Move(h);
@@ -83,9 +88,11 @@ public abstract class UserControl : MonoBehaviour {
             if (m_Skill3) m_Character.skill3();
             if (m_Skill4) m_Character.skill4();
             if (dash != 0) m_Character.StartCoroutine(m_Character.dash(dash));
-
         }
-        m_Stats.defensive = defensive;
+
+        m_Character.manageDefensive(defensive);
+
+        defensive = false;
         m_Attack = false;
         m_Jump = false;
         m_Skill1 = false;

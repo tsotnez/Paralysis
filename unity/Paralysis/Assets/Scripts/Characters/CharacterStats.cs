@@ -26,7 +26,6 @@ public class CharacterStats : MonoBehaviour {
     public Coroutine stunnedRoutine = null; //Stores the stunned Coroutine
     public bool bleeding = false;
     public Coroutine bleedingRoutine = null; //Stores the bleeding Coroutine
-    public bool defensive = false;
     public bool knockedBack = false;
     public Coroutine knockBackRoutine = null; //Stores the knockBack Coroutine
     public float slowFactor = 1; //Setting this to a value below 1 will slow down the character
@@ -63,10 +62,7 @@ public class CharacterStats : MonoBehaviour {
     }
 
     private void Update()
-    {
-        // Lock character in defensive animation, if necessary
-        anim.SetBool("defensive", defensive);
-        if (defensive) rigid.velocity = new Vector2(0, rigid.velocity.y);
+    { 
 		this.Hp.GetComponentInChildren<Text>().text = this.currentHealth + "/" + this.maxHealth;
 		this.Stamina.GetComponentInChildren<Text>().text = this.currentStamina + "/" + this.maxStamina;
         this.Hp.GetComponent<RectTransform>().offsetMax = new Vector2(this.vecHP.x - this.maxHealth + this.currentHealth, this.vecHP.y);
@@ -111,7 +107,7 @@ public class CharacterStats : MonoBehaviour {
         stunnedRoutine = StartCoroutine(stun(time));
     }
 
-    //Sets the stunned value for fiven amount of time.
+    //Sets the stunned value for given amount of time.
     private IEnumerator stun(float time)
     {
         stunned = true;

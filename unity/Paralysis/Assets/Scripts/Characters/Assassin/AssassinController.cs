@@ -60,7 +60,7 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill1()
     {
-        if (!attacking && m_Grounded)
+        if (!attacking && m_Grounded && !dashing)
         {
             if (invisible) stopInvisible();
             attackingRoutine = StartCoroutine(setAttacking(attackLength[4]));
@@ -75,7 +75,7 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill2()
     {
-        if (!attacking && m_Grounded)
+        if (!attacking && m_Grounded && !dashing)
         {
             if (invisible) stopInvisible();
             attackingRoutine = StartCoroutine(setAttacking(attackLength[5]));
@@ -91,7 +91,7 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill3()
     {
-        if (!attacking && m_Grounded)
+        if (!attacking && m_Grounded && !dashing)
         {
             if (invisible) stopInvisible();
             StartCoroutine(shadowStepHit());
@@ -106,7 +106,7 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill4()
     {
-        if (!attacking && m_Grounded)
+        if (!attacking && m_Grounded && !dashing)
         {
             if (invisible) stopInvisible();
             attackingRoutine = StartCoroutine(setAttacking(attackLength[7]));
@@ -142,7 +142,7 @@ public class AssassinController : ChampionClassController
             timer.reset();
         }
 
-        if (shouldAttack && !attacking)
+        if (shouldAttack && !attacking && !dashing)
         {
             if (!m_Grounded && !invisible) //Jump attack only when falling
             {
