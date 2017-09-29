@@ -18,6 +18,8 @@ public class CharacterStats : MonoBehaviour {
 	public GameObject Hp;
     public GameObject Stamina;
 	public int staminaRegRate = 10;
+    private Vector2 vecHP;
+    private Vector2 vecST;
 
     [Header("Statusses")]
     public bool stunned = false;
@@ -41,8 +43,15 @@ public class CharacterStats : MonoBehaviour {
     {
         currentHealth = maxHealth;
         currentStamina = maxStamina;
-        this.Hp.GetComponent<Text>().text = this.currentHealth + "/" + this.maxHealth;
-        this.Stamina.GetComponent<Text>().text = this.currentStamina + "/" + this.maxStamina;
+        this.Hp.GetComponentInChildren<Text>().text = this.currentHealth + "/" + this.maxHealth; ;
+        this.vecHP = this.Hp.GetComponent<RectTransform>().offsetMax;
+        //this.Hp.GetComponent<RectTransform>().offsetMax = new Vector2(this.vecHP.x - 30, this.vecHP.y);
+    
+        //this.Hp.GetComponent<Text>().text = this.currentHealth + "/" + this.maxHealth;
+        //this.Hp.GetComponent<Image>()
+        this.Stamina.GetComponentInChildren<Text>().text = this.currentStamina + "/" + this.maxStamina;
+        this.vecST = this.Stamina.GetComponent<RectTransform>().offsetMax;
+        //this.Stamina.GetComponent<RectTransform>().offsetMax = new Vector2(this.vecST.x - 30, this.vecST.y);
 
 		anim = GetComponentInChildren<Animator>();
         rigid = GetComponent<Rigidbody2D>();
@@ -58,8 +67,10 @@ public class CharacterStats : MonoBehaviour {
         // Lock character in defensive animation, if necessary
         anim.SetBool("defensive", defensive);
         if (defensive) rigid.velocity = new Vector2(0, rigid.velocity.y);
-		this.Hp.GetComponent<Text>().text = this.currentHealth + "/" + this.maxHealth;
-		this.Stamina.GetComponent<Text>().text = this.currentStamina + "/" + this.maxStamina;
+		this.Hp.GetComponentInChildren<Text>().text = this.currentHealth + "/" + this.maxHealth;
+		this.Stamina.GetComponentInChildren<Text>().text = this.currentStamina + "/" + this.maxStamina;
+        this.Hp.GetComponent<RectTransform>().offsetMax = new Vector2(this.vecHP.x - this.maxHealth + this.currentHealth, this.vecHP.y);
+        this.Stamina.GetComponent<RectTransform>().offsetMax = new Vector2(this.vecST.x - this.maxStamina + this.currentStamina, this.vecST.y);
 
 	}
 
@@ -71,7 +82,7 @@ public class CharacterStats : MonoBehaviour {
             if (currentStamina + staminaRegRate > maxStamina) this.currentStamina = this.maxStamina;
             else this.currentStamina += this.staminaRegRate;
             
-			this.Stamina.GetComponent<Text>().text = this.currentStamina + "/" + this.maxStamina;
+			//this.Stamina.GetComponentInChildren<Text>().text = this.currentStamina + "/" + this.maxStamina;
 
 		}
     }
@@ -80,14 +91,16 @@ public class CharacterStats : MonoBehaviour {
     {
         if ((currentStamina - amount) < 0) this.currentStamina = 0;
         else this.currentStamina -= amount;
-		this.Stamina.GetComponent<Text>().text = this.currentStamina + "/" + this.maxStamina;
+
+		//this.Stamina.GetComponentInChildren<Text>().text = this.currentStamina + "/" + this.maxStamina;
+        //this.Stamina.GetComponent<RectTransform>().offsetMax = new Vector2(this.vecST.x - this.vecST.x/amount, this.vecST.y);
 
 	}
 
     //Substract damage from current health.
     public void takeDamage(int amount, bool playAnimation)
     {
-        currentHealth -= amount; //Substract health
+        this.currentHealth -= amount; //Substract health
         if(playAnimation)anim.SetTrigger("hit"); //Play hit animation
         if (currentHealth <= 0) die();
     }
