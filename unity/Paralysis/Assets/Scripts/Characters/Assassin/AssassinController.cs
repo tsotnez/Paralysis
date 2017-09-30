@@ -261,7 +261,7 @@ public class AssassinController : ChampionClassController
 
     private void shootAttackHit()
     {
-        RaycastHit2D hit = tryToHit(3f);
+        RaycastHit2D hit = tryToHit(4.5f);
         if (hit == true)
         {
             hit.transform.gameObject.GetComponent<CharacterStats>().startKnockBack(transform.position);

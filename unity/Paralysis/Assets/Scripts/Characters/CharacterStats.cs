@@ -70,9 +70,6 @@ public class CharacterStats : MonoBehaviour {
         {
             if (currentStamina + staminaRegRate > maxStamina) this.currentStamina = this.maxStamina;
             else this.currentStamina += this.staminaRegRate;
-            
-
-
 		}
     }
 
@@ -80,8 +77,6 @@ public class CharacterStats : MonoBehaviour {
     {
         if ((currentStamina - amount) < 0) this.currentStamina = 0;
         else this.currentStamina -= amount;
-
-
 	}
 
     //Substract damage from current health.

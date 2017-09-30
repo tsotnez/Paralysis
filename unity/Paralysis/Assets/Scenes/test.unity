@@ -354,7 +354,7 @@ MonoBehaviour:
   slowFactor: 1
   knockBackDuration: 1
   knockBackForceX: 6
-  knockBackForceY: 12
+  knockBackForceY: 6
 --- !u!114 &208815061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1434,11 +1434,6 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1169484564}
---- !u!1 &1237088597 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1592707810867268, guid: fb4da503da42c0c48809cac878c3cc5a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1495400064}
 --- !u!1 &1255172574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1656,11 +1651,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1365552975}
---- !u!1 &1453947008 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1040465107192032, guid: fb4da503da42c0c48809cac878c3cc5a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1495400064}
 --- !u!1 &1457018340
 GameObject:
   m_ObjectHideFlags: 0
@@ -1896,88 +1886,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+    - target: {fileID: 114930369078163482, guid: fb4da503da42c0c48809cac878c3cc5a,
         type: 2}
-      propertyPath: m_jumpAttackRadius
-      value: 1.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114636547733299674, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 06bd2675fc72e423d872c9508357a0c4,
-        type: 3}
-    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: delay_Shoot
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114636547733299674, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114636547733299674, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114636547733299674, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114376840815480150, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 2d56f39b841bb44d29aba0e779e92ac2,
-        type: 3}
-    - target: {fileID: 114376840815480150, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: m_Type
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114376840815480150, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114376840815480150, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114376840815480150, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114636547733299674, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: m_Type
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114376840815480150, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: m_FillMethod
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114636547733299674, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: m_FillMethod
-      value: 0
+      propertyPath: knockBackForceY
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 114930369078163482, guid: fb4da503da42c0c48809cac878c3cc5a,
         type: 2}
-      propertyPath: Hp
-      value: 
-      objectReference: {fileID: 1453947008}
-    - target: {fileID: 114930369078163482, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: Stamina
-      value: 
-      objectReference: {fileID: 1237088597}
+      propertyPath: knockBackForceX
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}
   m_IsPrefabParent: 0

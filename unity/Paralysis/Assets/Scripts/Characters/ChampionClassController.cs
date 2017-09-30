@@ -180,10 +180,10 @@ public abstract class ChampionClassController : MonoBehaviour
                 dashing = true;
                 dontMove = true;
 
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.35f);
                 dashing = false;
 
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(0.09f);
                 dontMove = false;
             }
         }
