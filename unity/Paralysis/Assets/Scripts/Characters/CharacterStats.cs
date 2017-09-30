@@ -66,7 +66,7 @@ public class CharacterStats : MonoBehaviour {
     // Is called repeatetly to regenerate stamina value
     private void regenerateStamina()
     {
-        if(currentStamina < maxStamina)
+        if(currentStamina < maxStamina && !controller.defensive)
         {
             if (currentStamina + staminaRegRate > maxStamina) this.currentStamina = this.maxStamina;
             else this.currentStamina += this.staminaRegRate;

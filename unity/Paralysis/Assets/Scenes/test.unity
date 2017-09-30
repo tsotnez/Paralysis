@@ -261,7 +261,6 @@ GameObject:
   - component: {fileID: 208815058}
   - component: {fileID: 208815060}
   - component: {fileID: 208815062}
-  - component: {fileID: 208815061}
   m_Layer: 12
   m_Name: Dummy
   m_TagString: Player
@@ -355,17 +354,6 @@ MonoBehaviour:
   knockBackDuration: 1
   knockBackForceX: 6
   knockBackForceY: 6
---- !u!114 &208815061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 208815056}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd72484847542e54295d54eeb4e7b17c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &208815062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,8 +368,8 @@ MonoBehaviour:
   m_MaxSpeed: 7
   m_MoveSpeedWhileAttacking: 5
   m_JumpForce: 400
-  m_AirControl: 1
-  m_dashForce: 400
+  m_dashSpeed: 7
+  m_dashStaminaCost: 10
   m_jumpAttackRadius: 1
   m_WhatIsGround:
     serializedVersion: 2
@@ -1895,6 +1883,81 @@ Prefab:
         type: 2}
       propertyPath: knockBackForceX
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+        type: 2}
+      propertyPath: delay_BasicAttack1
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+        type: 2}
+      propertyPath: delay_BasicAttack2
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+        type: 2}
+      propertyPath: delay_BasicAttack3
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+        type: 2}
+      propertyPath: attackLength.Array.data[0]
+      value: 0.321
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+        type: 2}
+      propertyPath: attackLength.Array.data[1]
+      value: 0.357
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+        type: 2}
+      propertyPath: attackLength.Array.data[2]
+      value: 0.435
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+        type: 2}
+      propertyPath: attackLength.Array.data[4]
+      value: 0.371
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+        type: 2}
+      propertyPath: delay_StunAttack
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+        type: 2}
+      propertyPath: attackLength.Array.data[7]
+      value: 0.375
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+        type: 2}
+      propertyPath: delay_Shoot
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+        type: 2}
+      propertyPath: attackLength.Array.data[6]
+      value: 0.361
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+        type: 2}
+      propertyPath: delay_ShadowStep
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+        type: 2}
+      propertyPath: delay_AmbushAttack
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+        type: 2}
+      propertyPath: m_dashForce
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+        type: 2}
+      propertyPath: staminaBasicAttack1
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}
