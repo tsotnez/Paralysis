@@ -451,8 +451,8 @@ MonoBehaviour:
   m_MaxSpeed: 7
   m_MoveSpeedWhileAttacking: 4
   m_JumpForce: 500
-  m_AirControl: 1
-  m_dashForce: 10
+  m_dashSpeed: 7
+  m_dashStaminaCost: 10
   m_jumpAttackRadius: 1.3
   m_WhatIsGround:
     serializedVersion: 2
@@ -468,23 +468,27 @@ MonoBehaviour:
   dontMove: 0
   defensive: 0
   attackLength:
-  - 0.563
-  - 0.667
-  - 0.556
+  - 0.321
+  - 0.357
+  - 0.435
   - 0.6
-  - 0.52
+  - 0.371
   - 0.533
-  - 0.591
-  - 0.72
+  - 0.361
+  - 0.375
   m_DoubleJumpForce: 600
   invisible: 0
-  delay_BasicAttack1: 0.5
-  delay_BasicAttack2: 0.55
-  delay_BasicAttack3: 0.5
-  delay_StunAttack: 0.5
-  delay_ShadowStep: 0.5
-  delay_AmbushAttack: 0
-  delay_Shoot: 0.3
+  delay_BasicAttack1: 0.15
+  delay_BasicAttack2: 0.15
+  delay_BasicAttack3: 0.2
+  delay_StunAttack: 0.3
+  delay_ShadowStep: 0.3
+  delay_Shoot: 0.15
+  staminaBasicAttack1: 5
+  staminaStunAttack: 10
+  staminaVanish: 10
+  staminaShadowStep: 10
+  staminaShoot: 10
 --- !u!114 &114930369078163482
 MonoBehaviour:
   m_ObjectHideFlags: 1

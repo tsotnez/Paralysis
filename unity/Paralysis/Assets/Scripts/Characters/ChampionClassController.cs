@@ -105,21 +105,23 @@ public abstract class ChampionClassController : MonoBehaviour
             // The Speed animator parameter is set to the absolute value of the horizontal input.
             m_Anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
 
-            // Move the character
-            m_Rigidbody2D.velocity = new Vector2(move * maxSpeed * stats.slowFactor, m_Rigidbody2D.velocity.y);
-
             // If the input is moving the player right and the player is facing left...
             if (move > 0 && !m_FacingRight)
             {
+                if (attacking) return; // prevent player from turning around while attacking
                 // ... flip the player.
                 Flip();
             }
             // Otherwise if the input is moving the player left and the player is facing right...
             else if (move < 0 && m_FacingRight)
             {
+                if (attacking) return;
                 // ... flip the player.
                 Flip();
             }
+
+            // Move the character
+            m_Rigidbody2D.velocity = new Vector2(move * maxSpeed * stats.slowFactor, m_Rigidbody2D.velocity.y);
         }
     }
 

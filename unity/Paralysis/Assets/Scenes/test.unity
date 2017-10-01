@@ -1874,91 +1874,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114930369078163482, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: knockBackForceY
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 114930369078163482, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: knockBackForceX
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
         type: 2}
-      propertyPath: delay_BasicAttack1
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 1999998842244028, guid: 892db9d0c49a79a4a931d7adfbb95dc5,
         type: 2}
-      propertyPath: delay_BasicAttack2
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: delay_BasicAttack3
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: attackLength.Array.data[0]
-      value: 0.321
-      objectReference: {fileID: 0}
-    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: attackLength.Array.data[1]
-      value: 0.357
-      objectReference: {fileID: 0}
-    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: attackLength.Array.data[2]
-      value: 0.435
-      objectReference: {fileID: 0}
-    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: attackLength.Array.data[4]
-      value: 0.371
-      objectReference: {fileID: 0}
-    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: delay_StunAttack
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: attackLength.Array.data[7]
-      value: 0.375
-      objectReference: {fileID: 0}
-    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: delay_Shoot
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: attackLength.Array.data[6]
-      value: 0.361
-      objectReference: {fileID: 0}
-    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: delay_ShadowStep
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: delay_AmbushAttack
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: m_dashForce
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: staminaBasicAttack1
-      value: 5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}
   m_IsPrefabParent: 0

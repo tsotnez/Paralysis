@@ -12,6 +12,8 @@ public class AssassinController : ChampionClassController
     public bool invisible = false;
     Coroutine invisRoutine = null;
     Coroutine attackingRoutine = null;
+    [SerializeField]
+    private GameObject bulletPrefab;
 
     [Header("Attack Delays")]
     [SerializeField]
@@ -277,12 +279,13 @@ public class AssassinController : ChampionClassController
 
     private void shootAttackHit()
     {
-        RaycastHit2D hit = tryToHit(4.5f);
-        if (hit == true)
-        {
-            hit.transform.gameObject.GetComponent<CharacterStats>().startKnockBack(transform.position);
-            hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(20, false);
-        }
+        Instantiate(bulletPrefab, transform.position + new Vector3(0.5f, 0.3f), Quaternion.identity);
+        //RaycastHit2D hit = tryToHit(4.5f);
+        //if (hit == true)
+        //{
+        //    hit.transform.gameObject.GetComponent<CharacterStats>().startKnockBack(transform.position);
+        //    hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(20, false);
+        //}
     }
 
     private void stunAttackHit()
