@@ -92,6 +92,19 @@ public abstract class ChampionClassController : MonoBehaviour
         m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
     }
 
+    /// <summary>
+    /// Checks if the character hit anything
+    /// </summary>
+    protected RaycastHit2D tryToHit(float range)
+    {
+        Vector2 direction;// Direction to check in
+        if (m_FacingRight) direction = Vector2.right;
+
+        else direction = Vector2.left;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, range, whatToHit); //Send raycast
+        return hit;
+    }
+
 
     public virtual void Move(float move)
     {
