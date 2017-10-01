@@ -235,5 +235,18 @@ public abstract class ChampionClassController : MonoBehaviour
         theScale.x *= -1;
         graphics.localScale = theScale;
     }
+
+    /// <summary>
+    /// Checks if the character hit anything
+    /// </summary>
+    protected RaycastHit2D tryToHit(float range)
+    {
+        Vector2 direction;// Direction to check in
+        if (m_FacingRight) direction = Vector2.right;
+
+        else direction = Vector2.left;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, range, whatToHit); //Send raycast
+        return hit;
+    }
 }
 
