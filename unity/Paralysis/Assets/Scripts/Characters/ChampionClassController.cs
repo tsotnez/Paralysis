@@ -13,9 +13,9 @@ public abstract class ChampionClassController : MonoBehaviour
     [SerializeField]
     protected float m_JumpForce = 400f;                                   // Amount of force added when the player jumps.         
     [SerializeField]
-    protected bool m_AirControl = false;                                  // Whether or not a player can steer while jumping;
+    protected float m_dashSpeed = 7f;                                   // Force applied when dashing
     [SerializeField]
-    protected float m_dashForce = 400f;                                   // Force applied when dashing
+    protected int m_dashStaminaCost = 10;
     [SerializeField]
     protected float m_jumpAttackRadius = 10f;                            // Radius of jump Attack damage
     [SerializeField]
@@ -65,11 +65,7 @@ public abstract class ChampionClassController : MonoBehaviour
     protected virtual void Update()
     {
         timer.Update();
-        m_Anim.SetBool("jumpAttack", jumpAttacking);
         m_Anim.SetBool("defensive", defensive);
-
-        //Move the character if dashing
-        if (dashing && m_Grounded) transform.position += new Vector3(m_dashForce * Time.deltaTime, 0, 0);
     }
 
     protected virtual void FixedUpdate()
@@ -90,6 +86,9 @@ public abstract class ChampionClassController : MonoBehaviour
 
         // Set the vertical animation
         m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
+
+        //Move the character if dashing
+        if (dashing && m_Grounded) m_Rigidbody2D.velocity = new Vector2(m_dashSpeed, m_Rigidbody2D.velocity.y);
     }
 
 
@@ -106,21 +105,23 @@ public abstract class ChampionClassController : MonoBehaviour
             // The Speed animator parameter is set to the absolute value of the horizontal input.
             m_Anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
 
-            // Move the character
-            m_Rigidbody2D.velocity = new Vector2(move * maxSpeed * stats.slowFactor, m_Rigidbody2D.velocity.y);
-
             // If the input is moving the player right and the player is facing left...
             if (move > 0 && !m_FacingRight)
             {
+                if (attacking) return; // prevent player from turning around while attacking
                 // ... flip the player.
                 Flip();
             }
             // Otherwise if the input is moving the player left and the player is facing right...
             else if (move < 0 && m_FacingRight)
             {
+                if (attacking) return;
                 // ... flip the player.
                 Flip();
             }
+
+            // Move the character
+            m_Rigidbody2D.velocity = new Vector2(move * maxSpeed * stats.slowFactor, m_Rigidbody2D.velocity.y);
         }
     }
 
@@ -139,7 +140,13 @@ public abstract class ChampionClassController : MonoBehaviour
     protected virtual IEnumerator jumpAttack()
     {
         jumpAttacking = true; //Set status variable
-        m_Rigidbody2D.velocity = new Vector2(0, -m_jumpAttackForce); //Add downwards force
+        m_Anim.SetBool("jumpAttack", true);
+
+        int direction;
+        if (m_FacingRight) direction = 1;
+        else direction = -1;
+
+        m_Rigidbody2D.velocity = new Vector2( 4  *direction, -m_jumpAttackForce); //Add downwards force
         yield return new WaitUntil(() => m_Grounded); //Jump attacking as long as not grounded
         
         //Get hit enemies
@@ -152,6 +159,7 @@ public abstract class ChampionClassController : MonoBehaviour
 
         Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
         jumpAttacking = false;
+        m_Anim.SetBool("jumpAttack", false);
     }
 
     /// <summary>
@@ -162,16 +170,19 @@ public abstract class ChampionClassController : MonoBehaviour
     //Dashes in the given direction
     public IEnumerator dash(int direction)
     {
-        if (m_Grounded && !attacking && !dashing)
+        if (m_Grounded && !attacking && !dashing && stats.currentStamina >= m_dashStaminaCost)
         {
             if (direction != 0 && !dashing)
             {
+                //lsoe stamina
+                stats.loseStamina(m_dashStaminaCost);
+
                 //flip if necessary
                 if (direction < 0 && !m_FacingRight) Flip();
                 else if (direction > 0 && m_FacingRight) Flip();
 
                 //Calculate new dashForce
-                m_dashForce = Mathf.Abs(m_dashForce) * direction;
+                m_dashSpeed = Mathf.Abs(m_dashSpeed) * direction;
                 m_Rigidbody2D.velocity = Vector2.zero;
 
                 //Start animation
@@ -180,10 +191,11 @@ public abstract class ChampionClassController : MonoBehaviour
                 dashing = true;
                 dontMove = true;
 
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.4f);
                 dashing = false;
+                m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
 
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(0.04f);
                 dontMove = false;
             }
         }
