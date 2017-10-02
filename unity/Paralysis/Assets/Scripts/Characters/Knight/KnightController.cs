@@ -117,8 +117,8 @@ public class KnightController : ChampionClassController
         if (!attacking && m_Grounded)
         {
             attackingRoutine = StartCoroutine(setAttacking(attackLength[4]));
-            //m_Anim.SetTrigger("skill2");
-            //Invoke("skill2_hit", delay_Skill2); //Invoke damage function
+            m_Anim.SetTrigger("stunAttack");
+            Invoke("skill2_hit", delay_Skill2); //Invoke damage function
             stats.loseStamina(15);
         }
     }
@@ -138,8 +138,8 @@ public class KnightController : ChampionClassController
         if (!attacking && m_Grounded)
         {
             attackingRoutine = StartCoroutine(setAttacking(attackLength[7]));
-            //m_Anim.SetTrigger("skill3");
-            //Invoke("skill3_hit", delay_Skill3);
+            m_Anim.SetTrigger("knockedBack");
+            Invoke("skill3_hit", delay_Skill3);
             stats.loseStamina(30);
         }
     }
@@ -158,8 +158,7 @@ public class KnightController : ChampionClassController
         if (!attacking && m_Grounded)
         {
             attackingRoutine = StartCoroutine(setAttacking(attackLength[7]));
-            //m_Anim.SetTrigger("skill4");
-            //Invoke("skill4_hit", delay_Skill4);
+            Invoke("skill4_hit", delay_Skill4);
             stats.loseStamina(20);
         }
     }
