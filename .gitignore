@@ -17,6 +17,7 @@ unity/Paralysis/*.pidb.meta
 ###
 # VS/MD solution and project files
 ###
+unity/Paralysis/.vs/
 unity/Paralysis/[Ee]xportedObj/
 unity/Paralysis/*.booproj
 unity/Paralysis/*.csproj
