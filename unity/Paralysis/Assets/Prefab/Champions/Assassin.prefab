@@ -478,6 +478,7 @@ MonoBehaviour:
   - 0.375
   m_DoubleJumpForce: 600
   invisible: 0
+  bulletPrefab: {fileID: 0}
   delay_BasicAttack1: 0.15
   delay_BasicAttack2: 0.15
   delay_BasicAttack3: 0.2

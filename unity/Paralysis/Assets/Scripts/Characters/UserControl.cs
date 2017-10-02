@@ -26,8 +26,6 @@ public abstract class UserControl : MonoBehaviour {
 
     protected void Update()
     {
-        defensive = Input.GetButton("Defensive");
-
         if (dash == 0)
         {
             if (Input.GetButtonDown("DashLeft")) dash = -1;
@@ -64,11 +62,10 @@ public abstract class UserControl : MonoBehaviour {
             // Read the jump input in Update so button presses aren't missed.
             m_Jump = Input.GetButtonDown("Jump");
         }
-        if(!defensive)
-        {
-            if (!m_Stats.stunned && !m_Stats.knockedBack) defensive = Input.GetButton("Defensive");
-            else defensive = false;
-        }
+        if (!m_Stats.stunned && !m_Stats.knockedBack) defensive = Input.GetButton("Defensive");
+        else defensive = false;
+
+        m_Character.manageDefensive(defensive);
     }
 
 
@@ -89,8 +86,6 @@ public abstract class UserControl : MonoBehaviour {
             if (m_Skill4) m_Character.skill4();
             if (dash != 0) m_Character.StartCoroutine(m_Character.dash(dash));
         }
-
-        m_Character.manageDefensive(defensive);
 
         defensive = false;
         m_Attack = false;
