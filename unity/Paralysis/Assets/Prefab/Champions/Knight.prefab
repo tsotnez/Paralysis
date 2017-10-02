@@ -465,12 +465,12 @@ MonoBehaviour:
   m_jumpAttackRadius: 10
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1536
   m_ComboCounterMax: 1
   m_jumpAttackForce: 10
   whatToHit:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4096
   m_Grounded: 0
   m_FacingRight: 1
   dashing: 0
