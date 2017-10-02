@@ -38,19 +38,24 @@ public abstract class ChampionClassController : MonoBehaviour
     public bool m_FacingRight = true;                                     // For determining which way the player is currently facing.
     protected Transform graphics;                                         // Reference to the graphics child
 
+    [Header("Range Variables")]
+    protected float meeleRange = 1.5f;
+
+    [Header("Attacking Variables")]
+    [SerializeField]
     protected int attackCount = 0;                                        // The ComboState 0 means the character has not attacked yet
+    [SerializeField]
     protected bool inCombo = false;                                       // When true, the next comboStage can be reached
     [SerializeField]
     protected bool attacking = false;                                     // true, while the character is Attacking
+    [SerializeField]
     protected bool jumpAttacking = false;                                 // True while the character is jump attacking
-    public bool dashing = false;                                          // true while dashing
-    public bool dontMove = false;                                         // Character cannot move while true
-
-    public bool defensive = false;                                        //Is the character defensive?
-
     [SerializeField]
     protected float[] attackLength;                                       // Stores the length of the characters attack animations in seconds. Order: [Basic Attack 1] [Basic Attack 2] [Basic Attack 3] [jump Attack] [Skill1] [Skill2] [Skill3] [Skill4]
 
+    public bool dashing = false;                                          // true while dashing
+    public bool dontMove = false;                                         // Character cannot move while true
+    public bool defensive = false;                                        //Is the character defensive?
 
     protected virtual void Awake()
     {
@@ -224,6 +229,18 @@ public abstract class ChampionClassController : MonoBehaviour
         attacking = true;
         yield return new WaitForSeconds(seconds);
         attacking = false;
+    }
+
+    /// <summary>
+    /// set/reset the combo after 1 second
+    /// </summary>
+    /// <returns></returns>
+    protected IEnumerator setCombo()
+    {
+        inCombo = true;
+        yield return new WaitForSeconds(1);
+        inCombo = false;
+        attackCount = 0;
     }
 
     public virtual void Flip()

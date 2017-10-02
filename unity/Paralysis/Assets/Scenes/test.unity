@@ -138,7 +138,7 @@ MonoBehaviour:
   champions:
   - {fileID: 1083024026309572, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}
   - {fileID: 1040337364421342, guid: b1e43d9ab5ee2524d944148b7f0b4cbc, type: 2}
-  startChar: 0
+  startChar: 1
 --- !u!4 &33478042
 Transform:
   m_ObjectHideFlags: 0
@@ -382,10 +382,14 @@ MonoBehaviour:
     m_Bits: 2048
   m_Grounded: 0
   m_FacingRight: 0
+  attackCount: 0
+  inCombo: 0
+  attacking: 0
+  jumpAttacking: 0
+  attackLength: []
   dashing: 0
   dontMove: 0
   defensive: 0
-  attackLength: []
 --- !u!58 &208815063
 CircleCollider2D:
   m_ObjectHideFlags: 0

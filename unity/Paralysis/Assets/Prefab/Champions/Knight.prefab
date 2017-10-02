@@ -473,18 +473,22 @@ MonoBehaviour:
     m_Bits: 4096
   m_Grounded: 0
   m_FacingRight: 1
-  dashing: 0
-  dontMove: 0
-  defensive: 0
+  attackCount: 0
+  inCombo: 0
+  attacking: 0
+  jumpAttacking: 0
   attackLength:
   - 0.36
   - 0.367
   - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
+  - 0.5
+  - 0.444
+  - 0.667
+  - 0.75
+  - 0.55
+  dashing: 0
+  dontMove: 0
+  defensive: 0
   delay_BasicAttack1: 0
   delay_BasicAttack2: 0
   delay_BasicAttack3: 0
@@ -492,6 +496,20 @@ MonoBehaviour:
   delay_Skill2: 0
   delay_Skill3: 0
   delay_Skill4: 0
+  stamina_BasicAttack: 5
+  stamina_BasicAttackCombo: 10
+  stamina_JumpAttack: 5
+  stamina_Skill1_GroundSmash: 20
+  stamina_Skill2_Leap: 15
+  stamina_Skill3_ShieldBash: 30
+  stamina_Skill4_Spear: 20
+  damage_BasicAttack: 5
+  damage_BasicAttackCombo: 10
+  damage_JumpAttack: 5
+  damage_Skill1_GroundSmash: 20
+  damage_Skill2_Leap: 15
+  damage_Skill3_ShieldBash: 30
+  damage_Skill4_Spear: 20
 --- !u!114 &114906821031240144
 MonoBehaviour:
   m_ObjectHideFlags: 1

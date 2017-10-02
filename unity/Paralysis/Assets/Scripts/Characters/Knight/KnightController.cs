@@ -3,6 +3,7 @@ using UnityEngine;
 public class KnightController : ChampionClassController
 {
     Coroutine attackingRoutine;
+    Coroutine comboRoutine;
 
     [Header("Attack Delays")]
     [SerializeField]
@@ -24,17 +25,34 @@ public class KnightController : ChampionClassController
     [SerializeField]
     private int stamina_BasicAttack = 5;
     [SerializeField]
-    private int stamina_BasicAttackCombo = 10;
+    private int stamina_BasicAttackCombo = 7;
     [SerializeField]
     private int stamina_JumpAttack = 5;
     [SerializeField]
-    private int stamina_Skill1_GroundSmash = 20;
+    private int stamina_Skill1_GroundSmash = 5;
     [SerializeField]
-    private int stamina_Skill2_Leap = 15;
+    private int stamina_Skill2_Leap = 5;
     [SerializeField]
-    private int stamina_Skill3_ShieldBash = 30;
+    private int stamina_Skill3_ShieldBash = 10;
     [SerializeField]
-    private int stamina_Skill4_Spear = 20;
+    private int stamina_Skill4_Spear = 15;
+
+    [Header("Attack Damage")]
+    [SerializeField]
+    private int damage_BasicAttack = 5;
+    [SerializeField]
+    private int damage_BasicAttackCombo = 10;
+    [SerializeField]
+    private int damage_JumpAttack = 5;
+    [SerializeField]
+    private int damage_Skill1_GroundSmash = 20;
+    [SerializeField]
+    private int damage_Skill2_Leap = 15;
+    [SerializeField]
+    private int damage_Skill3_ShieldBash = 30;
+    [SerializeField]
+    private int damage_Skill4_Spear = 20;
+
 
     /// <summary>
     /// Attack combo. 2 normal hits, 1 strong hit
@@ -45,30 +63,20 @@ public class KnightController : ChampionClassController
     /// <param name="shouldAttack"></param>
     public override void basicAttack(bool shouldAttack)
     {
-        // When the timer is over the player is not allowed to continue his combo
-        if (timer.hasFinished() || attackCount==3)
-        {
-            //reset combo
-            inCombo = false;
-            attackCount = 0;
-            timer.timerStop();
-            timer.reset();
-        }
-
         if (shouldAttack && !attacking)
         {
             if (m_Grounded)
             {
                 //Check if enough Stamina for Attack
-                if (stats.currentStamina >= stamina_BasicAttack && (attackCount == 0 || attackCount == 1) || //Basic Attack (5 Stamina)
-                    stats.currentStamina >= stamina_BasicAttackCombo && (attackCount == 2)) // Strong Attack (10 Stamina)
+                if (stats.currentStamina >= stamina_BasicAttack && (attackCount == 0 || attackCount == 1) || //Basic Attack
+                    stats.currentStamina >= stamina_BasicAttackCombo && (attackCount == 2)) // Strong Attack
                 {
                     // Determining the attackCount
                     if (attackCount == 0 && !inCombo)
                     {
                         //First attack              
-                        timer.timerStart();
-                        inCombo = true;
+                        if (comboRoutine != null) StopCoroutine(comboRoutine);
+                        comboRoutine = StartCoroutine(setCombo());
                     }
 
                     //Attack Count increase per attack
@@ -90,7 +98,12 @@ public class KnightController : ChampionClassController
                             m_Anim.SetTrigger("AttackCombo");
                             if (attackingRoutine != null) StopCoroutine(attackingRoutine);
                             attackingRoutine = StartCoroutine(setAttacking(attackLength[2] - 0.08f));
-                            Invoke("strongAttack_hit", delay_BasicAttack2);
+                            Invoke("comboAttack_hit", delay_BasicAttack2);
+
+                            // Reset Combo after combo-hit
+                            if (comboRoutine != null) StopCoroutine(comboRoutine);
+                            inCombo = false;
+                            attackCount = 0;
                             break;
                     }
                 }
@@ -98,7 +111,7 @@ public class KnightController : ChampionClassController
             else if (!m_Grounded) //Jump attack only when falling
             {
                 // Check if enough stamina is left
-                if (stats.currentStamina >= stamina_JumpAttack) // Jump Attack needs 5 Stamina
+                if (stats.currentStamina >= stamina_JumpAttack)
                 {
                     //Lose Stamina
                     stats.loseStamina(stamina_JumpAttack);
@@ -106,10 +119,9 @@ public class KnightController : ChampionClassController
                     StartCoroutine(jumpAttack());
                     attackingRoutine = StartCoroutine(setAttacking(attackLength[3] - 0.08f));
                     //reset combo
+                    if (comboRoutine != null) StopCoroutine(comboRoutine);
                     inCombo = false;
                     attackCount = 0;
-                    timer.timerStop();
-                    timer.reset();
                 }
             }
         }
@@ -132,7 +144,7 @@ public class KnightController : ChampionClassController
             attackingRoutine = StartCoroutine(setAttacking(attackLength[4]));
             m_Anim.SetTrigger("stunAttack");
             Invoke("skill1_hit", delay_Skill1); //Invoke damage function
-            stats.loseStamina(20);
+            stats.loseStamina(stamina_Skill1_GroundSmash);
         }
     }
 
@@ -150,10 +162,10 @@ public class KnightController : ChampionClassController
     {
         if (!attacking && m_Grounded)
         {
-            attackingRoutine = StartCoroutine(setAttacking(attackLength[4]));
+            attackingRoutine = StartCoroutine(setAttacking(attackLength[5]));
             m_Anim.SetTrigger("stunAttack");
             Invoke("skill2_hit", delay_Skill2); //Invoke damage function
-            stats.loseStamina(15);
+            stats.loseStamina(stamina_Skill2_Leap);
         }
     }
 
@@ -171,10 +183,10 @@ public class KnightController : ChampionClassController
     {
         if (!attacking && m_Grounded)
         {
-            attackingRoutine = StartCoroutine(setAttacking(attackLength[7]));
+            attackingRoutine = StartCoroutine(setAttacking(attackLength[6]));
             m_Anim.SetTrigger("knockedBack");
             Invoke("skill3_hit", delay_Skill3);
-            stats.loseStamina(30);
+            stats.loseStamina(stamina_Skill3_ShieldBash);
         }
     }
 
@@ -193,7 +205,7 @@ public class KnightController : ChampionClassController
         {
             attackingRoutine = StartCoroutine(setAttacking(attackLength[7]));
             Invoke("skill4_hit", delay_Skill4);
-            stats.loseStamina(20);
+            stats.loseStamina(stamina_Skill4_Spear);
         }
     }
 
@@ -209,27 +221,62 @@ public class KnightController : ChampionClassController
         base.Update();
     }
 
+    
+    private void basicAttack_hit()
+    {
+        RaycastHit2D hit = tryToHit(meeleRange);
+        if (hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(damage_BasicAttack, true); //Let the hit character take damage
+    }
+
+    private void comboAttack_hit()
+    {
+        RaycastHit2D hit = tryToHit(meeleRange);
+        if (hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(damage_BasicAttackCombo, true); //Let the hit character take damage
+    }
+
     private void skill1_hit()
     {
-        RaycastHit2D hit = tryToHit(1.5f);
+        RaycastHit2D hit = tryToHit(meeleRange);
         CharacterStats target;
         if (hit == true)
         {
             target = hit.transform.gameObject.GetComponent<CharacterStats>();
             target.startStunned(3);
-            target.takeDamage(5, false);
+            target.takeDamage(damage_Skill1_GroundSmash, false);
         }
     }
 
-    private void basicAttack_hit()
+
+    private void skill2_hit()
     {
-        RaycastHit2D hit = tryToHit(1.5f);
-        if (hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(5, true); //Let the hit character take damage
+        RaycastHit2D hit = tryToHit(meeleRange);
+        CharacterStats target;
+        if (hit == true)
+        {
+            target = hit.transform.gameObject.GetComponent<CharacterStats>();
+            target.startStunned(3);
+            target.takeDamage(damage_Skill2_Leap, false);
+        }
     }
 
-    private void strongAttack_hit()
+    private void skill3_hit()
     {
-        RaycastHit2D hit = tryToHit(1.5f);
-        if (hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(10, true); //Let the hit character take damage
+        //Get hit enemies
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(m_GroundCheck.position, m_jumpAttackRadius, Vector2.up, 0.01f, whatToHit);
+
+        CharacterStats target;
+        foreach (RaycastHit2D hit in hits)
+        {
+            //Deal damage to each
+            target = hit.transform.gameObject.GetComponent<CharacterStats>();
+            target.startKnockBack(transform.position);
+            target.takeDamage(damage_Skill3_ShieldBash, false);
+        }
+    }
+
+    //range hit
+    private void skill4_hit()
+    {
+
     }
 }
