@@ -137,7 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   champions:
   - {fileID: 1083024026309572, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}
-  - {fileID: 0}
+  - {fileID: 1040337364421342, guid: b1e43d9ab5ee2524d944148b7f0b4cbc, type: 2}
   startChar: 1
 --- !u!4 &33478042
 Transform:
@@ -1921,12 +1921,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
-        type: 2}
-      propertyPath: bulletPrefab
-      value: 
-      objectReference: {fileID: 1999998842244028, guid: 8edf692e54e1dc341ba120a502e4691e,
-        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}
   m_IsPrefabParent: 0
