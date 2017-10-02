@@ -1,0 +1,330 @@
+fileFormatVersion: 2
+guid: fe198cdc18a9cb643b2b49114491a78d
+timeCreated: 1505838890
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: assassin_5_invisible_0
+    21300002: assassin_5_invisible_1
+    21300004: assassin_5_invisible_2
+    21300006: assassin_5_invisible_3
+    21300008: assassin_5_invisible_4
+    21300010: assassin_5_invisible_5
+    21300012: assassin_5_invisible_6
+    21300014: assassin_5_invisible_7
+    21300016: assassin_5_invisible_8
+    21300018: assassin_5_invisible_9
+    21300020: assassin_5_invisible_10
+    21300022: assassin_5_invisible_11
+    21300024: assassin_5_invisible_12
+    21300026: assassin_5_invisible_13
+    21300028: assassin_5_invisible_14
+    21300030: assassin_5_invisible_15
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 0
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 300
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 4096
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 4096
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: assassin_5_invisible_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2094
+        width: 882
+        height: 698
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_5_invisible_1
+      rect:
+        serializedVersion: 2
+        x: 882
+        y: 2094
+        width: 882
+        height: 698
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_5_invisible_2
+      rect:
+        serializedVersion: 2
+        x: 1764
+        y: 2094
+        width: 882
+        height: 698
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_5_invisible_3
+      rect:
+        serializedVersion: 2
+        x: 2646
+        y: 2094
+        width: 882
+        height: 698
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_5_invisible_4
+      rect:
+        serializedVersion: 2
+        x: 3528
+        y: 2094
+        width: 882
+        height: 698
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_5_invisible_5
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 1396
+        width: 882
+        height: 698
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_5_invisible_6
+      rect:
+        serializedVersion: 2
+        x: 882
+        y: 1396
+        width: 882
+        height: 698
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_5_invisible_7
+      rect:
+        serializedVersion: 2
+        x: 1764
+        y: 1396
+        width: 882
+        height: 698
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_5_invisible_8
+      rect:
+        serializedVersion: 2
+        x: 2646
+        y: 1396
+        width: 882
+        height: 698
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_5_invisible_9
+      rect:
+        serializedVersion: 2
+        x: 3528
+        y: 1396
+        width: 882
+        height: 698
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_5_invisible_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 695
+        width: 882
+        height: 698
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_5_invisible_11
+      rect:
+        serializedVersion: 2
+        x: 882
+        y: 698
+        width: 882
+        height: 698
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_5_invisible_12
+      rect:
+        serializedVersion: 2
+        x: 1764
+        y: 698
+        width: 882
+        height: 698
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_5_invisible_13
+      rect:
+        serializedVersion: 2
+        x: 2646
+        y: 698
+        width: 882
+        height: 698
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_5_invisible_14
+      rect:
+        serializedVersion: 2
+        x: 3528
+        y: 698
+        width: 882
+        height: 698
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_5_invisible_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 882
+        height: 698
+      alignment: 9
+      pivot: {x: 0.5, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

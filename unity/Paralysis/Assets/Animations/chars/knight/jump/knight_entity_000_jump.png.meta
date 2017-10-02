@@ -1,0 +1,364 @@
+fileFormatVersion: 2
+guid: eb66d0c224bbcdf4fae5d92882d10230
+timeCreated: 1506513022
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: knight_entity_000_jump_0
+    21300002: knight_entity_000_jump_1
+    21300004: knight_entity_000_jump_2
+    21300006: knight_entity_000_jump_3
+    21300008: knight_entity_000_jump_4
+    21300010: knight_entity_000_jump_5
+    21300012: knight_entity_000_jump_6
+    21300014: knight_entity_000_jump_7
+    21300016: knight_entity_000_jump_8
+    21300018: knight_entity_000_jump_9
+    21300020: knight_entity_000_jump_10
+    21300022: knight_entity_000_jump_11
+    21300024: knight_entity_000_jump_12
+    21300026: knight_entity_000_jump_13
+    21300028: knight_entity_000_jump_14
+    21300030: knight_entity_000_jump_15
+    21300032: knight_entity_000_jump_16
+    21300034: knight_entity_000_jump_17
+    21300036: knight_entity_000_jump_18
+    21300038: knight_entity_000_jump_19
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 0
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 525
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 8192
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 8192
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: knight_entity_000_jump_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2922
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_1
+      rect:
+        serializedVersion: 2
+        x: 1012
+        y: 2922
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_2
+      rect:
+        serializedVersion: 2
+        x: 2024
+        y: 2922
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_3
+      rect:
+        serializedVersion: 2
+        x: 3036
+        y: 2922
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_4
+      rect:
+        serializedVersion: 2
+        x: 4048
+        y: 2922
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1948
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_6
+      rect:
+        serializedVersion: 2
+        x: 1012
+        y: 1948
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_7
+      rect:
+        serializedVersion: 2
+        x: 2024
+        y: 1948
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_8
+      rect:
+        serializedVersion: 2
+        x: 3036
+        y: 1948
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_9
+      rect:
+        serializedVersion: 2
+        x: 4048
+        y: 1948
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 974
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_11
+      rect:
+        serializedVersion: 2
+        x: 1012
+        y: 974
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_12
+      rect:
+        serializedVersion: 2
+        x: 2024
+        y: 974
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_13
+      rect:
+        serializedVersion: 2
+        x: 3036
+        y: 974
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_14
+      rect:
+        serializedVersion: 2
+        x: 4048
+        y: 974
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_16
+      rect:
+        serializedVersion: 2
+        x: 1012
+        y: 0
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_17
+      rect:
+        serializedVersion: 2
+        x: 2024
+        y: 0
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_18
+      rect:
+        serializedVersion: 2
+        x: 3036
+        y: 0
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: knight_entity_000_jump_19
+      rect:
+        serializedVersion: 2
+        x: 4048
+        y: 0
+        width: 1012
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

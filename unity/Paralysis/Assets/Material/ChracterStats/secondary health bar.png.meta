@@ -1,0 +1,297 @@
+fileFormatVersion: 2
+guid: aaac86fec21be44698abb39e4fe88d5f
+timeCreated: 1506739702
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: secondary health bar_0
+    21300002: secondary health bar_1
+    21300004: secondary health bar_2
+    21300006: secondary health bar_3
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 512
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 512
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: iPhone
+    maxTextureSize: 512
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 512
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: secondary health bar_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 45
+        width: 976
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 464.1032, y: -9.575983}
+        - {x: 481.12573, y: 8.50972}
+        - {x: 488, y: 22.5}
+        - {x: -487.9141, y: 22.5}
+        - {x: -487.9141, y: -22.5}
+        - {x: 443.34497, y: -15.625702}
+      - - {x: -468.77347, y: 7.6800003}
+        - {x: -440.0625, y: 7.6800003}
+        - {x: -441.97656, y: -3.8400002}
+        - {x: -480.25784, y: -9.6}
+      - - {x: -411.35156, y: 7.6800003}
+        - {x: -336.70312, y: 7.6800003}
+        - {x: -340.53125, y: -9.6}
+        - {x: -411.35156, y: -9.6}
+      - - {x: -309.90625, y: -3.8400002}
+        - {x: -309.90625, y: 7.6800003}
+        - {x: -235.25781, y: 7.6800003}
+        - {x: -235.25781, y: -9.6}
+      - - {x: -208.46094, y: 7.6800003}
+        - {x: -126.15625, y: 7.6800003}
+        - {x: -126.15625, y: -9.6}
+        - {x: -206.54688, y: -7.6800003}
+      - - {x: -95.53125, y: 7.6800003}
+        - {x: -3.6562462, y: 7.6800003}
+        - {x: -3.6562462, y: -9.6}
+        - {x: -95.53125, y: -9.6}
+      - - {x: 25.054693, y: 7.6800003}
+        - {x: 92.04688, y: 7.6800003}
+        - {x: 92.04688, y: -9.6}
+        - {x: 26.968756, y: -9.6}
+      - - {x: 122.67188, y: 7.6800003}
+        - {x: 197.32033, y: 7.6800003}
+        - {x: 197.32033, y: -9.6}
+        - {x: 122.67188, y: -9.6}
+      - - {x: 227.94533, y: -3.8400002}
+        - {x: 227.94533, y: 7.6800003}
+        - {x: 300.67972, y: -3.8400002}
+        - {x: 300.67972, y: -9.6}
+      - - {x: 331.30472, y: -3.8400002}
+        - {x: 335.13284, y: 9.6}
+        - {x: 379.15628, y: 9.6}
+        - {x: 371.50003, y: -9.6}
+      - - {x: 409.78128, y: -3.8400002}
+        - {x: 430.83597, y: -9.6}
+        - {x: 402.12503, y: -11.52}
+        - {x: 404.0391, y: -11.52}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: secondary health bar_1
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 67
+        width: 23
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -11.269532, y: 13}
+        - {x: -11.269532, y: -12.680003}
+        - {x: -5.5273447, y: -12.680003}
+        - {x: 11.5, y: 4.5999975}
+        - {x: 11.5, y: 13}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: secondary health bar_2
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 45
+        width: 978
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -488.95706, y: 24.5}
+        - {x: -488.95706, y: -24.12}
+        - {x: 489, y: -24.12}
+        - {x: 489, y: -4.92}
+        - {x: 462.33203, y: 24.5}
+      - - {x: -479.38675, y: 14.280001}
+        - {x: -443.01956, y: 10.440001}
+        - {x: -439.19144, y: -8.76}
+        - {x: -479.38675, y: -8.76}
+      - - {x: -406.65237, y: 10.440001}
+        - {x: -339.6602, y: 12.360001}
+        - {x: -335.83206, y: -8.76}
+        - {x: -410.4805, y: -8.76}
+      - - {x: -309.0352, y: 12.360001}
+        - {x: -234.38673, y: -8.76}
+        - {x: -309.0352, y: -8.76}
+      - - {x: -205.6758, y: 10.440001}
+        - {x: -125.28517, y: 12.360001}
+        - {x: -125.28517, y: -8.76}
+        - {x: -207.58986, y: -6.84}
+      - - {x: -94.66017, y: 12.360001}
+        - {x: -2.7851691, y: 12.360001}
+        - {x: -2.7851691, y: -8.76}
+        - {x: -94.66017, y: -8.76}
+      - - {x: 27.839832, y: 12.360001}
+        - {x: 92.91796, y: 12.360001}
+        - {x: 92.91796, y: -8.76}
+        - {x: 25.92577, y: -8.76}
+      - - {x: 123.54296, y: 12.360001}
+        - {x: 198.1914, y: 12.360001}
+        - {x: 198.1914, y: -8.76}
+        - {x: 123.54296, y: -8.76}
+      - - {x: 228.8164, y: 12.360001}
+        - {x: 301.55078, y: 6.6000004}
+        - {x: 303.46484, y: -8.76}
+        - {x: 230.73047, y: -6.84}
+      - - {x: 332.17578, y: 4.6800003}
+        - {x: 328.34766, y: 12.360001}
+        - {x: 380.02734, y: -8.76}
+        - {x: 336.0039, y: -8.76}
+      - - {x: 406.82422, y: 12.360001}
+        - {x: 443.1914, y: 6.6000004}
+        - {x: 468.07422, y: -10.68}
+        - {x: 416.39453, y: -8.76}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: secondary health bar_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 980
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -490, y: 22.5}
+        - {x: -490, y: -22.04}
+        - {x: 490, y: -22.04}
+        - {x: 490, y: 22.5}
+      - - {x: -467.03128, y: 8.679999}
+        - {x: -440.2344, y: -2.8400006}
+        - {x: -440.2344, y: -8.600001}
+        - {x: -478.51566, y: -8.600001}
+      - - {x: -409.6094, y: 8.679999}
+        - {x: -334.96094, y: 8.679999}
+        - {x: -338.78906, y: -8.600001}
+        - {x: -409.6094, y: -8.600001}
+      - - {x: -308.16406, y: -2.8400006}
+        - {x: -308.16406, y: 8.679999}
+        - {x: -233.51564, y: 8.679999}
+        - {x: -233.51564, y: -8.600001}
+      - - {x: -206.71877, y: 8.679999}
+        - {x: -124.41407, y: 8.679999}
+        - {x: -124.41407, y: -8.600001}
+        - {x: -204.8047, y: -6.680001}
+      - - {x: -93.78907, y: 8.679999}
+        - {x: -1.9140626, y: 8.679999}
+        - {x: -1.9140626, y: -8.600001}
+        - {x: -93.78907, y: -8.600001}
+      - - {x: 26.796877, y: 8.679999}
+        - {x: 93.78907, y: 8.679999}
+        - {x: 93.78907, y: -8.600001}
+        - {x: 28.71094, y: -8.600001}
+      - - {x: 124.41407, y: 8.679999}
+        - {x: 199.06252, y: 8.679999}
+        - {x: 199.06252, y: -8.600001}
+        - {x: 124.41407, y: -8.600001}
+      - - {x: 229.68752, y: -2.8400006}
+        - {x: 229.68752, y: 8.679999}
+        - {x: 302.42188, y: -2.8400006}
+        - {x: 302.42188, y: -8.600001}
+      - - {x: 333.04688, y: -2.8400006}
+        - {x: 336.875, y: 10.599999}
+        - {x: 380.89847, y: 10.599999}
+        - {x: 373.24222, y: -8.600001}
+      - - {x: 411.52347, y: -2.8400006}
+        - {x: 432.57816, y: -8.600001}
+        - {x: 403.86722, y: -10.520001}
+        - {x: 405.78128, y: -10.520001}
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: CharacterStats
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

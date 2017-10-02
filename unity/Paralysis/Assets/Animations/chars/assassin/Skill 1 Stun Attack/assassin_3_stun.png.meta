@@ -1,0 +1,285 @@
+fileFormatVersion: 2
+guid: 415fd19b9dd593545ba99743f229d8c1
+timeCreated: 1505576934
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: assassin_3_stun_0
+    21300002: assassin_3_stun_1
+    21300004: assassin_3_stun_2
+    21300006: assassin_3_stun_3
+    21300008: assassin_3_stun_4
+    21300010: assassin_3_stun_5
+    21300012: assassin_3_stun_6
+    21300014: assassin_3_stun_7
+    21300016: assassin_3_stun_8
+    21300018: assassin_3_stun_9
+    21300020: assassin_3_stun_10
+    21300022: assassin_3_stun_11
+    21300024: assassin_3_stun_12
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 0
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 300
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 4096
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 4096
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: assassin_3_stun_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1328
+        width: 591
+        height: 664
+      alignment: 9
+      pivot: {x: 0.42051673, y: 0.32105705}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_3_stun_1
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 1328
+        width: 591
+        height: 664
+      alignment: 9
+      pivot: {x: 0.4859736, y: 0.35851023}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_3_stun_2
+      rect:
+        serializedVersion: 2
+        x: 1182
+        y: 1328
+        width: 591
+        height: 664
+      alignment: 9
+      pivot: {x: 0.48129803, y: 0.40428638}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_3_stun_3
+      rect:
+        serializedVersion: 2
+        x: 1773
+        y: 1328
+        width: 591
+        height: 664
+      alignment: 9
+      pivot: {x: 0.49532455, y: 0.43341672}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_3_stun_4
+      rect:
+        serializedVersion: 2
+        x: 2364
+        y: 1328
+        width: 591
+        height: 664
+      alignment: 9
+      pivot: {x: 0.49532455, y: 0.42093226}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_3_stun_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 664
+        width: 591
+        height: 664
+      alignment: 9
+      pivot: {x: 0.49532452, y: 0.41260934}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_3_stun_6
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 664
+        width: 591
+        height: 664
+      alignment: 9
+      pivot: {x: 0.50935096, y: 0.38347912}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_3_stun_7
+      rect:
+        serializedVersion: 2
+        x: 1182
+        y: 664
+        width: 591
+        height: 664
+      alignment: 9
+      pivot: {x: 0.5, y: 0.39180204}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_3_stun_8
+      rect:
+        serializedVersion: 2
+        x: 1773
+        y: 664
+        width: 591
+        height: 664
+      alignment: 9
+      pivot: {x: 0.49064913, y: 0.35851032}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_3_stun_9
+      rect:
+        serializedVersion: 2
+        x: 2364
+        y: 664
+        width: 591
+        height: 664
+      alignment: 9
+      pivot: {x: 0.46727154, y: 0.3293801}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_3_stun_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 591
+        height: 664
+      alignment: 9
+      pivot: {x: 0.4392187, y: 0.27111956}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_3_stun_11
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 0
+        width: 591
+        height: 664
+      alignment: 9
+      pivot: {x: 0.4298677, y: 0.25447372}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: assassin_3_stun_12
+      rect:
+        serializedVersion: 2
+        x: 1182
+        y: 0
+        width: 591
+        height: 664
+      alignment: 9
+      pivot: {x: 0.4298678, y: 0.3044113}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
