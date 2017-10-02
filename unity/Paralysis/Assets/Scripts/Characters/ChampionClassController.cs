@@ -40,6 +40,7 @@ public abstract class ChampionClassController : MonoBehaviour
 
     protected int attackCount = 0;                                        // The ComboState 0 means the character has not attacked yet
     protected bool inCombo = false;                                       // When true, the next comboStage can be reached
+    [SerializeField]
     protected bool attacking = false;                                     // true, while the character is Attacking
     protected bool jumpAttacking = false;                                 // True while the character is jump attacking
     public bool dashing = false;                                          // true while dashing

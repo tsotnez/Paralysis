@@ -20,6 +20,22 @@ public class KnightController : ChampionClassController
     [SerializeField]
     private float delay_Skill4 = 0;
 
+    [Header("Attack Stamina Costs")]
+    [SerializeField]
+    private int stamina_BasicAttack = 5;
+    [SerializeField]
+    private int stamina_BasicAttackCombo = 10;
+    [SerializeField]
+    private int stamina_JumpAttack = 5;
+    [SerializeField]
+    private int stamina_Skill1_GroundSmash = 20;
+    [SerializeField]
+    private int stamina_Skill2_Leap = 15;
+    [SerializeField]
+    private int stamina_Skill3_ShieldBash = 30;
+    [SerializeField]
+    private int stamina_Skill4_Spear = 20;
+
     /// <summary>
     /// Attack combo. 2 normal hits, 1 strong hit
     /// 
@@ -30,7 +46,7 @@ public class KnightController : ChampionClassController
     public override void basicAttack(bool shouldAttack)
     {
         // When the timer is over the player is not allowed to continue his combo
-        if (timer.hasFinished())
+        if (timer.hasFinished() || attackCount==3)
         {
             //reset combo
             inCombo = false;
@@ -39,44 +55,62 @@ public class KnightController : ChampionClassController
             timer.reset();
         }
 
-        if (shouldAttack && !attacking && m_Grounded)
+        if (shouldAttack && !attacking)
         {
-            // Determining the attackCount
-            if (attackCount == 0 && !inCombo)
+            if (m_Grounded)
             {
-                //First attack              
-                timer.timerStart();
-                inCombo = true;
-            }
+                //Check if enough Stamina for Attack
+                if (stats.currentStamina >= stamina_BasicAttack && (attackCount == 0 || attackCount == 1) || //Basic Attack (5 Stamina)
+                    stats.currentStamina >= stamina_BasicAttackCombo && (attackCount == 2)) // Strong Attack (10 Stamina)
+                {
+                    // Determining the attackCount
+                    if (attackCount == 0 && !inCombo)
+                    {
+                        //First attack              
+                        timer.timerStart();
+                        inCombo = true;
+                    }
 
-            //Attack Count increase per attack
-            attackCount++;
-            
-            //Playing the correct animation depending on the attackCount and setting attacking status
-            switch (attackCount)
+                    //Attack Count increase per attack
+                    attackCount++;
+
+                    //Playing the correct animation depending on the attackCount and setting attacking status
+                    switch (attackCount)
+                    {
+                        case 1:
+                        case 2:
+                            stats.loseStamina(stamina_BasicAttack);
+                            m_Anim.SetTrigger("Attack");
+                            if (attackingRoutine != null) StopCoroutine(attackingRoutine);
+                            attackingRoutine = StartCoroutine(setAttacking(attackLength[0] - 0.08f));
+                            Invoke("basicAttack_hit", delay_BasicAttack1);
+                            break;
+                        case 3:
+                            stats.loseStamina(stamina_BasicAttackCombo);
+                            m_Anim.SetTrigger("AttackCombo");
+                            if (attackingRoutine != null) StopCoroutine(attackingRoutine);
+                            attackingRoutine = StartCoroutine(setAttacking(attackLength[2] - 0.08f));
+                            Invoke("strongAttack_hit", delay_BasicAttack2);
+                            break;
+                    }
+                }
+            }
+            else if (!m_Grounded) //Jump attack only when falling
             {
-                case 1:
-                    m_Anim.SetTrigger("Attack");
-                    if (attackingRoutine != null) StopCoroutine(attackingRoutine);
-                    attackingRoutine = StartCoroutine(setAttacking(attackLength[0] - 0.08f));
-                    Invoke("basicAttackHit", delay_BasicAttack1);
-                    break;
-                case 2:
-                    m_Anim.SetTrigger("Attack2");
-                    if (attackingRoutine != null) StopCoroutine(attackingRoutine);
-                    attackingRoutine = StartCoroutine(setAttacking(attackLength[1] - 0.08f));
-                    Invoke("basicAttackHit", delay_BasicAttack2);
-                    break;
-                case 3:
-                    m_Anim.SetTrigger("Attack3");
-                    if (attackingRoutine != null) StopCoroutine(attackingRoutine);
-                    attackingRoutine = StartCoroutine(setAttacking(attackLength[2] - 0.08f));
-                    Invoke("strongAttackHit", delay_BasicAttack3);
+                // Check if enough stamina is left
+                if (stats.currentStamina >= stamina_JumpAttack) // Jump Attack needs 5 Stamina
+                {
+                    //Lose Stamina
+                    stats.loseStamina(stamina_JumpAttack);
+                    //Jump Attack
+                    StartCoroutine(jumpAttack());
+                    attackingRoutine = StartCoroutine(setAttacking(attackLength[3] - 0.08f));
+                    //reset combo
                     inCombo = false;
                     attackCount = 0;
                     timer.timerStop();
                     timer.reset();
-                    break;
+                }
             }
         }
     }
@@ -164,14 +198,16 @@ public class KnightController : ChampionClassController
     }
 
     // Use this for initialization
-    void Start () {
-		
-	}
+    void Start()
+    {
+
+    }
 
     // Update is called once per frame
-    protected override void Update () {
+    protected override void Update()
+    {
         base.Update();
-	}
+    }
 
     private void skill1_hit()
     {
@@ -183,5 +219,17 @@ public class KnightController : ChampionClassController
             target.startStunned(3);
             target.takeDamage(5, false);
         }
+    }
+
+    private void basicAttack_hit()
+    {
+        RaycastHit2D hit = tryToHit(1.5f);
+        if (hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(5, true); //Let the hit character take damage
+    }
+
+    private void strongAttack_hit()
+    {
+        RaycastHit2D hit = tryToHit(1.5f);
+        if (hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(10, true); //Let the hit character take damage
     }
 }

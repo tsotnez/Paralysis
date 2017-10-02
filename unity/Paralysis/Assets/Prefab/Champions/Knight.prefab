@@ -457,26 +457,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f5eddb718fbdf048add760e9a001bbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxSpeed: 10
+  m_MaxSpeed: 6
   m_MoveSpeedWhileAttacking: 5
-  m_JumpForce: 400
+  m_JumpForce: 1000
   m_dashSpeed: 7
   m_dashStaminaCost: 10
   m_jumpAttackRadius: 10
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1536
   m_ComboCounterMax: 1
   m_jumpAttackForce: 10
   whatToHit:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4096
   m_Grounded: 0
   m_FacingRight: 1
   dashing: 0
   dontMove: 0
   defensive: 0
-  attackLength: []
+  attackLength:
+  - 0.36
+  - 0.367
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   delay_BasicAttack1: 0
   delay_BasicAttack2: 0
   delay_BasicAttack3: 0
