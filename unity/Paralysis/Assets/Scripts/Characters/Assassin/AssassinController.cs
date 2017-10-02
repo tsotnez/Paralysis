@@ -266,13 +266,12 @@ public class AssassinController : ChampionClassController
 
     private void shootAttackHit()
     {
-        Instantiate(bulletPrefab, transform.position + new Vector3(0.5f, 0.3f), Quaternion.identity);
-        //RaycastHit2D hit = tryToHit(4.5f);
-        //if (hit == true)
-        //{
-        //    hit.transform.gameObject.GetComponent<CharacterStats>().startKnockBack(transform.position);
-        //    hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(20, false);
-        //}
+        int direction;
+        if (m_FacingRight) direction = 1;
+        else direction = -1;
+
+        GameObject bullet = Instantiate(bulletPrefab, transform.position + new Vector3(0.5f * direction, 0.3f), Quaternion.identity);
+        bullet.GetComponent<AssassinBullet>().direction = direction;
     }
 
     private void stunAttackHit()
