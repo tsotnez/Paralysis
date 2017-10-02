@@ -138,7 +138,7 @@ MonoBehaviour:
   champions:
   - {fileID: 1083024026309572, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}
   - {fileID: 1040337364421342, guid: b1e43d9ab5ee2524d944148b7f0b4cbc, type: 2}
-  startChar: 1
+  startChar: 0
 --- !u!4 &33478042
 Transform:
   m_ObjectHideFlags: 0
@@ -1679,10 +1679,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1040337364421342, guid: b1e43d9ab5ee2524d944148b7f0b4cbc, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b1e43d9ab5ee2524d944148b7f0b4cbc, type: 2}
   m_IsPrefabParent: 0
@@ -1919,6 +1915,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4574771313767776, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}
       propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083024026309572, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
