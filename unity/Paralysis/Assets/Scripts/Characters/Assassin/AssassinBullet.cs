@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class AssassinBullet : MonoBehaviour {
 
-    public float speed = 7;
+    public float speed = 7; //Max Speed of the bullet
+    public int direction = 0; //Direction to travel in, -1 if left, 1 if right
     
     // Use this for initialization
-	void Start () {
-		
+	void Update () {
+        if (direction == -1) GetComponent<SpriteRenderer>().flipX = true;
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        GetComponent<Rigidbody2D>().velocity = new Vector2(speed, 0);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(speed * direction, 0);
 	}
 
     void OnCollisionEnter2D(Collision2D collision)

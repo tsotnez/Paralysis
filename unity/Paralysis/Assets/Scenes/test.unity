@@ -138,6 +138,7 @@ MonoBehaviour:
   champions:
   - {fileID: 1083024026309572, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}
   - {fileID: 1083024026309572, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}
+  startChar: 0
 --- !u!4 &33478042
 Transform:
   m_ObjectHideFlags: 0
@@ -1874,12 +1875,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114861087606959032, guid: fb4da503da42c0c48809cac878c3cc5a,
+    - target: {fileID: 212491917836099794, guid: fb4da503da42c0c48809cac878c3cc5a,
         type: 2}
-      propertyPath: bulletPrefab
-      value: 
-      objectReference: {fileID: 1999998842244028, guid: 8edf692e54e1dc341ba120a502e4691e,
-        type: 2}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}
   m_IsPrefabParent: 0
