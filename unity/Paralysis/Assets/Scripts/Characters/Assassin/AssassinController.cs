@@ -313,7 +313,7 @@ public class AssassinController : ChampionClassController
             dontMove = true;
             if (targetLocation == 1)
             {
-                m_Rigidbody2D.MovePosition(hit.transform.position + Vector3.left); //Viable target on the right
+                m_Rigidbody2D.position = hit.transform.position + Vector3.left; //Viable target on the right
                 if (!m_FacingRight) Flip();
                 m_Rigidbody2D.velocity = Vector2.zero;
                 yield return new WaitForSeconds(delay_ShadowStep); //Deal damage at correct point in animation
@@ -322,7 +322,7 @@ public class AssassinController : ChampionClassController
             }
             else if (targetLocation == -1)
             {
-                m_Rigidbody2D.MovePosition(hitLeft.transform.position + Vector3.right); //Viable target on the left
+                m_Rigidbody2D.position = hitLeft.transform.position + Vector3.right; //Viable target on the left
                 if (m_FacingRight) Flip();
                 m_Rigidbody2D.velocity = Vector2.zero;
                 yield return new WaitForSeconds(delay_ShadowStep); //Deal damage at correct point in animation
