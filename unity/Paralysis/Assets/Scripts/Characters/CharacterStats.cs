@@ -24,11 +24,12 @@ public class CharacterStats : MonoBehaviour {
     [Header("Statusses")]
     public bool stunned = false;
     public Coroutine stunnedRoutine = null; //Stores the stunned Coroutine
-    public bool bleeding = false;
+    public bool bleeding = false;           //Takes damage while true
     public Coroutine bleedingRoutine = null; //Stores the bleeding Coroutine
-    public bool knockedBack = false;
+    public bool knockedBack = false;            //Prevents actions while being knocked back
     public Coroutine knockBackRoutine = null; //Stores the knockBack Coroutine
-    public float slowFactor = 1; //Setting this to a value below 1 will slow down the character
+    public float slowFactor = 1;                //Setting this to a value below 1 will slow down the character
+    public bool invincible = false;         //If true, character cant be harmed 
 
     [Header("Knock Back")]
     [SerializeField]
@@ -61,7 +62,14 @@ public class CharacterStats : MonoBehaviour {
 
         this.Hp.GetComponent<Image>().fillAmount = (float)this.currentHealth / (float)this.maxHealth;
         this.Stamina.GetComponent<Image>().fillAmount = (float)this.currentStamina / (float)this.maxStamina;
-	}
+
+        //Slow down walking and idle animation while slowed
+        if ((anim.GetCurrentAnimatorStateInfo(0).IsName("run") || anim.GetCurrentAnimatorStateInfo(0).IsName("idle")) && slowFactor < 1)
+        {
+            anim.speed = 0.7f;
+        }
+        else anim.speed = 1;
+    }
 
     // Is called repeatetly to regenerate stamina value
     private void regenerateStamina()
@@ -82,15 +90,21 @@ public class CharacterStats : MonoBehaviour {
     //Substract damage from current health.
     public void takeDamage(int amount, bool playAnimation)
     {
-        this.currentHealth -= amount; //Substract health
-        if(playAnimation)anim.SetTrigger("hit"); //Play hit animation
-        if (currentHealth <= 0) die();
+        if (!invincible)
+        {
+            this.currentHealth -= amount; //Substract health
+            if (playAnimation) anim.SetTrigger("hit"); //Play hit animation
+            if (currentHealth <= 0) die();
+        }
     }
 
     public void startStunned(int time)
     {
-        if (stunnedRoutine != null) StopCoroutine(stunnedRoutine);
-        stunnedRoutine = StartCoroutine(stun(time));
+        if (!invincible)
+        {
+            if (stunnedRoutine != null) StopCoroutine(stunnedRoutine);
+            stunnedRoutine = StartCoroutine(stun(time));
+        }
     }
 
     //Sets the stunned value for given amount of time.
@@ -105,8 +119,11 @@ public class CharacterStats : MonoBehaviour {
 
     public void startKnockBack(Vector3 origin)
     {
-        if (knockBackRoutine != null) StopCoroutine(knockBackRoutine);
-        knockBackRoutine = StartCoroutine(knockBack(new Vector2(origin.x, origin.y)));
+        if (!invincible)
+        {
+            if (knockBackRoutine != null) StopCoroutine(knockBackRoutine);
+            knockBackRoutine = StartCoroutine(knockBack(new Vector2(origin.x, origin.y)));
+        }
     }
 
     //Knocks back the character from the passed origin 
@@ -135,8 +152,11 @@ public class CharacterStats : MonoBehaviour {
 
     public void startBleeding(int time)
     {
-        if(bleedingRoutine != null) StopCoroutine(bleedingRoutine);
-        bleedingRoutine = StartCoroutine(bleed(time));
+        if (!invincible)
+        {
+            if (bleedingRoutine != null) StopCoroutine(bleedingRoutine);
+            bleedingRoutine = StartCoroutine(bleed(time));
+        }
     }
     
     // Set bleeding for time

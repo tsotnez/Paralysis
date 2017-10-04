@@ -7,7 +7,7 @@ public class AssassinBullet : MonoBehaviour {
     public float speed = 7; //Max Speed of the bullet
     public int direction = 0; //Direction to travel in, -1 if left, 1 if right
     public GameObject explosionPrefab;
-    public float range = 5;
+    public float range = 5; //Distance to travel before dying
     Vector3 startPos;
 
     private void Start()

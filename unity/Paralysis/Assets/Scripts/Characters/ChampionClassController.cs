@@ -27,6 +27,7 @@ public abstract class ChampionClassController : MonoBehaviour
     public LayerMask whatToHit;                                           // What to hit when checking for hits while attacking
     protected MyTimer timer;
 
+
     protected Transform m_GroundCheck;                                    // A position marking where to check if the player is grounded.
     protected const float k_GroundedRadius = .2f;                         // Radius of the overlap circle to determine if grounded
     [SerializeField]
@@ -180,14 +181,14 @@ public abstract class ChampionClassController : MonoBehaviour
         {
             if (direction != 0 && !dashing)
             {
-                //lsoe stamina
+                //lose stamina
                 stats.loseStamina(m_dashStaminaCost);
 
                 //flip if necessary
                 if (direction < 0 && !m_FacingRight) Flip();
                 else if (direction > 0 && m_FacingRight) Flip();
 
-                //Calculate new dashForce
+                //Calculate new dashForce to go in right direction
                 m_dashSpeed = Mathf.Abs(m_dashSpeed) * direction;
                 m_Rigidbody2D.velocity = Vector2.zero;
 
@@ -197,11 +198,15 @@ public abstract class ChampionClassController : MonoBehaviour
                 dashing = true;
                 dontMove = true;
 
-                yield return new WaitForSeconds(0.4f);
-                dashing = false;
-                m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
+                yield return new WaitForSeconds(0.1f);
+                stats.invincible = true; //Player is invincible for a period of time while dashing
 
-                yield return new WaitForSeconds(0.04f);
+                yield return new WaitForSeconds(0.3f);
+                dashing = false;
+                stats.invincible = false;
+                m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); //Stop moving
+
+                yield return new WaitForSeconds(0.04f); //Short time where character cant move after dashing
                 dontMove = false;
             }
         }

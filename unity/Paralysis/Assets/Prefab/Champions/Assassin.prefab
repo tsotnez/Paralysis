@@ -464,9 +464,10 @@ MonoBehaviour:
     m_Bits: 4096
   m_Grounded: 0
   m_FacingRight: 1
-  dashing: 0
-  dontMove: 0
-  defensive: 0
+  attackCount: 0
+  inCombo: 0
+  attacking: 0
+  jumpAttacking: 0
   attackLength:
   - 0.321
   - 0.357
@@ -476,6 +477,9 @@ MonoBehaviour:
   - 0.533
   - 0.361
   - 0.375
+  dashing: 0
+  dontMove: 0
+  defensive: 0
   m_DoubleJumpForce: 600
   invisible: 0
   bulletPrefab: {fileID: 1999998842244028, guid: 1382e079f46c9e848b29efd69252a8b5,

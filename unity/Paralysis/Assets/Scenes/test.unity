@@ -138,7 +138,7 @@ MonoBehaviour:
   champions:
   - {fileID: 1083024026309572, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}
   - {fileID: 1040337364421342, guid: b1e43d9ab5ee2524d944148b7f0b4cbc, type: 2}
-  startChar: 1
+  startChar: 0
 --- !u!4 &33478042
 Transform:
   m_ObjectHideFlags: 0
@@ -352,6 +352,7 @@ MonoBehaviour:
   bleeding: 0
   knockedBack: 0
   slowFactor: 1
+  invincible: 0
   knockBackDuration: 1
   knockBackForceX: 6
   knockBackForceY: 6
@@ -1683,6 +1684,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1040337364421342, guid: b1e43d9ab5ee2524d944148b7f0b4cbc, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b1e43d9ab5ee2524d944148b7f0b4cbc, type: 2}
   m_IsPrefabParent: 0
@@ -1923,7 +1928,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1083024026309572, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}
@@ -3078,7 +3083,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2101986820}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.717783, y: -4.7200003, z: -0.3499999}
+  m_LocalPosition: {x: -3.49, y: -4.7200003, z: -0.3499999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
