@@ -4,11 +4,9 @@ public class KnightController : ChampionClassController
 {
     [Header("Attack Delays")]
     [SerializeField]
-    private float delay_BasicAttack1 = 0;
+    private float delay_BasicAttack = 0;
     [SerializeField]
-    private float delay_BasicAttack2 = 0;
-    [SerializeField]
-    private float delay_BasicAttack3 = 0;
+    private float delay_BasicAttackCombo = 0;
     [SerializeField]
     private float delay_Skill1 = 0;
     [SerializeField]
@@ -40,8 +38,6 @@ public class KnightController : ChampionClassController
     [SerializeField]
     private int damage_BasicAttackCombo = 10;
     [SerializeField]
-    private int damage_JumpAttack = 5;
-    [SerializeField]
     private int damage_Skill1_GroundSmash = 20;
     [SerializeField]
     private int damage_Skill2_Leap = 15;
@@ -50,6 +46,23 @@ public class KnightController : ChampionClassController
     [SerializeField]
     private int damage_Skill4_Spear = 20;
 
+    #region default Methods
+
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    protected override void Update()
+    {
+        base.Update();
+    }
+
+    #endregion
+
+    #region BasicAttack
 
     /// <summary>
     /// Attack combo. 2 normal hits, 1 strong hit
@@ -64,75 +77,65 @@ public class KnightController : ChampionClassController
         {
             if (m_Grounded)
             {
-                //Check if enough stamina for attack
+                // Check if enough stamina for attack
                 if (stats.currentStamina >= stamina_BasicAttack && (attackCount == 0 || attackCount == 1) || //Basic Attack
                     stats.currentStamina >= stamina_BasicAttackCombo && (attackCount == 2)) // Strong Attack
                 {
                     // Already in combo?
                     if (!inCombo)
                     {
-                        //First attack - initialize combo coroutine
+                        // First attack - initialize combo coroutine
                         resetComboTime();
                         attackCount = 0;
                     }
 
-                    //AttackCount increase per attack
+                    // AttackCount increase per attack
                     attackCount++;
 
-                    //Playing the correct animation depending on the attackCount and setting attacking status
+                    // Playing the correct animation depending on the attackCount and setting attacking status
                     switch (attackCount)
                     {
                         case 1: case 2:
-                            //lose stamina
-                            stats.loseStamina(stamina_BasicAttack);
-                            //set animation
-                            m_Anim.SetTrigger("Attack");
-                            //set attacking coroutine
-                            if (attackingRoutine != null) StopCoroutine(attackingRoutine);
-                            attackingRoutine = StartCoroutine(setAttacking(attackLength[0] - 0.08f));
-                            //do basic attack hit
-                            Invoke("basicAttack_hit", delay_BasicAttack1);
+                            // do meele attack
+                            doMeeleSkill(0, "Attack", delay_BasicAttack, damage_BasicAttack, skillEffect.nothing, 0, stamina_BasicAttack);
                             // Reset timer of combo
                             resetComboTime();
                             break;
                         case 3:
-                            //lose stamina
-                            stats.loseStamina(stamina_BasicAttackCombo);
-                            //set animation
-                            m_Anim.SetTrigger("AttackCombo");
-                            //set attacking coroutine
-                            if (attackingRoutine != null) StopCoroutine(attackingRoutine);
-                            attackingRoutine = StartCoroutine(setAttacking(attackLength[2] - 0.08f));
-                            //do combo attack hit
-                            Invoke("comboAttack_hit", delay_BasicAttack2);
+                            // do meele attack
+                            doMeeleSkill(2, "AttackCombo", delay_BasicAttackCombo, damage_BasicAttackCombo, skillEffect.nothing, 0, stamina_BasicAttackCombo);
                             // Reset Combo after combo-hit
                             abortCombo();
                             break;
                         default:
-                            //Should not be triggered
+                            // Should not be triggered
                             abortCombo();
                             break;
 
                     }
                 }
             }
-            
-            else if (!m_Grounded) //Jump attack only when falling
+            // Jump attack only when falling
+            else
             {
                 // Check if enough stamina is left
                 if (stats.currentStamina >= stamina_JumpAttack)
                 {
-                    //Lose Stamina
+                    // Lose Stamina
                     stats.loseStamina(stamina_JumpAttack);
-                    //Jump Attack
+                    // Jump Attack
                     StartCoroutine(jumpAttack());
                     attackingRoutine = StartCoroutine(setAttacking(attackLength[3] - 0.08f));
-                    //abort combo
+                    // Abort combo
                     abortCombo();
                 }
             }
         }
     }
+
+    #endregion
+
+    #region Skills
 
     /// <summary>
     /// Ground Smash (Stun)
@@ -146,14 +149,9 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill1()
     {
-        if (!attacking && m_Grounded)
-        {
-            attackingRoutine = StartCoroutine(setAttacking(attackLength[4]));
-            m_Anim.SetTrigger("stunAttack");
-            Invoke("skill1_hit", delay_Skill1); //Invoke damage function
-            stats.loseStamina(stamina_Skill1_GroundSmash);
-        }
+        doMeeleSkill(4, "skill1_GroundSmash", delay_Skill1, damage_Skill1_GroundSmash, skillEffect.stun, 3, stamina_Skill1_GroundSmash);
     }
+
 
     /// <summary>
     /// Leap (Stun)
@@ -167,13 +165,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill2()
     {
-        if (!attacking && m_Grounded)
-        {
-            attackingRoutine = StartCoroutine(setAttacking(attackLength[5]));
-            m_Anim.SetTrigger("stunAttack");
-            Invoke("skill2_hit", delay_Skill2); //Invoke damage function
-            stats.loseStamina(stamina_Skill2_Leap);
-        }
+        doMeeleSkill(5, "skill2_Leap", delay_Skill2, damage_Skill2_Leap, skillEffect.stun, 3, stamina_Skill2_Leap);
     }
 
     /// <summary>
@@ -188,13 +180,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill3()
     {
-        if (!attacking && m_Grounded)
-        {
-            attackingRoutine = StartCoroutine(setAttacking(attackLength[6]));
-            m_Anim.SetTrigger("knockedBack");
-            Invoke("skill3_hit", delay_Skill3);
-            stats.loseStamina(stamina_Skill3_ShieldBash);
-        }
+        doMeeleSkill(6, "skill3_ShieldBash", delay_Skill3, damage_Skill3_ShieldBash, skillEffect.knockback, 0, stamina_Skill3_ShieldBash, false);
     }
 
     /// <summary>
@@ -208,82 +194,9 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill4()
     {
-        if (!attacking && m_Grounded)
-        {
-            attackingRoutine = StartCoroutine(setAttacking(attackLength[7]));
-            Invoke("skill4_hit", delay_Skill4);
-            stats.loseStamina(stamina_Skill4_Spear);
-        }
+        //range skill
+        //animation: skill4_Spear
     }
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-    }
-
-    
-    private void basicAttack_hit()
-    {
-        RaycastHit2D hit = tryToHit(meeleRange);
-        if (hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(damage_BasicAttack, true); //Let the hit character take damage
-    }
-
-    private void comboAttack_hit()
-    {
-        RaycastHit2D hit = tryToHit(meeleRange);
-        if (hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(damage_BasicAttackCombo, true); //Let the hit character take damage
-    }
-
-    private void skill1_hit()
-    {
-        RaycastHit2D hit = tryToHit(meeleRange);
-        CharacterStats target;
-        if (hit == true)
-        {
-            target = hit.transform.gameObject.GetComponent<CharacterStats>();
-            target.startStunned(3);
-            target.takeDamage(damage_Skill1_GroundSmash, false);
-        }
-    }
-
-
-    private void skill2_hit()
-    {
-        RaycastHit2D hit = tryToHit(meeleRange);
-        CharacterStats target;
-        if (hit == true)
-        {
-            target = hit.transform.gameObject.GetComponent<CharacterStats>();
-            target.startStunned(3);
-            target.takeDamage(damage_Skill2_Leap, false);
-        }
-    }
-
-    private void skill3_hit()
-    {
-        //Get hit enemies
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(m_GroundCheck.position, m_jumpAttackRadius, Vector2.up, 0.01f, whatToHit);
-
-        CharacterStats target;
-        foreach (RaycastHit2D hit in hits)
-        {
-            //Deal damage to each
-            target = hit.transform.gameObject.GetComponent<CharacterStats>();
-            target.startKnockBack(transform.position);
-            target.takeDamage(damage_Skill3_ShieldBash, false);
-        }
-    }
-
-    //range hit
-    private void skill4_hit()
-    {
-
-    }
+    #endregion
 }
