@@ -11,7 +11,6 @@ public class AssassinController : ChampionClassController
     private bool doubleJumped = false;                                    // Has the character double jumped already?
     public bool invisible = false;
     Coroutine invisRoutine = null;
-    Coroutine attackingRoutine = null;
     [SerializeField]
     private GameObject bulletPrefab;
 

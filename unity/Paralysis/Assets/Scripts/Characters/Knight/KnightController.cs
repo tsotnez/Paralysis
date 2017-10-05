@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class KnightController : ChampionClassController
 {
-    Coroutine attackingRoutine;
-    Coroutine comboRoutine;
-
     [Header("Attack Delays")]
     [SerializeField]
     private float delay_BasicAttack1 = 0;
@@ -75,8 +72,7 @@ public class KnightController : ChampionClassController
                     if (attackCount == 0 && !inCombo)
                     {
                         //First attack              
-                        if (comboRoutine != null) StopCoroutine(comboRoutine);
-                        comboRoutine = StartCoroutine(setCombo());
+                        resetComboTime();
                     }
 
                     //Attack Count increase per attack
@@ -118,10 +114,8 @@ public class KnightController : ChampionClassController
                     //Jump Attack
                     StartCoroutine(jumpAttack());
                     attackingRoutine = StartCoroutine(setAttacking(attackLength[3] - 0.08f));
-                    //reset combo
-                    if (comboRoutine != null) StopCoroutine(comboRoutine);
-                    inCombo = false;
-                    attackCount = 0;
+                    //abort combo
+                    abortCombo();
                 }
             }
         }

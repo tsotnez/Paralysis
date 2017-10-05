@@ -58,6 +58,9 @@ public abstract class ChampionClassController : MonoBehaviour
     public bool dontMove = false;                                         // Character cannot move while true
     public bool defensive = false;                                        //Is the character defensive?
 
+    protected Coroutine attackingRoutine;
+    protected Coroutine comboRoutine;
+
     protected virtual void Awake()
     {
         // Setting up references.
@@ -243,7 +246,20 @@ public abstract class ChampionClassController : MonoBehaviour
     protected IEnumerator setCombo()
     {
         inCombo = true;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(m_ComboCounterMax);
+        inCombo = false;
+        attackCount = 0;
+    }
+
+    protected void resetComboTime()
+    {
+        if (comboRoutine != null) StopCoroutine(comboRoutine);
+        comboRoutine = StartCoroutine(setCombo());
+    }
+
+    protected void abortCombo()
+    {
+        if (comboRoutine != null) StopCoroutine(comboRoutine);
         inCombo = false;
         attackCount = 0;
     }
