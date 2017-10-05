@@ -14,18 +14,53 @@ public class CameraBehaviour : MonoBehaviour {
     float offsetX = 0;
     [SerializeField]
     float offsetY = 0;
+    [SerializeField]
+    float lerpSpeed = 15f;
+
+    //Border objects, used to calculate if space outside of map is visible
+    private Transform leftBorder;                                  
+    private Transform rightBorder;                                 
+    private Transform topBorder;                                   
+    private Transform bottomBorder;
+
+    //Minimum and maximum coordinates
+    private float minY;
+    private float minX;
+    private float maxY;
+    private float maxX;
+
+    //Screen size
+    private float height;
+    private float width;                      
 
     private Coroutine shakingRoutine;
 
 
     // Use this for initialization
     void Start () {
-		
-	}
+        //calculate screen size
+        height = Camera.main.orthographicSize * 2f;
+        width = height * Camera.main.aspect;
+
+        //Get Border Objects
+        leftBorder = GameObject.FindGameObjectWithTag("LeftBorder").transform;
+        rightBorder = GameObject.FindGameObjectWithTag("RightBorder").transform;
+        topBorder = GameObject.FindGameObjectWithTag("TopBorder").transform;
+        bottomBorder = GameObject.FindGameObjectWithTag("BottomBorder").transform;
+
+        //Calculate minimum and maximum values
+        minX = (leftBorder.position.x + 0.5f * width);
+        maxX = rightBorder.position.x - 0.5f * width;
+        minY = bottomBorder.position.y + 0.5f * height;
+        maxY = topBorder.position.y - 0.5f * height;
+    }
 	
 	// Update is called once per frame
-	void Update () {
-        transform.position = new Vector3(target.position.x + offsetX, target.position.y + offsetY, transform.position.z);
+	void LateUpdate () {
+        
+        //clamp new position between min and max values and lerping to that position
+        Vector3 desiredPos = new Vector3(Mathf.Clamp(target.position.x + offsetX, minX, maxX), Mathf.Clamp(target.position.y + offsetY, minY, maxY), transform.position.z);
+        transform.position = Vector3.Lerp(transform.position, desiredPos, lerpSpeed * Time.deltaTime);
 	}
 
     public void changeTarget(Transform newTarget)
@@ -35,7 +70,6 @@ public class CameraBehaviour : MonoBehaviour {
 
     IEnumerator Shake()
     {
-
         float elapsed = 0.0f;
 
         while (elapsed < duration)
@@ -62,6 +96,5 @@ public class CameraBehaviour : MonoBehaviour {
     {
         if (shakingRoutine != null) StopCoroutine(shakingRoutine);
         shakingRoutine = StartCoroutine(Shake());
-
     }
 }

@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Enemy
   - MainPlayer
+  - LeftBorder
+  - RightBorder
+  - TopBorder
+  - BottomBorder
   layers:
   - Default
   - TransparentFX
