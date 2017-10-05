@@ -247,8 +247,7 @@ public abstract class ChampionClassController : MonoBehaviour
     {
         inCombo = true;
         yield return new WaitForSeconds(m_ComboCounterMax);
-        inCombo = false;
-        attackCount = 0;
+        abortCombo();
     }
 
     protected void resetComboTime()

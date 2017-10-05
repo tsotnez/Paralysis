@@ -64,46 +64,59 @@ public class KnightController : ChampionClassController
         {
             if (m_Grounded)
             {
-                //Check if enough Stamina for Attack
+                //Check if enough stamina for attack
                 if (stats.currentStamina >= stamina_BasicAttack && (attackCount == 0 || attackCount == 1) || //Basic Attack
                     stats.currentStamina >= stamina_BasicAttackCombo && (attackCount == 2)) // Strong Attack
                 {
-                    // Determining the attackCount
-                    if (attackCount == 0 && !inCombo)
+                    // Already in combo?
+                    if (!inCombo)
                     {
-                        //First attack              
+                        //First attack - initialize combo coroutine
                         resetComboTime();
+                        attackCount = 0;
                     }
 
-                    //Attack Count increase per attack
+                    //AttackCount increase per attack
                     attackCount++;
 
                     //Playing the correct animation depending on the attackCount and setting attacking status
                     switch (attackCount)
                     {
-                        case 1:
-                        case 2:
+                        case 1: case 2:
+                            //lose stamina
                             stats.loseStamina(stamina_BasicAttack);
+                            //set animation
                             m_Anim.SetTrigger("Attack");
+                            //set attacking coroutine
                             if (attackingRoutine != null) StopCoroutine(attackingRoutine);
                             attackingRoutine = StartCoroutine(setAttacking(attackLength[0] - 0.08f));
+                            //do basic attack hit
                             Invoke("basicAttack_hit", delay_BasicAttack1);
+                            // Reset timer of combo
+                            resetComboTime();
                             break;
                         case 3:
+                            //lose stamina
                             stats.loseStamina(stamina_BasicAttackCombo);
+                            //set animation
                             m_Anim.SetTrigger("AttackCombo");
+                            //set attacking coroutine
                             if (attackingRoutine != null) StopCoroutine(attackingRoutine);
                             attackingRoutine = StartCoroutine(setAttacking(attackLength[2] - 0.08f));
+                            //do combo attack hit
                             Invoke("comboAttack_hit", delay_BasicAttack2);
-
                             // Reset Combo after combo-hit
-                            if (comboRoutine != null) StopCoroutine(comboRoutine);
-                            inCombo = false;
-                            attackCount = 0;
+                            abortCombo();
                             break;
+                        default:
+                            //Should not be triggered
+                            abortCombo();
+                            break;
+
                     }
                 }
             }
+            
             else if (!m_Grounded) //Jump attack only when falling
             {
                 // Check if enough stamina is left
