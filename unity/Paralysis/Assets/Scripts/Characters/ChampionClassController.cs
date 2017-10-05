@@ -25,7 +25,6 @@ public abstract class ChampionClassController : MonoBehaviour
     [SerializeField]
     protected float m_jumpAttackForce = 10f;
     public LayerMask whatToHit;                                           // What to hit when checking for hits while attacking
-    protected MyTimer timer;
 
 
     protected Transform m_GroundCheck;                                    // A position marking where to check if the player is grounded.
@@ -68,13 +67,11 @@ public abstract class ChampionClassController : MonoBehaviour
         m_Anim = GetComponentInChildren<Animator>();
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         graphics = transform.Find("graphics");
-        timer = new MyTimer(m_ComboCounterMax);
         stats = GetComponent<CharacterStats>();
     }
 
     protected virtual void Update()
     {
-        timer.Update();
         m_Anim.SetBool("defensive", defensive);
     }
 

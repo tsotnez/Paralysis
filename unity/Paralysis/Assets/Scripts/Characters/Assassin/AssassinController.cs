@@ -144,16 +144,6 @@ public class AssassinController : ChampionClassController
 
     public override void basicAttack(bool shouldAttack)
     {
-        // When the timer is over the player is not allowed to continue his combo
-        if (timer.hasFinished())
-        {
-            //reset combo
-            inCombo = false;
-            attackCount = 0;
-            timer.timerStop();
-            timer.reset();
-        }
-
         if (shouldAttack && !attacking && !dashing)
         {
             if (!m_Grounded && !invisible && doubleJumped) //Jump attack only when falling and double jumped
@@ -162,10 +152,7 @@ public class AssassinController : ChampionClassController
                 StartCoroutine(jumpAttack());
                 attackingRoutine = StartCoroutine(setAttacking(attackLength[3] - 0.08f));
                 //reset combo
-                inCombo = false;
-                attackCount = 0;
-                timer.timerStop();
-                timer.reset();
+                abortCombo();
             }
             else if (m_Grounded && invisible)
             {
@@ -174,16 +161,15 @@ public class AssassinController : ChampionClassController
             // Determining the attackCount
             else if (m_Grounded && attackCount == 0 && !inCombo)
             {
-                //First attack
-                attackCount++;
-                timer.timerStart();
-                inCombo = true;
+                //First attack - initialize combo coroutine
+                resetComboTime();
+                attackCount = 1;
             }
             else if (m_Grounded && inCombo)
             {
                 //Already in combo
-                attackCount++;
-                timer.reset();
+                resetComboTime();
+                attackCount++;           
             }
 
             //Playing the correct animation depending on the attackCount and setting attacking status
@@ -192,44 +178,52 @@ public class AssassinController : ChampionClassController
                 switch (attackCount)
                 {
                     case 1:
+                        //set animation
                         m_Anim.SetTrigger("Attack");
+                        //set attacking coroutine
                         if (attackingRoutine != null) StopCoroutine(attackingRoutine);
                         attackingRoutine = StartCoroutine(setAttacking(attackLength[0] - 0.08f));
+                        // do basic attack
                         Invoke("basicAttackHit", delay_BasicAttack1);
                         break;
                     case 2:
+                        //set animation
                         m_Anim.SetTrigger("Attack2");
+                        //set attacking coroutine
                         if (attackingRoutine != null) StopCoroutine(attackingRoutine);
                         attackingRoutine = StartCoroutine(setAttacking(attackLength[1] - 0.08f));
+                        // do basic attack
                         Invoke("basicAttackHit", delay_BasicAttack2);
                         break;
                     case 3:
+                        //set animation
                         m_Anim.SetTrigger("Attack3");
+                        //set attacking coroutine
                         if (attackingRoutine != null) StopCoroutine(attackingRoutine);
                         attackingRoutine = StartCoroutine(setAttacking(attackLength[2] - 0.08f));
+                        // do bleed attack
                         Invoke("bleedAttackHit", delay_BasicAttack3);
-                        inCombo = false;
-                        attackCount = 0;
-                        timer.timerStop();
-                        timer.reset();
+
+                        //reset Combo
+                        abortCombo();
                         break;
                     case 4:
-                        //Ambush attack
+                        //set animation
                         m_Anim.SetTrigger("shadowstep");
+                        // set attacking coroutine
                         if (attackingRoutine != null) StopCoroutine(attackingRoutine);
                         attackingRoutine = StartCoroutine(setAttacking(attackLength[6] - 0.08f));
+                        //do ambush attack
                         Invoke("ambushAttackHit", delay_ShadowStep);
-                        //Stop combo
-                        inCombo = false;
-                        attackCount = 0;
-                        timer.timerStop();
-                        timer.reset();
+                        //reset Combo
+                        abortCombo();
+                        //end invisibility
                         stopInvisible();
                         break;
                 }
+                //pay stamina for attack
                 stats.loseStamina(staminaBasicAttack1);
             }
-            else attackCount = 0;
         }
     }
 
