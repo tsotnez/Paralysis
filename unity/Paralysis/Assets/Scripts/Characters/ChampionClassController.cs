@@ -4,7 +4,6 @@ using UnityEngine;
 
 public abstract class ChampionClassController : MonoBehaviour
 {
-
     [Header("Movement Variables")]
     [SerializeField]
     protected float m_MaxSpeed = 10f;                                     // The fastest the player can travel in the x axis.
@@ -39,7 +38,7 @@ public abstract class ChampionClassController : MonoBehaviour
     protected Transform graphics;                                         // Reference to the graphics child
 
     [Header("Range Variables")]
-    protected float meeleRange = 1.5f;
+    protected const float meeleRange = 1.5f;
 
     [Header("Attacking Variables")]
     [SerializeField]
@@ -52,6 +51,8 @@ public abstract class ChampionClassController : MonoBehaviour
     protected bool jumpAttacking = false;                                 // True while the character is jump attacking
     [SerializeField]
     protected float[] attackLength;                                       // Stores the length of the characters attack animations in seconds. Order: [Basic Attack 1] [Basic Attack 2] [Basic Attack 3] [jump Attack] [Skill1] [Skill2] [Skill3] [Skill4]
+    [SerializeField]
+    private int damage_JumpAttack = 5;
 
     public bool dashing = false;                                          // true while dashing
     public bool dontMove = false;                                         // Character cannot move while true
@@ -59,6 +60,8 @@ public abstract class ChampionClassController : MonoBehaviour
 
     protected Coroutine attackingRoutine;
     protected Coroutine comboRoutine;
+
+    #region default methods
 
     protected virtual void Awake()
     {
@@ -98,6 +101,9 @@ public abstract class ChampionClassController : MonoBehaviour
         if (dashing && m_Grounded) m_Rigidbody2D.velocity = new Vector2(m_dashSpeed, m_Rigidbody2D.velocity.y);
     }
 
+    #endregion
+
+    #region Normal character things (Move, Jump, JumpAttack, BasicAttack, Skills, ...)
 
     public virtual void Move(float move)
     {
@@ -161,7 +167,7 @@ public abstract class ChampionClassController : MonoBehaviour
         foreach(RaycastHit2D hit in hits)
         {
             //Deal damage to each
-            hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(3, true);
+            hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(damage_JumpAttack, true);
         }
 
         Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
@@ -212,6 +218,11 @@ public abstract class ChampionClassController : MonoBehaviour
         }
     }
 
+    public abstract void skill1();
+    public abstract void skill2();
+    public abstract void skill3();
+    public abstract void skill4();
+
     public void manageDefensive(bool pDefensive)
     {
         if (pDefensive)
@@ -223,11 +234,21 @@ public abstract class ChampionClassController : MonoBehaviour
         else defensive = false;
 
     }
-    public abstract void skill1();
-    public abstract void skill2();
-    public abstract void skill3();
-    public abstract void skill4();
 
+    public virtual void Flip()
+    {
+        // Switch the way the player is labelled as facing.
+        m_FacingRight = !m_FacingRight;
+
+        // Multiply the player's x local scale by -1.
+        Vector3 theScale = graphics.localScale;
+        theScale.x *= -1;
+        graphics.localScale = theScale;
+    }
+
+    #endregion
+
+    #region Attacking coroutine
 
     protected IEnumerator setAttacking(float seconds)
     {
@@ -235,6 +256,10 @@ public abstract class ChampionClassController : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         attacking = false;
     }
+
+    #endregion
+
+    #region Combo coroutine
 
     /// <summary>
     /// set/reset the combo after 1 second
@@ -247,12 +272,18 @@ public abstract class ChampionClassController : MonoBehaviour
         abortCombo();
     }
 
+    /// <summary>
+    /// (Re-)Sets the time of the combo
+    /// </summary>
     protected void resetComboTime()
     {
         if (comboRoutine != null) StopCoroutine(comboRoutine);
         comboRoutine = StartCoroutine(setCombo());
     }
 
+    /// <summary>
+    /// Abort the combo and sets combo values to default
+    /// </summary>
     protected void abortCombo()
     {
         if (comboRoutine != null) StopCoroutine(comboRoutine);
@@ -260,15 +291,105 @@ public abstract class ChampionClassController : MonoBehaviour
         attackCount = 0;
     }
 
-    public virtual void Flip()
-    {
-        // Switch the way the player is labelled as facing.
-        m_FacingRight = !m_FacingRight;
+    #endregion
 
-        // Multiply the player's x local scale by -1.
-        Vector3 theScale = graphics.localScale;
-        theScale.x *= -1;
-        graphics.localScale = theScale;
+    #region Meele Skill
+
+    protected enum skillEffect
+    {
+        nothing,
+        stun,
+        knockback,
+        bleed
+    }
+
+    /// <summary>
+    /// do a complete skill
+    /// </summary>
+    /// <param name="skillType">Value of attackLength[]. For order check property attackLength at ChampionClassController (Value 0-7)</param>
+    /// <param name="calledAnimation">Name of the animation that should be played at the character</param>
+    /// <param name="skillDelay">Delay of skill if requiered, else 0</param>
+    /// <param name="skillDamage">Damage of the skill</param>
+    /// <param name="skillSpecialEffect">Special effect of the skill like nothing, stun, knockback or bleed</param>
+    /// <param name="skillSpecialEffectTime">Duration of the special effect (only required for stun and bleed)</param>
+    /// <param name="skillStaminaCost">Stamina costs of the skill</param>
+    /// <param name="singleTarget">only the first target or all targets? (default: singleTarget - true)</param>
+    /// <param name="skillRange">Range of the skill (default: meeleRange - 1.5f)</param>.
+    protected void doMeeleSkill(int skillType, string calledAnimation, float skillDelay, int skillDamage, skillEffect skillSpecialEffect, int skillSpecialEffectTime, int skillStaminaCost, bool singleTarget = true, float skillRange = meeleRange)
+    {
+        //Validate that character is not attacking and standing on ground
+        if (!attacking && m_Grounded)
+        {
+            // check if enough stamina is left
+            if (stats.currentStamina >= skillStaminaCost)
+            {
+                // set attacking coroutine
+                if (attackingRoutine != null) StopCoroutine(attackingRoutine);
+                attackingRoutine = StartCoroutine(setAttacking(attackLength[skillType] - 0.08f));
+                // set animation
+                m_Anim.SetTrigger(calledAnimation);
+                // do hit by coroutine
+                StartCoroutine(doMeeleSkill_Hit(skillDelay, skillDamage, skillSpecialEffect, skillSpecialEffectTime, singleTarget, skillRange));
+                // lose stamina for skill
+                stats.loseStamina(skillStaminaCost);
+            }
+        }
+    }
+
+    protected IEnumerator doMeeleSkill_Hit(float skillDelay, int skillDamage, skillEffect skillSpecialEffect, int skillSpecialEffectTime, bool singleTarget, float skillRange)
+    {
+        // wait till delay ends
+        yield return new WaitForSeconds(skillDelay);
+
+        CharacterStats target;
+        RaycastHit2D[] hits = null;
+        if (singleTarget)
+        {
+            // if single target skill - get only one hit
+            RaycastHit2D singleTargetHit = tryToHit(skillRange);
+            if (singleTargetHit)
+            {
+                hits = new RaycastHit2D[1];
+                hits[0] = singleTargetHit;
+            }
+        }
+        else
+        {
+            // if multi target skill - get all hits
+            hits = Physics2D.CircleCastAll(m_GroundCheck.position, m_jumpAttackRadius, Vector2.up, 0.01f, whatToHit);
+        }
+
+        // only if something is in range
+        if (hits != null)
+        {
+            // loop throw hits
+            foreach (RaycastHit2D hit in hits)
+            {
+                // get the target of the hit
+                target = hit.transform.gameObject.GetComponent<CharacterStats>();
+                // add skill effect if skill requires
+                switch (skillSpecialEffect)
+                {
+                    case skillEffect.nothing:
+                        // do nothing
+                        break;
+                    case skillEffect.stun:
+                        target.startStunned(skillSpecialEffectTime);
+                        break;
+                    case skillEffect.knockback:
+                        target.startKnockBack(transform.position);
+                        break;
+                    case skillEffect.bleed:
+                        target.startBleeding(skillSpecialEffectTime);
+                        break;
+                    default:
+                        // should not happen
+                        throw new System.NotImplementedException();
+                }
+                // deal damage to target
+                target.takeDamage(skillDamage, false);
+            }
+        }
     }
 
     /// <summary>
@@ -283,5 +404,7 @@ public abstract class ChampionClassController : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, range, whatToHit); //Send raycast
         return hit;
     }
+
+    #endregion
 }
 
