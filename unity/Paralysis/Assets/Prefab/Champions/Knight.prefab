@@ -487,12 +487,12 @@ MonoBehaviour:
   - 0.667
   - 0.75
   - 0.55
+  damage_JumpAttack: 5
   dashing: 0
   dontMove: 0
   defensive: 0
-  delay_BasicAttack1: 0
-  delay_BasicAttack2: 0
-  delay_BasicAttack3: 0
+  delay_BasicAttack: 0
+  delay_BasicAttackCombo: 0
   delay_Skill1: 0
   delay_Skill2: 0
   delay_Skill3: 0
@@ -506,11 +506,10 @@ MonoBehaviour:
   stamina_Skill4_Spear: 20
   damage_BasicAttack: 5
   damage_BasicAttackCombo: 10
-  damage_JumpAttack: 5
-  damage_Skill1_GroundSmash: 20
-  damage_Skill2_Leap: 15
-  damage_Skill3_ShieldBash: 30
-  damage_Skill4_Spear: 20
+  damage_Skill1_GroundSmash: 5
+  damage_Skill2_Leap: 5
+  damage_Skill3_ShieldBash: 10
+  damage_Skill4_Spear: 15
 --- !u!114 &114906821031240144
 MonoBehaviour:
   m_ObjectHideFlags: 1

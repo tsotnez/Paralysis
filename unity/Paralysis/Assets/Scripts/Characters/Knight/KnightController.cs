@@ -24,13 +24,13 @@ public class KnightController : ChampionClassController
     [SerializeField]
     private int stamina_JumpAttack = 5;
     [SerializeField]
-    private int stamina_Skill1_GroundSmash = 5;
+    private int stamina_Skill1_GroundSmash = 20;
     [SerializeField]
-    private int stamina_Skill2_Leap = 5;
+    private int stamina_Skill2_Leap = 15;
     [SerializeField]
-    private int stamina_Skill3_ShieldBash = 10;
+    private int stamina_Skill3_ShieldBash = 30;
     [SerializeField]
-    private int stamina_Skill4_Spear = 15;
+    private int stamina_Skill4_Spear = 20;
 
     [Header("Attack Damage")]
     [SerializeField]
@@ -38,13 +38,13 @@ public class KnightController : ChampionClassController
     [SerializeField]
     private int damage_BasicAttackCombo = 10;
     [SerializeField]
-    private int damage_Skill1_GroundSmash = 20;
+    private int damage_Skill1_GroundSmash = 5;
     [SerializeField]
-    private int damage_Skill2_Leap = 15;
+    private int damage_Skill2_Leap = 5;
     [SerializeField]
-    private int damage_Skill3_ShieldBash = 30;
+    private int damage_Skill3_ShieldBash = 10;
     [SerializeField]
-    private int damage_Skill4_Spear = 20;
+    private int damage_Skill4_Spear = 15;
 
     #region default Methods
 
