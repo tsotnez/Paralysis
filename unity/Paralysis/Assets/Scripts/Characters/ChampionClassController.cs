@@ -315,6 +315,7 @@ public abstract class ChampionClassController : MonoBehaviour
     /// <param name="skillStaminaCost">Stamina costs of the skill</param>
     /// <param name="singleTarget">only the first target or all targets? (default: singleTarget - true)</param>
     /// <param name="skillRange">Range of the skill (default: meeleRange - 1.5f)</param>.
+    /// </summary>
     protected void doMeeleSkill(int skillType, string calledAnimation, float skillDelay, int skillDamage, skillEffect skillSpecialEffect, int skillSpecialEffectTime, int skillStaminaCost, bool singleTarget = true, float skillRange = meeleRange)
     {
         //Validate that character is not attacking and standing on ground
@@ -362,12 +363,12 @@ public abstract class ChampionClassController : MonoBehaviour
         // only if something is in range
         if (hits != null)
         {
-            // loop throw hits
+            // loop through hits
             foreach (RaycastHit2D hit in hits)
             {
                 // get the target of the hit
                 target = hit.transform.gameObject.GetComponent<CharacterStats>();
-                // add skill effect if skill requires
+                // add skill effect if required
                 switch (skillSpecialEffect)
                 {
                     case skillEffect.nothing:

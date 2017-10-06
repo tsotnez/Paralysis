@@ -420,6 +420,7 @@ MonoBehaviour:
   attacking: 0
   jumpAttacking: 0
   attackLength: []
+  damage_JumpAttack: 5
   dashing: 0
   dontMove: 0
   defensive: 0
