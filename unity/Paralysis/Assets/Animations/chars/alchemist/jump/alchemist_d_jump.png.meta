@@ -1,9 +1,25 @@
 fileFormatVersion: 2
-guid: fbfddd4008f50184e89937d3d268786a
-timeCreated: 1506887934
+guid: 6366294da4c1c2544bed299d011fe6ba
+timeCreated: 1506621907
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: alchemist_d_jump_0
+    21300002: alchemist_d_jump_1
+    21300004: alchemist_d_jump_2
+    21300006: alchemist_d_jump_3
+    21300008: alchemist_d_jump_4
+    21300010: alchemist_d_jump_5
+    21300012: alchemist_d_jump_6
+    21300014: alchemist_d_jump_7
+    21300016: alchemist_d_jump_8
+    21300018: alchemist_d_jump_9
+    21300020: alchemist_d_jump_10
+    21300022: alchemist_d_jump_11
+    21300024: alchemist_d_jump_12
+    21300026: alchemist_d_jump_13
+    21300028: alchemist_d_jump_14
+    21300030: alchemist_d_jump_15
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -12,6 +28,8 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -27,20 +45,23 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: -1
     aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
-  spriteExtrude: 1
+  spriteMode: 2
+  spriteExtrude: 0
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 500
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -51,7 +72,15 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 8192
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 8192
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -60,8 +89,233 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: alchemist_d_jump_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3597
+        width: 1400
+        height: 1199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_d_jump_1
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 3597
+        width: 1400
+        height: 1199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_d_jump_2
+      rect:
+        serializedVersion: 2
+        x: 2800
+        y: 3597
+        width: 1400
+        height: 1199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_d_jump_3
+      rect:
+        serializedVersion: 2
+        x: 4200
+        y: 3597
+        width: 1400
+        height: 1199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_d_jump_4
+      rect:
+        serializedVersion: 2
+        x: 5600
+        y: 3597
+        width: 1400
+        height: 1199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_d_jump_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2398
+        width: 1400
+        height: 1199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_d_jump_6
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 2398
+        width: 1400
+        height: 1199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_d_jump_7
+      rect:
+        serializedVersion: 2
+        x: 2800
+        y: 2398
+        width: 1400
+        height: 1199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_d_jump_8
+      rect:
+        serializedVersion: 2
+        x: 4200
+        y: 2398
+        width: 1400
+        height: 1199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_d_jump_9
+      rect:
+        serializedVersion: 2
+        x: 5600
+        y: 2398
+        width: 1400
+        height: 1199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_d_jump_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1199
+        width: 1400
+        height: 1199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_d_jump_11
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 1199
+        width: 1400
+        height: 1199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_d_jump_12
+      rect:
+        serializedVersion: 2
+        x: 2800
+        y: 1199
+        width: 1400
+        height: 1199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_d_jump_13
+      rect:
+        serializedVersion: 2
+        x: 4200
+        y: 1199
+        width: 1400
+        height: 1199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_d_jump_14
+      rect:
+        serializedVersion: 2
+        x: 5600
+        y: 1199
+        width: 1400
+        height: 1199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_d_jump_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1400
+        height: 1199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
+    physicsShape: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

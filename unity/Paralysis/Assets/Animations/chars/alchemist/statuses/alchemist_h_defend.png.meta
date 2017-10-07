@@ -1,9 +1,29 @@
 fileFormatVersion: 2
-guid: 32897f4abbb230a47a052a11b52fb990
-timeCreated: 1506887250
+guid: a78971dd255fca94984901991e93a924
+timeCreated: 1506622098
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: alchemist_h_defend_0
+    21300002: alchemist_h_defend_1
+    21300004: alchemist_h_defend_2
+    21300006: alchemist_h_defend_3
+    21300008: alchemist_h_defend_4
+    21300010: alchemist_h_defend_5
+    21300012: alchemist_h_defend_6
+    21300014: alchemist_h_defend_7
+    21300016: alchemist_h_defend_8
+    21300018: alchemist_h_defend_9
+    21300020: alchemist_h_defend_10
+    21300022: alchemist_h_defend_11
+    21300024: alchemist_h_defend_12
+    21300026: alchemist_h_defend_13
+    21300028: alchemist_h_defend_14
+    21300030: alchemist_h_defend_15
+    21300032: alchemist_h_defend_16
+    21300034: alchemist_h_defend_17
+    21300036: alchemist_h_defend_18
+    21300038: alchemist_h_defend_19
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -12,6 +32,8 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -27,20 +49,23 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: -1
     aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
-  spriteExtrude: 1
+  spriteMode: 2
+  spriteExtrude: 0
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 500
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -51,7 +76,15 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 8192
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 8192
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -60,8 +93,289 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: alchemist_h_defend_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2763
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_1
+      rect:
+        serializedVersion: 2
+        x: 1130
+        y: 2763
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_2
+      rect:
+        serializedVersion: 2
+        x: 2260
+        y: 2763
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_3
+      rect:
+        serializedVersion: 2
+        x: 3390
+        y: 2763
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_4
+      rect:
+        serializedVersion: 2
+        x: 4520
+        y: 2763
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1842
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_6
+      rect:
+        serializedVersion: 2
+        x: 1130
+        y: 1842
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_7
+      rect:
+        serializedVersion: 2
+        x: 2260
+        y: 1842
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_8
+      rect:
+        serializedVersion: 2
+        x: 3390
+        y: 1842
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_9
+      rect:
+        serializedVersion: 2
+        x: 4520
+        y: 1842
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 921
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_11
+      rect:
+        serializedVersion: 2
+        x: 1130
+        y: 921
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_12
+      rect:
+        serializedVersion: 2
+        x: 2260
+        y: 921
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_13
+      rect:
+        serializedVersion: 2
+        x: 3390
+        y: 921
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_14
+      rect:
+        serializedVersion: 2
+        x: 4520
+        y: 921
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_16
+      rect:
+        serializedVersion: 2
+        x: 1130
+        y: 0
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_17
+      rect:
+        serializedVersion: 2
+        x: 2260
+        y: 0
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_18
+      rect:
+        serializedVersion: 2
+        x: 3390
+        y: 0
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_h_defend_19
+      rect:
+        serializedVersion: 2
+        x: 4520
+        y: 0
+        width: 1130
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
+    physicsShape: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

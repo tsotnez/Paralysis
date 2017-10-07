@@ -1,9 +1,28 @@
 fileFormatVersion: 2
-guid: 5a239cb54f318b54e8a446246cdf1402
-timeCreated: 1506887482
+guid: 421e6c7f9ff65f846adb9daed210ae00
+timeCreated: 1506621991
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: alchemist_3_stunn load_0
+    21300002: alchemist_3_stunn load_1
+    21300004: alchemist_3_stunn load_2
+    21300006: alchemist_3_stunn load_3
+    21300008: alchemist_3_stunn load_4
+    21300010: alchemist_3_stunn load_5
+    21300012: alchemist_3_stunn load_6
+    21300014: alchemist_3_stunn load_7
+    21300016: alchemist_3_stunn load_8
+    21300018: alchemist_3_stunn load_9
+    21300020: alchemist_3_stunn load_10
+    21300022: alchemist_3_stunn load_11
+    21300024: alchemist_3_stunn load_12
+    21300026: alchemist_3_stunn load_13
+    21300028: alchemist_3_stunn load_14
+    21300030: alchemist_3_stunn load_15
+    21300032: alchemist_3_stunn load_16
+    21300034: alchemist_3_stunn load_17
+    21300036: alchemist_3_stunn load_18
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -12,6 +31,8 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -27,20 +48,23 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: -1
     aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
-  spriteExtrude: 1
+  spriteMode: 2
+  spriteExtrude: 0
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 500
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -51,7 +75,15 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 8192
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 8192
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -60,8 +92,275 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_0
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 2877
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_1
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 2877
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_2
+      rect:
+        serializedVersion: 2
+        x: 2079
+        y: 2877
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_3
+      rect:
+        serializedVersion: 2
+        x: 2772
+        y: 2877
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1918
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_5
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 1918
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_6
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 1918
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_7
+      rect:
+        serializedVersion: 2
+        x: 2079
+        y: 1918
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_8
+      rect:
+        serializedVersion: 2
+        x: 2772
+        y: 1918
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 959
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_10
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 959
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_11
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 959
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_12
+      rect:
+        serializedVersion: 2
+        x: 2079
+        y: 959
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_13
+      rect:
+        serializedVersion: 2
+        x: 2772
+        y: 959
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_15
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 0
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_16
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 0
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_17
+      rect:
+        serializedVersion: 2
+        x: 2079
+        y: 0
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist_3_stunn load_18
+      rect:
+        serializedVersion: 2
+        x: 2772
+        y: 0
+        width: 693
+        height: 959
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
+    physicsShape: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

@@ -1,9 +1,29 @@
 fileFormatVersion: 2
-guid: b127327447f53264c894e728afc0815b
-timeCreated: 1506887755
+guid: dbbd513f15dc5c04db13b343ed627c13
+timeCreated: 1506674910
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: alchemist1_entity_000_explosion_0
+    21300002: alchemist1_entity_000_explosion_1
+    21300004: alchemist1_entity_000_explosion_2
+    21300006: alchemist1_entity_000_explosion_3
+    21300008: alchemist1_entity_000_explosion_4
+    21300010: alchemist1_entity_000_explosion_5
+    21300012: alchemist1_entity_000_explosion_6
+    21300014: alchemist1_entity_000_explosion_7
+    21300016: alchemist1_entity_000_explosion_8
+    21300018: alchemist1_entity_000_explosion_9
+    21300020: alchemist1_entity_000_explosion_10
+    21300022: alchemist1_entity_000_explosion_11
+    21300024: alchemist1_entity_000_explosion_12
+    21300026: alchemist1_entity_000_explosion_13
+    21300028: alchemist1_entity_000_explosion_14
+    21300030: alchemist1_entity_000_explosion_15
+    21300032: alchemist1_entity_000_explosion_16
+    21300034: alchemist1_entity_000_explosion_17
+    21300036: alchemist1_entity_000_explosion_18
+    21300038: alchemist1_entity_000_explosion_19
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -12,6 +32,8 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -27,20 +49,23 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: -1
     aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
-  spriteExtrude: 1
+  spriteMode: 2
+  spriteExtrude: 0
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 250
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -51,7 +76,15 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 8192
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 8192
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -60,8 +93,289 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3502.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_1
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 3502.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_2
+      rect:
+        serializedVersion: 2
+        x: 2800
+        y: 3502.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_3
+      rect:
+        serializedVersion: 2
+        x: 4200
+        y: 3502.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_4
+      rect:
+        serializedVersion: 2
+        x: 5600
+        y: 3502.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2335.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_6
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 2335.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_7
+      rect:
+        serializedVersion: 2
+        x: 2800
+        y: 2335.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_8
+      rect:
+        serializedVersion: 2
+        x: 4200
+        y: 2335.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_9
+      rect:
+        serializedVersion: 2
+        x: 5600
+        y: 2335.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1168.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_11
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 1168.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_12
+      rect:
+        serializedVersion: 2
+        x: 2800
+        y: 1168.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_13
+      rect:
+        serializedVersion: 2
+        x: 4200
+        y: 1168.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_14
+      rect:
+        serializedVersion: 2
+        x: 5600
+        y: 1168.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_16
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 1.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_17
+      rect:
+        serializedVersion: 2
+        x: 2800
+        y: 1.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_18
+      rect:
+        serializedVersion: 2
+        x: 4200
+        y: 1.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: alchemist1_entity_000_explosion_19
+      rect:
+        serializedVersion: 2
+        x: 5600
+        y: 1.5
+        width: 1400
+        height: 1167.5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
+    physicsShape: []
   spritePackingTag: 
   userData: 
   assetBundleName: 
