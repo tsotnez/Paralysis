@@ -669,9 +669,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.5277778
+  m_ExitTime: 0.99018186
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -1396,7 +1396,7 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 7711f9e28150a964a944b265e3b71381, type: 2}
+  m_Motion: {fileID: 7400000, guid: f0c9c0e1b711b24409ee7c5a76dc2a31, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1480,7 +1480,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: run
+  m_Name: knight_run
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -1897,7 +1897,7 @@ AnimatorStateMachine:
     m_Position: {x: 828, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102088478354470198}
-    m_Position: {x: 744, y: -48, z: 0}
+    m_Position: {x: 756, y: -60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102523644756873190}
     m_Position: {x: 396, y: 324, z: 0}

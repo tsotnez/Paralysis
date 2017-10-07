@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 648ba036e54b621488172d07de966aa5
-timeCreated: 1506516820
+timeCreated: 1507370923
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -32,6 +32,8 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -47,10 +49,13 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: -1
     aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -105,10 +110,11 @@ TextureImporter:
         y: 3777
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_1
@@ -118,10 +124,11 @@ TextureImporter:
         y: 3777
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_2
@@ -131,10 +138,11 @@ TextureImporter:
         y: 3777
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_3
@@ -144,10 +152,11 @@ TextureImporter:
         y: 3777
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_4
@@ -157,10 +166,11 @@ TextureImporter:
         y: 3777
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_5
@@ -170,10 +180,11 @@ TextureImporter:
         y: 2518
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_6
@@ -183,10 +194,11 @@ TextureImporter:
         y: 2518
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_7
@@ -196,10 +208,11 @@ TextureImporter:
         y: 2518
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_8
@@ -209,10 +222,11 @@ TextureImporter:
         y: 2518
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_9
@@ -222,10 +236,11 @@ TextureImporter:
         y: 2518
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_10
@@ -235,10 +250,11 @@ TextureImporter:
         y: 1259
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_11
@@ -248,10 +264,11 @@ TextureImporter:
         y: 1259
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_12
@@ -261,10 +278,11 @@ TextureImporter:
         y: 1259
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_13
@@ -274,10 +292,11 @@ TextureImporter:
         y: 1259
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_14
@@ -287,10 +306,11 @@ TextureImporter:
         y: 1259
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_15
@@ -300,10 +320,11 @@ TextureImporter:
         y: 0
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_16
@@ -313,10 +334,11 @@ TextureImporter:
         y: 0
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_17
@@ -326,10 +348,11 @@ TextureImporter:
         y: 0
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_18
@@ -339,10 +362,11 @@ TextureImporter:
         y: 0
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_2 shield bash_19
@@ -352,12 +376,14 @@ TextureImporter:
         y: 0
         width: 1522
         height: 1259
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     outline: []
+    physicsShape: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

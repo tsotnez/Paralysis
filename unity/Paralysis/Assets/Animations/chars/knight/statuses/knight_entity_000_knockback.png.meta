@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: fa1ae6d133cfffa4899da06d6c537dbd
-timeCreated: 1506511506
+timeCreated: 1507370666
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -44,6 +44,8 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -59,10 +61,13 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: -1
     aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -117,10 +122,11 @@ TextureImporter:
         y: 6624
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_1
@@ -130,10 +136,11 @@ TextureImporter:
         y: 6624
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_2
@@ -143,10 +150,11 @@ TextureImporter:
         y: 6624
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_3
@@ -156,10 +164,11 @@ TextureImporter:
         y: 6624
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_4
@@ -169,10 +178,11 @@ TextureImporter:
         y: 6624
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_5
@@ -182,10 +192,11 @@ TextureImporter:
         y: 5520
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_6
@@ -195,10 +206,11 @@ TextureImporter:
         y: 5520
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_7
@@ -208,10 +220,11 @@ TextureImporter:
         y: 5520
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_8
@@ -221,10 +234,11 @@ TextureImporter:
         y: 5520
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_9
@@ -234,10 +248,11 @@ TextureImporter:
         y: 5520
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_10
@@ -247,10 +262,11 @@ TextureImporter:
         y: 4416
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_11
@@ -260,10 +276,11 @@ TextureImporter:
         y: 4416
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_12
@@ -273,10 +290,11 @@ TextureImporter:
         y: 4416
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_13
@@ -286,10 +304,11 @@ TextureImporter:
         y: 4416
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_14
@@ -299,10 +318,11 @@ TextureImporter:
         y: 4416
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_15
@@ -312,10 +332,11 @@ TextureImporter:
         y: 3312
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_16
@@ -325,10 +346,11 @@ TextureImporter:
         y: 3312
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_17
@@ -338,10 +360,11 @@ TextureImporter:
         y: 3312
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_18
@@ -351,10 +374,11 @@ TextureImporter:
         y: 3312
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_19
@@ -364,10 +388,11 @@ TextureImporter:
         y: 3312
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_20
@@ -377,10 +402,11 @@ TextureImporter:
         y: 2208
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_21
@@ -390,10 +416,11 @@ TextureImporter:
         y: 2208
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_22
@@ -403,10 +430,11 @@ TextureImporter:
         y: 2208
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_23
@@ -416,10 +444,11 @@ TextureImporter:
         y: 2208
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_24
@@ -429,10 +458,11 @@ TextureImporter:
         y: 2208
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_25
@@ -442,10 +472,11 @@ TextureImporter:
         y: 1104
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_26
@@ -455,10 +486,11 @@ TextureImporter:
         y: 1104
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_27
@@ -468,10 +500,11 @@ TextureImporter:
         y: 1104
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_28
@@ -481,10 +514,11 @@ TextureImporter:
         y: 1104
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_29
@@ -494,10 +528,11 @@ TextureImporter:
         y: 1104
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_30
@@ -507,10 +542,11 @@ TextureImporter:
         y: 0
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_knockback_31
@@ -520,12 +556,14 @@ TextureImporter:
         y: 0
         width: 1486
         height: 1104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     outline: []
+    physicsShape: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 66c9e88bb3af6cf4a81a0d0c03cf3111
-timeCreated: 1506511681
+timeCreated: 1507370842
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -52,6 +52,8 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -67,10 +69,13 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: -1
     aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -125,10 +130,11 @@ TextureImporter:
         y: 6944
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_1
@@ -138,10 +144,11 @@ TextureImporter:
         y: 6944
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_2
@@ -151,10 +158,11 @@ TextureImporter:
         y: 6944
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_3
@@ -164,10 +172,11 @@ TextureImporter:
         y: 6944
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_4
@@ -177,10 +186,11 @@ TextureImporter:
         y: 6944
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_5
@@ -190,10 +200,11 @@ TextureImporter:
         y: 5952
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_6
@@ -203,10 +214,11 @@ TextureImporter:
         y: 5952
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_7
@@ -216,10 +228,11 @@ TextureImporter:
         y: 5952
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_8
@@ -229,10 +242,11 @@ TextureImporter:
         y: 5952
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_9
@@ -242,10 +256,11 @@ TextureImporter:
         y: 5952
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_10
@@ -255,10 +270,11 @@ TextureImporter:
         y: 4960
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_11
@@ -268,10 +284,11 @@ TextureImporter:
         y: 4960
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_12
@@ -281,10 +298,11 @@ TextureImporter:
         y: 4960
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_13
@@ -294,10 +312,11 @@ TextureImporter:
         y: 4960
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_14
@@ -307,10 +326,11 @@ TextureImporter:
         y: 4960
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_15
@@ -320,10 +340,11 @@ TextureImporter:
         y: 3968
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_16
@@ -333,10 +354,11 @@ TextureImporter:
         y: 3968
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_17
@@ -346,10 +368,11 @@ TextureImporter:
         y: 3968
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_18
@@ -359,10 +382,11 @@ TextureImporter:
         y: 3968
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_19
@@ -372,10 +396,11 @@ TextureImporter:
         y: 3968
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_20
@@ -385,10 +410,11 @@ TextureImporter:
         y: 2976
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_21
@@ -398,10 +424,11 @@ TextureImporter:
         y: 2976
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_22
@@ -411,10 +438,11 @@ TextureImporter:
         y: 2976
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_23
@@ -424,10 +452,11 @@ TextureImporter:
         y: 2976
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_24
@@ -437,10 +466,11 @@ TextureImporter:
         y: 2976
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_25
@@ -450,10 +480,11 @@ TextureImporter:
         y: 1984
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_26
@@ -463,10 +494,11 @@ TextureImporter:
         y: 1984
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_27
@@ -476,10 +508,11 @@ TextureImporter:
         y: 1984
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_28
@@ -489,10 +522,11 @@ TextureImporter:
         y: 1984
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_29
@@ -502,10 +536,11 @@ TextureImporter:
         y: 1984
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_30
@@ -515,10 +550,11 @@ TextureImporter:
         y: 992
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_31
@@ -528,10 +564,11 @@ TextureImporter:
         y: 992
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_32
@@ -541,10 +578,11 @@ TextureImporter:
         y: 992
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_33
@@ -554,10 +592,11 @@ TextureImporter:
         y: 992
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_34
@@ -567,10 +606,11 @@ TextureImporter:
         y: 992
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_35
@@ -580,10 +620,11 @@ TextureImporter:
         y: 0
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_36
@@ -593,10 +634,11 @@ TextureImporter:
         y: 0
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_37
@@ -606,10 +648,11 @@ TextureImporter:
         y: 0
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_38
@@ -619,10 +662,11 @@ TextureImporter:
         y: 0
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: knight_entity_000_stunned_39
@@ -632,12 +676,14 @@ TextureImporter:
         y: 0
         width: 845
         height: 992
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     outline: []
+    physicsShape: []
   spritePackingTag: 
   userData: 
   assetBundleName: 
