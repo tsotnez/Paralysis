@@ -477,6 +477,7 @@ MonoBehaviour:
   - 0.533
   - 0.361
   - 0.375
+  damage_JumpAttack: 5
   dashing: 0
   dontMove: 0
   defensive: 0
@@ -517,6 +518,7 @@ MonoBehaviour:
   bleeding: 0
   knockedBack: 0
   slowFactor: 1
+  invincible: 0
   knockBackDuration: 0.8
   knockBackForceX: 6
   knockBackForceY: 12
