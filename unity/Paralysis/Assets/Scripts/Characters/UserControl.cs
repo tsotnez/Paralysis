@@ -71,9 +71,15 @@ public abstract class UserControl : MonoBehaviour {
 
     protected void FixedUpdate()
     {
+        CallMethods();
+        ResetValues();
+    }
+
+    protected virtual void CallMethods()
+    {
         //Do things only when not stunned, defensive or being knocked back
         if (!m_Stats.stunned && !m_Stats.knockedBack && !defensive)
-        { 
+        {
             float h = Input.GetAxis("Horizontal");
             // Pass all parameters to the character control script.
             m_Character.Move(h);
@@ -86,7 +92,10 @@ public abstract class UserControl : MonoBehaviour {
             if (m_Skill4) m_Character.skill4();
             if (dash != 0) m_Character.StartCoroutine(m_Character.dash(dash));
         }
+    }
 
+    protected virtual void ResetValues()
+    {
         defensive = false;
         m_Attack = false;
         m_Jump = false;

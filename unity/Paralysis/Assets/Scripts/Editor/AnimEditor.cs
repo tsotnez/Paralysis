@@ -6,9 +6,9 @@ using System;
 
 // Custom Editor using SerializedProperties.
 // Automatic handling of multi-object editing, undo, and prefab overrides.
-[CustomEditor(typeof(gAnimationController))]
+[CustomEditor(typeof(AnimationController))]
 [CanEditMultipleObjects]
-public class gAnimEditor : Editor {
+public class AnimEditor : Editor {
 
 	SerializedProperty animations, looping, customSpeeds, AnimationSpeed, CharacterClass, CharacterSkin, CharacterName;
 
@@ -61,8 +61,15 @@ public class gAnimEditor : Editor {
 			GUILayout.Space(0);
 			GUILayout.EndHorizontal();
 
-            gAnimationController.AnimatorStates xxx = (gAnimationController.AnimatorStates)Enum.Parse(typeof(gAnimationController.AnimatorStates), Animations[i].Name);
-            animations.GetArrayElementAtIndex(i).enumValueIndex = (int)xxx;
+            try
+            {
+                AnimationController.AnimatorStates xxx = (AnimationController.AnimatorStates)Enum.Parse(typeof(AnimationController.AnimatorStates), Animations[i].Name, true);
+                animations.GetArrayElementAtIndex(i).enumValueIndex = (int)xxx;
+            }
+            catch (ArgumentException)
+            {
+                //Ignore
+            }
 
             if (lastSpeed!= AnimationSpeed.floatValue)
 				customSpeeds.GetArrayElementAtIndex(i).floatValue = AnimationSpeed.floatValue;

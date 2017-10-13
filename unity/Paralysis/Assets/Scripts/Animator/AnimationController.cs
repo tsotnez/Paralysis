@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class gAnimationController : MonoBehaviour
+public class AnimationController : MonoBehaviour
 {
-    //animations located in /Assets/Resources/Animations
-    SpriteRenderer spriteRenderer;
-    string idleAnimation; // idle is needed to align all other animations to the "ground"
+
     public AnimatorStates[] AnimationType = { 0 };
-    public bool[] AnimationLoop = { true };
+    public bool[] AnimationLoop = { false };
     public float[] AnimationDuration;
     public float GeneralSpeed;
-    public string CharacterClass, CharacterSkin;//in Resources folder
+    public string CharacterClass = "_master";
+    public string CharacterSkin = "Basic";
+
+    public AnimatorStates currentAnimation { get; private set; } // current playing animation state
 
     string spritesPath;
     float idleHeight;
     float startHeight;
+    SpriteRenderer spriteRenderer;
 
     Dictionary<AnimatorStates, Sprite[]> animationSprites; // Saves all Sprites to the Animations
     Dictionary<AnimatorStates, float> animationDuration; // Saves all Speed of the Animations
@@ -50,7 +52,8 @@ public class gAnimationController : MonoBehaviour
         //Assassin
         DoubleJump,
         //Knight
-        BlockMove
+        BlockMove,
+        DashFor
     }
 
     void Start()
@@ -86,7 +89,7 @@ public class gAnimationController : MonoBehaviour
     IEnumerator PlayAnimation(AnimatorStates animation)
     {
         Sprite[] sprites = animationSprites[animation];
-        //fix possible height issues using idleanimation as reference(possibly create more)
+        //fix possible height issues using idle animation as reference(possibly create more)
         if (animationSprites[AnimatorStates.Idle] != null)
         {
             float groundoffset = sprites[0].bounds.extents.y - idleHeight;
@@ -108,12 +111,9 @@ public class gAnimationController : MonoBehaviour
             if (animationLoop[animation])
                 //loop
                 yield return null;
-            else if (idleAnimation != "")
+            else
                 //revert to idle if present
                 StartAnimation(AnimatorStates.Idle);
-            else
-                //stop
-                yield break;
         }
     }
 }
