@@ -2489,7 +2489,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1255172578}
   - component: {fileID: 1255172577}
-  - component: {fileID: 1255172579}
   m_Layer: 12
   m_Name: graphics
   m_TagString: Untagged
@@ -2537,7 +2536,7 @@ SpriteRenderer:
   m_Size: {x: 0.7970588, y: 1.3529412}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!4 &1255172578
 Transform:
@@ -2552,23 +2551,6 @@ Transform:
   m_Father: {fileID: 208815057}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1255172579
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1255172574}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 055687346d0c76c4786fee8317ed5c77, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 1
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &1257394427
 MonoBehaviour:
   m_ObjectHideFlags: 0
