@@ -7,6 +7,16 @@ using UnityEngine.UI;
 public class MainMenuController : MonoBehaviour
 {
 
+    public GameObject credits;
+    public GameObject setting;
+
+
+    private void Awake()
+    {
+        this.credits.SetActive(false);
+        this.setting.SetActive(false);
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -20,8 +30,29 @@ public class MainMenuController : MonoBehaviour
     }
 
 
+    public void CreditsButton ()
+    {
+        this.credits.SetActive(true);
+
+    }
+
+    public void SettingButton()
+    {
+        this.setting.SetActive(true);
+
+    }
+
     public void ChangeScene(string sceneName){
         StartCoroutine(ChangeAnimation(sceneName));
+
+    }
+
+
+    public void QuitGame()
+    {
+
+        Debug.Log("Quit Game");
+        Application.Quit();
 
     }
      
