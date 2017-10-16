@@ -35,6 +35,7 @@ public abstract class ChampionClassController : MonoBehaviour
     protected CharacterStats stats;                                       // Reference to stats
     public bool m_FacingRight = true;                                     // For determining which way the player is currently facing.
     protected Transform graphics;                                         // Reference to the graphics child
+    protected AnimationController animCon;
 
     [Header("Range Variables")]
     protected const float meeleRange = 1.5f;
@@ -69,12 +70,12 @@ public abstract class ChampionClassController : MonoBehaviour
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         graphics = transform.Find("graphics");
         stats = GetComponent<CharacterStats>();
+        animCon = graphics.GetComponent<AnimationController>();
     }
 
     protected virtual void Update()
     {
         //m_Anim.SetBool("defensive", defensive);
-
     }
 
     protected virtual void FixedUpdate()

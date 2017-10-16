@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ public class AnimationController : MonoBehaviour
     public float GeneralSpeed;
     public string CharacterClass = "_master";
     public string CharacterSkin = "Basic";
+
+    public bool finishedInit = false;  //True if finished loading all the sprites
 
     public AnimatorStates currentAnimation { get; private set; } // current playing animation state
 
@@ -58,6 +61,10 @@ public class AnimationController : MonoBehaviour
 
     void Start()
     {
+        animationSprites = new Dictionary<AnimatorStates, Sprite[]>();
+        animationDuration = new Dictionary<AnimatorStates, float>();
+        animationLoop = new Dictionary<AnimatorStates, bool>();
+
         spriteRenderer = GetComponent<SpriteRenderer>();
         spritesPath = "Animations/chars/" + CharacterClass + "/" + CharacterSkin + "/";
         InitAnimations();
@@ -73,9 +80,16 @@ public class AnimationController : MonoBehaviour
 
             if (sp.Length > 0)
             {
-                animationSprites.Add(AnimationType[i], sp);
-                animationDuration.Add(AnimationType[i], AnimationDuration[i]);
-                animationLoop.Add(AnimationType[i], AnimationLoop[i]);
+                try
+                {
+                    animationSprites.Add(AnimationType[i], sp);
+                    animationDuration.Add(AnimationType[i], AnimationDuration[i]);
+                    animationLoop.Add(AnimationType[i], AnimationLoop[i]);
+                }
+                catch(Exception ex)
+                {
+                    int t = 0;
+                }
             }
             else
             {
@@ -87,16 +101,25 @@ public class AnimationController : MonoBehaviour
         Sprite idleImage = animationSprites[AnimatorStates.Idle][0];
         idleHeight = idleImage.bounds.extents.y;
         startHeight = transform.localPosition.y;
+
+        finishedInit = true;
+
+        StartAnimation(AnimatorStates.Idle);
     }
 
     public void StartAnimation(AnimatorStates animation)
     {
-        StopAllCoroutines();
-        StartCoroutine(PlayAnimation(animation));
+        if (finishedInit)
+        {
+            StopAllCoroutines();
+            StartCoroutine(PlayAnimation(animation));
+        }
     }
 
     IEnumerator PlayAnimation(AnimatorStates animation)
     {
+        currentAnimation = animation;
+
         Sprite[] sprites = animationSprites[animation];
         //fix possible height issues using idle animation as reference(possibly create more)
         if (animationSprites[AnimatorStates.Idle] != null)
