@@ -69,9 +69,17 @@ public class AnimationController : MonoBehaviour
         for (int i = 0; i < AnimationType.Length; i++)
         {
             // Save sprites to Dictionary
-            animationSprites.Add(AnimationType[i], Resources.LoadAll<Sprite>(spritesPath + AnimationType[i].ToString()));
-            animationDuration.Add(AnimationType[i], AnimationDuration[i]);
-            animationLoop.Add(AnimationType[i], AnimationLoop[i]);
+            Sprite[] sp = Resources.LoadAll<Sprite>(spritesPath + AnimationType[i].ToString());
+            if (sp != null)
+            {
+                animationSprites.Add(AnimationType[i], sp);
+                animationDuration.Add(AnimationType[i], AnimationDuration[i]);
+                animationLoop.Add(AnimationType[i], AnimationLoop[i]);
+            }
+            else
+            {
+                //bla
+            }
         }
 
         // Save idle animation's ground position

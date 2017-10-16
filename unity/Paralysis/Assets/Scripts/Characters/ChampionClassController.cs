@@ -31,7 +31,6 @@ public abstract class ChampionClassController : MonoBehaviour
     [SerializeField]
     protected bool m_Grounded;                                            // Whether or not the player is grounded.
     protected const float k_CeilingRadius = .02f;                         // Radius of the overlap circle to determine if the player can stand up
-    protected Animator m_Anim;                                            // Reference to the player's animator component.
     protected Rigidbody2D m_Rigidbody2D;                                  // Reference to the players rigidbody
     protected CharacterStats stats;                                       // Reference to stats
     public bool m_FacingRight = true;                                     // For determining which way the player is currently facing.
@@ -67,7 +66,6 @@ public abstract class ChampionClassController : MonoBehaviour
     {
         // Setting up references.
         m_GroundCheck = transform.Find("GroundCheck");
-        m_Anim = GetComponentInChildren<Animator>();
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         graphics = transform.Find("graphics");
         stats = GetComponent<CharacterStats>();
@@ -75,7 +73,8 @@ public abstract class ChampionClassController : MonoBehaviour
 
     protected virtual void Update()
     {
-        m_Anim.SetBool("defensive", defensive);
+        //m_Anim.SetBool("defensive", defensive);
+
     }
 
     protected virtual void FixedUpdate()
@@ -92,10 +91,10 @@ public abstract class ChampionClassController : MonoBehaviour
                 m_Grounded = true;               
             }
         }
-        m_Anim.SetBool("Ground", m_Grounded);
+        //m_Anim.SetBool("Ground", m_Grounded);
 
         // Set the vertical animation
-        m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
+        //m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
 
         //Move the character if dashing
         if (dashing && m_Grounded) m_Rigidbody2D.velocity = new Vector2(m_dashSpeed, m_Rigidbody2D.velocity.y);
@@ -116,7 +115,7 @@ public abstract class ChampionClassController : MonoBehaviour
             else maxSpeed = m_MoveSpeedWhileAttacking;
 
             // The Speed animator parameter is set to the absolute value of the horizontal input.
-            m_Anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
+            //m_Anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
 
             // If the input is moving the player right and the player is facing left...
             if (move > 0 && !m_FacingRight)
@@ -145,7 +144,7 @@ public abstract class ChampionClassController : MonoBehaviour
         {
             // Add a vertical force to the player.
             m_Grounded = false;
-            m_Anim.SetBool("Ground", false);
+            //m_Anim.SetBool("Ground", false);
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
         }
     }
@@ -153,7 +152,7 @@ public abstract class ChampionClassController : MonoBehaviour
     protected virtual IEnumerator jumpAttack()
     {
         jumpAttacking = true; //Set status variable
-        m_Anim.SetBool("jumpAttack", true);
+        //m_Anim.SetBool("jumpAttack", true);
 
         int direction;
         if (m_FacingRight) direction = 1;
@@ -172,7 +171,7 @@ public abstract class ChampionClassController : MonoBehaviour
 
         Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
         jumpAttacking = false;
-        m_Anim.SetBool("jumpAttack", false);
+        //m_Anim.SetBool("jumpAttack", false);
     }
 
     /// <summary>
@@ -199,7 +198,7 @@ public abstract class ChampionClassController : MonoBehaviour
                 m_Rigidbody2D.velocity = Vector2.zero;
 
                 //Start animation
-                m_Anim.SetTrigger("dash");
+                //m_Anim.SetTrigger("dash");
 
                 dashing = true;
                 dontMove = true;
@@ -328,7 +327,7 @@ public abstract class ChampionClassController : MonoBehaviour
                 if (attackingRoutine != null) StopCoroutine(attackingRoutine);
                 attackingRoutine = StartCoroutine(setAttacking(attackLength[skillType] - 0.08f));
                 // set animation
-                m_Anim.SetTrigger(calledAnimation);
+                //m_Anim.SetTrigger(calledAnimation);
                 // do hit by coroutine
                 StartCoroutine(doMeeleSkill_Hit(skillDelay, skillDamage, skillSpecialEffect, skillSpecialEffectTime, singleTarget, skillRange));
                 // lose stamina for skill

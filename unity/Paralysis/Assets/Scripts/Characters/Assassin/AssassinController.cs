@@ -42,14 +42,14 @@ public class AssassinController : ChampionClassController
 
     public override void jump(bool jump)
     {
-        if (m_Grounded && jump && m_Anim.GetBool("Ground"))
+        if (m_Grounded && jump) /*m_Anim.GetBool("Ground")*/
             base.jump(jump);
         else if (!m_Grounded && jump && !doubleJumped)
         {
             // Add a vertical force to the player.
             m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
             m_Rigidbody2D.AddForce(new Vector2(0f, m_DoubleJumpForce));
-            m_Anim.SetTrigger("DoubleJump");
+            //m_Anim.SetTrigger("DoubleJump");
             doubleJumped = true;
         }
     }
@@ -76,7 +76,7 @@ public class AssassinController : ChampionClassController
         {
             if (invisible) stopInvisible();
             attackingRoutine = StartCoroutine(setAttacking(attackLength[4]));
-            m_Anim.SetTrigger("stunAttack");
+            //m_Anim.SetTrigger("stunAttack");
             Invoke("stunAttackHit", delay_StunAttack); //Invoke damage function
             stats.loseStamina(staminaStunAttack);
         }
@@ -91,7 +91,7 @@ public class AssassinController : ChampionClassController
         {
             if (invisible) stopInvisible();
             attackingRoutine = StartCoroutine(setAttacking(attackLength[5]));
-            m_Anim.SetTrigger("vanish");
+            //m_Anim.SetTrigger("vanish");
             if (invisRoutine != null) StopCoroutine(invisRoutine);
             invisRoutine = StartCoroutine(manageInvisibility());
             stats.loseStamina(staminaVanish);
@@ -108,7 +108,7 @@ public class AssassinController : ChampionClassController
             if (invisible) stopInvisible();
             StartCoroutine(shadowStepHit());
             attackingRoutine = StartCoroutine(setAttacking(attackLength[6]));
-            m_Anim.SetTrigger("shadowstep");
+            //m_Anim.SetTrigger("shadowstep");
             stats.loseStamina(staminaShadowStep);
         }
     }
@@ -122,7 +122,7 @@ public class AssassinController : ChampionClassController
         {
             if (invisible) stopInvisible();
             attackingRoutine = StartCoroutine(setAttacking(attackLength[7]));
-            m_Anim.SetTrigger("shoot");
+            //m_Anim.SetTrigger("shoot");
             Invoke("shootAttackHit", delay_Shoot);
             stats.loseStamina(staminaShoot);
         }
@@ -179,7 +179,7 @@ public class AssassinController : ChampionClassController
                 {
                     case 1:
                         //set animation
-                        m_Anim.SetTrigger("Attack");
+                        //m_Anim.SetTrigger("Attack");
                         //set attacking coroutine
                         if (attackingRoutine != null) StopCoroutine(attackingRoutine);
                         attackingRoutine = StartCoroutine(setAttacking(attackLength[0] - 0.08f));
@@ -188,7 +188,7 @@ public class AssassinController : ChampionClassController
                         break;
                     case 2:
                         //set animation
-                        m_Anim.SetTrigger("Attack2");
+                        //m_Anim.SetTrigger("Attack2");
                         //set attacking coroutine
                         if (attackingRoutine != null) StopCoroutine(attackingRoutine);
                         attackingRoutine = StartCoroutine(setAttacking(attackLength[1] - 0.08f));
@@ -197,7 +197,7 @@ public class AssassinController : ChampionClassController
                         break;
                     case 3:
                         //set animation
-                        m_Anim.SetTrigger("Attack3");
+                        //m_Anim.SetTrigger("Attack3");
                         //set attacking coroutine
                         if (attackingRoutine != null) StopCoroutine(attackingRoutine);
                         attackingRoutine = StartCoroutine(setAttacking(attackLength[2] - 0.08f));
@@ -209,7 +209,7 @@ public class AssassinController : ChampionClassController
                         break;
                     case 4:
                         //set animation
-                        m_Anim.SetTrigger("shadowstep");
+                        //m_Anim.SetTrigger("shadowstep");
                         // set attacking coroutine
                         if (attackingRoutine != null) StopCoroutine(attackingRoutine);
                         attackingRoutine = StartCoroutine(setAttacking(attackLength[6] - 0.08f));

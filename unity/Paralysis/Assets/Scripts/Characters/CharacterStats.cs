@@ -64,11 +64,11 @@ public class CharacterStats : MonoBehaviour {
         this.Stamina.GetComponent<Image>().fillAmount = (float)this.currentStamina / (float)this.maxStamina;
 
         //Slow down walking and idle animation while slowed
-        if ((anim.GetCurrentAnimatorStateInfo(0).IsName("run") || anim.GetCurrentAnimatorStateInfo(0).IsName("idle")) && slowFactor < 1)
-        {
-            anim.speed = 0.7f;
-        }
-        else anim.speed = 1;
+        //if ((anim.GetCurrentAnimatorStateInfo(0).IsName("run") || anim.GetCurrentAnimatorStateInfo(0).IsName("idle")) && slowFactor < 1)
+        //{
+        //    anim.speed = 0.7f;
+        //}
+        //else anim.speed = 1;
     }
 
     // Is called repeatetly to regenerate stamina value
