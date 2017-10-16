@@ -21,6 +21,9 @@ public class LevelLoader : MonoBehaviour {
     IEnumerator LoadAsynchronously(int sceneIndex)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
+        // --
+        //yield return operation;
+        //--
 
         loandingScreen.SetActive(true);
 
