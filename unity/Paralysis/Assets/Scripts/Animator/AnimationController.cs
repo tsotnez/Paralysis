@@ -70,7 +70,8 @@ public class AnimationController : MonoBehaviour
         {
             // Save sprites to Dictionary
             Sprite[] sp = Resources.LoadAll<Sprite>(spritesPath + AnimationType[i].ToString());
-            if (sp != null)
+
+            if (sp.Length > 0)
             {
                 animationSprites.Add(AnimationType[i], sp);
                 animationDuration.Add(AnimationType[i], AnimationDuration[i]);
