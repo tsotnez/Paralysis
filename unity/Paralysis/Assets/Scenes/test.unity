@@ -246,10 +246,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   champions:
-  - {fileID: 1083024026309572, guid: fb4da503da42c0c48809cac878c3cc5a, type: 2}
-  - {fileID: 1040337364421342, guid: b1e43d9ab5ee2524d944148b7f0b4cbc, type: 2}
-  - {fileID: 1813856546168428, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
-  startChar: 2
+  - {fileID: 1619680024147944, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
+  startChar: 0
 --- !u!4 &33478042
 Transform:
   m_ObjectHideFlags: 0
@@ -261,8 +259,54 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &34616901
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4314687281043260, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -2.3880858
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314687281043260, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -5.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314687281043260, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314687281043260, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314687281043260, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314687281043260, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314687281043260, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314687281043260, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1619680024147944, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &81925912
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,13 +808,12 @@ GameObject:
   m_Component:
   - component: {fileID: 392911030}
   - component: {fileID: 392911029}
-  - component: {fileID: 392911028}
   - component: {fileID: 392911027}
+  - component: {fileID: 392911028}
   - component: {fileID: 392911026}
   - component: {fileID: 392911025}
   - component: {fileID: 392911024}
   - component: {fileID: 392911031}
-  - component: {fileID: 392911032}
   m_Layer: 11
   m_Name: Knight
   m_TagString: MainPlayer
@@ -865,6 +908,7 @@ MonoBehaviour:
   knockedBack: 0
   slowFactor: 1
   invincible: 0
+  trigHit: 0
   knockBackDuration: 0.8
   knockBackForceX: 6
   knockBackForceY: 12
@@ -906,8 +950,10 @@ MonoBehaviour:
   whatToHit:
     serializedVersion: 2
     m_Bits: 4096
-  m_Grounded: 0
   m_FacingRight: 1
+  dashing: 0
+  dontMove: 0
+  blocking: 0
   attackCount: 0
   inCombo: 0
   attacking: 0
@@ -922,9 +968,6 @@ MonoBehaviour:
   - 0.75
   - 0.55
   damage_JumpAttack: 5
-  dashing: 0
-  dontMove: 0
-  defensive: 0
   delay_BasicAttack: 0
   delay_BasicAttackCombo: 0
   delay_Skill1: 0
@@ -1003,43 +1046,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
---- !u!114 &392911032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 392911023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8652326777ca6a4189adc11d223b02c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AnimationType: 090000000a00000008000000130000000400000014000000030000000500000000000000020000000c0000000d00000007000000010000000e0000000f000000100000001100000006000000
-  AnimationLoop: 00000000000000000000000000000000000000
-  AnimationDuration:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  GeneralSpeed: 0
-  CharacterClass: knight
-  CharacterSkin: Basic
-  finishedInit: 0
 --- !u!1 &394368013
 GameObject:
   m_ObjectHideFlags: 0
@@ -1444,7 +1450,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &720380220
 GameObject:
@@ -2119,6 +2125,7 @@ MonoBehaviour:
   knockedBack: 0
   slowFactor: 1
   invincible: 0
+  trigHit: 0
   knockBackDuration: 0.8
   knockBackForceX: 6
   knockBackForceY: 12
@@ -2770,52 +2777,6 @@ Transform:
   m_Father: {fileID: 392911030}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1689916671
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4956743845756160, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -2.3880858
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956743845756160, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -5.76
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956743845756160, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956743845756160, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956743845756160, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956743845756160, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956743845756160, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956743845756160, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1813856546168428, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1726954112
 GameObject:
   m_ObjectHideFlags: 0
@@ -3102,7 +3063,6 @@ GameObject:
   - component: {fileID: 1767014187}
   - component: {fileID: 1767014186}
   - component: {fileID: 1767014184}
-  - component: {fileID: 1767014185}
   m_Layer: 11
   m_Name: Assassin
   m_TagString: MainPlayer
@@ -3152,43 +3112,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
---- !u!114 &1767014185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1767014183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8652326777ca6a4189adc11d223b02c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AnimationType: 090000000a0000000b000000080000000400000012000000030000000500000000000000020000000c0000000d00000007000000010000000e0000000f000000100000001100000006000000
-  AnimationLoop: 00000000000000000000000000000000000000
-  AnimationDuration:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  GeneralSpeed: 0
-  CharacterClass: assassin
-  CharacterSkin: Basic
-  finishedInit: 0
 --- !u!61 &1767014186
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3290,8 +3213,10 @@ MonoBehaviour:
   whatToHit:
     serializedVersion: 2
     m_Bits: 4096
-  m_Grounded: 0
   m_FacingRight: 1
+  dashing: 0
+  dontMove: 0
+  blocking: 0
   attackCount: 0
   inCombo: 0
   attacking: 0
@@ -3306,9 +3231,6 @@ MonoBehaviour:
   - 0.361
   - 0.375
   damage_JumpAttack: 5
-  dashing: 0
-  dontMove: 0
-  defensive: 0
   m_DoubleJumpForce: 600
   invisible: 0
   bulletPrefab: {fileID: 1999998842244028, guid: 1382e079f46c9e848b29efd69252a8b5,
@@ -4377,7 +4299,7 @@ RectTransform:
   - {fileID: 319613917}
   - {fileID: 1365552976}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

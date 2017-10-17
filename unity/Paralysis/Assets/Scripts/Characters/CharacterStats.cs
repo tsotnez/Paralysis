@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,21 +22,22 @@ public class CharacterStats : MonoBehaviour {
 
     [Header("Statusses")]
     public bool stunned = false;
-    public Coroutine stunnedRoutine = null; //Stores the stunned Coroutine
-    public bool bleeding = false;           //Takes damage while true
-    public Coroutine bleedingRoutine = null; //Stores the bleeding Coroutine
+    public Coroutine stunnedRoutine = null;     //Stores the stunned Coroutine
+    public bool bleeding = false;               //Takes damage while true
+    public Coroutine bleedingRoutine = null;    //Stores the bleeding Coroutine
     public bool knockedBack = false;            //Prevents actions while being knocked back
-    public Coroutine knockBackRoutine = null; //Stores the knockBack Coroutine
+    public Coroutine knockBackRoutine = null;   //Stores the knockBack Coroutine
     public float slowFactor = 1;                //Setting this to a value below 1 will slow down the character
-    public bool invincible = false;         //If true, character cant be harmed 
+    public bool invincible = false;             //If true, character cant be harmed 
+    public bool trigHit = false;
 
     [Header("Knock Back")]
     [SerializeField]
-    private float knockBackDuration = 1; //How long the knockedBack status is set (character cant move)
+    private float knockBackDuration = 1;        //How long the knockedBack status is set (character cant move)
     [SerializeField]
-    private float knockBackForceX = 400; //Force used when knockbacking X
+    private float knockBackForceX = 400;        //Force used when knockbacking X
     [SerializeField]
-    private float knockBackForceY = 600; //Force used when knockbacking Y
+    private float knockBackForceY = 600;        //Force used when knockbacking Y
 
     void Awake()
     {
@@ -74,7 +74,7 @@ public class CharacterStats : MonoBehaviour {
     // Is called repeatetly to regenerate stamina value
     private void regenerateStamina()
     {
-        if(currentStamina < maxStamina && !controller.defensive)
+        if(currentStamina < maxStamina && !controller.blocking)
         {
             if (currentStamina + staminaRegRate > maxStamina) this.currentStamina = this.maxStamina;
             else this.currentStamina += this.staminaRegRate;
@@ -93,7 +93,7 @@ public class CharacterStats : MonoBehaviour {
         if (!invincible)
         {
             this.currentHealth -= amount; //Substract health
-            if (playAnimation) anim.SetTrigger("hit"); //Play hit animation
+            if (playAnimation) trigHit = true; //Play hit animation
             if (currentHealth <= 0) die();
         }
     }
@@ -111,9 +111,7 @@ public class CharacterStats : MonoBehaviour {
     private IEnumerator stun(float time)
     {
         stunned = true;
-        anim.SetBool("stunned", true);
         yield return new WaitForSeconds(time);
-        anim.SetBool("stunned", false);
         stunned = false;
     }
 
@@ -144,9 +142,7 @@ public class CharacterStats : MonoBehaviour {
 
         //Adding force and setting status variable
         rigid.AddForce(new Vector2(knockBackForceX * direction, knockBackForceY), ForceMode2D.Impulse);
-        anim.SetBool("knockedBack", true);
         yield return new WaitForSeconds(knockBackDuration);
-        anim.SetBool("knockedBack", false);
         knockedBack = false;
     }
 
@@ -207,11 +203,4 @@ public class CharacterStats : MonoBehaviour {
     {
         StartCoroutine(bleed(time));
     }
-
-
-
-
-
 }
-
-

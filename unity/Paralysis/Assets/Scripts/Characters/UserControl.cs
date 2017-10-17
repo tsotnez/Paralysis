@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public abstract class UserControl : MonoBehaviour {
-
+public abstract class UserControl : MonoBehaviour
+{
     protected ChampionClassController m_Character;
     protected CharacterStats m_Stats;
     protected bool m_Jump;
@@ -16,13 +14,11 @@ public abstract class UserControl : MonoBehaviour {
     protected bool m_Skill3;
     protected bool m_Skill4;
 
-
     protected void Awake()
     {
         m_Character = GetComponent<ChampionClassController>();
         m_Stats = GetComponent<CharacterStats>();
     }
-
 
     protected void Update()
     {
@@ -67,7 +63,6 @@ public abstract class UserControl : MonoBehaviour {
 
         m_Character.manageDefensive(defensive);
     }
-
 
     protected void FixedUpdate()
     {

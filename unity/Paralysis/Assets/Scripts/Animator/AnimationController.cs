@@ -12,9 +12,9 @@ public class AnimationController : MonoBehaviour
     public float[] AnimationDuration;
     public float GeneralSpeed;
     public string CharacterClass = "_master";
-    public string CharacterSkin = "Basic";
+    public string CharacterSkin = "basic";
 
-    public bool finishedInit = false;  //True if finished loading all the sprites
+    public bool finishedInitialization = false;  //True if finished loading all the sprites
 
     public AnimatorStates currentAnimation { get; private set; } // current playing animation state
 
@@ -23,9 +23,9 @@ public class AnimationController : MonoBehaviour
     float startHeight;
     SpriteRenderer spriteRenderer;
 
-    Dictionary<AnimatorStates, Sprite[]> animationSprites; // Saves all Sprites to the Animations
-    Dictionary<AnimatorStates, float> animationDuration; // Saves all Speed of the Animations
-    Dictionary<AnimatorStates, bool> animationLoop; // Saves if animation should be looped
+    Dictionary<AnimatorStates, Sprite[]> animationSprites;  // Saves all Sprites to the Animations
+    Dictionary<AnimatorStates, float> animationDuration;    // Saves all Speed of the Animations
+    Dictionary<AnimatorStates, bool> animationLoop;         // Saves if animation should be looped
 
     public enum AnimatorStates
     {
@@ -80,20 +80,9 @@ public class AnimationController : MonoBehaviour
 
             if (sp.Length > 0)
             {
-                try
-                {
-                    animationSprites.Add(AnimationType[i], sp);
-                    animationDuration.Add(AnimationType[i], AnimationDuration[i]);
-                    animationLoop.Add(AnimationType[i], AnimationLoop[i]);
-                }
-                catch(Exception ex)
-                {
-                    int t = 0;
-                }
-            }
-            else
-            {
-                //bla
+                animationSprites.Add(AnimationType[i], sp);
+                animationDuration.Add(AnimationType[i], AnimationDuration[i]);
+                animationLoop.Add(AnimationType[i], AnimationLoop[i]);
             }
         }
 
@@ -102,14 +91,13 @@ public class AnimationController : MonoBehaviour
         idleHeight = idleImage.bounds.extents.y;
         startHeight = transform.localPosition.y;
 
-        finishedInit = true;
-
+        finishedInitialization = true;
         StartAnimation(AnimatorStates.Idle);
     }
 
     public void StartAnimation(AnimatorStates animation)
     {
-        if (finishedInit)
+        if (finishedInitialization && currentAnimation != animation)
         {
             StopAllCoroutines();
             StartCoroutine(PlayAnimation(animation));

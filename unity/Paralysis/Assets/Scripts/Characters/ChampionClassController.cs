@@ -12,11 +12,11 @@ public abstract class ChampionClassController : MonoBehaviour
     [SerializeField]
     protected float m_JumpForce = 400f;                                   // Amount of force added when the player jumps.         
     [SerializeField]
-    protected float m_dashSpeed = 7f;                                   // Force applied when dashing
+    protected float m_dashSpeed = 7f;                                     // Force applied when dashing
     [SerializeField]
     protected int m_dashStaminaCost = 10;
     [SerializeField]
-    protected float m_jumpAttackRadius = 10f;                            // Radius of jump Attack damage
+    protected float m_jumpAttackRadius = 10f;                             // Radius of jump Attack damage
     [SerializeField]
     protected LayerMask m_WhatIsGround;                                   // A mask determining what is ground to the character
     [SerializeField]
@@ -25,19 +25,35 @@ public abstract class ChampionClassController : MonoBehaviour
     protected float m_jumpAttackForce = 10f;
     public LayerMask whatToHit;                                           // What to hit when checking for hits while attacking
 
-
     protected Transform m_GroundCheck;                                    // A position marking where to check if the player is grounded.
     protected const float k_GroundedRadius = .2f;                         // Radius of the overlap circle to determine if grounded
-    [SerializeField]
-    protected bool m_Grounded;                                            // Whether or not the player is grounded.
     protected const float k_CeilingRadius = .02f;                         // Radius of the overlap circle to determine if the player can stand up
+
+    protected bool m_Grounded;                                            // Whether or not the player is grounded.
+    protected float m_vSpeed;                                             // Vertical speed
+    protected float m_Speed;                                              // Horizontal speed
+    public bool m_FacingRight = true;                                     // For determining which way the player is currently facing.
+    public bool dashing = false;                                          // true while dashing
+    public bool dontMove = false;                                         // Character cannot move while true
+    public bool blocking = false;                                         // Is the character blocking?
+
+    protected bool trigBasicAttack1 = false;
+    protected bool trigBasicAttack2 = false;
+    protected bool trigBasicAttack3 = false;
+    protected bool trigSkill1 = false;
+    protected bool trigSkill2 = false;
+    protected bool trigSkill3 = false;
+    protected bool trigSkill4 = false;
+    protected bool trigJump = false;
+    protected bool trigJumpAttackEnd = false;
+
     protected Rigidbody2D m_Rigidbody2D;                                  // Reference to the players rigidbody
     protected CharacterStats stats;                                       // Reference to stats
-    public bool m_FacingRight = true;                                     // For determining which way the player is currently facing.
     protected Transform graphics;                                         // Reference to the graphics child
-    protected AnimationController animCon;
+    protected AnimationController animCon;                                // Reference to the Animation Contoller
 
     [Header("Range Variables")]
+    [SerializeField]
     protected const float meeleRange = 1.5f;
 
     [Header("Attacking Variables")]
@@ -54,10 +70,7 @@ public abstract class ChampionClassController : MonoBehaviour
     [SerializeField]
     private int damage_JumpAttack = 5;
 
-    public bool dashing = false;                                          // true while dashing
-    public bool dontMove = false;                                         // Character cannot move while true
-    public bool defensive = false;                                        //Is the character defensive?
-
+    //Coroutines
     protected Coroutine attackingRoutine;
     protected Coroutine comboRoutine;
 
@@ -75,7 +88,93 @@ public abstract class ChampionClassController : MonoBehaviour
 
     protected virtual void Update()
     {
-        //m_Anim.SetBool("defensive", defensive);
+        // Animations that work in any State
+        if (stats.stunned)
+            animCon.StartAnimation(AnimationController.AnimatorStates.Stunned);
+        else if (stats.knockedBack)
+            animCon.StartAnimation(AnimationController.AnimatorStates.KnockedBack);
+        else
+        {
+            // don't interrupt these animations (aquivalent to HasExitTime)
+            switch (animCon.currentAnimation)
+            {
+                case AnimationController.AnimatorStates.Dash:
+                case AnimationController.AnimatorStates.BasicAttack1:
+                case AnimationController.AnimatorStates.BasicAttack2:
+                case AnimationController.AnimatorStates.BasicAttack3:
+                case AnimationController.AnimatorStates.JumpAttack:
+                case AnimationController.AnimatorStates.JumpAttackEnd:
+                case AnimationController.AnimatorStates.Skill1:
+                case AnimationController.AnimatorStates.Skill2:
+                case AnimationController.AnimatorStates.Skill3:
+                case AnimationController.AnimatorStates.Skill4:
+                case AnimationController.AnimatorStates.DashFor:
+                    return;
+            }
+
+            if (blocking)
+                animCon.StartAnimation(AnimationController.AnimatorStates.Block);
+            else if (dashing)
+                animCon.StartAnimation(AnimationController.AnimatorStates.Dash);
+            else if (stats.trigHit)
+            {
+                stats.trigHit = false;
+                animCon.StartAnimation(AnimationController.AnimatorStates.Hit);
+            }
+            else if (trigJump)
+            {
+                trigJump = false;
+                animCon.StartAnimation(AnimationController.AnimatorStates.Jump);
+            }
+            else if (jumpAttacking)
+                animCon.StartAnimation(AnimationController.AnimatorStates.JumpAttack);
+            else if (trigJumpAttackEnd)
+            {
+                trigJumpAttackEnd = false;
+                animCon.StartAnimation(AnimationController.AnimatorStates.JumpAttackEnd);
+            }
+            else if (trigBasicAttack1)
+            {
+                trigBasicAttack1 = false;
+                animCon.StartAnimation(AnimationController.AnimatorStates.BasicAttack1);
+            }
+            else if (trigBasicAttack2)
+            {
+                trigBasicAttack2 = false;
+                animCon.StartAnimation(AnimationController.AnimatorStates.BasicAttack2);
+            }
+            else if (trigBasicAttack3)
+            {
+                trigBasicAttack3 = false;
+                animCon.StartAnimation(AnimationController.AnimatorStates.BasicAttack3);
+            }
+            else if (trigSkill1)
+            {
+                trigSkill1 = false;
+                animCon.StartAnimation(AnimationController.AnimatorStates.Skill1);
+            }
+            else if (trigSkill2)
+            {
+                trigSkill2 = false;
+                animCon.StartAnimation(AnimationController.AnimatorStates.Skill2);
+            }
+            else if (trigSkill3)
+            {
+                trigSkill3 = false;
+                animCon.StartAnimation(AnimationController.AnimatorStates.Skill3);
+            }
+            else if (trigSkill4)
+            {
+                trigSkill4 = false;
+                animCon.StartAnimation(AnimationController.AnimatorStates.Skill4);
+            }
+            else if (!m_Grounded && m_vSpeed > 0.001)
+                animCon.StartAnimation(AnimationController.AnimatorStates.Fall);
+            else if (m_Grounded && m_Speed > 0.001)
+                animCon.StartAnimation(AnimationController.AnimatorStates.Run);
+            else
+                animCon.StartAnimation(AnimationController.AnimatorStates.Idle);
+        }
     }
 
     protected virtual void FixedUpdate()
@@ -92,13 +191,15 @@ public abstract class ChampionClassController : MonoBehaviour
                 m_Grounded = true;               
             }
         }
-        //m_Anim.SetBool("Ground", m_Grounded);
 
-        // Set the vertical animation
-        //m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
+        // Determines the vertical speed
+        m_vSpeed = m_Rigidbody2D.velocity.y;
 
         //Move the character if dashing
-        if (dashing && m_Grounded) m_Rigidbody2D.velocity = new Vector2(m_dashSpeed, m_Rigidbody2D.velocity.y);
+        if (dashing && m_Grounded)
+        {
+            m_Rigidbody2D.velocity = new Vector2(m_dashSpeed, m_Rigidbody2D.velocity.y);
+        }
     }
 
     #endregion
@@ -116,7 +217,7 @@ public abstract class ChampionClassController : MonoBehaviour
             else maxSpeed = m_MoveSpeedWhileAttacking;
 
             // The Speed animator parameter is set to the absolute value of the horizontal input.
-            //m_Anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
+            m_Speed = Mathf.Abs(Input.GetAxis("Horizontal"));
 
             // If the input is moving the player right and the player is facing left...
             if (move > 0 && !m_FacingRight)
@@ -133,7 +234,7 @@ public abstract class ChampionClassController : MonoBehaviour
                 Flip();
             }
 
-            // Move the character
+            // Move the character      
             m_Rigidbody2D.velocity = new Vector2(move * maxSpeed * stats.slowFactor, m_Rigidbody2D.velocity.y);
         }
     }
@@ -145,7 +246,6 @@ public abstract class ChampionClassController : MonoBehaviour
         {
             // Add a vertical force to the player.
             m_Grounded = false;
-            //m_Anim.SetBool("Ground", false);
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
         }
     }
@@ -153,7 +253,6 @@ public abstract class ChampionClassController : MonoBehaviour
     protected virtual IEnumerator jumpAttack()
     {
         jumpAttacking = true; //Set status variable
-        //m_Anim.SetBool("jumpAttack", true);
 
         int direction;
         if (m_FacingRight) direction = 1;
@@ -161,8 +260,8 @@ public abstract class ChampionClassController : MonoBehaviour
 
         m_Rigidbody2D.velocity = new Vector2( 4  *direction, -m_jumpAttackForce); //Add downwards force
         yield return new WaitUntil(() => m_Grounded); //Jump attacking as long as not grounded
-        
-        //Get hit enemies
+
+        //Get hit enemies   
         RaycastHit2D[] hits = Physics2D.CircleCastAll(m_GroundCheck.position, m_jumpAttackRadius, Vector2.up, 0.01f, whatToHit);
         foreach(RaycastHit2D hit in hits)
         {
@@ -172,13 +271,18 @@ public abstract class ChampionClassController : MonoBehaviour
 
         Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
         jumpAttacking = false;
-        //m_Anim.SetBool("jumpAttack", false);
+        trigJumpAttackEnd = true;
     }
 
     /// <summary>
     /// Manages the attacking and Combos
     /// </summary>
     public abstract void basicAttack(bool shouldAttack);
+
+    public abstract void skill1();
+    public abstract void skill2();
+    public abstract void skill3();
+    public abstract void skill4();
 
     //Dashes in the given direction
     public IEnumerator dash(int direction)
@@ -199,7 +303,7 @@ public abstract class ChampionClassController : MonoBehaviour
                 m_Rigidbody2D.velocity = Vector2.zero;
 
                 //Start animation
-                //m_Anim.SetTrigger("dash");
+                animCon.StartAnimation(AnimationController.AnimatorStates.Dash);
 
                 dashing = true;
                 dontMove = true;
@@ -218,20 +322,18 @@ public abstract class ChampionClassController : MonoBehaviour
         }
     }
 
-    public abstract void skill1();
-    public abstract void skill2();
-    public abstract void skill3();
-    public abstract void skill4();
-
     public void manageDefensive(bool pDefensive)
     {
         if (pDefensive)
         {
             //Start being defensive only if not defensive already   
-            if (!defensive) m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); //Stop moving
-            defensive = true;
+            if (!blocking) m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); //Stop moving
+            blocking = true;
         }
-        else defensive = false;
+        else
+        {
+            blocking = false;
+        }
 
     }
 
@@ -316,7 +418,7 @@ public abstract class ChampionClassController : MonoBehaviour
     /// <param name="singleTarget">only the first target or all targets? (default: singleTarget - true)</param>
     /// <param name="skillRange">Range of the skill (default: meeleRange - 1.5f)</param>.
     /// </summary>
-    protected void doMeeleSkill(int skillType, string calledAnimation, float skillDelay, int skillDamage, skillEffect skillSpecialEffect, int skillSpecialEffectTime, int skillStaminaCost, bool singleTarget = true, float skillRange = meeleRange)
+    protected void doMeeleSkill(int skillType, ref bool animationVar, float skillDelay, int skillDamage, skillEffect skillSpecialEffect, int skillSpecialEffectTime, int skillStaminaCost, bool singleTarget = true, float skillRange = meeleRange)
     {
         //Validate that character is not attacking and standing on ground
         if (!attacking && m_Grounded)
@@ -327,8 +429,8 @@ public abstract class ChampionClassController : MonoBehaviour
                 // set attacking coroutine
                 if (attackingRoutine != null) StopCoroutine(attackingRoutine);
                 attackingRoutine = StartCoroutine(setAttacking(attackLength[skillType] - 0.08f));
-                // set animation
-                //m_Anim.SetTrigger(calledAnimation);
+                // set animation trigger
+                animationVar = true;
                 // do hit by coroutine
                 StartCoroutine(doMeeleSkill_Hit(skillDelay, skillDamage, skillSpecialEffect, skillSpecialEffectTime, singleTarget, skillRange));
                 // lose stamina for skill

@@ -97,13 +97,13 @@ public class KnightController : ChampionClassController
                     {
                         case 1: case 2:
                             // do meele attack
-                            doMeeleSkill(0, "Attack", delay_BasicAttack, damage_BasicAttack, skillEffect.nothing, 0, stamina_BasicAttack);
+                            doMeeleSkill(0, ref trigBasicAttack1, delay_BasicAttack, damage_BasicAttack, skillEffect.nothing, 0, stamina_BasicAttack);
                             // Reset timer of combo
                             resetComboTime();
                             break;
                         case 3:
                             // do meele attack
-                            doMeeleSkill(2, "AttackCombo", delay_BasicAttackCombo, damage_BasicAttackCombo, skillEffect.nothing, 0, stamina_BasicAttackCombo);
+                            doMeeleSkill(2, ref trigBasicAttack2, delay_BasicAttackCombo, damage_BasicAttackCombo, skillEffect.nothing, 0, stamina_BasicAttackCombo);
                             // Reset Combo after combo-hit
                             abortCombo();
                             break;
@@ -149,7 +149,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill1()
     {
-        doMeeleSkill(4, "skill1_GroundSmash", delay_Skill1, damage_Skill1_GroundSmash, skillEffect.stun, 3, stamina_Skill1_GroundSmash);
+        doMeeleSkill(4, ref trigSkill1, delay_Skill1, damage_Skill1_GroundSmash, skillEffect.stun, 3, stamina_Skill1_GroundSmash);
     }
 
 
@@ -165,7 +165,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill2()
     {
-        doMeeleSkill(5, "skill2_Leap", delay_Skill2, damage_Skill2_Leap, skillEffect.stun, 3, stamina_Skill2_Leap);
+        doMeeleSkill(5, ref trigSkill2, delay_Skill2, damage_Skill2_Leap, skillEffect.stun, 3, stamina_Skill2_Leap);
     }
 
     /// <summary>
@@ -180,7 +180,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill3()
     {
-        doMeeleSkill(6, "skill3_ShieldBash", delay_Skill3, damage_Skill3_ShieldBash, skillEffect.knockback, 0, stamina_Skill3_ShieldBash, false);
+        doMeeleSkill(6, ref trigSkill3, delay_Skill3, damage_Skill3_ShieldBash, skillEffect.knockback, 0, stamina_Skill3_ShieldBash, false);
     }
 
     /// <summary>
