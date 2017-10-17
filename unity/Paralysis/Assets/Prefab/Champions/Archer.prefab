@@ -332,7 +332,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 0.5
+  - 2
   - 0.45
   - 0
   - 0
@@ -342,6 +342,22 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  Atlasses:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: 8943d6091c418334a9361297d7760627, type: 2}
+  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: c0c60b9da53c099409ee401fbffe6c62, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: deb3dc8dc7777554fa637d60ee29005e, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   GeneralSpeed: 0
   CharacterClass: Archer
   CharacterSkin: Basic

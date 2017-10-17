@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
+using System.Linq;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class AnimationController : MonoBehaviour
@@ -10,6 +12,7 @@ public class AnimationController : MonoBehaviour
     public AnimatorStates[] AnimationType = { 0 };
     public bool[] AnimationLoop = { false };
     public float[] AnimationDuration;
+    public SpriteAtlas[] Atlasses;
     public float GeneralSpeed;
     public string CharacterClass = "_master";
     public string CharacterSkin = "basic";
@@ -23,7 +26,7 @@ public class AnimationController : MonoBehaviour
     float startHeight;
     SpriteRenderer spriteRenderer;
 
-    Dictionary<AnimatorStates, Sprite[]> animationSprites;  // Saves all Sprites to the Animations
+    Dictionary<AnimatorStates, SpriteAtlas> animationSprites;  // Saves all Sprites to the Animations
     Dictionary<AnimatorStates, float> animationDuration;    // Saves all Speed of the Animations
     Dictionary<AnimatorStates, bool> animationLoop;         // Saves if animation should be looped
 
@@ -61,7 +64,7 @@ public class AnimationController : MonoBehaviour
 
     void Start()
     {
-        animationSprites = new Dictionary<AnimatorStates, Sprite[]>();
+        animationSprites = new Dictionary<AnimatorStates, SpriteAtlas>();
         animationDuration = new Dictionary<AnimatorStates, float>();
         animationLoop = new Dictionary<AnimatorStates, bool>();
 
@@ -73,24 +76,34 @@ public class AnimationController : MonoBehaviour
     public void InitAnimations()
     {
         // Load all animation sprites on start for better performance
+        //for (int i = 0; i < AnimationType.Length; i++)
+        //{
+        //    // Save sprites to Dictionary
+        //    Sprite[] sp = Resources.LoadAll<Sprite>(spritesPath + AnimationType[i].ToString());
+
+        //    if (sp.Length > 0)
+        //    {
+        //        animationSprites.Add(AnimationType[i], sp);
+        //        animationDuration.Add(AnimationType[i], AnimationDuration[i]);
+        //        animationLoop.Add(AnimationType[i], AnimationLoop[i]);
+        //    }
+        //}
+
         for (int i = 0; i < AnimationType.Length; i++)
         {
-            // Save sprites to Dictionary
-            Sprite[] sp = Resources.LoadAll<Sprite>(spritesPath + AnimationType[i].ToString());
-
-            if (sp.Length > 0)
-            {
-                animationSprites.Add(AnimationType[i], sp);
-                animationDuration.Add(AnimationType[i], AnimationDuration[i]);
-                animationLoop.Add(AnimationType[i], AnimationLoop[i]);
-            }
+            animationSprites.Add(AnimationType[i], Atlasses[i]);
+            animationDuration.Add(AnimationType[i], AnimationDuration[i]);
+            animationLoop.Add(AnimationType[i], AnimationLoop[i]);
         }
 
         //Load idle animation
         loadAnimationFromResources(AnimatorStates.Idle);
 
         // Save idle animation's ground position
-        Sprite idleImage = animationSprites[AnimatorStates.Idle][0];
+        Sprite[] temp = new Sprite[animationSprites[AnimatorStates.Idle].spriteCount];
+        animationSprites[AnimatorStates.Idle].GetSprites(temp);
+
+        Sprite idleImage = temp[0];
         idleHeight = idleImage.bounds.extents.y;
         startHeight = transform.localPosition.y;
 
@@ -140,34 +153,38 @@ public class AnimationController : MonoBehaviour
         }
     }
 
-    private IEnumerator test()
-    {
-        yield return new WaitForSeconds(20);
-    }
-
     private Sprite[] loadAnimationFromResources(AnimatorStates animation)
     {
-        Sprite[] sprites;
-        if (animationSprites.ContainsKey(animation))
+        Sprite[] sprites = new Sprite[10];
+        try
+        { sprites = new Sprite[animationSprites[animation].spriteCount]; }
+        catch
         {
+        }
+        //if (animationSprites.ContainsKey(animation))
+        //{
             //Animation was loaded already
-            sprites = animationSprites[animation];
-        }
-        else
-        {
-            //Load animation
-            Sprite[] sp = Resources.LoadAll<Sprite>(spritesPath + animation.ToString());
-            int index = Array.IndexOf(AnimationType, animation); //index of animation to get correct loop and duration
+            animationSprites[animation].GetSprites(sprites);
+        //}
+        //else
+        //{
+        //    //Load animation
+        //    Sprite[] sp = Resources.LoadAll<Sprite>(spritesPath + animation.ToString());
+        //    int index = Array.IndexOf(AnimationType, animation); //index of animation to get correct loop and duration
 
-            if (sp.Length > 0)
-            {
-                //Save into dictionaries
-                animationSprites.Add(animation, sp);
-                animationDuration.Add(animation, AnimationDuration[index]);
-                animationLoop.Add(animation, AnimationLoop[index]);
-            }
-            sprites = sp;
-        }
+        //    if (sp.Length > 0)
+        //    {
+        //        //Save into dictionaries
+        //        animationSprites.Add(animation, sp);
+        //        animationDuration.Add(animation, AnimationDuration[index]);
+        //        animationLoop.Add(animation, AnimationLoop[index]);
+        //    }
+        //    sprites = sp;
+        //}
+
+
+       // Array muss sortiert werden.
+
         return sprites;
     }
 

@@ -10,7 +10,7 @@ using System;
 [CanEditMultipleObjects]
 public class AnimEditor : Editor {
 
-	SerializedProperty animations, looping, customSpeeds, AnimationSpeed, CharacterClass, CharacterSkin, CharacterName;
+	SerializedProperty animations, looping, customSpeeds, AnimationSpeed, CharacterClass, CharacterSkin, CharacterName, atlasses;
 
 
 	float lastSpeed;
@@ -18,7 +18,10 @@ public class AnimEditor : Editor {
 	DirectoryInfo levelDirectoryPath;
 	void OnEnable () {
 		animations = serializedObject.FindProperty ("AnimationType");
-		looping = serializedObject.FindProperty ("AnimationLoop");
+
+        atlasses = serializedObject.FindProperty("Atlasses");
+
+        looping = serializedObject.FindProperty ("AnimationLoop");
 		CharacterClass = serializedObject.FindProperty ("CharacterClass");
 		CharacterSkin = serializedObject.FindProperty ("CharacterSkin");
 		AnimationSpeed = serializedObject.FindProperty ("GeneralSpeed");
@@ -38,27 +41,32 @@ public class AnimEditor : Editor {
 		EditorGUILayout.PropertyField(CharacterSkin, new GUIContent("CharacterSkin"), true);
 		EditorGUILayout.PropertyField(AnimationSpeed, new GUIContent("AnimationSpeed"), true);
 
-		GUILayout.BeginHorizontal();
+        GUILayout.BeginHorizontal();
 		GUILayout.Label( "Animation");
-		GUILayout.Label( "Loop");
+        GUILayout.Label( "Loop");
 		GUILayout.Label( "Speed" );
-		GUILayout.EndHorizontal();
-		animations = serializedObject.FindProperty ("AnimationType");
-		looping = serializedObject.FindProperty ("AnimationLoop");
+        GUILayout.Label("Atlasses");
+        GUILayout.EndHorizontal();
 
-		DirectoryInfo[] Animations = levelDirectoryPath.GetDirectories();
-		looping.arraySize = Animations.Length;
+        animations = serializedObject.FindProperty ("AnimationType");
+		looping = serializedObject.FindProperty ("AnimationLoop");
+        atlasses = serializedObject.FindProperty("Atlasses");
+
+        DirectoryInfo[] Animations = levelDirectoryPath.GetDirectories();
+        atlasses.arraySize = Animations.Length;
+        looping.arraySize = Animations.Length;
 		animations.arraySize = Animations.Length;
 		customSpeeds.arraySize = Animations.Length;
 
 		for (int i = 0; i < Animations.Length; i++) {
 			GUILayout.BeginHorizontal();
-			EditorGUILayout.PropertyField(looping.GetArrayElementAtIndex(i),  
-				new GUIContent (Animations[i].Name), true); 
-			
-			EditorGUILayout.PropertyField(customSpeeds.GetArrayElementAtIndex(i), 
+            EditorGUILayout.PropertyField(looping.GetArrayElementAtIndex(i),  
+				new GUIContent (Animations[i].Name), true);
+            EditorGUILayout.PropertyField(customSpeeds.GetArrayElementAtIndex(i), 
 				new GUIContent (""), true);
-			GUILayout.Space(0);
+            EditorGUILayout.PropertyField(atlasses.GetArrayElementAtIndex(i),
+                new GUIContent(""), true);
+            GUILayout.Space(0);
 			GUILayout.EndHorizontal();
 
             try
@@ -71,12 +79,12 @@ public class AnimEditor : Editor {
                 //Ignore
             }
 
-            if (lastSpeed!= AnimationSpeed.floatValue)
+            if (lastSpeed != AnimationSpeed.floatValue)
 				customSpeeds.GetArrayElementAtIndex(i).floatValue = AnimationSpeed.floatValue;
 		}
-
-		serializedObject.ApplyModifiedProperties();
+        serializedObject.ApplyModifiedProperties();
 		lastSpeed = AnimationSpeed.floatValue;
+        serializedObject.Update();
 
 	}
 
