@@ -107,7 +107,6 @@ GameObject:
   - component: {fileID: 4314687281043260}
   - component: {fileID: 114595155284286512}
   - component: {fileID: 114080571498377182}
-  - component: {fileID: 114363158370114894}
   - component: {fileID: 114838793074813456}
   - component: {fileID: 61410386829232678}
   - component: {fileID: 58592652561703760}
@@ -115,7 +114,7 @@ GameObject:
   - component: {fileID: 212191050993358136}
   m_Layer: 11
   m_Name: Archer
-  m_TagString: Player
+  m_TagString: MainPlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -209,7 +208,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 3
-  m_Material: {fileID: 6200000, guid: 3054e506f64279f4b846defcd6acf01e, type: 2}
+  m_Material: {fileID: 6200000, guid: 6ca2f3d30bcc2d1429597abaf78ee1d2, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -222,7 +221,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1619680024147944}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 3054e506f64279f4b846defcd6acf01e, type: 2}
+  m_Material: {fileID: 6200000, guid: 6ca2f3d30bcc2d1429597abaf78ee1d2, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -237,7 +236,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1619680024147944}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 3054e506f64279f4b846defcd6acf01e, type: 2}
+  m_Material: {fileID: 6200000, guid: 6ca2f3d30bcc2d1429597abaf78ee1d2, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -314,39 +313,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Health
---- !u!114 &114363158370114894
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1619680024147944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8652326777ca6a4189adc11d223b02c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AnimationType: 090000000800000004000000030000000500000000000000020000000c00000007000000010000000e0000000f000000100000001100000006000000
-  AnimationLoop: 000000000001000000000000000000
-  AnimationDuration:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  GeneralSpeed: 0
-  CharacterClass: archer
-  CharacterSkin: Basic
-  finishedInitialization: 0
 --- !u!114 &114429982242684808
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -367,10 +333,10 @@ MonoBehaviour:
   - 0
   - 0
   - 0.5
+  - 0.45
   - 0
   - 0
-  - 0
-  - 0
+  - 0.3
   - 0
   - 0
   - 0

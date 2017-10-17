@@ -14,13 +14,15 @@ public class debug : MonoBehaviour {
         currentChamp = startChar;
 
         GameObject currentPlayer = GameObject.FindGameObjectWithTag("MainPlayer");
-
-        Debug.Log(currentPlayer.name);
-        GameObject newPlayer = Instantiate(champions[currentChamp], currentPlayer.transform.position, Quaternion.identity);
+        Vector2 startPos = Vector3.zero;
+        if (currentPlayer != null)
+        {
+            Debug.Log(currentPlayer.name);
+            Destroy(currentPlayer);
+        }
+        GameObject newPlayer = Instantiate(champions[currentChamp], startPos, Quaternion.identity);
 
         Camera.main.GetComponent<CameraBehaviour>().changeTarget(newPlayer.transform);
-        Destroy(currentPlayer);
-
     }
 
     //Switches the champion by changing the prefab

@@ -95,7 +95,7 @@ public abstract class ChampionClassController : MonoBehaviour
             animCon.StartAnimation(AnimationController.AnimatorStates.KnockedBack);
         else
         {
-            // don't interrupt these animations (aquivalent to HasExitTime)
+            // don't interrupt these animations (equivalent to HasExitTime)
             switch (animCon.currentAnimation)
             {
                 case AnimationController.AnimatorStates.Dash:
@@ -120,11 +120,6 @@ public abstract class ChampionClassController : MonoBehaviour
             {
                 stats.trigHit = false;
                 animCon.StartAnimation(AnimationController.AnimatorStates.Hit);
-            }
-            else if (trigJump)
-            {
-                trigJump = false;
-                animCon.StartAnimation(AnimationController.AnimatorStates.Jump);
             }
             else if (jumpAttacking)
                 animCon.StartAnimation(AnimationController.AnimatorStates.JumpAttack);
@@ -168,11 +163,16 @@ public abstract class ChampionClassController : MonoBehaviour
                 trigSkill4 = false;
                 animCon.StartAnimation(AnimationController.AnimatorStates.Skill4);
             }
-            else if (!m_Grounded && m_vSpeed > 0.001)
+            else if (!m_Grounded && m_vSpeed < 0)
                 animCon.StartAnimation(AnimationController.AnimatorStates.Fall);
+            else if (!m_Grounded && m_vSpeed > 0.001 && trigJump)
+            {
+                animCon.StartAnimation(AnimationController.AnimatorStates.Jump);
+                trigJump = false;
+            }
             else if (m_Grounded && m_Speed > 0.001)
                 animCon.StartAnimation(AnimationController.AnimatorStates.Run);
-            else
+            else if(m_Grounded)
                 animCon.StartAnimation(AnimationController.AnimatorStates.Idle);
         }
     }
@@ -246,6 +246,7 @@ public abstract class ChampionClassController : MonoBehaviour
         {
             // Add a vertical force to the player.
             m_Grounded = false;
+            trigJump = true;
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
         }
     }

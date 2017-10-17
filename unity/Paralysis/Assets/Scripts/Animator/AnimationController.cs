@@ -86,6 +86,9 @@ public class AnimationController : MonoBehaviour
             }
         }
 
+        //Load idle animation
+        loadAnimationFromResources(AnimatorStates.Idle);
+
         // Save idle animation's ground position
         Sprite idleImage = animationSprites[AnimatorStates.Idle][0];
         idleHeight = idleImage.bounds.extents.y;
@@ -107,8 +110,8 @@ public class AnimationController : MonoBehaviour
     IEnumerator PlayAnimation(AnimatorStates animation)
     {
         currentAnimation = animation;
+        Sprite[] sprites = loadAnimationFromResources(animation);
 
-        Sprite[] sprites = animationSprites[animation];
         //fix possible height issues using idle animation as reference(possibly create more)
         if (animationSprites[AnimatorStates.Idle] != null)
         {
@@ -136,4 +139,37 @@ public class AnimationController : MonoBehaviour
                 StartAnimation(AnimatorStates.Idle);
         }
     }
+
+    private IEnumerator test()
+    {
+        yield return new WaitForSeconds(20);
+    }
+
+    private Sprite[] loadAnimationFromResources(AnimatorStates animation)
+    {
+        Sprite[] sprites;
+        if (animationSprites.ContainsKey(animation))
+        {
+            //Animation was loaded already
+            sprites = animationSprites[animation];
+        }
+        else
+        {
+            //Load animation
+            Sprite[] sp = Resources.LoadAll<Sprite>(spritesPath + animation.ToString());
+            int index = Array.IndexOf(AnimationType, animation); //index of animation to get correct loop and duration
+
+            if (sp.Length > 0)
+            {
+                //Save into dictionaries
+                animationSprites.Add(animation, sp);
+                animationDuration.Add(animation, AnimationDuration[index]);
+                animationLoop.Add(animation, AnimationLoop[index]);
+            }
+            sprites = sp;
+        }
+        return sprites;
+    }
+
+
 }

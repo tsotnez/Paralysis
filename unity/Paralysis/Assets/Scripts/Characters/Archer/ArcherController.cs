@@ -8,6 +8,7 @@ public class ArcherController : ChampionClassController
 
     public override void basicAttack(bool shouldAttack)
     {
+        if(shouldAttack) trigBasicAttack1 = true;
     }
 
     public override void skill1()
