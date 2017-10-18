@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+
 
 public class SettingsManager : MonoBehaviour
 {
@@ -18,9 +20,11 @@ public class SettingsManager : MonoBehaviour
 
     public Slider musicVolumeSlide;
 
+    public Button applyButton;
 
 
 
+    public AudioSource musicSource;
     public Resolution[] resolutions;
     public GameSettings gameSettings;
 
@@ -47,12 +51,18 @@ public class SettingsManager : MonoBehaviour
 
         musicVolumeSlide.onValueChanged.AddListener(delegate { OnMusicVolumChange(); });
 
-
+        applyButton.onClick.AddListener(delegate { OnApplyButtonClick(); });
 
 
 
         resolutions = Screen.resolutions;
 
+        foreach(Resolution resolution in resolutions)
+        {
+            resolutionDropdown.options.Add(new Dropdown.OptionData(resolution.ToString()));
+        }
+
+        LoadSetting();
     }
 
 
@@ -68,7 +78,10 @@ public class SettingsManager : MonoBehaviour
 
     public void OnResolutionChange()
     {
+        Screen.SetResolution(resolutions[resolutionDropdown.value].width, resolutions[resolutionDropdown.value].height, Screen.fullScreen);
 
+
+        gameSettings.resolutionIndex = resolutionDropdown.value;
 
 
     }
@@ -86,29 +99,53 @@ public class SettingsManager : MonoBehaviour
     public void OnAntialiasingChange()
     {
 
+        QualitySettings.antiAliasing = gameSettings.antialiasing = (int)Mathf.Pow(2f, antialiasingDropdown.value);
+
     }
 
     public void OnVsyncChange()
     {
+
+        QualitySettings.vSyncCount = gameSettings.vSync = vSyncDropdown.value;
 
     }
 
 
     public void OnMusicVolumChange()
     {
+        musicSource.volume = gameSettings.musicVolume = musicVolumeSlide.value;
 
+    }
 
+    public void OnApplyButtonClick(){
+        
     }
 
 
     public void SaveSettings()
     {
-        
+        string jsonData = JsonUtility.ToJson(gameSettings, true);
+        File.WriteAllText(Application.persistentDataPath + "/gamesettings.json",jsonData);
+
     }
 
 
     public void LoadSetting()
     {
-        
+        gameSettings = JsonUtility.FromJson<GameSettings>(File.ReadAllText(Application.persistentDataPath + "/gamesettings.json"));
+
+        musicVolumeSlide.value = gameSettings.musicVolume;
+
+        antialiasingDropdown.value = gameSettings.antialiasing;
+
+        vSyncDropdown.value = gameSettings.vSync;
+
+        textureQualityDropdown.value = gameSettings.textureQuality;
+
+        resolutionDropdown.value = gameSettings.resolutionIndex;
+
+        fullscreenToggle.isOn = gameSettings.fullscreen;
+
+        resolutionDropdown.RefreshShownValue();
     }
 }
