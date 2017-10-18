@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class KnightController : ChampionClassController
@@ -196,6 +197,16 @@ public class KnightController : ChampionClassController
     {
         //range skill
         //animation: skill4_Spear
+    }
+
+    protected override bool additionalNotInterruptCondition()
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override bool additionalAnimationCondition()
+    {
+        throw new NotImplementedException();
     }
 
     #endregion

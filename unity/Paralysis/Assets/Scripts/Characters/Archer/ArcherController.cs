@@ -12,7 +12,7 @@ public class ArcherController : ChampionClassController
     }
 
     public override void skill1()
-    {
+    { 
     }
 
     public override void skill2()
@@ -27,5 +27,15 @@ public class ArcherController : ChampionClassController
     public override void skill4()
     {
 
+    }
+
+    protected override bool additionalAnimationCondition()
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override bool additionalNotInterruptCondition()
+    {
+        throw new NotImplementedException();
     }
 }

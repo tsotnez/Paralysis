@@ -333,5 +333,15 @@ public class AssassinController : ChampionClassController
         if(invisRoutine !=null) StopCoroutine(invisRoutine);
         GetComponentInChildren<SpriteRenderer>().color = Color.white;
     }
+
+    protected override bool additionalNotInterruptCondition()
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override bool additionalAnimationCondition()
+    {
+        throw new NotImplementedException();
+    }
 }
 

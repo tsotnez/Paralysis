@@ -182,9 +182,6 @@ public class AnimationController : MonoBehaviour
         //    sprites = sp;
         //}
 
-
-       // Array muss sortiert werden.
-
         return sprites;
     }
 

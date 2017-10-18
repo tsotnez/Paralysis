@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -96,6 +97,8 @@ public abstract class ChampionClassController : MonoBehaviour
         else
         {
             // don't interrupt these animations (equivalent to HasExitTime)
+            if (additionalNotInterruptCondition()) return;
+
             switch (animCon.currentAnimation)
             {
                 case AnimationController.AnimatorStates.Dash:
@@ -111,6 +114,8 @@ public abstract class ChampionClassController : MonoBehaviour
                 case AnimationController.AnimatorStates.DashFor:
                     return;
             }
+
+            if (additionalAnimationCondition()) return;
 
             if (blocking)
                 animCon.StartAnimation(AnimationController.AnimatorStates.Block);
@@ -176,6 +181,9 @@ public abstract class ChampionClassController : MonoBehaviour
                 animCon.StartAnimation(AnimationController.AnimatorStates.Idle);
         }
     }
+
+    protected abstract bool additionalNotInterruptCondition();
+    protected abstract bool additionalAnimationCondition();
 
     protected virtual void FixedUpdate()
     {
