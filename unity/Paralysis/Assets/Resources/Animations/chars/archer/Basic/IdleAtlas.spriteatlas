@@ -26,77 +26,77 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 0fd9e4af3e4abd44c06a5fd50e3597a3
+      Hash: 9fe33e36e34e2bf56565441413add258
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 0fd9e4af3e4abd44c06a5fd50e3597a3
+    hashString: 9fe33e36e34e2bf56565441413add258
     totalSpriteSurfaceArea: 12328000
     packables:
     - {fileID: 102900000, guid: 04d3171cf33157b41b5d7edbbe03aeb9, type: 3}
     packedSpriteRenderDataKeys:
-    - 6077392ca9d947043b96127a71b1981e: 21300000
-    - c349b295737ebe548be5fba724614bfb: 21300000
-    - 1dcdaa11e42a8b64aa2eb868033180e8: 21300000
-    - d3fb281317d9cee428f302a60188f5ff: 21300000
-    - 5f0eea4d0e0810d4180e1cb11090716d: 21300000
-    - 2db14d9f37a6b0941bc155c8b3ff8606: 21300000
-    - 9dc97ad73e93ad346bf22bc333a80a3b: 21300000
-    - 8d7249104ef457448a84ec6d5881e6a0: 21300000
-    - c72028d368be69147966e340ca0722b6: 21300000
-    - 77d2c1568aaf1e04c9939b9c5b5c5bec: 21300000
-    - 201211941f9cc1b4d90602df7dd9c6a4: 21300000
-    - 18045b615018a4f459b578d28064f31c: 21300000
-    - 1e8a378c86eee184296c9e12ebbdb429: 21300000
-    - f5c7cd1d2b2af5044a58d1e3758c9197: 21300000
-    - 8c7c134e8c7d3114cab3bd8607e14e04: 21300000
-    - fcb39713afe3ab541b054167ba9b698c: 21300000
-    - 62bac8fc149abd54fb6ecd8b5c545684: 21300000
-    - 3c6a3c73d4398c540a8d74fcc1e84c1d: 21300000
-    - d8d1173a6c0e464449bfcc603c5254eb: 21300000
-    - f509baf164ddaff44896f52d08e7c55a: 21300000
+    - c6cd05948aeaa7c4daaf9005d08056d1: 21300000
+    - d0da4c53fe2e9e0418102c2dfbbb097d: 21300000
+    - c9fffc8f6a8fdf8408e8c1068dcc6186: 21300000
+    - e0f2f61b37539a74e8e1cfc8f0f82347: 21300000
+    - 3ea0dacee8ef0ae45bbbbe7acb2d29c4: 21300000
+    - 4c9665100485519469aca0adff068f41: 21300000
+    - 1a2ca96e4ad35954c976ad5d9779ffaf: 21300000
+    - d66d68e74d437654ab8289314afeb3cc: 21300000
+    - c3517ec9a9f34964da844f2fb7e721c1: 21300000
+    - 0f356268bf750af4d989a5898a7f3562: 21300000
+    - 61ef6225ca2c07b42bfddbed8695994e: 21300000
+    - 01d2a614b3d2d544390e5e988f6d1bb8: 21300000
+    - 9d9f5e18097acc84a8eb182fe838a2a5: 21300000
+    - 23d1a7daa0be91447a45471af871c7f6: 21300000
+    - a22c45798e36a394c8f6935d4874b577: 21300000
+    - 4b2f355e400f87448b5b3f1df8b56a7a: 21300000
+    - ad3457f5e6bb84e4782cf4632d773bd5: 21300000
+    - 17b8256a940120145816651550135470: 21300000
+    - 071c695eea8160e43b469b00b3964818: 21300000
+    - b8ceaa78db52b9045af3c6bad293be74: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: 6077392ca9d947043b96127a71b1981e, type: 3}
-  - {fileID: 21300000, guid: c349b295737ebe548be5fba724614bfb, type: 3}
-  - {fileID: 21300000, guid: 1dcdaa11e42a8b64aa2eb868033180e8, type: 3}
-  - {fileID: 21300000, guid: d3fb281317d9cee428f302a60188f5ff, type: 3}
-  - {fileID: 21300000, guid: 5f0eea4d0e0810d4180e1cb11090716d, type: 3}
-  - {fileID: 21300000, guid: 2db14d9f37a6b0941bc155c8b3ff8606, type: 3}
-  - {fileID: 21300000, guid: 9dc97ad73e93ad346bf22bc333a80a3b, type: 3}
-  - {fileID: 21300000, guid: 8d7249104ef457448a84ec6d5881e6a0, type: 3}
-  - {fileID: 21300000, guid: c72028d368be69147966e340ca0722b6, type: 3}
-  - {fileID: 21300000, guid: 77d2c1568aaf1e04c9939b9c5b5c5bec, type: 3}
-  - {fileID: 21300000, guid: 201211941f9cc1b4d90602df7dd9c6a4, type: 3}
-  - {fileID: 21300000, guid: 18045b615018a4f459b578d28064f31c, type: 3}
-  - {fileID: 21300000, guid: 1e8a378c86eee184296c9e12ebbdb429, type: 3}
-  - {fileID: 21300000, guid: f5c7cd1d2b2af5044a58d1e3758c9197, type: 3}
-  - {fileID: 21300000, guid: 8c7c134e8c7d3114cab3bd8607e14e04, type: 3}
-  - {fileID: 21300000, guid: fcb39713afe3ab541b054167ba9b698c, type: 3}
-  - {fileID: 21300000, guid: 62bac8fc149abd54fb6ecd8b5c545684, type: 3}
-  - {fileID: 21300000, guid: 3c6a3c73d4398c540a8d74fcc1e84c1d, type: 3}
-  - {fileID: 21300000, guid: d8d1173a6c0e464449bfcc603c5254eb, type: 3}
-  - {fileID: 21300000, guid: f509baf164ddaff44896f52d08e7c55a, type: 3}
+  - {fileID: 21300000, guid: c6cd05948aeaa7c4daaf9005d08056d1, type: 3}
+  - {fileID: 21300000, guid: d0da4c53fe2e9e0418102c2dfbbb097d, type: 3}
+  - {fileID: 21300000, guid: c9fffc8f6a8fdf8408e8c1068dcc6186, type: 3}
+  - {fileID: 21300000, guid: e0f2f61b37539a74e8e1cfc8f0f82347, type: 3}
+  - {fileID: 21300000, guid: 3ea0dacee8ef0ae45bbbbe7acb2d29c4, type: 3}
+  - {fileID: 21300000, guid: 4c9665100485519469aca0adff068f41, type: 3}
+  - {fileID: 21300000, guid: 1a2ca96e4ad35954c976ad5d9779ffaf, type: 3}
+  - {fileID: 21300000, guid: d66d68e74d437654ab8289314afeb3cc, type: 3}
+  - {fileID: 21300000, guid: c3517ec9a9f34964da844f2fb7e721c1, type: 3}
+  - {fileID: 21300000, guid: 0f356268bf750af4d989a5898a7f3562, type: 3}
+  - {fileID: 21300000, guid: 61ef6225ca2c07b42bfddbed8695994e, type: 3}
+  - {fileID: 21300000, guid: 01d2a614b3d2d544390e5e988f6d1bb8, type: 3}
+  - {fileID: 21300000, guid: 9d9f5e18097acc84a8eb182fe838a2a5, type: 3}
+  - {fileID: 21300000, guid: 23d1a7daa0be91447a45471af871c7f6, type: 3}
+  - {fileID: 21300000, guid: a22c45798e36a394c8f6935d4874b577, type: 3}
+  - {fileID: 21300000, guid: 4b2f355e400f87448b5b3f1df8b56a7a, type: 3}
+  - {fileID: 21300000, guid: ad3457f5e6bb84e4782cf4632d773bd5, type: 3}
+  - {fileID: 21300000, guid: 17b8256a940120145816651550135470, type: 3}
+  - {fileID: 21300000, guid: 071c695eea8160e43b469b00b3964818, type: 3}
+  - {fileID: 21300000, guid: b8ceaa78db52b9045af3c6bad293be74, type: 3}
   m_PackedSpriteNamesToIndex:
-  - 1_h_idle_018
-  - 1_h_idle_019
-  - 1_h_idle_009
-  - 1_h_idle_008
-  - 1_h_idle_010
-  - 1_h_idle_011
-  - 1_h_idle_012
-  - 1_h_idle_013
-  - 1_h_idle_003
-  - 1_h_idle_014
-  - 1_h_idle_002
-  - 1_h_idle_015
-  - 1_h_idle_001
-  - 1_h_idle_016
-  - 1_h_idle_000
-  - 1_h_idle_017
-  - 1_h_idle_007
-  - 1_h_idle_006
-  - 1_h_idle_005
-  - 1_h_idle_004
+  - Idle_08
+  - Idle_09
+  - Idle_04
+  - Idle_05
+  - Idle_19
+  - Idle_06
+  - Idle_18
+  - Idle_07
+  - Idle_17
+  - Idle_00
+  - Idle_16
+  - Idle_01
+  - Idle_15
+  - Idle_02
+  - Idle_14
+  - Idle_03
+  - Idle_13
+  - Idle_12
+  - Idle_11
+  - Idle_10
   m_Tag: IdleAtlas
   m_IsVariant: 0
