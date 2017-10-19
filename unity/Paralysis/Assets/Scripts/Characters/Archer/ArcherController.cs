@@ -29,13 +29,17 @@ public class ArcherController : ChampionClassController
 
     }
 
-    protected override bool additionalAnimationCondition()
+    #region Character specific animation
+
+    protected override bool additionalAnimationCondition(AnimationController animCon)
     {
-        throw new NotImplementedException();
+        return false;
     }
 
-    protected override bool additionalNotInterruptCondition()
+    protected override bool additionalNotInterruptCondition(AnimationController.AnimatorStates activeAnimation)
     {
-        throw new NotImplementedException();
+        return false;
     }
+
+    #endregion
 }

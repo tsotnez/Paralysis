@@ -47,6 +47,9 @@ public class KnightController : ChampionClassController
     [SerializeField]
     private int damage_Skill4_Spear = 15;
 
+    // Trigger for character specific animations
+    private bool trigDashFor = false;
+
     #region default Methods
 
     // Use this for initialization
@@ -199,14 +202,38 @@ public class KnightController : ChampionClassController
         //animation: skill4_Spear
     }
 
-    protected override bool additionalNotInterruptCondition()
+    #endregion
+
+    #region Character specific animation
+
+    protected override bool additionalAnimationCondition(AnimationController animCon)
     {
-        throw new NotImplementedException();
+        if (blocking && m_Speed > 0.001)
+        {
+            animCon.StartAnimation(AnimationController.AnimatorStates.BlockMove);            
+        }
+        else if (trigDashFor)
+        {
+            trigDashFor = false;
+            animCon.StartAnimation(AnimationController.AnimatorStates.DashFor);
+        }
+        else
+        {
+            return false;
+        }
+
+        return true;
     }
 
-    protected override bool additionalAnimationCondition()
+    protected override bool additionalNotInterruptCondition(AnimationController.AnimatorStates activeAnimation)
     {
-        throw new NotImplementedException();
+        switch (activeAnimation)
+        {
+            case AnimationController.AnimatorStates.DashFor:
+                return true;
+        }
+
+        return false;
     }
 
     #endregion

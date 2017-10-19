@@ -24,6 +24,8 @@ public abstract class ChampionClassController : MonoBehaviour
     protected float m_ComboCounterMax = 1;                                // How long the next combostage is reachable (seconds)
     [SerializeField]
     protected float m_jumpAttackForce = 10f;
+    [SerializeField]
+    protected float m_MoveSpeedWhileBlocking = 0f;                        // Max speed while blocking
     public LayerMask whatToHit;                                           // What to hit when checking for hits while attacking
 
     protected Transform m_GroundCheck;                                    // A position marking where to check if the player is grounded.
@@ -97,7 +99,7 @@ public abstract class ChampionClassController : MonoBehaviour
         else
         {
             // don't interrupt these animations (equivalent to HasExitTime)
-            //if (additionalNotInterruptCondition()) return;
+            if (additionalNotInterruptCondition(animCon.currentAnimation)) return;
 
             switch (animCon.currentAnimation)
             {
@@ -115,7 +117,8 @@ public abstract class ChampionClassController : MonoBehaviour
                     return;
             }
 
-           // if (additionalAnimationCondition()) return;
+            // For character specific animations
+            if (additionalAnimationCondition(animCon)) return;
 
             if (blocking)
                 animCon.StartAnimation(AnimationController.AnimatorStates.Block);
@@ -182,8 +185,8 @@ public abstract class ChampionClassController : MonoBehaviour
         }
     }
 
-    protected abstract bool additionalNotInterruptCondition();
-    protected abstract bool additionalAnimationCondition();
+    protected abstract bool additionalNotInterruptCondition(AnimationController.AnimatorStates activeAnimation);
+    protected abstract bool additionalAnimationCondition(AnimationController animCon);
 
     protected virtual void FixedUpdate()
     {
@@ -336,7 +339,11 @@ public abstract class ChampionClassController : MonoBehaviour
         if (pDefensive)
         {
             //Start being defensive only if not defensive already   
-            if (!blocking) m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); //Stop moving
+            if (!blocking)
+            {
+                // Stop moving - Set MoveSpeed to char default.
+                m_Rigidbody2D.velocity = new Vector2(m_MoveSpeedWhileBlocking, m_Rigidbody2D.velocity.y); 
+            }
             blocking = true;
         }
         else

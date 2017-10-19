@@ -334,14 +334,18 @@ public class AssassinController : ChampionClassController
         GetComponentInChildren<SpriteRenderer>().color = Color.white;
     }
 
-    protected override bool additionalNotInterruptCondition()
+    #region Character specific animation
+
+    protected override bool additionalNotInterruptCondition(AnimationController.AnimatorStates activeAnimation)
     {
-        throw new NotImplementedException();
+        return false;
     }
 
-    protected override bool additionalAnimationCondition()
+    protected override bool additionalAnimationCondition(AnimationController animCon)
     {
-        throw new NotImplementedException();
+        return false;
     }
+
+    #endregion
 }
 
