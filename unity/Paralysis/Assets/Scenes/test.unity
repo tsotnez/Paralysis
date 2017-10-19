@@ -300,15 +300,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 1272443540450228, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114429982242684808, guid: 1c93aba00e9725e409b2a5a0a2b0e223,
-        type: 2}
-      propertyPath: AnimationDuration.Array.data[5]
-      value: 0.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
   m_IsPrefabParent: 0
@@ -952,6 +943,7 @@ MonoBehaviour:
     m_Bits: 1536
   m_ComboCounterMax: 1
   m_jumpAttackForce: 10
+  m_MoveSpeedWhileBlocking: 0
   whatToHit:
     serializedVersion: 2
     m_Bits: 4096
@@ -3215,6 +3207,7 @@ MonoBehaviour:
     m_Bits: 4294960840
   m_ComboCounterMax: 1
   m_jumpAttackForce: 10
+  m_MoveSpeedWhileBlocking: 0
   whatToHit:
     serializedVersion: 2
     m_Bits: 4096

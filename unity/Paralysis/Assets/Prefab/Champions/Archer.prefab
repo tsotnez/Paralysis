@@ -384,6 +384,7 @@ MonoBehaviour:
     m_Bits: 1536
   m_ComboCounterMax: 1
   m_jumpAttackForce: 10
+  m_MoveSpeedWhileBlocking: 0
   whatToHit:
     serializedVersion: 2
     m_Bits: 6144

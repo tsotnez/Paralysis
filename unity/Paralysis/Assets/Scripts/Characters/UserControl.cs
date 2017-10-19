@@ -58,7 +58,8 @@ public abstract class UserControl : MonoBehaviour
             // Read the jump input in Update so button presses aren't missed.
             m_Jump = Input.GetButtonDown("Jump");
         }
-        if (!m_Stats.stunned && !m_Stats.knockedBack) defensive = Input.GetButton("Defensive");
+        if (!m_Stats.stunned && !m_Stats.knockedBack)
+            defensive = Input.GetButton("Defensive");
         else defensive = false;
 
         m_Character.manageDefensive(defensive);
@@ -73,25 +74,28 @@ public abstract class UserControl : MonoBehaviour
     protected virtual void CallMethods()
     {
         //Do things only when not stunned, defensive or being knocked back
-        if (!m_Stats.stunned && !m_Stats.knockedBack && !defensive)
+        if (!m_Stats.stunned && !m_Stats.knockedBack)
         {
             float h = Input.GetAxis("Horizontal");
-            // Pass all parameters to the character control script.
             m_Character.Move(h);
-            m_Character.jump(m_Jump);
-            m_Character.basicAttack(m_Attack);
 
-            if (m_Skill1) m_Character.skill1();
-            if (m_Skill2) m_Character.skill2();
-            if (m_Skill3) m_Character.skill3();
-            if (m_Skill4) m_Character.skill4();
-            if (dash != 0) m_Character.StartCoroutine(m_Character.dash(dash));
+            if (!defensive)
+            {
+                // Pass all parameters to the character control script.
+                m_Character.jump(m_Jump);
+                m_Character.basicAttack(m_Attack);
+
+                if (m_Skill1) m_Character.skill1();
+                if (m_Skill2) m_Character.skill2();
+                if (m_Skill3) m_Character.skill3();
+                if (m_Skill4) m_Character.skill4();
+                if (dash != 0) m_Character.StartCoroutine(m_Character.dash(dash));
+            }
         }
     }
 
     protected virtual void ResetValues()
     {
-        defensive = false;
         m_Attack = false;
         m_Jump = false;
         m_Skill1 = false;

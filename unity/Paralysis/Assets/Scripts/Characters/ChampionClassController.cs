@@ -113,7 +113,6 @@ public abstract class ChampionClassController : MonoBehaviour
                 case AnimationController.AnimatorStates.Skill2:
                 case AnimationController.AnimatorStates.Skill3:
                 case AnimationController.AnimatorStates.Skill4:
-                case AnimationController.AnimatorStates.DashFor:
                     return;
             }
 
@@ -222,10 +221,14 @@ public abstract class ChampionClassController : MonoBehaviour
         //only control the player if grounded or airControl is turned on and not jump attacking and not dashing
         if (!jumpAttacking && !dashing && !dontMove)
         {
-            //Slow down the player if he's attacking
+            //Slow down the player if he's attacking or blocking
             float maxSpeed;
-            if (!attacking) maxSpeed = m_MaxSpeed;
-            else maxSpeed = m_MoveSpeedWhileAttacking;
+            if (attacking) maxSpeed = m_MoveSpeedWhileAttacking;
+            else if (blocking) maxSpeed = m_MoveSpeedWhileBlocking;
+            else maxSpeed = m_MaxSpeed;
+
+            // Prevent player from turning around while blocking
+            //if (maxSpeed == 0) return;
 
             // The Speed animator parameter is set to the absolute value of the horizontal input.
             m_Speed = Mathf.Abs(Input.GetAxis("Horizontal"));
@@ -297,25 +300,21 @@ public abstract class ChampionClassController : MonoBehaviour
     public abstract void skill4();
 
     //Dashes in the given direction
-    public IEnumerator dash(int direction)
+    public virtual IEnumerator dash(int direction)
     {
-        if (m_Grounded && !attacking && !dashing && stats.currentStamina >= m_dashStaminaCost)
+        if (m_Grounded && !attacking && !dashing && stats.hasSufficientStamina(m_dashStaminaCost))
         {
             if (direction != 0 && !dashing)
             {
-                //lose stamina
+                // lose stamina
                 stats.loseStamina(m_dashStaminaCost);
 
-                //flip if necessary
-                if (direction < 0 && !m_FacingRight) Flip();
-                else if (direction > 0 && m_FacingRight) Flip();
+                // flip if necessary
+                if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight) Flip();
 
-                //Calculate new dashForce to go in right direction
+                // Calculate new dashForce to go in right direction
                 m_dashSpeed = Mathf.Abs(m_dashSpeed) * direction;
                 m_Rigidbody2D.velocity = Vector2.zero;
-
-                //Start animation
-                animCon.StartAnimation(AnimationController.AnimatorStates.Dash);
 
                 dashing = true;
                 dontMove = true;
@@ -341,8 +340,8 @@ public abstract class ChampionClassController : MonoBehaviour
             //Start being defensive only if not defensive already   
             if (!blocking)
             {
-                // Stop moving - Set MoveSpeed to char default.
-                m_Rigidbody2D.velocity = new Vector2(m_MoveSpeedWhileBlocking, m_Rigidbody2D.velocity.y); 
+                // Stop moving
+                m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); 
             }
             blocking = true;
         }
@@ -440,7 +439,7 @@ public abstract class ChampionClassController : MonoBehaviour
         if (!attacking && m_Grounded)
         {
             // check if enough stamina is left
-            if (stats.currentStamina >= skillStaminaCost)
+            if (stats.hasSufficientStamina(skillStaminaCost))
             {
                 // set attacking coroutine
                 if (attackingRoutine != null) StopCoroutine(attackingRoutine);

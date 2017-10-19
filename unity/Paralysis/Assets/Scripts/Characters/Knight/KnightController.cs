@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class KnightController : ChampionClassController
@@ -48,7 +49,7 @@ public class KnightController : ChampionClassController
     private int damage_Skill4_Spear = 15;
 
     // Trigger for character specific animations
-    private bool trigDashFor = false;
+    private bool dashingForward = false;
 
     #region default Methods
 
@@ -82,8 +83,8 @@ public class KnightController : ChampionClassController
             if (m_Grounded)
             {
                 // Check if enough stamina for attack
-                if (stats.currentStamina >= stamina_BasicAttack && (attackCount == 0 || attackCount == 1) || //Basic Attack
-                    stats.currentStamina >= stamina_BasicAttackCombo && (attackCount == 2)) // Strong Attack
+                if (stats.hasSufficientStamina(stamina_BasicAttack) && (attackCount == 0 || attackCount == 1) || //Basic Attack
+                    stats.hasSufficientStamina(stamina_BasicAttackCombo) && (attackCount == 2)) // Strong Attack
                 {
                     // Already in combo?
                     if (!inCombo)
@@ -123,7 +124,7 @@ public class KnightController : ChampionClassController
             else
             {
                 // Check if enough stamina is left
-                if (stats.currentStamina >= stamina_JumpAttack)
+                if (stats.hasSufficientStamina(stamina_JumpAttack))
                 {
                     // Lose Stamina
                     stats.loseStamina(stamina_JumpAttack);
@@ -204,34 +205,66 @@ public class KnightController : ChampionClassController
 
     #endregion
 
+    #region Dash
+
+    /// <summary>
+    /// Dashes in the given direction with Dash and Dash Forward
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns></returns>
+    public override IEnumerator dash(int direction)
+    {
+        if (m_Grounded && !attacking && !dashing && stats.hasSufficientStamina(m_dashStaminaCost))
+        {
+            if (direction != 0 && !dashing)
+            {
+                //lose stamina
+                stats.loseStamina(m_dashStaminaCost);
+
+                //Calculate new dashForce to go in right direction
+                m_dashSpeed = Mathf.Abs(m_dashSpeed) * direction;
+                m_Rigidbody2D.velocity = Vector2.zero;
+
+                // set var for dash or dashForward
+                if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight) dashing = true;
+                else dashingForward = true;
+
+                dontMove = true;
+
+                yield return new WaitForSeconds(0.1f);
+                stats.invincible = true; //Player is invincible for a period of time while dashing
+
+                yield return new WaitForSeconds(0.3f);
+                dashing = false;
+                stats.invincible = false;
+                m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); //Stop moving
+
+                yield return new WaitForSeconds(0.04f); //Short time where character cant move after dashing
+                dontMove = false;
+            }
+        }
+    }
+
+    #endregion
+
     #region Character specific animation
 
     protected override bool additionalAnimationCondition(AnimationController animCon)
     {
         if (blocking && m_Speed > 0.001)
-        {
             animCon.StartAnimation(AnimationController.AnimatorStates.BlockMove);            
-        }
-        else if (trigDashFor)
-        {
-            trigDashFor = false;
+        else if (dashingForward)
             animCon.StartAnimation(AnimationController.AnimatorStates.DashFor);
-        }
         else
-        {
             return false;
-        }
 
         return true;
     }
 
     protected override bool additionalNotInterruptCondition(AnimationController.AnimatorStates activeAnimation)
     {
-        switch (activeAnimation)
-        {
-            case AnimationController.AnimatorStates.DashFor:
+        if (activeAnimation == AnimationController.AnimatorStates.DashFor)
                 return true;
-        }
 
         return false;
     }

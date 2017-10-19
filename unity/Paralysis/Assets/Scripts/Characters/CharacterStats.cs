@@ -87,6 +87,17 @@ public class CharacterStats : MonoBehaviour {
         else this.currentStamina -= amount;
 	}
 
+    /// <summary>
+    /// Checks if enough/sufficient stamina is left
+    /// </summary>
+    /// <param name="amount">amount of stamina</param>
+    /// <returns></returns>
+    public bool hasSufficientStamina(int amount)
+    {
+        if (currentStamina - amount >= 0) return true;
+        else return false;
+    }
+
     //Substract damage from current health.
     public void takeDamage(int amount, bool playAnimation)
     {

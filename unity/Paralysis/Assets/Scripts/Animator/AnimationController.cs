@@ -90,6 +90,10 @@ public class AnimationController : MonoBehaviour
         idleHeight = idleImage.bounds.extents.y;
         startHeight = transform.localPosition.y;
 
+        // clear working area
+        foreach (Sprite sp in temp) Destroy(sp);
+        Destroy(idleImage);
+
         finishedInitialization = true;
         StartAnimation(AnimatorStates.Idle);
     }
