@@ -412,7 +412,7 @@ public abstract class ChampionClassController : MonoBehaviour
 
     #region Meele Skill
 
-    protected enum skillEffect
+    public enum skillEffect
     {
         nothing,
         stun,
@@ -523,6 +523,27 @@ public abstract class ChampionClassController : MonoBehaviour
         return hit;
     }
 
+    #endregion
+
+    #region Ranged Skill
+    protected void rangedAttack(GameObject projectilePrefab, float range, int damage, skillEffect effect, int effectDuration, float speed = 7, GameObject onHitEffect = null)
+    {
+        int direction;
+        if (m_FacingRight) direction = 1;
+        else direction = -1;
+
+        GameObject bullet = Instantiate(projectilePrefab, transform.position + new Vector3(0.5f * direction, 0.3f), Quaternion.identity);
+
+        ProjectileBehaviour projectile = bullet.GetComponent<ProjectileBehaviour>();
+        //Assign variables to procetile Script
+        projectile.direction = direction;
+        projectile.range = range;
+        projectile.speed = speed;
+        projectile.explosionPrefab = onHitEffect;
+        projectile.damage = damage;
+        projectile.effectDuration = effectDuration;
+        projectile.ready = true;
+    }
     #endregion
 }
 

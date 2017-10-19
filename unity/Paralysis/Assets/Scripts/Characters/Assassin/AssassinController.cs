@@ -259,12 +259,7 @@ public class AssassinController : ChampionClassController
 
     private void shootAttackHit()
     {
-        int direction;
-        if (m_FacingRight) direction = 1;
-        else direction = -1;
-
-        GameObject bullet = Instantiate(bulletPrefab, transform.position + new Vector3(0.5f * direction, 0.3f), Quaternion.identity);
-        bullet.GetComponent<AssassinBullet>().direction = direction;
+        rangedAttack(bulletPrefab, 5, 20, skillEffect.knockback, 0);
     }
 
     private void stunAttackHit()

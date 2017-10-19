@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4478489214191828}
   - component: {fileID: 212923381416240380}
   - component: {fileID: 70254788016516590}
-  - component: {fileID: 114772031190889884}
   - component: {fileID: 50064110812313720}
+  - component: {fileID: 114130343906871988}
   m_Layer: 13
   m_Name: bullet
   m_TagString: Untagged
@@ -78,7 +78,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.00025845945, y: 0.010155716}
   m_Size: {x: 0.24179757, y: 0.09209282}
   m_Direction: 1
---- !u!114 &114772031190889884
+--- !u!114 &114130343906871988
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -86,13 +86,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1999998842244028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22107ae0c078fe746a7b071b9dba51a6, type: 3}
+  m_Script: {fileID: 11500000, guid: 03a3743c547dfd04bb8b2abc3bedcc4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  ready: 0
+  speed: 7
   direction: 0
   explosionPrefab: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 2}
   range: 5
+  effect: 0
+  effectDuration: 1
+  damage: 0
 --- !u!212 &212923381416240380
 SpriteRenderer:
   m_ObjectHideFlags: 1
