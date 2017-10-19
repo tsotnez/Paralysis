@@ -102,29 +102,28 @@ public class AnimationController : MonoBehaviour
     {
         if (finishedInitialization && currentAnimation != animation)
         {
+            currentAnimation = animation;
+
+            SpriteAtlas atlas = animationSprites[animation];
+            if (atlas == null) return;
+
+            //fix possible height issues using idle animation as reference(possibly create more)
+            //if (animationSprites[AnimatorStates.Idle] != null)
+            //{
+            //    float groundoffset = sprites[0].bounds.extents.y - idleHeight;
+            //    transform.localPosition = new Vector3(transform.localPosition.x, startHeight + groundoffset, transform.localPosition.z);
+            //}
+
+            //set speed,
+            float delay = animationDuration[animation] / (float)atlas.spriteCount;
+
             StopAllCoroutines();
-            StartCoroutine(PlayAnimation(animation));
+            StartCoroutine(PlayAnimation(animation, atlas, delay));
         }
     }
 
-    IEnumerator PlayAnimation(AnimatorStates animation)
+    IEnumerator PlayAnimation(AnimatorStates animation, SpriteAtlas atlas, float delay)
     {
-        currentAnimation = animation;
-
-        SpriteAtlas atlas = animationSprites[animation];
-        if (atlas == null) yield break; 
-
-        //fix possible height issues using idle animation as reference(possibly create more)
-        //if (animationSprites[AnimatorStates.Idle] != null)
-        //{
-        //    float groundoffset = sprites[0].bounds.extents.y - idleHeight;
-        //    transform.localPosition = new Vector3(transform.localPosition.x, startHeight + groundoffset, transform.localPosition.z);
-        //}
-
-        //set speed
-        float delay = animationDuration[animation] / (float)atlas.spriteCount;
-
-        //play
         while (true)
         {
             for (int i = 0; i < atlas.spriteCount; i++)
@@ -135,6 +134,7 @@ public class AnimationController : MonoBehaviour
                 spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + "_" + imageNumber);
                 yield return new WaitForSeconds(delay);
             }
+
             if (animationLoop[animation])
                 //loop
                 yield return null;
@@ -143,5 +143,4 @@ public class AnimationController : MonoBehaviour
                 StartAnimation(AnimatorStates.Idle);
         }
     }
-
 }
