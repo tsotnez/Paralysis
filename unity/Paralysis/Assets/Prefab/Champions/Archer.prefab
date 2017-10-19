@@ -332,7 +332,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 2
+  - 0.5
   - 0.45
   - 0
   - 0
@@ -346,13 +346,13 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 4343727234628468602, guid: 8943d6091c418334a9361297d7760627, type: 2}
+  - {fileID: 4343727234628468602, guid: 2a81c47ba73b2da4b949231b97ad5808, type: 2}
   - {fileID: 0}
-  - {fileID: 4343727234628468602, guid: c0c60b9da53c099409ee401fbffe6c62, type: 2}
+  - {fileID: 4343727234628468602, guid: e1da7b4aa82ea9348ab5d8c8069f2fdb, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 4343727234628468602, guid: deb3dc8dc7777554fa637d60ee29005e, type: 2}
+  - {fileID: 4343727234628468602, guid: b9c92c9c9f4366b4caf8e2a3db26d3fb, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -606,15 +606,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f94f502f5327619499963911c0499c48, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2ba7aebd80a523a48812e30ac1a9cc9e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.7970588, y: 1.3529412}
+  m_Size: {x: 6.7, y: 9.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
 --- !u!222 &222034820759152834
 CanvasRenderer:

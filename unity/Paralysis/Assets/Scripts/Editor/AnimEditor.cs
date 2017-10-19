@@ -29,7 +29,7 @@ public class AnimEditor : Editor {
 
 		lastSpeed = AnimationSpeed.floatValue;
 
-		string path = "/Resources/Animations/chars/" + CharacterClass.stringValue + "/" + CharacterSkin.stringValue;
+		string path = "/Animations/chars/" + CharacterClass.stringValue + "/" + CharacterSkin.stringValue;
 		 levelDirectoryPath = new DirectoryInfo(Application.dataPath + path);
 
 	}

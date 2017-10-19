@@ -97,7 +97,7 @@ public abstract class ChampionClassController : MonoBehaviour
         else
         {
             // don't interrupt these animations (equivalent to HasExitTime)
-            if (additionalNotInterruptCondition()) return;
+            //if (additionalNotInterruptCondition()) return;
 
             switch (animCon.currentAnimation)
             {
@@ -115,7 +115,7 @@ public abstract class ChampionClassController : MonoBehaviour
                     return;
             }
 
-            if (additionalAnimationCondition()) return;
+           // if (additionalAnimationCondition()) return;
 
             if (blocking)
                 animCon.StartAnimation(AnimationController.AnimatorStates.Block);

@@ -75,29 +75,12 @@ public class AnimationController : MonoBehaviour
 
     public void InitAnimations()
     {
-        // Load all animation sprites on start for better performance
-        //for (int i = 0; i < AnimationType.Length; i++)
-        //{
-        //    // Save sprites to Dictionary
-        //    Sprite[] sp = Resources.LoadAll<Sprite>(spritesPath + AnimationType[i].ToString());
-
-        //    if (sp.Length > 0)
-        //    {
-        //        animationSprites.Add(AnimationType[i], sp);
-        //        animationDuration.Add(AnimationType[i], AnimationDuration[i]);
-        //        animationLoop.Add(AnimationType[i], AnimationLoop[i]);
-        //    }
-        //}
-
         for (int i = 0; i < AnimationType.Length; i++)
         {
             animationSprites.Add(AnimationType[i], Atlasses[i]);
             animationDuration.Add(AnimationType[i], AnimationDuration[i]);
             animationLoop.Add(AnimationType[i], AnimationLoop[i]);
         }
-
-        //Load idle animation
-        loadAnimationFromResources(AnimatorStates.Idle);
 
         // Save idle animation's ground position
         Sprite[] temp = new Sprite[animationSprites[AnimatorStates.Idle].spriteCount];
@@ -123,27 +106,31 @@ public class AnimationController : MonoBehaviour
     IEnumerator PlayAnimation(AnimatorStates animation)
     {
         currentAnimation = animation;
-        Sprite[] sprites = loadAnimationFromResources(animation);
+
+        SpriteAtlas atlas = animationSprites[animation];
+        if (atlas == null) yield break; 
 
         //fix possible height issues using idle animation as reference(possibly create more)
-        if (animationSprites[AnimatorStates.Idle] != null)
-        {
-            float groundoffset = sprites[0].bounds.extents.y - idleHeight;
-            transform.localPosition = new Vector3(transform.localPosition.x, startHeight + groundoffset, transform.localPosition.z);
-        }
+        //if (animationSprites[AnimatorStates.Idle] != null)
+        //{
+        //    float groundoffset = sprites[0].bounds.extents.y - idleHeight;
+        //    transform.localPosition = new Vector3(transform.localPosition.x, startHeight + groundoffset, transform.localPosition.z);
+        //}
 
         //set speed
-        float delay = animationDuration[animation] / (float)sprites.Length;
+        float delay = animationDuration[animation] / (float)atlas.spriteCount;
 
         //play
         while (true)
         {
-            foreach (Sprite sp in sprites)
+            for (int i = 0; i < atlas.spriteCount; i++)
             {
-                spriteRenderer.sprite = sp;
+                string imageNumber;
+                if (i < 10) imageNumber = "0" + i.ToString();
+                else imageNumber = i.ToString();
+                spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + "_" + imageNumber);
                 yield return new WaitForSeconds(delay);
             }
-
             if (animationLoop[animation])
                 //loop
                 yield return null;
@@ -152,38 +139,5 @@ public class AnimationController : MonoBehaviour
                 StartAnimation(AnimatorStates.Idle);
         }
     }
-
-    private Sprite[] loadAnimationFromResources(AnimatorStates animation)
-    {
-        Sprite[] sprites = new Sprite[10];
-        try
-        { sprites = new Sprite[animationSprites[animation].spriteCount]; }
-        catch
-        {
-        }
-        //if (animationSprites.ContainsKey(animation))
-        //{
-            //Animation was loaded already
-            animationSprites[animation].GetSprites(sprites);
-        //}
-        //else
-        //{
-        //    //Load animation
-        //    Sprite[] sp = Resources.LoadAll<Sprite>(spritesPath + animation.ToString());
-        //    int index = Array.IndexOf(AnimationType, animation); //index of animation to get correct loop and duration
-
-        //    if (sp.Length > 0)
-        //    {
-        //        //Save into dictionaries
-        //        animationSprites.Add(animation, sp);
-        //        animationDuration.Add(animation, AnimationDuration[index]);
-        //        animationLoop.Add(animation, AnimationLoop[index]);
-        //    }
-        //    sprites = sp;
-        //}
-
-        return sprites;
-    }
-
 
 }
