@@ -14,32 +14,6 @@ public class AssassinController : ChampionClassController
     [SerializeField]
     private GameObject bulletPrefab;
 
-    [Header("Attack Delays")]
-    [SerializeField]
-    private float delay_BasicAttack1 = 0;
-    [SerializeField]
-    private float delay_BasicAttack2 = 0;
-    [SerializeField]
-    private float delay_BasicAttack3 = 0;
-    [SerializeField]
-    private float delay_StunAttack = 0;
-    [SerializeField]
-    private float delay_ShadowStep = 0;
-    [SerializeField]
-    private float delay_Shoot = 0;
-
-    [Header("Attack Stamina Costs")]
-    [SerializeField]
-    private int staminaBasicAttack1 = 5;
-    [SerializeField]
-    private int staminaStunAttack = 10;
-    [SerializeField]
-    private int staminaVanish = 10;
-    [SerializeField]
-    private int staminaShadowStep = 10;
-    [SerializeField]
-    private int staminaShoot = 10;
-
     public override void jump(bool jump)
     {
         if (m_Grounded && jump) /*m_Anim.GetBool("Ground")*/
@@ -72,13 +46,13 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill1()
     {
-        if (!attacking && m_Grounded && !dashing && stats.currentStamina >= staminaStunAttack)
+        if (!attacking && m_Grounded && !dashing && stats.hasSufficientStamina(stamina_Skill1))
         {
             if (invisible) stopInvisible();
             attackingRoutine = StartCoroutine(setAttacking(attackLength[4]));
             //m_Anim.SetTrigger("stunAttack");
-            Invoke("stunAttackHit", delay_StunAttack); //Invoke damage function
-            stats.loseStamina(staminaStunAttack);
+            Invoke("stunAttackHit", delay_Skill1); //Invoke damage function
+            stats.loseStamina(stamina_Skill1);
         }
     }
 
@@ -87,14 +61,14 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill2()
     {
-        if (!attacking && m_Grounded && !dashing && stats.currentStamina >= staminaVanish)
+        if (!attacking && m_Grounded && !dashing && stats.hasSufficientStamina(stamina_Skill2))
         {
             if (invisible) stopInvisible();
             attackingRoutine = StartCoroutine(setAttacking(attackLength[5]));
             //m_Anim.SetTrigger("vanish");
             if (invisRoutine != null) StopCoroutine(invisRoutine);
             invisRoutine = StartCoroutine(manageInvisibility());
-            stats.loseStamina(staminaVanish);
+            stats.loseStamina(stamina_Skill2);
         }
     }
 
@@ -103,13 +77,13 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill3()
     {
-        if (!attacking && m_Grounded && !dashing && stats.currentStamina >= staminaShadowStep)
+        if (!attacking && m_Grounded && !dashing && stats.hasSufficientStamina(stamina_Skill3))
         {
             if (invisible) stopInvisible();
             StartCoroutine(shadowStepHit());
             attackingRoutine = StartCoroutine(setAttacking(attackLength[6]));
             //m_Anim.SetTrigger("shadowstep");
-            stats.loseStamina(staminaShadowStep);
+            stats.loseStamina(stamina_Skill3);
         }
     }
 
@@ -118,13 +92,13 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill4()
     {
-        if (!attacking && m_Grounded && !dashing && stats.currentStamina >= staminaShoot)
+        if (!attacking && m_Grounded && !dashing && stats.hasSufficientStamina(stamina_Skill4))
         {
             if (invisible) stopInvisible();
             attackingRoutine = StartCoroutine(setAttacking(attackLength[7]));
             //m_Anim.SetTrigger("shoot");
-            Invoke("shootAttackHit", delay_Shoot);
-            stats.loseStamina(staminaShoot);
+            Invoke("shootAttackHit", delay_Skill4);
+            stats.loseStamina(stamina_Skill4);
         }
     }
 
@@ -173,7 +147,7 @@ public class AssassinController : ChampionClassController
             }
 
             //Playing the correct animation depending on the attackCount and setting attacking status
-            if (stats.currentStamina >= staminaBasicAttack1)
+            if (stats.hasSufficientStamina(stamina_BasicAttack1))
             {
                 switch (attackCount)
                 {
@@ -214,7 +188,7 @@ public class AssassinController : ChampionClassController
                         if (attackingRoutine != null) StopCoroutine(attackingRoutine);
                         attackingRoutine = StartCoroutine(setAttacking(attackLength[6] - 0.08f));
                         //do ambush attack
-                        Invoke("ambushAttackHit", delay_ShadowStep);
+                        Invoke("ambushAttackHit", delay_Skill3);
                         //reset Combo
                         abortCombo();
                         //end invisibility
@@ -222,7 +196,7 @@ public class AssassinController : ChampionClassController
                         break;
                 }
                 //pay stamina for attack
-                stats.loseStamina(staminaBasicAttack1);
+                stats.loseStamina(stamina_BasicAttack1);
             }
         }
     }
@@ -304,7 +278,7 @@ public class AssassinController : ChampionClassController
                 m_Rigidbody2D.position = hit.transform.position + Vector3.left; //Viable target on the right
                 if (!m_FacingRight) Flip();
                 m_Rigidbody2D.velocity = Vector2.zero;
-                yield return new WaitForSeconds(delay_ShadowStep); //Deal damage at correct point in animation
+                yield return new WaitForSeconds(delay_Skill3); //Deal damage at correct point in animation
                 hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(5, false);
                 hit.transform.gameObject.GetComponent<CharacterStats>().startStunned(3);
             }
@@ -313,11 +287,11 @@ public class AssassinController : ChampionClassController
                 m_Rigidbody2D.position = hitLeft.transform.position + Vector3.right; //Viable target on the left
                 if (m_FacingRight) Flip();
                 m_Rigidbody2D.velocity = Vector2.zero;
-                yield return new WaitForSeconds(delay_ShadowStep); //Deal damage at correct point in animation
+                yield return new WaitForSeconds(delay_Skill3); //Deal damage at correct point in animation
                 hitLeft.transform.gameObject.GetComponent<CharacterStats>().takeDamage(5, false);
                 hitLeft.transform.gameObject.GetComponent<CharacterStats>().startStunned(3);
             }
-            yield return new WaitForSeconds(attackLength[6] - delay_ShadowStep);
+            yield return new WaitForSeconds(attackLength[6] - delay_Skill3);
             dontMove = false;
         }
     }

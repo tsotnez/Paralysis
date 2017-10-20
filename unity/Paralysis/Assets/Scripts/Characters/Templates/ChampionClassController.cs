@@ -70,8 +70,80 @@ public abstract class ChampionClassController : MonoBehaviour
     protected bool jumpAttacking = false;                                 // True while the character is jump attacking
     [SerializeField]
     protected float[] attackLength;                                       // Stores the length of the characters attack animations in seconds. Order: [Basic Attack 1] [Basic Attack 2] [Basic Attack 3] [jump Attack] [Skill1] [Skill2] [Skill3] [Skill4]
+
+    #region Parameters for abilities
+
+    [Header("Attack Delays")]
     [SerializeField]
-    private int damage_JumpAttack = 5;
+    protected float delay_BasicAttack1 = 0;
+    [SerializeField]
+    protected float delay_BasicAttack2 = 0;
+    [SerializeField]
+    protected float delay_BasicAttack3 = 0;
+    [SerializeField]
+    protected float delay_Skill1 = 0;
+    [SerializeField]
+    protected float delay_Skill2 = 0;
+    [SerializeField]
+    protected float delay_Skill3 = 0;
+    [SerializeField]
+    protected float delay_Skill4 = 0;
+
+    [Header("Attack Stamina Costs")]
+    [SerializeField]
+    protected int stamina_BasicAttack1 = 5;
+    [SerializeField]
+    protected int stamina_BasicAttack2 = 5;
+    [SerializeField]
+    protected int stamina_BasicAttack3 = 5;
+    [SerializeField]
+    protected int stamina_JumpAttack = 5;
+    [SerializeField]
+    protected int stamina_Skill1 = 0;
+    [SerializeField]
+    protected int stamina_Skill2 = 0;
+    [SerializeField]
+    protected int stamina_Skill3 = 0;
+    [SerializeField]
+    protected int stamina_Skill4 = 0;
+
+    [Header("Attack Damage")]
+    [SerializeField]
+    protected int damage_BasicAttack1 = 0;
+    [SerializeField]
+    protected int damage_BasicAttack2 = 0;
+    [SerializeField]
+    protected int damage_BasicAttack3 = 0;
+    [SerializeField]
+    protected int damage_JumpAttack = 5;
+    [SerializeField]
+    protected int damage_Skill1 = 0;
+    [SerializeField]
+    protected int damage_Skill2 = 0;
+    [SerializeField]
+    protected int damage_Skill3 = 0;
+    [SerializeField]
+    protected int damage_Skill4 = 0;
+
+    [Header("Attack Cooldown")]
+    [SerializeField]
+    protected int cooldown_BasicAttack1 = 0;
+    [SerializeField]
+    protected int cooldown_BasicAttack2 = 0;
+    [SerializeField]
+    protected int cooldown_BasicAttack3 = 0;
+    [SerializeField]
+    protected int cooldown_JumpAttack = 0;
+    [SerializeField]
+    protected int cooldown_Skill1 = 0;
+    [SerializeField]
+    protected int cooldown_Skill2 = 0;
+    [SerializeField]
+    protected int cooldown_Skill3 = 0;
+    [SerializeField]
+    protected int cooldown_Skill4 = 0;
+
+    #endregion
 
     //Coroutines
     protected Coroutine attackingRoutine;
@@ -526,6 +598,7 @@ public abstract class ChampionClassController : MonoBehaviour
     #endregion
 
     #region Ranged Skill
+
     protected void rangedAttack(GameObject projectilePrefab, float range, int damage, skillEffect effect, int effectDuration, float speed = 7, GameObject onHitEffect = null)
     {
         int direction;
@@ -544,6 +617,7 @@ public abstract class ChampionClassController : MonoBehaviour
         projectile.effectDuration = effectDuration;
         projectile.ready = true;
     }
+
     #endregion
 }
 
