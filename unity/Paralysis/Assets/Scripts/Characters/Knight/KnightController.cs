@@ -4,50 +4,6 @@ using UnityEngine;
 
 public class KnightController : ChampionClassController
 {
-    [Header("Attack Delays")]
-    [SerializeField]
-    private float delay_BasicAttack = 0;
-    [SerializeField]
-    private float delay_BasicAttackCombo = 0;
-    [SerializeField]
-    private float delay_Skill1 = 0;
-    [SerializeField]
-    private float delay_Skill2 = 0;
-    [SerializeField]
-    private float delay_Skill3 = 0;
-    [SerializeField]
-    private float delay_Skill4 = 0;
-
-    [Header("Attack Stamina Costs")]
-    [SerializeField]
-    private int stamina_BasicAttack = 5;
-    [SerializeField]
-    private int stamina_BasicAttackCombo = 7;
-    [SerializeField]
-    private int stamina_JumpAttack = 5;
-    [SerializeField]
-    private int stamina_Skill1_GroundSmash = 20;
-    [SerializeField]
-    private int stamina_Skill2_Leap = 15;
-    [SerializeField]
-    private int stamina_Skill3_ShieldBash = 30;
-    [SerializeField]
-    private int stamina_Skill4_Spear = 20;
-
-    [Header("Attack Damage")]
-    [SerializeField]
-    private int damage_BasicAttack = 5;
-    [SerializeField]
-    private int damage_BasicAttackCombo = 10;
-    [SerializeField]
-    private int damage_Skill1_GroundSmash = 5;
-    [SerializeField]
-    private int damage_Skill2_Leap = 5;
-    [SerializeField]
-    private int damage_Skill3_ShieldBash = 10;
-    [SerializeField]
-    private int damage_Skill4_Spear = 15;
-
     // Trigger for character specific animations
     private bool dashingForward = false;
 
@@ -83,8 +39,8 @@ public class KnightController : ChampionClassController
             if (m_Grounded)
             {
                 // Check if enough stamina for attack
-                if (stats.hasSufficientStamina(stamina_BasicAttack) && (attackCount == 0 || attackCount == 1) || //Basic Attack
-                    stats.hasSufficientStamina(stamina_BasicAttackCombo) && (attackCount == 2)) // Strong Attack
+                if (stats.hasSufficientStamina(stamina_BasicAttack1) && (attackCount == 0 || attackCount == 1) || //Basic Attack
+                    stats.hasSufficientStamina(stamina_BasicAttack3) && (attackCount == 2)) // Strong Attack
                 {
                     // Already in combo?
                     if (!inCombo)
@@ -102,13 +58,13 @@ public class KnightController : ChampionClassController
                     {
                         case 1: case 2:
                             // do meele attack
-                            doMeeleSkill(0, ref trigBasicAttack1, delay_BasicAttack, damage_BasicAttack, skillEffect.nothing, 0, stamina_BasicAttack);
+                            doMeeleSkill(0, ref trigBasicAttack1, delay_BasicAttack1, damage_BasicAttack1, skillEffect.nothing, 0, stamina_BasicAttack1);
                             // Reset timer of combo
                             resetComboTime();
                             break;
                         case 3:
                             // do meele attack
-                            doMeeleSkill(2, ref trigBasicAttack2, delay_BasicAttackCombo, damage_BasicAttackCombo, skillEffect.nothing, 0, stamina_BasicAttackCombo);
+                            doMeeleSkill(2, ref trigBasicAttack2, delay_BasicAttack3, damage_BasicAttack3, skillEffect.nothing, 0, stamina_BasicAttack3);
                             // Reset Combo after combo-hit
                             abortCombo();
                             break;
@@ -154,7 +110,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill1()
     {
-        doMeeleSkill(4, ref trigSkill1, delay_Skill1, damage_Skill1_GroundSmash, skillEffect.stun, 3, stamina_Skill1_GroundSmash);
+        doMeeleSkill(4, ref trigSkill1, delay_Skill1, damage_Skill1, skillEffect.stun, 3, stamina_Skill1);
     }
 
 
@@ -170,7 +126,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill2()
     {
-        doMeeleSkill(5, ref trigSkill2, delay_Skill2, damage_Skill2_Leap, skillEffect.stun, 3, stamina_Skill2_Leap);
+        doMeeleSkill(5, ref trigSkill2, delay_Skill2, damage_Skill2, skillEffect.stun, 3, stamina_Skill2);
     }
 
     /// <summary>
@@ -185,7 +141,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill3()
     {
-        doMeeleSkill(6, ref trigSkill3, delay_Skill3, damage_Skill3_ShieldBash, skillEffect.knockback, 0, stamina_Skill3_ShieldBash, false);
+        doMeeleSkill(6, ref trigSkill3, delay_Skill3, damage_Skill3, skillEffect.knockback, 0, stamina_Skill3, false);
     }
 
     /// <summary>

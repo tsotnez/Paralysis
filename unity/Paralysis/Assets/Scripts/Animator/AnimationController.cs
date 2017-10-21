@@ -8,7 +8,6 @@ using System.Linq;
 [RequireComponent(typeof(SpriteRenderer))]
 public class AnimationController : MonoBehaviour
 {
-
     public AnimatorStates[] AnimationType = { 0 };
     public bool[] AnimationLoop = { false };
     public float[] AnimationDuration;
