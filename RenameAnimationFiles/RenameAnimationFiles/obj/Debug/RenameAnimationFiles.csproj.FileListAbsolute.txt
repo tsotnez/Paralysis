@@ -1,0 +1,6 @@
+c:\users\dehilja\documents\visual studio 2015\Projects\RenameAnimationFiles\RenameAnimationFiles\bin\Debug\RenameAnimationFiles.exe.config
+c:\users\dehilja\documents\visual studio 2015\Projects\RenameAnimationFiles\RenameAnimationFiles\bin\Debug\RenameAnimationFiles.exe
+c:\users\dehilja\documents\visual studio 2015\Projects\RenameAnimationFiles\RenameAnimationFiles\bin\Debug\RenameAnimationFiles.pdb
+c:\users\dehilja\documents\visual studio 2015\Projects\RenameAnimationFiles\RenameAnimationFiles\obj\Debug\RenameAnimationFiles.csprojResolveAssemblyReference.cache
+c:\users\dehilja\documents\visual studio 2015\Projects\RenameAnimationFiles\RenameAnimationFiles\obj\Debug\RenameAnimationFiles.exe
+c:\users\dehilja\documents\visual studio 2015\Projects\RenameAnimationFiles\RenameAnimationFiles\obj\Debug\RenameAnimationFiles.pdb
