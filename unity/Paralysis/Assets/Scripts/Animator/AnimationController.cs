@@ -8,27 +8,27 @@ using System.Linq;
 [RequireComponent(typeof(SpriteRenderer))]
 public class AnimationController : MonoBehaviour
 {
-    public AnimatorStates[] AnimationType = { 0 };
-    public bool[] AnimationLoop = { false };
-    public float[] AnimationDuration;
-    public SpriteAtlas[] Atlasses;
-    public float GeneralSpeed;
-    public string CharacterClass = "_master";
-    public string CharacterSkin = "basic";
+    // Public parameters for Editor-Inspector
+    public AnimatorStates[] AnimationType = { 0 };                          // Type of Animation
+    public bool[] AnimationLoop = { false };                                // Shall animation be looped?
+    public float[] AnimationDuration;                                       // Duration of each animation
+    public SpriteAtlas[] Atlasses;                                          // Array of all atlasses
+    public float GeneralSpeed;                                              // General Speed for all animations
+    public string CharacterClass = "_master";                               // Foldername to the selected char
+    public string CharacterSkin = "basic";                                  // Foldername to the selected skin
 
-    public bool finishedInitialization = false;  //True if finished loading all the sprites
+    // Public GET parameters
+    public AnimatorStates currentAnimation { get; private set; }            // current playing animation state
 
-    public AnimatorStates currentAnimation { get; private set; } // current playing animation state
+    //Private parameters
+    private Dictionary<AnimatorStates, SpriteAtlas> animationSprites;       // Saves all Sprites to the Animations
+    private Dictionary<AnimatorStates, float> animationDuration;            // Saves all Speed of the Animations
+    private Dictionary<AnimatorStates, bool> animationLoop;                 // Saves if animation should be looped
+    
+    private bool finishedInitialization = false;                            // True if finished loading all the sprites
+    private SpriteRenderer spriteRenderer;                                  // Sprite Renderer
 
-    string spritesPath;
-    float idleHeight;
-    float startHeight;
-    SpriteRenderer spriteRenderer;
-
-    Dictionary<AnimatorStates, SpriteAtlas> animationSprites;  // Saves all Sprites to the Animations
-    Dictionary<AnimatorStates, float> animationDuration;    // Saves all Speed of the Animations
-    Dictionary<AnimatorStates, bool> animationLoop;         // Saves if animation should be looped
-
+    // All existing animation types
     public enum AnimatorStates
     {
         //Default
@@ -63,17 +63,20 @@ public class AnimationController : MonoBehaviour
 
     void Start()
     {
+        // initiate dictionarys
         animationSprites = new Dictionary<AnimatorStates, SpriteAtlas>();
         animationDuration = new Dictionary<AnimatorStates, float>();
         animationLoop = new Dictionary<AnimatorStates, bool>();
 
+        // initiate Components
         spriteRenderer = GetComponent<SpriteRenderer>();
-        spritesPath = "Animations/chars/" + CharacterClass + "/" + CharacterSkin + "/";
+
         InitAnimations();
     }
 
     public void InitAnimations()
     {
+        // Save each animation and their attributes in the dictionarys
         for (int i = 0; i < AnimationType.Length; i++)
         {
             animationSprites.Add(AnimationType[i], Atlasses[i]);
@@ -85,14 +88,10 @@ public class AnimationController : MonoBehaviour
         Sprite[] temp = new Sprite[animationSprites[AnimatorStates.Idle].spriteCount];
         animationSprites[AnimatorStates.Idle].GetSprites(temp);
 
-        Sprite idleImage = temp[0];
-        idleHeight = idleImage.bounds.extents.y;
-        startHeight = transform.localPosition.y;
-
         // clear working area
         foreach (Sprite sp in temp) Destroy(sp);
-        Destroy(idleImage);
 
+        // set finsihed and start first animation
         finishedInitialization = true;
         StartAnimation(AnimatorStates.Idle);
     }
@@ -101,22 +100,19 @@ public class AnimationController : MonoBehaviour
     {
         if (finishedInitialization && currentAnimation != animation)
         {
+            // set current animation
             currentAnimation = animation;
 
+            // get sprite atlas
             SpriteAtlas atlas = animationSprites[animation];
             if (atlas == null) return;
 
-            //fix possible height issues using idle animation as reference(possibly create more)
-            //if (animationSprites[AnimatorStates.Idle] != null)
-            //{
-            //    float groundoffset = sprites[0].bounds.extents.y - idleHeight;
-            //    transform.localPosition = new Vector3(transform.localPosition.x, startHeight + groundoffset, transform.localPosition.z);
-            //}
-
-            //set speed,
+            //set speed
             float delay = animationDuration[animation] / (float)atlas.spriteCount;
 
+            // stop running coroutine
             StopAllCoroutines();
+            // start next animation as coroutine
             StartCoroutine(PlayAnimation(animation, atlas, delay));
         }
     }
@@ -125,12 +121,12 @@ public class AnimationController : MonoBehaviour
     {
         while (true)
         {
+            // play each animation of the atlas
             for (int i = 0; i < atlas.spriteCount; i++)
             {
-                string imageNumber;
-                if (i < 10) imageNumber = "0" + i.ToString();
-                else imageNumber = i.ToString();
-                spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + "_" + imageNumber);
+                if (i < 10) spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + "_" + "0" + i.ToString()); 
+                else spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + "_" + i.ToString());
+
                 yield return new WaitForSeconds(delay);
             }
 

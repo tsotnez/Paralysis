@@ -83,7 +83,8 @@ namespace Assets.Scripts.Characters.Infantry
 
         /// <summary>
         /// Retract Hook (Knockback)
-        /// Infantry launches a hook to a flexibly fixed distance and altitude the hook latches on to the first enemy it comes in contact with. The Infantry then repels to that target and kicks, causing a knockback effect to the enemy
+        /// Infantry launches a hook to a flexibly fixed distance and altitude the hook latches on to the first enemy it comes in contact with. 
+        /// The Infantry then repels to that target and kicks, causing a knockback effect to the enemy
         /// 
         /// Damage: 5
         /// Effect: Knockback
