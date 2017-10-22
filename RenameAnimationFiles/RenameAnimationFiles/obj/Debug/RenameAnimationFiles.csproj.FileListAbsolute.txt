@@ -1,0 +1,13 @@
+c:\users\dehilja\documents\visual studio 2015\Projects\RenameAnimationFiles\RenameAnimationFiles\bin\Debug\RenameAnimationFiles.exe.config
+c:\users\dehilja\documents\visual studio 2015\Projects\RenameAnimationFiles\RenameAnimationFiles\bin\Debug\RenameAnimationFiles.exe
+c:\users\dehilja\documents\visual studio 2015\Projects\RenameAnimationFiles\RenameAnimationFiles\bin\Debug\RenameAnimationFiles.pdb
+c:\users\dehilja\documents\visual studio 2015\Projects\RenameAnimationFiles\RenameAnimationFiles\obj\Debug\RenameAnimationFiles.csprojResolveAssemblyReference.cache
+c:\users\dehilja\documents\visual studio 2015\Projects\RenameAnimationFiles\RenameAnimationFiles\obj\Debug\RenameAnimationFiles.exe
+c:\users\dehilja\documents\visual studio 2015\Projects\RenameAnimationFiles\RenameAnimationFiles\obj\Debug\RenameAnimationFiles.pdb
+C:\Users\Win7\Documents\GitHub\Paralysis\RenameAnimationFiles\RenameAnimationFiles\bin\Debug\RenameAnimationFiles.exe.config
+C:\Users\Win7\Documents\GitHub\Paralysis\RenameAnimationFiles\RenameAnimationFiles\bin\Debug\RenameAnimationFiles.exe
+C:\Users\Win7\Documents\GitHub\Paralysis\RenameAnimationFiles\RenameAnimationFiles\bin\Debug\RenameAnimationFiles.pdb
+C:\Users\Win7\Documents\GitHub\Paralysis\RenameAnimationFiles\RenameAnimationFiles\obj\Debug\RenameAnimationFiles.csprojResolveAssemblyReference.cache
+C:\Users\Win7\Documents\GitHub\Paralysis\RenameAnimationFiles\RenameAnimationFiles\obj\Debug\RenameAnimationFiles.csproj.CoreCompileInputs.cache
+C:\Users\Win7\Documents\GitHub\Paralysis\RenameAnimationFiles\RenameAnimationFiles\obj\Debug\RenameAnimationFiles.exe
+C:\Users\Win7\Documents\GitHub\Paralysis\RenameAnimationFiles\RenameAnimationFiles\obj\Debug\RenameAnimationFiles.pdb

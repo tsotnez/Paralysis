@@ -8,31 +8,29 @@ SpriteAtlas:
   m_Name: StunnedAtlas
   m_EditorData:
     textureSettings:
-      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 0
+      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
-      sRGB: 0
     platformSettings: []
     packingParameters:
-      serializedVersion: 2
-      padding: 4
+      paddingPower: 2
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 0
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 580a15105a4078c663ac47440a9eeea2
+      Hash: acb80f32bfa05f68bc0dec3b234680db
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 580a15105a4078c663ac47440a9eeea2
+    hashString: acb80f32bfa05f68bc0dec3b234680db
     totalSpriteSurfaceArea: 12056520
     packables:
     - {fileID: 102900000, guid: 58ab4e8b7a5d1ee4b991e6603009bed7, type: 3}
