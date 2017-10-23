@@ -18,7 +18,7 @@ namespace Assets.Scripts.Characters.Infantry
         /// <param name="shouldAttack"></param>
         public override void basicAttack(bool shouldAttack)
         {
-            if (shouldAttack && !attacking)
+            if (shouldAttack && canPerformAttack())
             {
                 if (m_Grounded)
                 {
@@ -42,14 +42,14 @@ namespace Assets.Scripts.Characters.Infantry
                         {
                             case 1:                            
                                 // do meele attack
-                                doMeeleSkill(0, ref trigBasicAttack1, delay_BasicAttack1, damage_BasicAttack1, skillEffect.nothing, 0, stamina_BasicAttack1);
+                                doMeeleSkill(ref trigBasicAttack1, delay_BasicAttack1, damage_BasicAttack1, skillEffect.nothing, 0, stamina_BasicAttack1);
                                 // Reset timer of combo
                                 resetComboTime();
                                 break;
                             case 2:
                             case 3:
                                 // do meele attack
-                                doMeeleSkill(2, ref trigBasicAttack2, delay_BasicAttack3, damage_BasicAttack3, skillEffect.nothing, 0, stamina_BasicAttack3);
+                                doMeeleSkill(ref trigBasicAttack2, delay_BasicAttack3, damage_BasicAttack3, skillEffect.nothing, 0, stamina_BasicAttack3);
                                 // Reset Combo after combo-hit
                                 abortCombo();
                                 break;
@@ -71,7 +71,6 @@ namespace Assets.Scripts.Characters.Infantry
                         stats.loseStamina(stamina_JumpAttack);
                         // Jump Attack
                         StartCoroutine(jumpAttack());
-                        attackingRoutine = StartCoroutine(setAttacking(attackLength[3] - 0.08f));
                         // Abort combo
                         abortCombo();
                     }

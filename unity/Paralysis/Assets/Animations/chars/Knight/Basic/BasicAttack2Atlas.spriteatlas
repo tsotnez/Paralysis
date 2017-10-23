@@ -22,20 +22,69 @@ SpriteAtlas:
       paddingPower: 2
       blockOffset: 1
       allowAlphaSplitting: 0
-      enableRotation: 1
+      enableRotation: 0
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 884cf541037bbc6755b5dfa3c4f4a5ef
+      Hash: 3bd1c333a44b4acfb86a7d594a112e69
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 884cf541037bbc6755b5dfa3c4f4a5ef
-    totalSpriteSurfaceArea: 0
-    packables: []
-    packedSpriteRenderDataKeys: []
+    hashString: 3bd1c333a44b4acfb86a7d594a112e69
+    totalSpriteSurfaceArea: 26609632
+    packables:
+    - {fileID: 102900000, guid: 7a36e9f532e33a846b7ae762522770ba, type: 3}
+    packedSpriteRenderDataKeys:
+    - b30b0a4bec75b6f4c8735a9cc382b511: 21300000
+    - 6e5ae3c9baab3a74b8cb24de7e8531ef: 21300000
+    - 4bbdbb45a30111245a2165c6106c6c3f: 21300000
+    - 85dd9bf72270cee4b946e9120d09c930: 21300000
+    - 07d2bce8d014cb945bf720655999efe4: 21300000
+    - ffd9cebfda08a8f4ea0a7c155b67add4: 21300000
+    - da10f472aa04a234d9d93d9ac0a80558: 21300000
+    - bcf49e3e7d823204ea2039828eb0ced7: 21300000
+    - 782a983a609130e4cbebd9ae7cc8ab78: 21300000
+    - 379bae5cf4593504db163e2949729619: 21300000
+    - 65622810f507c1c4d8560c75f0b276de: 21300000
+    - bc4d7a965dfc7ab438e60396cf9f2c92: 21300000
+    - 88ea11f3f213f954fbca8bc2a56f9bd2: 21300000
+    - d9761acb270a95b4a9abd432269632b9: 21300000
+    - bab783f785ea4394b91da2243af5bb21: 21300000
+    - dcc8904073db39d488838b297410434a: 21300000
   m_MasterAtlas: {fileID: 0}
-  m_PackedSprites: []
-  m_PackedSpriteNamesToIndex: []
+  m_PackedSprites:
+  - {fileID: 21300000, guid: b30b0a4bec75b6f4c8735a9cc382b511, type: 3}
+  - {fileID: 21300000, guid: 6e5ae3c9baab3a74b8cb24de7e8531ef, type: 3}
+  - {fileID: 21300000, guid: 4bbdbb45a30111245a2165c6106c6c3f, type: 3}
+  - {fileID: 21300000, guid: 85dd9bf72270cee4b946e9120d09c930, type: 3}
+  - {fileID: 21300000, guid: 07d2bce8d014cb945bf720655999efe4, type: 3}
+  - {fileID: 21300000, guid: ffd9cebfda08a8f4ea0a7c155b67add4, type: 3}
+  - {fileID: 21300000, guid: da10f472aa04a234d9d93d9ac0a80558, type: 3}
+  - {fileID: 21300000, guid: bcf49e3e7d823204ea2039828eb0ced7, type: 3}
+  - {fileID: 21300000, guid: 782a983a609130e4cbebd9ae7cc8ab78, type: 3}
+  - {fileID: 21300000, guid: 379bae5cf4593504db163e2949729619, type: 3}
+  - {fileID: 21300000, guid: 65622810f507c1c4d8560c75f0b276de, type: 3}
+  - {fileID: 21300000, guid: bc4d7a965dfc7ab438e60396cf9f2c92, type: 3}
+  - {fileID: 21300000, guid: 88ea11f3f213f954fbca8bc2a56f9bd2, type: 3}
+  - {fileID: 21300000, guid: d9761acb270a95b4a9abd432269632b9, type: 3}
+  - {fileID: 21300000, guid: bab783f785ea4394b91da2243af5bb21, type: 3}
+  - {fileID: 21300000, guid: dcc8904073db39d488838b297410434a, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - BasicAttack2_08
+  - BasicAttack2_09
+  - BasicAttack2_02
+  - BasicAttack2_03
+  - BasicAttack2_00
+  - BasicAttack2_01
+  - BasicAttack2_15
+  - BasicAttack2_06
+  - BasicAttack2_14
+  - BasicAttack2_07
+  - BasicAttack2_04
+  - BasicAttack2_05
+  - BasicAttack2_11
+  - BasicAttack2_10
+  - BasicAttack2_13
+  - BasicAttack2_12
   m_Tag: BasicAttack2Atlas
   m_IsVariant: 0

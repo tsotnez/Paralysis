@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: BasicAttack1Atlas
+  m_EditorData:
+    textureSettings:
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      colorSpace: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+    platformSettings: []
+    packingParameters:
+      paddingPower: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 1
+    packedHash:
+      serializedVersion: 2
+      Hash: 360ff720b3a4360ccbb948b08b4ef9be
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 4
+    hashString: 360ff720b3a4360ccbb948b08b4ef9be
+    totalSpriteSurfaceArea: 5468160
+    packables:
+    - {fileID: 102900000, guid: 0483a9d61e4e44046af111efc4c5f7ca, type: 3}
+    packedSpriteRenderDataKeys:
+    - bb641a0733c36a54e9f030cb47b9e762: 21300000
+    - f5f761d2b3ae2a84bb738511210db724: 21300000
+    - b25caf1688c315e45b9d2da373e10319: 21300000
+    - a73b2d40f3274f0409a8401de790c98a: 21300000
+    - b3bde57428d753f4380fde3b69f7b9b5: 21300000
+    - f6ab407c675e6cd4c89fc306d71f5a28: 21300000
+    - 3ca5ce932e2173747a97120c1a5647f2: 21300000
+    - 618e9431587dfc24e84048c71d531f91: 21300000
+    - cac6a3777c217ac46916db372eb6afaf: 21300000
+    - 7c9ea3e2de7482146baf2bc08f1e00d5: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: bb641a0733c36a54e9f030cb47b9e762, type: 3}
+  - {fileID: 21300000, guid: f5f761d2b3ae2a84bb738511210db724, type: 3}
+  - {fileID: 21300000, guid: b25caf1688c315e45b9d2da373e10319, type: 3}
+  - {fileID: 21300000, guid: a73b2d40f3274f0409a8401de790c98a, type: 3}
+  - {fileID: 21300000, guid: b3bde57428d753f4380fde3b69f7b9b5, type: 3}
+  - {fileID: 21300000, guid: f6ab407c675e6cd4c89fc306d71f5a28, type: 3}
+  - {fileID: 21300000, guid: 3ca5ce932e2173747a97120c1a5647f2, type: 3}
+  - {fileID: 21300000, guid: 618e9431587dfc24e84048c71d531f91, type: 3}
+  - {fileID: 21300000, guid: cac6a3777c217ac46916db372eb6afaf, type: 3}
+  - {fileID: 21300000, guid: 7c9ea3e2de7482146baf2bc08f1e00d5, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - BasicAttack1_09
+  - BasicAttack1_08
+  - BasicAttack1_03
+  - BasicAttack1_02
+  - BasicAttack1_01
+  - BasicAttack1_00
+  - BasicAttack1_07
+  - BasicAttack1_06
+  - BasicAttack1_05
+  - BasicAttack1_04
+  m_Tag: BasicAttack1Atlas
+  m_IsVariant: 0

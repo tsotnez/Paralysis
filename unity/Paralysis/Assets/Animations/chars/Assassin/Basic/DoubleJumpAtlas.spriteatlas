@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: DoubleJumpAtlas
+  m_EditorData:
+    textureSettings:
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      colorSpace: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+    platformSettings: []
+    packingParameters:
+      paddingPower: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 1
+    packedHash:
+      serializedVersion: 2
+      Hash: d4e7f58b431db79de631d984fc636211
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 4
+    hashString: d4e7f58b431db79de631d984fc636211
+    totalSpriteSurfaceArea: 5263060
+    packables:
+    - {fileID: 102900000, guid: 076e5c1b2985fe0448abe6a1ce653c53, type: 3}
+    packedSpriteRenderDataKeys:
+    - 2e623bbc7078d3c4eb5050cea1b42eda: 21300000
+    - 5bbaf391e1ad604489585b14bb31a5d8: 21300000
+    - 3e6140cc6e5dada43840fa1a2c0df628: 21300000
+    - f8a28abda5f156b498e73f57fe7dff68: 21300000
+    - 0383a093d1d537842aa1ac39bb17a67a: 21300000
+    - 0f2f99c873d7f354793e9b029cbfc677: 21300000
+    - a90d91dfa6c41d6489e6dffb4b633c1a: 21300000
+    - b1bcc8a6fa566d04ab9885495191d16a: 21300000
+    - ca4dda8de2eabf84982fe741399e95bb: 21300000
+    - 4edb60a6ee614ae40b86150b62fe2536: 21300000
+    - f6e2a1d8402761d4b99ae9a4463949e9: 21300000
+    - 2904f4d29d50bc34bb15836e59fe8dc5: 21300000
+    - 53e6f2f1711ed5941b6de23e7e48216c: 21300000
+    - f34da83021f60eb4db9ffa823614be41: 21300000
+    - bb65f0b93ebd312449a8387dba6919d6: 21300000
+    - fe14127bd18e08a40a4d8806ebc10730: 21300000
+    - 3fa101234f2938e42bcce6d10b31133f: 21300000
+    - dca20c24599449b48983097d21212c5c: 21300000
+    - 5e7228ae54a34b64c9612f92b513ba86: 21300000
+    - f5ef0cc632f712f46bb08e5be027db98: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 2e623bbc7078d3c4eb5050cea1b42eda, type: 3}
+  - {fileID: 21300000, guid: 5bbaf391e1ad604489585b14bb31a5d8, type: 3}
+  - {fileID: 21300000, guid: 3e6140cc6e5dada43840fa1a2c0df628, type: 3}
+  - {fileID: 21300000, guid: f8a28abda5f156b498e73f57fe7dff68, type: 3}
+  - {fileID: 21300000, guid: 0383a093d1d537842aa1ac39bb17a67a, type: 3}
+  - {fileID: 21300000, guid: 0f2f99c873d7f354793e9b029cbfc677, type: 3}
+  - {fileID: 21300000, guid: a90d91dfa6c41d6489e6dffb4b633c1a, type: 3}
+  - {fileID: 21300000, guid: b1bcc8a6fa566d04ab9885495191d16a, type: 3}
+  - {fileID: 21300000, guid: ca4dda8de2eabf84982fe741399e95bb, type: 3}
+  - {fileID: 21300000, guid: 4edb60a6ee614ae40b86150b62fe2536, type: 3}
+  - {fileID: 21300000, guid: f6e2a1d8402761d4b99ae9a4463949e9, type: 3}
+  - {fileID: 21300000, guid: 2904f4d29d50bc34bb15836e59fe8dc5, type: 3}
+  - {fileID: 21300000, guid: 53e6f2f1711ed5941b6de23e7e48216c, type: 3}
+  - {fileID: 21300000, guid: f34da83021f60eb4db9ffa823614be41, type: 3}
+  - {fileID: 21300000, guid: bb65f0b93ebd312449a8387dba6919d6, type: 3}
+  - {fileID: 21300000, guid: fe14127bd18e08a40a4d8806ebc10730, type: 3}
+  - {fileID: 21300000, guid: 3fa101234f2938e42bcce6d10b31133f, type: 3}
+  - {fileID: 21300000, guid: dca20c24599449b48983097d21212c5c, type: 3}
+  - {fileID: 21300000, guid: 5e7228ae54a34b64c9612f92b513ba86, type: 3}
+  - {fileID: 21300000, guid: f5ef0cc632f712f46bb08e5be027db98, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - DoubleJump_10
+  - DoubleJump_11
+  - DoubleJump_12
+  - DoubleJump_13
+  - DoubleJump_03
+  - DoubleJump_14
+  - DoubleJump_02
+  - DoubleJump_15
+  - DoubleJump_01
+  - DoubleJump_16
+  - DoubleJump_00
+  - DoubleJump_17
+  - DoubleJump_07
+  - DoubleJump_18
+  - DoubleJump_06
+  - DoubleJump_19
+  - DoubleJump_05
+  - DoubleJump_04
+  - DoubleJump_09
+  - DoubleJump_08
+  m_Tag: DoubleJumpAtlas
+  m_IsVariant: 0
