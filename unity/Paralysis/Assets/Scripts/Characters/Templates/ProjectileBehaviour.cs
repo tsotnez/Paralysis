@@ -68,7 +68,8 @@ public class ProjectileBehaviour : MonoBehaviour {
     void explode()
     {
         //Plays explosion effect and destroys the bullet
-        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        if(explosionPrefab != null)
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }
