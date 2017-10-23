@@ -400,7 +400,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 0
+  - 0.2
   - 0
   Atlasses:
   - {fileID: 4343727234628468602, guid: b0104b8c51d885a469c7e806476256f8, type: 2}
@@ -534,6 +534,8 @@ MonoBehaviour:
   cooldown_Skill2: 0
   cooldown_Skill3: 0
   cooldown_Skill4: 0
+  Skill4_Spear: {fileID: 1686816382022230, guid: 60be7605c6f8ae34c9df248ad63aff85,
+    type: 2}
 --- !u!114 &114907541260098630
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class KnightController : ChampionClassController
 {
+    [Header("Knight Special")]
+    [SerializeField]
+    private GameObject Skill4_Spear;
+
     // Trigger for character specific animations
     private bool dashingForward = false;
 
@@ -154,8 +158,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill4()
     {
-        //range skill
-        //animation: skill4_Spear
+        doRangeSkill(ref trigSkill4, Skill4_Spear, 5f, damage_Skill4, skillEffect.nothing, 0, stamina_Skill4);
     }
 
     #endregion

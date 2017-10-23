@@ -84,7 +84,7 @@ public class AssassinController : ChampionClassController
     public override void skill4()
     { 
         if (invisible) stopInvisible();
-        rangedAttack(bulletPrefab, 5, damage_Skill4, skillEffect.knockback, 2);
+        doRangeSkill(ref trigSkill4, bulletPrefab, 5, damage_Skill4, skillEffect.knockback, 2, stamina_Skill4);
     }
 
     private IEnumerator manageInvisibility()
@@ -201,11 +201,6 @@ public class AssassinController : ChampionClassController
             target.startBleeding(6);
             target.takeDamage(5, true);
         }
-    }
-
-    private void shootAttackHit()
-    {
-        rangedAttack(bulletPrefab, 5, 20, skillEffect.knockback, 0);
     }
 
     private void stunAttackHit()

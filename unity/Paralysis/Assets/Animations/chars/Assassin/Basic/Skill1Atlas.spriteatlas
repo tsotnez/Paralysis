@@ -26,17 +26,53 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 00000000000000000000000000000000
+      Hash: 6ca180cdd921dd8302078f93ab3e4bbe
     variantMultiplier: 1
     bindAsDefault: 1
-    finalFormat: -1
-    hashString: 
-    totalSpriteSurfaceArea: 0
+    finalFormat: 4
+    hashString: 6ca180cdd921dd8302078f93ab3e4bbe
+    totalSpriteSurfaceArea: 4709088
     packables:
     - {fileID: 102900000, guid: a3b9a4aa61febc74ba6c3250c60e6a60, type: 3}
-    packedSpriteRenderDataKeys: []
+    packedSpriteRenderDataKeys:
+    - ec0bd8f11deb459419153ebb4e4f609c: 21300000
+    - bbe431f3b12fa71418a5981333b7a19d: 21300000
+    - 6ff263dfbfbd87d41ba7d33d7c9da795: 21300000
+    - b33185637e1bf6d40ab1c3e153887f64: 21300000
+    - 0b11470d67a391c4c8636a07d965cd40: 21300000
+    - fa9a6d6c81cce1744954588914fc8e6a: 21300000
+    - 1f287f19b460418419bbab2ecaab9182: 21300000
+    - a454995fa19f4744d8e9cd0e4f164b5e: 21300000
+    - b262c5b599a86434d82a4394f818b28c: 21300000
+    - 1f057bd4d95cefb4ea34497001baf49d: 21300000
+    - 92e7d2d2d20b15f43ae5d9acbd23d7e3: 21300000
+    - 1d5b9c4a673e8274eb52c303ded3abaf: 21300000
   m_MasterAtlas: {fileID: 0}
-  m_PackedSprites: []
-  m_PackedSpriteNamesToIndex: []
+  m_PackedSprites:
+  - {fileID: 21300000, guid: ec0bd8f11deb459419153ebb4e4f609c, type: 3}
+  - {fileID: 21300000, guid: bbe431f3b12fa71418a5981333b7a19d, type: 3}
+  - {fileID: 21300000, guid: 6ff263dfbfbd87d41ba7d33d7c9da795, type: 3}
+  - {fileID: 21300000, guid: b33185637e1bf6d40ab1c3e153887f64, type: 3}
+  - {fileID: 21300000, guid: 0b11470d67a391c4c8636a07d965cd40, type: 3}
+  - {fileID: 21300000, guid: fa9a6d6c81cce1744954588914fc8e6a, type: 3}
+  - {fileID: 21300000, guid: 1f287f19b460418419bbab2ecaab9182, type: 3}
+  - {fileID: 21300000, guid: a454995fa19f4744d8e9cd0e4f164b5e, type: 3}
+  - {fileID: 21300000, guid: b262c5b599a86434d82a4394f818b28c, type: 3}
+  - {fileID: 21300000, guid: 1f057bd4d95cefb4ea34497001baf49d, type: 3}
+  - {fileID: 21300000, guid: 92e7d2d2d20b15f43ae5d9acbd23d7e3, type: 3}
+  - {fileID: 21300000, guid: 1d5b9c4a673e8274eb52c303ded3abaf, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Skill1_02
+  - Skill1_03
+  - Skill1_00
+  - Skill1_01
+  - Skill1_06
+  - Skill1_07
+  - Skill1_04
+  - Skill1_05
+  - Skill1_11
+  - Skill1_10
+  - Skill1_08
+  - Skill1_09
   m_Tag: Skill1Atlas
   m_IsVariant: 0

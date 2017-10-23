@@ -26,17 +26,41 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 00000000000000000000000000000000
+      Hash: 7754d7649ae9b1baa7b735308f56a690
     variantMultiplier: 1
     bindAsDefault: 1
-    finalFormat: -1
-    hashString: 
-    totalSpriteSurfaceArea: 0
+    finalFormat: 4
+    hashString: 7754d7649ae9b1baa7b735308f56a690
+    totalSpriteSurfaceArea: 14323136
     packables:
     - {fileID: 102900000, guid: 840f6776481de48449f8176c23ea7cde, type: 3}
-    packedSpriteRenderDataKeys: []
+    packedSpriteRenderDataKeys:
+    - 6c9806f6d0100a24ba42d00e8b73f485: 21300000
+    - e64558799e1f03c4383da54576787b1c: 21300000
+    - bda6f6dd3e4f32149a67adacf89c0fd7: 21300000
+    - 3c662fe2c1cb8674f8a4a93f3b8a4f08: 21300000
+    - e25e1bbd9c0b3fe41a195b6229c04f56: 21300000
+    - bc3458ba67c196946b0bfa98b3b8d605: 21300000
+    - d7c3d77c4f54a5a418e48a5f4a323c80: 21300000
+    - 1d2a06e140de49e4dbaf18842127963b: 21300000
   m_MasterAtlas: {fileID: 0}
-  m_PackedSprites: []
-  m_PackedSpriteNamesToIndex: []
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 6c9806f6d0100a24ba42d00e8b73f485, type: 3}
+  - {fileID: 21300000, guid: e64558799e1f03c4383da54576787b1c, type: 3}
+  - {fileID: 21300000, guid: bda6f6dd3e4f32149a67adacf89c0fd7, type: 3}
+  - {fileID: 21300000, guid: 3c662fe2c1cb8674f8a4a93f3b8a4f08, type: 3}
+  - {fileID: 21300000, guid: e25e1bbd9c0b3fe41a195b6229c04f56, type: 3}
+  - {fileID: 21300000, guid: bc3458ba67c196946b0bfa98b3b8d605, type: 3}
+  - {fileID: 21300000, guid: d7c3d77c4f54a5a418e48a5f4a323c80, type: 3}
+  - {fileID: 21300000, guid: 1d2a06e140de49e4dbaf18842127963b, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - JumpAttack_02
+  - JumpAttack_03
+  - JumpAttack_00
+  - JumpAttack_01
+  - JumpAttack_06
+  - JumpAttack_07
+  - JumpAttack_04
+  - JumpAttack_05
   m_Tag: JumpAttackAtlas
   m_IsVariant: 0

@@ -26,17 +26,29 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 00000000000000000000000000000000
+      Hash: 96f8c573ce28f5d8c621b4d3d2d38410
     variantMultiplier: 1
     bindAsDefault: 1
-    finalFormat: -1
-    hashString: 
-    totalSpriteSurfaceArea: 0
+    finalFormat: 4
+    hashString: 96f8c573ce28f5d8c621b4d3d2d38410
+    totalSpriteSurfaceArea: 7161568
     packables:
     - {fileID: 102900000, guid: 76a7a173416b5fe45af1b49158bb4617, type: 3}
-    packedSpriteRenderDataKeys: []
+    packedSpriteRenderDataKeys:
+    - 0a11f0fe49e433245bb6b173fc99ebcc: 21300000
+    - bd59c41941b4da845ace5ebe15035f51: 21300000
+    - a86c56e422679204eb300f92fe5d2c0a: 21300000
+    - bbbcecdef8feb824ba0d43e9a63d6bd0: 21300000
   m_MasterAtlas: {fileID: 0}
-  m_PackedSprites: []
-  m_PackedSpriteNamesToIndex: []
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 0a11f0fe49e433245bb6b173fc99ebcc, type: 3}
+  - {fileID: 21300000, guid: bd59c41941b4da845ace5ebe15035f51, type: 3}
+  - {fileID: 21300000, guid: a86c56e422679204eb300f92fe5d2c0a, type: 3}
+  - {fileID: 21300000, guid: bbbcecdef8feb824ba0d43e9a63d6bd0, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - JumpAttack_08
+  - JumpAttack_09
+  - JumpAttack_11
+  - JumpAttack_10
   m_Tag: JumpAttackEndAtlas 1
   m_IsVariant: 0

@@ -479,7 +479,6 @@ public abstract class ChampionClassController : MonoBehaviour
     /// <summary>
     /// do a complete skill
     /// </summary>
-    /// <param name="skillType">Value of attackLength[]. For order check property attackLength at ChampionClassController (Value 0-7)</param>
     /// <param name="animationVar">Trigger to set</param>
     /// <param name="skillDelay">Delay of skill if requiered, else 0</param>
     /// <param name="skillDamage">Damage of the skill</param>
@@ -576,27 +575,41 @@ public abstract class ChampionClassController : MonoBehaviour
 
     #region Ranged Skill
 
-    protected void rangedAttack(GameObject projectilePrefab, float range, int damage, skillEffect effect, int effectDuration, float speed = 7, GameObject onHitEffect = null)
+    protected void doRangeSkill(ref bool animationVar, GameObject projectilePrefab, float range, int damage, skillEffect effect, int effectDuration, int skillStaminaCost, float speed = 7, GameObject onHitEffect = null)
     {
-        int direction;
-        if (m_FacingRight) direction = 1;
-        else direction = -1;
+        //Validate that character is not attacking and standing on ground
+        if (canPerformAttack() && m_Grounded && stats.hasSufficientStamina(skillStaminaCost))
+        {
+            // calculate direction
+            int direction;
+            if (m_FacingRight) direction = 1;
+            else direction = -1;
 
-        GameObject bullet = Instantiate(projectilePrefab, transform.position + new Vector3(0.5f * direction, 0.3f), Quaternion.identity);
+            // set animation trigger
+            animationVar = true;
 
-        ProjectileBehaviour projectile = bullet.GetComponent<ProjectileBehaviour>();
-        //Assign variables to procetile Script
-        projectile.direction = direction;
-        projectile.range = range;
-        projectile.speed = speed;
-        if(onHitEffect != null)
-            projectile.explosionPrefab = onHitEffect;
-        projectile.damage = damage;
-        projectile.effectDuration = effectDuration;
-        projectile.ready = true;
+            // generate GameObject
+            GameObject goProjectile = Instantiate(projectilePrefab, transform.position + new Vector3(0.5f * direction, 0.3f), Quaternion.identity);
+            ProjectileBehaviour projectile = goProjectile.GetComponent<ProjectileBehaviour>();
+
+            // assign variables to procetile Script
+            projectile.direction = direction;
+            projectile.range = range;
+            projectile.speed = speed;
+            if (onHitEffect != null)
+                projectile.explosionPrefab = onHitEffect;
+            projectile.damage = damage;
+            projectile.effectDuration = effectDuration;
+            projectile.ready = true;
+
+            // lose stamina for skill
+            stats.loseStamina(skillStaminaCost);
+        }
     }
 
     #endregion
+
+    #region Character Can Perform
 
     /// <summary>
     /// Checks if character is allowed to perform an Attack
@@ -623,5 +636,7 @@ public abstract class ChampionClassController : MonoBehaviour
         }
         return true;
     }
+
+    #endregion
 }
 

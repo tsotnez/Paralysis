@@ -26,17 +26,47 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 00000000000000000000000000000000
+      Hash: d5ac454e0e4b228dd0fa07c927db4b49
     variantMultiplier: 1
     bindAsDefault: 1
-    finalFormat: -1
-    hashString: 
-    totalSpriteSurfaceArea: 0
+    finalFormat: 4
+    hashString: d5ac454e0e4b228dd0fa07c927db4b49
+    totalSpriteSurfaceArea: 4669000
     packables:
     - {fileID: 102900000, guid: c0b1e9fe1db457e4dad65e7001482ac0, type: 3}
-    packedSpriteRenderDataKeys: []
+    packedSpriteRenderDataKeys:
+    - f139c93ecfd77974e98a59129f35e0ad: 21300000
+    - 5317aa3d2f92d2e4aaab51d571322ea8: 21300000
+    - e256816f26197664f8a2502e4719a6bb: 21300000
+    - 30f1d2297565c3b4cb60b7875980dfe2: 21300000
+    - a1916827702ead74db073962d2d76f53: 21300000
+    - 47a26057ea294014f811fbd6f9e98de8: 21300000
+    - 15170e20729e2b54f9bc72690907de7a: 21300000
+    - def484bc93aaa724387a63128573087d: 21300000
+    - c3ed8cf35de56d449a355969043abe09: 21300000
+    - 66b101df02dd0494ab4377670d7de011: 21300000
   m_MasterAtlas: {fileID: 0}
-  m_PackedSprites: []
-  m_PackedSpriteNamesToIndex: []
+  m_PackedSprites:
+  - {fileID: 21300000, guid: f139c93ecfd77974e98a59129f35e0ad, type: 3}
+  - {fileID: 21300000, guid: 5317aa3d2f92d2e4aaab51d571322ea8, type: 3}
+  - {fileID: 21300000, guid: e256816f26197664f8a2502e4719a6bb, type: 3}
+  - {fileID: 21300000, guid: 30f1d2297565c3b4cb60b7875980dfe2, type: 3}
+  - {fileID: 21300000, guid: a1916827702ead74db073962d2d76f53, type: 3}
+  - {fileID: 21300000, guid: 47a26057ea294014f811fbd6f9e98de8, type: 3}
+  - {fileID: 21300000, guid: 15170e20729e2b54f9bc72690907de7a, type: 3}
+  - {fileID: 21300000, guid: def484bc93aaa724387a63128573087d, type: 3}
+  - {fileID: 21300000, guid: c3ed8cf35de56d449a355969043abe09, type: 3}
+  - {fileID: 21300000, guid: 66b101df02dd0494ab4377670d7de011, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - BasicAttack2_08
+  - BasicAttack2_09
+  - BasicAttack2_02
+  - BasicAttack2_03
+  - BasicAttack2_00
+  - BasicAttack2_01
+  - BasicAttack2_06
+  - BasicAttack2_07
+  - BasicAttack2_04
+  - BasicAttack2_05
   m_Tag: BasicAttack2Atlas
   m_IsVariant: 0
