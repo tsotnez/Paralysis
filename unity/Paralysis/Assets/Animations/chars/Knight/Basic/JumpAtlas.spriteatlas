@@ -22,20 +22,81 @@ SpriteAtlas:
       paddingPower: 2
       blockOffset: 1
       allowAlphaSplitting: 0
-      enableRotation: 1
+      enableRotation: 0
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: d9ba2bd72527daa2673e4f5dfeee671b
+      Hash: 46a7caf3518cfa2b29a1647ac1164f3b
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: d9ba2bd72527daa2673e4f5dfeee671b
-    totalSpriteSurfaceArea: 0
-    packables: []
-    packedSpriteRenderDataKeys: []
+    hashString: 46a7caf3518cfa2b29a1647ac1164f3b
+    totalSpriteSurfaceArea: 19713760
+    packables:
+    - {fileID: 102900000, guid: c302d560157b54241a54b2a0d8ec64ad, type: 3}
+    packedSpriteRenderDataKeys:
+    - d3154f1b990009e4892b23547cf95fda: 21300000
+    - c4a7478dac347a3498d6b7fea74c7e11: 21300000
+    - 227ab5b272ea71441957e1ad54ff6878: 21300000
+    - a9418b94bfb048a45a26832403ed875d: 21300000
+    - 7e7f77322b5b25d4eabbda4fd1d6369a: 21300000
+    - fa250093db58ce54cb360379cbeaf558: 21300000
+    - 15f9d2ffe0438b84c935341206b0db1e: 21300000
+    - dd34e9dcfe40df741ab5b9924f00ea51: 21300000
+    - f4fb6df6bf0b8c5438d1c8aa4404a901: 21300000
+    - 194158bd58c45be45b144a5880b1f77e: 21300000
+    - 9b328bc0678fa3043a068abbd9e92d65: 21300000
+    - d166895cdcb98014aaf0fb051620785d: 21300000
+    - 148752531bd660047a2f20b1a233b911: 21300000
+    - 1481cc03c3c88a442a960be3d8e2535c: 21300000
+    - 120caed433546c446928a23030cea01c: 21300000
+    - 0cbf54748a26b5442b7f101ab511dfd6: 21300000
+    - 7b41dc278e4c0e44ca05930c22472a00: 21300000
+    - 975b104415014574eaf1b8a71e6a91f6: 21300000
+    - 8c4372722c6bea94ab247eb1b86e9dc1: 21300000
+    - 1bcda84f3e09a1b44bf8db4a48f7db64: 21300000
   m_MasterAtlas: {fileID: 0}
-  m_PackedSprites: []
-  m_PackedSpriteNamesToIndex: []
+  m_PackedSprites:
+  - {fileID: 21300000, guid: d3154f1b990009e4892b23547cf95fda, type: 3}
+  - {fileID: 21300000, guid: c4a7478dac347a3498d6b7fea74c7e11, type: 3}
+  - {fileID: 21300000, guid: 227ab5b272ea71441957e1ad54ff6878, type: 3}
+  - {fileID: 21300000, guid: a9418b94bfb048a45a26832403ed875d, type: 3}
+  - {fileID: 21300000, guid: 7e7f77322b5b25d4eabbda4fd1d6369a, type: 3}
+  - {fileID: 21300000, guid: fa250093db58ce54cb360379cbeaf558, type: 3}
+  - {fileID: 21300000, guid: 15f9d2ffe0438b84c935341206b0db1e, type: 3}
+  - {fileID: 21300000, guid: dd34e9dcfe40df741ab5b9924f00ea51, type: 3}
+  - {fileID: 21300000, guid: f4fb6df6bf0b8c5438d1c8aa4404a901, type: 3}
+  - {fileID: 21300000, guid: 194158bd58c45be45b144a5880b1f77e, type: 3}
+  - {fileID: 21300000, guid: 9b328bc0678fa3043a068abbd9e92d65, type: 3}
+  - {fileID: 21300000, guid: d166895cdcb98014aaf0fb051620785d, type: 3}
+  - {fileID: 21300000, guid: 148752531bd660047a2f20b1a233b911, type: 3}
+  - {fileID: 21300000, guid: 1481cc03c3c88a442a960be3d8e2535c, type: 3}
+  - {fileID: 21300000, guid: 120caed433546c446928a23030cea01c, type: 3}
+  - {fileID: 21300000, guid: 0cbf54748a26b5442b7f101ab511dfd6, type: 3}
+  - {fileID: 21300000, guid: 7b41dc278e4c0e44ca05930c22472a00, type: 3}
+  - {fileID: 21300000, guid: 975b104415014574eaf1b8a71e6a91f6, type: 3}
+  - {fileID: 21300000, guid: 8c4372722c6bea94ab247eb1b86e9dc1, type: 3}
+  - {fileID: 21300000, guid: 1bcda84f3e09a1b44bf8db4a48f7db64, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Jump_02
+  - Jump_03
+  - Jump_00
+  - Jump_01
+  - Jump_06
+  - Jump_07
+  - Jump_04
+  - Jump_05
+  - Jump_08
+  - Jump_09
+  - Jump_15
+  - Jump_14
+  - Jump_17
+  - Jump_16
+  - Jump_11
+  - Jump_10
+  - Jump_13
+  - Jump_12
+  - Jump_19
+  - Jump_18
   m_Tag: JumpAtlas
   m_IsVariant: 0

@@ -22,20 +22,69 @@ SpriteAtlas:
       paddingPower: 2
       blockOffset: 1
       allowAlphaSplitting: 0
-      enableRotation: 1
+      enableRotation: 0
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 67d40891dd54c35ebbf1840d75895678
+      Hash: 967551b6ee91d1a0e92bb7349b9b61ae
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 67d40891dd54c35ebbf1840d75895678
-    totalSpriteSurfaceArea: 0
-    packables: []
-    packedSpriteRenderDataKeys: []
+    hashString: 967551b6ee91d1a0e92bb7349b9b61ae
+    totalSpriteSurfaceArea: 12642832
+    packables:
+    - {fileID: 102900000, guid: 9d4e3d5431ba14f44a92fe12b039d22e, type: 3}
+    packedSpriteRenderDataKeys:
+    - 2dd08179f5c9bbf42853100c87935d10: 21300000
+    - 80b24e54867110a4f948137288317b93: 21300000
+    - de13b8e09860f3a47ac8e06adce71973: 21300000
+    - fdc8604f52f258f4ba4174bcce640f67: 21300000
+    - bdf26558d20609949b636bab33dc65d9: 21300000
+    - e8378042b9fde2c47a3c3c940d196415: 21300000
+    - 7f642b32c8faafb46bc1c974c01ac92c: 21300000
+    - bb8f5bc4fd79e664ba1cc109e4e7cd55: 21300000
+    - 9e22fdaa205409442a01c45fa179732c: 21300000
+    - e65982604208bd14abb7801d1ac3438e: 21300000
+    - 52cc91babbf287e49be0ff3515e6a546: 21300000
+    - 5f7b5f52e0ba15843b1745956a085d22: 21300000
+    - 924f3179fe7f0ec4c9d5f57c4c005e7c: 21300000
+    - b052fa7002fddec4a9db0bbe7b716b92: 21300000
+    - 18d49beb07507504a8f5f67ea06b8c2f: 21300000
+    - 14c094fce49f9c749bd16c7be83aa260: 21300000
   m_MasterAtlas: {fileID: 0}
-  m_PackedSprites: []
-  m_PackedSpriteNamesToIndex: []
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 2dd08179f5c9bbf42853100c87935d10, type: 3}
+  - {fileID: 21300000, guid: 80b24e54867110a4f948137288317b93, type: 3}
+  - {fileID: 21300000, guid: de13b8e09860f3a47ac8e06adce71973, type: 3}
+  - {fileID: 21300000, guid: fdc8604f52f258f4ba4174bcce640f67, type: 3}
+  - {fileID: 21300000, guid: bdf26558d20609949b636bab33dc65d9, type: 3}
+  - {fileID: 21300000, guid: e8378042b9fde2c47a3c3c940d196415, type: 3}
+  - {fileID: 21300000, guid: 7f642b32c8faafb46bc1c974c01ac92c, type: 3}
+  - {fileID: 21300000, guid: bb8f5bc4fd79e664ba1cc109e4e7cd55, type: 3}
+  - {fileID: 21300000, guid: 9e22fdaa205409442a01c45fa179732c, type: 3}
+  - {fileID: 21300000, guid: e65982604208bd14abb7801d1ac3438e, type: 3}
+  - {fileID: 21300000, guid: 52cc91babbf287e49be0ff3515e6a546, type: 3}
+  - {fileID: 21300000, guid: 5f7b5f52e0ba15843b1745956a085d22, type: 3}
+  - {fileID: 21300000, guid: 924f3179fe7f0ec4c9d5f57c4c005e7c, type: 3}
+  - {fileID: 21300000, guid: b052fa7002fddec4a9db0bbe7b716b92, type: 3}
+  - {fileID: 21300000, guid: 18d49beb07507504a8f5f67ea06b8c2f, type: 3}
+  - {fileID: 21300000, guid: 14c094fce49f9c749bd16c7be83aa260, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Run_12
+  - Run_13
+  - Run_10
+  - Run_11
+  - Run_14
+  - Run_15
+  - Run_09
+  - Run_08
+  - Run_05
+  - Run_04
+  - Run_07
+  - Run_06
+  - Run_01
+  - Run_00
+  - Run_03
+  - Run_02
   m_Tag: RunAtlas
   m_IsVariant: 0

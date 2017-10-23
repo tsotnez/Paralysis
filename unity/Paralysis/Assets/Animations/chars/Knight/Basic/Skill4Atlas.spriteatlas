@@ -22,20 +22,54 @@ SpriteAtlas:
       paddingPower: 2
       blockOffset: 1
       allowAlphaSplitting: 0
-      enableRotation: 1
+      enableRotation: 0
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 5527e73abfbec1b673f333eb19da30ec
+      Hash: 29bcca0814489ccb29fd1f83471cdc8b
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 5527e73abfbec1b673f333eb19da30ec
-    totalSpriteSurfaceArea: 0
-    packables: []
-    packedSpriteRenderDataKeys: []
+    hashString: 29bcca0814489ccb29fd1f83471cdc8b
+    totalSpriteSurfaceArea: 25229424
+    packables:
+    - {fileID: 102900000, guid: c0c3500e7be5df346b346f97c5b95ca7, type: 3}
+    packedSpriteRenderDataKeys:
+    - 9a6bae5aae44d5d4daf40f0a79200f81: 21300000
+    - 7ad21f358d0affb499cb36b1b589d695: 21300000
+    - 0341044beaf869346b6e4eb75bdbc7a8: 21300000
+    - 016003903787eb04ebcda92146be6a87: 21300000
+    - 278b7f8cb164b75438555c5c4b69c5ed: 21300000
+    - 7f9ff46f45b0bfc4ea94e051c1efb68a: 21300000
+    - cdf53a4934bd3ea4ab93279929e79ce3: 21300000
+    - c96f216cb01b5bc4bbc4ec7d10e59a57: 21300000
+    - 8fba9aa0826468c4882cddc36caef5a2: 21300000
+    - b8df4d04f08114d4887dc126620d9c6e: 21300000
+    - f03db3ad14b53144283b9c8c791d0556: 21300000
   m_MasterAtlas: {fileID: 0}
-  m_PackedSprites: []
-  m_PackedSpriteNamesToIndex: []
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 9a6bae5aae44d5d4daf40f0a79200f81, type: 3}
+  - {fileID: 21300000, guid: 7ad21f358d0affb499cb36b1b589d695, type: 3}
+  - {fileID: 21300000, guid: 0341044beaf869346b6e4eb75bdbc7a8, type: 3}
+  - {fileID: 21300000, guid: 016003903787eb04ebcda92146be6a87, type: 3}
+  - {fileID: 21300000, guid: 278b7f8cb164b75438555c5c4b69c5ed, type: 3}
+  - {fileID: 21300000, guid: 7f9ff46f45b0bfc4ea94e051c1efb68a, type: 3}
+  - {fileID: 21300000, guid: cdf53a4934bd3ea4ab93279929e79ce3, type: 3}
+  - {fileID: 21300000, guid: c96f216cb01b5bc4bbc4ec7d10e59a57, type: 3}
+  - {fileID: 21300000, guid: 8fba9aa0826468c4882cddc36caef5a2, type: 3}
+  - {fileID: 21300000, guid: b8df4d04f08114d4887dc126620d9c6e, type: 3}
+  - {fileID: 21300000, guid: f03db3ad14b53144283b9c8c791d0556, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Skill4_01
+  - Skill4_00
+  - Skill4_03
+  - Skill4_02
+  - Skill4_05
+  - Skill4_04
+  - Skill4_07
+  - Skill4_06
+  - Skill4_09
+  - Skill4_08
+  - Skill4_10
   m_Tag: Skill4Atlas
   m_IsVariant: 0
