@@ -303,7 +303,7 @@ MonoBehaviour:
   delay_Skill1: 0
   delay_Skill2: 0
   delay_Skill3: 0
-  delay_Skill4: 0
+  delay_Skill4: 0.25
   stamina_BasicAttack1: 5
   stamina_BasicAttack2: 5
   stamina_BasicAttack3: 5

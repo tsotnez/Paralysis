@@ -400,7 +400,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 0.2
+  - 0.5
   - 0
   Atlasses:
   - {fileID: 4343727234628468602, guid: b0104b8c51d885a469c7e806476256f8, type: 2}
@@ -509,7 +509,7 @@ MonoBehaviour:
   delay_Skill1: 0
   delay_Skill2: 0
   delay_Skill3: 0
-  delay_Skill4: 0
+  delay_Skill4: 0.2
   stamina_BasicAttack1: 5
   stamina_BasicAttack2: 5
   stamina_BasicAttack3: 7

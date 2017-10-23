@@ -575,36 +575,43 @@ public abstract class ChampionClassController : MonoBehaviour
 
     #region Ranged Skill
 
-    protected void doRangeSkill(ref bool animationVar, GameObject projectilePrefab, float range, int damage, skillEffect effect, int effectDuration, int skillStaminaCost, float speed = 7, GameObject onHitEffect = null)
+    protected void doRangeSkill(ref bool animationVar, float skillDelay, GameObject projectilePrefab, float range, int damage, skillEffect effect, int effectDuration, int skillStaminaCost, float speed = 7, GameObject onHitEffect = null)
     {
         //Validate that character is not attacking and standing on ground
         if (canPerformAttack() && m_Grounded && stats.hasSufficientStamina(skillStaminaCost))
         {
-            // calculate direction
-            int direction;
-            if (m_FacingRight) direction = 1;
-            else direction = -1;
-
             // set animation trigger
             animationVar = true;
-
-            // generate GameObject
-            GameObject goProjectile = Instantiate(projectilePrefab, transform.position + new Vector3(0.5f * direction, 0.3f), Quaternion.identity);
-            ProjectileBehaviour projectile = goProjectile.GetComponent<ProjectileBehaviour>();
-
-            // assign variables to procetile Script
-            projectile.direction = direction;
-            projectile.range = range;
-            projectile.speed = speed;
-            if (onHitEffect != null)
-                projectile.explosionPrefab = onHitEffect;
-            projectile.damage = damage;
-            projectile.effectDuration = effectDuration;
-            projectile.ready = true;
-
+            // do hit by coroutine
+            StartCoroutine(doRangeSkill_Hit(skillDelay, projectilePrefab, range, damage, effectDuration, speed, onHitEffect));
             // lose stamina for skill
             stats.loseStamina(skillStaminaCost);
         }
+    }
+
+    private IEnumerator doRangeSkill_Hit(float skillDelay, GameObject projectilePrefab, float range, int damage, int effectDuration, float speed, GameObject onHitEffect)
+    {
+        // wait till delay ends
+        yield return new WaitForSeconds(skillDelay);
+
+        // calculate direction
+        int direction;
+        if (m_FacingRight) direction = 1;
+        else direction = -1;
+
+        // generate GameObject
+        GameObject goProjectile = Instantiate(projectilePrefab, transform.position + new Vector3(0.5f * direction, 0.3f), Quaternion.identity);
+        ProjectileBehaviour projectile = goProjectile.GetComponent<ProjectileBehaviour>();
+
+        // assign variables to procetile Script
+        projectile.direction = direction;
+        projectile.range = range;
+        projectile.speed = speed;
+        if (onHitEffect != null)
+            projectile.explosionPrefab = onHitEffect;
+        projectile.damage = damage;
+        projectile.effectDuration = effectDuration;
+        projectile.ready = true;
     }
 
     #endregion
