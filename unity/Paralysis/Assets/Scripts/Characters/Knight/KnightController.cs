@@ -34,7 +34,7 @@ public class KnightController : ChampionClassController
     /// <param name="shouldAttack"></param>
     public override void basicAttack(bool shouldAttack)
     {
-        if (shouldAttack && !attacking)
+        if (shouldAttack && canPerformAttack())
         {
             if (m_Grounded)
             {
@@ -58,13 +58,13 @@ public class KnightController : ChampionClassController
                     {
                         case 1: case 2:
                             // do meele attack
-                            doMeeleSkill(0, ref trigBasicAttack1, delay_BasicAttack1, damage_BasicAttack1, skillEffect.nothing, 0, stamina_BasicAttack1);
+                            doMeeleSkill(ref trigBasicAttack1, delay_BasicAttack1, damage_BasicAttack1, skillEffect.nothing, 0, stamina_BasicAttack1);
                             // Reset timer of combo
                             resetComboTime();
                             break;
                         case 3:
                             // do meele attack
-                            doMeeleSkill(2, ref trigBasicAttack2, delay_BasicAttack3, damage_BasicAttack3, skillEffect.nothing, 0, stamina_BasicAttack3);
+                            doMeeleSkill(ref trigBasicAttack2, delay_BasicAttack3, damage_BasicAttack3, skillEffect.nothing, 0, stamina_BasicAttack3);
                             // Reset Combo after combo-hit
                             abortCombo();
                             break;
@@ -86,7 +86,6 @@ public class KnightController : ChampionClassController
                     stats.loseStamina(stamina_JumpAttack);
                     // Jump Attack
                     StartCoroutine(jumpAttack());
-                    attackingRoutine = StartCoroutine(setAttacking(attackLength[3] - 0.08f));
                     // Abort combo
                     abortCombo();
                 }
@@ -110,7 +109,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill1()
     {
-        doMeeleSkill(4, ref trigSkill1, delay_Skill1, damage_Skill1, skillEffect.stun, 3, stamina_Skill1);
+        doMeeleSkill(ref trigSkill1, delay_Skill1, damage_Skill1, skillEffect.stun, 3, stamina_Skill1);
     }
 
 
@@ -126,7 +125,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill2()
     {
-        doMeeleSkill(5, ref trigSkill2, delay_Skill2, damage_Skill2, skillEffect.stun, 3, stamina_Skill2);
+        doMeeleSkill(ref trigSkill2, delay_Skill2, damage_Skill2, skillEffect.stun, 3, stamina_Skill2);
     }
 
     /// <summary>
@@ -141,7 +140,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill3()
     {
-        doMeeleSkill(6, ref trigSkill3, delay_Skill3, damage_Skill3, skillEffect.knockback, 0, stamina_Skill3, false);
+        doMeeleSkill(ref trigSkill3, delay_Skill3, damage_Skill3, skillEffect.knockback, 0, stamina_Skill3, false);
     }
 
     /// <summary>
@@ -170,7 +169,7 @@ public class KnightController : ChampionClassController
     /// <returns></returns>
     public override IEnumerator dash(int direction)
     {
-        if (m_Grounded && !attacking && !dashing && stats.hasSufficientStamina(m_dashStaminaCost))
+        if (m_Grounded && canPerformAttack() && !dashing && stats.hasSufficientStamina(m_dashStaminaCost))
         {
             if (direction != 0 && !dashing)
             {

@@ -65,11 +65,7 @@ public abstract class ChampionClassController : MonoBehaviour
     [SerializeField]
     protected bool inCombo = false;                                       // When true, the next comboStage can be reached
     [SerializeField]
-    protected bool attacking = false;                                     // true, while the character is Attacking
-    [SerializeField]
     protected bool jumpAttacking = false;                                 // True while the character is jump attacking
-    [SerializeField]
-    protected float[] attackLength;                                       // Stores the length of the characters attack animations in seconds. Order: [Basic Attack 1] [Basic Attack 2] [Basic Attack 3] [jump Attack] [Skill1] [Skill2] [Skill3] [Skill4]
 
     #region Parameters for abilities
 
@@ -146,7 +142,6 @@ public abstract class ChampionClassController : MonoBehaviour
     #endregion
 
     //Coroutines
-    protected Coroutine attackingRoutine;
     protected Coroutine comboRoutine;
 
     #region default methods
@@ -295,7 +290,7 @@ public abstract class ChampionClassController : MonoBehaviour
         {
             //Slow down the player if he's attacking or blocking
             float maxSpeed;
-            if (attacking) maxSpeed = m_MoveSpeedWhileAttacking;
+            if (!canPerformAttack()) maxSpeed = m_MoveSpeedWhileAttacking;
             else if (blocking) maxSpeed = m_MoveSpeedWhileBlocking;
             else maxSpeed = m_MaxSpeed;
 
@@ -308,14 +303,14 @@ public abstract class ChampionClassController : MonoBehaviour
             // If the input is moving the player right and the player is facing left...
             if (move > 0 && !m_FacingRight)
             {
-                if (attacking) return; // prevent player from turning around while attacking
+                if (!canPerformAttack()) return; // prevent player from turning around while attacking
                 // ... flip the player.
                 Flip();
             }
             // Otherwise if the input is moving the player left and the player is facing right...
             else if (move < 0 && m_FacingRight)
             {
-                if (attacking) return;
+                if (!canPerformAttack()) return;
                 // ... flip the player.
                 Flip();
             }
@@ -328,7 +323,7 @@ public abstract class ChampionClassController : MonoBehaviour
     public virtual void jump(bool jump)
     {
         // If the player should jump...
-        if (m_Grounded && jump && !dashing && !attacking)
+        if (m_Grounded && jump && !dashing && canPerformAttack())
         {
             // Add a vertical force to the player.
             m_Grounded = false;
@@ -374,7 +369,7 @@ public abstract class ChampionClassController : MonoBehaviour
     //Dashes in the given direction
     public virtual IEnumerator dash(int direction)
     {
-        if (m_Grounded && !attacking && !dashing && stats.hasSufficientStamina(m_dashStaminaCost))
+        if (m_Grounded && canPerformAttack() && !dashing && stats.hasSufficientStamina(m_dashStaminaCost))
         {
             if (direction != 0 && !dashing)
             {
@@ -437,17 +432,6 @@ public abstract class ChampionClassController : MonoBehaviour
 
     #endregion
 
-    #region Attacking coroutine
-
-    protected IEnumerator setAttacking(float seconds)
-    {
-        attacking = true;
-        yield return new WaitForSeconds(seconds);
-        attacking = false;
-    }
-
-    #endregion
-
     #region Combo coroutine
 
     /// <summary>
@@ -496,7 +480,7 @@ public abstract class ChampionClassController : MonoBehaviour
     /// do a complete skill
     /// </summary>
     /// <param name="skillType">Value of attackLength[]. For order check property attackLength at ChampionClassController (Value 0-7)</param>
-    /// <param name="calledAnimation">Name of the animation that should be played at the character</param>
+    /// <param name="animationVar">Trigger to set</param>
     /// <param name="skillDelay">Delay of skill if requiered, else 0</param>
     /// <param name="skillDamage">Damage of the skill</param>
     /// <param name="skillSpecialEffect">Special effect of the skill like nothing, stun, knockback or bleed</param>
@@ -505,24 +489,17 @@ public abstract class ChampionClassController : MonoBehaviour
     /// <param name="singleTarget">only the first target or all targets? (default: singleTarget - true)</param>
     /// <param name="skillRange">Range of the skill (default: meeleRange - 1.5f)</param>.
     /// </summary>
-    protected void doMeeleSkill(int skillType, ref bool animationVar, float skillDelay, int skillDamage, skillEffect skillSpecialEffect, int skillSpecialEffectTime, int skillStaminaCost, bool singleTarget = true, float skillRange = meeleRange)
+    protected void doMeeleSkill(ref bool animationVar, float skillDelay, int skillDamage, skillEffect skillSpecialEffect, int skillSpecialEffectTime, int skillStaminaCost, bool singleTarget = true, float skillRange = meeleRange)
     {
         //Validate that character is not attacking and standing on ground
-        if (!attacking && m_Grounded)
+        if (canPerformAttack() && m_Grounded && stats.hasSufficientStamina(skillStaminaCost))
         {
-            // check if enough stamina is left
-            if (stats.hasSufficientStamina(skillStaminaCost))
-            {
-                // set attacking coroutine
-                if (attackingRoutine != null) StopCoroutine(attackingRoutine);
-                attackingRoutine = StartCoroutine(setAttacking(attackLength[skillType] - 0.08f));
-                // set animation trigger
-                animationVar = true;
-                // do hit by coroutine
-                StartCoroutine(doMeeleSkill_Hit(skillDelay, skillDamage, skillSpecialEffect, skillSpecialEffectTime, singleTarget, skillRange));
-                // lose stamina for skill
-                stats.loseStamina(skillStaminaCost);
-            }
+            // set animation trigger
+            animationVar = true;
+            // do hit by coroutine
+            StartCoroutine(doMeeleSkill_Hit(skillDelay, skillDamage, skillSpecialEffect, skillSpecialEffectTime, singleTarget, skillRange));
+            // lose stamina for skill
+            stats.loseStamina(skillStaminaCost);
         }
     }
 
@@ -612,12 +589,39 @@ public abstract class ChampionClassController : MonoBehaviour
         projectile.direction = direction;
         projectile.range = range;
         projectile.speed = speed;
-        projectile.explosionPrefab = onHitEffect;
+        if(onHitEffect != null)
+            projectile.explosionPrefab = onHitEffect;
         projectile.damage = damage;
         projectile.effectDuration = effectDuration;
         projectile.ready = true;
     }
 
     #endregion
+
+    /// <summary>
+    /// Checks if character is allowed to perform an Attack
+    /// </summary>
+    /// <returns></returns>
+    public bool canPerformAttack()
+    {
+        switch (animCon.currentAnimation)
+        {
+            case AnimationController.AnimatorStates.BasicAttack1:
+            case AnimationController.AnimatorStates.BasicAttack2:
+            case AnimationController.AnimatorStates.BasicAttack3:
+            case AnimationController.AnimatorStates.JumpAttack:
+            case AnimationController.AnimatorStates.JumpAttackEnd:
+            case AnimationController.AnimatorStates.Skill1:
+            case AnimationController.AnimatorStates.Skill2:
+            case AnimationController.AnimatorStates.Skill3:
+            case AnimationController.AnimatorStates.Skill4:
+            case AnimationController.AnimatorStates.DashFor:
+            case AnimationController.AnimatorStates.Dash:
+            case AnimationController.AnimatorStates.Stunned:
+            case AnimationController.AnimatorStates.KnockedBack:
+                return false;
+        }
+        return true;
+    }
 }
 

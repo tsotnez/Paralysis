@@ -46,14 +46,8 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill1()
     {
-        if (!attacking && m_Grounded && !dashing && stats.hasSufficientStamina(stamina_Skill1))
-        {
-            if (invisible) stopInvisible();
-            attackingRoutine = StartCoroutine(setAttacking(attackLength[4]));
-            //m_Anim.SetTrigger("stunAttack");
-            Invoke("stunAttackHit", delay_Skill1); //Invoke damage function
-            stats.loseStamina(stamina_Skill1);
-        }
+        if (invisible) stopInvisible();
+        doMeeleSkill(ref trigBasicAttack1, delay_BasicAttack1, damage_BasicAttack1, skillEffect.stun, 3, stamina_BasicAttack1);
     }
 
     /// <summary>
@@ -61,11 +55,10 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill2()
     {
-        if (!attacking && m_Grounded && !dashing && stats.hasSufficientStamina(stamina_Skill2))
+        if (m_Grounded && !dashing && canPerformAttack() && stats.hasSufficientStamina(stamina_Skill2))
         {
             if (invisible) stopInvisible();
-            attackingRoutine = StartCoroutine(setAttacking(attackLength[5]));
-            //m_Anim.SetTrigger("vanish");
+
             if (invisRoutine != null) StopCoroutine(invisRoutine);
             invisRoutine = StartCoroutine(manageInvisibility());
             stats.loseStamina(stamina_Skill2);
@@ -77,12 +70,10 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill3()
     {
-        if (!attacking && m_Grounded && !dashing && stats.hasSufficientStamina(stamina_Skill3))
+        if (m_Grounded && !dashing && canPerformAttack() && stats.hasSufficientStamina(stamina_Skill3))
         {
             if (invisible) stopInvisible();
             StartCoroutine(shadowStepHit());
-            attackingRoutine = StartCoroutine(setAttacking(attackLength[6]));
-            //m_Anim.SetTrigger("shadowstep");
             stats.loseStamina(stamina_Skill3);
         }
     }
@@ -91,20 +82,14 @@ public class AssassinController : ChampionClassController
     /// Shoot pistol and knock back
     /// </summary>
     public override void skill4()
-    {
-        if (!attacking && m_Grounded && !dashing && stats.hasSufficientStamina(stamina_Skill4))
-        {
-            if (invisible) stopInvisible();
-            attackingRoutine = StartCoroutine(setAttacking(attackLength[7]));
-            //m_Anim.SetTrigger("shoot");
-            Invoke("shootAttackHit", delay_Skill4);
-            stats.loseStamina(stamina_Skill4);
-        }
+    { 
+        if (invisible) stopInvisible();
+        rangedAttack(bulletPrefab, 5, damage_Skill4, skillEffect.knockback, 2);
     }
 
     private IEnumerator manageInvisibility()
     {
-        yield return new WaitForSeconds(attackLength[5] - 0.05f);
+        yield return new WaitForSeconds(delay_Skill3/*attackLength[5] - 0.05f*/);
         invisible = true;
 
         //Set transparency
@@ -118,13 +103,12 @@ public class AssassinController : ChampionClassController
 
     public override void basicAttack(bool shouldAttack)
     {
-        if (shouldAttack && !attacking && !dashing)
+        if (shouldAttack && canPerformAttack() && !dashing)
         {
             if (!m_Grounded && !invisible && doubleJumped) //Jump attack only when falling and double jumped
             {
                 //Jump Attack
                 StartCoroutine(jumpAttack());
-                attackingRoutine = StartCoroutine(setAttacking(attackLength[3] - 0.08f));
                 //reset combo
                 abortCombo();
             }
@@ -154,27 +138,18 @@ public class AssassinController : ChampionClassController
                     case 1:
                         //set animation
                         //m_Anim.SetTrigger("Attack");
-                        //set attacking coroutine
-                        if (attackingRoutine != null) StopCoroutine(attackingRoutine);
-                        attackingRoutine = StartCoroutine(setAttacking(attackLength[0] - 0.08f));
                         // do basic attack
                         Invoke("basicAttackHit", delay_BasicAttack1);
                         break;
                     case 2:
                         //set animation
                         //m_Anim.SetTrigger("Attack2");
-                        //set attacking coroutine
-                        if (attackingRoutine != null) StopCoroutine(attackingRoutine);
-                        attackingRoutine = StartCoroutine(setAttacking(attackLength[1] - 0.08f));
                         // do basic attack
                         Invoke("basicAttackHit", delay_BasicAttack2);
                         break;
                     case 3:
                         //set animation
                         //m_Anim.SetTrigger("Attack3");
-                        //set attacking coroutine
-                        if (attackingRoutine != null) StopCoroutine(attackingRoutine);
-                        attackingRoutine = StartCoroutine(setAttacking(attackLength[2] - 0.08f));
                         // do bleed attack
                         Invoke("bleedAttackHit", delay_BasicAttack3);
 
@@ -184,9 +159,6 @@ public class AssassinController : ChampionClassController
                     case 4:
                         //set animation
                         //m_Anim.SetTrigger("shadowstep");
-                        // set attacking coroutine
-                        if (attackingRoutine != null) StopCoroutine(attackingRoutine);
-                        attackingRoutine = StartCoroutine(setAttacking(attackLength[6] - 0.08f));
                         //do ambush attack
                         Invoke("ambushAttackHit", delay_Skill3);
                         //reset Combo
@@ -277,21 +249,15 @@ public class AssassinController : ChampionClassController
             {
                 m_Rigidbody2D.position = hit.transform.position + Vector3.left; //Viable target on the right
                 if (!m_FacingRight) Flip();
-                m_Rigidbody2D.velocity = Vector2.zero;
-                yield return new WaitForSeconds(delay_Skill3); //Deal damage at correct point in animation
-                hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(5, false);
-                hit.transform.gameObject.GetComponent<CharacterStats>().startStunned(3);
             }
             else if (targetLocation == -1)
             {
                 m_Rigidbody2D.position = hitLeft.transform.position + Vector3.right; //Viable target on the left
                 if (m_FacingRight) Flip();
-                m_Rigidbody2D.velocity = Vector2.zero;
-                yield return new WaitForSeconds(delay_Skill3); //Deal damage at correct point in animation
-                hitLeft.transform.gameObject.GetComponent<CharacterStats>().takeDamage(5, false);
-                hitLeft.transform.gameObject.GetComponent<CharacterStats>().startStunned(3);
             }
-            yield return new WaitForSeconds(attackLength[6] - delay_Skill3);
+            m_Rigidbody2D.velocity = Vector2.zero;
+            doMeeleSkill(ref trigSkill3, delay_Skill3, 5, skillEffect.stun, 3, stamina_Skill3);
+            yield return new WaitForSeconds(delay_Skill4);
             dontMove = false;
         }
     }
