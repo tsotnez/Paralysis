@@ -14,19 +14,8 @@ public class AssassinController : ChampionClassController
     [SerializeField]
     private GameObject bulletPrefab;
 
-    public override void jump(bool jump)
-    {
-        if (m_Grounded && jump) /*m_Anim.GetBool("Ground")*/
-            base.jump(jump);
-        else if (!m_Grounded && jump && !doubleJumped)
-        {
-            // Add a vertical force to the player.
-            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
-            m_Rigidbody2D.AddForce(new Vector2(0f, m_DoubleJumpForce));
-            //m_Anim.SetTrigger("DoubleJump");
-            doubleJumped = true;
-        }
-    }
+    // trigger for animation
+    bool trigDoubleJump = false;
 
     protected override void FixedUpdate()
     {
@@ -41,13 +30,15 @@ public class AssassinController : ChampionClassController
         if(stats.knockedBack && invisible) stopInvisible();
     }
 
+    #region Skills
+
     /// <summary>
     /// Stun attack
     /// </summary>
     public override void skill1()
     {
         if (invisible) stopInvisible();
-        doMeeleSkill(ref trigBasicAttack1, delay_BasicAttack1, damage_BasicAttack1, skillEffect.stun, 3, stamina_BasicAttack1);
+        doMeeleSkill(ref trigSkill1, delay_Skill1, damage_Skill1, skillEffect.stun, 3, stamina_Skill1);
     }
 
     /// <summary>
@@ -87,19 +78,9 @@ public class AssassinController : ChampionClassController
         doRangeSkill(ref trigSkill4, delay_Skill4, bulletPrefab, 5, damage_Skill4, skillEffect.knockback, 2, stamina_Skill4);
     }
 
-    private IEnumerator manageInvisibility()
-    {
-        yield return new WaitForSeconds(delay_Skill3/*attackLength[5] - 0.05f*/);
-        invisible = true;
+    #endregion
 
-        //Set transparency
-        Color oldCol = GetComponentInChildren<SpriteRenderer>().color;
-        oldCol.a = 0.5f;
-        GetComponentInChildren<SpriteRenderer>().color = oldCol;
-
-        yield return new WaitForSeconds(5);
-        stopInvisible();
-    }
+    #region Basic Attack
 
     public override void basicAttack(bool shouldAttack)
     {
@@ -136,84 +117,58 @@ public class AssassinController : ChampionClassController
                 switch (attackCount)
                 {
                     case 1:
-                        //set animation
-                        //m_Anim.SetTrigger("Attack");
                         // do basic attack
-                        Invoke("basicAttackHit", delay_BasicAttack1);
+                        doMeeleSkill(ref trigBasicAttack1, delay_BasicAttack1, damage_BasicAttack1, skillEffect.nothing, 0, stamina_BasicAttack1);
                         break;
                     case 2:
-                        //set animation
-                        //m_Anim.SetTrigger("Attack2");
                         // do basic attack
-                        Invoke("basicAttackHit", delay_BasicAttack2);
+                        doMeeleSkill(ref trigBasicAttack2, delay_BasicAttack2, damage_BasicAttack2, skillEffect.nothing, 0, stamina_BasicAttack2);
                         break;
                     case 3:
-                        //set animation
-                        //m_Anim.SetTrigger("Attack3");
-                        // do bleed attack
-                        Invoke("bleedAttackHit", delay_BasicAttack3);
+                        // do basic attack
+                        doMeeleSkill(ref trigBasicAttack3, delay_BasicAttack3, damage_BasicAttack3, skillEffect.bleed, 0, stamina_BasicAttack3);
 
                         //reset Combo
                         abortCombo();
                         break;
                     case 4:
-                        //set animation
-                        //m_Anim.SetTrigger("shadowstep");
-                        //do ambush attack
-                        Invoke("ambushAttackHit", delay_Skill3);
+                        // do skill 3
+                        doMeeleSkill(ref trigSkill3, delay_Skill3, damage_Skill3, skillEffect.nothing, 3, stamina_Skill3);
                         //reset Combo
                         abortCombo();
                         //end invisibility
                         stopInvisible();
                         break;
                 }
-                //pay stamina for attack
-                stats.loseStamina(stamina_BasicAttack1);
             }
         }
     }
 
-    private void basicAttackHit()
+    #endregion
+
+    #region Double Jump
+
+    public override void jump(bool jump)
     {
-        RaycastHit2D hit = tryToHit(1.5f);
-
-        //Dealing damage accordingly
-        int dmg = 0;
-        if (attackCount == 1) dmg = 5;
-        else if (attackCount == 2) dmg = 7;
-
-        if(hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(dmg, true); //Let the hit character take damage
-    }
-
-    private void ambushAttackHit()
-    {
-        RaycastHit2D hit = tryToHit(1.5f);
-        if (hit == true) hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(13, true); //Let the hit character take damage
-    }
-
-    private void bleedAttackHit()
-    {
-        RaycastHit2D hit = tryToHit(1.5f);
-        CharacterStats target;
-        if (hit == true)
+        if (m_Grounded && jump)
+            base.jump(jump);
+        else if (!m_Grounded && jump && !doubleJumped)
         {
-            target = hit.transform.gameObject.GetComponent<CharacterStats>();
-            target.startBleeding(6);
-            target.takeDamage(5, true);
+            // Add a vertical force to the player.
+            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
+            m_Rigidbody2D.AddForce(new Vector2(0f, m_DoubleJumpForce));
+
+            // set animation
+            trigDoubleJump = true;
+
+            // set variable to prevent third jump
+            doubleJumped = true;
         }
     }
 
-    private void stunAttackHit()
-    {
-        RaycastHit2D hit = tryToHit(1.5f);
-        CharacterStats target;
-        if (hit == true)
-        {
-            target = hit.transform.gameObject.GetComponent<CharacterStats>();
-            target.startStunned(3);
-            target.takeDamage(5, false);
-        }
-    }
+    #endregion
+
+    #region Teleport Skill
 
     private IEnumerator shadowStepHit()
     {
@@ -222,10 +177,12 @@ public class AssassinController : ChampionClassController
         temp |= (1 << LayerMask.NameToLayer("Walls"));
         temp |= (1 << LayerMask.NameToLayer("Ground"));
 
+        // set animation
+        trigSkill3 = true;
 
         int targetLocation = 0;
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right,  1000f,temp); //Right hit
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 1000f, temp); //Right hit
         RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, Vector2.left, 1000f, temp); //Left hit
 
         if ((hit == true && hit.transform.tag == "Player") && (hitLeft == true && hitLeft.transform.gameObject.tag == "Player"))
@@ -257,12 +214,35 @@ public class AssassinController : ChampionClassController
         }
     }
 
+    #endregion
+
+    #region Invisibility
+
+    private IEnumerator manageInvisibility()
+    {
+        yield return new WaitForSeconds(delay_Skill2);
+        invisible = true;
+
+        // set animation
+        trigSkill2 = true;
+
+        //Set transparency
+        Color oldCol = GetComponentInChildren<SpriteRenderer>().color;
+        oldCol.a = 0.5f;
+        GetComponentInChildren<SpriteRenderer>().color = oldCol;
+
+        yield return new WaitForSeconds(5);
+        stopInvisible();
+    }
+
     private void stopInvisible()
     {
         invisible = false;
         if(invisRoutine !=null) StopCoroutine(invisRoutine);
         GetComponentInChildren<SpriteRenderer>().color = Color.white;
     }
+
+    #endregion
 
     #region Character specific animation
 
@@ -273,6 +253,13 @@ public class AssassinController : ChampionClassController
 
     protected override bool additionalAnimationCondition(AnimationController animCon)
     {
+        if (!m_Grounded && m_vSpeed > 0.001 && trigDoubleJump)
+        {
+            animCon.StartAnimation(AnimationController.AnimatorStates.Jump);
+            trigDoubleJump = false;
+            return true;
+        }
+
         return false;
     }
 
