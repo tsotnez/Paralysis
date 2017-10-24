@@ -875,6 +875,7 @@ MonoBehaviour:
   stunned: 0
   bleeding: 0
   knockedBack: 0
+  immovable: 0
   slowFactor: 1
   invincible: 0
   trigHit: 0
@@ -892,27 +893,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 267d6e355c50eda45be08e1aa2b9830a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxSpeed: 10
-  m_MoveSpeedWhileAttacking: 5
-  m_JumpForce: 400
-  m_dashSpeed: 7
-  m_dashStaminaCost: 10
-  m_jumpAttackRadius: 10
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 0
-  m_ComboCounterMax: 1
-  m_jumpAttackForce: 10
-  m_MoveSpeedWhileBlocking: 0
   whatToHit:
     serializedVersion: 2
     m_Bits: 0
-  m_FacingRight: 1
-  dashing: 0
-  dontMove: 0
-  blocking: 0
+  m_MaxSpeed: 10
+  m_MoveSpeedWhileAttacking: 5
+  m_MoveSpeedWhileBlocking: 0
+  m_JumpForce: 400
+  m_jumpAttackRadius: 10
+  m_jumpAttackForce: 10
+  m_dashSpeed: 7
+  m_dashStaminaCost: 10
   attackCount: 0
   inCombo: 0
+  m_ComboExpire: 1
   jumpAttacking: 0
   delay_BasicAttack1: 0
   delay_BasicAttack2: 0
@@ -945,6 +942,9 @@ MonoBehaviour:
   cooldown_Skill2: 0
   cooldown_Skill3: 0
   cooldown_Skill4: 0
+  m_FacingRight: 1
+  dashing: 0
+  blocking: 0
 --- !u!4 &467577410
 Transform:
   m_ObjectHideFlags: 0
@@ -1659,6 +1659,26 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114352005746325332, guid: 0639eac30390dec449afda643c7fa53c,
+        type: 2}
+      propertyPath: Atlasses.Array.size
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 114352005746325332, guid: 0639eac30390dec449afda643c7fa53c,
+        type: 2}
+      propertyPath: AnimationType.Array.size
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 114352005746325332, guid: 0639eac30390dec449afda643c7fa53c,
+        type: 2}
+      propertyPath: AnimationLoop.Array.size
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 114352005746325332, guid: 0639eac30390dec449afda643c7fa53c,
+        type: 2}
+      propertyPath: AnimationDuration.Array.size
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 4662659095535300, guid: 0639eac30390dec449afda643c7fa53c, type: 2}
       propertyPath: m_LocalPosition.x
       value: -6.56
@@ -1695,6 +1715,57 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114352005746325332, guid: 0639eac30390dec449afda643c7fa53c,
+        type: 2}
+      propertyPath: AnimationType.Array.data[9]
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 114352005746325332, guid: 0639eac30390dec449afda643c7fa53c,
+        type: 2}
+      propertyPath: AnimationType.Array.data[10]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114352005746325332, guid: 0639eac30390dec449afda643c7fa53c,
+        type: 2}
+      propertyPath: AnimationType.Array.data[11]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114352005746325332, guid: 0639eac30390dec449afda643c7fa53c,
+        type: 2}
+      propertyPath: AnimationType.Array.data[12]
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 114352005746325332, guid: 0639eac30390dec449afda643c7fa53c,
+        type: 2}
+      propertyPath: AnimationType.Array.data[13]
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114352005746325332, guid: 0639eac30390dec449afda643c7fa53c,
+        type: 2}
+      propertyPath: AnimationType.Array.data[14]
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 114352005746325332, guid: 0639eac30390dec449afda643c7fa53c,
+        type: 2}
+      propertyPath: AnimationType.Array.data[15]
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 114352005746325332, guid: 0639eac30390dec449afda643c7fa53c,
+        type: 2}
+      propertyPath: AnimationType.Array.data[16]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114352005746325332, guid: 0639eac30390dec449afda643c7fa53c,
+        type: 2}
+      propertyPath: AnimationLoop.Array.data[16]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114352005746325332, guid: 0639eac30390dec449afda643c7fa53c,
+        type: 2}
+      propertyPath: Atlasses.Array.data[16]
+      value: 
+      objectReference: {fileID: 4343727234628468602, guid: 74c004e0576947045984e31565904e45,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0639eac30390dec449afda643c7fa53c, type: 2}
   m_IsPrefabParent: 0
