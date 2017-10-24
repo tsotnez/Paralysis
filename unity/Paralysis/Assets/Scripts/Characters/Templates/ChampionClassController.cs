@@ -141,6 +141,7 @@ public abstract class ChampionClassController : MonoBehaviour
     protected bool trigSkill4 = false;
     protected bool trigJump = false;
     protected bool trigJumpAttackEnd = false;
+    protected bool trigDash = false;
 
     protected Rigidbody2D m_Rigidbody2D;                                    // Reference to the players rigidbody
     protected CharacterStats stats;                                         // Reference to stats
@@ -194,8 +195,11 @@ public abstract class ChampionClassController : MonoBehaviour
 
             if (blocking)
                 animCon.StartAnimation(AnimationController.AnimatorStates.Block);
-            else if (dashing)
+            else if (trigDash)
+            {
+                trigDash = false;
                 animCon.StartAnimation(AnimationController.AnimatorStates.Dash);
+            }
             else if (stats.trigHit)
             {
                 stats.trigHit = false;
@@ -252,7 +256,7 @@ public abstract class ChampionClassController : MonoBehaviour
             }
             else if (m_Grounded && m_Speed > 0.001)
                 animCon.StartAnimation(AnimationController.AnimatorStates.Run);
-            else if(m_Grounded)
+            else if (m_Grounded)
                 animCon.StartAnimation(AnimationController.AnimatorStates.Idle);
         }
     }
@@ -382,6 +386,7 @@ public abstract class ChampionClassController : MonoBehaviour
                 m_Rigidbody2D.velocity = Vector2.zero;
 
                 dashing = true;
+                trigDash = true;
                 stats.immovable = true;
 
                 yield return new WaitForSeconds(0.1f);
@@ -624,6 +629,8 @@ public abstract class ChampionClassController : MonoBehaviour
         else if (stats.knockedBack)
             return false;
         else if (stats.stunned)
+            return false;
+        else if (dashing)
             return false;
         else
             return true;

@@ -9,7 +9,7 @@ public class KnightController : ChampionClassController
     private GameObject Skill4_Spear;
 
     // Trigger for character specific animations
-    private bool dashingForward = false;
+    private bool trigDashForward = false;
 
     #region default Methods
 
@@ -179,9 +179,10 @@ public class KnightController : ChampionClassController
                 m_Rigidbody2D.velocity = Vector2.zero;
 
                 // set var for dash or dashForward
-                if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight) dashing = true;
-                else dashingForward = true;
+                if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight) trigDash = true;
+                else trigDashForward = true;
 
+                dashing = true;
                 stats.immovable = true;
 
                 yield return new WaitForSeconds(0.1f);
@@ -206,7 +207,7 @@ public class KnightController : ChampionClassController
     {
         if (blocking && m_Speed > 0.001)
             animCon.StartAnimation(AnimationController.AnimatorStates.BlockMove);            
-        else if (dashingForward)
+        else if (trigDashForward)
             animCon.StartAnimation(AnimationController.AnimatorStates.DashFor);
         else
             return false;
