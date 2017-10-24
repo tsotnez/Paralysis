@@ -22,22 +22,23 @@ public class CharacterStats : MonoBehaviour {
 
     [Header("Statusses")]
     public bool stunned = false;
-    public Coroutine stunnedRoutine = null;     //Stores the stunned Coroutine
-    public bool bleeding = false;               //Takes damage while true
-    public Coroutine bleedingRoutine = null;    //Stores the bleeding Coroutine
-    public bool knockedBack = false;            //Prevents actions while being knocked back
-    public Coroutine knockBackRoutine = null;   //Stores the knockBack Coroutine
-    public float slowFactor = 1;                //Setting this to a value below 1 will slow down the character
-    public bool invincible = false;             //If true, character cant be harmed 
+    public Coroutine stunnedRoutine = null;     // Stores the stunned Coroutine
+    public bool bleeding = false;               // Takes damage while true
+    public Coroutine bleedingRoutine = null;    // Stores the bleeding Coroutine
+    public bool knockedBack = false;            // Prevents actions while being knocked back
+    public Coroutine knockBackRoutine = null;   // Stores the knockBack Coroutine
+    public bool immovable = false;              // Stores if character is immoveable
+    public float slowFactor = 1;                // Setting this to a value below 1 will slow down the character
+    public bool invincible = false;             // If true, character cant be harmed 
     public bool trigHit = false;
 
     [Header("Knock Back")]
     [SerializeField]
-    private float knockBackDuration = 1;        //How long the knockedBack status is set (character cant move)
+    private float knockBackDuration = 1;        // How long the knockedBack status is set (character cant move)
     [SerializeField]
-    private float knockBackForceX = 400;        //Force used when knockbacking X
+    private float knockBackForceX = 400;        // Force used when knockbacking X
     [SerializeField]
-    private float knockBackForceY = 600;        //Force used when knockbacking Y
+    private float knockBackForceY = 600;        // Force used when knockbacking Y
 
     void Awake()
     {
@@ -81,10 +82,19 @@ public class CharacterStats : MonoBehaviour {
 		}
     }
 
-    public void loseStamina(int amount)
+    /// <summary>
+    /// Checks if enough/sufficient stamina is left and lose the stamina
+    /// </summary>
+    /// <param name="amount">amount of stamina</param>
+    /// <returns></returns>
+    public bool loseStamina(int amount)
     {
-        if ((currentStamina - amount) < 0) this.currentStamina = 0;
-        else this.currentStamina -= amount;
+        if (hasSufficientStamina(amount))
+        {
+            currentStamina -= amount;
+            return true;
+        }
+        return false;
 	}
 
     /// <summary>

@@ -7,12 +7,13 @@ public class AssassinController : ChampionClassController
 {
     [Header("Assassin Specific")]
     [SerializeField]
-    protected float m_DoubleJumpForce = 400f;                             // Force added when doublejumping  
+    protected float m_DoubleJumpForce = 400f;                             // Force added when doublejumping 
+    [SerializeField]
+    private GameObject bulletPrefab;
+
     private bool doubleJumped = false;                                    // Has the character double jumped already?
     public bool invisible = false;
     Coroutine invisRoutine = null;
-    [SerializeField]
-    private GameObject bulletPrefab;
 
     // trigger for animation
     bool trigDoubleJump = false;
@@ -20,14 +21,14 @@ public class AssassinController : ChampionClassController
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        if(m_Grounded) doubleJumped = false;
+        if (m_Grounded) doubleJumped = false;
     }
 
     protected override void Update()
     {
         base.Update();
-        if(stats.stunned && invisible) stopInvisible();
-        if(stats.knockedBack && invisible) stopInvisible();
+        if (stats.stunned && invisible) stopInvisible();
+        if (stats.knockedBack && invisible) stopInvisible();
     }
 
     #region Skills
@@ -46,13 +47,11 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill2()
     {
-        if (m_Grounded && !dashing && canPerformAttack() && stats.hasSufficientStamina(stamina_Skill2))
+        if (canPerformAction(true) && canPerformAttack() && stats.loseStamina(stamina_Skill2))
         {
             if (invisible) stopInvisible();
-
             if (invisRoutine != null) StopCoroutine(invisRoutine);
             invisRoutine = StartCoroutine(manageInvisibility());
-            stats.loseStamina(stamina_Skill2);
         }
     }
 
@@ -61,11 +60,10 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill3()
     {
-        if (m_Grounded && !dashing && canPerformAttack() && stats.hasSufficientStamina(stamina_Skill3))
+        if (canPerformAction(true) && canPerformAttack() && stats.loseStamina(stamina_Skill3))
         {
             if (invisible) stopInvisible();
             StartCoroutine(shadowStepHit());
-            stats.loseStamina(stamina_Skill3);
         }
     }
 
@@ -73,7 +71,7 @@ public class AssassinController : ChampionClassController
     /// Shoot pistol and knock back
     /// </summary>
     public override void skill4()
-    { 
+    {
         if (invisible) stopInvisible();
         doRangeSkill(ref trigSkill4, delay_Skill4, bulletPrefab, 5, damage_Skill4, skillEffect.knockback, 2, stamina_Skill4);
     }
@@ -108,7 +106,7 @@ public class AssassinController : ChampionClassController
             {
                 //Already in combo
                 resetComboTime();
-                attackCount++;           
+                attackCount++;
             }
 
             //Playing the correct animation depending on the attackCount and setting attacking status
@@ -196,7 +194,7 @@ public class AssassinController : ChampionClassController
 
         if (targetLocation != 0)
         {
-            dontMove = true;
+            stats.immovable = true;
             if (targetLocation == 1)
             {
                 m_Rigidbody2D.position = hit.transform.position + Vector3.left; //Viable target on the right
@@ -210,7 +208,7 @@ public class AssassinController : ChampionClassController
             m_Rigidbody2D.velocity = Vector2.zero;
             doMeeleSkill(ref trigSkill3, delay_Skill3, 5, skillEffect.stun, 3, stamina_Skill3);
             yield return new WaitForSeconds(delay_Skill4);
-            dontMove = false;
+            stats.immovable = false;
         }
     }
 
@@ -226,7 +224,7 @@ public class AssassinController : ChampionClassController
         // set animation
         trigSkill2 = true;
 
-        //Set transparency
+        // set transparency
         Color oldCol = GetComponentInChildren<SpriteRenderer>().color;
         oldCol.a = 0.5f;
         GetComponentInChildren<SpriteRenderer>().color = oldCol;
@@ -238,7 +236,7 @@ public class AssassinController : ChampionClassController
     private void stopInvisible()
     {
         invisible = false;
-        if(invisRoutine !=null) StopCoroutine(invisRoutine);
+        if (invisRoutine != null) StopCoroutine(invisRoutine);
         GetComponentInChildren<SpriteRenderer>().color = Color.white;
     }
 

@@ -38,7 +38,7 @@ public class KnightController : ChampionClassController
     /// <param name="shouldAttack"></param>
     public override void basicAttack(bool shouldAttack)
     {
-        if (shouldAttack && canPerformAttack())
+        if (shouldAttack && canPerformAction(false) && canPerformAttack())
         {
             if (m_Grounded)
             {
@@ -84,10 +84,8 @@ public class KnightController : ChampionClassController
             else
             {
                 // Check if enough stamina is left
-                if (stats.hasSufficientStamina(stamina_JumpAttack))
+                if (stats.loseStamina(stamina_JumpAttack))
                 {
-                    // Lose Stamina
-                    stats.loseStamina(stamina_JumpAttack);
                     // Jump Attack
                     StartCoroutine(jumpAttack());
                     // Abort combo
@@ -172,13 +170,10 @@ public class KnightController : ChampionClassController
     /// <returns></returns>
     public override IEnumerator dash(int direction)
     {
-        if (m_Grounded && canPerformAttack() && !dashing && stats.hasSufficientStamina(m_dashStaminaCost))
+        if (canPerformAction(true) && canPerformAttack() && stats.loseStamina(m_dashStaminaCost))
         {
             if (direction != 0 && !dashing)
             {
-                //lose stamina
-                stats.loseStamina(m_dashStaminaCost);
-
                 //Calculate new dashForce to go in right direction
                 m_dashSpeed = Mathf.Abs(m_dashSpeed) * direction;
                 m_Rigidbody2D.velocity = Vector2.zero;
@@ -187,7 +182,7 @@ public class KnightController : ChampionClassController
                 if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight) dashing = true;
                 else dashingForward = true;
 
-                dontMove = true;
+                stats.immovable = true;
 
                 yield return new WaitForSeconds(0.1f);
                 stats.invincible = true; //Player is invincible for a period of time while dashing
@@ -198,7 +193,7 @@ public class KnightController : ChampionClassController
                 m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); //Stop moving
 
                 yield return new WaitForSeconds(0.04f); //Short time where character cant move after dashing
-                dontMove = false;
+                stats.immovable = false;
             }
         }
     }

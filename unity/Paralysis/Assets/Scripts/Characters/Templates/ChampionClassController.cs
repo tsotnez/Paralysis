@@ -5,69 +5,49 @@ using UnityEngine;
 
 public abstract class ChampionClassController : MonoBehaviour
 {
-    [Header("Movement Variables")]
+    #region Parameters for Inspector
+
+    [Header("Allgemein")]
     [SerializeField]
-    protected float m_MaxSpeed = 10f;                                     // The fastest the player can travel in the x axis.
+    protected LayerMask m_WhatIsGround;                                     // A mask determining what is ground to the character
     [SerializeField]
-    protected float m_MoveSpeedWhileAttacking = 5f;                       // Max speed while attacking
+    protected LayerMask whatToHit;                                          // What to hit when checking for hits while attacking
+
+    [Header("Movement")]
     [SerializeField]
-    protected float m_JumpForce = 400f;                                   // Amount of force added when the player jumps.         
+    protected float m_MaxSpeed = 10f;                                       // The fastest the player can travel in the x axis.
     [SerializeField]
-    protected float m_dashSpeed = 7f;                                     // Force applied when dashing
+    protected float m_MoveSpeedWhileAttacking = 5f;                         // Max speed while attacking
+    [SerializeField]
+    protected float m_MoveSpeedWhileBlocking = 0f;                          // Max speed while blocking
+
+    [Header("Jump")]
+    [SerializeField]
+    protected float m_JumpForce = 400f;                                     // Amount of force added when the player jumps.   
+    [SerializeField]
+    protected float m_jumpAttackRadius = 10f;                               // Radius of jump Attack damage
+    [SerializeField]
+    protected float m_jumpAttackForce = 10f;                                // Amount of force added when the player jump attack
+
+    [Header("Dash")]
+    [SerializeField]
+    protected float m_dashSpeed = 7f;                                       // Force applied when dashing
     [SerializeField]
     protected int m_dashStaminaCost = 10;
-    [SerializeField]
-    protected float m_jumpAttackRadius = 10f;                             // Radius of jump Attack damage
-    [SerializeField]
-    protected LayerMask m_WhatIsGround;                                   // A mask determining what is ground to the character
-    [SerializeField]
-    protected float m_ComboCounterMax = 1;                                // How long the next combostage is reachable (seconds)
-    [SerializeField]
-    protected float m_jumpAttackForce = 10f;
-    [SerializeField]
-    protected float m_MoveSpeedWhileBlocking = 0f;                        // Max speed while blocking
-    public LayerMask whatToHit;                                           // What to hit when checking for hits while attacking
-
-    protected Transform m_GroundCheck;                                    // A position marking where to check if the player is grounded.
-    protected const float k_GroundedRadius = .2f;                         // Radius of the overlap circle to determine if grounded
-    protected const float k_CeilingRadius = .02f;                         // Radius of the overlap circle to determine if the player can stand up
-
-    protected bool m_Grounded;                                            // Whether or not the player is grounded.
-    protected float m_vSpeed;                                             // Vertical speed
-    protected float m_Speed;                                              // Horizontal speed
-    public bool m_FacingRight = true;                                     // For determining which way the player is currently facing.
-    public bool dashing = false;                                          // true while dashing
-    public bool dontMove = false;                                         // Character cannot move while true
-    public bool blocking = false;                                         // Is the character blocking?
-
-    protected bool trigBasicAttack1 = false;
-    protected bool trigBasicAttack2 = false;
-    protected bool trigBasicAttack3 = false;
-    protected bool trigSkill1 = false;
-    protected bool trigSkill2 = false;
-    protected bool trigSkill3 = false;
-    protected bool trigSkill4 = false;
-    protected bool trigJump = false;
-    protected bool trigJumpAttackEnd = false;
-
-    protected Rigidbody2D m_Rigidbody2D;                                  // Reference to the players rigidbody
-    protected CharacterStats stats;                                       // Reference to stats
-    protected Transform graphics;                                         // Reference to the graphics child
-    protected AnimationController animCon;                                // Reference to the Animation Contoller
 
     [Header("Range Variables")]
     [SerializeField]
-    protected const float meeleRange = 1.5f;
+    protected const float meeleRange = 1.5f;                                // Default range for meele attacks
 
     [Header("Attacking Variables")]
     [SerializeField]
-    protected int attackCount = 0;                                        // The ComboState 0 means the character has not attacked yet
+    protected int attackCount = 0;                                          // The ComboState 0 means the character has not attacked yet
     [SerializeField]
-    protected bool inCombo = false;                                       // When true, the next comboStage can be reached
+    protected bool inCombo = false;                                         // When true, the next comboStage can be reached
     [SerializeField]
-    protected bool jumpAttacking = false;                                 // True while the character is jump attacking
-
-    #region Parameters for abilities
+    protected float m_ComboExpire = 1;                                      // How long the next combostage is reachable (seconds)
+    [SerializeField]
+    protected bool jumpAttacking = false;                                   // True while the character is jump attacking
 
     [Header("Attack Delays")]
     [SerializeField]
@@ -140,6 +120,32 @@ public abstract class ChampionClassController : MonoBehaviour
     protected int cooldown_Skill4 = 0;
 
     #endregion
+
+    protected Transform m_GroundCheck;                                      // A position marking where to check if the player is grounded.
+    protected const float k_GroundedRadius = .2f;                           // Radius of the overlap circle to determine if grounded
+    protected const float k_CeilingRadius = .02f;                           // Radius of the overlap circle to determine if the player can stand up
+
+    protected bool m_Grounded;                                              // Whether or not the player is grounded.
+    protected float m_vSpeed;                                               // Vertical speed
+    protected float m_Speed;                                                // Horizontal speed
+    public bool m_FacingRight = true;                                       // For determining which way the player is currently facing.
+    public bool dashing = false;                                            // true while dashing
+    public bool blocking = false;                                           // Is the character blocking?
+
+    protected bool trigBasicAttack1 = false;
+    protected bool trigBasicAttack2 = false;
+    protected bool trigBasicAttack3 = false;
+    protected bool trigSkill1 = false;
+    protected bool trigSkill2 = false;
+    protected bool trigSkill3 = false;
+    protected bool trigSkill4 = false;
+    protected bool trigJump = false;
+    protected bool trigJumpAttackEnd = false;
+
+    protected Rigidbody2D m_Rigidbody2D;                                    // Reference to the players rigidbody
+    protected CharacterStats stats;                                         // Reference to stats
+    protected Transform graphics;                                           // Reference to the graphics child
+    protected AnimationController animCon;                                  // Reference to the Animation Contoller
 
     //Coroutines
     protected Coroutine comboRoutine;
@@ -286,7 +292,7 @@ public abstract class ChampionClassController : MonoBehaviour
     public virtual void Move(float move)
     {
         //only control the player if grounded or airControl is turned on and not jump attacking and not dashing
-        if (!jumpAttacking && !dashing && !dontMove)
+        if (!jumpAttacking && !stats.immovable)
         {
             //Slow down the player if he's attacking or blocking
             float maxSpeed;
@@ -323,7 +329,7 @@ public abstract class ChampionClassController : MonoBehaviour
     public virtual void jump(bool jump)
     {
         // If the player should jump...
-        if (m_Grounded && jump && !dashing && canPerformAttack())
+        if (canPerformAction(true) && jump && canPerformAttack())
         {
             // Add a vertical force to the player.
             m_Grounded = false;
@@ -343,13 +349,8 @@ public abstract class ChampionClassController : MonoBehaviour
         m_Rigidbody2D.velocity = new Vector2( 4  *direction, -m_jumpAttackForce); //Add downwards force
         yield return new WaitUntil(() => m_Grounded); //Jump attacking as long as not grounded
 
-        //Get hit enemies   
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(m_GroundCheck.position, m_jumpAttackRadius, Vector2.up, 0.01f, whatToHit);
-        foreach(RaycastHit2D hit in hits)
-        {
-            //Deal damage to each
-            hit.transform.gameObject.GetComponent<CharacterStats>().takeDamage(damage_JumpAttack, true);
-        }
+        // Deal damage to all enemys
+        StartCoroutine(doMeeleSkill_Hit(0, damage_JumpAttack, skillEffect.nothing, 0, false, m_jumpAttackRadius));
 
         Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
         jumpAttacking = false;
@@ -369,13 +370,10 @@ public abstract class ChampionClassController : MonoBehaviour
     //Dashes in the given direction
     public virtual IEnumerator dash(int direction)
     {
-        if (m_Grounded && canPerformAttack() && !dashing && stats.hasSufficientStamina(m_dashStaminaCost))
+        if (canPerformAction(true) && canPerformAttack())
         {
-            if (direction != 0 && !dashing)
+            if (direction != 0 && stats.loseStamina(m_dashStaminaCost))
             {
-                // lose stamina
-                stats.loseStamina(m_dashStaminaCost);
-
                 // flip if necessary
                 if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight) Flip();
 
@@ -384,7 +382,7 @@ public abstract class ChampionClassController : MonoBehaviour
                 m_Rigidbody2D.velocity = Vector2.zero;
 
                 dashing = true;
-                dontMove = true;
+                stats.immovable = true;
 
                 yield return new WaitForSeconds(0.1f);
                 stats.invincible = true; //Player is invincible for a period of time while dashing
@@ -395,7 +393,7 @@ public abstract class ChampionClassController : MonoBehaviour
                 m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); //Stop moving
 
                 yield return new WaitForSeconds(0.04f); //Short time where character cant move after dashing
-                dontMove = false;
+                stats.immovable = false;
             }
         }
     }
@@ -441,7 +439,7 @@ public abstract class ChampionClassController : MonoBehaviour
     protected IEnumerator setCombo()
     {
         inCombo = true;
-        yield return new WaitForSeconds(m_ComboCounterMax);
+        yield return new WaitForSeconds(m_ComboExpire);
         abortCombo();
     }
 
@@ -491,14 +489,12 @@ public abstract class ChampionClassController : MonoBehaviour
     protected void doMeeleSkill(ref bool animationVar, float skillDelay, int skillDamage, skillEffect skillSpecialEffect, int skillSpecialEffectTime, int skillStaminaCost, bool singleTarget = true, float skillRange = meeleRange)
     {
         //Validate that character is not attacking and standing on ground
-        if (canPerformAttack() && m_Grounded && stats.hasSufficientStamina(skillStaminaCost))
+        if (canPerformAction(true) && canPerformAttack() && stats.loseStamina(skillStaminaCost))
         {
             // set animation trigger
             animationVar = true;
             // do hit by coroutine
             StartCoroutine(doMeeleSkill_Hit(skillDelay, skillDamage, skillSpecialEffect, skillSpecialEffectTime, singleTarget, skillRange));
-            // lose stamina for skill
-            stats.loseStamina(skillStaminaCost);
         }
     }
 
@@ -522,7 +518,7 @@ public abstract class ChampionClassController : MonoBehaviour
         else
         {
             // if multi target skill - get all hits
-            hits = Physics2D.CircleCastAll(m_GroundCheck.position, m_jumpAttackRadius, Vector2.up, 0.01f, whatToHit);
+            hits = Physics2D.CircleCastAll(m_GroundCheck.position, skillRange, Vector2.up, 0.01f, whatToHit);
         }
 
         // only if something is in range
@@ -578,14 +574,12 @@ public abstract class ChampionClassController : MonoBehaviour
     protected void doRangeSkill(ref bool animationVar, float skillDelay, GameObject projectilePrefab, float range, int damage, skillEffect effect, int effectDuration, int skillStaminaCost, float speed = 7, GameObject onHitEffect = null)
     {
         //Validate that character is not attacking and standing on ground
-        if (canPerformAttack() && m_Grounded && stats.hasSufficientStamina(skillStaminaCost))
+        if (canPerformAction(true) && canPerformAttack() && stats.loseStamina(skillStaminaCost))
         {
             // set animation trigger
             animationVar = true;
             // do hit by coroutine
             StartCoroutine(doRangeSkill_Hit(skillDelay, projectilePrefab, range, damage, effectDuration, speed, onHitEffect));
-            // lose stamina for skill
-            stats.loseStamina(skillStaminaCost);
         }
     }
 
@@ -619,7 +613,24 @@ public abstract class ChampionClassController : MonoBehaviour
     #region Character Can Perform
 
     /// <summary>
-    /// Checks if character is allowed to perform an Attack
+    /// Checks if Character is not knockedBack or Stunned
+    /// </summary>
+    /// <param name="GroundCheck">Check also, if character is on ground</param>
+    /// <returns></returns>
+    public bool canPerformAction(bool GroundCheck)
+    {
+        if (GroundCheck && !m_Grounded)
+            return false;
+        else if (stats.knockedBack)
+            return false;
+        else if (stats.stunned)
+            return false;
+        else
+            return true;
+    }
+
+    /// <summary>
+    /// Checks if character is not attacking
     /// </summary>
     /// <returns></returns>
     public bool canPerformAttack()
@@ -635,10 +646,6 @@ public abstract class ChampionClassController : MonoBehaviour
             case AnimationController.AnimatorStates.Skill2:
             case AnimationController.AnimatorStates.Skill3:
             case AnimationController.AnimatorStates.Skill4:
-            case AnimationController.AnimatorStates.DashFor:
-            case AnimationController.AnimatorStates.Dash:
-            case AnimationController.AnimatorStates.Stunned:
-            case AnimationController.AnimatorStates.KnockedBack:
                 return false;
         }
         return true;
@@ -646,4 +653,3 @@ public abstract class ChampionClassController : MonoBehaviour
 
     #endregion
 }
-
