@@ -16,9 +16,12 @@ public class CharacterStats : MonoBehaviour {
     public int currentStamina;
 	public GameObject Hp;
     public GameObject Stamina;
+    //public GameObject coolSkill;
 	public int staminaRegRate = 100;
     //private Vector2 vecHP;
     //private Vector2 vecST;
+
+
 
     [Header("Statusses")]
     public bool stunned = false;
