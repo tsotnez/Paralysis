@@ -6,7 +6,7 @@ using System.Text;
 namespace Assets.Scripts.Characters.Infantry
 {
     class InfantryContoller : ChampionClassController
-    { 
+    {
         #region BasicAttack
 
         /// <summary>
@@ -18,13 +18,13 @@ namespace Assets.Scripts.Characters.Infantry
         /// <param name="shouldAttack"></param>
         public override void basicAttack(bool shouldAttack)
         {
-            if (shouldAttack && canPerformAttack())
+            if (shouldAttack && canPerformAction(false) && canPerformAttack())
             {
                 if (m_Grounded)
                 {
                     // Check if enough stamina for attack
                     if (stats.hasSufficientStamina(stamina_BasicAttack1) && (attackCount == 0) || //Basic Attack
-                        stats.hasSufficientStamina(stamina_BasicAttack3) && (attackCount == 1 || attackCount == 2)) // Strong Attack
+                        stats.hasSufficientStamina(stamina_BasicAttack2) && (attackCount == 1 || attackCount == 2)) // Strong Attack
                     {
                         // Already in combo?
                         if (!inCombo)
@@ -40,7 +40,7 @@ namespace Assets.Scripts.Characters.Infantry
                         // Playing the correct animation depending on the attackCount and setting attacking status
                         switch (attackCount)
                         {
-                            case 1:                            
+                            case 1:
                                 // do meele attack
                                 doMeeleSkill(ref trigBasicAttack1, delay_BasicAttack1, damage_BasicAttack1, skillEffect.nothing, 0, stamina_BasicAttack1);
                                 // Reset timer of combo
@@ -65,10 +65,8 @@ namespace Assets.Scripts.Characters.Infantry
                 else
                 {
                     // Check if enough stamina is left
-                    if (stats.hasSufficientStamina(stamina_JumpAttack))
+                    if (stats.loseStamina(stamina_JumpAttack))
                     {
-                        // Lose Stamina
-                        stats.loseStamina(stamina_JumpAttack);
                         // Jump Attack
                         StartCoroutine(jumpAttack());
                         // Abort combo
