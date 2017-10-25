@@ -7,13 +7,11 @@ public abstract class ChampionClassController : MonoBehaviour
 {
     #region Parameters for Inspector
 
-    [Header("Allgemein")]
     [SerializeField]
     protected LayerMask m_WhatIsGround;                                     // A mask determining what is ground to the character
     [SerializeField]
-    protected LayerMask whatToHit;                                          // What to hit when checking for hits while attacking
+    protected LayerMask m_whatToHit;                                          // What to hit when checking for hits while attacking
 
-    [Header("Movement")]
     [SerializeField]
     protected float m_MaxSpeed = 10f;                                       // The fastest the player can travel in the x axis.
     [SerializeField]
@@ -21,7 +19,6 @@ public abstract class ChampionClassController : MonoBehaviour
     [SerializeField]
     protected float m_MoveSpeedWhileBlocking = 0f;                          // Max speed while blocking
 
-    [Header("Jump")]
     [SerializeField]
     protected float m_JumpForce = 400f;                                     // Amount of force added when the player jumps.   
     [SerializeField]
@@ -29,27 +26,20 @@ public abstract class ChampionClassController : MonoBehaviour
     [SerializeField]
     protected float m_jumpAttackForce = 10f;                                // Amount of force added when the player jump attack
 
-    [Header("Dash")]
     [SerializeField]
     protected float m_dashSpeed = 7f;                                       // Force applied when dashing
     [SerializeField]
     protected int m_dashStaminaCost = 10;
 
-    [Header("Range Variables")]
     [SerializeField]
     protected const float meeleRange = 1.5f;                                // Default range for meele attacks
 
-    [Header("Attacking Variables")]
-    [SerializeField]
     protected int attackCount = 0;                                          // The ComboState 0 means the character has not attacked yet
-    [SerializeField]
     protected bool inCombo = false;                                         // When true, the next comboStage can be reached
     [SerializeField]
     protected float m_ComboExpire = 1;                                      // How long the next combostage is reachable (seconds)
-    [SerializeField]
     protected bool jumpAttacking = false;                                   // True while the character is jump attacking
 
-    [Header("Attack Delays")]
     [SerializeField]
     protected float delay_BasicAttack1 = 0;
     [SerializeField]
@@ -65,7 +55,6 @@ public abstract class ChampionClassController : MonoBehaviour
     [SerializeField]
     protected float delay_Skill4 = 0;
 
-    [Header("Attack Stamina Costs")]
     [SerializeField]
     protected int stamina_BasicAttack1 = 5;
     [SerializeField]
@@ -83,7 +72,6 @@ public abstract class ChampionClassController : MonoBehaviour
     [SerializeField]
     protected int stamina_Skill4 = 0;
 
-    [Header("Attack Damage")]
     [SerializeField]
     protected int damage_BasicAttack1 = 0;
     [SerializeField]
@@ -101,7 +89,6 @@ public abstract class ChampionClassController : MonoBehaviour
     [SerializeField]
     protected int damage_Skill4 = 0;
 
-    [Header("Attack Cooldown")]
     [SerializeField]
     protected int cooldown_BasicAttack1 = 0;
     [SerializeField]
@@ -123,7 +110,6 @@ public abstract class ChampionClassController : MonoBehaviour
 
     protected Transform m_GroundCheck;                                      // A position marking where to check if the player is grounded.
     protected const float k_GroundedRadius = .2f;                           // Radius of the overlap circle to determine if grounded
-    protected const float k_CeilingRadius = .02f;                           // Radius of the overlap circle to determine if the player can stand up
 
     protected bool m_Grounded;                                              // Whether or not the player is grounded.
     protected float m_vSpeed;                                               // Vertical speed
@@ -523,7 +509,7 @@ public abstract class ChampionClassController : MonoBehaviour
         else
         {
             // if multi target skill - get all hits
-            hits = Physics2D.CircleCastAll(m_GroundCheck.position, skillRange, Vector2.up, 0.01f, whatToHit);
+            hits = Physics2D.CircleCastAll(m_GroundCheck.position, skillRange, Vector2.up, 0.01f, m_whatToHit);
         }
 
         // only if something is in range
@@ -568,7 +554,7 @@ public abstract class ChampionClassController : MonoBehaviour
         if (m_FacingRight) direction = Vector2.right;
 
         else direction = Vector2.left;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, range, whatToHit); //Send raycast
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, range, m_whatToHit); //Send raycast
         return hit;
     }
 

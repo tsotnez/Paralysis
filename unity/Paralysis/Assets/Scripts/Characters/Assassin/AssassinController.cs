@@ -171,7 +171,7 @@ public class AssassinController : ChampionClassController
     private IEnumerator shadowStepHit()
     {
         //Add walls and Ground to layermask so they are an obstacle for the raycast
-        LayerMask temp = whatToHit;
+        LayerMask temp = m_whatToHit;
         temp |= (1 << LayerMask.NameToLayer("Walls"));
         temp |= (1 << LayerMask.NameToLayer("Ground"));
 
