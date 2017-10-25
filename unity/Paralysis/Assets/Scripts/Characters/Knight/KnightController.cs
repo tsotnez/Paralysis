@@ -16,12 +16,6 @@ public class KnightController : ChampionClassController
         animCon = graphics.GetComponent<KnightAnimationController>();
     }
 
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-    }
-
     #endregion
 
     #region BasicAttack

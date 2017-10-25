@@ -7,6 +7,12 @@ namespace Assets.Scripts.Characters.Infantry
 {
     class InfantryContoller : ChampionClassController
     {
+        // Use this for initialization
+        void Start()
+        {
+            animCon = graphics.GetComponent<InfantryAnimationController>();
+        }
+
         #region BasicAttack
 
         /// <summary>
