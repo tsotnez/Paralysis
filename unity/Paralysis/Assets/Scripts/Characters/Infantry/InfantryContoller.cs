@@ -7,6 +7,12 @@ namespace Assets.Scripts.Characters.Infantry
 {
     class InfantryContoller : ChampionClassController
     {
+        // Use this for initialization
+        void Start()
+        {
+            animCon = graphics.GetComponent<InfantryAnimationController>();
+        }
+
         #region BasicAttack
 
         /// <summary>
@@ -20,7 +26,7 @@ namespace Assets.Scripts.Characters.Infantry
         {
             if (shouldAttack && canPerformAction(false) && canPerformAttack())
             {
-                if (m_Grounded)
+                if (animCon.m_Grounded)
                 {
                     // Check if enough stamina for attack
                     if (stats.hasSufficientStamina(stamina_BasicAttack1) && (attackCount == 0) || //Basic Attack
@@ -42,14 +48,14 @@ namespace Assets.Scripts.Characters.Infantry
                         {
                             case 1:
                                 // do meele attack
-                                doMeeleSkill(ref trigBasicAttack1, delay_BasicAttack1, damage_BasicAttack1, skillEffect.nothing, 0, stamina_BasicAttack1);
+                                doMeeleSkill(ref animCon.trigBasicAttack1, delay_BasicAttack1, damage_BasicAttack1, skillEffect.nothing, 0, stamina_BasicAttack1);
                                 // Reset timer of combo
                                 resetComboTime();
                                 break;
                             case 2:
                             case 3:
                                 // do meele attack
-                                doMeeleSkill(ref trigBasicAttack2, delay_BasicAttack3, damage_BasicAttack3, skillEffect.nothing, 0, stamina_BasicAttack3);
+                                doMeeleSkill(ref animCon.trigBasicAttack2, delay_BasicAttack3, damage_BasicAttack3, skillEffect.nothing, 0, stamina_BasicAttack3);
                                 // Reset Combo after combo-hit
                                 abortCombo();
                                 break;
@@ -133,16 +139,6 @@ namespace Assets.Scripts.Characters.Infantry
         public override void skill4()
         {
             throw new NotImplementedException();
-        }
-
-        protected override bool additionalAnimationCondition(AnimationController animCon)
-        {
-            return false;
-        }
-
-        protected override bool additionalNotInterruptCondition(AnimationController.AnimatorStates activeAnimation)
-        {
-            return false;
         }
     }
 }

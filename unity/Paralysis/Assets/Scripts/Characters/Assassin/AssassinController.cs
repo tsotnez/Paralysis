@@ -15,13 +15,16 @@ public class AssassinController : ChampionClassController
     public bool invisible = false;
     Coroutine invisRoutine = null;
 
-    // trigger for animation
-    bool trigDoubleJump = false;
+    // Use this for initialization
+    void Start()
+    {
+        animCon = graphics.GetComponent<AssassinAnimationController>();
+    }
 
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (m_Grounded) doubleJumped = false;
+        if (animCon.m_Grounded) doubleJumped = false;
     }
 
     protected override void Update()
@@ -39,7 +42,7 @@ public class AssassinController : ChampionClassController
     public override void skill1()
     {
         if (invisible) stopInvisible();
-        doMeeleSkill(ref trigSkill1, delay_Skill1, damage_Skill1, skillEffect.stun, 3, stamina_Skill1);
+        doMeeleSkill(ref animCon.trigSkill1, delay_Skill1, damage_Skill1, skillEffect.stun, 3, stamina_Skill1);
     }
 
     /// <summary>
@@ -73,7 +76,7 @@ public class AssassinController : ChampionClassController
     public override void skill4()
     {
         if (invisible) stopInvisible();
-        doRangeSkill(ref trigSkill4, delay_Skill4, bulletPrefab, 5, damage_Skill4, skillEffect.knockback, 2, stamina_Skill4);
+        doRangeSkill(ref animCon.trigSkill4, delay_Skill4, bulletPrefab, 5, damage_Skill4, skillEffect.knockback, 2, stamina_Skill4);
     }
 
     #endregion
@@ -84,25 +87,25 @@ public class AssassinController : ChampionClassController
     {
         if (shouldAttack && canPerformAttack() && !dashing)
         {
-            if (!m_Grounded && !invisible && doubleJumped) //Jump attack only when falling and double jumped
+            if (!animCon.m_Grounded && !invisible && doubleJumped) //Jump attack only when falling and double jumped
             {
                 //Jump Attack
                 StartCoroutine(jumpAttack());
                 //reset combo
                 abortCombo();
             }
-            else if (m_Grounded && invisible)
+            else if (animCon.m_Grounded && invisible)
             {
                 attackCount = 4;
             }
             // Determining the attackCount
-            else if (m_Grounded && attackCount == 0 && !inCombo)
+            else if (animCon.m_Grounded && attackCount == 0 && !inCombo)
             {
                 //First attack - initialize combo coroutine
                 resetComboTime();
                 attackCount = 1;
             }
-            else if (m_Grounded && inCombo)
+            else if (animCon.m_Grounded && inCombo)
             {
                 //Already in combo
                 resetComboTime();
@@ -116,22 +119,22 @@ public class AssassinController : ChampionClassController
                 {
                     case 1:
                         // do basic attack
-                        doMeeleSkill(ref trigBasicAttack1, delay_BasicAttack1, damage_BasicAttack1, skillEffect.nothing, 0, stamina_BasicAttack1);
+                        doMeeleSkill(ref animCon.trigBasicAttack1, delay_BasicAttack1, damage_BasicAttack1, skillEffect.nothing, 0, stamina_BasicAttack1);
                         break;
                     case 2:
                         // do basic attack
-                        doMeeleSkill(ref trigBasicAttack2, delay_BasicAttack2, damage_BasicAttack2, skillEffect.nothing, 0, stamina_BasicAttack2);
+                        doMeeleSkill(ref animCon.trigBasicAttack2, delay_BasicAttack2, damage_BasicAttack2, skillEffect.nothing, 0, stamina_BasicAttack2);
                         break;
                     case 3:
                         // do basic attack
-                        doMeeleSkill(ref trigBasicAttack3, delay_BasicAttack3, damage_BasicAttack3, skillEffect.bleed, 0, stamina_BasicAttack3);
+                        doMeeleSkill(ref animCon.trigBasicAttack3, delay_BasicAttack3, damage_BasicAttack3, skillEffect.bleed, 0, stamina_BasicAttack3);
 
                         //reset Combo
                         abortCombo();
                         break;
                     case 4:
                         // do skill 3
-                        doMeeleSkill(ref trigSkill3, delay_Skill3, damage_Skill3, skillEffect.nothing, 3, stamina_Skill3);
+                        doMeeleSkill(ref animCon.trigSkill3, delay_Skill3, damage_Skill3, skillEffect.nothing, 3, stamina_Skill3);
                         //reset Combo
                         abortCombo();
                         //end invisibility
@@ -148,16 +151,16 @@ public class AssassinController : ChampionClassController
 
     public override void jump(bool jump)
     {
-        if (m_Grounded && jump)
+        if (animCon.m_Grounded && jump)
             base.jump(jump);
-        else if (!m_Grounded && jump && !doubleJumped)
+        else if (!animCon.m_Grounded && jump && !doubleJumped)
         {
             // Add a vertical force to the player.
             m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
             m_Rigidbody2D.AddForce(new Vector2(0f, m_DoubleJumpForce));
 
             // set animation
-            trigDoubleJump = true;
+            ((AssassinAnimationController)animCon).trigDoubleJump = true;
 
             // set variable to prevent third jump
             doubleJumped = true;
@@ -171,12 +174,12 @@ public class AssassinController : ChampionClassController
     private IEnumerator shadowStepHit()
     {
         //Add walls and Ground to layermask so they are an obstacle for the raycast
-        LayerMask temp = whatToHit;
+        LayerMask temp = m_whatToHit;
         temp |= (1 << LayerMask.NameToLayer("Walls"));
         temp |= (1 << LayerMask.NameToLayer("Ground"));
 
         // set animation
-        trigSkill3 = true;
+        animCon.trigSkill3 = true;
 
         int targetLocation = 0;
 
@@ -206,7 +209,7 @@ public class AssassinController : ChampionClassController
                 if (m_FacingRight) Flip();
             }
             m_Rigidbody2D.velocity = Vector2.zero;
-            doMeeleSkill(ref trigSkill3, delay_Skill3, 5, skillEffect.stun, 3, stamina_Skill3);
+            doMeeleSkill(ref animCon.trigSkill3, delay_Skill3, 5, skillEffect.stun, 3, stamina_Skill3);
             yield return new WaitForSeconds(delay_Skill4);
             stats.immovable = false;
         }
@@ -222,7 +225,7 @@ public class AssassinController : ChampionClassController
         invisible = true;
 
         // set animation
-        trigSkill2 = true;
+        animCon.trigSkill2 = true;
 
         // set transparency
         Color oldCol = GetComponentInChildren<SpriteRenderer>().color;
@@ -238,27 +241,6 @@ public class AssassinController : ChampionClassController
         invisible = false;
         if (invisRoutine != null) StopCoroutine(invisRoutine);
         GetComponentInChildren<SpriteRenderer>().color = Color.white;
-    }
-
-    #endregion
-
-    #region Character specific animation
-
-    protected override bool additionalNotInterruptCondition(AnimationController.AnimatorStates activeAnimation)
-    {
-        return false;
-    }
-
-    protected override bool additionalAnimationCondition(AnimationController animCon)
-    {
-        if (!m_Grounded && m_vSpeed > 0.001 && trigDoubleJump)
-        {
-            animCon.StartAnimation(AnimationController.AnimatorStates.Jump);
-            trigDoubleJump = false;
-            return true;
-        }
-
-        return false;
     }
 
     #endregion

@@ -275,30 +275,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e6004ce6e5398c4285786f110855b64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxSpeed: 7
-  m_MoveSpeedWhileAttacking: 5
-  m_JumpForce: 1000
-  m_dashSpeed: 7
-  m_dashStaminaCost: 10
-  m_jumpAttackRadius: 1
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 1536
-  m_ComboCounterMax: 1
-  m_jumpAttackForce: 10
-  m_MoveSpeedWhileBlocking: 0
-  whatToHit:
+  m_whatToHit:
     serializedVersion: 2
-    m_Bits: 6144
-  m_FacingRight: 0
-  dashing: 0
-  dontMove: 0
-  blocking: 0
-  attackCount: 0
-  inCombo: 0
-  attacking: 0
-  jumpAttacking: 0
-  attackLength: []
+    m_Bits: 0
+  m_MaxSpeed: 7
+  m_MoveSpeedWhileAttacking: 5
+  m_MoveSpeedWhileBlocking: 0
+  m_JumpForce: 1000
+  m_jumpAttackRadius: 1
+  m_jumpAttackForce: 10
+  m_dashSpeed: 7
+  m_dashStaminaCost: 10
+  m_ComboExpire: 1
   delay_BasicAttack1: 0
   delay_BasicAttack2: 0
   delay_BasicAttack3: 0
@@ -330,6 +321,9 @@ MonoBehaviour:
   cooldown_Skill2: 0
   cooldown_Skill3: 0
   cooldown_Skill4: 0
+  m_FacingRight: 0
+  dashing: 0
+  blocking: 0
 --- !u!114 &114377760250446108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -338,19 +332,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1587404009544488}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8652326777ca6a4189adc11d223b02c, type: 3}
+  m_Script: {fileID: 11500000, guid: ae766196b09c0f544bba680d8e0ce502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimationType: 090000000800000004000000030000000500000000000000020000000c00000007000000010000000e0000000f000000100000001100000006000000
-  AnimationLoop: 000000000001000000000000000000
+  AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000
+  AnimationLoop: 010100010000000001000000000000000000000000
   AnimationDuration:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
   - 0.5
+  - 0
   - 0.45
+  - 0
+  - 0
+  - 0
+  - 0
   - 0
   - 0
   - 0.3
@@ -359,26 +353,55 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   Atlasses:
-  - {fileID: 4343727234628468602, guid: e0ba94629de578f49826dffb1ca47307, type: 2}
-  - {fileID: 4343727234628468602, guid: 8551d00e9c71c8c42a9a028e732f86c1, type: 2}
-  - {fileID: 4343727234628468602, guid: dbf82629d7a38e544be8bb2be33ee174, type: 2}
-  - {fileID: 4343727234628468602, guid: 2a81c47ba73b2da4b949231b97ad5808, type: 2}
-  - {fileID: 4343727234628468602, guid: 4e06e1b5fd78bfb488e25b6e6bae85e5, type: 2}
   - {fileID: 4343727234628468602, guid: e1da7b4aa82ea9348ab5d8c8069f2fdb, type: 2}
-  - {fileID: 4343727234628468602, guid: 2c5b50d041341744bbafd0324ae17484, type: 2}
-  - {fileID: 4343727234628468602, guid: b9c92c9c9f4366b4caf8e2a3db26d3fb, type: 2}
-  - {fileID: 4343727234628468602, guid: 350805dc80c3bc3468d686687d8aa41c, type: 2}
   - {fileID: 4343727234628468602, guid: 857434a4a454f0e4d84252a7644a410b, type: 2}
+  - {fileID: 4343727234628468602, guid: 2c5b50d041341744bbafd0324ae17484, type: 2}
+  - {fileID: 4343727234628468602, guid: 2a81c47ba73b2da4b949231b97ad5808, type: 2}
+  - {fileID: 4343727234628468602, guid: dbf82629d7a38e544be8bb2be33ee174, type: 2}
+  - {fileID: 4343727234628468602, guid: 4e06e1b5fd78bfb488e25b6e6bae85e5, type: 2}
+  - {fileID: 4343727234628468602, guid: 862c043f4c9613f458d406eb741507ce, type: 2}
+  - {fileID: 4343727234628468602, guid: 350805dc80c3bc3468d686687d8aa41c, type: 2}
+  - {fileID: 4343727234628468602, guid: 8551d00e9c71c8c42a9a028e732f86c1, type: 2}
+  - {fileID: 4343727234628468602, guid: e0ba94629de578f49826dffb1ca47307, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: b9c92c9c9f4366b4caf8e2a3db26d3fb, type: 2}
+  - {fileID: 0}
   - {fileID: 4343727234628468602, guid: 4cef951466f82be4bbc97d15aad73269, type: 2}
   - {fileID: 4343727234628468602, guid: c498e6093a181db4db281185f9f27d0c, type: 2}
   - {fileID: 4343727234628468602, guid: 72c1415ab8d180d48b287eb7366d7a75, type: 2}
   - {fileID: 4343727234628468602, guid: 2c8eae7ab9a41bb41bacd6e8557235ba, type: 2}
-  - {fileID: 4343727234628468602, guid: 862c043f4c9613f458d406eb741507ce, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   GeneralSpeed: 0
-  CharacterClass: Archer
-  CharacterSkin: Basic
-  finishedInitialization: 0
+  CharacterClass: archer
+  CharacterSkin: basic
+  m_Grounded: 0
+  m_vSpeed: 0
+  m_Speed: 0
+  statStunned: 0
+  statKnockedBack: 0
+  statBlock: 0
+  trigBasicAttack1: 0
+  trigBasicAttack2: 0
+  trigBasicAttack3: 0
+  trigSkill1: 0
+  trigSkill2: 0
+  trigSkill3: 0
+  trigSkill4: 0
+  trigJump: 0
+  trigJumpAttack: 0
+  trigJumpAttackEnd: 0
+  trigDash: 0
+  trigHit: 0
 --- !u!114 &114441194947304052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -524,6 +547,7 @@ MonoBehaviour:
   stunned: 0
   bleeding: 0
   knockedBack: 0
+  immovable: 0
   slowFactor: 1
   invincible: 0
   trigHit: 0
