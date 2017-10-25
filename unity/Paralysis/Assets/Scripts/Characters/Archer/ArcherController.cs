@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class ArcherController : ChampionClassController
 {
-
     public override void basicAttack(bool shouldAttack)
     {
-        if(shouldAttack) trigBasicAttack1 = true;
+        if(shouldAttack) animCon.trigBasicAttack1 = true;
     }
 
     public override void skill1()
@@ -28,18 +27,4 @@ public class ArcherController : ChampionClassController
     {
 
     }
-
-    #region Character specific animation
-
-    protected override bool additionalAnimationCondition(AnimationController animCon)
-    {
-        return false;
-    }
-
-    protected override bool additionalNotInterruptCondition(AnimationController.AnimatorStates activeAnimation)
-    {
-        return false;
-    }
-
-    #endregion
 }

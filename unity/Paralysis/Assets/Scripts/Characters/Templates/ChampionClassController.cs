@@ -111,28 +111,14 @@ public abstract class ChampionClassController : MonoBehaviour
     protected Transform m_GroundCheck;                                      // A position marking where to check if the player is grounded.
     protected const float k_GroundedRadius = .2f;                           // Radius of the overlap circle to determine if grounded
 
-    protected bool m_Grounded;                                              // Whether or not the player is grounded.
-    protected float m_vSpeed;                                               // Vertical speed
-    protected float m_Speed;                                                // Horizontal speed
     public bool m_FacingRight = true;                                       // For determining which way the player is currently facing.
     public bool dashing = false;                                            // true while dashing
     public bool blocking = false;                                           // Is the character blocking?
 
-    protected bool trigBasicAttack1 = false;
-    protected bool trigBasicAttack2 = false;
-    protected bool trigBasicAttack3 = false;
-    protected bool trigSkill1 = false;
-    protected bool trigSkill2 = false;
-    protected bool trigSkill3 = false;
-    protected bool trigSkill4 = false;
-    protected bool trigJump = false;
-    protected bool trigJumpAttackEnd = false;
-    protected bool trigDash = false;
-
     protected Rigidbody2D m_Rigidbody2D;                                    // Reference to the players rigidbody
     protected CharacterStats stats;                                         // Reference to stats
     protected Transform graphics;                                           // Reference to the graphics child
-    protected AnimationController animCon;                                  // Reference to the Animation Contoller
+    protected ChampionAnimationController animCon;                          // Reference to the Animation Contoller
 
     //Coroutines
     protected Coroutine comboRoutine;
@@ -146,113 +132,23 @@ public abstract class ChampionClassController : MonoBehaviour
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         graphics = transform.Find("graphics");
         stats = GetComponent<CharacterStats>();
-        animCon = graphics.GetComponent<AnimationController>();
+        animCon = graphics.GetComponent<ChampionAnimationController>();
     }
 
     protected virtual void Update()
     {
-        // Animations that work in any State
-        if (stats.stunned)
-            animCon.StartAnimation(AnimationController.AnimatorStates.Stunned);
-        else if (stats.knockedBack)
-            animCon.StartAnimation(AnimationController.AnimatorStates.KnockedBack);
-        else
+        if (stats.trigHit)
         {
-            // don't interrupt these animations (equivalent to HasExitTime)
-            if (additionalNotInterruptCondition(animCon.currentAnimation)) return;
-
-            switch (animCon.currentAnimation)
-            {
-                case AnimationController.AnimatorStates.Dash:
-                case AnimationController.AnimatorStates.BasicAttack1:
-                case AnimationController.AnimatorStates.BasicAttack2:
-                case AnimationController.AnimatorStates.BasicAttack3:
-                case AnimationController.AnimatorStates.JumpAttack:
-                case AnimationController.AnimatorStates.JumpAttackEnd:
-                case AnimationController.AnimatorStates.Skill1:
-                case AnimationController.AnimatorStates.Skill2:
-                case AnimationController.AnimatorStates.Skill3:
-                case AnimationController.AnimatorStates.Skill4:
-                    return;
-            }
-
-            // For character specific animations
-            if (additionalAnimationCondition(animCon)) return;
-
-            if (blocking)
-                animCon.StartAnimation(AnimationController.AnimatorStates.Block);
-            else if (trigDash)
-            {
-                trigDash = false;
-                animCon.StartAnimation(AnimationController.AnimatorStates.Dash);
-            }
-            else if (stats.trigHit)
-            {
-                stats.trigHit = false;
-                animCon.StartAnimation(AnimationController.AnimatorStates.Hit);
-            }
-            else if (jumpAttacking)
-                animCon.StartAnimation(AnimationController.AnimatorStates.JumpAttack);
-            else if (trigJumpAttackEnd)
-            {
-                trigJumpAttackEnd = false;
-                animCon.StartAnimation(AnimationController.AnimatorStates.JumpAttackEnd);
-            }
-            else if (trigBasicAttack1)
-            {
-                trigBasicAttack1 = false;
-                animCon.StartAnimation(AnimationController.AnimatorStates.BasicAttack1);
-            }
-            else if (trigBasicAttack2)
-            {
-                trigBasicAttack2 = false;
-                animCon.StartAnimation(AnimationController.AnimatorStates.BasicAttack2);
-            }
-            else if (trigBasicAttack3)
-            {
-                trigBasicAttack3 = false;
-                animCon.StartAnimation(AnimationController.AnimatorStates.BasicAttack3);
-            }
-            else if (trigSkill1)
-            {
-                trigSkill1 = false;
-                animCon.StartAnimation(AnimationController.AnimatorStates.Skill1);
-            }
-            else if (trigSkill2)
-            {
-                trigSkill2 = false;
-                animCon.StartAnimation(AnimationController.AnimatorStates.Skill2);
-            }
-            else if (trigSkill3)
-            {
-                trigSkill3 = false;
-                animCon.StartAnimation(AnimationController.AnimatorStates.Skill3);
-            }
-            else if (trigSkill4)
-            {
-                trigSkill4 = false;
-                animCon.StartAnimation(AnimationController.AnimatorStates.Skill4);
-            }
-            else if (!m_Grounded && m_vSpeed < 0)
-                animCon.StartAnimation(AnimationController.AnimatorStates.Fall);
-            else if (!m_Grounded && m_vSpeed > 0.001 && trigJump)
-            {
-                animCon.StartAnimation(AnimationController.AnimatorStates.Jump);
-                trigJump = false;
-            }
-            else if (m_Grounded && m_Speed > 0.001)
-                animCon.StartAnimation(AnimationController.AnimatorStates.Run);
-            else if (m_Grounded)
-                animCon.StartAnimation(AnimationController.AnimatorStates.Idle);
+            stats.trigHit = false;
+            animCon.trigHit = true;
         }
+        animCon.statStunned = stats.stunned;
+        animCon.statKnockedBack = stats.knockedBack;
     }
-
-    protected abstract bool additionalNotInterruptCondition(AnimationController.AnimatorStates activeAnimation);
-    protected abstract bool additionalAnimationCondition(AnimationController animCon);
 
     protected virtual void FixedUpdate()
     {
-        m_Grounded = false;
+        animCon.m_Grounded = false;
 
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
@@ -261,15 +157,15 @@ public abstract class ChampionClassController : MonoBehaviour
         {
             if (colliders[i].gameObject != gameObject)
             {
-                m_Grounded = true;               
+                animCon.m_Grounded = true;               
             }
         }
 
         // Determines the vertical speed
-        m_vSpeed = m_Rigidbody2D.velocity.y;
+        animCon.m_vSpeed = m_Rigidbody2D.velocity.y;
 
         //Move the character if dashing
-        if (dashing && m_Grounded)
+        if (dashing && animCon.m_Grounded)
         {
             m_Rigidbody2D.velocity = new Vector2(m_dashSpeed, m_Rigidbody2D.velocity.y);
         }
@@ -294,7 +190,7 @@ public abstract class ChampionClassController : MonoBehaviour
             //if (maxSpeed == 0) return;
 
             // The Speed animator parameter is set to the absolute value of the horizontal input.
-            m_Speed = Mathf.Abs(Input.GetAxis("Horizontal"));
+            animCon.m_Speed = Mathf.Abs(Input.GetAxis("Horizontal"));
 
             // If the input is moving the player right and the player is facing left...
             if (move > 0 && !m_FacingRight)
@@ -322,8 +218,8 @@ public abstract class ChampionClassController : MonoBehaviour
         if (canPerformAction(true) && jump && canPerformAttack())
         {
             // Add a vertical force to the player.
-            m_Grounded = false;
-            trigJump = true;
+            animCon.m_Grounded = false;
+            animCon.trigJump = true;
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
         }
     }
@@ -337,14 +233,14 @@ public abstract class ChampionClassController : MonoBehaviour
         else direction = -1;
 
         m_Rigidbody2D.velocity = new Vector2( 4  *direction, -m_jumpAttackForce); //Add downwards force
-        yield return new WaitUntil(() => m_Grounded); //Jump attacking as long as not grounded
+        yield return new WaitUntil(() => animCon.m_Grounded); //Jump attacking as long as not grounded
 
         // Deal damage to all enemys
         StartCoroutine(doMeeleSkill_Hit(0, damage_JumpAttack, skillEffect.nothing, 0, false, m_jumpAttackRadius));
 
         Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
         jumpAttacking = false;
-        trigJumpAttackEnd = true;
+        animCon.trigJumpAttackEnd = true;
     }
 
     /// <summary>
@@ -372,7 +268,7 @@ public abstract class ChampionClassController : MonoBehaviour
                 m_Rigidbody2D.velocity = Vector2.zero;
 
                 dashing = true;
-                trigDash = true;
+                animCon.trigDash = true;
                 stats.immovable = true;
 
                 yield return new WaitForSeconds(0.1f);
@@ -610,7 +506,7 @@ public abstract class ChampionClassController : MonoBehaviour
     /// <returns></returns>
     public bool canPerformAction(bool GroundCheck)
     {
-        if (GroundCheck && !m_Grounded)
+        if (GroundCheck && !animCon.m_Grounded)
             return false;
         else if (stats.knockedBack)
             return false;
