@@ -275,27 +275,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a955a31a6a337664b86ca5a46753d7c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxSpeed: 7
-  m_MoveSpeedWhileAttacking: 4
-  m_JumpForce: 500
-  m_dashSpeed: 7
-  m_dashStaminaCost: 10
-  m_jumpAttackRadius: 1.3
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 4294960840
-  m_ComboCounterMax: 1
-  m_jumpAttackForce: 10
-  m_MoveSpeedWhileBlocking: 0
   whatToHit:
     serializedVersion: 2
     m_Bits: 4096
-  m_FacingRight: 1
-  dashing: 0
-  dontMove: 0
-  blocking: 0
+  m_MaxSpeed: 7
+  m_MoveSpeedWhileAttacking: 4
+  m_MoveSpeedWhileBlocking: 0
+  m_JumpForce: 500
+  m_jumpAttackRadius: 1.3
+  m_jumpAttackForce: 10
+  m_dashSpeed: 7
+  m_dashStaminaCost: 10
   attackCount: 0
   inCombo: 0
+  m_ComboExpire: 1
   jumpAttacking: 0
   delay_BasicAttack1: 0.15
   delay_BasicAttack2: 0.15
@@ -328,10 +324,13 @@ MonoBehaviour:
   cooldown_Skill2: 0
   cooldown_Skill3: 0
   cooldown_Skill4: 0
+  m_FacingRight: 1
+  dashing: 0
+  blocking: 0
   m_DoubleJumpForce: 600
-  invisible: 0
   bulletPrefab: {fileID: 1999998842244028, guid: 1382e079f46c9e848b29efd69252a8b5,
     type: 2}
+  invisible: 0
 --- !u!114 &114154634626000324
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -510,6 +509,7 @@ MonoBehaviour:
   stunned: 0
   bleeding: 0
   knockedBack: 0
+  immovable: 0
   slowFactor: 1
   invincible: 0
   trigHit: 0
@@ -527,8 +527,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8652326777ca6a4189adc11d223b02c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimationType: 090000000a0000000b0000000800000004000000120000000300000000000000020000000c0000000d00000007000000010000000e0000000f000000100000001100000006000000
-  AnimationLoop: 000000000000000000000000000000000000
+  AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000
+  AnimationLoop: 010100010000000001000000000000000000000000
   AnimationDuration:
   - 0
   - 0
@@ -548,27 +548,33 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  - 0
+  - 0
+  - 0
   Atlasses:
+  - {fileID: 4343727234628468602, guid: 043681e887c53954e990ca179fe0d8b1, type: 2}
+  - {fileID: 4343727234628468602, guid: 98d622f74a152e843bb52e3560a2d018, type: 2}
+  - {fileID: 4343727234628468602, guid: c1fa476dcb4daa9408d53bac4b02fd0a, type: 2}
+  - {fileID: 4343727234628468602, guid: 7701ac59b4bbd4c4b8aaa46a79ad629a, type: 2}
+  - {fileID: 4343727234628468602, guid: 5a6c84ba07732bb4fa006142729eed17, type: 2}
+  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: 624053e3fb22b7e4289016438b538172, type: 2}
+  - {fileID: 4343727234628468602, guid: 0f39f1a69d82c304697b461e985ab9f7, type: 2}
+  - {fileID: 4343727234628468602, guid: bc527b6457f920247b16ddd5344065d8, type: 2}
   - {fileID: 4343727234628468602, guid: 9af720b8a8ca07b4498ecf3f9137d1cd, type: 2}
   - {fileID: 4343727234628468602, guid: 5ad2d41f1437d0f4ca9fb01feb590f83, type: 2}
   - {fileID: 4343727234628468602, guid: 3e103cd5a17909b41af4495a968886de, type: 2}
-  - {fileID: 4343727234628468602, guid: bc527b6457f920247b16ddd5344065d8, type: 2}
-  - {fileID: 4343727234628468602, guid: 5a6c84ba07732bb4fa006142729eed17, type: 2}
-  - {fileID: 4343727234628468602, guid: d6be4dd066f99324397f7831ca5406ef, type: 2}
-  - {fileID: 4343727234628468602, guid: 7701ac59b4bbd4c4b8aaa46a79ad629a, type: 2}
-  - {fileID: 4343727234628468602, guid: 043681e887c53954e990ca179fe0d8b1, type: 2}
-  - {fileID: 4343727234628468602, guid: c1fa476dcb4daa9408d53bac4b02fd0a, type: 2}
   - {fileID: 4343727234628468602, guid: b6d27418a6a78554aba3eeba22d8bffb, type: 2}
   - {fileID: 4343727234628468602, guid: e4ed102551fdf724d93448c39624f9c3, type: 2}
-  - {fileID: 4343727234628468602, guid: 0f39f1a69d82c304697b461e985ab9f7, type: 2}
-  - {fileID: 4343727234628468602, guid: 98d622f74a152e843bb52e3560a2d018, type: 2}
   - {fileID: 4343727234628468602, guid: cc25fcf1de64a7f468dac2b79556a138, type: 2}
   - {fileID: 4343727234628468602, guid: 327fde0731c709a47b63760f5a79f2c5, type: 2}
   - {fileID: 4343727234628468602, guid: c317f21e201b72644adb524819e93166, type: 2}
   - {fileID: 4343727234628468602, guid: 9075431dc456cc740853a1d9bf837569, type: 2}
-  - {fileID: 4343727234628468602, guid: 624053e3fb22b7e4289016438b538172, type: 2}
+  - {fileID: 4343727234628468602, guid: d6be4dd066f99324397f7831ca5406ef, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   GeneralSpeed: 0
-  CharacterClass: Assassin
+  CharacterClass: assassin
   CharacterSkin: basic
 --- !u!212 &212178966560292566
 SpriteRenderer:

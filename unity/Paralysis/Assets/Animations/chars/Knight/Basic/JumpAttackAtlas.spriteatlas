@@ -26,77 +26,50 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 7a86b45632d56ea22e9e52a6f4148807
+      Hash: b0c42c5787d7822f219d3d25062b537b
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 7a86b45632d56ea22e9e52a6f4148807
-    totalSpriteSurfaceArea: 47883600
+    hashString: b0c42c5787d7822f219d3d25062b537b
+    totalSpriteSurfaceArea: 26335980
     packables:
     - {fileID: 102900000, guid: 2dc932ab136795241af16668cf2a2902, type: 3}
     packedSpriteRenderDataKeys:
     - f50195ab1ac556a4ba6728482cf667c0: 21300000
     - 79dfe0ece107ad0459bea681a06f9dc2: 21300000
-    - 2c0913a6f8d50bf4086a3ea5b04186b2: 21300000
     - 12488ed3739bda6449e1a7c7c1adc681: 21300000
-    - 3d63f75aca9f20e4e8c31146e0e30e20: 21300000
     - b57cc7355c284b74bbcb20c45cebf78e: 21300000
     - 1abb18578c6355449969a6d63aee8997: 21300000
     - fde881e6889cdec46b77159aa3b7ba52: 21300000
-    - 454c2044e0f85ee4797585bdaef0f547: 21300000
     - 58a64c2c286b4b74fb40a5618441a6fe: 21300000
-    - d0dbf67639f861648880a8f24a725dbc: 21300000
     - 92cc58183a13b454da8d520297e62100: 21300000
-    - 2de0eb11192676c42b91a355dbdc5df6: 21300000
     - be1a2f11cf8a20c4eb92c343f67ae604: 21300000
-    - 99b623a81c09b9d4e8369611b569e777: 21300000
     - bfa4b0ed85750a443869a948031978be: 21300000
-    - 00b6a26d2fad76a42b60f6e51411a60b: 21300000
     - efed686445a99a947ab073258b69a7f3: 21300000
-    - 3e6aa2740b6b707419a403ce02f2f6d2: 21300000
-    - 5efa4c153f348e941b9483f5ad1165ca: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: f50195ab1ac556a4ba6728482cf667c0, type: 3}
   - {fileID: 21300000, guid: 79dfe0ece107ad0459bea681a06f9dc2, type: 3}
-  - {fileID: 21300000, guid: 2c0913a6f8d50bf4086a3ea5b04186b2, type: 3}
   - {fileID: 21300000, guid: 12488ed3739bda6449e1a7c7c1adc681, type: 3}
-  - {fileID: 21300000, guid: 3d63f75aca9f20e4e8c31146e0e30e20, type: 3}
   - {fileID: 21300000, guid: b57cc7355c284b74bbcb20c45cebf78e, type: 3}
   - {fileID: 21300000, guid: 1abb18578c6355449969a6d63aee8997, type: 3}
   - {fileID: 21300000, guid: fde881e6889cdec46b77159aa3b7ba52, type: 3}
-  - {fileID: 21300000, guid: 454c2044e0f85ee4797585bdaef0f547, type: 3}
   - {fileID: 21300000, guid: 58a64c2c286b4b74fb40a5618441a6fe, type: 3}
-  - {fileID: 21300000, guid: d0dbf67639f861648880a8f24a725dbc, type: 3}
   - {fileID: 21300000, guid: 92cc58183a13b454da8d520297e62100, type: 3}
-  - {fileID: 21300000, guid: 2de0eb11192676c42b91a355dbdc5df6, type: 3}
   - {fileID: 21300000, guid: be1a2f11cf8a20c4eb92c343f67ae604, type: 3}
-  - {fileID: 21300000, guid: 99b623a81c09b9d4e8369611b569e777, type: 3}
   - {fileID: 21300000, guid: bfa4b0ed85750a443869a948031978be, type: 3}
-  - {fileID: 21300000, guid: 00b6a26d2fad76a42b60f6e51411a60b, type: 3}
   - {fileID: 21300000, guid: efed686445a99a947ab073258b69a7f3, type: 3}
-  - {fileID: 21300000, guid: 3e6aa2740b6b707419a403ce02f2f6d2, type: 3}
-  - {fileID: 21300000, guid: 5efa4c153f348e941b9483f5ad1165ca, type: 3}
   m_PackedSpriteNamesToIndex:
   - JumpAttack_08
   - JumpAttack_09
-  - JumpAttack_19
   - JumpAttack_02
-  - JumpAttack_18
   - JumpAttack_03
   - JumpAttack_00
   - JumpAttack_01
-  - JumpAttack_15
   - JumpAttack_06
-  - JumpAttack_14
   - JumpAttack_07
-  - JumpAttack_17
   - JumpAttack_04
-  - JumpAttack_16
   - JumpAttack_05
-  - JumpAttack_11
   - JumpAttack_10
-  - JumpAttack_13
-  - JumpAttack_12
   m_Tag: JumpAttackAtlas
   m_IsVariant: 0
