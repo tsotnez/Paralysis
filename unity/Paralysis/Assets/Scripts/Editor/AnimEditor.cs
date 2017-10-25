@@ -28,8 +28,7 @@ public class AnimEditor : Editor
 
         lastSpeed = AnimationSpeed.floatValue;
 
-        string path = "/Animations/chars/" + CharacterClass.stringValue + "/" + CharacterSkin.stringValue;
-        levelDirectoryPath = new DirectoryInfo(Application.dataPath + path);
+        path = Application.dataPath + "/Animations/chars/" + CharacterClass.stringValue + "/" + CharacterSkin.stringValue + "/";
     }
 
     public override void OnInspectorGUI()
@@ -50,32 +49,45 @@ public class AnimEditor : Editor
         looping = serializedObject.FindProperty("AnimationLoop");
         atlasses = serializedObject.FindProperty("Atlasses");
 
-        DirectoryInfo[] Animations = levelDirectoryPath.GetDirectories();
-        atlasses.arraySize = Animations.Length;
-        looping.arraySize = Animations.Length;
-        animations.arraySize = Animations.Length;
-        customSpeeds.arraySize = Animations.Length;
+        // get all existing EnumTypes
+        var animStates = Enum.GetValues(typeof(AnimationController.AnimatorStates));
 
-        for (int i = 0; i < Animations.Length; i++)
+        // set arraysize to length of enum
+        atlasses.arraySize = animStates.Length;
+        looping.arraySize = animStates.Length;
+        animations.arraySize = animStates.Length;
+        customSpeeds.arraySize = animStates.Length;
+
+        // loop through every enum state
+        int count = 0;
+        foreach (var animState in animStates)
         {
-            GUILayout.BeginHorizontal();
+            bool directoryFound = Directory.Exists(path + animState.ToString());
 
-            EditorGUILayout.PropertyField(looping.GetArrayElementAtIndex(i), new GUIContent(Animations[i].Name), true);
-            EditorGUILayout.PropertyField(customSpeeds.GetArrayElementAtIndex(i), new GUIContent(""), true);
-            EditorGUILayout.PropertyField(atlasses.GetArrayElementAtIndex(i), new GUIContent(""), true);
+            GUILayout.BeginHorizontal();
+            if (!directoryFound)
+                EditorGUI.BeginDisabledGroup(true);
+
+            EditorGUILayout.PropertyField(looping.GetArrayElementAtIndex(count), new GUIContent(animState.ToString()), true);
+            EditorGUILayout.PropertyField(customSpeeds.GetArrayElementAtIndex(count), new GUIContent(""), true);
+            EditorGUILayout.PropertyField(atlasses.GetArrayElementAtIndex(count), new GUIContent(""), true);
+
+            if (!directoryFound)
+                EditorGUI.EndDisabledGroup();
 
             GUILayout.Space(0);
             GUILayout.EndHorizontal();
 
             try
             {
-                animations.GetArrayElementAtIndex(i).enumValueIndex = Convert.ToInt32((AnimationController.AnimatorStates)Enum.Parse(typeof(AnimationController.AnimatorStates), Animations[i].Name, true));
+                animations.GetArrayElementAtIndex(count).enumValueIndex = Convert.ToInt32((AnimationController.AnimatorStates)Enum.Parse(typeof(AnimationController.AnimatorStates), animState.ToString(), true));
             }
             catch (ArgumentException) { } // Ignore
 
-
             if (lastSpeed != AnimationSpeed.floatValue)
-                customSpeeds.GetArrayElementAtIndex(i).floatValue = AnimationSpeed.floatValue;
+                customSpeeds.GetArrayElementAtIndex(count).floatValue = AnimationSpeed.floatValue;
+
+            count++;
         }
 
         serializedObject.ApplyModifiedProperties();
