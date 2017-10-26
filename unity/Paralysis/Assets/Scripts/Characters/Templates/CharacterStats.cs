@@ -148,6 +148,13 @@ public class CharacterStats : MonoBehaviour {
         }
     }
 
+    /*public void SkillUsed(){
+       
+    }*/
+
+
+
+
     //Knocks back the character from the passed origin 
     public IEnumerator knockBack(Vector2 origin)
     {
