@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class ProjectileBehaviour : MonoBehaviour {
     public bool ready = false;
+    bool stuck = false;
+    bool falling = false; //True if projectile has reched maxRange already
+    Coroutine fallingRoutine = null;
+
+    public bool explodeOnHit = false; //If true, the projectile will play an explosion effect on hit. It well stuck into the Object it hit otherwise
+    public GameObject creator;
 
     public float speed = 7; //Max Speed of the bullet
     public int direction = 0; //Direction to travel in, -1 if left, 1 if right
@@ -22,26 +28,32 @@ public class ProjectileBehaviour : MonoBehaviour {
     // Use this for initialization
     void Update()
     {
-        if (ready)
+        if (ready && !stuck && !falling)
         {
             if (direction == -1) GetComponent<SpriteRenderer>().flipX = true; //Flip sprite if necessary
-            if (Vector2.Distance(startPos, transform.position) >= range) explode(); //Explode if max range is reached
+            if (Vector2.Distance(startPos, transform.position) >= range)
+            {
+                if (explodeOnHit)
+                    explode(); //Explode if max range is reached
+                else
+                    fallingRoutine = StartCoroutine(fallToGround());
+            }
         }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(ready)
+        if(ready && !stuck && !falling)
             GetComponent<Rigidbody2D>().velocity = new Vector2(speed * direction, 0);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (ready)
+        if (ready && collision.collider.gameObject != creator)
         {
             //On collision, check if collider is enemy.
-            if (collision.gameObject.layer == 12)
+            if (collision.gameObject.layer == 12 && !falling)
             {
                 CharacterStats targetStats = collision.gameObject.GetComponent<CharacterStats>();
 
@@ -61,7 +73,10 @@ public class ProjectileBehaviour : MonoBehaviour {
                 }
                 targetStats.takeDamage(damage, false);
             }
-            explode();
+            if (explodeOnHit)
+                explode();
+            else
+                StartCoroutine(getStuck());
         }
     }
 
@@ -71,5 +86,51 @@ public class ProjectileBehaviour : MonoBehaviour {
         if(explosionPrefab != null)
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
+    }
+
+    IEnumerator getStuck()
+    {
+        //Stop moving and destroy after 5 seconds 
+        stuck = true;
+        if (fallingRoutine != null)
+            StopCoroutine(fallingRoutine);
+        GetComponent<Collider2D>().enabled = false; //Disable collider
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0); //Stop moving
+        GetComponent<Rigidbody2D>().freezeRotation = true;
+        yield return new WaitForSeconds(5);
+        Destroy(gameObject);
+    }
+
+    IEnumerator fallToGround()
+    {
+        //Move toward the ground while rotating 
+        falling = true;
+        GetComponent<Rigidbody2D>().velocity = new Vector2(speed*direction, -5);
+
+        //Turn to face the ground
+        if (direction > 0)
+        {
+            while (transform.eulerAngles.z > -83 && !stuck)
+            {
+                transform.Rotate(new Vector3(0, 0, -4));
+                yield return new WaitForSeconds(0.02f);
+
+                float vertical = GetComponent<Rigidbody2D>().velocity.y;
+                float horizontal = GetComponent<Rigidbody2D>().velocity.x;
+                GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(horizontal - 0.3f, 0, speed), vertical - 0.3f);
+            }
+        }
+        else
+        {
+            while (transform.eulerAngles.z < 83 && !stuck)
+            {
+                transform.Rotate(new Vector3(0, 0, 4));
+                yield return new WaitForSeconds(0.02f);
+
+                float vertical = GetComponent<Rigidbody2D>().velocity.y;
+                float horizontal = GetComponent<Rigidbody2D>().velocity.x;
+                GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(horizontal + 0.3f, -speed, 0), vertical - 0.3f);
+            }
+        }
     }
 }
