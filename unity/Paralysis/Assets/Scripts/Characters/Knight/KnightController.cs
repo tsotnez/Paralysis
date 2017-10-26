@@ -8,12 +8,21 @@ public class KnightController : ChampionClassController
     [SerializeField]
     private GameObject Skill4_Spear;
 
+    // Trigger for character specific animations
+    private bool trigDashForward = false;
+
     #region default Methods
 
     // Use this for initialization
     void Start()
     {
-        animCon = graphics.GetComponent<KnightAnimationController>();
+
+    }
+
+    // Update is called once per frame
+    protected override void Update()
+    {
+        base.Update();
     }
 
     #endregion
@@ -31,7 +40,7 @@ public class KnightController : ChampionClassController
     {
         if (shouldAttack && canPerformAction(false) && canPerformAttack())
         {
-            if (animCon.m_Grounded)
+            if (m_Grounded)
             {
                 // Check if enough stamina for attack
                 if (stats.hasSufficientStamina(stamina_BasicAttack1) && (attackCount == 0 || attackCount == 1) || //Basic Attack
@@ -53,13 +62,13 @@ public class KnightController : ChampionClassController
                     {
                         case 1: case 2:
                             // do meele attack
-                            doMeeleSkill(ref animCon.trigBasicAttack1, delay_BasicAttack1, damage_BasicAttack1, skillEffect.nothing, 0, stamina_BasicAttack1);
+                            doMeeleSkill(ref trigBasicAttack1, delay_BasicAttack1, damage_BasicAttack1, skillEffect.nothing, 0, stamina_BasicAttack1);
                             // Reset timer of combo
                             resetComboTime();
                             break;
                         case 3:
                             // do meele attack
-                            doMeeleSkill(ref animCon.trigBasicAttack2, delay_BasicAttack3, damage_BasicAttack3, skillEffect.nothing, 0, stamina_BasicAttack3);
+                            doMeeleSkill(ref trigBasicAttack2, delay_BasicAttack3, damage_BasicAttack3, skillEffect.nothing, 0, stamina_BasicAttack3);
                             // Reset Combo after combo-hit
                             abortCombo();
                             break;
@@ -102,7 +111,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill1()
     {
-        doMeeleSkill(ref animCon.trigSkill1, delay_Skill1, damage_Skill1, skillEffect.stun, 3, stamina_Skill1);
+        doMeeleSkill(ref trigSkill1, delay_Skill1, damage_Skill1, skillEffect.stun, 3, stamina_Skill1);
     }
 
 
@@ -118,7 +127,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill2()
     {
-        doMeeleSkill(ref animCon.trigSkill2, delay_Skill2, damage_Skill2, skillEffect.stun, 3, stamina_Skill2);
+        doMeeleSkill(ref trigSkill2, delay_Skill2, damage_Skill2, skillEffect.stun, 3, stamina_Skill2);
     }
 
     /// <summary>
@@ -133,7 +142,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill3()
     {
-        doMeeleSkill(ref animCon.trigSkill3, delay_Skill3, damage_Skill3, skillEffect.knockback, 0, stamina_Skill3, false);
+        doMeeleSkill(ref trigSkill3, delay_Skill3, damage_Skill3, skillEffect.knockback, 0, stamina_Skill3, false);
     }
 
     /// <summary>
@@ -147,7 +156,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill4()
     {
-        doRangeSkill(ref animCon.trigSkill4, delay_Skill4, Skill4_Spear, 5f, damage_Skill4, skillEffect.nothing, 0, stamina_Skill4);
+        doRangeSkill(ref trigSkill4, delay_Skill4, Skill4_Spear, 5f, damage_Skill4, skillEffect.nothing, 0, stamina_Skill4);
     }
 
     #endregion
@@ -170,8 +179,8 @@ public class KnightController : ChampionClassController
                 m_Rigidbody2D.velocity = Vector2.zero;
 
                 // set var for dash or dashForward
-                if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight) animCon.trigDash = true;
-                else ((KnightAnimationController)animCon).trigDashForward = true;
+                if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight) trigDash = true;
+                else trigDashForward = true;
 
                 dashing = true;
                 stats.immovable = true;
@@ -188,6 +197,30 @@ public class KnightController : ChampionClassController
                 stats.immovable = false;
             }
         }
+    }
+
+    #endregion
+
+    #region Character specific animation
+
+    protected override bool additionalAnimationCondition(AnimationController animCon)
+    {
+        if (blocking && m_Speed > 0.001)
+            animCon.StartAnimation(AnimationController.AnimatorStates.BlockMove);            
+        else if (trigDashForward)
+            animCon.StartAnimation(AnimationController.AnimatorStates.DashFor);
+        else
+            return false;
+
+        return true;
+    }
+
+    protected override bool additionalNotInterruptCondition(AnimationController.AnimatorStates activeAnimation)
+    {
+        if (activeAnimation == AnimationController.AnimatorStates.DashFor)
+                return true;
+
+        return false;
     }
 
     #endregion
