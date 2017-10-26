@@ -562,7 +562,7 @@ public abstract class ChampionClassController : MonoBehaviour
 
     #region Ranged Skill
 
-    protected void doRangeSkill(ref bool animationVar, float skillDelay, GameObject projectilePrefab, float range, int damage, skillEffect effect, int effectDuration, int skillStaminaCost, float speed = 7, GameObject onHitEffect = null)
+    protected void doRangeSkill(ref bool animationVar, float skillDelay, GameObject projectilePrefab, float range, int damage, skillEffect effect, int effectDuration, int skillStaminaCost, float speed = 7, bool onHitEffect = false)
     {
         //Validate that character is not attacking and standing on ground
         if (canPerformAction(true) && canPerformAttack() && stats.loseStamina(skillStaminaCost))
@@ -574,7 +574,7 @@ public abstract class ChampionClassController : MonoBehaviour
         }
     }
 
-    private IEnumerator doRangeSkill_Hit(float skillDelay, GameObject projectilePrefab, float range, int damage, int effectDuration, float speed, GameObject onHitEffect)
+    private IEnumerator doRangeSkill_Hit(float skillDelay, GameObject projectilePrefab, float range, int damage, int effectDuration, float speed, bool onHitEffect)
     {
         // wait till delay ends
         yield return new WaitForSeconds(skillDelay);
@@ -585,15 +585,15 @@ public abstract class ChampionClassController : MonoBehaviour
         else direction = -1;
 
         // generate GameObject
-        GameObject goProjectile = Instantiate(projectilePrefab, transform.position + new Vector3(0.5f * direction, 0.3f), Quaternion.identity);
+        GameObject goProjectile = Instantiate(projectilePrefab, transform.position + new Vector3(1f * direction, 0.3f), Quaternion.identity);
         ProjectileBehaviour projectile = goProjectile.GetComponent<ProjectileBehaviour>();
 
         // assign variables to procetile Script
         projectile.direction = direction;
+        projectile.creator = this.gameObject;
         projectile.range = range;
         projectile.speed = speed;
-        if (onHitEffect != null)
-            projectile.explosionPrefab = onHitEffect;
+        projectile.explodeOnHit = onHitEffect;
         projectile.damage = damage;
         projectile.effectDuration = effectDuration;
         projectile.ready = true;

@@ -244,7 +244,7 @@ MonoBehaviour:
   - {fileID: 1654434425598688, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
   - {fileID: 1468821578159268, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b, type: 2}
   - {fileID: 1903508196159970, guid: 0639eac30390dec449afda643c7fa53c, type: 2}
-  startChar: 2
+  startChar: 0
 --- !u!4 &33478042
 Transform:
   m_ObjectHideFlags: 0
@@ -896,7 +896,7 @@ MonoBehaviour:
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 0
-  whatToHit:
+  m_whatToHit:
     serializedVersion: 2
     m_Bits: 0
   m_MaxSpeed: 10
@@ -907,10 +907,7 @@ MonoBehaviour:
   m_jumpAttackForce: 10
   m_dashSpeed: 7
   m_dashStaminaCost: 10
-  attackCount: 0
-  inCombo: 0
   m_ComboExpire: 1
-  jumpAttacking: 0
   delay_BasicAttack1: 0
   delay_BasicAttack2: 0
   delay_BasicAttack3: 0

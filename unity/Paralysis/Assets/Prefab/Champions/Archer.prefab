@@ -278,9 +278,9 @@ MonoBehaviour:
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 1536
-  whatToHit:
+  m_whatToHit:
     serializedVersion: 2
-    m_Bits: 6144
+    m_Bits: 0
   m_MaxSpeed: 7
   m_MoveSpeedWhileAttacking: 5
   m_MoveSpeedWhileBlocking: 0
@@ -289,11 +289,8 @@ MonoBehaviour:
   m_jumpAttackForce: 10
   m_dashSpeed: 7
   m_dashStaminaCost: 10
-  attackCount: 0
-  inCombo: 0
   m_ComboExpire: 1
-  jumpAttacking: 0
-  delay_BasicAttack1: 0
+  delay_BasicAttack1: 0.3
   delay_BasicAttack2: 0
   delay_BasicAttack3: 0
   delay_Skill1: 0
@@ -327,6 +324,8 @@ MonoBehaviour:
   m_FacingRight: 0
   dashing: 0
   blocking: 0
+  standartArrowPrefab: {fileID: 1365143412859840, guid: 7de1c85d9954b954a93e03f5597f6e80,
+    type: 2}
 --- !u!114 &114377760250446108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -342,7 +341,7 @@ MonoBehaviour:
   AnimationLoop: 010100010000000001000000000000000000000000
   AnimationDuration:
   - 0.5
-  - 0
+  - 0.5
   - 0.45
   - 0
   - 0
@@ -350,7 +349,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 0.3
+  - 0.4
   - 0
   - 0
   - 0
