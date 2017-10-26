@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(ChampionClassController))]
+[CustomEditor(typeof(ChampionClassController), true)]
 public class ChampionClassEditor : Editor {
 
     SerializedProperty WhatIsGround, WhatToHit, MoveSpeed, MoveSpeedWhileAttacking, MoveSpeedWhileBlocking, JumpForce, JumpAttackRadius, JumpAttackForce,

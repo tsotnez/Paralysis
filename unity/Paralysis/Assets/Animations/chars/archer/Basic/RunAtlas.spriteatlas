@@ -26,62 +26,44 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 3b2bd2172676ec39e20a6440dc265ace
+      Hash: 72522ac588dc07a501a822768a538a21
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 3b2bd2172676ec39e20a6440dc265ace
-    totalSpriteSurfaceArea: 28609308
+    hashString: 72522ac588dc07a501a822768a538a21
+    totalSpriteSurfaceArea: 18728568
     packables:
     - {fileID: 102900000, guid: 70e5dadfe8e23c94d9a1cf8dca707c52, type: 3}
     packedSpriteRenderDataKeys:
-    - 78c2853c1fd3d5f449e48dc287edbbbc: 21300000
-    - 6865ecd110b0a854e8548b3835e5f6ec: 21300000
-    - ca12ce9e26c21dd4096c41081ffbf268: 21300000
-    - 620e3aab844c3a4468354a5045dedc9d: 21300000
-    - 218b02078bf7e42438ad7383507cd019: 21300000
-    - 7e5320b35e1fae84886ff412476d389c: 21300000
-    - e0ae5bbca8512294aae3c44faef1e1f2: 21300000
-    - 5b186c91fa0a3e44e96fc1ff20a49faf: 21300000
-    - 514746770458dbb4da633a88ea2c1853: 21300000
-    - bb87d38658c631440a8e807fc9cb5eec: 21300000
-    - 46b0f95d73f65b54ca954c8ab8576ce5: 21300000
-    - 52eaebd136bbec542833b0c8e45b6e7f: 21300000
-    - 2441f556070337e4b8ba3e934f3cbebb: 21300000
-    - 01c091c149c53a24a9ebb1c1dbf08e9f: 21300000
-    - b0b5eedc6013833439c586200ad33d90: 21300000
-    - 0f84135282291ca448fdd721e691a474: 21300000
-    - 59da968bd62a7034ca861cc3c1cd8875: 21300000
-    - f9c8d58c20edd5740a20a85ab45bad5c: 21300000
+    - 998ad1714ac496340891458959710d08: 21300000
+    - f94a3e2544d8503439adcaebe67506b1: 21300000
+    - 9f24dda1881d3de4191065459efdaf4f: 21300000
+    - 5d49f9dd277ff914aab42794daf2e2d1: 21300000
+    - f3e009bc138b3f8448485c07016a7f8b: 21300000
+    - ff640f3a3964fad47bab737ec9bc801f: 21300000
+    - 47044d2e63fda4c49a9c397507584085: 21300000
+    - 5e02632b7e1005f46a878a19512915c4: 21300000
+    - ade9363ea56e3fa48adf0ce165f50fcb: 21300000
+    - df7ff087d674a084a898d911882a416b: 21300000
+    - 382ee9bb857aecd45bb9be5d754a6e35: 21300000
+    - 5daf67e46b5a8ec47baa07101e2527a3: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: 78c2853c1fd3d5f449e48dc287edbbbc, type: 3}
-  - {fileID: 21300000, guid: 6865ecd110b0a854e8548b3835e5f6ec, type: 3}
-  - {fileID: 21300000, guid: ca12ce9e26c21dd4096c41081ffbf268, type: 3}
-  - {fileID: 21300000, guid: 620e3aab844c3a4468354a5045dedc9d, type: 3}
-  - {fileID: 21300000, guid: 218b02078bf7e42438ad7383507cd019, type: 3}
-  - {fileID: 21300000, guid: 7e5320b35e1fae84886ff412476d389c, type: 3}
-  - {fileID: 21300000, guid: e0ae5bbca8512294aae3c44faef1e1f2, type: 3}
-  - {fileID: 21300000, guid: 5b186c91fa0a3e44e96fc1ff20a49faf, type: 3}
-  - {fileID: 21300000, guid: 514746770458dbb4da633a88ea2c1853, type: 3}
-  - {fileID: 21300000, guid: bb87d38658c631440a8e807fc9cb5eec, type: 3}
-  - {fileID: 21300000, guid: 46b0f95d73f65b54ca954c8ab8576ce5, type: 3}
-  - {fileID: 21300000, guid: 52eaebd136bbec542833b0c8e45b6e7f, type: 3}
-  - {fileID: 21300000, guid: 2441f556070337e4b8ba3e934f3cbebb, type: 3}
-  - {fileID: 21300000, guid: 01c091c149c53a24a9ebb1c1dbf08e9f, type: 3}
-  - {fileID: 21300000, guid: b0b5eedc6013833439c586200ad33d90, type: 3}
-  - {fileID: 21300000, guid: 0f84135282291ca448fdd721e691a474, type: 3}
-  - {fileID: 21300000, guid: 59da968bd62a7034ca861cc3c1cd8875, type: 3}
-  - {fileID: 21300000, guid: f9c8d58c20edd5740a20a85ab45bad5c, type: 3}
+  - {fileID: 21300000, guid: 998ad1714ac496340891458959710d08, type: 3}
+  - {fileID: 21300000, guid: f94a3e2544d8503439adcaebe67506b1, type: 3}
+  - {fileID: 21300000, guid: 9f24dda1881d3de4191065459efdaf4f, type: 3}
+  - {fileID: 21300000, guid: 5d49f9dd277ff914aab42794daf2e2d1, type: 3}
+  - {fileID: 21300000, guid: f3e009bc138b3f8448485c07016a7f8b, type: 3}
+  - {fileID: 21300000, guid: ff640f3a3964fad47bab737ec9bc801f, type: 3}
+  - {fileID: 21300000, guid: 47044d2e63fda4c49a9c397507584085, type: 3}
+  - {fileID: 21300000, guid: 5e02632b7e1005f46a878a19512915c4, type: 3}
+  - {fileID: 21300000, guid: ade9363ea56e3fa48adf0ce165f50fcb, type: 3}
+  - {fileID: 21300000, guid: df7ff087d674a084a898d911882a416b, type: 3}
+  - {fileID: 21300000, guid: 382ee9bb857aecd45bb9be5d754a6e35, type: 3}
+  - {fileID: 21300000, guid: 5daf67e46b5a8ec47baa07101e2527a3, type: 3}
   m_PackedSpriteNamesToIndex:
-  - Run_12
-  - Run_13
   - Run_10
   - Run_11
-  - Run_16
-  - Run_17
-  - Run_14
-  - Run_15
   - Run_09
   - Run_08
   - Run_05

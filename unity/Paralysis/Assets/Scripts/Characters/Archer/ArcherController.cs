@@ -5,14 +5,10 @@ using UnityEngine;
 
 public class ArcherController : ChampionClassController
 {
-    public GameObject arrowPrefab;
 
     public override void basicAttack(bool shouldAttack)
     {
-        if (shouldAttack)
-        {
-            doRangeSkill(ref trigBasicAttack1, delay_BasicAttack1, arrowPrefab, 5, damage_BasicAttack1, skillEffect.nothing, 0, stamina_BasicAttack1);
-        }
+        if(shouldAttack) trigBasicAttack1 = true;
     }
 
     public override void skill1()
