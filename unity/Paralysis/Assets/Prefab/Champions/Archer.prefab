@@ -293,7 +293,7 @@ MonoBehaviour:
   delay_BasicAttack1: 0.3
   delay_BasicAttack2: 0
   delay_BasicAttack3: 0
-  delay_Skill1: 0
+  delay_Skill1: 0.4
   delay_Skill2: 0
   delay_Skill3: 0
   delay_Skill4: 0
@@ -305,11 +305,11 @@ MonoBehaviour:
   stamina_Skill2: 0
   stamina_Skill3: 0
   stamina_Skill4: 0
-  damage_BasicAttack1: 0
+  damage_BasicAttack1: 5
   damage_BasicAttack2: 0
   damage_BasicAttack3: 0
   damage_JumpAttack: 5
-  damage_Skill1: 0
+  damage_Skill1: 10
   damage_Skill2: 0
   damage_Skill3: 0
   damage_Skill4: 5
@@ -325,6 +325,8 @@ MonoBehaviour:
   dashing: 0
   blocking: 0
   standartArrowPrefab: {fileID: 1365143412859840, guid: 7de1c85d9954b954a93e03f5597f6e80,
+    type: 2}
+  greatArrowPrefab: {fileID: 1102937920621408, guid: 6211ccf37bad0dc47a9a26203c60efca,
     type: 2}
 --- !u!114 &114377760250446108
 MonoBehaviour:
@@ -354,7 +356,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 0
+  - 0.4
   - 0
   - 0
   - 0
