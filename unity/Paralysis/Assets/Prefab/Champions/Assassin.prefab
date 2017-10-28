@@ -278,9 +278,9 @@ MonoBehaviour:
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 4294960840
-  whatToHit:
+  m_whatToHit:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 0
   m_MaxSpeed: 7
   m_MoveSpeedWhileAttacking: 4
   m_MoveSpeedWhileBlocking: 0
@@ -289,10 +289,7 @@ MonoBehaviour:
   m_jumpAttackForce: 10
   m_dashSpeed: 7
   m_dashStaminaCost: 10
-  attackCount: 0
-  inCombo: 0
   m_ComboExpire: 1
-  jumpAttacking: 0
   delay_BasicAttack1: 0.15
   delay_BasicAttack2: 0.15
   delay_BasicAttack3: 0.2
@@ -524,7 +521,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1329833219150200}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8652326777ca6a4189adc11d223b02c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ec329f3ff493bd4aaf8b7e72e19607d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000
@@ -576,6 +573,25 @@ MonoBehaviour:
   GeneralSpeed: 0
   CharacterClass: assassin
   CharacterSkin: basic
+  m_Grounded: 0
+  m_vSpeed: 0
+  m_Speed: 0
+  statStunned: 0
+  statKnockedBack: 0
+  statBlock: 0
+  trigBasicAttack1: 0
+  trigBasicAttack2: 0
+  trigBasicAttack3: 0
+  trigSkill1: 0
+  trigSkill2: 0
+  trigSkill3: 0
+  trigSkill4: 0
+  trigJump: 0
+  trigJumpAttack: 0
+  trigJumpAttackEnd: 0
+  trigDash: 0
+  trigHit: 0
+  trigDoubleJump: 0
 --- !u!212 &212178966560292566
 SpriteRenderer:
   m_ObjectHideFlags: 1
