@@ -293,7 +293,7 @@ MonoBehaviour:
   delay_BasicAttack1: 0.3
   delay_BasicAttack2: 0
   delay_BasicAttack3: 0
-  delay_Skill1: 0
+  delay_Skill1: 0.4
   delay_Skill2: 0
   delay_Skill3: 0
   delay_Skill4: 0
@@ -305,11 +305,11 @@ MonoBehaviour:
   stamina_Skill2: 0
   stamina_Skill3: 0
   stamina_Skill4: 0
-  damage_BasicAttack1: 0
+  damage_BasicAttack1: 5
   damage_BasicAttack2: 0
   damage_BasicAttack3: 0
   damage_JumpAttack: 5
-  damage_Skill1: 0
+  damage_Skill1: 10
   damage_Skill2: 0
   damage_Skill3: 0
   damage_Skill4: 5
@@ -326,6 +326,9 @@ MonoBehaviour:
   blocking: 0
   standartArrowPrefab: {fileID: 1365143412859840, guid: 7de1c85d9954b954a93e03f5597f6e80,
     type: 2}
+  greatArrowPrefab: {fileID: 1102937920621408, guid: 6211ccf37bad0dc47a9a26203c60efca,
+    type: 2}
+  trapPrefab: {fileID: 0}
 --- !u!114 &114377760250446108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -334,7 +337,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1587404009544488}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8652326777ca6a4189adc11d223b02c, type: 3}
+  m_Script: {fileID: 11500000, guid: a70140056e40f68489e513993cf476c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000
@@ -354,7 +357,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 0
+  - 0.4
   - 0
   - 0
   - 0
@@ -386,6 +389,24 @@ MonoBehaviour:
   GeneralSpeed: 0
   CharacterClass: archer
   CharacterSkin: basic
+  m_Grounded: 0
+  m_vSpeed: 0
+  m_Speed: 0
+  statStunned: 0
+  statKnockedBack: 0
+  statBlock: 0
+  trigBasicAttack1: 0
+  trigBasicAttack2: 0
+  trigBasicAttack3: 0
+  trigSkill1: 0
+  trigSkill2: 0
+  trigSkill3: 0
+  trigSkill4: 0
+  trigJump: 0
+  trigJumpAttack: 0
+  trigJumpAttackEnd: 0
+  trigDash: 0
+  trigHit: 0
 --- !u!114 &114441194947304052
 MonoBehaviour:
   m_ObjectHideFlags: 1

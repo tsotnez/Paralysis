@@ -6,7 +6,7 @@ using UnityEngine.U2D;
 using System.Linq;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class AnimationController : MonoBehaviour
+public abstract class AnimationController : MonoBehaviour
 {
     // Public parameters for Editor-Inspector
     public AnimatorStates[] AnimationType = { 0 };                          // Type of Animation

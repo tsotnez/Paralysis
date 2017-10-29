@@ -11,6 +11,7 @@ public class ArcherEditor : ChampionClassEditor {
 
         GUILayout.Label("Archer Specific", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(serializedObject.FindProperty("standartArrowPrefab"), new GUIContent("Standart Arrow"), true);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("greatArrowPrefab"), new GUIContent("Great Arrow"), true);
         serializedObject.ApplyModifiedProperties();
     }
 }

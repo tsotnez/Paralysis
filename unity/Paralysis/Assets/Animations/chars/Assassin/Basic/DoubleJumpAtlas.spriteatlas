@@ -8,31 +8,29 @@ SpriteAtlas:
   m_Name: DoubleJumpAtlas
   m_EditorData:
     textureSettings:
-      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 0
+      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
-      sRGB: 0
     platformSettings: []
     packingParameters:
-      serializedVersion: 2
-      padding: 4
+      paddingPower: 2
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 0
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: cbe1450fa7050fec7300ce3326b682a6
+      Hash: aa522470d23a451607b6d9b3257818d7
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: cbe1450fa7050fec7300ce3326b682a6
+    hashString: aa522470d23a451607b6d9b3257818d7
     totalSpriteSurfaceArea: 5263060
     packables:
     - {fileID: 102900000, guid: 076e5c1b2985fe0448abe6a1ce653c53, type: 3}
