@@ -11,7 +11,7 @@ public class ProjectileBehaviour : MonoBehaviour {
     public bool explodeOnHit = false; //If true, the projectile will play an explosion effect on hit. It well stuck into the Object it hit otherwise
     public GameObject creator;
 
-    public float speed = 7; //Max Speed of the bullet
+    public Vector2 speed = new Vector2(7, 0); //Max Speed of the bullet
     public int direction = 0; //Direction to travel in, -1 if left, 1 if right
     public GameObject explosionPrefab;
     public float range = 5; //Distance to travel before dying
@@ -45,7 +45,7 @@ public class ProjectileBehaviour : MonoBehaviour {
     void FixedUpdate()
     {
         if(ready && !stuck && !falling)
-            GetComponent<Rigidbody2D>().velocity = new Vector2(speed * direction, 0);
+            GetComponent<Rigidbody2D>().velocity = new Vector2(speed.x * direction, speed.y);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -103,9 +103,9 @@ public class ProjectileBehaviour : MonoBehaviour {
 
     IEnumerator fallToGround()
     {
-        //Move toward the ground while rotating 
+        //Move towards the ground while rotating 
         falling = true;
-        GetComponent<Rigidbody2D>().velocity = new Vector2(speed*direction, -5);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(speed.x * direction, -5);
 
         //Turn to face the ground
         if (direction > 0)
@@ -117,7 +117,7 @@ public class ProjectileBehaviour : MonoBehaviour {
 
                 float vertical = GetComponent<Rigidbody2D>().velocity.y;
                 float horizontal = GetComponent<Rigidbody2D>().velocity.x;
-                GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(horizontal - 0.3f, 0, speed), vertical - 0.3f);
+                GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(horizontal - 0.3f, 0, speed.x), vertical - 0.3f);
             }
         }
         else
@@ -129,7 +129,7 @@ public class ProjectileBehaviour : MonoBehaviour {
 
                 float vertical = GetComponent<Rigidbody2D>().velocity.y;
                 float horizontal = GetComponent<Rigidbody2D>().velocity.x;
-                GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(horizontal + 0.3f, -speed, 0), vertical - 0.3f);
+                GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(horizontal + 0.3f, -speed.x, 0), vertical - 0.3f);
             }
         }
     }

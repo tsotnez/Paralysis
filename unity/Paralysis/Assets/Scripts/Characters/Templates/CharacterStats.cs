@@ -16,7 +16,7 @@ public class CharacterStats : MonoBehaviour {
     public int currentStamina;
 	public GameObject Hp;
     public GameObject Stamina;
-	public int staminaRegRate = 100;
+	public int staminaRegRate = 2;
     //private Vector2 vecHP;
     //private Vector2 vecST;
 
