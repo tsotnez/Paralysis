@@ -274,7 +274,7 @@ public abstract class ChampionClassController : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
                 stats.invincible = true; //Player is invincible for a period of time while dashing
 
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitUntil(() => animCon.currentAnimation != AnimationController.AnimatorStates.Dash);
                 dashing = false;
                 stats.invincible = false;
                 m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); //Stop moving
@@ -373,10 +373,10 @@ public abstract class ChampionClassController : MonoBehaviour
     /// <param name="singleTarget">only the first target or all targets? (default: singleTarget - true)</param>
     /// <param name="skillRange">Range of the skill (default: meeleRange - 1.5f)</param>.
     /// </summary>
-    protected void doMeeleSkill(ref bool animationVar, float skillDelay, int skillDamage, skillEffect skillSpecialEffect, int skillSpecialEffectTime, int skillStaminaCost, bool singleTarget = true, float skillRange = meeleRange)
+    protected void doMeeleSkill(ref bool animationVar, float skillDelay, int skillDamage, skillEffect skillSpecialEffect, int skillSpecialEffectTime, int skillStaminaCost, bool singleTarget = true, float skillRange = meeleRange, bool needsToBeGrounded = true)
     {
         //Validate that character is not attacking and standing on ground
-        if (canPerformAction(true) && canPerformAttack() && stats.loseStamina(skillStaminaCost))
+        if (canPerformAction(needsToBeGrounded) && canPerformAttack() && stats.loseStamina(skillStaminaCost))
         {
             // set animation trigger
             animationVar = true;
@@ -458,10 +458,10 @@ public abstract class ChampionClassController : MonoBehaviour
 
     #region Ranged Skill
 
-    protected void doRangeSkill(ref bool animationVar, float skillDelay, GameObject projectilePrefab, float range, int damage, skillEffect effect, int effectDuration, int skillStaminaCost, float speed = 7, bool onHitEffect = false)
+    protected void doRangeSkill(ref bool animationVar, float skillDelay, GameObject projectilePrefab, float range, int damage, skillEffect effect, int effectDuration, int skillStaminaCost, Vector2 speed, bool onHitEffect = false, bool needsToBeGrounded = true)
     {
         //Validate that character is not attacking and standing on ground
-        if (canPerformAction(true) && canPerformAttack() && stats.loseStamina(skillStaminaCost))
+        if (canPerformAction(needsToBeGrounded) && canPerformAttack() && stats.loseStamina(skillStaminaCost))
         {
             // set animation trigger
             animationVar = true;
@@ -470,7 +470,7 @@ public abstract class ChampionClassController : MonoBehaviour
         }
     }
 
-    private IEnumerator doRangeSkill_Hit(float skillDelay, GameObject projectilePrefab, float range, int damage, int effectDuration, float speed, bool onHitEffect)
+    private IEnumerator doRangeSkill_Hit(float skillDelay, GameObject projectilePrefab, float range, int damage, int effectDuration, Vector2 speed, bool onHitEffect)
     {
         // wait till delay ends
         yield return new WaitForSeconds(skillDelay);
@@ -481,7 +481,8 @@ public abstract class ChampionClassController : MonoBehaviour
         else direction = -1;
 
         // generate GameObject
-        GameObject goProjectile = Instantiate(projectilePrefab, transform.position + new Vector3(1f * direction, 0.3f), Quaternion.identity);
+        GameObject goProjectile = Instantiate(projectilePrefab, transform.position + new Vector3(1f * direction, 0.3f), new Quaternion(projectilePrefab.transform.rotation.x, 
+            projectilePrefab.transform.rotation.y, projectilePrefab.transform.rotation.z * direction, projectilePrefab.transform.rotation.w));
         ProjectileBehaviour projectile = goProjectile.GetComponent<ProjectileBehaviour>();
 
         // assign variables to procetile Script
