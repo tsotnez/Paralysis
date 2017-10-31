@@ -171,7 +171,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1587404009544488}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.036, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4855790070949082}
@@ -225,9 +225,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.06, y: -0.45}
+  m_Offset: {x: 0.06, y: -0.56}
   serializedVersion: 2
-  m_Radius: 0.16
+  m_Radius: 0.16000009
 --- !u!61 &61156633718313208
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -240,7 +240,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.059999995, y: 0.16921192}
+  m_Offset: {x: 0.059999995, y: 0.1499548}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -251,7 +251,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.24, y: 0.90157616}
+  m_Size: {x: 0.24, y: 1.0941486}
   m_EdgeRadius: 0
 --- !u!114 &114011890627075438
 MonoBehaviour:
@@ -280,7 +280,7 @@ MonoBehaviour:
     m_Bits: 1536
   m_whatToHit:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4096
   m_MaxSpeed: 7
   m_MoveSpeedWhileAttacking: 5
   m_MoveSpeedWhileBlocking: 0
@@ -294,41 +294,43 @@ MonoBehaviour:
   delay_BasicAttack2: 0
   delay_BasicAttack3: 0
   delay_Skill1: 0.4
-  delay_Skill2: 0
-  delay_Skill3: 0
+  delay_Skill2: 0.4
+  delay_Skill3: 0.4
   delay_Skill4: 0
-  stamina_BasicAttack1: 0
+  stamina_BasicAttack1: 5
   stamina_BasicAttack2: 0
   stamina_BasicAttack3: 0
   stamina_JumpAttack: 0
-  stamina_Skill1: 0
-  stamina_Skill2: 0
-  stamina_Skill3: 0
-  stamina_Skill4: 0
+  stamina_Skill1: 15
+  stamina_Skill2: 10
+  stamina_Skill3: 10
+  stamina_Skill4: 10
   damage_BasicAttack1: 5
   damage_BasicAttack2: 0
   damage_BasicAttack3: 0
   damage_JumpAttack: 5
   damage_Skill1: 10
-  damage_Skill2: 0
-  damage_Skill3: 0
-  damage_Skill4: 5
+  damage_Skill2: 10
+  damage_Skill3: 5
+  damage_Skill4: 0
   cooldown_BasicAttack1: 0
   cooldown_BasicAttack2: 0
   cooldown_BasicAttack3: 0
   cooldown_JumpAttack: 0
-  cooldown_Skill1: 0
-  cooldown_Skill2: 0
-  cooldown_Skill3: 0
-  cooldown_Skill4: 0
+  cooldown_Skill1: 15
+  cooldown_Skill2: 10
+  cooldown_Skill3: 15
+  cooldown_Skill4: 15
   m_FacingRight: 0
   dashing: 0
   blocking: 0
   standartArrowPrefab: {fileID: 1365143412859840, guid: 7de1c85d9954b954a93e03f5597f6e80,
     type: 2}
+  jumpAttackArrowPrefab: {fileID: 1365143412859840, guid: b78f2406196d67d4e8e70af69e1138c6,
+    type: 2}
   greatArrowPrefab: {fileID: 1102937920621408, guid: 6211ccf37bad0dc47a9a26203c60efca,
     type: 2}
-  trapPrefab: {fileID: 0}
+  trapPrefab: {fileID: 1602197186405658, guid: c8572649fafeeee43b625d0a9d12466c, type: 2}
 --- !u!114 &114377760250446108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -343,16 +345,11 @@ MonoBehaviour:
   AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000
   AnimationLoop: 010100010000000001000000000000000000000000
   AnimationDuration:
-  - 0.5
+  - 0.6
   - 0.5
   - 0.45
   - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0.4
+  - 0.31
   - 0
   - 0
   - 0
@@ -360,7 +357,12 @@ MonoBehaviour:
   - 0.4
   - 0
   - 0
+  - 0.5
   - 0
+  - 0.4
+  - 0.4
+  - 0.5
+  - 0.4
   - 0
   - 0
   - 0
@@ -548,7 +550,7 @@ MonoBehaviour:
   currentStamina: 0
   Hp: {fileID: 1819623968484500}
   Stamina: {fileID: 1572123457537342}
-  staminaRegRate: 10
+  staminaRegRate: 2
   stunned: 0
   bleeding: 0
   knockedBack: 0
@@ -621,8 +623,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1496276277
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2ba7aebd80a523a48812e30ac1a9cc9e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

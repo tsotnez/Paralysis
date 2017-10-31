@@ -80,7 +80,7 @@ public class AssassinController : ChampionClassController
     public override void skill4()
     {
         if (invisible) stopInvisible();
-        doRangeSkill(ref animCon.trigSkill4, delay_Skill4, bulletPrefab, 5, damage_Skill4, skillEffect.knockback, 2, stamina_Skill4);
+        doRangeSkill(ref animCon.trigSkill4, delay_Skill4, bulletPrefab, 5, damage_Skill4, skillEffect.knockback, 2, stamina_Skill4, new Vector2(7, 0));
     }
 
     #endregion

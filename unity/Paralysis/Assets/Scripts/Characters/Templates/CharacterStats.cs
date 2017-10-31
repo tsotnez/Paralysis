@@ -16,12 +16,9 @@ public class CharacterStats : MonoBehaviour {
     public int currentStamina;
 	public GameObject Hp;
     public GameObject Stamina;
-    //public GameObject coolSkill;
-	public int staminaRegRate = 100;
+	public int staminaRegRate = 2;
     //private Vector2 vecHP;
     //private Vector2 vecST;
-
-
 
     [Header("Statusses")]
     public bool stunned = false;
@@ -147,13 +144,6 @@ public class CharacterStats : MonoBehaviour {
             knockBackRoutine = StartCoroutine(knockBack(new Vector2(origin.x, origin.y)));
         }
     }
-
-    /*public void SkillUsed(){
-       
-    }*/
-
-
-
 
     //Knocks back the character from the passed origin 
     public IEnumerator knockBack(Vector2 origin)

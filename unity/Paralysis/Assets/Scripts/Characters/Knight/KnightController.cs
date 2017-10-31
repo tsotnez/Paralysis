@@ -153,7 +153,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill4()
     {
-        doRangeSkill(ref animCon.trigSkill4, delay_Skill4, Skill4_Spear, 5f, damage_Skill4, skillEffect.nothing, 0, stamina_Skill4);
+        doRangeSkill(ref animCon.trigSkill4, delay_Skill4, Skill4_Spear, 5f, damage_Skill4, skillEffect.nothing, 0, stamina_Skill4, new Vector2(7 , 0));
     }
 
     #endregion
