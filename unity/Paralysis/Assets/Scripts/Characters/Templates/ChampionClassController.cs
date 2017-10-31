@@ -301,7 +301,7 @@ public abstract class ChampionClassController : MonoBehaviour
         {
             blocking = false;
         }
-
+        animCon.statBlock = blocking;
     }
 
     public virtual void Flip()
@@ -488,6 +488,7 @@ public abstract class ChampionClassController : MonoBehaviour
         // assign variables to procetile Script
         projectile.direction = direction;
         projectile.creator = this.gameObject;
+        projectile.whatToHit = m_whatToHit;
         projectile.range = range;
         projectile.speed = speed;
         projectile.explodeOnHit = onHitEffect;
