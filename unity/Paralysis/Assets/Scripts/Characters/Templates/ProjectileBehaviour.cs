@@ -18,6 +18,7 @@ public class ProjectileBehaviour : MonoBehaviour {
     public ChampionClassController.skillEffect effect = ChampionClassController.skillEffect.nothing;
     public int effectDuration = 1;
     public int damage = 0;
+    public LayerMask whatToHit;
     Vector3 startPos;
 
     private void Start()
@@ -52,8 +53,8 @@ public class ProjectileBehaviour : MonoBehaviour {
     {
         if (ready && collision.collider.gameObject != creator)
         {
-            //On collision, check if collider is enemy.
-            if (collision.gameObject.layer == 12 && !falling)
+            //On collision, check if collider is in whatToHit layermask
+            if (whatToHit == (whatToHit | (1 << collision.gameObject.layer)))
             {
                 CharacterStats targetStats = collision.gameObject.GetComponent<CharacterStats>();
 
