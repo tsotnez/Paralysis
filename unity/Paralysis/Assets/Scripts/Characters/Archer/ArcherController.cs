@@ -50,6 +50,7 @@ public class ArcherController : ChampionClassController
     {
         //Shoot a stronger arrow, causing knockback
         doRangeSkill(ref animCon.trigSkill1, delay_Skill1, greatArrowPrefab, 7, damage_Skill1, skillEffect.knockback, 1, stamina_Skill1, new Vector2(9, 0));
+        stats.SkillUsed(10);
     }
 
     public override void skill2()
@@ -60,6 +61,7 @@ public class ArcherController : ChampionClassController
             animCon.trigSkill2 = true;
             Invoke("placeTrap", delay_Skill2);
         }
+        stats.SkillUsed(20);
     }
 
     private void placeTrap()
@@ -75,6 +77,7 @@ public class ArcherController : ChampionClassController
     {
         //Stomp the ground, stunning everyone in a given radius
         doMeeleSkill(ref animCon.trigSkill3, delay_Skill3, damage_Skill3, skillEffect.stun, 3, stamina_Skill3, false, 3);
+        stats.SkillUsed(30);
     }
 
     public override void skill4()
@@ -86,6 +89,7 @@ public class ArcherController : ChampionClassController
                 StopCoroutine(disengageRoutine);
             disengageRoutine = StartCoroutine(disengage());
         }
+        stats.SkillUsed(40);
     }
 
     private IEnumerator disengage()

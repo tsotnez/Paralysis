@@ -47,6 +47,7 @@ public class AssassinController : ChampionClassController
     {
         if (invisible) stopInvisible();
         doMeeleSkill(ref animCon.trigSkill1, delay_Skill1, damage_Skill1, skillEffect.stun, 3, stamina_Skill1);
+        stats.SkillUsed(10);
     }
 
     /// <summary>
@@ -60,6 +61,7 @@ public class AssassinController : ChampionClassController
             if (invisRoutine != null) StopCoroutine(invisRoutine);
             invisRoutine = StartCoroutine(manageInvisibility());
         }
+        stats.SkillUsed(20);
     }
 
     /// <summary>
@@ -72,6 +74,7 @@ public class AssassinController : ChampionClassController
             if (invisible) stopInvisible();
             StartCoroutine(shadowStepHit());
         }
+        stats.SkillUsed(30);
     }
 
     /// <summary>
@@ -81,6 +84,7 @@ public class AssassinController : ChampionClassController
     {
         if (invisible) stopInvisible();
         doRangeSkill(ref animCon.trigSkill4, delay_Skill4, bulletPrefab, 5, damage_Skill4, skillEffect.knockback, 2, stamina_Skill4, new Vector2(7, 0));
+        stats.SkillUsed(40);
     }
 
     #endregion

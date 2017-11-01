@@ -109,6 +109,7 @@ public class KnightController : ChampionClassController
     public override void skill1()
     {
         doMeeleSkill(ref animCon.trigSkill1, delay_Skill1, damage_Skill1, skillEffect.stun, 3, stamina_Skill1);
+        stats.SkillUsed(10);
     }
 
 
@@ -125,6 +126,7 @@ public class KnightController : ChampionClassController
     public override void skill2()
     {
         doMeeleSkill(ref animCon.trigSkill2, delay_Skill2, damage_Skill2, skillEffect.stun, 3, stamina_Skill2);
+        stats.SkillUsed(20);
     }
 
     /// <summary>
@@ -140,6 +142,7 @@ public class KnightController : ChampionClassController
     public override void skill3()
     {
         doMeeleSkill(ref animCon.trigSkill3, delay_Skill3, damage_Skill3, skillEffect.knockback, 0, stamina_Skill3, false);
+        stats.SkillUsed(30);
     }
 
     /// <summary>
@@ -154,6 +157,7 @@ public class KnightController : ChampionClassController
     public override void skill4()
     {
         doRangeSkill(ref animCon.trigSkill4, delay_Skill4, Skill4_Spear, 5f, damage_Skill4, skillEffect.nothing, 0, stamina_Skill4, new Vector2(7 , 0));
+        stats.SkillUsed(40);
     }
 
     #endregion

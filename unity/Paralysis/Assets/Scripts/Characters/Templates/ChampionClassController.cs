@@ -132,6 +132,7 @@ public abstract class ChampionClassController : MonoBehaviour
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         graphics = transform.Find("graphics");
         stats = GetComponent<CharacterStats>();
+
         animCon = graphics.GetComponent<ChampionAnimationController>();
     }
 
@@ -157,7 +158,7 @@ public abstract class ChampionClassController : MonoBehaviour
         {
             if (colliders[i].gameObject != gameObject)
             {
-                animCon.m_Grounded = true;               
+                animCon.m_Grounded = true;
             }
         }
 
@@ -172,6 +173,26 @@ public abstract class ChampionClassController : MonoBehaviour
     }
 
     #endregion
+
+
+    #region gets of cooldown
+
+    public int CoolDownSkill(){
+
+
+
+        return 0;
+    }
+
+
+
+    #endregion
+
+
+
+
+
+
 
     #region Normal character things (Move, Jump, JumpAttack, BasicAttack, Skills, ...)
 
