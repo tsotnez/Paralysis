@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class debug : MonoBehaviour {
     public GameObject[] champions;
+    public GameObject[] championsPlayer2;
     int currentChamp = 0;
+    bool multiplayer = false;
 
     [SerializeField]
     private int startChar = 0;
@@ -37,6 +39,26 @@ public class debug : MonoBehaviour {
 
         Camera.main.GetComponent<CameraBehaviour>().changeTarget(newPlayer.transform);
         Destroy(currentPlayer);
+    }
+
+    /// <summary>
+    /// Switch from multiplayer mode to singleplayer mode and vice versa
+    /// </summary>
+    public void switchPlayingMode()
+    {
+        if(multiplayer)
+        {
+            Camera.main.GetComponent<CameraBehaviour>().switchToSingleplayer();
+            Destroy(GameObject.FindGameObjectWithTag("MainPlayer2"));
+            multiplayer = false;
+        }
+        else
+        {
+            //Instantiate player2 prefab and switch camrea to multiplayer-mode
+            GameObject player2 = Instantiate(championsPlayer2[0], Vector3.zero, Quaternion.identity);
+            Camera.main.GetComponent<CameraBehaviour>().switchToMultiplayer(player2.GetComponent<Transform>());
+            multiplayer = true;
+        }
     }
 
     private void increaseIndex()

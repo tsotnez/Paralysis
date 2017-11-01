@@ -190,7 +190,7 @@ public abstract class ChampionClassController : MonoBehaviour
             //if (maxSpeed == 0) return;
 
             // The Speed animator parameter is set to the absolute value of the horizontal input.
-            animCon.m_Speed = Mathf.Abs(Input.GetAxis("Horizontal"));
+            animCon.m_Speed = Mathf.Abs(move);
 
             // If the input is moving the player right and the player is facing left...
             if (move > 0 && !m_FacingRight)
@@ -220,6 +220,7 @@ public abstract class ChampionClassController : MonoBehaviour
             // Add a vertical force to the player.
             animCon.m_Grounded = false;
             animCon.trigJump = true;
+            m_Rigidbody2D.velocity = Vector2.zero;
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
         }
     }
@@ -287,9 +288,9 @@ public abstract class ChampionClassController : MonoBehaviour
 
     public void manageDefensive(bool pDefensive)
     {
-        if (pDefensive)
+        if (pDefensive && animCon.m_Grounded)
         {
-            //Start being defensive only if not defensive already   
+            //Start being defensive only if not defensive already and grounded  
             if (!blocking)
             {
                 // Stop moving
