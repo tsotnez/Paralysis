@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: BlockMoveAtlas
+  m_EditorData:
+    textureSettings:
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      colorSpace: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+    platformSettings: []
+    packingParameters:
+      paddingPower: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    packedHash:
+      serializedVersion: 2
+      Hash: 91da8e2201490d28347a1fab3d6f2585
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 4
+    hashString: 91da8e2201490d28347a1fab3d6f2585
+    totalSpriteSurfaceArea: 14600000
+    packables:
+    - {fileID: 102900000, guid: 7265fb3683a52fd4bb613c66a5813674, type: 3}
+    packedSpriteRenderDataKeys:
+    - e4bfdfcad40f65a418bd71ef0ba9110b: 21300000
+    - 45d6e423b874aa244bdd1e91e08f7fe8: 21300000
+    - c92d5895fd27dbe49a164f477272457c: 21300000
+    - 409f52236a6c73c49a5ca85baf30a51b: 21300000
+    - 51172db5b2e60f34887337515ec08310: 21300000
+    - 7e05e35275cb2bc43b4e7b56f0bd8588: 21300000
+    - 06d8d5fff836eeb4a9e77f70ca9ccf9c: 21300000
+    - 01a03ea4e1bbc854d8eecb4a13e2abbd: 21300000
+    - 1236608b91cc187409fda252e3241429: 21300000
+    - 4707a639d78a9a44d80997e597ffad2a: 21300000
+    - 40f8ea5af97663c4db5a03539bd7e538: 21300000
+    - 5001964687d04d34bb8cf3368e97db49: 21300000
+    - dd4745c4bbd8cde4280d902f5c349b89: 21300000
+    - 7eff5d65860f1e94ba0e301aaa49f429: 21300000
+    - 490b0ef087c5ae54aadfe835c6bc3270: 21300000
+    - 61671b562df446e44a76402205c7370c: 21300000
+    - 06105c9fd48b89546909d7ff167ce55f: 21300000
+    - f4b6186626988564e9d7c0c7d1037df3: 21300000
+    - ea2926b08d04f6448bad5e2a5b9d6a08: 21300000
+    - b2a6155e22c593d4daa83084965392c7: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: e4bfdfcad40f65a418bd71ef0ba9110b, type: 3}
+  - {fileID: 21300000, guid: 45d6e423b874aa244bdd1e91e08f7fe8, type: 3}
+  - {fileID: 21300000, guid: c92d5895fd27dbe49a164f477272457c, type: 3}
+  - {fileID: 21300000, guid: 409f52236a6c73c49a5ca85baf30a51b, type: 3}
+  - {fileID: 21300000, guid: 51172db5b2e60f34887337515ec08310, type: 3}
+  - {fileID: 21300000, guid: 7e05e35275cb2bc43b4e7b56f0bd8588, type: 3}
+  - {fileID: 21300000, guid: 06d8d5fff836eeb4a9e77f70ca9ccf9c, type: 3}
+  - {fileID: 21300000, guid: 01a03ea4e1bbc854d8eecb4a13e2abbd, type: 3}
+  - {fileID: 21300000, guid: 1236608b91cc187409fda252e3241429, type: 3}
+  - {fileID: 21300000, guid: 4707a639d78a9a44d80997e597ffad2a, type: 3}
+  - {fileID: 21300000, guid: 40f8ea5af97663c4db5a03539bd7e538, type: 3}
+  - {fileID: 21300000, guid: 5001964687d04d34bb8cf3368e97db49, type: 3}
+  - {fileID: 21300000, guid: dd4745c4bbd8cde4280d902f5c349b89, type: 3}
+  - {fileID: 21300000, guid: 7eff5d65860f1e94ba0e301aaa49f429, type: 3}
+  - {fileID: 21300000, guid: 490b0ef087c5ae54aadfe835c6bc3270, type: 3}
+  - {fileID: 21300000, guid: 61671b562df446e44a76402205c7370c, type: 3}
+  - {fileID: 21300000, guid: 06105c9fd48b89546909d7ff167ce55f, type: 3}
+  - {fileID: 21300000, guid: f4b6186626988564e9d7c0c7d1037df3, type: 3}
+  - {fileID: 21300000, guid: ea2926b08d04f6448bad5e2a5b9d6a08, type: 3}
+  - {fileID: 21300000, guid: b2a6155e22c593d4daa83084965392c7, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - BlockMove_00
+  - BlockMove_01
+  - BlockMove_02
+  - BlockMove_03
+  - BlockMove_04
+  - BlockMove_05
+  - BlockMove_06
+  - BlockMove_07
+  - BlockMove_08
+  - BlockMove_09
+  - BlockMove_13
+  - BlockMove_12
+  - BlockMove_11
+  - BlockMove_10
+  - BlockMove_17
+  - BlockMove_16
+  - BlockMove_15
+  - BlockMove_14
+  - BlockMove_19
+  - BlockMove_18
+  m_Tag: BlockMoveAtlas
+  m_IsVariant: 0
