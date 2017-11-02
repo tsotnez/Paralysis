@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraBehaviour : MonoBehaviour {
 
-    //Kommentar
+    bool multiplayer = false;
 
     public float magnitude = 0.05f;
     public float duration = 0.01f;
@@ -16,6 +16,8 @@ public class CameraBehaviour : MonoBehaviour {
     float offsetY = 0;
     [SerializeField]
     float lerpSpeed = 15f;
+
+    Transform target2;
 
     //Border objects, used to calculate if space outside of map is visible
     private Transform leftBorder;                                  
@@ -38,9 +40,6 @@ public class CameraBehaviour : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        //calculate screen size
-        height = Camera.main.orthographicSize * 2f;
-        width = height * Camera.main.aspect;
 
         //Get Border Objects
         leftBorder = GameObject.FindGameObjectWithTag("LeftBorder").transform;
@@ -48,20 +47,64 @@ public class CameraBehaviour : MonoBehaviour {
         topBorder = GameObject.FindGameObjectWithTag("TopBorder").transform;
         bottomBorder = GameObject.FindGameObjectWithTag("BottomBorder").transform;
 
-        //Calculate minimum and maximum values
+        CalculatePositioningValues();
+    }
+	
+	// Update is called once per frame
+	void LateUpdate ()
+    {
+        if (multiplayer)
+            Multiplayer();
+        else
+            SinglePlayer();
+    }
+
+    private void SinglePlayer()
+    {
+        //clamp new position between min and max values and lerp to that position
+        Vector3 desiredPos = new Vector3(Mathf.Clamp(target.position.x + offsetX, minX, maxX), Mathf.Clamp(target.position.y + offsetY, minY, maxY), transform.position.z);
+        transform.position = Vector3.Lerp(transform.position, desiredPos, lerpSpeed * Time.deltaTime);
+    }
+
+    private void Multiplayer()
+    {
+        Vector3 middleBetweenPlayers = target.position + ((target2.position- target.position) / 2); //Middle is target's position plus half of the vector leading to target2's position
+        
+        //clamp new position between min and max values and lerp to that position
+        Vector3 desiredPos = new Vector3(Mathf.Clamp(middleBetweenPlayers.x + offsetX, minX, maxX), Mathf.Clamp(middleBetweenPlayers.y + offsetY, minY, maxY), transform.position.z);
+        transform.position = Vector3.Lerp(transform.position, desiredPos, lerpSpeed * Time.deltaTime);
+    }
+    
+    public void switchToMultiplayer(Transform player2)
+    {
+        target2 = player2;
+        multiplayer = true;
+        GetComponent<Camera>().orthographicSize = 6;
+
+        //Re calculate stuff
+        CalculatePositioningValues();
+    }
+
+    public void switchToSingleplayer()
+    {
+        target2 = null;
+        multiplayer = false;
+        GetComponent<Camera>().orthographicSize = 2.96f;
+
+        //Re calculate stuff
+        CalculatePositioningValues();
+    }
+
+    private void CalculatePositioningValues()
+    {
+        //calculate screen size
+        height = Camera.main.orthographicSize * 2f;
+        width = height * Camera.main.aspect;
         minX = (leftBorder.position.x + 0.5f * width);
         maxX = rightBorder.position.x - 0.5f * width;
         minY = bottomBorder.position.y + 0.5f * height;
         maxY = topBorder.position.y - 0.5f * height;
     }
-	
-	// Update is called once per frame
-	void LateUpdate () {
-        
-        //clamp new position between min and max values and lerping to that position
-        Vector3 desiredPos = new Vector3(Mathf.Clamp(target.position.x + offsetX, minX, maxX), Mathf.Clamp(target.position.y + offsetY, minY, maxY), transform.position.z);
-        transform.position = Vector3.Lerp(transform.position, desiredPos, lerpSpeed * Time.deltaTime);
-	}
 
     public void changeTarget(Transform newTarget)
     {
