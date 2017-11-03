@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CharacterStats : MonoBehaviour {
 
-    private Animator anim;
+    private ChampionAnimationController animCon;
     private Rigidbody2D rigid;
     private ChampionClassController controller;
 
@@ -34,8 +34,6 @@ public class CharacterStats : MonoBehaviour {
 
     [Header("Knock Back")]
     [SerializeField]
-    private float knockBackDuration = 1;        // How long the knockedBack status is set (character cant move)
-    [SerializeField]
     private float knockBackForceX = 400;        // Force used when knockbacking X
     [SerializeField]
     private float knockBackForceY = 600;        // Force used when knockbacking Y
@@ -47,7 +45,7 @@ public class CharacterStats : MonoBehaviour {
         this.Hp.GetComponentInChildren<Text>().text = this.currentHealth + "/" + this.maxHealth; ;
         this.Stamina.GetComponentInChildren<Text>().text = this.currentStamina + "/" + this.maxStamina;
 
-		anim = GetComponentInChildren<Animator>();
+        animCon = transform.Find("graphics").GetComponent<ChampionAnimationController>();
         rigid = GetComponent<Rigidbody2D>();
         controller = GetComponent<ChampionClassController>();
     }
@@ -160,10 +158,12 @@ public class CharacterStats : MonoBehaviour {
 
         //Zeroing out velocity
         rigid.velocity = Vector2.zero;
-
+        animCon.statKnockedBack = true;
         //Adding force and setting status variable
         rigid.AddForce(new Vector2(knockBackForceX * direction, knockBackForceY), ForceMode2D.Impulse);
-        yield return new WaitForSeconds(knockBackDuration);
+        yield return new WaitUntil(() => !animCon.m_Grounded);
+        yield return new WaitUntil(() => animCon.m_Grounded);
+        animCon.statKnockedBack = false;
         knockedBack = false;
     }
 

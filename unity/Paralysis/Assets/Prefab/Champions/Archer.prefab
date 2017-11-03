@@ -158,7 +158,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1565692438089764}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.052, y: -0.611, z: 0}
+  m_LocalPosition: {x: 0.052, y: -0.704, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4855790070949082}
@@ -288,7 +288,7 @@ MonoBehaviour:
   m_JumpForce: 1000
   m_jumpAttackRadius: 1
   m_jumpAttackForce: 10
-  m_dashSpeed: 7
+  m_dashSpeed: 9.5
   m_dashStaminaCost: 10
   m_ComboExpire: 1
   delay_BasicAttack1: 0.3
@@ -349,11 +349,11 @@ MonoBehaviour:
   - 0.6
   - 0.5
   - 0.45
+  - 0.2
+  - 0.2
   - 0
-  - 0.31
   - 0
-  - 0
-  - 0
+  - 0.4
   - 0.4
   - 0.4
   - 0
@@ -559,9 +559,8 @@ MonoBehaviour:
   slowFactor: 1
   invincible: 0
   trigHit: 0
-  knockBackDuration: 1
   knockBackForceX: 6
-  knockBackForceY: 6
+  knockBackForceY: 8
 --- !u!114 &114880336743332564
 MonoBehaviour:
   m_ObjectHideFlags: 1

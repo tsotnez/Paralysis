@@ -49,7 +49,7 @@ public class ArcherController : ChampionClassController
     public override void skill1()
     {
         //Shoot a stronger arrow, causing knockback
-        doRangeSkill(ref animCon.trigSkill1, delay_Skill1, greatArrowPrefab, 7, damage_Skill1, skillEffect.knockback, 1, stamina_Skill1, new Vector2(9, 0));
+        doRangeSkill(ref animCon.trigSkill1, delay_Skill1, greatArrowPrefab, 7, damage_Skill1, skillEffect.knockback, 0, stamina_Skill1, new Vector2(9, 0));
     }
 
     public override void skill2()
