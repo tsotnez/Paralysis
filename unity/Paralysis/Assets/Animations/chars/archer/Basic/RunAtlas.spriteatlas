@@ -8,29 +8,31 @@ SpriteAtlas:
   m_Name: RunAtlas
   m_EditorData:
     textureSettings:
+      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 0
-      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
+      sRGB: 0
     platformSettings: []
     packingParameters:
-      paddingPower: 2
+      serializedVersion: 2
+      padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 0
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 089c0b82ae11f20d29d8dc02d8bcdeb5
+      Hash: f5f7ce32e8624b276093890e17fab613
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 089c0b82ae11f20d29d8dc02d8bcdeb5
+    hashString: f5f7ce32e8624b276093890e17fab613
     totalSpriteSurfaceArea: 18728568
     packables:
     - {fileID: 102900000, guid: 70e5dadfe8e23c94d9a1cf8dca707c52, type: 3}
