@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 223877417116988040}
   - component: {fileID: 114471756636310842}
   - component: {fileID: 114626533223108666}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: CanvasStats
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 224366574695338038}
   - component: {fileID: 222665430383982362}
   - component: {fileID: 114575538853941322}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: HpNumber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4627797282998778}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 224675963521829422}
   - component: {fileID: 222445390652667012}
   - component: {fileID: 114441194947304052}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: Stamina
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 4816568741588148}
   - component: {fileID: 212229921532901446}
   - component: {fileID: 114377760250446108}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,9 +110,9 @@ GameObject:
   - component: {fileID: 58608550699904714}
   - component: {fileID: 50883490448698580}
   - component: {fileID: 212363234993358298}
-  m_Layer: 12
-  m_Name: ArcherPlayer2
-  m_TagString: MainPlayer2
+  m_Layer: 11
+  m_Name: Archer
+  m_TagString: MainPlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 224647954105019412}
   - component: {fileID: 222358852421526900}
   - component: {fileID: 114455288572531248}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: Hp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 224334721441270158}
   - component: {fileID: 222989020529420748}
   - component: {fileID: 114880336743332564}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: StaminaNumber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1565692438089764}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.052, y: -0.611, z: 0}
+  m_LocalPosition: {x: 0.052, y: -0.704, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4855790070949082}
@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a5564560037ca14b9ada7d8a935255a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputDevice: 0
+  inputDevice: 1
 --- !u!114 &114231252518877400
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -281,14 +281,14 @@ MonoBehaviour:
     m_Bits: 1536
   m_whatToHit:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 4096
   m_MaxSpeed: 7
   m_MoveSpeedWhileAttacking: 5
   m_MoveSpeedWhileBlocking: 0
   m_JumpForce: 1000
   m_jumpAttackRadius: 1
   m_jumpAttackForce: 10
-  m_dashSpeed: 7
+  m_dashSpeed: 9.5
   m_dashStaminaCost: 10
   m_ComboExpire: 1
   delay_BasicAttack1: 0.3
@@ -349,11 +349,11 @@ MonoBehaviour:
   - 0.6
   - 0.5
   - 0.45
+  - 0.2
+  - 0.2
   - 0
-  - 0.31
   - 0
-  - 0
-  - 0
+  - 0.4
   - 0.4
   - 0.4
   - 0
@@ -559,9 +559,8 @@ MonoBehaviour:
   slowFactor: 1
   invincible: 0
   trigHit: 0
-  knockBackDuration: 1
   knockBackForceX: 6
-  knockBackForceY: 6
+  knockBackForceY: 8
 --- !u!114 &114880336743332564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -627,7 +626,7 @@ SpriteRenderer:
   m_SortingLayerID: -1496276277
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d98f70818c156484ba25e557bbb7326d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2ba7aebd80a523a48812e30ac1a9cc9e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0

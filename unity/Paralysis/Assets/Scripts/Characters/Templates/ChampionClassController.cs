@@ -109,7 +109,7 @@ public abstract class ChampionClassController : MonoBehaviour
     #endregion
 
     protected Transform m_GroundCheck;                                      // A position marking where to check if the player is grounded.
-    protected const float k_GroundedRadius = .2f;                           // Radius of the overlap circle to determine if grounded
+    protected const float k_GroundedRadius = .02f;                           // Radius of the overlap circle to determine if grounded
 
     public bool m_FacingRight = true;                                       // For determining which way the player is currently facing.
     public bool dashing = false;                                            // true while dashing
@@ -144,7 +144,6 @@ public abstract class ChampionClassController : MonoBehaviour
             animCon.trigHit = true;
         }
         animCon.statStunned = stats.stunned;
-        animCon.statKnockedBack = stats.knockedBack;
     }
 
     protected virtual void FixedUpdate()
@@ -488,11 +487,11 @@ public abstract class ChampionClassController : MonoBehaviour
             // set animation trigger
             animationVar = true;
             // do hit by coroutine
-            StartCoroutine(doRangeSkill_Hit(skillDelay, projectilePrefab, range, damage, effectDuration, speed, onHitEffect));
+            StartCoroutine(doRangeSkill_Hit(skillDelay, projectilePrefab, range, damage, effect, effectDuration, speed, onHitEffect));
         }
     }
 
-    private IEnumerator doRangeSkill_Hit(float skillDelay, GameObject projectilePrefab, float range, int damage, int effectDuration, Vector2 speed, bool onHitEffect)
+    private IEnumerator doRangeSkill_Hit(float skillDelay, GameObject projectilePrefab, float range, int damage, skillEffect effect, int effectDuration, Vector2 speed, bool onHitEffect)
     {
         // wait till delay ends
         yield return new WaitForSeconds(skillDelay);
@@ -513,6 +512,7 @@ public abstract class ChampionClassController : MonoBehaviour
         projectile.whatToHit = m_whatToHit;
         projectile.range = range;
         projectile.speed = speed;
+        projectile.effect = effect;
         projectile.explodeOnHit = onHitEffect;
         projectile.damage = damage;
         projectile.effectDuration = effectDuration;

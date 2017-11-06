@@ -127,7 +127,7 @@ public abstract class AnimationController : MonoBehaviour
                 if (i < 10) spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + "_" + "0" + i.ToString()); 
                 else spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + "_" + i.ToString());
 
-                yield return new WaitForSeconds(delay);
+                yield return new WaitForSecondsRealtime(delay);
             }
 
             if (animationLoop[animation])

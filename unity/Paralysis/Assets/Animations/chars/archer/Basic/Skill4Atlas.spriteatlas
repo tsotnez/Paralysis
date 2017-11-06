@@ -8,31 +8,29 @@ SpriteAtlas:
   m_Name: Skill4Atlas
   m_EditorData:
     textureSettings:
-      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 0
+      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
-      sRGB: 0
     platformSettings: []
     packingParameters:
-      serializedVersion: 2
-      padding: 4
+      paddingPower: 2
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 0
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: adfeb8778c3cdc3f7d2ae2633221ef21
+      Hash: 6bb8cae46e8413c028fbc3014a9d6553
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: adfeb8778c3cdc3f7d2ae2633221ef21
+    hashString: 6bb8cae46e8413c028fbc3014a9d6553
     totalSpriteSurfaceArea: 70898464
     packables:
     - {fileID: 102900000, guid: 0f2d7f35de8c18947b7712fa25483420, type: 3}

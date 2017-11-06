@@ -3,9 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class CharacterStats : MonoBehaviour{
+public class CharacterStats : MonoBehaviour {
 
-    private Animator anim;
+    private ChampionAnimationController animCon;
     private Rigidbody2D rigid;
     private ChampionClassController controller;
 
@@ -14,14 +14,9 @@ public class CharacterStats : MonoBehaviour{
     public int currentHealth;
     public int maxStamina = 100;
     public int currentStamina;
-    public float coolDownMax = 100;
-    public float currentCoolDown;
-
 	public GameObject Hp;
     public GameObject Stamina;
-    public GameObject coolDown;
 	public int staminaRegRate = 2;
-    public float coolDownRate = 10;
     //private Vector2 vecHP;
     //private Vector2 vecST;
 
@@ -39,8 +34,6 @@ public class CharacterStats : MonoBehaviour{
 
     [Header("Knock Back")]
     [SerializeField]
-    private float knockBackDuration = 1;        // How long the knockedBack status is set (character cant move)
-    [SerializeField]
     private float knockBackForceX = 400;        // Force used when knockbacking X
     [SerializeField]
     private float knockBackForceY = 600;        // Force used when knockbacking Y
@@ -49,22 +42,16 @@ public class CharacterStats : MonoBehaviour{
     {
         currentHealth = maxHealth;
         currentStamina = maxStamina;
-        currentCoolDown = coolDownMax;
         this.Hp.GetComponentInChildren<Text>().text = this.currentHealth + "/" + this.maxHealth; ;
         this.Stamina.GetComponentInChildren<Text>().text = this.currentStamina + "/" + this.maxStamina;
 
-
-        this.coolDown.GetComponent<Image>().fillAmount = 1;
-
-
-		anim = GetComponentInChildren<Animator>();
+        animCon = transform.Find("graphics").GetComponent<ChampionAnimationController>();
         rigid = GetComponent<Rigidbody2D>();
         controller = GetComponent<ChampionClassController>();
     }
     void Start()
     {
         InvokeRepeating("regenerateStamina", 0f, 1f);
-        InvokeRepeating("RegenerateCoolDown", 0f, 1f);
     }
 
     private void Update()
@@ -74,8 +61,6 @@ public class CharacterStats : MonoBehaviour{
 
         this.Hp.GetComponent<Image>().fillAmount = (float)this.currentHealth / (float)this.maxHealth;
         this.Stamina.GetComponent<Image>().fillAmount = (float)this.currentStamina / (float)this.maxStamina;
-        this.coolDown.GetComponent<Image>().fillAmount = this.currentCoolDown / this.coolDownMax;
-
 
         //Slow down walking and idle animation while slowed
         //if ((anim.GetCurrentAnimatorStateInfo(0).IsName("run") || anim.GetCurrentAnimatorStateInfo(0).IsName("idle")) && slowFactor < 1)
@@ -86,8 +71,6 @@ public class CharacterStats : MonoBehaviour{
     }
 
     // Is called repeatetly to regenerate stamina value
-
-
     private void regenerateStamina()
     {
         if(currentStamina < maxStamina && !controller.blocking)
@@ -95,36 +78,6 @@ public class CharacterStats : MonoBehaviour{
             if (currentStamina + staminaRegRate > maxStamina) this.currentStamina = this.maxStamina;
             else this.currentStamina += this.staminaRegRate;
 		}
-    }
-
-
-
-    /// <summary>
-    /// Regenerates the cool down.
-    /// </summary>
-    /// 
-    private void RegenerateCoolDown()
-    {
-        if (currentCoolDown < coolDownMax)
-        {
-            if (currentCoolDown + coolDownRate > coolDownMax) this.currentCoolDown = this.coolDownMax;
-            else this.currentCoolDown += this.coolDownRate;
-        }
-
-    }
-
-    /// <summary>
-    /// Skills used.
-    /// </summary>
-    /// <param name="coolSkill">Cool skill.</param>
-    public void SkillUsed(float coolSkill)
-    {
-        if((float)currentCoolDown >= coolSkill){
-
-            this.currentCoolDown = this.currentCoolDown - coolSkill;
-        }
-
-
     }
 
     /// <summary>
@@ -205,10 +158,12 @@ public class CharacterStats : MonoBehaviour{
 
         //Zeroing out velocity
         rigid.velocity = Vector2.zero;
-
+        animCon.statKnockedBack = true;
         //Adding force and setting status variable
         rigid.AddForce(new Vector2(knockBackForceX * direction, knockBackForceY), ForceMode2D.Impulse);
-        yield return new WaitForSeconds(knockBackDuration);
+        yield return new WaitUntil(() => !animCon.m_Grounded);
+        yield return new WaitUntil(() => animCon.m_Grounded);
+        animCon.statKnockedBack = false;
         knockedBack = false;
     }
 

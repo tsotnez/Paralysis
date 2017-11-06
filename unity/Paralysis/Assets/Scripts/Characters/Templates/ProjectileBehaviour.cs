@@ -73,6 +73,12 @@ public class ProjectileBehaviour : MonoBehaviour {
                         break;
                 }
                 targetStats.takeDamage(damage, false);
+                if (!explodeOnHit)
+                {
+                    //Destroy on hit if no explosion effect is supposed to be played
+                    Destroy(gameObject);
+                    return;
+                }
             }
             if (explodeOnHit)
                 explode();
