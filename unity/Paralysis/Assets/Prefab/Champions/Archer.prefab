@@ -285,7 +285,7 @@ MonoBehaviour:
   m_MaxSpeed: 7
   m_MoveSpeedWhileAttacking: 5
   m_MoveSpeedWhileBlocking: 0
-  m_JumpForce: 1000
+  m_JumpForce: 850
   m_jumpAttackRadius: 1
   m_jumpAttackForce: 10
   m_dashSpeed: 9.5
@@ -350,7 +350,7 @@ MonoBehaviour:
   - 0.5
   - 0.45
   - 0.2
-  - 0.2
+  - 0.3
   - 0
   - 0
   - 0.4
@@ -739,7 +739,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 4.2, y: 1.04}
+  m_AnchoredPosition: {x: 4.2, y: 1.13}
   m_SizeDelta: {x: 1.614, y: 0.415}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224334721441270158

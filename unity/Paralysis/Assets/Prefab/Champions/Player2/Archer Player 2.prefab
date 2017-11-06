@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 223877417116988040}
   - component: {fileID: 114471756636310842}
   - component: {fileID: 114626533223108666}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: CanvasStats
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 224366574695338038}
   - component: {fileID: 222665430383982362}
   - component: {fileID: 114575538853941322}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: HpNumber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4627797282998778}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 224675963521829422}
   - component: {fileID: 222445390652667012}
   - component: {fileID: 114441194947304052}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Stamina
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 4816568741588148}
   - component: {fileID: 212229921532901446}
   - component: {fileID: 114377760250446108}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,9 +110,9 @@ GameObject:
   - component: {fileID: 58608550699904714}
   - component: {fileID: 50883490448698580}
   - component: {fileID: 212363234993358298}
-  m_Layer: 11
-  m_Name: Archer
-  m_TagString: MainPlayer
+  m_Layer: 12
+  m_Name: Archer Player 2
+  m_TagString: MainPlayer2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 224647954105019412}
   - component: {fileID: 222358852421526900}
   - component: {fileID: 114455288572531248}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Hp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 224334721441270158}
   - component: {fileID: 222989020529420748}
   - component: {fileID: 114880336743332564}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: StaminaNumber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a5564560037ca14b9ada7d8a935255a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputDevice: 1
+  inputDevice: 0
 --- !u!114 &114231252518877400
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -281,11 +281,11 @@ MonoBehaviour:
     m_Bits: 1536
   m_whatToHit:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 2048
   m_MaxSpeed: 7
   m_MoveSpeedWhileAttacking: 5
   m_MoveSpeedWhileBlocking: 0
-  m_JumpForce: 1000
+  m_JumpForce: 850
   m_jumpAttackRadius: 1
   m_jumpAttackForce: 10
   m_dashSpeed: 9.5

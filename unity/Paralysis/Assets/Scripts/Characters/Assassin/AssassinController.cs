@@ -10,6 +10,8 @@ public class AssassinController : ChampionClassController
     protected float m_DoubleJumpForce = 400f;                             // Force added when doublejumping 
     [SerializeField]
     private GameObject bulletPrefab;
+    [SerializeField]
+    private int ambushAttack_damage = 13;
 
     private bool doubleJumped = false;                                    // Has the character double jumped already?
     public bool invisible = false;
@@ -80,7 +82,7 @@ public class AssassinController : ChampionClassController
     public override void skill4()
     {
         if (invisible) stopInvisible();
-        doRangeSkill(ref animCon.trigSkill4, delay_Skill4, bulletPrefab, 5, damage_Skill4, skillEffect.knockback, 2, stamina_Skill4, new Vector2(7, 0));
+        doRangeSkill(ref animCon.trigSkill4, delay_Skill4, bulletPrefab, 5, damage_Skill4, skillEffect.knockback, 2, stamina_Skill4, new Vector2(7, 0), true);
     }
 
     #endregion
@@ -91,7 +93,7 @@ public class AssassinController : ChampionClassController
     {
         if (shouldAttack && canPerformAttack() && !dashing)
         {
-            if (!animCon.m_Grounded && !invisible && doubleJumped) //Jump attack only when falling and double jumped
+            if (!animCon.m_Grounded && !invisible && doubleJumped) //Jump attack only when double jumped
             {
                 //Jump Attack
                 StartCoroutine(jumpAttack());
@@ -137,8 +139,8 @@ public class AssassinController : ChampionClassController
                         abortCombo();
                         break;
                     case 4:
-                        // do skill 3
-                        doMeeleSkill(ref animCon.trigSkill3, delay_Skill3, damage_Skill3, skillEffect.nothing, 3, stamina_Skill3);
+                        // do ambush attack
+                        doMeeleSkill(ref animCon.trigSkill3, delay_Skill3, ambushAttack_damage, skillEffect.nothing, 3, stamina_BasicAttack1);
                         //reset Combo
                         abortCombo();
                         //end invisibility
@@ -177,44 +179,69 @@ public class AssassinController : ChampionClassController
 
     private IEnumerator shadowStepHit()
     {
+        animCon.trigSkill2 = true;
+        stats.invincible = true;
+
+        yield return new WaitUntil(() => animCon.currentAnimation == AnimationController.AnimatorStates.Skill2);
+        yield return new WaitUntil(() => animCon.currentAnimation != AnimationController.AnimatorStates.Skill2); //Wait until intro animation is finished
+
         //Add walls and Ground to layermask so they are an obstacle for the raycast
         LayerMask temp = m_whatToHit;
         temp |= (1 << LayerMask.NameToLayer("Walls"));
         temp |= (1 << LayerMask.NameToLayer("Ground"));
-
-        // set animation
-        animCon.trigSkill3 = true;
 
         int targetLocation = 0;
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 1000f, temp); //Right hit
         RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, Vector2.left, 1000f, temp); //Left hit
 
-        if ((hit == true && hit.transform.tag == "Player") && (hitLeft == true && hitLeft.transform.gameObject.tag == "Player"))
+        bool hitIsEnemy = false;
+        if (hit == true)
+          hitIsEnemy =  m_whatToHit == (m_whatToHit | (1 << hit.collider.gameObject.layer)); //Check if hits layer is in WhatToHit
+
+        bool hitLeftIsEnemy = false;
+        if (hitLeft == true)
+            hitLeftIsEnemy = m_whatToHit == (m_whatToHit | (1 << hitLeft.collider.gameObject.layer));
+
+        if (hitLeftIsEnemy && hitIsEnemy)
         {
             //There is a target on both sides, check for distance
             if (hit.distance <= hitLeft.distance) targetLocation = 1; //Teleport to target on the right   
             else targetLocation = -1; //Teleport to target on the left
         }
-        else if (hit == true && hit.transform.gameObject.tag == "Player") targetLocation = 1;
-        else if (hitLeft == true && hitLeft.transform.gameObject.tag == "Player") targetLocation = -1;
+        else if (hitIsEnemy) targetLocation = 1;
+        else if (hitLeftIsEnemy) targetLocation = -1;
+        else yield return null;
 
         if (targetLocation != 0)
         {
             stats.immovable = true;
+            GameObject target = null;
+            CharacterStats targetStats = null;
+
             if (targetLocation == 1)
             {
                 m_Rigidbody2D.position = hit.transform.position + Vector3.left; //Viable target on the right
+                target = hit.collider.gameObject;
+                targetStats = target.GetComponent<CharacterStats>();
+                targetStats.startStunned(3);
                 if (!m_FacingRight) Flip();
             }
             else if (targetLocation == -1)
             {
                 m_Rigidbody2D.position = hitLeft.transform.position + Vector3.right; //Viable target on the left
+                target = hitLeft.collider.gameObject;
+                targetStats = target.GetComponent<CharacterStats>();
+                targetStats.startStunned(3);
                 if (m_FacingRight) Flip();
             }
             m_Rigidbody2D.velocity = Vector2.zero;
-            doMeeleSkill(ref animCon.trigSkill3, delay_Skill3, 5, skillEffect.stun, 3, stamina_Skill3);
-            yield return new WaitForSeconds(delay_Skill4);
+            stats.invincible = false;
+            animCon.trigSkill3 = true;
+            yield return new WaitForSeconds(delay_Skill3);
+            targetStats.takeDamage(damage_Skill3, false);
+
+            yield return new WaitUntil(() => animCon.currentAnimation != AnimationController.AnimatorStates.Skill3);
             stats.immovable = false;
         }
     }
@@ -232,9 +259,9 @@ public class AssassinController : ChampionClassController
         animCon.trigSkill2 = true;
 
         // set transparency
-        Color oldCol = GetComponentInChildren<SpriteRenderer>().color;
+        Color oldCol = transform.Find("graphics").GetComponent<SpriteRenderer>().color;
         oldCol.a = 0.5f;
-        GetComponentInChildren<SpriteRenderer>().color = oldCol;
+        transform.Find("graphics").GetComponent<SpriteRenderer>().color = oldCol;
 
         yield return new WaitForSeconds(5);
         stopInvisible();
@@ -244,7 +271,7 @@ public class AssassinController : ChampionClassController
     {
         invisible = false;
         if (invisRoutine != null) StopCoroutine(invisRoutine);
-        GetComponentInChildren<SpriteRenderer>().color = Color.white;
+        transform.Find("graphics").GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     #endregion

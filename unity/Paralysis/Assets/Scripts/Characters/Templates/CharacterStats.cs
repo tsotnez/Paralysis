@@ -129,6 +129,7 @@ public class CharacterStats : MonoBehaviour {
     //Sets the stunned value for given amount of time.
     private IEnumerator stun(float time)
     {
+        rigid.velocity = Vector2.zero;
         stunned = true;
         yield return new WaitForSeconds(time);
         stunned = false;

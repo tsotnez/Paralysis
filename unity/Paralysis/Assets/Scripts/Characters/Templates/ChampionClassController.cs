@@ -227,6 +227,7 @@ public abstract class ChampionClassController : MonoBehaviour
     protected virtual IEnumerator jumpAttack()
     {
         jumpAttacking = true; //Set status variable
+        animCon.trigJumpAttack = true;
 
         int direction;
         if (m_FacingRight) direction = 1;
@@ -235,12 +236,12 @@ public abstract class ChampionClassController : MonoBehaviour
         m_Rigidbody2D.velocity = new Vector2( 4  *direction, -m_jumpAttackForce); //Add downwards force
         yield return new WaitUntil(() => animCon.m_Grounded); //Jump attacking as long as not grounded
 
-        // Deal damage to all enemys
+        // Deal damage to all enemies
+        animCon.trigJumpAttackEnd = true;
         StartCoroutine(doMeeleSkill_Hit(0, damage_JumpAttack, skillEffect.nothing, 0, false, m_jumpAttackRadius));
 
         Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
         jumpAttacking = false;
-        animCon.trigJumpAttackEnd = true;
     }
 
     /// <summary>

@@ -5,7 +5,7 @@ SpriteAtlas:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: JumpAttackEndAtlas 1
+  m_Name: JumpAttackEndAtlas
   m_EditorData:
     textureSettings:
       anisoLevel: 1
@@ -26,29 +26,29 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 96f8c573ce28f5d8c621b4d3d2d38410
+      Hash: d61be360a412b4661916af4063ddb380
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 96f8c573ce28f5d8c621b4d3d2d38410
+    hashString: d61be360a412b4661916af4063ddb380
     totalSpriteSurfaceArea: 7161568
     packables:
     - {fileID: 102900000, guid: 76a7a173416b5fe45af1b49158bb4617, type: 3}
     packedSpriteRenderDataKeys:
-    - 0a11f0fe49e433245bb6b173fc99ebcc: 21300000
-    - bd59c41941b4da845ace5ebe15035f51: 21300000
-    - a86c56e422679204eb300f92fe5d2c0a: 21300000
-    - bbbcecdef8feb824ba0d43e9a63d6bd0: 21300000
+    - fd125dcb0d12fb440bcacb45dd7b7183: 21300000
+    - e5f0781d7bfad334da2f0c9a3fff23fe: 21300000
+    - d8c5092b0b2b42e4c94e7dea78378372: 21300000
+    - bfb1dede5899cfc4cb45dc6293e6c899: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: 0a11f0fe49e433245bb6b173fc99ebcc, type: 3}
-  - {fileID: 21300000, guid: bd59c41941b4da845ace5ebe15035f51, type: 3}
-  - {fileID: 21300000, guid: a86c56e422679204eb300f92fe5d2c0a, type: 3}
-  - {fileID: 21300000, guid: bbbcecdef8feb824ba0d43e9a63d6bd0, type: 3}
+  - {fileID: 21300000, guid: fd125dcb0d12fb440bcacb45dd7b7183, type: 3}
+  - {fileID: 21300000, guid: e5f0781d7bfad334da2f0c9a3fff23fe, type: 3}
+  - {fileID: 21300000, guid: d8c5092b0b2b42e4c94e7dea78378372, type: 3}
+  - {fileID: 21300000, guid: bfb1dede5899cfc4cb45dc6293e6c899, type: 3}
   m_PackedSpriteNamesToIndex:
-  - JumpAttack_08
-  - JumpAttack_09
-  - JumpAttack_11
-  - JumpAttack_10
-  m_Tag: JumpAttackEndAtlas 1
+  - JumpAttackEnd_01
+  - JumpAttackEnd_00
+  - JumpAttackEnd_03
+  - JumpAttackEnd_02
+  m_Tag: JumpAttackEndAtlas
   m_IsVariant: 0
