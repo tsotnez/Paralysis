@@ -57,3 +57,6 @@ TagManager:
   - name: foreground
     uniqueID: 2990562645
     locked: 0
+  - name: DynamicUI
+    uniqueID: 4129098791
+    locked: 0

@@ -158,7 +158,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1468821578159268}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.055, y: -5.74, z: 0}
+  m_LocalPosition: {x: -1.726, y: -5.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4854947890863954}
@@ -328,6 +328,7 @@ MonoBehaviour:
   m_DoubleJumpForce: 600
   bulletPrefab: {fileID: 1999998842244028, guid: 1382e079f46c9e848b29efd69252a8b5,
     type: 2}
+  ambushAttack_damage: 13
   invisible: 0
 --- !u!114 &114154634626000324
 MonoBehaviour:
@@ -497,6 +498,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8534aaec119f174fa29e73ef6da6ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floatingTextPrefab: {fileID: 1316972185215744, guid: 363dd64a823c2ac4bbfc36cf69b0ed1b,
+    type: 2}
   maxHealth: 100
   currentHealth: 0
   maxStamina: 100
@@ -717,8 +720,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -165868505
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &224003472375266824
 RectTransform:

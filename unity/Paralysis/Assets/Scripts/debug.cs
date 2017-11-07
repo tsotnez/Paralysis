@@ -46,7 +46,7 @@ public class debug : MonoBehaviour {
     /// </summary>
     public void switchPlayingMode()
     {
-        if(multiplayer)
+        if (multiplayer)
         {
             Camera.main.GetComponent<CameraBehaviour>().switchToSingleplayer();
             Destroy(GameObject.FindGameObjectWithTag("MainPlayer2"));
@@ -54,8 +54,17 @@ public class debug : MonoBehaviour {
         }
         else
         {
-            //Instantiate player2 prefab and switch camrea to multiplayer-mode
-            GameObject player2 = Instantiate(championsPlayer2[0], Vector3.zero, Quaternion.identity);
+            //Instantiate player2 prefab and switch camera to multiplayer-mode
+            GameObject player2 = Instantiate(champions[0], Vector3.zero, Quaternion.identity);
+            player2.layer = 12;
+            player2.tag = "MainPlayer2";
+
+            LayerMask whatToHit = new LayerMask();
+            whatToHit |= (1 << LayerMask.NameToLayer("Player"));
+
+            player2.GetComponent<ChampionClassController>().m_whatToHit = whatToHit;
+            player2.GetComponent<UserControl>().inputDevice = UserControl.InputDevice.XboxController;
+
             Camera.main.GetComponent<CameraBehaviour>().switchToMultiplayer(player2.GetComponent<Transform>());
             multiplayer = true;
         }
