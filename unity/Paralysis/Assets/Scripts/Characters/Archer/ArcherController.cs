@@ -19,6 +19,11 @@ public class ArcherController : ChampionClassController
     void Start()
     {
         animCon = graphics.GetComponent<ArcherAnimationController>();
+
+        basicAttack1_var = new RangedSkill(false, new Vector2(9, 0), standartArrowPrefab, delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, true, cooldown_BasicAttack1, 6);
+
+        skill1_var = new RangedSkill(false, new Vector2(9, 0), greatArrowPrefab, delay_Skill1, damage_Skill1, Skill.skillEffect.knockback, 0, stamina_Skill1, true, cooldown_Skill1, 7);
+        skill3_var = new MeleeSkill(delay_Skill3, damage_Skill3, Skill.skillEffect.stun, 3, stamina_Skill3, false, cooldown_Skill3, 3);
     }
 
     protected override void FixedUpdate()
@@ -40,16 +45,16 @@ public class ArcherController : ChampionClassController
         if (shouldAttack)
         {
             if(animCon.m_Grounded)
-                doRangeSkill(ref animCon.trigBasicAttack1, delay_BasicAttack1, standartArrowPrefab, 5, damage_BasicAttack1, skillEffect.nothing, 0, stamina_BasicAttack1, new Vector2(9, 0));
+                doRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill) basicAttack1_var);
             else //jump Attack
-                doRangeSkill(ref animCon.trigJumpAttack, 0.2f, jumpAttackArrowPrefab, 100, damage_BasicAttack1, skillEffect.nothing, 0, stamina_BasicAttack1, new Vector2(11, -9), false ,false);
+                doRangeSkill(ref animCon.trigJumpAttack, new RangedSkill(false, new Vector2(11, -9), jumpAttackArrowPrefab, 0.2f, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, true , 0, 100, false));
         }
     }
 
     public override void skill1()
     {
         //Shoot a stronger arrow, causing knockback
-        doRangeSkill(ref animCon.trigSkill1, delay_Skill1, greatArrowPrefab, 7, damage_Skill1, skillEffect.knockback, 0, stamina_Skill1, new Vector2(9, 0));
+        doRangeSkill(ref animCon.trigSkill1, (RangedSkill) skill1_var);
     }
 
     public override void skill2()
@@ -74,7 +79,7 @@ public class ArcherController : ChampionClassController
     public override void skill3()
     {
         //Stomp the ground, stunning everyone in a given radius
-        doMeeleSkill(ref animCon.trigSkill3, delay_Skill3, damage_Skill3, skillEffect.stun, 3, stamina_Skill3, false, 3);
+        doMeeleSkill(ref animCon.trigSkill3, (MeleeSkill) skill3_var);
     }
 
     public override void skill4()

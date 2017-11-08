@@ -218,7 +218,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1654434425598688}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.3880858, y: -5.76, z: 0}
+  m_LocalPosition: {x: -3.1811585, y: -5.717063, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4816568741588148}
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_MaxSpeed: 7
   m_MoveSpeedWhileAttacking: 5
   m_MoveSpeedWhileBlocking: 0
-  m_JumpForce: 1000
+  m_JumpForce: 850
   m_jumpAttackRadius: 1
   m_jumpAttackForce: 10
   m_dashSpeed: 9.5
@@ -384,7 +384,7 @@ MonoBehaviour:
   - 0.5
   - 0.45
   - 0.2
-  - 0.2
+  - 0.3
   - 0
   - 0
   - 0.4
@@ -829,8 +829,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -165868505
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &224201266492843086
 RectTransform:
@@ -850,7 +850,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 4.2, y: 1.04}
+  m_AnchoredPosition: {x: 4.12, y: 1.13}
   m_SizeDelta: {x: 1.614, y: 0.415}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224217406267976142

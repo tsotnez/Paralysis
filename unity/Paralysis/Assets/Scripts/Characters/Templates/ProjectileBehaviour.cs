@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileBehaviour : MonoBehaviour {
-    public bool ready = false;
     bool stuck = false;
     bool falling = false; //True if projectile has reched maxRange already
     Coroutine fallingRoutine = null;
@@ -15,7 +14,7 @@ public class ProjectileBehaviour : MonoBehaviour {
     public int direction = 0; //Direction to travel in, -1 if left, 1 if right
     public GameObject explosionPrefab;
     public float range = 5; //Distance to travel before dying
-    public ChampionClassController.skillEffect effect = ChampionClassController.skillEffect.nothing;
+    public Skill.skillEffect effect = Skill.skillEffect.nothing;
     public int effectDuration = 1;
     public int damage = 0;
     public LayerMask whatToHit;
@@ -29,7 +28,7 @@ public class ProjectileBehaviour : MonoBehaviour {
     // Use this for initialization
     void Update()
     {
-        if (ready && !stuck && !falling)
+        if (!stuck && !falling)
         {
             if (direction == -1) GetComponent<SpriteRenderer>().flipX = true; //Flip sprite if necessary
             if (Vector2.Distance(startPos, transform.position) >= range)
@@ -45,13 +44,13 @@ public class ProjectileBehaviour : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(ready && !stuck && !falling)
+        if(!stuck && !falling)
             GetComponent<Rigidbody2D>().velocity = new Vector2(speed.x * direction, speed.y);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (ready && collision.collider.gameObject != creator)
+        if (collision.collider.gameObject != creator)
         {
             //On collision, check if collider is in whatToHit layermask
             if (whatToHit == (whatToHit | (1 << collision.gameObject.layer)))
@@ -60,15 +59,15 @@ public class ProjectileBehaviour : MonoBehaviour {
 
                 switch (effect)
                 {
-                    case ChampionClassController.skillEffect.nothing:
+                    case Skill.skillEffect.nothing:
                         break;
-                    case ChampionClassController.skillEffect.stun:
+                    case Skill.skillEffect.stun:
                         targetStats.startStunned(effectDuration);
                         break;
-                    case ChampionClassController.skillEffect.knockback:
+                    case Skill.skillEffect.knockback:
                         targetStats.startKnockBack(transform.position);
                         break;
-                    case ChampionClassController.skillEffect.bleed:
+                    case Skill.skillEffect.bleed:
                         targetStats.startBleeding(effectDuration);
                         break;
                 }

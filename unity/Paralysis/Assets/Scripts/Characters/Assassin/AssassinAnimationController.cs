@@ -12,7 +12,7 @@ class AssassinAnimationController : ChampionAnimationController
     {
         if (!m_Grounded && m_vSpeed > 0.001 && trigDoubleJump)
         {
-            StartAnimation(AnimationController.AnimatorStates.Jump);
+            StartAnimation(AnimationController.AnimatorStates.DoubleJump);
             trigDoubleJump = false;
             return true;
         }

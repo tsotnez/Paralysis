@@ -9,8 +9,8 @@ public abstract class ChampionClassController : MonoBehaviour
 
     [SerializeField]
     protected LayerMask m_WhatIsGround;                                     // A mask determining what is ground to the character
-    [SerializeField]
-    protected LayerMask m_whatToHit;                                        // What to hit when checking for hits while attacking
+
+    public LayerMask m_whatToHit;                                        // What to hit when checking for hits while attacking
 
     [SerializeField]
     protected float m_MaxSpeed = 10f;                                       // The fastest the player can travel in the x axis.
@@ -110,6 +110,14 @@ public abstract class ChampionClassController : MonoBehaviour
 
     protected Transform m_GroundCheck;                                      // A position marking where to check if the player is grounded.
     protected const float k_GroundedRadius = .02f;                           // Radius of the overlap circle to determine if grounded
+
+    protected Skill basicAttack1_var;
+    protected Skill basicAttack2_var;
+    protected Skill basicAttack3_var;
+    protected Skill skill1_var;
+    protected Skill skill2_var;
+    protected Skill skill3_var;
+    protected Skill skill4_var;
 
     public bool m_FacingRight = true;                                       // For determining which way the player is currently facing.
     public bool dashing = false;                                            // true while dashing
@@ -248,6 +256,7 @@ public abstract class ChampionClassController : MonoBehaviour
     protected virtual IEnumerator jumpAttack()
     {
         jumpAttacking = true; //Set status variable
+        animCon.trigJumpAttack = true;
 
         int direction;
         if (m_FacingRight) direction = 1;
@@ -256,12 +265,12 @@ public abstract class ChampionClassController : MonoBehaviour
         m_Rigidbody2D.velocity = new Vector2( 4  *direction, -m_jumpAttackForce); //Add downwards force
         yield return new WaitUntil(() => animCon.m_Grounded); //Jump attacking as long as not grounded
 
-        // Deal damage to all enemys
-        StartCoroutine(doMeeleSkill_Hit(0, damage_JumpAttack, skillEffect.nothing, 0, false, m_jumpAttackRadius));
+        // Deal damage to all enemies
+        animCon.trigJumpAttackEnd = true;
+        StartCoroutine(doMeeleSkill_Hit(new MeleeSkill(0, damage_JumpAttack, Skill.skillEffect.nothing, 0, 10, false, 0 , m_jumpAttackRadius)));
 
         Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
         jumpAttacking = false;
-        animCon.trigJumpAttackEnd = true;
     }
 
     /// <summary>
@@ -374,14 +383,6 @@ public abstract class ChampionClassController : MonoBehaviour
 
     #region Meele Skill
 
-    public enum skillEffect
-    {
-        nothing,
-        stun,
-        knockback,
-        bleed
-    }
-
     /// <summary>
     /// do a complete skill
     /// </summary>
@@ -394,29 +395,29 @@ public abstract class ChampionClassController : MonoBehaviour
     /// <param name="singleTarget">only the first target or all targets? (default: singleTarget - true)</param>
     /// <param name="skillRange">Range of the skill (default: meeleRange - 1.5f)</param>.
     /// </summary>
-    protected void doMeeleSkill(ref bool animationVar, float skillDelay, int skillDamage, skillEffect skillSpecialEffect, int skillSpecialEffectTime, int skillStaminaCost, bool singleTarget = true, float skillRange = meeleRange, bool needsToBeGrounded = true)
-    {
+    protected void doMeeleSkill(ref bool animationVar, MeleeSkill skillToPerform)
+    { 
         //Validate that character is not attacking and standing on ground
-        if (canPerformAction(needsToBeGrounded) && canPerformAttack() && stats.loseStamina(skillStaminaCost))
+        if (canPerformAction(skillToPerform.needsToBeGrounded) && canPerformAttack() && stats.loseStamina(skillToPerform.staminaCost))
         {
             // set animation trigger
             animationVar = true;
             // do hit by coroutine
-            StartCoroutine(doMeeleSkill_Hit(skillDelay, skillDamage, skillSpecialEffect, skillSpecialEffectTime, singleTarget, skillRange));
+            StartCoroutine(doMeeleSkill_Hit(skillToPerform));
         }
     }
 
-    protected IEnumerator doMeeleSkill_Hit(float skillDelay, int skillDamage, skillEffect skillSpecialEffect, int skillSpecialEffectTime, bool singleTarget, float skillRange)
+    protected IEnumerator doMeeleSkill_Hit(MeleeSkill skillToPerform)
     {
         // wait till delay ends
-        yield return new WaitForSeconds(skillDelay);
+        yield return new WaitForSeconds(skillToPerform.delay);
 
         CharacterStats target;
         RaycastHit2D[] hits = null;
-        if (singleTarget)
+        if (skillToPerform.singleTarget)
         {
             // if single target skill - get only one hit
-            RaycastHit2D singleTargetHit = tryToHit(skillRange);
+            RaycastHit2D singleTargetHit = tryToHit(skillToPerform.range);
             if (singleTargetHit)
             {
                 hits = new RaycastHit2D[1];
@@ -426,7 +427,7 @@ public abstract class ChampionClassController : MonoBehaviour
         else
         {
             // if multi target skill - get all hits
-            hits = Physics2D.CircleCastAll(m_GroundCheck.position, skillRange, Vector2.up, 0.01f, m_whatToHit);
+            hits = Physics2D.CircleCastAll(m_GroundCheck.position, skillToPerform.range, Vector2.up, 0.01f, m_whatToHit);
         }
 
         // only if something is in range
@@ -438,26 +439,26 @@ public abstract class ChampionClassController : MonoBehaviour
                 // get the target of the hit
                 target = hit.transform.gameObject.GetComponent<CharacterStats>();
                 // add skill effect if required
-                switch (skillSpecialEffect)
+                switch (skillToPerform.effect)
                 {
-                    case skillEffect.nothing:
+                    case Skill.skillEffect.nothing:
                         // do nothing
                         break;
-                    case skillEffect.stun:
-                        target.startStunned(skillSpecialEffectTime);
+                    case Skill.skillEffect.stun:
+                        target.startStunned(skillToPerform.effectDuration);
                         break;
-                    case skillEffect.knockback:
+                    case Skill.skillEffect.knockback:
                         target.startKnockBack(transform.position);
                         break;
-                    case skillEffect.bleed:
-                        target.startBleeding(skillSpecialEffectTime);
+                    case Skill.skillEffect.bleed:
+                        target.startBleeding(skillToPerform.effectDuration);
                         break;
                     default:
                         // should not happen
                         throw new System.NotImplementedException();
                 }
                 // deal damage to target
-                target.takeDamage(skillDamage, false);
+                target.takeDamage(skillToPerform.damage, false);
             }
         }
     }
@@ -479,22 +480,22 @@ public abstract class ChampionClassController : MonoBehaviour
 
     #region Ranged Skill
 
-    protected void doRangeSkill(ref bool animationVar, float skillDelay, GameObject projectilePrefab, float range, int damage, skillEffect effect, int effectDuration, int skillStaminaCost, Vector2 speed, bool onHitEffect = false, bool needsToBeGrounded = true)
+    protected void doRangeSkill(ref bool animationVar, RangedSkill skillToPerform)
     {
         //Validate that character is not attacking and standing on ground
-        if (canPerformAction(needsToBeGrounded) && canPerformAttack() && stats.loseStamina(skillStaminaCost))
+        if (canPerformAction(skillToPerform.needsToBeGrounded) && canPerformAttack() && stats.loseStamina(skillToPerform.staminaCost))
         {
             // set animation trigger
             animationVar = true;
             // do hit by coroutine
-            StartCoroutine(doRangeSkill_Hit(skillDelay, projectilePrefab, range, damage, effect, effectDuration, speed, onHitEffect));
+            StartCoroutine(doRangeSkill_Hit(skillToPerform));
         }
     }
 
-    private IEnumerator doRangeSkill_Hit(float skillDelay, GameObject projectilePrefab, float range, int damage, skillEffect effect, int effectDuration, Vector2 speed, bool onHitEffect)
+    private IEnumerator doRangeSkill_Hit(RangedSkill skillToPerform)
     {
         // wait till delay ends
-        yield return new WaitForSeconds(skillDelay);
+        yield return new WaitForSeconds(skillToPerform.delay);
 
         // calculate direction
         int direction;
@@ -502,21 +503,22 @@ public abstract class ChampionClassController : MonoBehaviour
         else direction = -1;
 
         // generate GameObject
-        GameObject goProjectile = Instantiate(projectilePrefab, transform.position + new Vector3(1f * direction, 0.3f), new Quaternion(projectilePrefab.transform.rotation.x, 
-            projectilePrefab.transform.rotation.y, projectilePrefab.transform.rotation.z * direction, projectilePrefab.transform.rotation.w));
+        GameObject goProjectile = skillToPerform.prefab;
         ProjectileBehaviour projectile = goProjectile.GetComponent<ProjectileBehaviour>();
 
-        // assign variables to procetile Script
+        // assign variables to projectile Script
         projectile.direction = direction;
         projectile.creator = this.gameObject;
         projectile.whatToHit = m_whatToHit;
-        projectile.range = range;
-        projectile.speed = speed;
-        projectile.effect = effect;
-        projectile.explodeOnHit = onHitEffect;
-        projectile.damage = damage;
-        projectile.effectDuration = effectDuration;
-        projectile.ready = true;
+        projectile.range = skillToPerform.range;
+        projectile.speed = skillToPerform.speed;
+        projectile.effect = skillToPerform.effect;
+        projectile.explodeOnHit = skillToPerform.onHitEffect;
+        projectile.damage = skillToPerform.damage;
+        projectile.effectDuration = skillToPerform.effectDuration;
+
+        Instantiate(goProjectile, transform.position + new Vector3(1f * direction, 0.3f), new Quaternion(goProjectile.transform.rotation.x,
+            goProjectile.transform.rotation.y, goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));
     }
 
     #endregion

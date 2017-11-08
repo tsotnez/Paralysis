@@ -13,7 +13,7 @@ public abstract class AnimationController : MonoBehaviour
     public bool[] AnimationLoop = { false };                                // Shall animation be looped?
     public float[] AnimationDuration;                                       // Duration of each animation
     public SpriteAtlas[] Atlasses;                                          // Array of all atlasses
-    public float GeneralSpeed;                                              // General Speed for all animations
+    public float GeneralSpeed = 1;                                              // General Speed for all animations
     public string CharacterClass = "_master";                               // Foldername to the selected char
     public string CharacterSkin = "basic";                                  // Foldername to the selected skin
 
@@ -127,7 +127,7 @@ public abstract class AnimationController : MonoBehaviour
                 if (i < 10) spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + "_" + "0" + i.ToString()); 
                 else spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + "_" + i.ToString());
 
-                yield return new WaitForSecondsRealtime(delay);
+                yield return new WaitForSeconds(delay);
             }
 
             if (animationLoop[animation])

@@ -14,6 +14,13 @@ public class KnightController : ChampionClassController
     void Start()
     {
         animCon = graphics.GetComponent<KnightAnimationController>();
+
+        basicAttack1_var = new MeleeSkill(delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, true, cooldown_BasicAttack1, meeleRange);
+        basicAttack2_var = new MeleeSkill(delay_BasicAttack3, damage_BasicAttack3, Skill.skillEffect.nothing, 0, stamina_BasicAttack3, true, cooldown_BasicAttack2, meeleRange);
+
+        skill1_var = new MeleeSkill(delay_Skill1, damage_Skill1, Skill.skillEffect.stun, 3, stamina_Skill1, false, cooldown_Skill1, 1.5f);
+        skill3_var = new MeleeSkill(delay_Skill3, damage_Skill3, Skill.skillEffect.knockback, 0, stamina_Skill3, false, cooldown_Skill3, 1.5f);
+        skill4_var = new RangedSkill(false, new Vector2(7, 0), Skill4_Spear, delay_Skill4, damage_Skill4, Skill.skillEffect.nothing, 0, stamina_Skill4, true, cooldown_Skill4, 5f);
     }
 
     // Update is called once per frame
@@ -59,13 +66,13 @@ public class KnightController : ChampionClassController
                     {
                         case 1: case 2:
                             // do meele attack
-                            doMeeleSkill(ref animCon.trigBasicAttack1, delay_BasicAttack1, damage_BasicAttack1, skillEffect.nothing, 0, stamina_BasicAttack1);
+                            doMeeleSkill(ref animCon.trigBasicAttack1, (MeleeSkill) basicAttack1_var);
                             // Reset timer of combo
                             resetComboTime();
                             break;
                         case 3:
                             // do meele attack
-                            doMeeleSkill(ref animCon.trigBasicAttack2, delay_BasicAttack3, damage_BasicAttack3, skillEffect.nothing, 0, stamina_BasicAttack3);
+                            doMeeleSkill(ref animCon.trigBasicAttack2, (MeleeSkill) basicAttack2_var);
                             // Reset Combo after combo-hit
                             abortCombo();
                             break;
@@ -108,8 +115,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill1()
     {
-        doMeeleSkill(ref animCon.trigSkill1, delay_Skill1, damage_Skill1, skillEffect.stun, 3, stamina_Skill1);
-        stats.SkillUsed(10);
+        doMeeleSkill(ref animCon.trigSkill1, (MeleeSkill) skill1_var);
     }
 
 
@@ -125,8 +131,8 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill2()
     {
-        doMeeleSkill(ref animCon.trigSkill2, delay_Skill2, damage_Skill2, skillEffect.stun, 3, stamina_Skill2);
-        stats.SkillUsed(20);
+        //doMeeleSkill(ref animCon.trigSkill2, delay_Skill2, damage_Skill2, Skill.skillEffect.stun, 3, stamina_Skill2);
+        //TODO
     }
 
     /// <summary>
@@ -141,8 +147,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill3()
     {
-        doMeeleSkill(ref animCon.trigSkill3, delay_Skill3, damage_Skill3, skillEffect.knockback, 0, stamina_Skill3, false);
-        stats.SkillUsed(30);
+        doMeeleSkill(ref animCon.trigSkill3, (MeleeSkill) skill3_var);
     }
 
     /// <summary>
@@ -156,8 +161,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill4()
     {
-        doRangeSkill(ref animCon.trigSkill4, delay_Skill4, Skill4_Spear, 5f, damage_Skill4, skillEffect.nothing, 0, stamina_Skill4, new Vector2(7 , 0));
-        stats.SkillUsed(40);
+        doRangeSkill(ref animCon.trigSkill4, (RangedSkill) skill4_var);
     }
 
     #endregion

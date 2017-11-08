@@ -9,6 +9,9 @@ public class CharacterStats : MonoBehaviour {
     private Rigidbody2D rigid;
     private ChampionClassController controller;
 
+    private GameObject floatingTextPrefab;
+    private float nextTextPosition = 1; //Will the next damage number be instaitated on the left or on the right 
+
     [Header("Stats")]
     public int maxHealth = 100;
     public int currentHealth;
@@ -48,6 +51,8 @@ public class CharacterStats : MonoBehaviour {
         animCon = transform.Find("graphics").GetComponent<ChampionAnimationController>();
         rigid = GetComponent<Rigidbody2D>();
         controller = GetComponent<ChampionClassController>();
+        floatingTextPrefab = Resources.Load("Prefabs/FloatingText/FloatingText") as GameObject;
+
     }
     void Start()
     {
@@ -61,13 +66,6 @@ public class CharacterStats : MonoBehaviour {
 
         this.Hp.GetComponent<Image>().fillAmount = (float)this.currentHealth / (float)this.maxHealth;
         this.Stamina.GetComponent<Image>().fillAmount = (float)this.currentStamina / (float)this.maxStamina;
-
-        //Slow down walking and idle animation while slowed
-        //if ((anim.GetCurrentAnimatorStateInfo(0).IsName("run") || anim.GetCurrentAnimatorStateInfo(0).IsName("idle")) && slowFactor < 1)
-        //{
-        //    anim.speed = 0.7f;
-        //}
-        //else anim.speed = 1;
     }
 
     // Is called repeatetly to regenerate stamina value
@@ -111,6 +109,13 @@ public class CharacterStats : MonoBehaviour {
     {
         if (!invincible)
         {
+            GameObject text = floatingTextPrefab; 
+            text.GetComponent<RectTransform>().position += new Vector3(0.3f,0,0) * nextTextPosition;
+            nextTextPosition = -nextTextPosition; //Toggle next text positon
+            text.GetComponentInChildren<Text>().text = amount.ToString();
+
+            Instantiate(floatingTextPrefab, transform.Find("CanvasStats"), false); //Show number of damage received
+
             this.currentHealth -= amount; //Substract health
             if (playAnimation) trigHit = true; //Play hit animation
             if (currentHealth <= 0) die();
@@ -129,6 +134,7 @@ public class CharacterStats : MonoBehaviour {
     //Sets the stunned value for given amount of time.
     private IEnumerator stun(float time)
     {
+        rigid.velocity = Vector2.zero;
         stunned = true;
         yield return new WaitForSeconds(time);
         stunned = false;
