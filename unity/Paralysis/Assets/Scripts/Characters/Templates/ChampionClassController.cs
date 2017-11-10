@@ -119,6 +119,7 @@ public abstract class ChampionClassController : MonoBehaviour
     protected Skill skill3_var;
     protected Skill skill4_var;
 
+    public string className;
     public bool m_FacingRight = true;                                       // For determining which way the player is currently facing.
     public bool dashing = false;                                            // true while dashing
     public bool blocking = false;                                           // Is the character blocking?

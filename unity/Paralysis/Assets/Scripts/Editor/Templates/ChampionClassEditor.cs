@@ -7,7 +7,7 @@ using UnityEditor;
 public class ChampionClassEditor : Editor {
 
     SerializedProperty WhatIsGround, WhatToHit, MoveSpeed, MoveSpeedWhileAttacking, MoveSpeedWhileBlocking, JumpForce, JumpAttackRadius, JumpAttackForce,
-        DashSpeed, DashStaminaCost, ComboExpire;
+        DashSpeed, DashStaminaCost, ComboExpire, ClassName;
 
 	void OnEnable()
     {
@@ -23,12 +23,14 @@ public class ChampionClassEditor : Editor {
         DashSpeed = serializedObject.FindProperty("m_dashSpeed");
         DashStaminaCost = serializedObject.FindProperty("m_dashStaminaCost");
         ComboExpire = serializedObject.FindProperty("m_ComboExpire");
+        ClassName = serializedObject.FindProperty("className");
     }
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
         EditorGUILayout.PropertyField(WhatIsGround, new GUIContent("What Is ground"), true);
+        EditorGUILayout.PropertyField(ClassName, new GUIContent("Class Name"), true);
 
         GUILayout.Label("Speeds", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();

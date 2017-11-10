@@ -8,16 +8,24 @@ public class CameraBehaviour : MonoBehaviour {
 
     public float magnitude = 0.05f;
     public float duration = 0.01f;
-    [SerializeField]
-    Transform target;
+
     [SerializeField]
     float offsetX = 0;
     [SerializeField]
     float offsetY = 0;
     [SerializeField]
     float lerpSpeed = 15f;
+    [SerializeField]
+    float minSize = 5f;
+    [SerializeField]
+    float maxSize = 6f;
+    [SerializeField]
+    float zoomSpeed = 2f;
 
+    Transform target;
     Transform target2;
+
+    private Camera cam;
 
     //Border objects, used to calculate if space outside of map is visible
     private Transform leftBorder;                                  
@@ -39,7 +47,8 @@ public class CameraBehaviour : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
+        cam = GetComponent<Camera>();
 
         //Get Border Objects
         leftBorder = GameObject.FindGameObjectWithTag("LeftBorder").transform;
@@ -49,14 +58,17 @@ public class CameraBehaviour : MonoBehaviour {
 
         CalculatePositioningValues();
     }
-	
-	// Update is called once per frame
-	void LateUpdate ()
+
+
+    // Update is called once per frame
+    void LateUpdate ()
     {
         if (multiplayer)
             Multiplayer();
         else
             SinglePlayer();
+
+        CalculatePositioningValues();
     }
 
     private void SinglePlayer()
@@ -69,7 +81,11 @@ public class CameraBehaviour : MonoBehaviour {
     private void Multiplayer()
     {
         Vector3 middleBetweenPlayers = target.position + ((target2.position- target.position) / 2); //Middle is target's position plus half of the vector leading to target2's position
-        
+
+        //Zoom correctly
+        float desiredSize =  Mathf.Clamp(Vector3.Distance(target.position, target2.position) * 0.3f, minSize, maxSize);
+        cam.orthographicSize = Mathf.Clamp(cam.orthographicSize + ((desiredSize -  cam.orthographicSize) * Time.deltaTime * zoomSpeed), minSize, maxSize);
+
         //clamp new position between min and max values and lerp to that position
         Vector3 desiredPos = new Vector3(Mathf.Clamp(middleBetweenPlayers.x + offsetX, minX, maxX), Mathf.Clamp(middleBetweenPlayers.y + offsetY, minY, maxY), transform.position.z);
         transform.position = Vector3.Lerp(transform.position, desiredPos, lerpSpeed * Time.deltaTime);
@@ -89,7 +105,7 @@ public class CameraBehaviour : MonoBehaviour {
     {
         target2 = null;
         multiplayer = false;
-        GetComponent<Camera>().orthographicSize = 2.96f;
+        cam.orthographicSize = 2.96f;
 
         //Re calculate stuff
         CalculatePositioningValues();
@@ -98,9 +114,9 @@ public class CameraBehaviour : MonoBehaviour {
     private void CalculatePositioningValues()
     {
         //calculate screen size
-        height = Camera.main.orthographicSize * 2f;
-        width = height * Camera.main.aspect;
-        minX = (leftBorder.position.x + 0.5f * width);
+        height = cam.orthographicSize * 2f;
+        width = height * cam.aspect;
+        minX = leftBorder.position.x + 0.5f * width;
         maxX = rightBorder.position.x - 0.5f * width;
         minY = bottomBorder.position.y + 0.5f * height;
         maxY = topBorder.position.y - 0.5f * height;
@@ -129,7 +145,7 @@ public class CameraBehaviour : MonoBehaviour {
             x *= magnitude * damper;
             y *= magnitude * damper;
 
-            Camera.main.transform.position += new Vector3(x, y, 0);
+            cam.transform.position += new Vector3(x, y, 0);
 
             yield return null;
         }
