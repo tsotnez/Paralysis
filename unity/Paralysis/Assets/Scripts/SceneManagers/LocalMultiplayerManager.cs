@@ -26,7 +26,7 @@ public class LocalMultiplayerManager : MonoBehaviour {
     //Array containign all player game objects
     private List<GameObject> players = new List<GameObject>();
 
-    private void Start()
+    private void Awake()
     {
         instantiatePlayers();
         buildUI();
@@ -41,10 +41,14 @@ public class LocalMultiplayerManager : MonoBehaviour {
         hotbar.GetComponent<HotbarController>().setChampionName(player1.name);
         hotbar.GetComponent<HotbarController>().initAbilityImages(player1.name);
 
+        //Assign hotbar to player
+        players[0].GetComponent<CharacterStats>().hotbar = hotbar.GetComponent<HotbarController>();
+
         GameObject hotbar2 = Instantiate(hotbarPrefab, parent, false);
         hotbar2.transform.position = new Vector3(-hotbar2.transform.position.x, hotbar2.transform.position.y, hotbar.transform.position.z);
         hotbar2.GetComponent<HotbarController>().setChampionName(player2.name);
         hotbar2.GetComponent<HotbarController>().initAbilityImages(player2.name);
+        players[1].GetComponent<CharacterStats>().hotbar = hotbar2.GetComponent<HotbarController>();
     }
 
     private void instantiatePlayers()
@@ -69,7 +73,7 @@ public class LocalMultiplayerManager : MonoBehaviour {
 
             //Change player2 prefab to be an enemy to player 1
             LayerMask whatToHit = new LayerMask();
-            whatToHit |= (1 << LayerMask.NameToLayer("Player"));
+            whatToHit |= (1 << 12);
 
             instPlayer2.GetComponent<ChampionClassController>().m_whatToHit = whatToHit;
             instPlayer2.GetComponent<UserControl>().inputDevice = UserControl.InputDevice.XboxController;

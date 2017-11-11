@@ -1,10 +1,14 @@
 fileFormatVersion: 2
 guid: b8534aaec119f174fa29e73ef6da6ee4
-timeCreated: 1505383212
+timeCreated: 1510429618
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - hotbar: {instanceID: 0}
+  - FloatingStatusBar: {instanceID: 0}
+  - Team1Color: {fileID: 21300000, guid: 1a78a4f52a148e74e94f1a45a0162c39, type: 3}
+  - Team2Color: {fileID: 21300000, guid: b6621b7fdd8965c4b9242b62287ce72a, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

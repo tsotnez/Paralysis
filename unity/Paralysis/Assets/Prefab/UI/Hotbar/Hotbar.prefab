@@ -304,18 +304,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.52205884, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
+  m_Sprite: {fileID: 21300000, guid: 55cdb88526d5b7b4caa3cc1422a01cb5, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 1
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.09575042, g: 0.5661765, b: 0.5661765, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -484,11 +484,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   championName: {fileID: 114096267527839352}
+  hpPercent: {fileID: 114340945589499778}
+  staminaPercent: {fileID: 114410330641936674}
   spell1Image: {fileID: 114004988959505126}
   spell2Image: {fileID: 114550296014171802}
   spell3Image: {fileID: 114652159640076758}
   spell4Image: {fileID: 114165490481297522}
   basicAttackImage: {fileID: 114379073560098588}
+  hpImage: {fileID: 114037210825183258}
+  staminaImage: {fileID: 114882424390613898}
 --- !u!114 &114549259419895012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -663,18 +667,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.52205884, g: 0.37804264, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
+  m_Sprite: {fileID: 21300000, guid: d69d64e06f44e4c439cdf3735089610f, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 1
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -777,8 +781,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 145.51973, y: -37.6}
-  m_SizeDelta: {x: 258.79, y: 36.08}
+  m_AnchoredPosition: {x: 147.25, y: -33.9}
+  m_SizeDelta: {x: 249.26, y: 36.08}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224086851113425812
 RectTransform:
@@ -795,7 +799,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 311.7, y: 5.3428993}
+  m_AnchoredPosition: {x: 311.7, y: -4.8}
   m_SizeDelta: {x: 2000, y: 357.66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224097052738326620
@@ -831,7 +835,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 172, y: 44.864}
+  m_AnchoredPosition: {x: 172, y: 40.9}
   m_SizeDelta: {x: 2000, y: 429.63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224186213435869956
@@ -989,7 +993,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -594.26, y: -409}
+  m_AnchoredPosition: {x: -594.26, y: 378}
   m_SizeDelta: {x: 687.67, y: 66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224906886053957254
@@ -1007,7 +1011,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 311.7034, y: -37.6}
+  m_AnchoredPosition: {x: 311.7034, y: -34.6}
   m_SizeDelta: {x: 2000, y: 357.66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224957084604489928
@@ -1043,6 +1047,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 145.52, y: 5.3429747}
-  m_SizeDelta: {x: 258.79, y: 36.08}
+  m_AnchoredPosition: {x: 145.52, y: -3.25}
+  m_SizeDelta: {x: 258.79, y: 53.26}
   m_Pivot: {x: 0.5, y: 0.5}
