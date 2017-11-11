@@ -1,10 +1,9 @@
-﻿
-/// <summary>
+﻿/// <summary>
 /// Describes a skill
 /// </summary>
 
-public abstract class Skill{
-
+public abstract class Skill
+{ 
     public enum skillEffect
     {
         nothing,
@@ -26,7 +25,7 @@ public abstract class Skill{
     public bool notOnCooldown = true;
 
 
-    public Skill (float skillDelay, int skillDamage, Skill.skillEffect skillSpecialEffect, int skillSpecialEffectTime, int skillStaminaCost, bool skillSingleTarget, 
+    public Skill(float skillDelay, int skillDamage, Skill.skillEffect skillSpecialEffect, int skillSpecialEffectTime, int skillStaminaCost, bool skillSingleTarget,
         float skillCooldown, float skillRange, bool skillNeedsToBeGrounded = true)
     {
         delay = skillDelay;
@@ -39,7 +38,4 @@ public abstract class Skill{
         range = skillRange;
         singleTarget = skillSingleTarget;
     }
-
-
-
 }

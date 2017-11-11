@@ -150,7 +150,7 @@ public abstract class AnimationController : MonoBehaviour
             // stop running coroutine
             StopAllCoroutines();
             // start next animation as coroutine
-            StartCoroutine(PlayAnimation(currentAnimation, atlas, delay));
+            StartCoroutine(PlayAnimation(currentAnimation.ToString() + "End", atlas, delay));
         }
         else
         {
@@ -160,13 +160,18 @@ public abstract class AnimationController : MonoBehaviour
 
     IEnumerator PlayAnimation(AnimatorStates animation, SpriteAtlas atlas, float delay, bool HoldOnEnd = false)
     {
+        return PlayAnimation(animation.ToString(), atlas, delay, HoldOnEnd);
+    }
+
+    IEnumerator PlayAnimation(string animation, SpriteAtlas atlas, float delay, bool HoldOnEnd = false)
+    {
         while (true)
         {
             // play each animation of the atlas
             for (int i = 0; i < atlas.spriteCount; i++)
             {
-                if (i < 10) spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + "_" + "0" + i.ToString());
-                else spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + "_" + i.ToString());
+                if (i < 10) spriteRenderer.sprite = atlas.GetSprite(animation + "_" + "0" + i.ToString());
+                else spriteRenderer.sprite = atlas.GetSprite(animation + "_" + i.ToString());
 
                 yield return new WaitForSeconds(delay);
             }
@@ -174,9 +179,10 @@ public abstract class AnimationController : MonoBehaviour
             if (HoldOnEnd)
                 while (true)
                 {
-                    yield return new WaitForSeconds(0.1f);
+                    if (atlas.spriteCount < 10) spriteRenderer.sprite = atlas.GetSprite(animation + "_" + "0" + atlas.spriteCount.ToString());
+                    else spriteRenderer.sprite = atlas.GetSprite(animation + "_" + atlas.spriteCount.ToString());
                 }
-            else if (animationLoop[animation])
+            else if (animationLoop[((AnimatorStates)(Enum.Parse(typeof(AnimatorStates), animation.ToString(), true)))])
                 //loop
                 yield return null;
             else
