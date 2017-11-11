@@ -536,7 +536,6 @@ public abstract class ChampionClassController : MonoBehaviour
             case AnimationController.AnimatorStates.BasicAttack2:
             case AnimationController.AnimatorStates.BasicAttack3:
             case AnimationController.AnimatorStates.JumpAttack:
-            case AnimationController.AnimatorStates.JumpAttackEnd:
             case AnimationController.AnimatorStates.Skill1:
             case AnimationController.AnimatorStates.Skill2:
             case AnimationController.AnimatorStates.Skill3:

@@ -345,30 +345,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a70140056e40f68489e513993cf476c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000
-  AnimationLoop: 010100010000000001000000000000000000000000
-  AnimationDuration:
-  - 0.6
-  - 0.5
-  - 0.45
-  - 0.2
-  - 0.3
-  - 0
-  - 0
-  - 0.4
-  - 0.4
-  - 0.4
-  - 0
-  - 0
-  - 0.5
-  - 0
-  - 0.4
-  - 0.4
-  - 0.5
-  - 0.45
-  - 0
-  - 0
-  - 0
+  CharacterClass: archer
+  CharacterSkin: basic
+  GeneralSpeed: 0
+  AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000
   Atlasses:
   - {fileID: 4343727234628468602, guid: e1da7b4aa82ea9348ab5d8c8069f2fdb, type: 2}
   - {fileID: 4343727234628468602, guid: 857434a4a454f0e4d84252a7644a410b, type: 2}
@@ -383,7 +363,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 4343727234628468602, guid: b9c92c9c9f4366b4caf8e2a3db26d3fb, type: 2}
-  - {fileID: 0}
   - {fileID: 4343727234628468602, guid: 4cef951466f82be4bbc97d15aad73269, type: 2}
   - {fileID: 4343727234628468602, guid: c498e6093a181db4db281185f9f27d0c, type: 2}
   - {fileID: 4343727234628468602, guid: 72c1415ab8d180d48b287eb7366d7a75, type: 2}
@@ -391,9 +370,52 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  GeneralSpeed: 0
-  CharacterClass: archer
-  CharacterSkin: basic
+  AnimationLoop: 0101000100000000010000000000000000000000
+  AnimationDuration:
+  - 0.6
+  - 0.5
+  - 0.45
+  - 0.2
+  - 0.3
+  - 0
+  - 0
+  - 0.4
+  - 0.4
+  - 0.4
+  - 0
+  - 0
+  - 0.5
+  - 0.4
+  - 0.4
+  - 0.5
+  - 0.45
+  - 0
+  - 0
+  - 0
+  EndAnimationType: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  EndAtlasses:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  EndAnimationLoop: 00
+  EndAnimationDuration: []
   m_Grounded: 0
   m_vSpeed: 0
   m_Speed: 0

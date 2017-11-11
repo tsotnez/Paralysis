@@ -10,32 +10,66 @@ using System;
 [CanEditMultipleObjects]
 public class AnimEditor : Editor
 {
-    SerializedProperty animations, looping, customSpeeds, AnimationSpeed, CharacterClass, CharacterSkin, CharacterName, atlasses;
+    // Default Properties for Animator
+    SerializedProperty GeneralAnimationSpeed, CharacterClass, CharacterSkin, CharacterName;
+    // Properties for Animation-Dictionarys
+    SerializedProperty Animations, Atlasses, Looping, CustomSpeeds;
+    // Properties for AnimationEnd-Dictionarys
+    SerializedProperty EndAnimations, EndAtlasses;
 
-    float lastSpeed;
     public string path;
+    float lastSpeed;
     DirectoryInfo levelDirectoryPath;
 
     void OnEnable()
     {
-        animations = serializedObject.FindProperty("AnimationType");
-        atlasses = serializedObject.FindProperty("Atlasses");
-        looping = serializedObject.FindProperty("AnimationLoop");
+        // Default Properties
         CharacterClass = serializedObject.FindProperty("CharacterClass");
         CharacterSkin = serializedObject.FindProperty("CharacterSkin");
-        AnimationSpeed = serializedObject.FindProperty("GeneralSpeed");
-        customSpeeds = serializedObject.FindProperty("AnimationDuration");
+        GeneralAnimationSpeed = serializedObject.FindProperty("GeneralSpeed");
 
-        lastSpeed = AnimationSpeed.floatValue;
+        // Dictionary Properties for Animation
+        Animations = serializedObject.FindProperty("AnimationType");
+        Atlasses = serializedObject.FindProperty("Atlasses");
+        Looping = serializedObject.FindProperty("AnimationLoop");
+        CustomSpeeds = serializedObject.FindProperty("AnimationDuration");
+
+        // Dictionary Properties for EndAnimation
+        EndAnimations = serializedObject.FindProperty("EndAnimationType");
+        EndAtlasses = serializedObject.FindProperty("EndAtlasses");
+
+        lastSpeed = GeneralAnimationSpeed.floatValue;
         path = Application.dataPath + "/Animations/chars/" + CharacterClass.stringValue + "/" + CharacterSkin.stringValue + "/";
     }
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
-        EditorGUILayout.PropertyField(CharacterClass, new GUIContent("CharacterClass"), true);
-        EditorGUILayout.PropertyField(CharacterSkin, new GUIContent("CharacterSkin"), true);
-        EditorGUILayout.PropertyField(AnimationSpeed, new GUIContent("AnimationSpeed"), true);
+        EditorGUILayout.PropertyField(CharacterClass, new GUIContent("Character class"), true);
+        EditorGUILayout.PropertyField(CharacterSkin, new GUIContent("Character skin"), true);
+        EditorGUILayout.PropertyField(GeneralAnimationSpeed, new GUIContent("General animation speed"), true);
+
+        // Dictionary Properties for Animation
+        Animations = serializedObject.FindProperty("AnimationType");
+        Atlasses = serializedObject.FindProperty("Atlasses");
+        Looping = serializedObject.FindProperty("AnimationLoop");
+        CustomSpeeds = serializedObject.FindProperty("AnimationDuration");
+
+        // Dictionary Properties for EndAnimation
+        EndAnimations = serializedObject.FindProperty("EndAnimationType");
+        EndAtlasses = serializedObject.FindProperty("EndAtlasses");
+
+        // get all existing EnumTypes
+        var animStates = Enum.GetValues(typeof(AnimationController.AnimatorStates));
+
+        // set arraysize to length of enum
+        Atlasses.arraySize = animStates.Length;
+        Looping.arraySize = animStates.Length;
+        Animations.arraySize = animStates.Length;
+        CustomSpeeds.arraySize = animStates.Length;
+
+        EndAtlasses.arraySize = animStates.Length;
+        EndAnimations.arraySize = animStates.Length;
 
         GUILayout.BeginHorizontal();
         GUILayout.Label("Animation");
@@ -44,20 +78,7 @@ public class AnimEditor : Editor
         GUILayout.Label("Atlasses");
         GUILayout.EndHorizontal();
 
-        animations = serializedObject.FindProperty("AnimationType");
-        looping = serializedObject.FindProperty("AnimationLoop");
-        atlasses = serializedObject.FindProperty("Atlasses");
-
-        // get all existing EnumTypes
-        var animStates = Enum.GetValues(typeof(AnimationController.AnimatorStates));
-
-        // set arraysize to length of enum
-        atlasses.arraySize = animStates.Length;
-        looping.arraySize = animStates.Length;
-        animations.arraySize = animStates.Length;
-        customSpeeds.arraySize = animStates.Length;
-
-        // loop through every enum state
+        // loop through every enum state for Animation
         int count = 0;
         foreach (var animState in animStates)
         {
@@ -67,9 +88,9 @@ public class AnimEditor : Editor
             if (!directoryFound)
                 EditorGUI.BeginDisabledGroup(true);
 
-            EditorGUILayout.PropertyField(looping.GetArrayElementAtIndex(count), new GUIContent(animState.ToString()), true);
-            EditorGUILayout.PropertyField(customSpeeds.GetArrayElementAtIndex(count), new GUIContent(""), true);
-            EditorGUILayout.PropertyField(atlasses.GetArrayElementAtIndex(count), new GUIContent(""), true);
+            EditorGUILayout.PropertyField(Looping.GetArrayElementAtIndex(count), new GUIContent(animState.ToString()), true);
+            EditorGUILayout.PropertyField(CustomSpeeds.GetArrayElementAtIndex(count), new GUIContent(""), true);
+            EditorGUILayout.PropertyField(Atlasses.GetArrayElementAtIndex(count), new GUIContent(""), true);
 
             if (!directoryFound)
                 EditorGUI.EndDisabledGroup();
@@ -79,18 +100,51 @@ public class AnimEditor : Editor
 
             try
             {
-                animations.GetArrayElementAtIndex(count).enumValueIndex = Convert.ToInt32((AnimationController.AnimatorStates)Enum.Parse(typeof(AnimationController.AnimatorStates), animState.ToString(), true));
+                Animations.GetArrayElementAtIndex(count).enumValueIndex = Convert.ToInt32((AnimationController.AnimatorStates)Enum.Parse(typeof(AnimationController.AnimatorStates), animState.ToString(), true));
             }
             catch (ArgumentException) { } // Ignore
 
-            if (lastSpeed != AnimationSpeed.floatValue)
-                customSpeeds.GetArrayElementAtIndex(count).floatValue = AnimationSpeed.floatValue;
+            if (lastSpeed != GeneralAnimationSpeed.floatValue)
+                CustomSpeeds.GetArrayElementAtIndex(count).floatValue = GeneralAnimationSpeed.floatValue;
+            count++;
+        }
 
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("End-Animation");
+        GUILayout.Label("End-Atlasses");
+        GUILayout.EndHorizontal();
+
+        // loop through every enum state for EndAnimation
+        count = 0;
+        foreach (var animState in animStates)
+        {
+            bool directoryFound = Directory.Exists(path + animState.ToString() + "End");
+
+            GUILayout.BeginHorizontal();
+            if (!directoryFound)
+                EditorGUI.BeginDisabledGroup(true);
+
+            EditorGUILayout.PropertyField(EndAtlasses.GetArrayElementAtIndex(count), new GUIContent(animState.ToString() + "-End"), true);
+
+            if (!directoryFound)
+                EditorGUI.EndDisabledGroup();
+
+            GUILayout.Space(0);
+            GUILayout.EndHorizontal();
+
+            try
+            {
+                Animations.GetArrayElementAtIndex(count).enumValueIndex = Convert.ToInt32((AnimationController.AnimatorStates)Enum.Parse(typeof(AnimationController.AnimatorStates), animState.ToString(), true));
+            }
+            catch (ArgumentException) { } // Ignore
+
+            if (lastSpeed != GeneralAnimationSpeed.floatValue)
+                CustomSpeeds.GetArrayElementAtIndex(count).floatValue = GeneralAnimationSpeed.floatValue;
             count++;
         }
 
         serializedObject.ApplyModifiedProperties();
-        lastSpeed = AnimationSpeed.floatValue;
+        lastSpeed = GeneralAnimationSpeed.floatValue;
         serializedObject.Update();
     }
 }

@@ -325,8 +325,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c7fb4ce49072d34e9d6b2ee270aed06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000
-  AnimationLoop: 010000010000000001000000000000000000000100
+  CharacterClass: Infantry
+  CharacterSkin: basic
+  GeneralSpeed: 0
+  AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000
+  Atlasses:
+  - {fileID: 4343727234628468602, guid: 6db8b0344d022854eb5766ff8efb9d9b, type: 2}
+  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: 22fb6763762175149b6da762d7ebb4bc, type: 2}
+  - {fileID: 4343727234628468602, guid: 0f1a689d2a50e76478ccc1361ad7c9d2, type: 2}
+  - {fileID: 4343727234628468602, guid: 90d88b27ebc0b3641a8de4ecc065b742, type: 2}
+  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: f3dfcd954382c49419b1e3e494776393, type: 2}
+  - {fileID: 4343727234628468602, guid: f88efd6674f6b164ab5d5d8777787c39, type: 2}
+  - {fileID: 4343727234628468602, guid: 577a7bad3f97ba145bd7b03dfa3a2f04, type: 2}
+  - {fileID: 4343727234628468602, guid: 5fc8e76df56adc34f92be378555c92a0, type: 2}
+  - {fileID: 4343727234628468602, guid: 1c9045221fd5a0b47910ea8097ec3d6f, type: 2}
+  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: c5951280ad294d4459fd2effaeee322b, type: 2}
+  - {fileID: 4343727234628468602, guid: cb88c41f26a2e0c4887212bb2694ed71, type: 2}
+  - {fileID: 4343727234628468602, guid: 4be1f778d6ce9c4478082d0197be7d0f, type: 2}
+  - {fileID: 4343727234628468602, guid: 95d80c22b71d9d84ca2196e34cf7dd05, type: 2}
+  - {fileID: 4343727234628468602, guid: 658b2c8e9f3f8c04f8ea0dff2a2230c6, type: 2}
+  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: 019f54fbc91fb884b9ce7593251b6e43, type: 2}
+  - {fileID: 0}
+  AnimationLoop: 0100000100000000010000000000000000000100
   AnimationDuration:
   - 0
   - 0
@@ -348,32 +372,30 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 0
-  Atlasses:
-  - {fileID: 4343727234628468602, guid: 6db8b0344d022854eb5766ff8efb9d9b, type: 2}
+  EndAnimationType: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  EndAtlasses:
   - {fileID: 0}
-  - {fileID: 4343727234628468602, guid: 22fb6763762175149b6da762d7ebb4bc, type: 2}
-  - {fileID: 4343727234628468602, guid: 0f1a689d2a50e76478ccc1361ad7c9d2, type: 2}
-  - {fileID: 4343727234628468602, guid: 90d88b27ebc0b3641a8de4ecc065b742, type: 2}
   - {fileID: 0}
-  - {fileID: 4343727234628468602, guid: f3dfcd954382c49419b1e3e494776393, type: 2}
-  - {fileID: 4343727234628468602, guid: f88efd6674f6b164ab5d5d8777787c39, type: 2}
-  - {fileID: 4343727234628468602, guid: 577a7bad3f97ba145bd7b03dfa3a2f04, type: 2}
-  - {fileID: 4343727234628468602, guid: 5fc8e76df56adc34f92be378555c92a0, type: 2}
-  - {fileID: 4343727234628468602, guid: 1c9045221fd5a0b47910ea8097ec3d6f, type: 2}
   - {fileID: 0}
-  - {fileID: 4343727234628468602, guid: c5951280ad294d4459fd2effaeee322b, type: 2}
   - {fileID: 0}
-  - {fileID: 4343727234628468602, guid: cb88c41f26a2e0c4887212bb2694ed71, type: 2}
-  - {fileID: 4343727234628468602, guid: 4be1f778d6ce9c4478082d0197be7d0f, type: 2}
-  - {fileID: 4343727234628468602, guid: 95d80c22b71d9d84ca2196e34cf7dd05, type: 2}
-  - {fileID: 4343727234628468602, guid: 658b2c8e9f3f8c04f8ea0dff2a2230c6, type: 2}
   - {fileID: 0}
-  - {fileID: 4343727234628468602, guid: 019f54fbc91fb884b9ce7593251b6e43, type: 2}
   - {fileID: 0}
-  GeneralSpeed: 0
-  CharacterClass: Infantry
-  CharacterSkin: basic
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  EndAnimationLoop: 00
+  EndAnimationDuration: []
   m_Grounded: 0
   m_vSpeed: 0
   m_Speed: 0
@@ -471,7 +493,6 @@ MonoBehaviour:
   slowFactor: 1
   invincible: 0
   trigHit: 0
-  knockBackDuration: 1
   knockBackForceX: 6
   knockBackForceY: 6
 --- !u!114 &114790458009126038
@@ -558,6 +579,7 @@ MonoBehaviour:
   cooldown_Skill2: 0
   cooldown_Skill3: 0
   cooldown_Skill4: 0
+  className: 
   m_FacingRight: 1
   dashing: 0
   blocking: 0
