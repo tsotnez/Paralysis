@@ -73,7 +73,7 @@
             else if (trigJumpAttack)
             {
                 trigJumpAttack = false;
-                StartAnimation(AnimatorStates.JumpAttack, true);
+                StartAnimation(AnimatorStates.JumpAttack);
             }
             else if (trigJumpAttackEnd)
             {
