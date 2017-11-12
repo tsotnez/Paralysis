@@ -265,7 +265,7 @@ Prefab:
     - target: {fileID: 224867175232933978, guid: 1af496c58dcb903408eaa6d024bfe250,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 378
+      value: -383
       objectReference: {fileID: 0}
     - target: {fileID: 224867175232933978, guid: 1af496c58dcb903408eaa6d024bfe250,
         type: 2}
@@ -306,6 +306,11 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224317398947265206, guid: 1af496c58dcb903408eaa6d024bfe250,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 463.27002
       objectReference: {fileID: 0}
     - target: {fileID: 1880548955337550, guid: 1af496c58dcb903408eaa6d024bfe250, type: 2}
       propertyPath: m_IsActive
@@ -964,7 +969,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960, y: -804}
+  m_AnchoredPosition: {x: 959.99994, y: -804.00006}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &779978032
@@ -1073,6 +1078,36 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114488746061249168, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b,
+        type: 2}
+      propertyPath: Atlasses.Array.size
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 114488746061249168, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b,
+        type: 2}
+      propertyPath: EndAtlasses.Array.size
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 114488746061249168, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b,
+        type: 2}
+      propertyPath: AnimationType.Array.size
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 114488746061249168, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b,
+        type: 2}
+      propertyPath: AnimationLoop.Array.size
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 114488746061249168, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b,
+        type: 2}
+      propertyPath: EndAnimationType.Array.size
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 114488746061249168, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b,
+        type: 2}
+      propertyPath: AnimationDuration.Array.size
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 4370754418486606, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b, type: 2}
       propertyPath: m_LocalPosition.x
       value: -1.726
@@ -1108,6 +1143,11 @@ Prefab:
     - target: {fileID: 1468821578159268, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114488746061249168, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b,
+        type: 2}
+      propertyPath: AnimationType.Array.data[20]
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b, type: 2}
@@ -1444,6 +1484,36 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114377760250446108, guid: 1c93aba00e9725e409b2a5a0a2b0e223,
+        type: 2}
+      propertyPath: Atlasses.Array.size
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 114377760250446108, guid: 1c93aba00e9725e409b2a5a0a2b0e223,
+        type: 2}
+      propertyPath: EndAtlasses.Array.size
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 114377760250446108, guid: 1c93aba00e9725e409b2a5a0a2b0e223,
+        type: 2}
+      propertyPath: AnimationType.Array.size
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 114377760250446108, guid: 1c93aba00e9725e409b2a5a0a2b0e223,
+        type: 2}
+      propertyPath: AnimationLoop.Array.size
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 114377760250446108, guid: 1c93aba00e9725e409b2a5a0a2b0e223,
+        type: 2}
+      propertyPath: EndAnimationType.Array.size
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 114377760250446108, guid: 1c93aba00e9725e409b2a5a0a2b0e223,
+        type: 2}
+      propertyPath: AnimationDuration.Array.size
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 4855790070949082, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
       propertyPath: m_LocalPosition.x
       value: -3.1811585
@@ -1479,6 +1549,11 @@ Prefab:
     - target: {fileID: 1654434425598688, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114377760250446108, guid: 1c93aba00e9725e409b2a5a0a2b0e223,
+        type: 2}
+      propertyPath: AnimationType.Array.data[20]
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}

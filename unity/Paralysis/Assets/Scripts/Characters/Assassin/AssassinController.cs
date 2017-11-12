@@ -24,12 +24,15 @@ public class AssassinController : ChampionClassController
     {
         animCon = graphics.GetComponent<AssassinAnimationController>();
 
-        basicAttack1_var = new MeleeSkill(delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, true, cooldown_BasicAttack1, meeleRange);
-        basicAttack2_var = new MeleeSkill(delay_BasicAttack2, damage_BasicAttack2, Skill.skillEffect.nothing, 0, stamina_BasicAttack2, true, cooldown_BasicAttack2, meeleRange);
-        basicAttack3_var = new MeleeSkill(delay_BasicAttack3, damage_BasicAttack3, Skill.skillEffect.bleed, 10, stamina_BasicAttack3, true, cooldown_BasicAttack3, meeleRange);
+        //Instantiate skill variables
+        basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1 , delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, true, cooldown_BasicAttack1, meeleRange);
+        basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.skillEffect.nothing, 0, stamina_BasicAttack2, true, cooldown_BasicAttack2, meeleRange);
+        basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack3, delay_BasicAttack3, damage_BasicAttack3, Skill.skillEffect.bleed, 10, stamina_BasicAttack3, true, cooldown_BasicAttack3, meeleRange);
 
-        skill1_var = new MeleeSkill(delay_Skill1, damage_Skill1, Skill.skillEffect.stun, 3, stamina_Skill1, true, cooldown_Skill1, meeleRange);
-        skill4_var = new RangedSkill(true,new Vector2(7, 0), bulletPrefab, delay_Skill4 , damage_Skill4, Skill.skillEffect.knockback, 2, stamina_Skill4, true, cooldown_Skill4, 5);
+        skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.skillEffect.stun, 3, stamina_Skill1, true, cooldown_Skill1, meeleRange);
+        skill2_var = new Skill(AnimationController.AnimatorStates.Skill2, cooldown_Skill2);
+        skill3_var = new Skill(AnimationController.AnimatorStates.Skill3, cooldown_Skill3);
+        skill4_var = new RangedSkill(AnimationController.AnimatorStates.Skill4, true, new Vector2(7, 0), bulletPrefab, delay_Skill4 , damage_Skill4, Skill.skillEffect.knockback, 2, stamina_Skill4, true, cooldown_Skill4, 5);
     }
 
     protected override void FixedUpdate()
@@ -63,7 +66,7 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill2()
     {
-        if (canPerformAction(true) && canPerformAttack() && stats.loseStamina(stamina_Skill2))
+        if (canPerformAction(true) && canPerformAttack() && skill2_var.notOnCooldown && stats.loseStamina(stamina_Skill2))
         {
             if (invisible) stopInvisible();
             if (invisRoutine != null) StopCoroutine(invisRoutine);
@@ -76,7 +79,7 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void skill3()
     {
-        if (canPerformAction(true) && canPerformAttack() && stats.loseStamina(stamina_Skill3))
+        if (canPerformAction(true) && canPerformAttack() && skill3_var.notOnCooldown && stats.loseStamina(stamina_Skill3))
         {
             if (invisible) stopInvisible();
             StartCoroutine(shadowStepHit());
@@ -146,7 +149,7 @@ public class AssassinController : ChampionClassController
                         break;
                     case 4:
                         // do ambush attack
-                        doMeeleSkill(ref animCon.trigSkill3, new MeleeSkill(delay_Skill3, ambushAttack_damage, Skill.skillEffect.nothing, 3, stamina_BasicAttack1, true, 0, meeleRange));
+                        doMeeleSkill(ref animCon.trigSkill3, new MeleeSkill(0, delay_Skill3, ambushAttack_damage, Skill.skillEffect.nothing, 3, stamina_BasicAttack1, true, 0, meeleRange));
                         //reset Combo
                         abortCombo();
                         //end invisibility
@@ -250,6 +253,7 @@ public class AssassinController : ChampionClassController
             yield return new WaitUntil(() => animCon.currentAnimation != AnimationController.AnimatorStates.Skill3);
             stats.immovable = false;
         }
+        StartCoroutine(setSkillOnCooldown(skill3_var));
     }
 
     #endregion
@@ -260,6 +264,7 @@ public class AssassinController : ChampionClassController
     {
         yield return new WaitForSeconds(delay_Skill2);
         invisible = true;
+        StartCoroutine(setSkillOnCooldown(skill2_var));
 
         // set animation
         animCon.trigSkill2 = true;

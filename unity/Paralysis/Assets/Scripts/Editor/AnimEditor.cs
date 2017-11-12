@@ -60,7 +60,7 @@ public class AnimEditor : Editor
         EndAtlasses = serializedObject.FindProperty("EndAtlasses");
 
         // get all existing EnumTypes
-        var animStates = Enum.GetValues(typeof(AnimationController.AnimatorStates));
+        Array animStates = Enum.GetValues(typeof(AnimationController.AnimatorStates));
 
         // set arraysize to length of enum
         Atlasses.arraySize = animStates.Length;

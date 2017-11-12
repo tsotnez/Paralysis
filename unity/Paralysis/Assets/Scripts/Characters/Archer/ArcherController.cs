@@ -20,10 +20,12 @@ public class ArcherController : ChampionClassController
     {
         animCon = graphics.GetComponent<ArcherAnimationController>();
 
-        basicAttack1_var = new RangedSkill(false, new Vector2(9, 0), standartArrowPrefab, delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, true, cooldown_BasicAttack1, 6);
+        basicAttack1_var = new RangedSkill(AnimationController.AnimatorStates.BasicAttack1, false, new Vector2(9, 0), standartArrowPrefab, delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, true, cooldown_BasicAttack1, 6);
 
-        skill1_var = new RangedSkill(false, new Vector2(9, 0), greatArrowPrefab, delay_Skill1, damage_Skill1, Skill.skillEffect.knockback, 0, stamina_Skill1, true, cooldown_Skill1, 7);
-        skill3_var = new MeleeSkill(delay_Skill3, damage_Skill3, Skill.skillEffect.stun, 3, stamina_Skill3, false, cooldown_Skill3, 3);
+        skill1_var = new RangedSkill(AnimationController.AnimatorStates.Skill1, false, new Vector2(9, 0), greatArrowPrefab, delay_Skill1, damage_Skill1, Skill.skillEffect.knockback, 0, stamina_Skill1, true, cooldown_Skill1, 7);
+        skill2_var = new Skill(AnimationController.AnimatorStates.Skill2, cooldown_Skill2);
+        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.skillEffect.stun, 3, stamina_Skill3, false, cooldown_Skill3, 3);
+        skill4_var = new Skill(AnimationController.AnimatorStates.Skill4, cooldown_Skill4);
     }
 
     protected override void FixedUpdate()
@@ -47,7 +49,7 @@ public class ArcherController : ChampionClassController
             if(animCon.m_Grounded)
                 doRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill) basicAttack1_var);
             else //jump Attack
-                doRangeSkill(ref animCon.trigJumpAttack, new RangedSkill(false, new Vector2(11, -9), jumpAttackArrowPrefab, 0.2f, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, true , 0, 100, false));
+                doRangeSkill(ref animCon.trigJumpAttack, new RangedSkill(0, false, new Vector2(11, -9), jumpAttackArrowPrefab, 0.2f, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, true , 0, 100, false));
         }
     }
 
@@ -59,7 +61,7 @@ public class ArcherController : ChampionClassController
 
     public override void skill2()
     {
-        if (canPerformAction(true) && canPerformAttack() && stats.loseStamina(stamina_Skill2))
+        if (canPerformAction(true) && canPerformAttack() && skill2_var.notOnCooldown && stats.loseStamina(stamina_Skill2))
         {
             //Puts down a trap
             animCon.trigSkill2 = true;
@@ -74,6 +76,7 @@ public class ArcherController : ChampionClassController
         trapScript.damage = damage_Skill2;
         trapScript.whatToHit = m_whatToHit;
         trapScript.ready = true;
+        StartCoroutine(setSkillOnCooldown(skill2_var));
     }
 
     public override void skill3()
@@ -84,7 +87,7 @@ public class ArcherController : ChampionClassController
 
     public override void skill4()
     {
-        if (canPerformAction(true) && canPerformAttack() && stats.loseStamina(stamina_Skill4))
+        if (canPerformAction(true) && canPerformAttack() && skill4_var.notOnCooldown && stats.loseStamina(stamina_Skill4))
         {
             //Jump back while being invincible
             if (disengageRoutine != null)
@@ -116,5 +119,6 @@ public class ArcherController : ChampionClassController
         stats.invincible = false;
         disengaging = false;
         stats.immovable = false;
+        StartCoroutine(setSkillOnCooldown(skill4_var));
     }
 }

@@ -126,6 +126,8 @@ public class CharacterStats : MonoBehaviour {
     {
         if (!invincible)
         {
+            if (controller.blocking) amount /= 2; //Reduce damage by 50% if blocking
+
             GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false); //Show number of damage received
             nextTextPosition = -nextTextPosition; //Toggle next text positon
             text.GetComponentInChildren<Text>().text = amount.ToString();
@@ -134,6 +136,19 @@ public class CharacterStats : MonoBehaviour {
             if (playAnimation) trigHit = true; //Play hit animation
             if (currentHealth <= 0) die();
         }
+    }
+
+    /// <summary>
+    /// Same as "takeDamage" but no check if invincible and wont lower damage if blocking
+    /// </summary>
+    private void takeBleedDamage(int amount)
+    {
+        GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false); //Show number of damage received
+        nextTextPosition = -nextTextPosition; //Toggle next text positon
+        text.GetComponentInChildren<Text>().text = amount.ToString();
+
+        this.currentHealth -= amount; //Substract health
+        if (currentHealth <= 0) die();
     }
 
     public void startStunned(int time)
@@ -156,7 +171,7 @@ public class CharacterStats : MonoBehaviour {
 
     public void startKnockBack(Vector3 origin)
     {
-        if (!invincible)
+        if (!invincible && !controller.blocking) //Only knock back if not blocking and not invincible
         {
             if (knockBackRoutine != null) StopCoroutine(knockBackRoutine);
             knockBackRoutine = StartCoroutine(knockBack(new Vector2(origin.x, origin.y)));
@@ -208,7 +223,7 @@ public class CharacterStats : MonoBehaviour {
     //Repeats itself as long as bleeding is true
     private void bleedDamage()
     {
-        takeDamage(1, false);
+        takeBleedDamage(1);
         if (bleeding) Invoke("bleedDamage", 1);
     }
 

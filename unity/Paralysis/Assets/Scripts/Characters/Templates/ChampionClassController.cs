@@ -128,6 +128,8 @@ public abstract class ChampionClassController : MonoBehaviour
     protected CharacterStats stats;                                         // Reference to stats
     protected Transform graphics;                                           // Reference to the graphics child
     protected ChampionAnimationController animCon;                          // Reference to the Animation Contoller
+    [HideInInspector]
+    public HotbarController hotbar;
 
     //Coroutines
     protected Coroutine comboRoutine;
@@ -247,7 +249,7 @@ public abstract class ChampionClassController : MonoBehaviour
 
         // Deal damage to all enemies
         animCon.trigJumpAttackEnd = true;
-        StartCoroutine(doMeeleSkill_Hit(new MeleeSkill(0, damage_JumpAttack, Skill.skillEffect.nothing, 0, 10, false, 0 , m_jumpAttackRadius)));
+        StartCoroutine(doMeeleSkill_Hit(new MeleeSkill(0, 0, damage_JumpAttack, Skill.skillEffect.nothing, 0, 10, false, 0 , m_jumpAttackRadius)));
 
         Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
         jumpAttacking = false;
@@ -378,7 +380,7 @@ public abstract class ChampionClassController : MonoBehaviour
     protected void doMeeleSkill(ref bool animationVar, MeleeSkill skillToPerform)
     { 
         //Validate that character is not attacking and standing on ground
-        if (canPerformAction(skillToPerform.needsToBeGrounded) && canPerformAttack() && stats.loseStamina(skillToPerform.staminaCost))
+        if (canPerformAction(skillToPerform.needsToBeGrounded) && canPerformAttack() && skillToPerform.notOnCooldown && stats.loseStamina(skillToPerform.staminaCost))
         {
             // set animation trigger
             animationVar = true;
@@ -441,6 +443,9 @@ public abstract class ChampionClassController : MonoBehaviour
                 target.takeDamage(skillToPerform.damage, false);
             }
         }
+
+        StartCoroutine(setSkillOnCooldown(skillToPerform));
+            
     }
 
     /// <summary>
@@ -463,7 +468,7 @@ public abstract class ChampionClassController : MonoBehaviour
     protected void doRangeSkill(ref bool animationVar, RangedSkill skillToPerform)
     {
         //Validate that character is not attacking and standing on ground
-        if (canPerformAction(skillToPerform.needsToBeGrounded) && canPerformAttack() && stats.loseStamina(skillToPerform.staminaCost))
+        if (canPerformAction(skillToPerform.needsToBeGrounded) && canPerformAttack() && skillToPerform.notOnCooldown && stats.loseStamina(skillToPerform.staminaCost))
         {
             // set animation trigger
             animationVar = true;
@@ -499,8 +504,25 @@ public abstract class ChampionClassController : MonoBehaviour
 
         Instantiate(goProjectile, transform.position + new Vector3(1f * direction, 0.3f), new Quaternion(goProjectile.transform.rotation.x,
             goProjectile.transform.rotation.y, goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));
+
+        StartCoroutine(setSkillOnCooldown(skillToPerform));
     }
 
+    #endregion
+
+    #region setOnCooldown
+    protected IEnumerator setSkillOnCooldown(Skill skillToPerform)
+    {
+        //Set on cooldown
+        if (skillToPerform.cooldown > 0)
+        {
+            hotbar.setOnCooldown(skillToPerform.name, skillToPerform.cooldown);
+
+            skillToPerform.notOnCooldown = false;
+            yield return new WaitForSeconds(skillToPerform.cooldown);
+            skillToPerform.notOnCooldown = true;
+        }
+    }
     #endregion
 
     #region Character Can Perform
