@@ -8,29 +8,31 @@ SpriteAtlas:
   m_Name: KnockedBackAtlas
   m_EditorData:
     textureSettings:
+      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 0
-      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
+      sRGB: 0
     platformSettings: []
     packingParameters:
-      paddingPower: 2
+      serializedVersion: 2
+      padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 0
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 168edebc815f1c4e79bf2e72aa4770e9
+      Hash: 92d1d1f6f24046e1de54322f7ba2d67c
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 168edebc815f1c4e79bf2e72aa4770e9
+    hashString: 92d1d1f6f24046e1de54322f7ba2d67c
     totalSpriteSurfaceArea: 33966000
     packables:
     - {fileID: 102900000, guid: 8484ff08c4a9ae24fa39043bddc69369, type: 3}

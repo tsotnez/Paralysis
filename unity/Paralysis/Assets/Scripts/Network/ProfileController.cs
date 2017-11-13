@@ -9,6 +9,11 @@ public class ProfileController : MonoBehaviour {
     /// Start this instance.
     /// </summary>
 
+    public Text player1;
+    public Text Connect;
+
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -21,4 +26,20 @@ public class ProfileController : MonoBehaviour {
 	}
 
 
+    public void NameUser(string name)
+    {
+        this.player1.text = name;
+
+    }
+
+
+    public void Connection(bool connected)
+    {
+        if (connected)
+            this.Connect.text = "Connected";
+
+        else
+            this.Connect.text = "No connected";
+        
+    }
 }

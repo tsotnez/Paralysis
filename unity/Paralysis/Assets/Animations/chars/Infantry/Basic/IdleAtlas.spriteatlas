@@ -8,29 +8,31 @@ SpriteAtlas:
   m_Name: IdleAtlas
   m_EditorData:
     textureSettings:
+      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 0
-      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
+      sRGB: 0
     platformSettings: []
     packingParameters:
-      paddingPower: 2
+      serializedVersion: 2
+      padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 1
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 06b5e0dd1fbd5a996768f07b4551af4c
+      Hash: d94f218e0512b2e0b2cfcc3eafd76682
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 06b5e0dd1fbd5a996768f07b4551af4c
+    hashString: d94f218e0512b2e0b2cfcc3eafd76682
     totalSpriteSurfaceArea: 7959840
     packables:
     - {fileID: 102900000, guid: 24a832898eb146e40ad1667824e09e90, type: 3}
