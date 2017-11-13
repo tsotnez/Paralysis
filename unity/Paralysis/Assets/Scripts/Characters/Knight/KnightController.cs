@@ -15,12 +15,12 @@ public class KnightController : ChampionClassController
     {
         animCon = graphics.GetComponent<KnightAnimationController>();
 
-        basicAttack1_var = new MeleeSkill(delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, true, cooldown_BasicAttack1, meeleRange);
-        basicAttack2_var = new MeleeSkill(delay_BasicAttack3, damage_BasicAttack3, Skill.skillEffect.nothing, 0, stamina_BasicAttack3, true, cooldown_BasicAttack2, meeleRange);
+        basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, true, cooldown_BasicAttack1, meeleRange);
+        basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack3, damage_BasicAttack3, Skill.skillEffect.nothing, 0, stamina_BasicAttack3, true, cooldown_BasicAttack2, meeleRange);
 
-        skill1_var = new MeleeSkill(delay_Skill1, damage_Skill1, Skill.skillEffect.stun, 3, stamina_Skill1, false, cooldown_Skill1, 1.5f);
-        skill3_var = new MeleeSkill(delay_Skill3, damage_Skill3, Skill.skillEffect.knockback, 0, stamina_Skill3, false, cooldown_Skill3, 1.5f);
-        skill4_var = new RangedSkill(false, new Vector2(7, 0), Skill4_Spear, delay_Skill4, damage_Skill4, Skill.skillEffect.nothing, 0, stamina_Skill4, true, cooldown_Skill4, 5f);
+        skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.skillEffect.stun, 3, stamina_Skill1, false, cooldown_Skill1, 1.5f);
+        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill3, damage_Skill3, Skill.skillEffect.knockback, 0, stamina_Skill3, false, cooldown_Skill3, 1.5f);
+        skill4_var = new RangedSkill(AnimationController.AnimatorStates.Skill3, false, new Vector2(7, 0), Skill4_Spear, delay_Skill4, damage_Skill4, Skill.skillEffect.nothing, 0, stamina_Skill4, true, cooldown_Skill4, 5f);
     }
 
     // Update is called once per frame

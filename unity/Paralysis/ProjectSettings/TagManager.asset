@@ -23,8 +23,8 @@ TagManager:
   - Background
   - Ground
   - Walls
-  - Player
-  - Enemy
+  - Team1
+  - Team2
   - Projectile
   - 
   - 
@@ -54,9 +54,12 @@ TagManager:
   - name: Player
     uniqueID: 2798691019
     locked: 0
+  - name: DynamicUI
+    uniqueID: 4129098791
+    locked: 0
   - name: foreground
     uniqueID: 2990562645
     locked: 0
-  - name: DynamicUI
-    uniqueID: 4129098791
+  - name: MainUI
+    uniqueID: 2636575447
     locked: 0

@@ -1,9 +1,10 @@
-﻿
+﻿using UnityEngine;
+
 /// <summary>
 /// Describes a skill
 /// </summary>
 
-public abstract class Skill{
+public class Skill{
 
     public enum skillEffect
     {
@@ -13,6 +14,7 @@ public abstract class Skill{
         bleed
     }
 
+    public AnimationController.AnimatorStates name;
     public skillEffect effect;
     public int effectDuration;
     public int damage;
@@ -26,9 +28,10 @@ public abstract class Skill{
     public bool notOnCooldown = true;
 
 
-    public Skill (float skillDelay, int skillDamage, Skill.skillEffect skillSpecialEffect, int skillSpecialEffectTime, int skillStaminaCost, bool skillSingleTarget, 
+    public Skill (AnimationController.AnimatorStates skillName, float skillDelay, int skillDamage, Skill.skillEffect skillSpecialEffect, int skillSpecialEffectTime, int skillStaminaCost, bool skillSingleTarget, 
         float skillCooldown, float skillRange, bool skillNeedsToBeGrounded = true)
     {
+        name = skillName;
         delay = skillDelay;
         damage = skillDamage;
         effect = skillSpecialEffect;
@@ -40,6 +43,9 @@ public abstract class Skill{
         singleTarget = skillSingleTarget;
     }
 
-
-
+    public Skill(AnimationController.AnimatorStates skillName, float skillCooldown)
+    {
+        cooldown = skillCooldown;
+        name = skillName;
+    }
 }

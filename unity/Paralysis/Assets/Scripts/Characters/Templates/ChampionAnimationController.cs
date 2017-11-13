@@ -48,7 +48,6 @@
                 case AnimatorStates.BasicAttack2:
                 case AnimatorStates.BasicAttack3:
                 case AnimatorStates.JumpAttack:
-                case AnimatorStates.JumpAttackEnd:
                 case AnimatorStates.Skill1:
                 case AnimatorStates.Skill2:
                 case AnimatorStates.Skill3:
@@ -79,7 +78,7 @@
             else if (trigJumpAttackEnd)
             {
                 trigJumpAttackEnd = false;
-                StartAnimation(AnimatorStates.JumpAttackEnd);
+                StartEndAnimation();
             }
             else if (trigBasicAttack1)
             {

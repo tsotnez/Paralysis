@@ -17,11 +17,7 @@ public class CharacterStats : MonoBehaviour {
     public int currentHealth;
     public int maxStamina = 100;
     public int currentStamina;
-	public GameObject Hp;
-    public GameObject Stamina;
 	public int staminaRegRate = 2;
-    //private Vector2 vecHP;
-    //private Vector2 vecST;
 
     [Header("Statusses")]
     public bool stunned = false;
@@ -41,31 +37,52 @@ public class CharacterStats : MonoBehaviour {
     [SerializeField]
     private float knockBackForceY = 600;        // Force used when knockbacking Y
 
+    [HideInInspector]
+    public HotbarController hotbar;
+
+    [Header("Status Bars")]
+    public Image TeamColor;
+    public Sprite Team1Color;
+    public Sprite Team2Color;
+    public Image floatingHpBar;
+    public Image floatingStaminaBar;
+
     void Awake()
     {
         currentHealth = maxHealth;
         currentStamina = maxStamina;
-        this.Hp.GetComponentInChildren<Text>().text = this.currentHealth + "/" + this.maxHealth; ;
-        this.Stamina.GetComponentInChildren<Text>().text = this.currentStamina + "/" + this.maxStamina;
 
         animCon = transform.Find("graphics").GetComponent<ChampionAnimationController>();
         rigid = GetComponent<Rigidbody2D>();
         controller = GetComponent<ChampionClassController>();
         floatingTextPrefab = Resources.Load("Prefabs/FloatingText/FloatingText") as GameObject;
-
     }
     void Start()
     {
         InvokeRepeating("regenerateStamina", 0f, 1f);
+        
+        //Assign team Color
+        if (gameObject.layer == 11)
+            TeamColor.sprite = Team1Color;
+        else
+            TeamColor.sprite = Team2Color;
+
     }
 
     private void Update()
-    { 
-		this.Hp.GetComponentInChildren<Text>().text = this.currentHealth + "/" + this.maxHealth;
-		this.Stamina.GetComponentInChildren<Text>().text = this.currentStamina + "/" + this.maxStamina;
+    {
+        float h = currentHealth;
+        float mH = maxHealth;
 
-        this.Hp.GetComponent<Image>().fillAmount = (float)this.currentHealth / (float)this.maxHealth;
-        this.Stamina.GetComponent<Image>().fillAmount = (float)this.currentStamina / (float)this.maxStamina;
+        float s = currentStamina;
+        float mS = maxStamina;
+
+        float hpPercent = h / mH;
+        float staminaPercent = s / mS;
+
+        hotbar.setFillAmounts(hpPercent, staminaPercent);
+        floatingHpBar.fillAmount = hpPercent;
+        floatingStaminaBar.fillAmount = staminaPercent;
     }
 
     // Is called repeatetly to regenerate stamina value
@@ -109,17 +126,29 @@ public class CharacterStats : MonoBehaviour {
     {
         if (!invincible)
         {
-            GameObject text = floatingTextPrefab; 
-            text.GetComponent<RectTransform>().position += new Vector3(0.3f,0,0) * nextTextPosition;
+            if (controller.blocking) amount /= 2; //Reduce damage by 50% if blocking
+
+            GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false); //Show number of damage received
             nextTextPosition = -nextTextPosition; //Toggle next text positon
             text.GetComponentInChildren<Text>().text = amount.ToString();
-
-            Instantiate(floatingTextPrefab, transform.Find("CanvasStats"), false); //Show number of damage received
 
             this.currentHealth -= amount; //Substract health
             if (playAnimation) trigHit = true; //Play hit animation
             if (currentHealth <= 0) die();
         }
+    }
+
+    /// <summary>
+    /// Same as "takeDamage" but no check if invincible and wont lower damage if blocking
+    /// </summary>
+    private void takeBleedDamage(int amount)
+    {
+        GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false); //Show number of damage received
+        nextTextPosition = -nextTextPosition; //Toggle next text positon
+        text.GetComponentInChildren<Text>().text = amount.ToString();
+
+        this.currentHealth -= amount; //Substract health
+        if (currentHealth <= 0) die();
     }
 
     public void startStunned(int time)
@@ -142,7 +171,7 @@ public class CharacterStats : MonoBehaviour {
 
     public void startKnockBack(Vector3 origin)
     {
-        if (!invincible)
+        if (!invincible && !controller.blocking) //Only knock back if not blocking and not invincible
         {
             if (knockBackRoutine != null) StopCoroutine(knockBackRoutine);
             knockBackRoutine = StartCoroutine(knockBack(new Vector2(origin.x, origin.y)));
@@ -194,7 +223,7 @@ public class CharacterStats : MonoBehaviour {
     //Repeats itself as long as bleeding is true
     private void bleedDamage()
     {
-        takeDamage(1, false);
+        takeBleedDamage(1);
         if (bleeding) Invoke("bleedDamage", 1);
     }
 
