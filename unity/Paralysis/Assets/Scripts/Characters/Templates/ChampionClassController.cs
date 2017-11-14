@@ -109,6 +109,7 @@ public abstract class ChampionClassController : MonoBehaviour
     #endregion
 
     protected Transform m_GroundCheck;                                      // A position marking where to check if the player is grounded.
+    protected SpriteRenderer shadowRenderer;
     protected const float k_GroundedRadius = .02f;                           // Radius of the overlap circle to determine if grounded
 
     protected Skill basicAttack1_var;
@@ -145,6 +146,7 @@ public abstract class ChampionClassController : MonoBehaviour
         stats = GetComponent<CharacterStats>();
 
         animCon = graphics.GetComponent<ChampionAnimationController>();
+        shadowRenderer = m_GroundCheck.GetComponent<SpriteRenderer>();
     }
 
     protected virtual void Update()
@@ -171,6 +173,10 @@ public abstract class ChampionClassController : MonoBehaviour
                 animCon.m_Grounded = true;
             }
         }
+
+        //Disable shadow if mid air
+        if (shadowRenderer != null)
+            shadowRenderer.enabled = animCon.m_Grounded;
 
         // Determines the vertical speed
         animCon.m_vSpeed = m_Rigidbody2D.velocity.y;

@@ -8,6 +8,7 @@ public class CharacterStats : MonoBehaviour {
     private ChampionAnimationController animCon;
     private Rigidbody2D rigid;
     private ChampionClassController controller;
+    private GameObject stunnedSymbol;
 
     private GameObject floatingTextPrefab;
     private float nextTextPosition = 1; //Will the next damage number be instaitated on the left or on the right 
@@ -56,6 +57,7 @@ public class CharacterStats : MonoBehaviour {
         rigid = GetComponent<Rigidbody2D>();
         controller = GetComponent<ChampionClassController>();
         floatingTextPrefab = Resources.Load("Prefabs/FloatingText/FloatingText") as GameObject;
+        stunnedSymbol = transform.Find("stunnedSymbol").gameObject;
     }
     void Start()
     {
@@ -93,6 +95,7 @@ public class CharacterStats : MonoBehaviour {
             if (currentStamina + staminaRegRate > maxStamina) this.currentStamina = this.maxStamina;
             else this.currentStamina += this.staminaRegRate;
 		}
+
     }
 
     /// <summary>
@@ -165,7 +168,9 @@ public class CharacterStats : MonoBehaviour {
     {
         rigid.velocity = Vector2.zero;
         stunned = true;
+        stunnedSymbol.SetActive(true);
         yield return new WaitForSeconds(time);
+        stunnedSymbol.SetActive(false);
         stunned = false;
     }
 

@@ -17,6 +17,8 @@ public abstract class UserControl : MonoBehaviour
     protected bool m_Skill4;
 
 
+    protected float lastVerticalValue = 0; //Saves the last value for the jump-sticks horizontal input
+
 
     public enum InputDevice
     {
@@ -43,6 +45,7 @@ public abstract class UserControl : MonoBehaviour
                 checkInputForKeyboardAndMouse();
                 break;
             case InputDevice.Ps4Controller:
+                checkInputForPs4Controller();
                 break;
         }
     }
@@ -142,7 +145,12 @@ public abstract class UserControl : MonoBehaviour
     /// </summary>
     protected virtual void checkInputForXboxController()
     {
+        //Set move to 0, 1 or -1 so character will move full speed or 0
         move = Input.GetAxis("Horizontal_Xbox");
+        if (move > 0) move = 1;
+        else if (move < 0) move = -1;
+        else move = 0;
+
         if (dash == 0)
         {
             if (Input.GetButtonDown("DashLeft_Xbox")) dash = -1;
@@ -176,13 +184,66 @@ public abstract class UserControl : MonoBehaviour
 
         if (!m_Jump)
         {
-            // Read the jump input in Update so button presses aren't missed.
-            m_Jump = Input.GetAxis("RightStickVertical_Xbox") < 0;
+            if (lastVerticalValue >= 0)
+                m_Jump = Input.GetAxis("RightStickVertical_Xbox") < 0;
         }
         if (!m_Stats.stunned && !m_Stats.knockedBack)
             defensive = Input.GetAxis("RightStickVertical_Xbox") > 0;
         else defensive = false;
 
+        lastVerticalValue = Input.GetAxis("RightStickVertical_Xbox"); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
+        m_Character.manageDefensive(defensive);
+    }
+
+    protected virtual void checkInputForPs4Controller()
+    {
+        //Set move to 0, 1 or -1 so character will move full speed or 0
+        move = Input.GetAxis("Horizontal_Ps4");
+        if (move > 0) move = 1;
+        else if (move < 0) move = -1;
+        else move = 0;
+
+        if (dash == 0)
+        {
+            if (Input.GetButtonDown("DashLeft_Ps4")) dash = -1;
+            else if (Input.GetButtonDown("DashRight_Ps4")) dash = 1;
+        }
+
+        if (!m_Attack)
+        {
+            m_Attack = Input.GetAxis("BasicAttack_Ps4") < 0;
+        }
+
+        if (!m_Skill1)
+        {
+            m_Skill1 = Input.GetButtonDown("Skill1_Ps4");
+        }
+
+        if (!m_Skill2)
+        {
+            m_Skill2 = Input.GetButtonDown("Skill2_Ps4");
+        }
+
+        if (!m_Skill3)
+        {
+            m_Skill3 = Input.GetButtonDown("Skill3_Ps4");
+        }
+
+        if (!m_Skill4)
+        {
+            m_Skill4 = Input.GetButtonDown("Skill4_Ps4");
+        }
+
+        if (!m_Jump)
+        {
+            if (lastVerticalValue >= 0)
+                m_Jump = Input.GetAxis("RightStickVertical_Ps4") < 0;
+        }
+        if (!m_Stats.stunned && !m_Stats.knockedBack)
+            defensive = Input.GetAxis("RightStickVertical_Ps4") > 0;
+        else defensive = false;
+
+        lastVerticalValue = Input.GetAxis("RightStickVertical_Ps4"); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
         m_Character.manageDefensive(defensive);
     }
 }

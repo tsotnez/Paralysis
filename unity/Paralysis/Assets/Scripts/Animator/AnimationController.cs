@@ -35,6 +35,8 @@ public abstract class AnimationController : MonoBehaviour
     private Dictionary<AnimatorStates, SpriteAtlas> animationSpriteEnds;    // Saves all Sprite-End-Animations to the Animations
     private Dictionary<AnimatorStates, float> animationDuration;            // Saves all Speed of the Animations
     private Dictionary<AnimatorStates, bool> animationLoop;                 // Saves if animation should be looped
+    private AudioSource audio;                                              // reference to audio soirce for playing sounds
+    private ChampionClassController controller;
 
     private bool finishedInitialization = false;                            // True if finished loading all the sprites
     private SpriteRenderer spriteRenderer;                                  // Sprite Renderer
@@ -79,6 +81,8 @@ public abstract class AnimationController : MonoBehaviour
         animationSpriteEnds = new Dictionary<AnimatorStates, SpriteAtlas>();
         animationDuration = new Dictionary<AnimatorStates, float>();
         animationLoop = new Dictionary<AnimatorStates, bool>();
+        audio = GetComponent<AudioSource>();
+        controller = GetComponentInParent<ChampionClassController>();
 
         // initiate Components
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -162,6 +166,21 @@ public abstract class AnimationController : MonoBehaviour
     {
         while (true)
         {
+            //Handle audio
+            AudioClip clip = Resources.Load<AudioClip>("Audio/Characters/"  + controller.className + "/" + animation.ToString());
+            if (clip != null)
+            {
+                if (audio.clip != clip || animationLoop[animation])
+                {
+                    audio.clip = clip;
+                    audio.Play();
+                }
+                else
+                    audio.Stop();
+            }
+            else
+                audio.Stop();
+
             // play each animation of the atlas
             for (int i = 0; i < atlas.spriteCount; i++)
             {
