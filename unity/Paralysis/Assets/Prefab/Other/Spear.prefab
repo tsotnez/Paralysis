@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114125136945849764}
   - component: {fileID: 50630935450158470}
   - component: {fileID: 61809811630486686}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Spear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,15 +99,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a3743c547dfd04bb8b2abc3bedcc4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ready: 0
   explodeOnHit: 0
-  speed: 7
+  creator: {fileID: 0}
+  speed: {x: 7, y: 0}
   direction: 0
   explosionPrefab: {fileID: 0}
   range: 5
   effect: 0
   effectDuration: 1
   damage: 0
+  whatToHit:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!212 &212181927283793142
 SpriteRenderer:
   m_ObjectHideFlags: 1

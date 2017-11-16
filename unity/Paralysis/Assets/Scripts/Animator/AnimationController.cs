@@ -35,8 +35,7 @@ public abstract class AnimationController : MonoBehaviour
     private Dictionary<AnimatorStates, SpriteAtlas> animationSpriteEnds;    // Saves all Sprite-End-Animations to the Animations
     private Dictionary<AnimatorStates, float> animationDuration;            // Saves all Speed of the Animations
     private Dictionary<AnimatorStates, bool> animationLoop;                 // Saves if animation should be looped
-    private AudioSource audio;                                              // reference to audio soirce for playing sounds
-    private ChampionClassController controller;
+    private AudioSource audioSource;                                        // reference to audio soirce for playing sounds
 
     private bool finishedInitialization = false;                            // True if finished loading all the sprites
     private SpriteRenderer spriteRenderer;                                  // Sprite Renderer
@@ -81,8 +80,7 @@ public abstract class AnimationController : MonoBehaviour
         animationSpriteEnds = new Dictionary<AnimatorStates, SpriteAtlas>();
         animationDuration = new Dictionary<AnimatorStates, float>();
         animationLoop = new Dictionary<AnimatorStates, bool>();
-        audio = GetComponent<AudioSource>();
-        controller = GetComponentInParent<ChampionClassController>();
+        audioSource = GetComponent<AudioSource>();
 
         // initiate Components
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -164,22 +162,30 @@ public abstract class AnimationController : MonoBehaviour
 
     IEnumerator PlayAnimation(AnimatorStates animation, SpriteAtlas atlas, float delay, bool HoldOnEnd = false)
     {
-        while (true)
+        //Handle audio
+        AudioClip clip = Resources.Load<AudioClip>("Audio/Characters/" + CharacterClass + "/" + animation.ToString());
+        if (clip != null)
         {
-            //Handle audio
-            AudioClip clip = Resources.Load<AudioClip>("Audio/Characters/"  + controller.className + "/" + animation.ToString());
-            if (clip != null)
+            if (audioSource.clip != clip || (audioSource.clip == clip && animationLoop[animation]))
             {
-                if (audio.clip != clip || animationLoop[animation])
-                {
-                    audio.clip = clip;
-                    audio.Play();
-                }
-                else
-                    audio.Stop();
+                //New clip or loop
+                audioSource.clip = clip;
+                audioSource.Play();
+            }
+            else if (audioSource.clip == clip && !animationLoop[animation])
+            {
+                //Same clip again
+                audioSource.Stop();
+                audioSource.Play();
             }
             else
-                audio.Stop();
+                audioSource.Stop();
+        }
+        else
+            audioSource.Stop();
+
+        while (true)
+        {
 
             // play each animation of the atlas
             for (int i = 0; i < atlas.spriteCount; i++)

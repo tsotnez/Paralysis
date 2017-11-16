@@ -48,8 +48,8 @@ public class ArcherController : ChampionClassController
         {
             if(animCon.m_Grounded)
                 doRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill) basicAttack1_var);
-            else //jump Attack
-                doRangeSkill(ref animCon.trigJumpAttack, new RangedSkill(0, false, new Vector2(11, -9), jumpAttackArrowPrefab, 0.2f, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, true , 0, 100, false));
+            else if(doubleJumped) //jump Attack
+                doRangeSkill(ref animCon.trigJumpAttack, new RangedSkill(0, false, new Vector2(4, -9), jumpAttackArrowPrefab, 0.2f, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, true , 0, 100, false));
         }
     }
 
@@ -89,6 +89,7 @@ public class ArcherController : ChampionClassController
     {
         if (canPerformAction(true) && canPerformAttack() && skill4_var.notOnCooldown && stats.loseStamina(stamina_Skill4))
         {
+            placeTrap();
             //Jump back while being invincible
             if (disengageRoutine != null)
                 StopCoroutine(disengageRoutine);

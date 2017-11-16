@@ -3,6 +3,7 @@
 public abstract class UserControl : MonoBehaviour
 {
     public InputDevice inputDevice = InputDevice.KeyboardMouse; //Whick input device is used?
+    public PlayerNumbers playerNumber = PlayerNumbers.Player1;
     protected ChampionClassController m_Character;
     protected CharacterStats m_Stats;
     protected bool m_Jump;
@@ -25,6 +26,11 @@ public abstract class UserControl : MonoBehaviour
         XboxController,
         KeyboardMouse,
         Ps4Controller
+    }
+
+    public enum PlayerNumbers
+    {
+        Player1, Player2, Player3, Player4
     }
 
     protected void Awake()
@@ -146,104 +152,104 @@ public abstract class UserControl : MonoBehaviour
     protected virtual void checkInputForXboxController()
     {
         //Set move to 0, 1 or -1 so character will move full speed or 0
-        move = Input.GetAxis("Horizontal_Xbox");
+        move = Input.GetAxis("Horizontal_Xbox" + playerNumber.ToString());
         if (move > 0) move = 1;
         else if (move < 0) move = -1;
         else move = 0;
 
         if (dash == 0)
         {
-            if (Input.GetButtonDown("DashLeft_Xbox")) dash = -1;
-            else if (Input.GetButtonDown("DashRight_Xbox")) dash = 1;
+            if (Input.GetButtonDown("DashLeft_Xbox" + playerNumber.ToString())) dash = -1;
+            else if (Input.GetButtonDown("DashRight_Xbox" + playerNumber.ToString())) dash = 1;
         }
 
         if (!m_Attack)
         {
-            m_Attack = Input.GetAxis("BasicAttack_Xbox") < 0;
+            m_Attack = Input.GetAxis("BasicAttack_Xbox" + playerNumber.ToString()) < 0;
         }
 
         if (!m_Skill1)
         {
-            m_Skill1 = Input.GetButtonDown("Skill1_Xbox");
+            m_Skill1 = Input.GetButtonDown("Skill1_Xbox" + playerNumber.ToString());
         }
 
         if (!m_Skill2)
         {
-            m_Skill2 = Input.GetButtonDown("Skill2_Xbox");
+            m_Skill2 = Input.GetButtonDown("Skill2_Xbox" + playerNumber.ToString());
         }
 
         if (!m_Skill3)
         {
-            m_Skill3 = Input.GetButtonDown("Skill3_Xbox");
+            m_Skill3 = Input.GetButtonDown("Skill3_Xbox" + playerNumber.ToString());
         }
 
         if (!m_Skill4)
         {
-            m_Skill4 = Input.GetButtonDown("Skill4_Xbox");
+            m_Skill4 = Input.GetButtonDown("Skill4_Xbox" + playerNumber.ToString());
         }
 
         if (!m_Jump)
         {
             if (lastVerticalValue >= 0)
-                m_Jump = Input.GetAxis("RightStickVertical_Xbox") < 0;
+                m_Jump = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()) < 0;
         }
         if (!m_Stats.stunned && !m_Stats.knockedBack)
-            defensive = Input.GetAxis("RightStickVertical_Xbox") > 0;
+            defensive = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()) > 0;
         else defensive = false;
 
-        lastVerticalValue = Input.GetAxis("RightStickVertical_Xbox"); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
+        lastVerticalValue = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
         m_Character.manageDefensive(defensive);
     }
 
     protected virtual void checkInputForPs4Controller()
     {
         //Set move to 0, 1 or -1 so character will move full speed or 0
-        move = Input.GetAxis("Horizontal_Ps4");
+        move = Input.GetAxis("Horizontal_Ps4" + playerNumber.ToString());
         if (move > 0) move = 1;
         else if (move < 0) move = -1;
         else move = 0;
 
         if (dash == 0)
         {
-            if (Input.GetButtonDown("DashLeft_Ps4")) dash = -1;
-            else if (Input.GetButtonDown("DashRight_Ps4")) dash = 1;
+            if (Input.GetButtonDown("DashLeft_Ps4" + playerNumber.ToString())) dash = -1;
+            else if (Input.GetButtonDown("DashRight_Ps4" + playerNumber.ToString())) dash = 1;
         }
 
         if (!m_Attack)
         {
-            m_Attack = Input.GetAxis("BasicAttack_Ps4") < 0;
+            m_Attack = Input.GetAxis("BasicAttack_Ps4" + playerNumber.ToString()) < 0;
         }
 
         if (!m_Skill1)
         {
-            m_Skill1 = Input.GetButtonDown("Skill1_Ps4");
+            m_Skill1 = Input.GetButtonDown("Skill1_Ps4" + playerNumber.ToString());
         }
 
         if (!m_Skill2)
         {
-            m_Skill2 = Input.GetButtonDown("Skill2_Ps4");
+            m_Skill2 = Input.GetButtonDown("Skill2_Ps4" + playerNumber.ToString());
         }
 
         if (!m_Skill3)
         {
-            m_Skill3 = Input.GetButtonDown("Skill3_Ps4");
+            m_Skill3 = Input.GetButtonDown("Skill3_Ps4" + playerNumber.ToString());
         }
 
         if (!m_Skill4)
         {
-            m_Skill4 = Input.GetButtonDown("Skill4_Ps4");
+            m_Skill4 = Input.GetButtonDown("Skill4_Ps4" + playerNumber.ToString());
         }
 
         if (!m_Jump)
         {
             if (lastVerticalValue >= 0)
-                m_Jump = Input.GetAxis("RightStickVertical_Ps4") < 0;
+                m_Jump = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()) < 0;
         }
         if (!m_Stats.stunned && !m_Stats.knockedBack)
-            defensive = Input.GetAxis("RightStickVertical_Ps4") > 0;
+            defensive = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()) > 0;
         else defensive = false;
 
-        lastVerticalValue = Input.GetAxis("RightStickVertical_Ps4"); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
+        lastVerticalValue = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
         m_Character.manageDefensive(defensive);
     }
 }

@@ -1,13 +1,18 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using UnityEngine.UI;
 
 public class LocalMultiplayerManager : MonoBehaviour {
 
+    //GameOver overlay
+    public Transform gameOverOverlay;
+
     //Prefabs for players
     public static GameObject player1 = null;
+    public static UserControl.InputDevice inputP1 = UserControl.InputDevice.XboxController;
     public static GameObject player2 = null;
+    public static UserControl.InputDevice inputP2 = UserControl.InputDevice.KeyboardMouse;
 
     //Redundant variables so they can be assigned in the inspector (static ones cant)
     public GameObject defaultPlayer1 = null;
@@ -46,7 +51,7 @@ public class LocalMultiplayerManager : MonoBehaviour {
         players[0].GetComponent<ChampionClassController>().hotbar = hotbar.GetComponent<HotbarController>();
 
         GameObject hotbar2 = Instantiate(hotbarPrefab, parent, false);
-        hotbar2.transform.position = new Vector3(5f, hotbar2.transform.position.y, hotbar.transform.position.z);
+        hotbar2.transform.position = new Vector3(4.4f, hotbar2.transform.position.y, hotbar.transform.position.z);
         hotbar2.GetComponent<HotbarController>().setChampionName(player2.name);
         hotbar2.GetComponent<HotbarController>().initAbilityImages(player2.name);
         players[1].GetComponent<CharacterStats>().hotbar = hotbar2.GetComponent<HotbarController>();
@@ -68,6 +73,7 @@ public class LocalMultiplayerManager : MonoBehaviour {
 
             //when starting from champion selection, disable debug buttons, instantiate players
             GameObject instPlayer1 = Instantiate(player1, spawnPlayer1.position, Quaternion.identity);
+            instPlayer1.GetComponent<UserControl>().inputDevice = inputP1;
             Camera.main.GetComponent<CameraBehaviour>().changeTarget(instPlayer1.transform);
 
             GameObject instPlayer2 = Instantiate(player2, spawnPlayer2.position, Quaternion.identity);
@@ -78,7 +84,8 @@ public class LocalMultiplayerManager : MonoBehaviour {
             whatToHit |= (1 << 11);
 
             instPlayer2.GetComponent<ChampionClassController>().m_whatToHit = whatToHit;
-            instPlayer2.GetComponent<UserControl>().inputDevice = UserControl.InputDevice.XboxController;
+            instPlayer2.GetComponent<UserControl>().inputDevice = inputP2;
+            instPlayer2.GetComponent<UserControl>().playerNumber = UserControl.PlayerNumbers.Player2;
 
             Camera.main.GetComponent<CameraBehaviour>().switchToMultiplayer(instPlayer2.GetComponent<Transform>());
 
@@ -89,5 +96,20 @@ public class LocalMultiplayerManager : MonoBehaviour {
             players.Add(instPlayer1);
             players.Add(instPlayer2);
         }
+    }
+
+    /// <summary>
+    /// Called when a player dies. The duel is over. Show end Screen.
+    /// </summary>
+    /// <param name="deadPlayer"></param>
+    public void gameOver(GameObject deadPlayer)
+    {
+        //Get the one player who is not dead
+        string winner = players.Where(x => x != deadPlayer).ToArray()[0].GetComponent<ChampionClassController>().className;
+
+        gameOverOverlay.Find("Title").GetComponent<Text>().text = winner + " won the game";
+        gameOverOverlay.gameObject.SetActive(true);
+        deadPlayer.SetActive(false);
+        Camera.main.GetComponent<CameraBehaviour>().gameRunning = false;
     }
 }

@@ -50,6 +50,7 @@ public class ProjectileBehaviour : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+
         if (collision.collider.gameObject != creator)
         {
             //On collision, check if collider is in whatToHit layermask

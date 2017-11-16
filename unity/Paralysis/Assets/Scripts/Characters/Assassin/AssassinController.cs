@@ -7,13 +7,10 @@ public class AssassinController : ChampionClassController
 {
     [Header("Assassin Specific")]
     [SerializeField]
-    protected float m_DoubleJumpForce = 400f;                             // Force added when doublejumping 
-    [SerializeField]
     private GameObject bulletPrefab;
     [SerializeField]
     private int ambushAttack_damage = 13;
 
-    private bool doubleJumped = false;                                    // Has the character double jumped already?
     public bool invisible = false;
     Coroutine invisRoutine = null;
 
@@ -29,16 +26,10 @@ public class AssassinController : ChampionClassController
         basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.skillEffect.nothing, 0, stamina_BasicAttack2, true, cooldown_BasicAttack2, meeleRange);
         basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack3, delay_BasicAttack3, damage_BasicAttack3, Skill.skillEffect.bleed, 6, stamina_BasicAttack3, true, cooldown_BasicAttack3, meeleRange);
 
-        skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.skillEffect.stun, 3, stamina_Skill1, true, cooldown_Skill1, meeleRange);
+        skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.skillEffect.nothing, 0, stamina_Skill1, true, cooldown_Skill1, meeleRange);
         skill2_var = new Skill(AnimationController.AnimatorStates.Skill2, cooldown_Skill2);
         skill3_var = new Skill(AnimationController.AnimatorStates.Skill3, cooldown_Skill3);
         skill4_var = new RangedSkill(AnimationController.AnimatorStates.Skill4, true, new Vector2(7, 0), bulletPrefab, delay_Skill4 , damage_Skill4, Skill.skillEffect.knockback, 2, stamina_Skill4, true, cooldown_Skill4, 5);
-    }
-
-    protected override void FixedUpdate()
-    {
-        base.FixedUpdate();
-        if (animCon.m_Grounded) doubleJumped = false;
     }
 
     protected override void Update()
@@ -162,28 +153,6 @@ public class AssassinController : ChampionClassController
 
     #endregion
 
-    #region Double Jump
-
-    public override void jump(bool jump)
-    {
-        if (animCon.m_Grounded && jump)
-            base.jump(jump);
-        else if (!animCon.m_Grounded && jump && !doubleJumped && canPerformAction(false) && canPerformAttack())
-        {
-            // Add a vertical force to the player.
-            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
-            m_Rigidbody2D.AddForce(new Vector2(0f, m_DoubleJumpForce));
-
-            // set animation
-            ((AssassinAnimationController)animCon).trigDoubleJump = true;
-
-            // set variable to prevent third jump
-            doubleJumped = true;
-        }
-    }
-
-    #endregion
-
     #region Teleport Skill
 
     private IEnumerator shadowStepHit()
@@ -233,7 +202,7 @@ public class AssassinController : ChampionClassController
                 m_Rigidbody2D.position = hit.transform.position + Vector3.left; //Viable target on the right
                 target = hit.collider.gameObject;
                 targetStats = target.GetComponent<CharacterStats>();
-                targetStats.startStunned(3);
+                targetStats.startStunned(2);
                 if (!m_FacingRight) Flip();
             }
             else if (targetLocation == -1)
@@ -241,11 +210,10 @@ public class AssassinController : ChampionClassController
                 m_Rigidbody2D.position = hitLeft.transform.position + Vector3.right; //Viable target on the left
                 target = hitLeft.collider.gameObject;
                 targetStats = target.GetComponent<CharacterStats>();
-                targetStats.startStunned(3);
+                targetStats.startStunned(2);
                 if (m_FacingRight) Flip();
             }
             m_Rigidbody2D.velocity = Vector2.zero;
-            stats.invincible = false;
             animCon.trigSkill3 = true;
             yield return new WaitForSeconds(delay_Skill3);
             targetStats.takeDamage(damage_Skill3, false);
@@ -253,6 +221,7 @@ public class AssassinController : ChampionClassController
             yield return new WaitUntil(() => animCon.currentAnimation != AnimationController.AnimatorStates.Skill3);
             stats.immovable = false;
         }
+        stats.invincible = false;
         StartCoroutine(setSkillOnCooldown(skill3_var));
     }
 

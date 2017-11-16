@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraBehaviour : MonoBehaviour {
 
     bool multiplayer = false;
+    public bool gameRunning = true;
 
     public float magnitude = 0.05f;
     public float duration = 0.01f;
@@ -63,10 +64,13 @@ public class CameraBehaviour : MonoBehaviour {
     // Update is called once per frame
     void LateUpdate ()
     {
-        if (multiplayer)
-            Multiplayer();
-        else
-            SinglePlayer();
+        if (gameRunning)
+        {
+            if (multiplayer)
+                Multiplayer();
+            else
+                SinglePlayer();
+        }
 
         CalculatePositioningValues();
     }

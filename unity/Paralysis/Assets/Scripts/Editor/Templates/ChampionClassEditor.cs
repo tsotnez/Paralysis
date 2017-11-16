@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(ChampionClassController))]
+[CustomEditor(typeof(ChampionClassController))] 
 public class ChampionClassEditor : Editor {
 
     SerializedProperty WhatIsGround, WhatToHit, MoveSpeed, MoveSpeedWhileAttacking, MoveSpeedWhileBlocking, JumpForce, JumpAttackRadius, JumpAttackForce,
-        DashSpeed, DashStaminaCost, ComboExpire, ClassName;
+        DashSpeed, DashStaminaCost, ComboExpire, ClassName, DoubleJumpForce;
 
 	void OnEnable()
     {
@@ -24,6 +24,7 @@ public class ChampionClassEditor : Editor {
         DashStaminaCost = serializedObject.FindProperty("m_dashStaminaCost");
         ComboExpire = serializedObject.FindProperty("m_ComboExpire");
         ClassName = serializedObject.FindProperty("className");
+        DoubleJumpForce = serializedObject.FindProperty("m_DoubleJumpForce");
     }
 
     public override void OnInspectorGUI()
@@ -50,12 +51,14 @@ public class ChampionClassEditor : Editor {
         GUILayout.Label("Jump force");
         GUILayout.Label("JumpAttack Force");
         GUILayout.Label("JumpAttack Radius");
+        GUILayout.Label("DoubleJump Force");
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(JumpForce, new GUIContent(""), true);
         EditorGUILayout.PropertyField(JumpAttackForce, new GUIContent(""), true);
         EditorGUILayout.PropertyField(JumpAttackRadius, new GUIContent(""), true);
+        EditorGUILayout.PropertyField(DoubleJumpForce, new GUIContent(""), true);
         GUILayout.EndHorizontal();
 
         GUILayout.Label("Dashing", EditorStyles.boldLabel);
