@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 50266758922953022}
   - component: {fileID: 114129448306191796}
   - component: {fileID: 61085428760503340}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: standartArrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,15 +99,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a3743c547dfd04bb8b2abc3bedcc4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ready: 0
   explodeOnHit: 0
-  speed: 7
-  direction: 0
+  creator: {fileID: 0}
+  speed: {x: 9, y: 0}
+  direction: 1
   explosionPrefab: {fileID: 0}
-  range: 5
+  range: 6
   effect: 0
-  effectDuration: 1
-  damage: 0
+  effectDuration: 0
+  damage: 5
+  whatToHit:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!212 &212785438580124604
 SpriteRenderer:
   m_ObjectHideFlags: 1

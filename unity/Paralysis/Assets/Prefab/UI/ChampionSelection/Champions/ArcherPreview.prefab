@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4816568741588148}
   - component: {fileID: 212229921532901446}
   - component: {fileID: 114377760250446108}
+  - component: {fileID: 82600299282694278}
   m_Layer: 11
   m_Name: graphics
   m_TagString: Untagged
@@ -71,6 +72,86 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &82600299282694278
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1587404009544488}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.07
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114377760250446108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -82,30 +163,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a70140056e40f68489e513993cf476c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000
-  AnimationLoop: 010100010000000001000000000000000000000000
-  AnimationDuration:
-  - 0.6
-  - 0.5
-  - 0.45
-  - 0.2
-  - 0.3
-  - 0
-  - 0
-  - 0.4
-  - 0.4
-  - 0.4
-  - 0
-  - 0
-  - 0.5
-  - 0
-  - 0.4
-  - 0.4
-  - 0.5
-  - 0.45
-  - 0
-  - 0
-  - 0
+  CharacterClass: Archer
+  CharacterSkin: basic
+  GeneralSpeed: 0
+  AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000
   Atlasses:
   - {fileID: 4343727234628468602, guid: e1da7b4aa82ea9348ab5d8c8069f2fdb, type: 2}
   - {fileID: 4343727234628468602, guid: 857434a4a454f0e4d84252a7644a410b, type: 2}
@@ -127,10 +188,52 @@ MonoBehaviour:
   - {fileID: 4343727234628468602, guid: 2c8eae7ab9a41bb41bacd6e8557235ba, type: 2}
   - {fileID: 0}
   - {fileID: 0}
+  AnimationLoop: 0101000100000000010000000000000000000000
+  AnimationDuration:
+  - 0.6
+  - 0.5
+  - 0.45
+  - 0.2
+  - 0.3
+  - 0
+  - 0
+  - 0.4
+  - 0.4
+  - 0.4
+  - 0
+  - 0
+  - 0.5
+  - 0
+  - 0.4
+  - 0.4
+  - 0.5
+  - 0.45
+  - 0
+  - 0
+  EndAnimationType: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  EndAtlasses:
   - {fileID: 0}
-  GeneralSpeed: 0
-  CharacterClass: archer
-  CharacterSkin: basic
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  EndAnimationLoop: 00
+  EndAnimationDuration: []
   m_Grounded: 0
   m_vSpeed: 0
   m_Speed: 0

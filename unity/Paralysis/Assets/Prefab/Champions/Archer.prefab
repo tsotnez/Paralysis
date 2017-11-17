@@ -315,13 +315,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.221
+  m_Volume: 0.07
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 87
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -413,6 +413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputDevice: 1
+  playerNumber: 0
 --- !u!114 &114231252518877400
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -433,7 +434,8 @@ MonoBehaviour:
   m_MaxSpeed: 6
   m_MoveSpeedWhileAttacking: 5
   m_MoveSpeedWhileBlocking: 0
-  m_JumpForce: 850
+  m_JumpForce: 700
+  m_DoubleJumpForce: 600
   m_jumpAttackRadius: 1
   m_jumpAttackForce: 10
   m_dashSpeed: 12
@@ -454,11 +456,11 @@ MonoBehaviour:
   stamina_Skill2: 10
   stamina_Skill3: 10
   stamina_Skill4: 10
-  damage_BasicAttack1: 5
+  damage_BasicAttack1: 7
   damage_BasicAttack2: 0
   damage_BasicAttack3: 0
   damage_JumpAttack: 5
-  damage_Skill1: 10
+  damage_Skill1: 15
   damage_Skill2: 10
   damage_Skill3: 5
   damage_Skill4: 0
@@ -559,7 +561,7 @@ MonoBehaviour:
   - 0.2
   - 0.3
   - 0
-  - 0
+  - 0.4
   - 0.4
   - 0.4
   - 0.4

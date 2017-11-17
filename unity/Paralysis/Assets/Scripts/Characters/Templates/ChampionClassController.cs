@@ -20,7 +20,9 @@ public abstract class ChampionClassController : MonoBehaviour
     protected float m_MoveSpeedWhileBlocking = 0f;                          // Max speed while blocking
 
     [SerializeField]
-    protected float m_JumpForce = 400f;                                     // Amount of force added when the player jumps.   
+    protected float m_JumpForce = 400f;                                     // Amount of force added when the player jumps.  
+    [SerializeField]
+    protected float m_DoubleJumpForce = 400f;                               // Force added when doublejumping 
     [SerializeField]
     protected float m_jumpAttackRadius = 10f;                               // Radius of jump Attack damage
     [SerializeField]
@@ -111,6 +113,7 @@ public abstract class ChampionClassController : MonoBehaviour
     protected Transform m_GroundCheck;                                      // A position marking where to check if the player is grounded.
     protected SpriteRenderer shadowRenderer;
     protected const float k_GroundedRadius = .02f;                           // Radius of the overlap circle to determine if grounded
+    protected bool doubleJumped = false;                                    // Has the character double jumped already?
 
     protected Skill basicAttack1_var;
     protected Skill basicAttack2_var;
@@ -173,6 +176,9 @@ public abstract class ChampionClassController : MonoBehaviour
                 animCon.m_Grounded = true;
             }
         }
+
+        //Reset doubleJumped when touching ground
+        if (animCon.m_Grounded) doubleJumped = false;
 
         //Disable shadow if mid air
         if (shadowRenderer != null)
@@ -252,13 +258,28 @@ public abstract class ChampionClassController : MonoBehaviour
     public virtual void jump(bool jump)
     {
         // If the player should jump...
-        if (canPerformAction(true) && jump && canPerformAttack())
+        if (canPerformAction(false) && jump && canPerformAttack())
         {
-            // Add a vertical force to the player.
-            animCon.m_Grounded = false;
-            animCon.trigJump = true;
-            m_Rigidbody2D.velocity = Vector2.zero;
-            m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+            if (animCon.m_Grounded && stats.loseStamina(15))
+            {
+                // Add a vertical force to the player.
+                animCon.m_Grounded = false;
+                animCon.trigJump = true;
+                m_Rigidbody2D.velocity = Vector2.zero;
+                m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+            }
+            else if(!doubleJumped && !animCon.m_Grounded)
+            {
+                // Double Jump
+                m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
+                m_Rigidbody2D.AddForce(new Vector2(0f, m_DoubleJumpForce));
+
+                // set animation
+                animCon.trigJump = true;
+
+                // set variable to prevent third jump
+                doubleJumped = true;
+            }
         }
     }
 

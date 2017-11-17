@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4854947890863954}
   - component: {fileID: 212178966560292566}
   - component: {fileID: 114488746061249168}
+  - component: {fileID: 82239638919744952}
   m_Layer: 11
   m_Name: graphics
   m_TagString: Untagged
@@ -71,6 +72,86 @@ Transform:
   m_Father: {fileID: 4370754418486606}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &82239638919744952
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1329833219150200}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.2
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114488746061249168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -82,7 +163,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec329f3ff493bd4aaf8b7e72e19607d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterClass: assassin
+  CharacterSkin: basic
+  GeneralSpeed: 0
   AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000
+  Atlasses:
+  - {fileID: 4343727234628468602, guid: 043681e887c53954e990ca179fe0d8b1, type: 2}
+  - {fileID: 4343727234628468602, guid: 98d622f74a152e843bb52e3560a2d018, type: 2}
+  - {fileID: 4343727234628468602, guid: c1fa476dcb4daa9408d53bac4b02fd0a, type: 2}
+  - {fileID: 4343727234628468602, guid: 7701ac59b4bbd4c4b8aaa46a79ad629a, type: 2}
+  - {fileID: 4343727234628468602, guid: 5a6c84ba07732bb4fa006142729eed17, type: 2}
+  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: 624053e3fb22b7e4289016438b538172, type: 2}
+  - {fileID: 4343727234628468602, guid: 0f39f1a69d82c304697b461e985ab9f7, type: 2}
+  - {fileID: 4343727234628468602, guid: bc527b6457f920247b16ddd5344065d8, type: 2}
+  - {fileID: 4343727234628468602, guid: 9af720b8a8ca07b4498ecf3f9137d1cd, type: 2}
+  - {fileID: 4343727234628468602, guid: 5ad2d41f1437d0f4ca9fb01feb590f83, type: 2}
+  - {fileID: 4343727234628468602, guid: 3e103cd5a17909b41af4495a968886de, type: 2}
+  - {fileID: 4343727234628468602, guid: b6d27418a6a78554aba3eeba22d8bffb, type: 2}
+  - {fileID: 4343727234628468602, guid: e4ed102551fdf724d93448c39624f9c3, type: 2}
+  - {fileID: 4343727234628468602, guid: cc25fcf1de64a7f468dac2b79556a138, type: 2}
+  - {fileID: 4343727234628468602, guid: 327fde0731c709a47b63760f5a79f2c5, type: 2}
+  - {fileID: 4343727234628468602, guid: c317f21e201b72644adb524819e93166, type: 2}
+  - {fileID: 4343727234628468602, guid: 9075431dc456cc740853a1d9bf837569, type: 2}
+  - {fileID: 4343727234628468602, guid: d6be4dd066f99324397f7831ca5406ef, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   AnimationLoop: 010100010000000001000000000000000000000000
   AnimationDuration:
   - 0.5
@@ -106,31 +212,10 @@ MonoBehaviour:
   - 0.5
   - 0
   - 0
-  Atlasses:
-  - {fileID: 4343727234628468602, guid: 043681e887c53954e990ca179fe0d8b1, type: 2}
-  - {fileID: 4343727234628468602, guid: 98d622f74a152e843bb52e3560a2d018, type: 2}
-  - {fileID: 4343727234628468602, guid: c1fa476dcb4daa9408d53bac4b02fd0a, type: 2}
-  - {fileID: 4343727234628468602, guid: 7701ac59b4bbd4c4b8aaa46a79ad629a, type: 2}
-  - {fileID: 4343727234628468602, guid: 5a6c84ba07732bb4fa006142729eed17, type: 2}
-  - {fileID: 0}
-  - {fileID: 4343727234628468602, guid: 624053e3fb22b7e4289016438b538172, type: 2}
-  - {fileID: 4343727234628468602, guid: 0f39f1a69d82c304697b461e985ab9f7, type: 2}
-  - {fileID: 4343727234628468602, guid: bc527b6457f920247b16ddd5344065d8, type: 2}
-  - {fileID: 4343727234628468602, guid: 9af720b8a8ca07b4498ecf3f9137d1cd, type: 2}
-  - {fileID: 4343727234628468602, guid: 5ad2d41f1437d0f4ca9fb01feb590f83, type: 2}
-  - {fileID: 4343727234628468602, guid: 3e103cd5a17909b41af4495a968886de, type: 2}
-  - {fileID: 4343727234628468602, guid: b6d27418a6a78554aba3eeba22d8bffb, type: 2}
-  - {fileID: 4343727234628468602, guid: e4ed102551fdf724d93448c39624f9c3, type: 2}
-  - {fileID: 4343727234628468602, guid: cc25fcf1de64a7f468dac2b79556a138, type: 2}
-  - {fileID: 4343727234628468602, guid: 327fde0731c709a47b63760f5a79f2c5, type: 2}
-  - {fileID: 4343727234628468602, guid: c317f21e201b72644adb524819e93166, type: 2}
-  - {fileID: 4343727234628468602, guid: 9075431dc456cc740853a1d9bf837569, type: 2}
-  - {fileID: 4343727234628468602, guid: d6be4dd066f99324397f7831ca5406ef, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  GeneralSpeed: 0
-  CharacterClass: assassin
-  CharacterSkin: basic
+  EndAnimationType: 00000000
+  EndAtlasses: []
+  EndAnimationLoop: 00
+  EndAnimationDuration: []
   m_Grounded: 0
   m_vSpeed: 0
   m_Speed: 0

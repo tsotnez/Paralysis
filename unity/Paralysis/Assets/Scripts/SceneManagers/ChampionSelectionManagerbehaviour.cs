@@ -2,10 +2,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 public class ChampionSelectionManagerbehaviour : MonoBehaviour {
 
     public GameObject[] platforms;
+    public Dropdown inputPlayer1;
+    public Dropdown inputPlayer2;
 
     //Holds [Platform] as key and [previewPrefab][champoionPrefab] as value
     private Dictionary<GameObject, GameObject[]> championsOnPlatforms = new Dictionary<GameObject, GameObject[]>();
@@ -41,6 +44,8 @@ public class ChampionSelectionManagerbehaviour : MonoBehaviour {
         //Pass players 
         LocalMultiplayerManager.player1 = championsOnPlatforms[platforms[0]][1];
         LocalMultiplayerManager.player2 = championsOnPlatforms[platforms[1]][1];
+        LocalMultiplayerManager.inputP1 = (UserControl.InputDevice) Enum.Parse(typeof(UserControl.InputDevice), inputPlayer1.GetComponentInChildren<Text>().text);
+        LocalMultiplayerManager.inputP2 = (UserControl.InputDevice)Enum.Parse(typeof(UserControl.InputDevice), inputPlayer2.GetComponentInChildren<Text>().text);
         //Load scene
         SceneManager.LoadScene("scenes/test");
     }

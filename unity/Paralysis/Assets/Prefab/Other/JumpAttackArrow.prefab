@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 50266758922953022}
   - component: {fileID: 114129448306191796}
   - component: {fileID: 61085428760503340}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: JumpAttackArrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,13 +36,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1365143412859840}
-  m_LocalRotation: {x: -0, y: -0, z: -0.3294466, w: 0.9441743}
-  m_LocalPosition: {x: -0.17806384, y: -5.068755, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.47703227, w: 0.8788858}
+  m_LocalPosition: {x: -2.0412788, y: -5.287663, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -38.47}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -56.983}
 --- !u!50 &50266758922953022
 Rigidbody2D:
   serializedVersion: 4
@@ -99,16 +99,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a3743c547dfd04bb8b2abc3bedcc4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ready: 0
   explodeOnHit: 0
   creator: {fileID: 0}
-  speed: {x: 7, y: 0}
-  direction: 0
+  speed: {x: 4, y: -9}
+  direction: -1
   explosionPrefab: {fileID: 0}
-  range: 5
+  range: 100
   effect: 0
-  effectDuration: 1
-  damage: 0
+  effectDuration: 0
+  damage: 5
+  whatToHit:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!212 &212785438580124604
 SpriteRenderer:
   m_ObjectHideFlags: 1

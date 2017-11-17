@@ -18,7 +18,8 @@ public class CharacterStats : MonoBehaviour {
     public int currentHealth;
     public int maxStamina = 100;
     public int currentStamina;
-	public int staminaRegRate = 2;
+
+	private int staminaRegRate = 4;
 
     [Header("Statusses")]
     public bool stunned = false;
@@ -127,7 +128,7 @@ public class CharacterStats : MonoBehaviour {
     //Substract damage from current health.
     public void takeDamage(int amount, bool playAnimation)
     {
-        if (!invincible)
+        if (!invincible && amount > 0)
         {
             if (controller.blocking) amount /= 2; //Reduce damage by 50% if blocking
 
@@ -243,7 +244,7 @@ public class CharacterStats : MonoBehaviour {
     //Calles when health equals or is less than zero
     private void die()
     {
-        Destroy(gameObject);
+        GameObject.Find("manager").GetComponent<LocalMultiplayerManager>().gameOver(gameObject);
     }
 
     ////////////////////////////////////////// D   E    B   U  G ////////////////////////////////////////////////////////////

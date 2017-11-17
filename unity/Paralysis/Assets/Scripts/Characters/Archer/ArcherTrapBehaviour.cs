@@ -57,6 +57,7 @@ public class ArcherTrapBehaviour : MonoBehaviour {
         {
             if (whatToHit == (whatToHit | (1 << collision.gameObject.layer)))
             {
+                collision.gameObject.GetComponent<CharacterStats>().startStunned(3);
                 collision.gameObject.GetComponent<CharacterStats>().takeDamage(damage, true);
                 Camera.main.GetComponent<CameraBehaviour>().startShake();
                 explode();
