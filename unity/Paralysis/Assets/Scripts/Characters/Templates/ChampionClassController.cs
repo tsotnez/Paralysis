@@ -300,7 +300,8 @@ public abstract class ChampionClassController : MonoBehaviour
             if (direction != 0 && stats.loseStamina(m_dashStaminaCost))
             {
                 // flip if necessary
-                if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight) Flip();
+                if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight)
+                    Flip();
 
                 // Calculate new dashForce to go in right direction
                 m_dashSpeed = Mathf.Abs(m_dashSpeed) * direction;
@@ -311,7 +312,7 @@ public abstract class ChampionClassController : MonoBehaviour
                 stats.immovable = true;
 
                 stats.invincible = true; //Player is invincible for a period of time while dashing
-
+                yield return new WaitUntil(() => animCon.currentAnimation == AnimationController.AnimatorStates.Dash);
                 yield return new WaitUntil(() => animCon.currentAnimation != AnimationController.AnimatorStates.Dash);
                 dashing = false;
                 stats.invincible = false;
@@ -590,6 +591,25 @@ public abstract class ChampionClassController : MonoBehaviour
             case AnimationController.AnimatorStates.Skill3:
             case AnimationController.AnimatorStates.Skill4:
                 return false;
+        }
+        return true;
+    }
+
+    public bool ShouldRegenerateStamina()
+    {
+        if (!canPerformAttack())
+            return false;
+        else
+        {
+            switch (animCon.currentAnimation)
+            {
+                case AnimationController.AnimatorStates.Jump:
+                case AnimationController.AnimatorStates.Dash:
+                case AnimationController.AnimatorStates.Hit:
+                case AnimationController.AnimatorStates.DoubleJump:
+                case AnimationController.AnimatorStates.DashFor:
+                    return false;               
+            }
         }
         return true;
     }

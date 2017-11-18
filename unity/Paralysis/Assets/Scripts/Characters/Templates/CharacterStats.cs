@@ -12,6 +12,7 @@ public class CharacterStats : MonoBehaviour {
 
     private GameObject floatingTextPrefab;
     private float nextTextPosition = 1; //Will the next damage number be instaitated on the left or on the right 
+    private int callsSinceLastAction = 10;
 
     [Header("Stats")]
     public int maxHealth = 100;
@@ -19,7 +20,8 @@ public class CharacterStats : MonoBehaviour {
     public int maxStamina = 100;
     public int currentStamina;
 
-	private int staminaRegRate = 4;
+	private int staminaRegRate = 2;
+    private int staminaRegRateWhileStanding = 4;
 
     [Header("Statusses")]
     public bool stunned = false;
@@ -62,7 +64,7 @@ public class CharacterStats : MonoBehaviour {
     }
     void Start()
     {
-        InvokeRepeating("regenerateStamina", 0f, 1f);
+        InvokeRepeating("regenerateStamina", 0f, 0.1f);
         
         //Assign team Color
         if (gameObject.layer == 11)
@@ -91,11 +93,29 @@ public class CharacterStats : MonoBehaviour {
     // Is called repeatetly to regenerate stamina value
     private void regenerateStamina()
     {
-        if(currentStamina < maxStamina && !controller.blocking)
+
+        if(currentStamina < maxStamina && !controller.blocking && controller.ShouldRegenerateStamina())
         {
-            if (currentStamina + staminaRegRate > maxStamina) this.currentStamina = this.maxStamina;
-            else this.currentStamina += this.staminaRegRate;
+            if (callsSinceLastAction == 10) //regenerate only if characters hasnt done anything for a while
+            {
+                int regRate;
+                //Check if character is standing still. If so, increase reg Rate
+                if (rigid.velocity == Vector2.zero)
+                    regRate = staminaRegRateWhileStanding;
+                else
+                    regRate = staminaRegRate;
+
+
+                if (currentStamina + regRate > maxStamina) this.currentStamina = this.maxStamina;
+                else this.currentStamina += regRate;
+            }
+            else
+                callsSinceLastAction++;
 		}
+        else
+        {
+            callsSinceLastAction = 0;
+        }
 
     }
 
