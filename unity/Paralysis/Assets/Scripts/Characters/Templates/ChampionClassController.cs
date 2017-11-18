@@ -123,6 +123,9 @@ public abstract class ChampionClassController : MonoBehaviour
     protected Skill skill3_var;
     protected Skill skill4_var;
 
+    public Trinket Trinket1;
+    public Trinket Trinket2;
+
     public string className;
     public bool m_FacingRight = true;                                       // For determining which way the player is currently facing.
     public bool dashing = false;                                            // true while dashing
@@ -149,6 +152,9 @@ public abstract class ChampionClassController : MonoBehaviour
         stats = GetComponent<CharacterStats>();
         animCon = graphics.GetComponent<ChampionAnimationController>();
         shadowRenderer = m_GroundCheck.GetComponent<SpriteRenderer>();
+
+        //Trinket1 = new UseTrinket_HealingOverTime();
+        //Trinket2 = new UseTrinket_RemoveStatusEffect();
     }
 
     protected virtual void Update()
@@ -159,6 +165,9 @@ public abstract class ChampionClassController : MonoBehaviour
             animCon.trigHit = true;
         }
         animCon.statStunned = stats.stunned;
+
+        //Debug.Log("Trinket1: " + Trinket1.GetType().BaseType);
+        //Debug.Log("Trinket2: " + Trinket2.GetType().BaseType);
     }
 
     protected virtual void FixedUpdate()
