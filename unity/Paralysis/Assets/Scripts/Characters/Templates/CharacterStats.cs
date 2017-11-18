@@ -3,7 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class CharacterStats : MonoBehaviour {
+public class CharacterStats : MonoBehaviour
+{
 
     private ChampionAnimationController animCon;
     private Rigidbody2D rigid;
@@ -19,7 +20,7 @@ public class CharacterStats : MonoBehaviour {
     public int maxStamina = 100;
     public int currentStamina;
 
-	private int staminaRegRate = 2;
+    private int staminaRegRate = 2;
     private int staminaRegRateWhileStanding = 4;
 
     [Header("Statusses")]
@@ -71,7 +72,7 @@ public class CharacterStats : MonoBehaviour {
     void Start()
     {
         InvokeRepeating("regenerateStamina", 0f, 0.1f);
-        
+
         //Assign team Color
         if (gameObject.layer == 11)
             TeamColor.sprite = Team1Color;
@@ -100,7 +101,7 @@ public class CharacterStats : MonoBehaviour {
     private void regenerateStamina()
     {
 
-        if(currentStamina < maxStamina && !controller.blocking && controller.ShouldRegenerateStamina())
+        if (currentStamina < maxStamina && !controller.blocking && controller.ShouldRegenerateStamina())
         {
             if (callsSinceLastAction == 10) //regenerate only if characters hasnt done anything for a while
             {
@@ -117,7 +118,7 @@ public class CharacterStats : MonoBehaviour {
             }
             else
                 callsSinceLastAction++;
-		}
+        }
         else
         {
             callsSinceLastAction = 0;
@@ -138,7 +139,7 @@ public class CharacterStats : MonoBehaviour {
             return true;
         }
         return false;
-	}
+    }
 
     /// <summary>
     /// Checks if enough/sufficient stamina is left
@@ -152,7 +153,7 @@ public class CharacterStats : MonoBehaviour {
     }
 
     public void dealDamage(CharacterStats StatsOfTheTarget, int amount, bool playAnimation)
-    {   
+    {
         // If trinket 1 or trinket 2 is an passive trinket and has as triggertype DealDamage, then use it passively
         if (typeof(PassiveTrinket) == controller.Trinket1.GetType().BaseType && ((PassiveTrinket)controller.Trinket1).TrinketTriggerType == PassiveTrinket.TriggerType.DealDamage)
             ((PassiveTrinket)controller.Trinket1).Use(this);
@@ -237,10 +238,13 @@ public class CharacterStats : MonoBehaviour {
             currentHealth += amount;
         }
 
-        // Show that player got healed
-        GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false);
-        text.GetComponentInChildren<Text>().text = amount.ToString();
-        text.GetComponentInChildren<Text>().color = Color.green;
+        if (amount > 0)
+        {
+            // Show that player got healed
+            GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false);
+            text.GetComponentInChildren<Text>().text = amount.ToString();
+            text.GetComponentInChildren<Text>().color = Color.green;
+        }
     }
 
     public void startStunned(int time)
@@ -304,12 +308,12 @@ public class CharacterStats : MonoBehaviour {
             bleedingRoutine = StartCoroutine(bleed(time));
         }
     }
-    
+
     // Set bleeding for time
     private IEnumerator bleed(float time)
     {
         bleeding = true;
-        if(!IsInvoking("bleedDamage")) bleedDamage();
+        if (!IsInvoking("bleedDamage")) bleedDamage();
         yield return new WaitForSeconds(time);
         bleeding = false;
     }

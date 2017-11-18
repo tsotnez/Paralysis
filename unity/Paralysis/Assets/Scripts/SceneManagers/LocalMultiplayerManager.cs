@@ -111,6 +111,8 @@ public class LocalMultiplayerManager : MonoBehaviour {
             //Trinkets P2
             instPlayer2.AddComponent(Trinket.trinketsForNames[trinket1Player2]);
             instPlayer2.AddComponent(Trinket.trinketsForNames[trinket2Player2]);
+            instPlayer2.GetComponent<ChampionClassController>().Trinket1 = instPlayer2.GetComponents<Trinket>()[0];
+            instPlayer2.GetComponent<ChampionClassController>().Trinket2 = instPlayer2.GetComponents<Trinket>()[1];
 
             //Set overlay
             instPlayer1.transform.Find("graphics").GetComponent<SpriteRenderer>().color = championSpriteOverlayColor;
