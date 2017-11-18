@@ -181,9 +181,13 @@ public class CharacterStats : MonoBehaviour {
         if (currentHealth <= 0) die();
     }
 
+    //Heal for the given amount
     public void GetHealth(int amount)
     {
-        currentHealth += amount;
+        if (currentHealth + amount > maxHealth)
+            currentHealth = maxHealth;
+        else
+            currentHealth += amount;
     }
 
     public void startStunned(int time)

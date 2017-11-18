@@ -10,6 +10,12 @@ public class ChampionSelectionManagerbehaviour : MonoBehaviour {
     public Dropdown inputPlayer1;
     public Dropdown inputPlayer2;
 
+    //Players trinkets
+    public Trinket trinket1Player1;
+    public Trinket trinket2Player1;
+    public Trinket trinket1Player2;
+    public Trinket trinket2Player2;
+
     //Holds [Platform] as key and [previewPrefab][champoionPrefab] as value
     private Dictionary<GameObject, GameObject[]> championsOnPlatforms = new Dictionary<GameObject, GameObject[]>();
     private Button btnStart;
@@ -41,7 +47,7 @@ public class ChampionSelectionManagerbehaviour : MonoBehaviour {
 
     void startGame()
     {
-        //Pass players 
+        //Pass players and theiir inputs and trinkets
         LocalMultiplayerManager.player1 = championsOnPlatforms[platforms[0]][1];
         LocalMultiplayerManager.player2 = championsOnPlatforms[platforms[1]][1];
         LocalMultiplayerManager.inputP1 = (UserControl.InputDevice) Enum.Parse(typeof(UserControl.InputDevice), inputPlayer1.GetComponentInChildren<Text>().text);

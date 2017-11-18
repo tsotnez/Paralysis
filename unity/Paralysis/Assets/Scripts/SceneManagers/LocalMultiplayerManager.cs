@@ -74,21 +74,29 @@ public class LocalMultiplayerManager : MonoBehaviour {
             //when starting from champion selection, disable debug buttons, instantiate players
             GameObject instPlayer1 = Instantiate(player1, spawnPlayer1.position, Quaternion.identity);
             instPlayer1.GetComponent<UserControl>().inputDevice = inputP1;
+            instPlayer1.layer = 11;
+
+            LayerMask whatToHitP1 = new LayerMask();
+            whatToHitP1 |= (1 << 12);
+
+            instPlayer1.GetComponent<ChampionClassController>().m_whatToHit = whatToHitP1;
+
             Camera.main.GetComponent<CameraBehaviour>().changeTarget(instPlayer1.transform);
 
             GameObject instPlayer2 = Instantiate(player2, spawnPlayer2.position, Quaternion.identity);
             instPlayer2.layer = 12;
 
             //Change player2 prefab to be an enemy to player 1
-            LayerMask whatToHit = new LayerMask();
-            whatToHit |= (1 << 11);
+            LayerMask whatToHitP2 = new LayerMask();
+            whatToHitP2 |= (1 << 11);
 
-            instPlayer2.GetComponent<ChampionClassController>().m_whatToHit = whatToHit;
+            instPlayer2.GetComponent<ChampionClassController>().m_whatToHit = whatToHitP2;
             instPlayer2.GetComponent<UserControl>().inputDevice = inputP2;
             instPlayer2.GetComponent<UserControl>().playerNumber = UserControl.PlayerNumbers.Player2;
 
             Camera.main.GetComponent<CameraBehaviour>().switchToMultiplayer(instPlayer2.GetComponent<Transform>());
 
+            //Set overlay
             instPlayer1.transform.Find("graphics").GetComponent<SpriteRenderer>().color = championSpriteOverlayColor;
             instPlayer2.transform.Find("graphics").GetComponent<SpriteRenderer>().color = championSpriteOverlayColor;
 
