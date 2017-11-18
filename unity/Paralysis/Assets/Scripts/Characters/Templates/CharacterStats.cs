@@ -11,7 +11,6 @@ public class CharacterStats : MonoBehaviour {
     private GameObject stunnedSymbol;
 
     private GameObject floatingTextPrefab;
-    private float nextTextPosition = 1; //Will the next damage number be instaitated on the left or on the right 
     private int callsSinceLastAction = 10;
 
     [Header("Stats")]
@@ -152,6 +151,37 @@ public class CharacterStats : MonoBehaviour {
         else return false;
     }
 
+    public void dealDamage(CharacterStats StatsOfTheTarget, int amount, bool playAnimation)
+    {   
+        // If trinket 1 or trinket 2 is an passive trinket and has as triggertype DealDamage, then use it passively
+        if (typeof(PassiveTrinket) == controller.Trinket1.GetType().BaseType && ((PassiveTrinket)controller.Trinket1).TrinketTriggerType == PassiveTrinket.TriggerType.DealDamage)
+            ((PassiveTrinket)controller.Trinket1).Use(this);
+        if (typeof(PassiveTrinket) == controller.Trinket2.GetType().BaseType && ((PassiveTrinket)controller.Trinket2).TrinketTriggerType == PassiveTrinket.TriggerType.DealDamage)
+            ((PassiveTrinket)controller.Trinket2).Use(this);
+
+        amount = (int)System.Math.Round(amount * this.PercentageDamage);
+
+        if (StatsOfTheTarget.reflect)
+        {
+            this.takeDamage(amount, playAnimation);
+        }
+        else
+        {
+            StatsOfTheTarget.takeDamage(amount, playAnimation);
+        }
+
+        if (NextHitDealsStun)
+        {
+            NextHitDealsStun = false;
+            StatsOfTheTarget.startStunned(3);
+        }
+        if (NextHitDealsBleed)
+        {
+            NextHitDealsBleed = false;
+            StatsOfTheTarget.startBleeding(3);
+        }
+    }
+
     //Substract damage from current health.
     public void takeDamage(int amount, bool playAnimation)
     {
@@ -159,13 +189,26 @@ public class CharacterStats : MonoBehaviour {
         {
             if (controller.blocking) amount /= 2; //Reduce damage by 50% if blocking
 
-            GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false); //Show number of damage received
-            nextTextPosition = -nextTextPosition; //Toggle next text positon
+            //Show number of damage received
+            GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false);
             text.GetComponentInChildren<Text>().text = amount.ToString();
 
             this.currentHealth -= amount; //Substract health
             if (playAnimation) trigHit = true; //Play hit animation
             if (currentHealth <= 0) die();
+
+            // If trinket 1 or trinket 2 is an passive trinket and has as triggertype TakeDamage, then use it passively
+            if (typeof(PassiveTrinket) == controller.Trinket1.GetType().BaseType && ((PassiveTrinket)controller.Trinket1).TrinketTriggerType == PassiveTrinket.TriggerType.TakeDamage)
+                ((PassiveTrinket)controller.Trinket1).Use(this);
+            if (typeof(PassiveTrinket) == controller.Trinket2.GetType().BaseType && ((PassiveTrinket)controller.Trinket2).TrinketTriggerType == PassiveTrinket.TriggerType.TakeDamage)
+                ((PassiveTrinket)controller.Trinket2).Use(this);
+        }
+        else
+        {
+            // Show that player is invincible
+            GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false);
+            text.GetComponentInChildren<Text>().text = "Invincible";
+            text.GetComponentInChildren<Text>().color = Color.grey;
         }
     }
 
@@ -175,7 +218,6 @@ public class CharacterStats : MonoBehaviour {
     private void takeBleedDamage(int amount)
     {
         GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false); //Show number of damage received
-        nextTextPosition = -nextTextPosition; //Toggle next text positon
         text.GetComponentInChildren<Text>().text = amount.ToString();
 
         this.currentHealth -= amount; //Substract health
@@ -186,9 +228,19 @@ public class CharacterStats : MonoBehaviour {
     public void GetHealth(int amount)
     {
         if (currentHealth + amount > maxHealth)
+        {
+            amount = maxHealth - currentHealth;
             currentHealth = maxHealth;
+        }
         else
+        {
             currentHealth += amount;
+        }
+
+        // Show that player got healed
+        GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false);
+        text.GetComponentInChildren<Text>().text = amount.ToString();
+        text.GetComponentInChildren<Text>().color = Color.green;
     }
 
     public void startStunned(int time)

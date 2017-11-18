@@ -479,7 +479,7 @@ public abstract class ChampionClassController : MonoBehaviour
                         throw new NotImplementedException();
                 }
                 // deal damage to target
-                target.takeDamage((int)Math.Round(skillToPerform.damage * stats.PercentageDamage), false);
+                stats.dealDamage(target, skillToPerform.damage, false);
             }
         }
 
@@ -537,7 +537,7 @@ public abstract class ChampionClassController : MonoBehaviour
         projectile.speed = skillToPerform.speed;
         projectile.effect = skillToPerform.effect;
         projectile.explodeOnHit = skillToPerform.onHitEffect;
-        projectile.damage = (int)Math.Round(skillToPerform.damage * stats.PercentageDamage);
+        projectile.damage = skillToPerform.damage;
         projectile.effectDuration = skillToPerform.effectDuration;
 
         Instantiate(goProjectile, transform.position + new Vector3(1f * direction, 0.3f), new Quaternion(goProjectile.transform.rotation.x,

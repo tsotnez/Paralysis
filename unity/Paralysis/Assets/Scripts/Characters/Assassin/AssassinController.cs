@@ -216,7 +216,7 @@ public class AssassinController : ChampionClassController
             m_Rigidbody2D.velocity = Vector2.zero;
             animCon.trigSkill3 = true;
             yield return new WaitForSeconds(delay_Skill3);
-            targetStats.takeDamage(damage_Skill3, false);
+            stats.dealDamage(targetStats, damage_Skill3, false);
 
             yield return new WaitUntil(() => animCon.currentAnimation != AnimationController.AnimatorStates.Skill3);
             stats.immovable = false;

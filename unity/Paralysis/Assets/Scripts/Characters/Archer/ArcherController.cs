@@ -74,6 +74,7 @@ public class ArcherController : ChampionClassController
     {
         GameObject trap = Instantiate(trapPrefab, m_GroundCheck.position, Quaternion.identity);
         ArcherTrapBehaviour trapScript = trap.GetComponent<ArcherTrapBehaviour>();
+        trapScript.creator = gameObject;
         trapScript.damage = damage_Skill2;
         trapScript.whatToHit = m_whatToHit;
         trapScript.ready = true;
