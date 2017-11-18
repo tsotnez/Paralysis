@@ -11,8 +11,13 @@ public class LocalMultiplayerManager : MonoBehaviour {
     //Prefabs for players
     public static GameObject player1 = null;
     public static UserControl.InputDevice inputP1 = UserControl.InputDevice.XboxController;
+    public static Trinket.Trinkets trinket1Player1;
+    public static Trinket.Trinkets trinket2Player1;
+
     public static GameObject player2 = null;
     public static UserControl.InputDevice inputP2 = UserControl.InputDevice.KeyboardMouse;
+    public static Trinket.Trinkets trinket1Player2;
+    public static Trinket.Trinkets trinket2Player2;
 
     //Redundant variables so they can be assigned in the inspector (static ones cant)
     public GameObject defaultPlayer1 = null;
@@ -71,7 +76,7 @@ public class LocalMultiplayerManager : MonoBehaviour {
             GameObject.Find("Button_changeCharacter").SetActive(false);
             GameObject.Find("Button_switchMode").SetActive(false);
 
-            //when starting from champion selection, disable debug buttons, instantiate players
+            //Player1
             GameObject instPlayer1 = Instantiate(player1, spawnPlayer1.position, Quaternion.identity);
             instPlayer1.GetComponent<UserControl>().inputDevice = inputP1;
             instPlayer1.layer = 11;
@@ -81,8 +86,13 @@ public class LocalMultiplayerManager : MonoBehaviour {
 
             instPlayer1.GetComponent<ChampionClassController>().m_whatToHit = whatToHitP1;
 
+            //Trinkets P1
+            instPlayer1.AddComponent(Trinket.trinketsForNames[trinket1Player1]);
+            instPlayer1.AddComponent(Trinket.trinketsForNames[trinket2Player1]);
+
             Camera.main.GetComponent<CameraBehaviour>().changeTarget(instPlayer1.transform);
 
+            //Player 2
             GameObject instPlayer2 = Instantiate(player2, spawnPlayer2.position, Quaternion.identity);
             instPlayer2.layer = 12;
 
@@ -95,6 +105,10 @@ public class LocalMultiplayerManager : MonoBehaviour {
             instPlayer2.GetComponent<UserControl>().playerNumber = UserControl.PlayerNumbers.Player2;
 
             Camera.main.GetComponent<CameraBehaviour>().switchToMultiplayer(instPlayer2.GetComponent<Transform>());
+
+            //Trinkets P2
+            instPlayer2.AddComponent(Trinket.trinketsForNames[trinket1Player2]);
+            instPlayer2.AddComponent(Trinket.trinketsForNames[trinket2Player2]);
 
             //Set overlay
             instPlayer1.transform.Find("graphics").GetComponent<SpriteRenderer>().color = championSpriteOverlayColor;

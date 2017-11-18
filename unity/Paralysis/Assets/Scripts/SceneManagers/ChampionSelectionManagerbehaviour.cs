@@ -11,10 +11,10 @@ public class ChampionSelectionManagerbehaviour : MonoBehaviour {
     public Dropdown inputPlayer2;
 
     //Players trinkets
-    public Trinket trinket1Player1;
-    public Trinket trinket2Player1;
-    public Trinket trinket1Player2;
-    public Trinket trinket2Player2;
+    public Trinket.Trinkets trinket1Player1;
+    public Trinket.Trinkets trinket2Player1;
+    public Trinket.Trinkets trinket1Player2 = Trinket.Trinkets.PassiveTrinket_ChanceToStun;
+    public Trinket.Trinkets trinket2Player2 = Trinket.Trinkets.UseTrinkets_NextHitDealsbleeding;
 
     //Holds [Platform] as key and [previewPrefab][champoionPrefab] as value
     private Dictionary<GameObject, GameObject[]> championsOnPlatforms = new Dictionary<GameObject, GameObject[]>();
@@ -52,6 +52,12 @@ public class ChampionSelectionManagerbehaviour : MonoBehaviour {
         LocalMultiplayerManager.player2 = championsOnPlatforms[platforms[1]][1];
         LocalMultiplayerManager.inputP1 = (UserControl.InputDevice) Enum.Parse(typeof(UserControl.InputDevice), inputPlayer1.GetComponentInChildren<Text>().text);
         LocalMultiplayerManager.inputP2 = (UserControl.InputDevice)Enum.Parse(typeof(UserControl.InputDevice), inputPlayer2.GetComponentInChildren<Text>().text);
+
+        LocalMultiplayerManager.trinket1Player1 = trinket1Player1;
+        LocalMultiplayerManager.trinket2Player1 = trinket2Player1;
+        LocalMultiplayerManager.trinket1Player2 = trinket1Player2;
+        LocalMultiplayerManager.trinket2Player2 = trinket2Player2;
+
         //Load scene
         SceneManager.LoadScene("scenes/test");
     }
