@@ -310,7 +310,6 @@ public abstract class ChampionClassController : MonoBehaviour
                 animCon.trigDash = true;
                 stats.immovable = true;
 
-                yield return new WaitForSeconds(0.1f);
                 stats.invincible = true; //Player is invincible for a period of time while dashing
 
                 yield return new WaitUntil(() => animCon.currentAnimation != AnimationController.AnimatorStates.Dash);

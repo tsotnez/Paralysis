@@ -679,7 +679,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Assassin
+  m_Text: Knight
 --- !u!114 &114782771377757718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -725,8 +725,8 @@ MonoBehaviour:
   m_MaxSpeed: 6
   m_MoveSpeedWhileAttacking: 5
   m_MoveSpeedWhileBlocking: 0
-  m_JumpForce: 1000
-  m_DoubleJumpForce: 400
+  m_JumpForce: 700
+  m_DoubleJumpForce: 600
   m_jumpAttackRadius: 10
   m_jumpAttackForce: 10
   m_dashSpeed: 7
@@ -993,7 +993,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 4.8339996, y: 0.32070065}
+  m_AnchoredPosition: {x: 0, y: 0.32070065}
   m_SizeDelta: {x: 2, y: 2.0381}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224154734678214778
