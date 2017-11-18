@@ -10,6 +10,7 @@ public class TrinketPreview : MonoBehaviour {
     private void Start()
     {
         GetComponent<Button>().onClick.AddListener(setTrinketAsSelected);
+        GetComponentInChildren<Text>().text = gameObject.name;
     }
 
     void setTrinketAsSelected()
@@ -17,8 +18,7 @@ public class TrinketPreview : MonoBehaviour {
         AvailableTrinketsSelection parent = transform.parent.GetComponent<AvailableTrinketsSelection>();
         parent.targetSlot.setSelectedTrinket(trinket);
         parent.targetSlot.gameObject.GetComponent<Image>().sprite = GetComponent<Image>().sprite;
-        Text temp = parent.targetSlot.transform.GetComponentInChildren<Text>();
-        var temp2 = Trinket.trinketsForNames[trinket].GetProperty("DisplayName", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+        parent.targetSlot.transform.GetComponentInChildren<Text>().text = GetComponentInChildren<Text>().text;
         parent.gameObject.SetActive(false);
     }
 }

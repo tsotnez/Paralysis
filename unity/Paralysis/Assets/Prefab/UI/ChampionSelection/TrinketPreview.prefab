@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 222619643539146816}
   - component: {fileID: 114830799263028706}
   - component: {fileID: 114954426469079142}
+  - component: {fileID: 114602112303229304}
   m_Layer: 5
   m_Name: TrinketPreview
   m_TagString: Untagged
@@ -79,6 +80,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Trinket
+--- !u!114 &114602112303229304
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1550587421164650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dda04494023c89c478776704dc93110f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trinket: 0
 --- !u!114 &114830799263028706
 MonoBehaviour:
   m_ObjectHideFlags: 1

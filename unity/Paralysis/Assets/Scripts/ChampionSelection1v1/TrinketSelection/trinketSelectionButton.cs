@@ -17,11 +17,11 @@ public class trinketSelectionButton : MonoBehaviour {
 	void showAvailableTrinkets()
     {
         //Show trinket selection and set target slot to this object
-        if (availableTrinkets.activeInHierarchy == false)
-        {
-            availableTrinkets.GetComponent<AvailableTrinketsSelection>().targetSlot = this;
-            availableTrinkets.SetActive(true);
-        }
+        if (availableTrinkets.activeInHierarchy == true)
+            availableTrinkets.SetActive(false);
+
+        availableTrinkets.GetComponent<AvailableTrinketsSelection>().targetSlot = this;
+        availableTrinkets.SetActive(true);
     }
 
     public void setSelectedTrinket(Trinket.Trinkets value)
