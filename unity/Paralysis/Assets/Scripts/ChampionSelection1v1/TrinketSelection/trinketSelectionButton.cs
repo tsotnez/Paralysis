@@ -12,6 +12,7 @@ public class trinketSelectionButton : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         GetComponent<Button>().onClick.AddListener(showAvailableTrinkets);
+        setSelectedTrinket(selectedTrinket);
 	}
 	
 	void showAvailableTrinkets()

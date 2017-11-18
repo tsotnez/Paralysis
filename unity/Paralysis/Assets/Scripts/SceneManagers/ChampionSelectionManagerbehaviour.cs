@@ -13,8 +13,8 @@ public class ChampionSelectionManagerbehaviour : MonoBehaviour {
     //Players trinkets
     public Trinket.Trinkets trinket1Player1;
     public Trinket.Trinkets trinket2Player1;
-    public Trinket.Trinkets trinket1Player2 = Trinket.Trinkets.PassiveTrinket_ChanceToStun;
-    public Trinket.Trinkets trinket2Player2 = Trinket.Trinkets.UseTrinkets_NextHitDealsbleeding;
+    public Trinket.Trinkets trinket1Player2;
+    public Trinket.Trinkets trinket2Player2;
 
     //Holds [Platform] as key and [previewPrefab][champoionPrefab] as value
     private Dictionary<GameObject, GameObject[]> championsOnPlatforms = new Dictionary<GameObject, GameObject[]>();
