@@ -12,6 +12,11 @@ public class ChampionSelectButton : MonoBehaviour {
 
     public Sprite onHoverSprite;
     private Sprite defaultSprite;
+    private Image image;
+
+    public bool selectedInGroup = false;
+    private bool pointerOverButton = false;
+
 
     public enum players
     {
@@ -20,24 +25,44 @@ public class ChampionSelectButton : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        defaultSprite = GetComponent<Image>().sprite;
+        image = GetComponent<Image>();
+        defaultSprite = image.sprite;
         btn = GetComponent<Button>();
         btn.onClick.AddListener(showChampion);
   	}
-	
-	void showChampion()
+
+    private void Update()
     {
+        //Is the button the selected button, keep showing the hover sprite
+        if (!pointerOverButton)
+        {
+            if (selectedInGroup)
+            {
+                image.sprite = onHoverSprite;
+            }
+            else
+                image.sprite = defaultSprite;
+        }
+    }
+
+    void showChampion()
+    {
+        transform.parent.transform.parent.GetComponent<ChampionSelectButtonGroup>().setSelectedButton(this);
         GameObject.Find("manager").GetComponent<ChampionSelectionManagerbehaviour>().showChamp(previewPrefab, championPrefab, playerNumber);
     }
 
     public void PointerEnter()
     {
-        GetComponent<Image>().sprite = onHoverSprite;
+        pointerOverButton = true;
+        transform.Find("Overlay").gameObject.SetActive(true);
+
     }
 
     public void PointerExit()
     {
-        GetComponent<Image>().sprite = defaultSprite;
+        pointerOverButton = false;
+        transform.Find("Overlay").gameObject.SetActive(false);
+        image.sprite = defaultSprite;
     }
 
 }
