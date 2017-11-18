@@ -6,6 +6,10 @@ public class KnightController : ChampionClassController
 {
     [SerializeField]
     private GameObject Skill4_Spear;
+    [SerializeField]
+    private float skill2_leap_speed = 10f;
+
+    private bool skill2_leap = false;
 
     #region default Methods
 
@@ -19,14 +23,24 @@ public class KnightController : ChampionClassController
 
         skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.skillEffect.stun, 3, stamina_Skill1, false, cooldown_Skill1, meeleRange);
         skill2_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.skillEffect.stun, 3, stamina_Skill2, false, cooldown_Skill2, meeleRange);
-        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill3, damage_Skill3, Skill.skillEffect.knockback, 0, stamina_Skill3, false, cooldown_Skill3, meeleRange);
-        skill4_var = new RangedSkill(AnimationController.AnimatorStates.Skill3, false, new Vector2(7, 0), Skill4_Spear, delay_Skill4, damage_Skill4, Skill.skillEffect.nothing, 0, stamina_Skill4, true, cooldown_Skill4, 5f);
+        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.skillEffect.knockback, 0, stamina_Skill3, false, cooldown_Skill3, meeleRange);
+        skill4_var = new RangedSkill(AnimationController.AnimatorStates.Skill4, false, new Vector2(7, 0), Skill4_Spear, delay_Skill4, damage_Skill4, Skill.skillEffect.nothing, 0, stamina_Skill4, true, cooldown_Skill4, 5f);
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+        if (skill2_leap)
+        {
+            m_Rigidbody2D.velocity = new Vector2(skill2_leap_speed, m_Rigidbody2D.velocity.y);
+        }
     }
 
     #endregion
@@ -64,15 +78,16 @@ public class KnightController : ChampionClassController
                     // Playing the correct animation depending on the attackCount and setting attacking status
                     switch (attackCount)
                     {
-                        case 1: case 2:
+                        case 1:
+                        case 2:
                             // do meele attack
-                            doMeeleSkill(ref animCon.trigBasicAttack1, (MeleeSkill) basicAttack1_var);
+                            doMeeleSkill(ref animCon.trigBasicAttack1, (MeleeSkill)basicAttack1_var);
                             // Reset timer of combo
                             resetComboTime();
                             break;
                         case 3:
                             // do meele attack
-                            doMeeleSkill(ref animCon.trigBasicAttack2, (MeleeSkill) basicAttack2_var);
+                            doMeeleSkill(ref animCon.trigBasicAttack2, (MeleeSkill)basicAttack2_var);
                             // Reset Combo after combo-hit
                             abortCombo();
                             break;
@@ -131,34 +146,38 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill2()
     {
-        //doMeeleSkill(ref animCon.trigSkill2, delay_Skill2, damage_Skill2, Skill.skillEffect.stun, 3, stamina_Skill2);
-        //TODO
-
         // Validate if skill can be performed
-        if (canPerformAction(false) && canPerformAttack())
+        if (canPerformAction(true) && canPerformAttack() && stats.hasSufficientStamina(stamina_Skill2))
         {
-            if (animCon.m_Grounded && stats.hasSufficientStamina(15))
-            {
-                // start coroutine for hitting when reaching ground
-                StartCoroutine(skill2_Coroutine());
-            }
+            // set animation
+            animCon.trigSkill2 = true;
+
+            // start coroutine for hitting when reaching ground
+            StartCoroutine(skill2_Coroutine());
         }
     }
 
     private IEnumerator skill2_Coroutine()
     {
+        stats.immovable = true;
+        skill2_leap = true;
+
+        // Calculate correct direction
+        if (!m_FacingRight)
+            skill2_leap_speed = Math.Abs(skill2_leap_speed) * (-1);
+        else
+            skill2_leap_speed = Math.Abs(skill2_leap_speed);
+
         // Add a vertical force to the player.
-        animCon.m_Grounded = false;
         m_Rigidbody2D.velocity = Vector2.zero;
         m_Rigidbody2D.AddForce(new Vector2(0, 400));
-        yield return new WaitForSeconds(0.1f);
-        m_Rigidbody2D.AddForce(new Vector2(700, 0));
 
-        // set animation
-        animCon.trigSkill2 = true;
-
+        // Wait until force is applied
+        yield return new WaitUntil(() => !animCon.m_Grounded);
         // Wait while not on ground
         yield return new WaitUntil(() => animCon.m_Grounded);
+        skill2_leap = false;
+        stats.immovable = false;
 
         doMeeleSkill(ref ((KnightAnimationController)animCon).trigSkill2End, (MeleeSkill)skill2_var);
     }

@@ -174,7 +174,7 @@ MonoBehaviour:
   champions:
   - {fileID: 1654434425598688, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
   - {fileID: 1468821578159268, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b, type: 2}
-  - {fileID: 1903508196159970, guid: 0639eac30390dec449afda643c7fa53c, type: 2}
+  - {fileID: 0}
   - {fileID: 1128103333960868, guid: e6f7d777ee6c44d448705ae811eebec4, type: 2}
   startChar: 1
 --- !u!4 &33478042
@@ -204,7 +204,7 @@ MonoBehaviour:
   gameOverOverlay: {fileID: 1124908811}
   defaultPlayer1: {fileID: 1468821578159268, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b,
     type: 2}
-  defaultPlayer2: {fileID: 1654434425598688, guid: 1c93aba00e9725e409b2a5a0a2b0e223,
+  defaultPlayer2: {fileID: 1903508196159970, guid: 0639eac30390dec449afda643c7fa53c,
     type: 2}
   hotbarPrefab: {fileID: 1880548955337550, guid: 1af496c58dcb903408eaa6d024bfe250,
     type: 2}
@@ -1900,7 +1900,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4425572547114126, guid: e6f7d777ee6c44d448705ae811eebec4, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1128103333960868, guid: e6f7d777ee6c44d448705ae811eebec4, type: 2}
       propertyPath: m_IsActive
@@ -3170,7 +3170,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4662659095535300, guid: 0639eac30390dec449afda643c7fa53c, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1903508196159970, guid: 0639eac30390dec449afda643c7fa53c, type: 2}
       propertyPath: m_IsActive

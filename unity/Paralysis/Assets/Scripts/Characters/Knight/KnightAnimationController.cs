@@ -9,7 +9,7 @@ public class KnightAnimationController : ChampionAnimationController
         if (trigSkill2End)
         {
             trigSkill2End = false;
-            StartEndAnimation();
+            //StartEndAnimation();
         }
         if (statBlock && m_Speed > 0.001)
             StartAnimation(AnimatorStates.BlockMove);
