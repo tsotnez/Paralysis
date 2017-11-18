@@ -37,6 +37,7 @@ public class KnightController : ChampionClassController
     {
         base.FixedUpdate();
 
+        // Add force to knight when leaping (Skill 2)
         if (skill2_leap)
         {
             m_Rigidbody2D.velocity = new Vector2(skill2_leap_speed, m_Rigidbody2D.velocity.y);
@@ -147,7 +148,7 @@ public class KnightController : ChampionClassController
     public override void skill2()
     {
         // Validate if skill can be performed
-        if (canPerformAction(true) && canPerformAttack() && stats.hasSufficientStamina(stamina_Skill2))
+        if (canPerformAction(true) && canPerformAttack() && skill2_var.notOnCooldown && stats.hasSufficientStamina(stamina_Skill2))
         {
             // set animation
             animCon.trigSkill2 = true;
@@ -176,6 +177,7 @@ public class KnightController : ChampionClassController
         yield return new WaitUntil(() => !animCon.m_Grounded);
         // Wait while not on ground
         yield return new WaitUntil(() => animCon.m_Grounded);
+        Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
         skill2_leap = false;
         stats.immovable = false;
 
