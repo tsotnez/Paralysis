@@ -89,6 +89,8 @@ public class LocalMultiplayerManager : MonoBehaviour {
             //Trinkets P1
             instPlayer1.AddComponent(Trinket.trinketsForNames[trinket1Player1]);
             instPlayer1.AddComponent(Trinket.trinketsForNames[trinket2Player1]);
+            instPlayer1.GetComponent<ChampionClassController>().Trinket1 = instPlayer1.GetComponents<Trinket>()[0];
+            instPlayer1.GetComponent<ChampionClassController>().Trinket2 = instPlayer1.GetComponents<Trinket>()[1];
 
             Camera.main.GetComponent<CameraBehaviour>().changeTarget(instPlayer1.transform);
 

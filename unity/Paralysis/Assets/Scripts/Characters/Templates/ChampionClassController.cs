@@ -152,9 +152,6 @@ public abstract class ChampionClassController : MonoBehaviour
         stats = GetComponent<CharacterStats>();
         animCon = graphics.GetComponent<ChampionAnimationController>();
         shadowRenderer = m_GroundCheck.GetComponent<SpriteRenderer>();
-
-        //Trinket1 = new UseTrinket_HealingOverTime();
-        //Trinket2 = new UseTrinket_RemoveStatusEffect();
     }
 
     protected virtual void Update()
@@ -165,9 +162,6 @@ public abstract class ChampionClassController : MonoBehaviour
             animCon.trigHit = true;
         }
         animCon.statStunned = stats.stunned;
-
-        //Debug.Log("Trinket1: " + Trinket1.GetType().BaseType);
-        //Debug.Log("Trinket2: " + Trinket2.GetType().BaseType);
     }
 
     protected virtual void FixedUpdate()
