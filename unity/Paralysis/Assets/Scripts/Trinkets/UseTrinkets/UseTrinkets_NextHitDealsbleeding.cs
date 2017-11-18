@@ -4,7 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// Position: 9
-/// Effect: Next hit in 10 seconds deals bleeding effect
+/// Effect: Next hit deals bleeding effect
 /// </summary>
 public class UseTrinkets_NextHitDealsbleeding : UseTrinket
 {
@@ -19,16 +19,16 @@ public class UseTrinkets_NextHitDealsbleeding : UseTrinket
 
     protected override IEnumerator ManageTrinketDuration(CharacterStats TrinketOwnerStats)
     {
-        throw new NotImplementedException();
-
         // Set Effects of Use-Trinket 
+        TrinketOwnerStats.NextHitDealsBleed = true;
 
-        // Wait till duration ends
-        yield return new WaitForSeconds(GeneralDuration);
+        // Wait
+        yield return new WaitForSeconds(0.1f);
 
-        // Disable Effects of Use-Trinket
+        // Wait till effect is dealed
+        yield return new WaitUntil(() => !TrinketOwnerStats.NextHitDealsBleed);
 
-        // Stop Trinket
+        // End trinket effect
         TrinketRunning = false;
     }
 }

@@ -3,14 +3,21 @@ using UnityEngine;
 
 public abstract class PassiveTrinket : Trinket
 {
+    public enum TriggerType
+    {
+        DealDamage, TakeDamage
+    }
+
+    public TriggerType TrinketTriggerType { get; protected set; }
+    public bool TrinketRunning { get; protected set; }
     public bool TrinketReady { get; private set; }
 
-    protected int GeneralCooldown; 
+    protected int GeneralCooldown;
+    protected int GeneralDuration;
     protected float PercentageEffectAdd;
 
     private int TriggerChance;
     private System.Random random;
-    
 
     protected virtual void Awake()
     {
@@ -34,6 +41,8 @@ public abstract class PassiveTrinket : Trinket
             int rand = random.Next(1, 100);
             if (rand-TriggerChance >= 95)
             {
+                // Set trinket is active
+                TrinketRunning = true;
                 // Start trinket action
                 StartCoroutine(ManageTrinketDuration(TrinketOwnerStats));
                 // Start Cooldown
@@ -46,6 +55,7 @@ public abstract class PassiveTrinket : Trinket
 
     private IEnumerator manageCooldown()
     {
+        yield return new WaitUntil(() => !TrinketRunning);
         TrinketReady = false;
         yield return new WaitForSeconds(GeneralCooldown);
         TrinketReady = true;

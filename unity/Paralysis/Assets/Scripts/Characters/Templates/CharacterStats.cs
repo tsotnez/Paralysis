@@ -55,7 +55,8 @@ public class CharacterStats : MonoBehaviour {
     [Header("Effects")]
     public float PercentageMovement = 1f;
     public float PercentageDamage = 1f;
-
+    public bool NextHitDealsStun = false;
+    public bool NextHitDealsBleed = false;
 
     void Awake()
     {

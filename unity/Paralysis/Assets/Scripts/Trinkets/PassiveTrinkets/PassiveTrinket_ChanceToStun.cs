@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using UnityEngine;
 
 /// <summary>
 /// Position: 10
@@ -11,10 +12,18 @@ class PassiveTrinket_ChanceToStun : PassiveTrinket
     void Start()
     {
         DisplayName += "Chance to deal extra damage";
+        TrinketTriggerType = TriggerType.DealDamage;
     }
 
     protected override IEnumerator ManageTrinketDuration(CharacterStats TrinketOwnerStats)
     {
-        throw new NotImplementedException();
+        // Add Effect
+        TrinketOwnerStats.NextHitDealsStun = false;
+
+        // Wait till effect is dealed
+        yield return new WaitUntil(() => !TrinketOwnerStats.NextHitDealsStun);
+
+        // End Trinket Effect
+        TrinketRunning = false;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using UnityEngine;
 
 /// <summary>
 /// Position: 5
@@ -12,10 +13,21 @@ class PassiveTrinket_SpeedWhenHitted : PassiveTrinket
     {
         DisplayName += "Chance to deal extra damage";
         PercentageEffectAdd = 0.2f;
+        TrinketTriggerType = TriggerType.TakeDamage;
     }
 
     protected override IEnumerator ManageTrinketDuration(CharacterStats TrinketOwnerStats)
     {
-        throw new NotImplementedException();
+        // Set Effects of Use-Trinket 
+        TrinketOwnerStats.PercentageMovement += PercentageEffectAdd;
+
+        // Wait till duration ends
+        yield return new WaitForSeconds(GeneralDuration);
+
+        // Disable Effects of Use-Trinket
+        TrinketOwnerStats.PercentageMovement -= PercentageEffectAdd;
+
+        // Stop Trinket
+        TrinketRunning = false;
     }
 }
