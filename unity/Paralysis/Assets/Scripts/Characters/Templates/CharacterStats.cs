@@ -33,6 +33,7 @@ public class CharacterStats : MonoBehaviour {
     public bool immovable = false;              // Stores if character is immoveable
     public float slowFactor = 1;                // Setting this to a value below 1 will slow down the character
     public bool invincible = false;             // If true, character cant be harmed 
+    public bool reflect = false;                // If true, character reflect damage to its dealer  --- NOT IMPLEMENTED
     public bool trigHit = false;
 
     [Header("Knock Back")]
@@ -50,6 +51,11 @@ public class CharacterStats : MonoBehaviour {
     public Sprite Team2Color;
     public Image floatingHpBar;
     public Image floatingStaminaBar;
+
+    [Header("Effects")]
+    public float PercentageMovement = 1f;
+    public float PercentageDamage = 1f;
+
 
     void Awake()
     {
@@ -173,6 +179,11 @@ public class CharacterStats : MonoBehaviour {
 
         this.currentHealth -= amount; //Substract health
         if (currentHealth <= 0) die();
+    }
+
+    public void GetHealth(int amount)
+    {
+        currentHealth += amount;
     }
 
     public void startStunned(int time)

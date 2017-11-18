@@ -208,6 +208,9 @@ public abstract class ChampionClassController : MonoBehaviour
             else if (blocking) maxSpeed = m_MoveSpeedWhileBlocking;
             else maxSpeed = m_MaxSpeed;
 
+            // Add movement effects to the speed
+            maxSpeed += stats.PercentageMovement;
+
             // Prevent player from turning around while blocking
             //if (maxSpeed == 0) return;
 
@@ -467,7 +470,7 @@ public abstract class ChampionClassController : MonoBehaviour
                         throw new NotImplementedException();
                 }
                 // deal damage to target
-                target.takeDamage(skillToPerform.damage, false);
+                target.takeDamage((int)Math.Round(skillToPerform.damage * stats.PercentageDamage), false);
             }
         }
 
@@ -525,7 +528,7 @@ public abstract class ChampionClassController : MonoBehaviour
         projectile.speed = skillToPerform.speed;
         projectile.effect = skillToPerform.effect;
         projectile.explodeOnHit = skillToPerform.onHitEffect;
-        projectile.damage = skillToPerform.damage;
+        projectile.damage = (int)Math.Round(skillToPerform.damage * stats.PercentageDamage);
         projectile.effectDuration = skillToPerform.effectDuration;
 
         Instantiate(goProjectile, transform.position + new Vector3(1f * direction, 0.3f), new Quaternion(goProjectile.transform.rotation.x,
