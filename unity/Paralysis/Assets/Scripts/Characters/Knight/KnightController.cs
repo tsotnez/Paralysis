@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class KnightController : ChampionClassController
 {
-    [Header("Knight Specific")]
     [SerializeField]
     private GameObject Skill4_Spear;
 
@@ -140,22 +139,24 @@ public class KnightController : ChampionClassController
         {
             if (animCon.m_Grounded && stats.hasSufficientStamina(15))
             {
-                // Add a vertical force to the player.
-                animCon.m_Grounded = false;
-                m_Rigidbody2D.velocity = Vector2.zero;
-                m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
-
-                // set animation
-                animCon.trigSkill2 = true;
-
                 // start coroutine for hitting when reaching ground
-                StartCoroutine(skill2_HitWhenOnGround());
+                StartCoroutine(skill2_Coroutine());
             }
         }
     }
 
-    private IEnumerator skill2_HitWhenOnGround()
+    private IEnumerator skill2_Coroutine()
     {
+        // Add a vertical force to the player.
+        animCon.m_Grounded = false;
+        m_Rigidbody2D.velocity = Vector2.zero;
+        m_Rigidbody2D.AddForce(new Vector2(0, 400));
+        yield return new WaitForSeconds(0.1f);
+        m_Rigidbody2D.AddForce(new Vector2(700, 0));
+
+        // set animation
+        animCon.trigSkill2 = true;
+
         // Wait while not on ground
         yield return new WaitUntil(() => animCon.m_Grounded);
 
