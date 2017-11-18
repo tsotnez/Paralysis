@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KnightController : ChampionClassController
 {
-    [Header("Knight Special")]
+    [Header("Knight Specific")]
     [SerializeField]
     private GameObject Skill4_Spear;
 
@@ -18,8 +18,9 @@ public class KnightController : ChampionClassController
         basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, true, cooldown_BasicAttack1, meeleRange);
         basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack3, damage_BasicAttack3, Skill.skillEffect.nothing, 0, stamina_BasicAttack3, true, cooldown_BasicAttack2, meeleRange);
 
-        skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.skillEffect.stun, 3, stamina_Skill1, false, cooldown_Skill1, 1.5f);
-        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill3, damage_Skill3, Skill.skillEffect.knockback, 0, stamina_Skill3, false, cooldown_Skill3, 1.5f);
+        skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.skillEffect.stun, 3, stamina_Skill1, false, cooldown_Skill1, meeleRange);
+        skill2_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.skillEffect.stun, 3, stamina_Skill2, false, cooldown_Skill2, meeleRange);
+        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill3, damage_Skill3, Skill.skillEffect.knockback, 0, stamina_Skill3, false, cooldown_Skill3, meeleRange);
         skill4_var = new RangedSkill(AnimationController.AnimatorStates.Skill3, false, new Vector2(7, 0), Skill4_Spear, delay_Skill4, damage_Skill4, Skill.skillEffect.nothing, 0, stamina_Skill4, true, cooldown_Skill4, 5f);
     }
 
@@ -115,7 +116,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill1()
     {
-        doMeeleSkill(ref animCon.trigSkill1, (MeleeSkill) skill1_var);
+        doMeeleSkill(ref animCon.trigSkill1, (MeleeSkill)skill1_var);
     }
 
 
@@ -133,6 +134,32 @@ public class KnightController : ChampionClassController
     {
         //doMeeleSkill(ref animCon.trigSkill2, delay_Skill2, damage_Skill2, Skill.skillEffect.stun, 3, stamina_Skill2);
         //TODO
+
+        // Validate if skill can be performed
+        if (canPerformAction(false) && canPerformAttack())
+        {
+            if (animCon.m_Grounded && stats.hasSufficientStamina(15))
+            {
+                // Add a vertical force to the player.
+                animCon.m_Grounded = false;
+                m_Rigidbody2D.velocity = Vector2.zero;
+                m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+
+                // set animation
+                animCon.trigSkill2 = true;
+
+                // start coroutine for hitting when reaching ground
+                StartCoroutine(skill2_HitWhenOnGround());
+            }
+        }
+    }
+
+    private IEnumerator skill2_HitWhenOnGround()
+    {
+        // Wait while not on ground
+        yield return new WaitUntil(() => animCon.m_Grounded);
+
+        doMeeleSkill(ref ((KnightAnimationController)animCon).trigSkill2End, (MeleeSkill)skill2_var);
     }
 
     /// <summary>
@@ -147,7 +174,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill3()
     {
-        doMeeleSkill(ref animCon.trigSkill3, (MeleeSkill) skill3_var);
+        doMeeleSkill(ref animCon.trigSkill3, (MeleeSkill)skill3_var);
     }
 
     /// <summary>
@@ -161,7 +188,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill4()
     {
-        doRangeSkill(ref animCon.trigSkill4, (RangedSkill) skill4_var);
+        doRangeSkill(ref animCon.trigSkill4, (RangedSkill)skill4_var);
     }
 
     #endregion

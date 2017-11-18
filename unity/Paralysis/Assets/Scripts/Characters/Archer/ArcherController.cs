@@ -13,6 +13,7 @@ public class ArcherController : ChampionClassController
     private bool disengaging = false; //True while performing the disengage skill
     private Coroutine disengageRoutine = null;
     private float disengageSpeed = 15;
+
     #region default
 
     // Use this for initialization

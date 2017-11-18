@@ -112,7 +112,7 @@ public abstract class ChampionClassController : MonoBehaviour
 
     protected Transform m_GroundCheck;                                      // A position marking where to check if the player is grounded.
     protected SpriteRenderer shadowRenderer;
-    protected const float k_GroundedRadius = .02f;                           // Radius of the overlap circle to determine if grounded
+    protected const float k_GroundedRadius = .02f;                          // Radius of the overlap circle to determine if grounded
     protected bool doubleJumped = false;                                    // Has the character double jumped already?
 
     protected Skill basicAttack1_var;
@@ -464,15 +464,14 @@ public abstract class ChampionClassController : MonoBehaviour
                         break;
                     default:
                         // should not happen
-                        throw new System.NotImplementedException();
+                        throw new NotImplementedException();
                 }
                 // deal damage to target
                 target.takeDamage(skillToPerform.damage, false);
             }
         }
 
-        StartCoroutine(setSkillOnCooldown(skillToPerform));
-            
+        StartCoroutine(setSkillOnCooldown(skillToPerform));      
     }
 
     /// <summary>
@@ -538,6 +537,7 @@ public abstract class ChampionClassController : MonoBehaviour
     #endregion
 
     #region setOnCooldown
+
     protected IEnumerator setSkillOnCooldown(Skill skillToPerform)
     {
         //Set on cooldown
@@ -550,6 +550,7 @@ public abstract class ChampionClassController : MonoBehaviour
             skillToPerform.notOnCooldown = true;
         }
     }
+
     #endregion
 
     #region Character Can Perform
