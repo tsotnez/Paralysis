@@ -9,7 +9,13 @@ public class InfantryContoller : ChampionClassController
     {
         animCon = graphics.GetComponent<InfantryAnimationController>();
 
+        basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, Skill.skillTarget.SingleTarget, cooldown_BasicAttack1, meeleRange);
+        basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.skillEffect.nothing, 0, stamina_BasicAttack2, Skill.skillTarget.SingleTarget, cooldown_BasicAttack2, meeleRange);
 
+        skill1_var = new Skill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.skillEffect.stun, 3, stamina_Skill1, Skill.skillTarget.SingleTarget, cooldown_Skill1, meeleRange);
+        skill2_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.skillEffect.stun, 3, stamina_Skill2, Skill.skillTarget.InFront, cooldown_Skill2, meeleRange);
+        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.skillEffect.nothing, 0, stamina_Skill3, Skill.skillTarget.MultiTarget, cooldown_Skill3, meeleRange);
+        skill4_var = new MeleeSkill(AnimationController.AnimatorStates.Skill4, delay_Skill4, damage_Skill4, Skill.skillEffect.knockback, 0, stamina_Skill4, Skill.skillTarget.InFront, cooldown_Skill4, meeleRange);
     }
 
     #endregion
@@ -49,14 +55,14 @@ public class InfantryContoller : ChampionClassController
                     {
                         case 1:
                             // do meele attack
-                            //doMeeleSkill(ref animCon.trigBasicAttack1, delay_BasicAttack1, damage_BasicAttack1, skillEffect.nothing, 0, stamina_BasicAttack1);
+                            doMeleeSkill(ref animCon.trigBasicAttack1, (MeleeSkill)basicAttack1_var);
                             // Reset timer of combo
                             resetComboTime();
                             break;
                         case 2:
                         case 3:
                             // do meele attack
-                            //doMeeleSkill(ref animCon.trigBasicAttack2, delay_BasicAttack3, damage_BasicAttack3, skillEffect.nothing, 0, stamina_BasicAttack3);
+                            doMeleeSkill(ref animCon.trigBasicAttack2, (MeleeSkill)basicAttack2_var);
                             // Reset Combo after combo-hit
                             abortCombo();
                             break;
@@ -103,7 +109,7 @@ public class InfantryContoller : ChampionClassController
     }
 
     /// <summary>
-    /// Groudn Break (Stun)
+    /// Ground Break (Stun)
     /// The Infantry strikes the ground with his sword producing a force that can stun any enemys directly in front of him.
     /// 
     /// Damage: 5
@@ -118,7 +124,7 @@ public class InfantryContoller : ChampionClassController
 
     /// <summary>
     /// Bladestorm (Damage)
-    /// Infatry swings his sword in all directions. Any enemy directly in front or behind the Infantry will take extensive damage
+    /// Infantry swings his sword in all directions. Any enemy directly in front or behind the Infantry will take extensive damage
     ///  
     /// Damage: 15
     /// Effect: nothing
@@ -127,7 +133,7 @@ public class InfantryContoller : ChampionClassController
     /// </summary>
     public override void skill3()
     {
-        throw new NotImplementedException();
+        doMeleeSkill(ref animCon.trigSkill3, (MeleeSkill)skill3_var);
     }
 
     /// <summary>

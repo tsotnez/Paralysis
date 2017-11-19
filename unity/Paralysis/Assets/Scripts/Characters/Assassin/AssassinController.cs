@@ -22,14 +22,14 @@ public class AssassinController : ChampionClassController
         animCon = graphics.GetComponent<AssassinAnimationController>();
 
         //Instantiate skill variables
-        basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1 , delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, true, cooldown_BasicAttack1, meeleRange);
-        basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.skillEffect.nothing, 0, stamina_BasicAttack2, true, cooldown_BasicAttack2, meeleRange);
-        basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack3, delay_BasicAttack3, damage_BasicAttack3, Skill.skillEffect.bleed, 6, stamina_BasicAttack3, true, cooldown_BasicAttack3, meeleRange);
+        basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, Skill.skillTarget.SingleTarget, cooldown_BasicAttack1, meeleRange);
+        basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.skillEffect.nothing, 0, stamina_BasicAttack2, Skill.skillTarget.SingleTarget, cooldown_BasicAttack2, meeleRange);
+        basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack3, delay_BasicAttack3, damage_BasicAttack3, Skill.skillEffect.bleed, 6, stamina_BasicAttack3, Skill.skillTarget.SingleTarget, cooldown_BasicAttack3, meeleRange);
 
-        skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.skillEffect.nothing, 0, stamina_Skill1, true, cooldown_Skill1, meeleRange);
+        skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.skillEffect.nothing, 0, stamina_Skill1, Skill.skillTarget.SingleTarget, cooldown_Skill1, meeleRange);
         skill2_var = new Skill(AnimationController.AnimatorStates.Skill2, cooldown_Skill2);
         skill3_var = new Skill(AnimationController.AnimatorStates.Skill3, cooldown_Skill3);
-        skill4_var = new RangedSkill(AnimationController.AnimatorStates.Skill4, true, new Vector2(7, 0), bulletPrefab, delay_Skill4 , damage_Skill4, Skill.skillEffect.knockback, 2, stamina_Skill4, true, cooldown_Skill4, 5);
+        skill4_var = new RangedSkill(AnimationController.AnimatorStates.Skill4, true, new Vector2(7, 0), bulletPrefab, delay_Skill4, damage_Skill4, Skill.skillEffect.knockback, 2, stamina_Skill4, Skill.skillTarget.SingleTarget, cooldown_Skill4, 5);
     }
 
     protected override void Update()
@@ -49,7 +49,7 @@ public class AssassinController : ChampionClassController
     public override void skill1()
     {
         if (invisible) stopInvisible();
-        doMeeleSkill(ref animCon.trigSkill1, (MeleeSkill) skill1_var);
+        doMeleeSkill(ref animCon.trigSkill1, (MeleeSkill)skill1_var);
     }
 
     /// <summary>
@@ -83,7 +83,7 @@ public class AssassinController : ChampionClassController
     public override void skill4()
     {
         if (invisible) stopInvisible();
-        doRangeSkill(ref animCon.trigSkill4, (RangedSkill) skill4_var);
+        doRangeSkill(ref animCon.trigSkill4, (RangedSkill)skill4_var);
     }
 
     #endregion
@@ -126,21 +126,21 @@ public class AssassinController : ChampionClassController
                 {
                     case 1:
                         // do basic attack
-                        doMeeleSkill(ref animCon.trigBasicAttack1, (MeleeSkill) basicAttack1_var);
+                        doMeleeSkill(ref animCon.trigBasicAttack1, (MeleeSkill)basicAttack1_var);
                         break;
                     case 2:
                         // do basic attack
-                        doMeeleSkill(ref animCon.trigBasicAttack2, (MeleeSkill) basicAttack2_var);
+                        doMeleeSkill(ref animCon.trigBasicAttack2, (MeleeSkill)basicAttack2_var);
                         break;
                     case 3:
                         // do bleed attack
-                        doMeeleSkill(ref animCon.trigBasicAttack3, (MeleeSkill) basicAttack3_var);
+                        doMeleeSkill(ref animCon.trigBasicAttack3, (MeleeSkill)basicAttack3_var);
                         //reset Combo
                         abortCombo();
                         break;
                     case 4:
                         // do ambush attack
-                        doMeeleSkill(ref animCon.trigSkill3, new MeleeSkill(0, delay_Skill3, ambushAttack_damage, Skill.skillEffect.nothing, 3, stamina_BasicAttack1, true, 0, meeleRange));
+                        doMeleeSkill(ref animCon.trigSkill3, new MeleeSkill(0, delay_Skill3, ambushAttack_damage, Skill.skillEffect.nothing, 3, stamina_BasicAttack1, Skill.skillTarget.SingleTarget, 0, meeleRange));
                         //reset Combo
                         abortCombo();
                         //end invisibility
@@ -175,7 +175,7 @@ public class AssassinController : ChampionClassController
 
         bool hitIsEnemy = false;
         if (hit == true)
-          hitIsEnemy =  m_whatToHit == (m_whatToHit | (1 << hit.collider.gameObject.layer)); //Check if hits layer is in WhatToHit
+            hitIsEnemy = m_whatToHit == (m_whatToHit | (1 << hit.collider.gameObject.layer)); //Check if hits layer is in WhatToHit
 
         bool hitLeftIsEnemy = false;
         if (hitLeft == true)

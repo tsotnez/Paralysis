@@ -276,7 +276,7 @@ public abstract class ChampionClassController : MonoBehaviour
 
         // Deal damage to all enemies
         animCon.trigJumpAttackEnd = true;
-        StartCoroutine(doMeeleSkill_Hit(new MeleeSkill(0, 0, damage_JumpAttack, Skill.skillEffect.nothing, 0, 10, false, 0, m_jumpAttackRadius)));
+        StartCoroutine(doMeleeSkill_Hit(new MeleeSkill(0, 0, damage_JumpAttack, Skill.skillEffect.nothing, 0, 10, Skill.skillTarget.SingleTarget, 0, m_jumpAttackRadius)));
 
         Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
         jumpAttacking = false;
@@ -415,26 +415,29 @@ public abstract class ChampionClassController : MonoBehaviour
     /// <param name="singleTarget">only the first target or all targets? (default: singleTarget - true)</param>
     /// <param name="skillRange">Range of the skill (default: meeleRange - 1.5f)</param>.
     /// </summary>
-    protected void doMeeleSkill(ref bool animationVar, MeleeSkill skillToPerform, bool NoValidation = false)
+    protected void doMeleeSkill(ref bool animationVar, MeleeSkill skillToPerform, bool NoValidation = false)
     {
         //Validate that character is not attacking and standing on ground
-        if (NoValidation || canPerformAction(skillToPerform.needsToBeGrounded) && canPerformAttack() && skillToPerform.notOnCooldown && stats.loseStamina(skillToPerform.staminaCost))
+        if (NoValidation || canPerformAction(skillToPerform.needsToBeGrounded) && canPerformAttack())
         {
-            // set animation trigger
-            animationVar = true;
-            // do hit by coroutine
-            StartCoroutine(doMeeleSkill_Hit(skillToPerform));
+            if (skillToPerform.notOnCooldown && stats.loseStamina(skillToPerform.staminaCost))
+            {
+                // set animation trigger
+                animationVar = true;
+                // do hit by coroutine
+                StartCoroutine(doMeleeSkill_Hit(skillToPerform));
+            }
         }
     }
 
-    protected IEnumerator doMeeleSkill_Hit(MeleeSkill skillToPerform)
+    protected IEnumerator doMeleeSkill_Hit(MeleeSkill skillToPerform)
     {
         // wait till delay ends
         yield return new WaitForSeconds(skillToPerform.delay);
 
         CharacterStats target;
         RaycastHit2D[] hits = null;
-        if (skillToPerform.singleTarget)
+        if (skillToPerform.targetType == Skill.skillTarget.SingleTarget)
         {
             // if single target skill - get only one hit
             RaycastHit2D singleTargetHit = tryToHit(skillToPerform.range);
@@ -444,10 +447,14 @@ public abstract class ChampionClassController : MonoBehaviour
                 hits[0] = singleTargetHit;
             }
         }
-        else
+        else if (skillToPerform.targetType == Skill.skillTarget.MultiTarget)
         {
             // if multi target skill - get all hits
             hits = Physics2D.CircleCastAll(m_GroundCheck.position, skillToPerform.range, Vector2.up, 0.01f, m_whatToHit);
+        }
+        else
+        {
+            // Only enemys in front of the character
         }
 
         // only if something is in range
