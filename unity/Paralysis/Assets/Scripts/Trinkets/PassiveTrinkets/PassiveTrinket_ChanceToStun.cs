@@ -11,7 +11,7 @@ class PassiveTrinket_ChanceToStun : PassiveTrinket
     // Use this for initialization
     void Start()
     {
-        DisplayName += "Chance to deal extra damage";
+        DisplayName += "Next Hit Stuns";
         TrinketTriggerType = TriggerType.DealDamage;
     }
 

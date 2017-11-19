@@ -10,7 +10,7 @@ public class UseTrinket_IncreaseDamage : UseTrinket
     // Use this for initialization
     void Start()
     {
-        DisplayName += "Deal more damage";
+        DisplayName += "Damage Increased";
 
         GeneralDuration = 5;
         PercentageEffectAdd = 0.2f;

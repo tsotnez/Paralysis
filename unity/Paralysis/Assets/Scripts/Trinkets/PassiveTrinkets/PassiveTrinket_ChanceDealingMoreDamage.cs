@@ -11,7 +11,7 @@ class PassiveTrinket_ChanceDealingMoreDamage : PassiveTrinket
     // Use this for initialization
     void Start()
     {
-        DisplayName += "Chance to deal extra damage";
+        DisplayName += "Extra Damage";
         GeneralDuration = 3;
         PercentageEffectAdd = 0.2f;
         TrinketTriggerType = TriggerType.DealDamage;

@@ -154,15 +154,7 @@ public abstract class ChampionClassController : MonoBehaviour
         shadowRenderer = m_GroundCheck.GetComponent<SpriteRenderer>();
     }
 
-    protected virtual void Update()
-    {
-        if (stats.trigHit)
-        {
-            stats.trigHit = false;
-            animCon.trigHit = true;
-        }
-        animCon.statStunned = stats.stunned;
-    }
+    protected virtual void Update() { }
 
     protected virtual void FixedUpdate()
     {
@@ -175,7 +167,7 @@ public abstract class ChampionClassController : MonoBehaviour
         {
             if (colliders[i].gameObject != gameObject)
             {
-                animCon.m_Grounded = true;               
+                animCon.m_Grounded = true;
             }
         }
 
@@ -253,7 +245,7 @@ public abstract class ChampionClassController : MonoBehaviour
                 m_Rigidbody2D.velocity = Vector2.zero;
                 m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             }
-            else if(!doubleJumped && !animCon.m_Grounded)
+            else if (!doubleJumped && !animCon.m_Grounded)
             {
                 // Double Jump
                 m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
@@ -277,12 +269,12 @@ public abstract class ChampionClassController : MonoBehaviour
         if (m_FacingRight) direction = 1;
         else direction = -1;
 
-        m_Rigidbody2D.velocity = new Vector2( 4  *direction, -m_jumpAttackForce); //Add downwards force
+        m_Rigidbody2D.velocity = new Vector2(4 * direction, -m_jumpAttackForce); //Add downwards force
         yield return new WaitUntil(() => animCon.m_Grounded); //Jump attacking as long as not grounded
 
         // Deal damage to all enemies
         animCon.trigJumpAttackEnd = true;
-        StartCoroutine(doMeeleSkill_Hit(new MeleeSkill(0, 0, damage_JumpAttack, Skill.skillEffect.nothing, 0, 10, false, 0 , m_jumpAttackRadius)));
+        StartCoroutine(doMeeleSkill_Hit(new MeleeSkill(0, 0, damage_JumpAttack, Skill.skillEffect.nothing, 0, 10, false, 0, m_jumpAttackRadius)));
 
         Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
         jumpAttacking = false;
@@ -338,7 +330,7 @@ public abstract class ChampionClassController : MonoBehaviour
             if (!blocking)
             {
                 // Stop moving
-                m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); 
+                m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
             }
             blocking = true;
         }
@@ -411,7 +403,7 @@ public abstract class ChampionClassController : MonoBehaviour
     /// <param name="skillRange">Range of the skill (default: meeleRange - 1.5f)</param>.
     /// </summary>
     protected void doMeeleSkill(ref bool animationVar, MeleeSkill skillToPerform)
-    { 
+    {
         //Validate that character is not attacking and standing on ground
         if (canPerformAction(skillToPerform.needsToBeGrounded) && canPerformAttack() && skillToPerform.notOnCooldown && stats.loseStamina(skillToPerform.staminaCost))
         {
@@ -477,7 +469,7 @@ public abstract class ChampionClassController : MonoBehaviour
             }
         }
 
-        StartCoroutine(setSkillOnCooldown(skillToPerform));      
+        StartCoroutine(setSkillOnCooldown(skillToPerform));
     }
 
     /// <summary>
@@ -614,7 +606,7 @@ public abstract class ChampionClassController : MonoBehaviour
                 case AnimationController.AnimatorStates.Hit:
                 case AnimationController.AnimatorStates.DoubleJump:
                 case AnimationController.AnimatorStates.DashFor:
-                    return false;               
+                    return false;
             }
         }
         return true;

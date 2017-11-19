@@ -10,7 +10,7 @@ public class UseTrinket_ReflectDamage : UseTrinket
     // Use this for initialization
     void Start()
     {
-        DisplayName += "Reflect damage";
+        DisplayName += "Reflect Damage";
 
         GeneralDuration = 2;
         PercentageEffectAdd = 0f;

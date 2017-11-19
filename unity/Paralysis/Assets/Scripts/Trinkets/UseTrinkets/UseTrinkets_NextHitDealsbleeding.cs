@@ -11,7 +11,7 @@ public class UseTrinkets_NextHitDealsbleeding : UseTrinket
     // Use this for initialization
     void Start()
     {
-        DisplayName += "Next hit deals bleeding effect";
+        DisplayName += "Next Hit Bleeds";
 
         GeneralDuration = 10;
         PercentageEffectAdd = 0f;

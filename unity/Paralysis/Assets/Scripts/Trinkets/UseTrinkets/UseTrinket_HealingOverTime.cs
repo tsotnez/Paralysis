@@ -10,7 +10,7 @@ public class UseTrinket_HealingOverTime : UseTrinket
     // Use this for initialization
     void Start()
     {
-        DisplayName += "Healing over time";
+        DisplayName += "Healing Over Time";
 
         GeneralDuration = 10;
         AmountEffect = 50;

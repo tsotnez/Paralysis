@@ -34,9 +34,9 @@ public abstract class PassiveTrinket : Trinket
     /// Starts the effect of the Trinket
     /// </summary>
     /// <returns>Trinket has started or not</returns>
-    public void Use(CharacterStats TrinketOwnerStats)
+    public bool Use(CharacterStats TrinketOwnerStats)
     {
-        if (TrinketReady)
+        if (TrinketReady && !TrinketRunning)
         {
             int rand = random.Next(1, 100);
             if (rand-TriggerChance >= 95)
@@ -47,8 +47,11 @@ public abstract class PassiveTrinket : Trinket
                 StartCoroutine(ManageTrinketDuration(TrinketOwnerStats));
                 // Start Cooldown
                 StartCoroutine(manageCooldown());
+                return true;
             }
         }
+
+        return false;
     }
 
     protected abstract IEnumerator ManageTrinketDuration(CharacterStats TrinketOwnerStats);

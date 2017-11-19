@@ -13,7 +13,7 @@ public abstract class UseTrinket : Trinket
 
     protected virtual void Awake()
     {
-        DisplayName = "(USE) ";
+        DisplayName = "(TRINKET) ";
         GeneralCooldown = 60;
 
         TrinketRunning = false;
@@ -31,6 +31,8 @@ public abstract class UseTrinket : Trinket
         {
             // Set trinket is active
             TrinketRunning = true;
+            // Show the player that the trinket is active
+            TrinketOwnerStats.ShowFloatingText_TrinketTriggered(DisplayName);
             // Start trinket action
             StartCoroutine(ManageTrinketDuration(TrinketOwnerStats));
             // Start Cooldown

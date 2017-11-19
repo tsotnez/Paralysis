@@ -10,7 +10,7 @@ public class UseTrinket_IncreaseMovementSpeed : UseTrinket
     // Use this for initialization
     void Start()
     {
-        DisplayName += "Run faster";
+        DisplayName += "Movementspeed Increased";
 
         GeneralDuration = 5;
         PercentageEffectAdd = 0.2f;

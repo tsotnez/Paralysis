@@ -10,7 +10,7 @@ public class UseTrinket_RemoveStatusEffect : UseTrinket
     // Use this for initialization
     void Start()
     {
-        DisplayName += "Remove negative status effects";
+        DisplayName += "Free off Effects";
         GeneralDuration = 0.25f;
     }
 
