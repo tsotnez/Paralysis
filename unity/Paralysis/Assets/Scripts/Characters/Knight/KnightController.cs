@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class KnightController : ChampionClassController
 {
-    [Header("Knight Special")]
     [SerializeField]
     private GameObject Skill4_Spear;
+    [SerializeField]
+    private float skill2_leap_speed = 10f;
+
+    private bool skill2_leap = false;
 
     #region default Methods
 
@@ -15,18 +18,30 @@ public class KnightController : ChampionClassController
     {
         animCon = graphics.GetComponent<KnightAnimationController>();
 
-        basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, true, cooldown_BasicAttack1, meeleRange);
-        basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack3, damage_BasicAttack3, Skill.skillEffect.nothing, 0, stamina_BasicAttack3, true, cooldown_BasicAttack2, meeleRange);
+        basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, Skill.skillTarget.SingleTarget, cooldown_BasicAttack1, meeleRange);
+        basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.skillEffect.nothing, 0, stamina_BasicAttack2, Skill.skillTarget.SingleTarget, cooldown_BasicAttack2, meeleRange);
 
-        skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.skillEffect.stun, 3, stamina_Skill1, false, cooldown_Skill1, 1.5f);
-        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill3, damage_Skill3, Skill.skillEffect.knockback, 0, stamina_Skill3, false, cooldown_Skill3, 1.5f);
-        skill4_var = new RangedSkill(AnimationController.AnimatorStates.Skill3, false, new Vector2(7, 0), Skill4_Spear, delay_Skill4, damage_Skill4, Skill.skillEffect.nothing, 0, stamina_Skill4, true, cooldown_Skill4, 5f);
+        skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.skillEffect.stun, 3, stamina_Skill1, Skill.skillTarget.MultiTarget, cooldown_Skill1, meeleRange);
+        skill2_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.skillEffect.stun, 3, stamina_Skill2, Skill.skillTarget.MultiTarget, cooldown_Skill2, meeleRange);
+        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.skillEffect.knockback, 0, stamina_Skill3, Skill.skillTarget.SingleTarget, cooldown_Skill3, meeleRange);
+        skill4_var = new RangedSkill(AnimationController.AnimatorStates.Skill4, false, new Vector2(7, 0), Skill4_Spear, delay_Skill4, damage_Skill4, Skill.skillEffect.nothing, 0, stamina_Skill4, Skill.skillTarget.SingleTarget, cooldown_Skill4, 5f);
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+        // Add force to knight when leaping (Skill 2)
+        if (skill2_leap)
+        {
+            m_Rigidbody2D.velocity = new Vector2(skill2_leap_speed, m_Rigidbody2D.velocity.y);
+        }
     }
 
     #endregion
@@ -64,15 +79,16 @@ public class KnightController : ChampionClassController
                     // Playing the correct animation depending on the attackCount and setting attacking status
                     switch (attackCount)
                     {
-                        case 1: case 2:
+                        case 1:
+                        case 2:
                             // do meele attack
-                            doMeeleSkill(ref animCon.trigBasicAttack1, (MeleeSkill) basicAttack1_var);
+                            doMeleeSkill(ref animCon.trigBasicAttack1, (MeleeSkill)basicAttack1_var);
                             // Reset timer of combo
                             resetComboTime();
                             break;
                         case 3:
                             // do meele attack
-                            doMeeleSkill(ref animCon.trigBasicAttack2, (MeleeSkill) basicAttack2_var);
+                            doMeleeSkill(ref animCon.trigBasicAttack2, (MeleeSkill)basicAttack2_var);
                             // Reset Combo after combo-hit
                             abortCombo();
                             break;
@@ -115,7 +131,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill1()
     {
-        doMeeleSkill(ref animCon.trigSkill1, (MeleeSkill) skill1_var);
+        doMeleeSkill(ref animCon.trigSkill1, (MeleeSkill)skill1_var);
     }
 
 
@@ -131,8 +147,41 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill2()
     {
-        //doMeeleSkill(ref animCon.trigSkill2, delay_Skill2, damage_Skill2, Skill.skillEffect.stun, 3, stamina_Skill2);
-        //TODO
+        // Validate if skill can be performed
+        if (canPerformAction(true) && canPerformAttack() && skill2_var.notOnCooldown && stats.hasSufficientStamina(stamina_Skill2))
+        {
+            // set animation
+            animCon.trigSkill2 = true;
+
+            // start coroutine for hitting when reaching ground
+            StartCoroutine(skill2_Coroutine());
+        }
+    }
+
+    private IEnumerator skill2_Coroutine()
+    {
+        stats.immovable = true;
+        skill2_leap = true;
+
+        // Calculate correct direction
+        if (!m_FacingRight)
+            skill2_leap_speed = Math.Abs(skill2_leap_speed) * (-1);
+        else
+            skill2_leap_speed = Math.Abs(skill2_leap_speed);
+
+        // Add a vertical force to the player.
+        m_Rigidbody2D.velocity = Vector2.zero;
+        m_Rigidbody2D.AddForce(new Vector2(0, 400));
+
+        // Wait until force is applied
+        yield return new WaitUntil(() => !animCon.m_Grounded);
+        // Wait while not on ground
+        yield return new WaitUntil(() => animCon.m_Grounded);
+        Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
+        skill2_leap = false;
+        stats.immovable = false;
+
+        doMeleeSkill(ref ((KnightAnimationController)animCon).trigSkill2End, (MeleeSkill)skill2_var, true);
     }
 
     /// <summary>
@@ -147,7 +196,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill3()
     {
-        doMeeleSkill(ref animCon.trigSkill3, (MeleeSkill) skill3_var);
+        doMeleeSkill(ref animCon.trigSkill3, (MeleeSkill)skill3_var);
     }
 
     /// <summary>
@@ -161,48 +210,9 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void skill4()
     {
-        doRangeSkill(ref animCon.trigSkill4, (RangedSkill) skill4_var);
+        doRangeSkill(ref animCon.trigSkill4, (RangedSkill)skill4_var);
     }
 
     #endregion
 
-    #region Dash
-
-    /// <summary>
-    /// Dashes in the given direction with Dash and Dash Forward
-    /// </summary>
-    /// <param name="direction"></param>
-    /// <returns></returns>
-    public override IEnumerator dash(int direction)
-    {
-        if (canPerformAction(true) && canPerformAttack() && stats.loseStamina(m_dashStaminaCost))
-        {
-            if (direction != 0 && !dashing)
-            {
-                //Calculate new dashForce to go in right direction
-                m_dashSpeed = Mathf.Abs(m_dashSpeed) * direction;
-                m_Rigidbody2D.velocity = Vector2.zero;
-
-                // set var for dash or dashForward
-                if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight) animCon.trigDash = true;
-                else ((KnightAnimationController)animCon).trigDashForward = true;
-
-                dashing = true;
-                stats.immovable = true;
-
-                yield return new WaitForSeconds(0.1f);
-                stats.invincible = true; //Player is invincible for a period of time while dashing
-
-                yield return new WaitForSeconds(0.3f);
-                dashing = false;
-                stats.invincible = false;
-                m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); //Stop moving
-
-                yield return new WaitForSeconds(0.04f); //Short time where character cant move after dashing
-                stats.immovable = false;
-            }
-        }
-    }
-
-    #endregion
 }

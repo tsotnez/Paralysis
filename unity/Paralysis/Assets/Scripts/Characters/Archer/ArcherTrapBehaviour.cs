@@ -8,6 +8,7 @@ public class ArcherTrapBehaviour : MonoBehaviour {
     public LayerMask m_WhatIsGround;
     public LayerMask whatToHit;
     public GameObject explosionPrefab;
+    public GameObject creator;
 
     bool grounded = false;
     float accelaration = 1;
@@ -57,8 +58,9 @@ public class ArcherTrapBehaviour : MonoBehaviour {
         {
             if (whatToHit == (whatToHit | (1 << collision.gameObject.layer)))
             {
-                collision.gameObject.GetComponent<CharacterStats>().startStunned(3);
-                collision.gameObject.GetComponent<CharacterStats>().takeDamage(damage, true);
+                CharacterStats targetStats = collision.gameObject.GetComponent<CharacterStats>();
+                targetStats.startStunned(3);
+                creator.GetComponent<CharacterStats>().dealDamage(targetStats, damage, true);
                 Camera.main.GetComponent<CameraBehaviour>().startShake();
                 explode();
             }

@@ -17,6 +17,9 @@ public abstract class UserControl : MonoBehaviour
     protected bool m_Skill3;
     protected bool m_Skill4;
 
+    protected bool m_Trinket1;
+    protected bool m_Trinket2;
+
 
     protected float lastVerticalValue = 0; //Saves the last value for the jump-sticks horizontal input
 
@@ -67,6 +70,16 @@ public abstract class UserControl : MonoBehaviour
     /// </summary>
     protected virtual void CallMethods()
     {
+        if (m_Trinket1 && typeof(UseTrinket) == m_Character.Trinket1.GetType().BaseType)
+        {
+            ((UseTrinket)m_Character.Trinket1).Use(m_Stats); 
+            
+        }
+        if (m_Trinket2 && typeof(UseTrinket) == m_Character.Trinket2.GetType().BaseType)
+        {
+            ((UseTrinket)m_Character.Trinket2).Use(m_Stats);
+        }
+
         //Do things only when not stunned, defensive or being knocked back
         if (!m_Stats.stunned && !m_Stats.knockedBack)
         {
@@ -95,8 +108,12 @@ public abstract class UserControl : MonoBehaviour
         m_Skill2 = false;
         m_Skill3 = false;
         m_Skill4 = false;
+        m_Trinket1 = false;
+        m_Trinket2 = false;
         dash = 0;
     }
+
+    #region Keyboard & Mouse
 
     /// <summary>
     /// Checks inputs for Keyboard and Mouse
@@ -135,6 +152,16 @@ public abstract class UserControl : MonoBehaviour
             m_Skill4 = Input.GetButtonDown("Skill4");
         }
 
+        if (!m_Trinket1)
+        {
+            m_Trinket1 = Input.GetButtonDown("Trinket1");
+        }
+
+        if (!m_Trinket2)
+        {
+            m_Trinket2 = Input.GetButtonDown("Trinket2");
+        }
+
         if (!m_Jump)
         {
             // Read the jump input in Update so button presses aren't missed.
@@ -146,6 +173,11 @@ public abstract class UserControl : MonoBehaviour
 
         m_Character.manageDefensive(defensive);
     }
+
+    #endregion
+
+    #region XBox
+
     /// <summary>
     /// Checks input for Xbox Controllers
     /// </summary>
@@ -188,6 +220,16 @@ public abstract class UserControl : MonoBehaviour
             m_Skill4 = Input.GetButtonDown("Skill4_Xbox" + playerNumber.ToString());
         }
 
+        if (!m_Trinket1)
+        {
+            m_Trinket1 = Input.GetAxis("Trinket1_Xbox" + playerNumber.ToString()) < 0;
+        }
+
+        if (!m_Trinket2)
+        {
+            m_Trinket2 = Input.GetAxis("Trinket2_Xbox" + playerNumber.ToString()) > 0;
+        }
+
         if (!m_Jump)
         {
             if (lastVerticalValue >= 0)
@@ -200,6 +242,10 @@ public abstract class UserControl : MonoBehaviour
         lastVerticalValue = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
         m_Character.manageDefensive(defensive);
     }
+
+    #endregion
+
+    #region PS4
 
     protected virtual void checkInputForPs4Controller()
     {
@@ -252,4 +298,6 @@ public abstract class UserControl : MonoBehaviour
         lastVerticalValue = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
         m_Character.manageDefensive(defensive);
     }
+
+    #endregion
 }

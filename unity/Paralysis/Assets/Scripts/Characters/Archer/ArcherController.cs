@@ -13,6 +13,7 @@ public class ArcherController : ChampionClassController
     private bool disengaging = false; //True while performing the disengage skill
     private Coroutine disengageRoutine = null;
     private float disengageSpeed = 15;
+
     #region default
 
     // Use this for initialization
@@ -20,11 +21,11 @@ public class ArcherController : ChampionClassController
     {
         animCon = graphics.GetComponent<ArcherAnimationController>();
 
-        basicAttack1_var = new RangedSkill(AnimationController.AnimatorStates.BasicAttack1, false, new Vector2(9, 0), standartArrowPrefab, delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, true, cooldown_BasicAttack1, 6);
+        basicAttack1_var = new RangedSkill(AnimationController.AnimatorStates.BasicAttack1, false, new Vector2(9, 0), standartArrowPrefab, delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, Skill.skillTarget.SingleTarget, cooldown_BasicAttack1, 6);
 
-        skill1_var = new RangedSkill(AnimationController.AnimatorStates.Skill1, false, new Vector2(9, 0), greatArrowPrefab, delay_Skill1, damage_Skill1, Skill.skillEffect.knockback, 0, stamina_Skill1, true, cooldown_Skill1, 7);
+        skill1_var = new RangedSkill(AnimationController.AnimatorStates.Skill1, false, new Vector2(9, 0), greatArrowPrefab, delay_Skill1, damage_Skill1, Skill.skillEffect.knockback, 0, stamina_Skill1, Skill.skillTarget.SingleTarget, cooldown_Skill1, 7);
         skill2_var = new Skill(AnimationController.AnimatorStates.Skill2, cooldown_Skill2);
-        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.skillEffect.stun, 3, stamina_Skill3, false, cooldown_Skill3, 3);
+        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.skillEffect.stun, 3, stamina_Skill3, Skill.skillTarget.MultiTarget, cooldown_Skill3, 3);
         skill4_var = new Skill(AnimationController.AnimatorStates.Skill4, cooldown_Skill4);
     }
 
@@ -33,7 +34,7 @@ public class ArcherController : ChampionClassController
         base.FixedUpdate();
 
         //Move while disengaging
-        if(disengaging)
+        if (disengaging)
         {
             m_Rigidbody2D.velocity = new Vector2(disengageSpeed, m_Rigidbody2D.velocity.y);
         }
@@ -46,17 +47,17 @@ public class ArcherController : ChampionClassController
         //Shoot a basic arrow 
         if (shouldAttack)
         {
-            if(animCon.m_Grounded)
-                doRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill) basicAttack1_var);
-            else if(doubleJumped) //jump Attack
-                doRangeSkill(ref animCon.trigJumpAttack, new RangedSkill(0, false, new Vector2(4, -9), jumpAttackArrowPrefab, 0.2f, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, true , 0, 100, false));
+            if (animCon.m_Grounded)
+                doRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill)basicAttack1_var);
+            else if (doubleJumped) //jump Attack
+                doRangeSkill(ref animCon.trigJumpAttack, new RangedSkill(0, false, new Vector2(4, -9), jumpAttackArrowPrefab, 0.2f, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, Skill.skillTarget.SingleTarget, 0, 100, false));
         }
     }
 
     public override void skill1()
     {
         //Shoot a stronger arrow, causing knockback
-        doRangeSkill(ref animCon.trigSkill1, (RangedSkill) skill1_var);
+        doRangeSkill(ref animCon.trigSkill1, (RangedSkill)skill1_var);
     }
 
     public override void skill2()
@@ -73,6 +74,7 @@ public class ArcherController : ChampionClassController
     {
         GameObject trap = Instantiate(trapPrefab, m_GroundCheck.position, Quaternion.identity);
         ArcherTrapBehaviour trapScript = trap.GetComponent<ArcherTrapBehaviour>();
+        trapScript.creator = gameObject;
         trapScript.damage = damage_Skill2;
         trapScript.whatToHit = m_whatToHit;
         trapScript.ready = true;
@@ -82,7 +84,7 @@ public class ArcherController : ChampionClassController
     public override void skill3()
     {
         //Stomp the ground, stunning everyone in a given radius
-        doMeeleSkill(ref animCon.trigSkill3, (MeleeSkill) skill3_var);
+        doMeleeSkill(ref animCon.trigSkill3, (MeleeSkill)skill3_var);
     }
 
     public override void skill4()

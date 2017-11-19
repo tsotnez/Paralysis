@@ -71,8 +71,8 @@ public class ProjectileBehaviour : MonoBehaviour {
                     case Skill.skillEffect.bleed:
                         targetStats.startBleeding(effectDuration);
                         break;
-                }
-                targetStats.takeDamage(damage, false);
+                }      
+                creator.GetComponent<CharacterStats>().dealDamage(targetStats, damage, false);
                 if (!explodeOnHit)
                 {
                     //Destroy on hit if no explosion effect is supposed to be played

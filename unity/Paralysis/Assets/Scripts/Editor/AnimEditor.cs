@@ -15,7 +15,7 @@ public class AnimEditor : Editor
     // Properties for Animation-Dictionarys
     SerializedProperty Animations, Atlasses, Looping, CustomSpeeds;
     // Properties for AnimationEnd-Dictionarys
-    SerializedProperty EndAnimations, EndAtlasses;
+    SerializedProperty EndAtlasses;
 
     public string path;
     float lastSpeed;
@@ -35,7 +35,6 @@ public class AnimEditor : Editor
         CustomSpeeds = serializedObject.FindProperty("AnimationDuration");
 
         // Dictionary Properties for EndAnimation
-        EndAnimations = serializedObject.FindProperty("EndAnimationType");
         EndAtlasses = serializedObject.FindProperty("EndAtlasses");
 
         lastSpeed = GeneralAnimationSpeed.floatValue;
@@ -56,7 +55,6 @@ public class AnimEditor : Editor
         CustomSpeeds = serializedObject.FindProperty("AnimationDuration");
 
         // Dictionary Properties for EndAnimation
-        EndAnimations = serializedObject.FindProperty("EndAnimationType");
         EndAtlasses = serializedObject.FindProperty("EndAtlasses");
 
         // get all existing EnumTypes
@@ -67,15 +65,13 @@ public class AnimEditor : Editor
         Looping.arraySize = animStates.Length;
         Animations.arraySize = animStates.Length;
         CustomSpeeds.arraySize = animStates.Length;
-
         EndAtlasses.arraySize = animStates.Length;
-        EndAnimations.arraySize = animStates.Length;
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Animation");
-        GUILayout.Label("Loop");
-        GUILayout.Label("Speed");
-        GUILayout.Label("Atlasses");
+        GUILayout.Label("Animation", EditorStyles.boldLabel);
+        GUILayout.Label("Loop", EditorStyles.boldLabel);
+        GUILayout.Label("Speed", EditorStyles.boldLabel);
+        GUILayout.Label("Atlasses", EditorStyles.boldLabel);
         GUILayout.EndHorizontal();
 
         // loop through every enum state for Animation
@@ -110,8 +106,8 @@ public class AnimEditor : Editor
         }
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("End-Animation");
-        GUILayout.Label("End-Atlasses");
+        GUILayout.Label("End-Animation", EditorStyles.boldLabel);
+        GUILayout.Label("End-Atlasses", EditorStyles.boldLabel);
         GUILayout.EndHorizontal();
 
         // loop through every enum state for EndAnimation

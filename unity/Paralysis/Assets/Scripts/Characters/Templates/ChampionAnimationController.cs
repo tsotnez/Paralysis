@@ -22,12 +22,15 @@
     public bool trigJumpAttack = false;
     public bool trigJumpAttackEnd = false;
     public bool trigDash = false;
+    public bool trigDashForward = false;
     public bool trigHit = false;
 
     protected virtual void Update()
     {
         AnimationManager();
     }
+
+    protected virtual void FixedUpdate() { }
 
     private void AnimationManager()
     {
@@ -44,14 +47,21 @@
             switch (currentAnimation)
             {
                 case AnimatorStates.Dash:
+                case AnimatorStates.DashFor:
                 case AnimatorStates.BasicAttack1:
                 case AnimatorStates.BasicAttack2:
                 case AnimatorStates.BasicAttack3:
-                case AnimatorStates.JumpAttack:
                 case AnimatorStates.Skill1:
                 case AnimatorStates.Skill2:
                 case AnimatorStates.Skill3:
                 case AnimatorStates.Skill4:
+                    return;
+                case AnimatorStates.JumpAttack:
+                    if (trigJumpAttackEnd)
+                    {
+                        trigJumpAttackEnd = false;
+                        StartAnimation(AnimatorStates.JumpAttack, TypeOfAnimation.EndAnimation);
+                    }
                     return;
             }
 
@@ -65,6 +75,11 @@
                 trigDash = false;
                 StartAnimation(AnimatorStates.Dash);
             }
+            else if (trigDashForward)
+            {
+                trigDashForward = false;
+                StartAnimation(AnimatorStates.DashFor);
+            }
             else if (trigHit)
             {
                 trigHit = false;
@@ -74,11 +89,6 @@
             {
                 trigJumpAttack = false;
                 StartAnimation(AnimatorStates.JumpAttack);
-            }
-            else if (trigJumpAttackEnd)
-            {
-                trigJumpAttackEnd = false;
-                StartEndAnimation();
             }
             else if (trigBasicAttack1)
             {

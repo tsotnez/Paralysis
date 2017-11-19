@@ -518,14 +518,14 @@ MonoBehaviour:
   delay_Skill2: 0
   delay_Skill3: 0
   delay_Skill4: 0.25
-  stamina_BasicAttack1: 5
-  stamina_BasicAttack2: 5
-  stamina_BasicAttack3: 5
+  stamina_BasicAttack1: 10
+  stamina_BasicAttack2: 10
+  stamina_BasicAttack3: 10
   stamina_JumpAttack: 5
-  stamina_Skill1: 10
+  stamina_Skill1: 15
   stamina_Skill2: 10
-  stamina_Skill3: 10
-  stamina_Skill4: 10
+  stamina_Skill3: 15
+  stamina_Skill4: 20
   damage_BasicAttack1: 5
   damage_BasicAttack2: 7
   damage_BasicAttack3: 5
@@ -638,7 +638,6 @@ MonoBehaviour:
   currentHealth: 0
   maxStamina: 100
   currentStamina: 0
-  staminaRegRate: 2
   stunned: 0
   bleeding: 0
   knockedBack: 0

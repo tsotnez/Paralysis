@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class ProfileController : MonoBehaviour {
 
     /// <summary>
@@ -42,4 +43,8 @@ public class ProfileController : MonoBehaviour {
             this.Connect.text = "No connected";
         
     }
+
+
+
+
 }
