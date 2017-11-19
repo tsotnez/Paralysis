@@ -72,7 +72,8 @@ public abstract class UserControl : MonoBehaviour
     {
         if (m_Trinket1 && typeof(UseTrinket) == m_Character.Trinket1.GetType().BaseType)
         {
-            ((UseTrinket)m_Character.Trinket1).Use(m_Stats);
+            ((UseTrinket)m_Character.Trinket1).Use(m_Stats); 
+            
         }
         if (m_Trinket2 && typeof(UseTrinket) == m_Character.Trinket2.GetType().BaseType)
         {

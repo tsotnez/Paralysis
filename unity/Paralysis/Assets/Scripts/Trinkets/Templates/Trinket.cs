@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public abstract class Trinket : MonoBehaviour
 {
     public string DisplayName;
+    public int trinketNumber;
 
     public static Dictionary<Trinkets, System.Type> trinketsForNames = new Dictionary<Trinkets, System.Type>()
     {

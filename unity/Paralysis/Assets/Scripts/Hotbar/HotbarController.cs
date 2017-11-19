@@ -9,7 +9,7 @@ public class HotbarController : MonoBehaviour {
     private Text championName, hpPercent, staminaPercent;
     [SerializeField]
     private Color overlayWhenCooldown;
-    public Image spell1Image, spell2Image, spell3Image, spell4Image, basicAttackImage, hpImage, staminaImage;
+    public Image spell1Image, spell2Image, spell3Image, spell4Image, basicAttackImage, hpImage, staminaImage, trinket1Image, trinket2Image;
 
     public void setChampionName(string name)
     {
@@ -59,6 +59,33 @@ public class HotbarController : MonoBehaviour {
         StartCoroutine(countDown(skillImage, seconds)); //Start coroutine
     }
 
+    //Sets trinket on Cooldown
+    public void setTrinketOnCooldown(int trinketNumber, int seconds)
+    {
+        if(trinketNumber == 1)
+        {
+            StartCoroutine(countDown(trinket1Image, seconds));
+        }
+        else
+        {
+            StartCoroutine(countDown(trinket2Image, seconds));
+        }
+    }
+
+    //Greys out given trinket
+    public void greyOutTrinket(int trinketNumber)
+    {
+        if (trinketNumber == 1)
+        {
+            trinket1Image.color = overlayWhenCooldown;
+        }
+        else
+        {
+            trinket2Image.color = overlayWhenCooldown;
+        }
+    }
+    
+    //Sets image on cooldown
     private IEnumerator countDown(Image spell, float seconds)
     {
         Text text = spell.transform.Find("CooldownText").GetComponent<Text>(); //Make cooldown text visible

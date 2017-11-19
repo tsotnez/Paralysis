@@ -728,6 +728,8 @@ MonoBehaviour:
   basicAttackImage: {fileID: 114379073560098588}
   hpImage: {fileID: 114037210825183258}
   staminaImage: {fileID: 114882424390613898}
+  trinket1Image: {fileID: 114836434960300380}
+  trinket2Image: {fileID: 114745808299060520}
 --- !u!114 &114549259419895012
 MonoBehaviour:
   m_ObjectHideFlags: 1

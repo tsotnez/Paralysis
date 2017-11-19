@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -262,7 +263,7 @@ public class CharacterStats : MonoBehaviour
             else
             {
                 // Show that player is invincible
-                ShowFloatingText("Invincible", Color.gray);
+                ShowFloatingText("Invincible", new Color(0.7f, 0.7f, 0.7f, 1), -5);
             }
         }
     }
@@ -401,11 +402,14 @@ public class CharacterStats : MonoBehaviour
     /// </summary>
     /// <param name="TextValue">Text that shall be displayed</param>
     /// <param name="ColorValue">Color of the text</param>
-    public void ShowFloatingText(string TextValue, Color ColorValue)
+    public void ShowFloatingText(string TextValue, Color ColorValue, int changeFontSizeBy)
     {
         GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false);
-        text.GetComponentInChildren<Text>().text = TextValue;
-        //text.GetComponentInChildren<Text>().material.color = ColorValue;
+        Text component = text.GetComponentInChildren<Text>();
+
+        component.text = TextValue;
+        component.color = ColorValue;
+        component.fontSize += changeFontSizeBy;
     }
 
     /// <summary>
@@ -414,7 +418,7 @@ public class CharacterStats : MonoBehaviour
     /// <param name="value">Healing amount</param>
     public void ShowFloatingText_Heal(int value)
     {
-        ShowFloatingText(value.ToString(), Color.green);
+        ShowFloatingText(value.ToString(), Color.green, 0);
     }
 
     /// <summary>
@@ -423,7 +427,7 @@ public class CharacterStats : MonoBehaviour
     /// <param name="value">Damage amount</param>
     public void ShowFloatingText_Damage(int value)
     {
-        ShowFloatingText(value.ToString(), Color.red);
+        ShowFloatingText(value.ToString(), Color.red, 0);
     }
 
     /// <summary>
@@ -432,7 +436,7 @@ public class CharacterStats : MonoBehaviour
     /// <param name="TriggerName">Name of the trigger</param>
     public void ShowFloatingText_TrinketTriggered(string TriggerName)
     {
-        ShowFloatingText(TriggerName.ToString() + " has triggered", Color.yellow);
+        ShowFloatingText(TriggerName.ToString() + Environment.NewLine + "has triggered", Color.yellow, -10);
     }
 
     #endregion

@@ -46,7 +46,9 @@ public abstract class UseTrinket : Trinket
 
     private IEnumerator manageCooldown()
     {
+        GetComponent<ChampionClassController>().hotbar.greyOutTrinket(trinketNumber);
         yield return new WaitUntil(() => !TrinketRunning);
+        GetComponent<ChampionClassController>().hotbar.setTrinketOnCooldown(trinketNumber, GeneralCooldown);
         TrinketReady = false;
         yield return new WaitForSeconds(GeneralCooldown);
         TrinketReady = true;

@@ -91,6 +91,8 @@ public class LocalMultiplayerManager : MonoBehaviour {
             instPlayer1.AddComponent(Trinket.trinketsForNames[trinket2Player1]);
             instPlayer1.GetComponent<ChampionClassController>().Trinket1 = instPlayer1.GetComponents<Trinket>()[0];
             instPlayer1.GetComponent<ChampionClassController>().Trinket2 = instPlayer1.GetComponents<Trinket>()[1];
+            instPlayer1.GetComponent<ChampionClassController>().Trinket1.trinketNumber = 1;
+            instPlayer1.GetComponent<ChampionClassController>().Trinket2.trinketNumber = 2;
 
             Camera.main.GetComponent<CameraBehaviour>().changeTarget(instPlayer1.transform);
 
@@ -113,6 +115,8 @@ public class LocalMultiplayerManager : MonoBehaviour {
             instPlayer2.AddComponent(Trinket.trinketsForNames[trinket2Player2]);
             instPlayer2.GetComponent<ChampionClassController>().Trinket1 = instPlayer2.GetComponents<Trinket>()[0];
             instPlayer2.GetComponent<ChampionClassController>().Trinket2 = instPlayer2.GetComponents<Trinket>()[1];
+            instPlayer2.GetComponent<ChampionClassController>().Trinket1.trinketNumber = 1;
+            instPlayer2.GetComponent<ChampionClassController>().Trinket2.trinketNumber = 2;
 
             //Set overlay
             instPlayer1.transform.Find("graphics").GetComponent<SpriteRenderer>().color = championSpriteOverlayColor;
