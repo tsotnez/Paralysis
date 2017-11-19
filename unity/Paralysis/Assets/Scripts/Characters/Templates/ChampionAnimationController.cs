@@ -22,6 +22,7 @@
     public bool trigJumpAttack = false;
     public bool trigJumpAttackEnd = false;
     public bool trigDash = false;
+    public bool trigDashForward = false;
     public bool trigHit = false;
 
     protected virtual void Update()
@@ -46,6 +47,7 @@
             switch (currentAnimation)
             {
                 case AnimatorStates.Dash:
+                case AnimatorStates.DashFor:
                 case AnimatorStates.BasicAttack1:
                 case AnimatorStates.BasicAttack2:
                 case AnimatorStates.BasicAttack3:
@@ -72,6 +74,11 @@
             {
                 trigDash = false;
                 StartAnimation(AnimatorStates.Dash);
+            }
+            else if (trigDashForward)
+            {
+                trigDashForward = false;
+                StartAnimation(AnimatorStates.DashFor);
             }
             else if (trigHit)
             {

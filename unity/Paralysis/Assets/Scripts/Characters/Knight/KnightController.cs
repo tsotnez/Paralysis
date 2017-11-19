@@ -215,43 +215,4 @@ public class KnightController : ChampionClassController
 
     #endregion
 
-    #region Dash
-
-    /// <summary>
-    /// Dashes in the given direction with Dash and Dash Forward
-    /// </summary>
-    /// <param name="direction"></param>
-    /// <returns></returns>
-    public override IEnumerator dash(int direction)
-    {
-        if (canPerformAction(true) && canPerformAttack() && stats.loseStamina(m_dashStaminaCost))
-        {
-            if (direction != 0 && !dashing)
-            {
-                //Calculate new dashForce to go in right direction
-                m_dashSpeed = Mathf.Abs(m_dashSpeed) * direction;
-                m_Rigidbody2D.velocity = Vector2.zero;
-
-                // set var for dash or dashForward
-                if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight) animCon.trigDash = true;
-                else ((KnightAnimationController)animCon).trigDashForward = true;
-
-                dashing = true;
-                stats.immovable = true;
-
-                yield return new WaitForSeconds(0.1f);
-                stats.invincible = true; //Player is invincible for a period of time while dashing
-
-                yield return new WaitForSeconds(0.3f);
-                dashing = false;
-                stats.invincible = false;
-                m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); //Stop moving
-
-                yield return new WaitForSeconds(0.04f); //Short time where character cant move after dashing
-                stats.immovable = false;
-            }
-        }
-    }
-
-    #endregion
 }

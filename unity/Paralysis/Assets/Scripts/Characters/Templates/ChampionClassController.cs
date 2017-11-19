@@ -32,6 +32,8 @@ public abstract class ChampionClassController : MonoBehaviour
     protected float m_dashSpeed = 7f;                                       // Force applied when dashing
     [SerializeField]
     protected int m_dashStaminaCost = 10;
+    [SerializeField]
+    protected bool m_CanDashForward = false;
 
     [SerializeField]
     protected const float meeleRange = 1.5f;                                // Default range for meele attacks
@@ -297,16 +299,27 @@ public abstract class ChampionClassController : MonoBehaviour
         {
             if (direction != 0 && stats.loseStamina(m_dashStaminaCost))
             {
-                // flip if necessary
-                if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight)
-                    Flip();
+                if (m_CanDashForward)
+                {
+                    // set var for dash or dashForward
+                    if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight)
+                        animCon.trigDash = true;
+                    else
+                        animCon.trigDashForward = true;
+                }
+                else
+                {
+                    // flip if necessary
+                    if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight)
+                        Flip();
+                    animCon.trigDash = true;
+                }
 
                 // Calculate new dashForce to go in right direction
                 m_dashSpeed = Mathf.Abs(m_dashSpeed) * direction;
                 m_Rigidbody2D.velocity = Vector2.zero;
 
                 dashing = true;
-                animCon.trigDash = true;
                 stats.immovable = true;
 
                 stats.invincible = true; //Player is invincible for a period of time while dashing
