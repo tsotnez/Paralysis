@@ -20,10 +20,7 @@ public abstract class AnimationController : MonoBehaviour
     public bool[] AnimationLoop = { false };                                // Shall animation be looped?
     public float[] AnimationDuration;                                       // Duration of each animation
     // AnimationEnd Properties
-    public AnimatorStates[] EndAnimationType = { 0 };                       // Type of Animation
     public SpriteAtlas[] EndAtlasses;                                       // Array of all atlasses
-    public bool[] EndAnimationLoop = { false };                             // Shall animation be looped?
-    public float[] EndAnimationDuration;                                    // Duration of each animation
 
     #endregion
 
@@ -39,6 +36,8 @@ public abstract class AnimationController : MonoBehaviour
 
     private bool finishedInitialization = false;                            // True if finished loading all the sprites
     private SpriteRenderer spriteRenderer;                                  // Sprite Renderer
+
+    #region Enums
 
     // All existing animation types
     public enum AnimatorStates
@@ -73,6 +72,20 @@ public abstract class AnimationController : MonoBehaviour
         DashFor
     }
 
+    public enum TypeOfAnimation
+    {
+        Animation, EndAnimation
+    }
+
+    public enum AnimationPlayTypes
+    {
+        Single, Loop, HoldOnEnd
+    }
+
+    #endregion
+
+    #region Init
+
     void Start()
     {
         // initiate dictionarys
@@ -90,12 +103,18 @@ public abstract class AnimationController : MonoBehaviour
 
     public void InitAnimations()
     {
-        // Save each animation and their attributes in the dictionarys
+        // Save each ANIMATION and their attributes in the dictionarys
         for (int i = 0; i < AnimationType.Length; i++)
         {
             animationSprites.Add(AnimationType[i], Atlasses[i]);
             animationDuration.Add(AnimationType[i], AnimationDuration[i]);
             animationLoop.Add(AnimationType[i], AnimationLoop[i]);
+
+            // Save each END-ANIMATION
+            if (EndAtlasses[i] != null)
+            {
+                animationSpriteEnds.Add(AnimationType[i], EndAtlasses[i]);
+            }
         }
 
         // Save idle animation's ground position
@@ -110,57 +129,75 @@ public abstract class AnimationController : MonoBehaviour
         StartAnimation(AnimatorStates.Idle);
     }
 
-    public void StartAnimation(AnimatorStates animation, bool HoldOnEnd = false)
-    {
-        if (finishedInitialization && currentAnimation != animation)
-        {
-            // set current animation
-            currentAnimation = animation;
+    #endregion
 
-            if (animationSprites.ContainsKey(currentAnimation))
+    #region Manage Animations
+
+    public void StartAnimation(AnimatorStates animation, TypeOfAnimation AnimationType = TypeOfAnimation.Animation)
+    {
+        if (finishedInitialization && (currentAnimation != animation || (currentAnimation == animation && AnimationType == TypeOfAnimation.EndAnimation)))
+        {
+            //if (animation == AnimatorStates.JumpAttack && AnimationType == TypeOfAnimation.EndAnimation)
+            //{
+            //    bool abc = true;
+            //}
+            if (AnimationDictionaryHasAnimation(animation, AnimationType))
             {
+                // set current animation
+                currentAnimation = animation;
+
                 // get sprite atlas
-                SpriteAtlas atlas = animationSprites[animation];
+                SpriteAtlas atlas = null;
+                if (AnimationType == TypeOfAnimation.Animation)
+                    atlas = animationSprites[animation];
+                else if (AnimationType == TypeOfAnimation.EndAnimation)
+                    atlas = animationSpriteEnds[animation];
+
                 if (atlas == null) return;
 
                 //set speed
                 float delay = animationDuration[animation] / (float)atlas.spriteCount;
 
+                // Calculating AnimationPlayType
+                AnimationPlayTypes AnimationPlayType = AnimationPlayTypes.Single;
+                if (AnimationType == TypeOfAnimation.Animation && AnimationDictionaryHasAnimation(animation, TypeOfAnimation.EndAnimation))
+                {   // if found a matching End-Animation to the choosen animation set the PlayType to HoldOnEnd
+                    AnimationPlayType = AnimationPlayTypes.HoldOnEnd;
+                }
+                else if (animationLoop[animation])
+                {
+                    AnimationPlayType = AnimationPlayTypes.Loop;
+                }
+
                 // stop running coroutine
                 StopAllCoroutines();
                 // start next animation as coroutine
-                StartCoroutine(PlayAnimation(animation, atlas, delay, HoldOnEnd));
+                StartCoroutine(PlayAnimation(animation, atlas, delay, AnimationType, AnimationPlayType));
             }
             else
             {
-                Debug.Log("Could not start Animation '" + currentAnimation.ToString() + "' because it is not present in Dictionary!");
+                Debug.Log("Could not start " + AnimationType.ToString() + " '" + animation.ToString() + "' because it is not present in Dictionary!");
             }
         }
     }
 
-    public void StartEndAnimation()
+    private bool AnimationDictionaryHasAnimation(AnimatorStates Animation, TypeOfAnimation AnimationType)
     {
-        if (animationSpriteEnds.ContainsKey(currentAnimation))
+        if (AnimationType == TypeOfAnimation.Animation)
         {
-            // get sprite atlas
-            SpriteAtlas atlas = animationSpriteEnds[currentAnimation];
-            if (atlas == null) return;
-
-            //set speed
-            float delay = animationDuration[currentAnimation] / (float)atlas.spriteCount;
-
-            // stop running coroutine
-            StopAllCoroutines();
-            // start next animation as coroutine
-            StartCoroutine(PlayAnimation(currentAnimation, atlas, delay));
+            if (animationSprites.ContainsKey(Animation))
+                return true;
         }
         else
         {
-            Debug.Log("Could not start End-Animation '" + currentAnimation.ToString() + "' because it is not present in Dictionary!");
+            if (animationSpriteEnds.ContainsKey(Animation))
+                return true;
         }
+
+        return false;
     }
 
-    IEnumerator PlayAnimation(AnimatorStates animation, SpriteAtlas atlas, float delay, bool HoldOnEnd = false)
+    IEnumerator PlayAnimation(AnimatorStates animation, SpriteAtlas atlas, float delay, TypeOfAnimation AnimationType, AnimationPlayTypes AnimationPlayType)
     {
         //Handle audio
         AudioClip clip = Resources.Load<AudioClip>("Audio/Characters/" + CharacterClass + "/" + animation.ToString());
@@ -184,24 +221,29 @@ public abstract class AnimationController : MonoBehaviour
         else
             audioSource.Stop();
 
+        // Add end to the filename if its an EndAnimation
+        string AtlasNameAddition = "";
+        if (AnimationType == TypeOfAnimation.EndAnimation)
+            AtlasNameAddition = "End";
+
         while (true)
         {
 
             // play each animation of the atlas
             for (int i = 0; i < atlas.spriteCount; i++)
             {
-                if (i < 10) spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + "_" + "0" + i.ToString());
-                else spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + "_" + i.ToString());
+                if (i < 10) spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + AtlasNameAddition + "_" + "0" + i.ToString());
+                else spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + AtlasNameAddition + "_" + i.ToString());
 
                 yield return new WaitForSeconds(delay);
             }
 
-            if (HoldOnEnd)
+            if (AnimationPlayType == AnimationPlayTypes.HoldOnEnd)
                 while (true)
                 {
                     yield return new WaitForSeconds(0.1f);
                 }
-            else if (animationLoop[animation])
+            else if (AnimationPlayType == AnimationPlayTypes.Loop)
                 //loop
                 yield return null;
             else
@@ -209,4 +251,7 @@ public abstract class AnimationController : MonoBehaviour
                 StartAnimation(AnimatorStates.Idle);
         }
     }
+
+    #endregion
+
 }

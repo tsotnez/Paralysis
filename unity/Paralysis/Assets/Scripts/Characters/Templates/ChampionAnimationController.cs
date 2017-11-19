@@ -29,6 +29,8 @@
         AnimationManager();
     }
 
+    protected virtual void FixedUpdate() { }
+
     private void AnimationManager()
     {
         // Animations that work in any State
@@ -47,11 +49,17 @@
                 case AnimatorStates.BasicAttack1:
                 case AnimatorStates.BasicAttack2:
                 case AnimatorStates.BasicAttack3:
-                case AnimatorStates.JumpAttack:
                 case AnimatorStates.Skill1:
                 case AnimatorStates.Skill2:
                 case AnimatorStates.Skill3:
                 case AnimatorStates.Skill4:
+                    return;
+                case AnimatorStates.JumpAttack:
+                    if (trigJumpAttackEnd)
+                    {
+                        trigJumpAttackEnd = false;
+                        StartAnimation(AnimatorStates.JumpAttack, TypeOfAnimation.EndAnimation);
+                    }
                     return;
             }
 
@@ -74,11 +82,6 @@
             {
                 trigJumpAttack = false;
                 StartAnimation(AnimatorStates.JumpAttack);
-            }
-            else if (trigJumpAttackEnd)
-            {
-                trigJumpAttackEnd = false;
-                StartEndAnimation();
             }
             else if (trigBasicAttack1)
             {
