@@ -415,10 +415,10 @@ public abstract class ChampionClassController : MonoBehaviour
     /// <param name="singleTarget">only the first target or all targets? (default: singleTarget - true)</param>
     /// <param name="skillRange">Range of the skill (default: meeleRange - 1.5f)</param>.
     /// </summary>
-    protected void doMeeleSkill(ref bool animationVar, MeleeSkill skillToPerform)
+    protected void doMeeleSkill(ref bool animationVar, MeleeSkill skillToPerform, bool NoValidation = false)
     {
         //Validate that character is not attacking and standing on ground
-        if (canPerformAction(skillToPerform.needsToBeGrounded) && canPerformAttack() && skillToPerform.notOnCooldown && stats.loseStamina(skillToPerform.staminaCost))
+        if (NoValidation || canPerformAction(skillToPerform.needsToBeGrounded) && canPerformAttack() && skillToPerform.notOnCooldown && stats.loseStamina(skillToPerform.staminaCost))
         {
             // set animation trigger
             animationVar = true;

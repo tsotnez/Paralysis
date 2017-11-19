@@ -181,7 +181,7 @@ public class KnightController : ChampionClassController
         skill2_leap = false;
         stats.immovable = false;
 
-        doMeeleSkill(ref ((KnightAnimationController)animCon).trigSkill2End, (MeleeSkill)skill2_var);
+        doMeeleSkill(ref ((KnightAnimationController)animCon).trigSkill2End, (MeleeSkill)skill2_var, true);
     }
 
     /// <summary>
