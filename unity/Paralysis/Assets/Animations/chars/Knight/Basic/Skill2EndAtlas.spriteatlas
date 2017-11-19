@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Skill2EndAtlas
+  m_EditorData:
+    textureSettings:
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      colorSpace: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+    platformSettings: []
+    packingParameters:
+      paddingPower: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    packedHash:
+      serializedVersion: 2
+      Hash: 677f44e9dbae0994cb513c23ba226c96
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 4
+    hashString: 677f44e9dbae0994cb513c23ba226c96
+    totalSpriteSurfaceArea: 26489736
+    packables:
+    - {fileID: 102900000, guid: e3153ce26df7f04478f0defdf641db7b, type: 3}
+    packedSpriteRenderDataKeys:
+    - 7d7f188ad424055459f26eebb7464a57: 21300000
+    - ded5cfbb5fdea1743a95ccfbb7bf1041: 21300000
+    - 472793fead74c4046a242b30071b3155: 21300000
+    - 2313283ee1cab704b8fcb197f8d628b9: 21300000
+    - 6af8783fe94c9e448bf5f8749af6b364: 21300000
+    - 54d6ceade3ca78d48a1b55ae58fbc4ad: 21300000
+    - 9ac62714ee383dd47852539f6b81e944: 21300000
+    - fcede8963e5276746959ca31d8118f65: 21300000
+    - a80c48fac52b8cc42a7c18e971fec680: 21300000
+    - fc1da3f197522ae438111f2576370e99: 21300000
+    - 6451ee7538a97b140b613ce9c572ba23: 21300000
+    - a69500c0120a0ba4fb231880a208989f: 21300000
+    - c09d24db531b03741a96c7103cb713aa: 21300000
+    - 82e65c8161e750e4d8805f12b0478b86: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 7d7f188ad424055459f26eebb7464a57, type: 3}
+  - {fileID: 21300000, guid: ded5cfbb5fdea1743a95ccfbb7bf1041, type: 3}
+  - {fileID: 21300000, guid: 472793fead74c4046a242b30071b3155, type: 3}
+  - {fileID: 21300000, guid: 2313283ee1cab704b8fcb197f8d628b9, type: 3}
+  - {fileID: 21300000, guid: 6af8783fe94c9e448bf5f8749af6b364, type: 3}
+  - {fileID: 21300000, guid: 54d6ceade3ca78d48a1b55ae58fbc4ad, type: 3}
+  - {fileID: 21300000, guid: 9ac62714ee383dd47852539f6b81e944, type: 3}
+  - {fileID: 21300000, guid: fcede8963e5276746959ca31d8118f65, type: 3}
+  - {fileID: 21300000, guid: a80c48fac52b8cc42a7c18e971fec680, type: 3}
+  - {fileID: 21300000, guid: fc1da3f197522ae438111f2576370e99, type: 3}
+  - {fileID: 21300000, guid: 6451ee7538a97b140b613ce9c572ba23, type: 3}
+  - {fileID: 21300000, guid: a69500c0120a0ba4fb231880a208989f, type: 3}
+  - {fileID: 21300000, guid: c09d24db531b03741a96c7103cb713aa, type: 3}
+  - {fileID: 21300000, guid: 82e65c8161e750e4d8805f12b0478b86, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Skill2End_08
+  - Skill2End_09
+  - Skill2End_06
+  - Skill2End_07
+  - Skill2End_04
+  - Skill2End_05
+  - Skill2End_02
+  - Skill2End_03
+  - Skill2End_00
+  - Skill2End_01
+  - Skill2End_11
+  - Skill2End_10
+  - Skill2End_13
+  - Skill2End_12
+  m_Tag: Skill2EndAtlas
+  m_IsVariant: 0
