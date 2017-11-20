@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InfantryContoller : ChampionClassController
 {
+    private bool skill1_hook = false;
     private float skill1_hook_speed = 10f;
     #region default
 
@@ -15,10 +16,21 @@ public class InfantryContoller : ChampionClassController
         basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, meeleRange);
         basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.SkillEffect.nothing, 0, stamina_BasicAttack2, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack2, meeleRange);
 
-        skill1_var = new Skill      (AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.SkillEffect.stun, 3, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, 10f);
-        skill2_var = new MeleeSkill (AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.SkillEffect.stun, 3, stamina_Skill2, Skill.SkillTarget.InFront, cooldown_Skill2, meeleRange);
-        skill3_var = new MeleeSkill (AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.SkillEffect.nothing, 0, stamina_Skill3, Skill.SkillTarget.MultiTarget, cooldown_Skill3, meeleRange);
-        skill4_var = new MeleeSkill (AnimationController.AnimatorStates.Skill4, delay_Skill4, damage_Skill4, Skill.SkillEffect.knockback, 0, stamina_Skill4, Skill.SkillTarget.InFront, cooldown_Skill4, meeleRange);
+        skill1_var = new Skill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.SkillEffect.stun, 3, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, 10f);
+        skill2_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.SkillEffect.stun, 3, stamina_Skill2, Skill.SkillTarget.InFront, cooldown_Skill2, meeleRange);
+        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.SkillEffect.nothing, 0, stamina_Skill3, Skill.SkillTarget.MultiTarget, cooldown_Skill3, meeleRange);
+        skill4_var = new MeleeSkill(AnimationController.AnimatorStates.Skill4, delay_Skill4, damage_Skill4, Skill.SkillEffect.knockback, 0, stamina_Skill4, Skill.SkillTarget.InFront, cooldown_Skill4, meeleRange);
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+        // Add force to infantry when leaping (Skill 1)
+        if (skill1_hook)
+        {
+            m_Rigidbody2D.velocity = new Vector2(skill1_hook_speed, m_Rigidbody2D.velocity.y);
+        }
     }
 
     #endregion
@@ -120,36 +132,41 @@ public class InfantryContoller : ChampionClassController
 
     private IEnumerator Skill1_Hook()
     {
-        animCon.trigSkill2 = true;
         stats.immovable = true;
+        skill1_hook = true;
 
         // Get target and stun it
         RaycastHit2D hit = TryToHit(skill1_var.range);
-        CharacterStats target = hit.transform.gameObject.GetComponent<CharacterStats>();
-        target.StartStunned();
+        if (hit)
+        {
+            CharacterStats target = hit.transform.gameObject.GetComponent<CharacterStats>();
+            target.StartStunned();
 
-        // Calculate correct direction
-        if (!m_FacingRight)
-            skill1_hook_speed = Math.Abs(skill1_hook_speed) * (-1);
-        else
-            skill1_hook_speed = Math.Abs(skill1_hook_speed);
+            // Calculate correct direction
+            if (!m_FacingRight)
+                skill1_hook_speed = Math.Abs(skill1_hook_speed) * (-1);
+            else
+                skill1_hook_speed = Math.Abs(skill1_hook_speed);
 
-        // Add a vertical force to the player.
-        m_Rigidbody2D.velocity = Vector2.zero;
-        m_Rigidbody2D.AddForce(new Vector2(0, 400));
+            // Add a vertical force to the player.
+            animCon.trigSkill1 = true;
+            m_Rigidbody2D.velocity = Vector2.zero;
+            m_Rigidbody2D.AddForce(new Vector2(0, (70 * hit.distance))); // Distance 5.8f --> AddForce 400f --> 70 * Distance
 
-        // Wait until force is applied
-        yield return new WaitUntil(() => !animCon.m_Grounded);
-        // Wait while not on ground
-        yield return new WaitUntil(() => animCon.m_Grounded);
-        ((InfantryAnimationController)animCon).trigSkill2End = true;
-        Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
+            // Wait until force is applied
+            yield return new WaitUntil(() => !animCon.m_Grounded);
+            // Wait while not on ground
+            yield return new WaitUntil(() => animCon.m_Grounded);
+            ((InfantryAnimationController)animCon).trigSkill1End = true;
+            Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
 
-        // Do melee hit after landing
-        stats.DealDamage(target, skill1_var.damage, true);
+            // Do melee hit after landing
+            stats.DealDamage(target, skill1_var.damage, true);
+            target.StopStunned();
+        }
+
         StartCoroutine(SetSkillOnCooldown(skill1_var));
-        target.StopStunned();
-
+        skill1_hook = false;
         stats.immovable = false;
     }
 

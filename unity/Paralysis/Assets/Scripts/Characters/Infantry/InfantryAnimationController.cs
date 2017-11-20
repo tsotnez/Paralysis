@@ -1,7 +1,7 @@
 public class InfantryAnimationController : ChampionAnimationController
 {
 // Trigger for character specific animations
-    public bool trigSkill2End = false;
+    public bool trigSkill1End = false;
 
     protected override bool AdditionalAnimationCondition()
     {
@@ -12,10 +12,10 @@ public class InfantryAnimationController : ChampionAnimationController
     {
         switch (CurrentAnimation)
         {
-            case AnimatorStates.Skill2:
-                if (trigSkill2End)
+            case AnimatorStates.Skill1:
+                if (trigSkill1End)
                 {
-                    trigSkill2End = false;
+                    trigSkill1End = false;
                     StartAnimation(AnimatorStates.Skill2, TypeOfAnimation.EndAnimation);
                 }
                 return true;
