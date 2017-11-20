@@ -137,10 +137,6 @@ public abstract class AnimationController : MonoBehaviour
     {
         if (finishedInitialization && (currentAnimation != animation || (currentAnimation == animation && AnimationType == TypeOfAnimation.EndAnimation)))
         {
-            //if (animation == AnimatorStates.JumpAttack && AnimationType == TypeOfAnimation.EndAnimation)
-            //{
-            //    bool abc = true;
-            //}
             if (AnimationDictionaryHasAnimation(animation, AnimationType))
             {
                 // set current animation
@@ -152,8 +148,6 @@ public abstract class AnimationController : MonoBehaviour
                     atlas = animationSprites[animation];
                 else if (AnimationType == TypeOfAnimation.EndAnimation)
                     atlas = animationSpriteEnds[animation];
-
-                if (atlas == null) return;
 
                 //set speed
                 float delay = animationDuration[animation] / (float)atlas.spriteCount;
@@ -176,7 +170,9 @@ public abstract class AnimationController : MonoBehaviour
             }
             else
             {
-                Debug.Log("Could not start " + AnimationType.ToString() + " '" + animation.ToString() + "' because it is not present in Dictionary!");
+                // If an animation is not found revert to idle to prevent displaying errors
+                Debug.Log("Could not start " + AnimationType.ToString() + " '" + animation.ToString() + "' because it is not present in Dictionary!" + "\n" + "Idle-Animation has been started instead.");
+                StartAnimation(AnimatorStates.Idle);
             }
         }
     }
@@ -185,12 +181,12 @@ public abstract class AnimationController : MonoBehaviour
     {
         if (AnimationType == TypeOfAnimation.Animation)
         {
-            if (animationSprites.ContainsKey(Animation))
+            if (animationSprites.ContainsKey(Animation) && animationSprites[Animation] != null)
                 return true;
         }
         else
         {
-            if (animationSpriteEnds.ContainsKey(Animation))
+            if (animationSpriteEnds.ContainsKey(Animation) && animationSpriteEnds[Animation] != null)
                 return true;
         }
 
