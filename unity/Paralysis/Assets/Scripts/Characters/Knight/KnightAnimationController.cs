@@ -5,12 +5,7 @@ public class KnightAnimationController : ChampionAnimationController
 
     protected override bool AdditionalAnimationCondition()
     {
-        if (statBlock && m_Speed > 0.001)
-            StartAnimation(AnimatorStates.BlockMove);
-        else
-            return false;
-
-        return true;
+        return false;
     }
 
     protected override bool AdditionalNotInterruptCondition(AnimatorStates activeAnimation)

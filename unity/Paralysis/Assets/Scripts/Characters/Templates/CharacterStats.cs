@@ -306,6 +306,35 @@ public class CharacterStats : MonoBehaviour
 
     #region Stun, KnockBack, Bleed, Slow
 
+    /// <summary>
+    /// Sets the stunned value till disable
+    /// </summary>
+    public void StartStunned()
+    {
+        if (!invincible)
+        {
+            rigid.velocity = Vector2.zero;
+            stunned = true;
+            stunnedSymbol.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// Stop the stun immediately
+    /// </summary>
+    public void StopStunned()
+    {
+        if (stunned)
+        {
+            stunnedSymbol.SetActive(false);
+            stunned = false;
+        }
+    }
+
+    /// <summary>
+    /// Sets the stunned value for given amount of time.
+    /// </summary>
+    /// <param name="time"></param>
     public void StartStunned(int time)
     {
         if (!invincible)
@@ -315,7 +344,6 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
-    //Sets the stunned value for given amount of time.
     private IEnumerator Stun(float time)
     {
         rigid.velocity = Vector2.zero;

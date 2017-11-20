@@ -81,6 +81,8 @@
 
             if (statBlock)
                 StartAnimation(AnimatorStates.Block);
+            else if(statBlock && m_Speed > 0.001)
+                StartAnimation(AnimatorStates.BlockMove);
             else if (trigDash)
             {
                 trigDash = false;
