@@ -351,12 +351,12 @@ public class CharacterStats : MonoBehaviour
 
         //Zeroing out velocity
         rigid.velocity = Vector2.zero;
-        animCon.statKnockedBack = true;
+        animCon.trigKnockedBack = true;
         //Adding force and setting status variable
         rigid.AddForce(new Vector2(knockBackForceX * direction, knockBackForceY), ForceMode2D.Impulse);
         yield return new WaitUntil(() => !animCon.m_Grounded);
         yield return new WaitUntil(() => animCon.m_Grounded);
-        animCon.statKnockedBack = false;
+        animCon.trigKnockedBackEnd = true;
         knockedBack = false;
     }
 
