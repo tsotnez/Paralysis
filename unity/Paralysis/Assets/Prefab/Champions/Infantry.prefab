@@ -642,7 +642,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: 46cc76496fd57f8489613f4e43c6568d, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -659,7 +659,6 @@ MonoBehaviour:
   m_vSpeed: 0
   m_Speed: 0
   statStunned: 0
-  statKnockedBack: 0
   statBlock: 0
   trigBasicAttack1: 0
   trigBasicAttack2: 0
@@ -668,6 +667,8 @@ MonoBehaviour:
   trigSkill2: 0
   trigSkill3: 0
   trigSkill4: 0
+  trigKnockedBack: 0
+  trigKnockedBackEnd: 0
   trigJump: 0
   trigJumpAttack: 0
   trigJumpAttackEnd: 0
