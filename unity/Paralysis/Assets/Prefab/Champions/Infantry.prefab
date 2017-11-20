@@ -728,8 +728,8 @@ MonoBehaviour:
   m_MaxSpeed: 10
   m_MoveSpeedWhileAttacking: 5
   m_MoveSpeedWhileBlocking: 0
-  m_JumpForce: 400
-  m_DoubleJumpForce: 400
+  m_JumpForce: 700
+  m_DoubleJumpForce: 600
   m_jumpAttackRadius: 10
   m_jumpAttackForce: 10
   m_dashSpeed: 7
@@ -836,7 +836,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 11298e302170cd0459241177664013ad, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 6.7, y: 9.2}

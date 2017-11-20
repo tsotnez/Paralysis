@@ -12,10 +12,10 @@ public class InfantryContoller : ChampionClassController
         basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, Skill.skillTarget.SingleTarget, cooldown_BasicAttack1, meeleRange);
         basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.skillEffect.nothing, 0, stamina_BasicAttack2, Skill.skillTarget.SingleTarget, cooldown_BasicAttack2, meeleRange);
 
-        skill1_var = new Skill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.skillEffect.stun, 3, stamina_Skill1, Skill.skillTarget.SingleTarget, cooldown_Skill1, meeleRange);
-        skill2_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.skillEffect.stun, 3, stamina_Skill2, Skill.skillTarget.InFront, cooldown_Skill2, meeleRange);
-        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.skillEffect.nothing, 0, stamina_Skill3, Skill.skillTarget.MultiTarget, cooldown_Skill3, meeleRange);
-        skill4_var = new MeleeSkill(AnimationController.AnimatorStates.Skill4, delay_Skill4, damage_Skill4, Skill.skillEffect.knockback, 0, stamina_Skill4, Skill.skillTarget.InFront, cooldown_Skill4, meeleRange);
+        skill1_var = new Skill      (AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.skillEffect.stun, 3, stamina_Skill1, Skill.skillTarget.SingleTarget, cooldown_Skill1, meeleRange);
+        skill2_var = new MeleeSkill (AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.skillEffect.stun, 3, stamina_Skill2, Skill.skillTarget.InFront, cooldown_Skill2, meeleRange);
+        skill3_var = new MeleeSkill (AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.skillEffect.nothing, 0, stamina_Skill3, Skill.skillTarget.MultiTarget, cooldown_Skill3, meeleRange);
+        skill4_var = new MeleeSkill (AnimationController.AnimatorStates.Skill4, delay_Skill4, damage_Skill4, Skill.skillEffect.knockback, 0, stamina_Skill4, Skill.skillTarget.InFront, cooldown_Skill4, meeleRange);
     }
 
     #endregion
@@ -60,6 +60,9 @@ public class InfantryContoller : ChampionClassController
                             resetComboTime();
                             break;
                         case 2:
+                            // do meele attack
+                            doMeleeSkill(ref animCon.trigBasicAttack2, (MeleeSkill)basicAttack2_var);
+                            break;
                         case 3:
                             // do meele attack
                             doMeleeSkill(ref animCon.trigBasicAttack2, (MeleeSkill)basicAttack2_var);
@@ -119,7 +122,7 @@ public class InfantryContoller : ChampionClassController
     /// </summary>
     public override void skill2()
     {
-        throw new NotImplementedException();
+        doMeleeSkill(ref animCon.trigSkill2, (MeleeSkill)skill2_var);
     }
 
     /// <summary>
@@ -147,7 +150,7 @@ public class InfantryContoller : ChampionClassController
     /// </summary>
     public override void skill4()
     {
-        throw new NotImplementedException();
+        doMeleeSkill(ref animCon.trigSkill4, (MeleeSkill)skill4_var);
     }
 
     #endregion

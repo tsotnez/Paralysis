@@ -20,9 +20,9 @@ public abstract class ChampionClassController : MonoBehaviour
     protected float m_MoveSpeedWhileBlocking = 0f;                          // Max speed while blocking
 
     [SerializeField]
-    protected float m_JumpForce = 400f;                                     // Amount of force added when the player jumps.  
+    protected float m_JumpForce = 700f;                                     // Amount of force added when the player jumps.  
     [SerializeField]
-    protected float m_DoubleJumpForce = 400f;                               // Force added when doublejumping 
+    protected float m_DoubleJumpForce = 600f;                               // Force added when doublejumping 
     [SerializeField]
     protected float m_jumpAttackRadius = 10f;                               // Radius of jump Attack damage
     [SerializeField]
@@ -455,6 +455,10 @@ public abstract class ChampionClassController : MonoBehaviour
         else
         {
             // Only enemys in front of the character
+            Vector3 postion = m_GroundCheck.position;
+            if (m_FacingRight) postion.x += (skillToPerform.range / 2);
+            else postion.x -= (skillToPerform.range / 2);
+            hits = Physics2D.CircleCastAll(postion, skillToPerform.range/2, Vector2.up, 0.01f, m_whatToHit);
         }
 
         // only if something is in range
@@ -499,8 +503,8 @@ public abstract class ChampionClassController : MonoBehaviour
     {
         Vector2 direction;// Direction to check in
         if (m_FacingRight) direction = Vector2.right;
-
         else direction = Vector2.left;
+
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, range, m_whatToHit); //Send raycast
         return hit;
     }
