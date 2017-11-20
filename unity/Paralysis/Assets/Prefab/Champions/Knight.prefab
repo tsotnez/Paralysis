@@ -233,7 +233,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1903508196159970}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.56, y: -5.8, z: 0}
+  m_LocalPosition: {x: -5, y: -5.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4638925856882956}
@@ -721,8 +721,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   m_MaxSpeed: 6
-  m_MoveSpeedWhileAttacking: 5
-  m_MoveSpeedWhileBlocking: 0
+  m_MoveSpeedWhileAttacking: 0.5
+  m_MoveSpeedWhileBlocking: 3
   m_JumpForce: 700
   m_DoubleJumpForce: 600
   m_jumpAttackRadius: 10

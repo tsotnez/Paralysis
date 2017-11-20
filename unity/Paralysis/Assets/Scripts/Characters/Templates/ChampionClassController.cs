@@ -9,13 +9,12 @@ public abstract class ChampionClassController : MonoBehaviour
 
     [SerializeField]
     protected LayerMask m_WhatIsGround;                                     // A mask determining what is ground to the character
-
-    public LayerMask m_whatToHit;                                        // What to hit when checking for hits while attacking
+    public LayerMask m_whatToHit;                                           // What to hit when checking for hits while attacking
 
     [SerializeField]
-    protected float m_MaxSpeed = 10f;                                       // The fastest the player can travel in the x axis.
+    protected float m_MaxSpeed = 6f;                                        // The fastest the player can travel in the x axis.
     [SerializeField]
-    protected float m_MoveSpeedWhileAttacking = 5f;                         // Max speed while attacking
+    protected float m_MoveSpeedWhileAttacking = 0.5f;                       // Max speed while attacking
     [SerializeField]
     protected float m_MoveSpeedWhileBlocking = 0f;                          // Max speed while blocking
 
@@ -29,7 +28,7 @@ public abstract class ChampionClassController : MonoBehaviour
     protected float m_jumpAttackForce = 10f;                                // Amount of force added when the player jump attack
 
     [SerializeField]
-    protected float m_dashSpeed = 7f;                                       // Force applied when dashing
+    protected float m_dashSpeed = 12f;                                      // Force applied when dashing
     [SerializeField]
     protected int m_dashStaminaCost = 10;
     [SerializeField]
