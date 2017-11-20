@@ -6,10 +6,10 @@ public class FloatingTextBehaviour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        StartCoroutine(die());
+        StartCoroutine(Die());
 	}
 
-    private IEnumerator die()
+    private IEnumerator Die()
     {
         yield return new WaitForSeconds(0.832f);
         Destroy(gameObject);

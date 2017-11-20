@@ -4,7 +4,7 @@
 public class Skill
 {
 
-    public enum skillEffect
+    public enum SkillEffect
     {
         nothing,
         stun,
@@ -12,18 +12,18 @@ public class Skill
         bleed
     }
 
-    public enum skillTarget
+    public enum SkillTarget
     {
         SingleTarget, MultiTarget, InFront
     }
 
     public AnimationController.AnimatorStates name;
-    public skillEffect effect;
+    public SkillEffect effect;
     public int effectDuration;
     public int damage;
     public int staminaCost;
     public float cooldown;
-    public skillTarget targetType;
+    public SkillTarget targetType;
     public float range;
     public bool needsToBeGrounded;
     public float delay;
@@ -31,7 +31,7 @@ public class Skill
     public bool notOnCooldown = true;
 
 
-    public Skill(AnimationController.AnimatorStates skillName, float skillDelay, int skillDamage, Skill.skillEffect skillSpecialEffect, int skillSpecialEffectTime, int skillStaminaCost, skillTarget skillTargetType,
+    public Skill(AnimationController.AnimatorStates skillName, float skillDelay, int skillDamage, Skill.SkillEffect skillSpecialEffect, int skillSpecialEffectTime, int skillStaminaCost, SkillTarget skillTargetType,
         float skillCooldown, float skillRange, bool skillNeedsToBeGrounded = true)
     {
         name = skillName;

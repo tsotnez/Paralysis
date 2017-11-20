@@ -1,11 +1,11 @@
 public class InfantryAnimationController : ChampionAnimationController
 {
-    protected override bool additionalAnimationCondition()
+    protected override bool AdditionalAnimationCondition()
     {
         return false;
     }
 
-    protected override bool additionalNotInterruptCondition(AnimatorStates activeAnimation)
+    protected override bool AdditionalNotInterruptCondition(AnimatorStates activeAnimation)
     {
         return false;
     }

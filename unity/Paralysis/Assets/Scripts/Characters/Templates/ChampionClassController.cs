@@ -200,7 +200,7 @@ public abstract class ChampionClassController : MonoBehaviour
         {
             //Slow down the player if he's attacking or blocking
             float maxSpeed;
-            if (!canPerformAttack()) maxSpeed = m_MoveSpeedWhileAttacking;
+            if (!CanPerformAttack()) maxSpeed = m_MoveSpeedWhileAttacking;
             else if (blocking) maxSpeed = m_MoveSpeedWhileBlocking;
             else maxSpeed = m_MaxSpeed;
 
@@ -216,14 +216,14 @@ public abstract class ChampionClassController : MonoBehaviour
             // If the input is moving the player right and the player is facing left...
             if (move > 0 && !m_FacingRight)
             {
-                if (!canPerformAttack()) return; // prevent player from turning around while attacking
+                if (!CanPerformAttack()) return; // prevent player from turning around while attacking
                 // ... flip the player.
                 Flip();
             }
             // Otherwise if the input is moving the player left and the player is facing right...
             else if (move < 0 && m_FacingRight)
             {
-                if (!canPerformAttack()) return;
+                if (!CanPerformAttack()) return;
                 // ... flip the player.
                 Flip();
             }
@@ -233,12 +233,12 @@ public abstract class ChampionClassController : MonoBehaviour
         }
     }
 
-    public virtual void jump(bool jump)
+    public virtual void Jump(bool jump)
     {
         // If the player should jump...
-        if (canPerformAction(false) && jump && canPerformAttack())
+        if (CanPerformAction(false) && jump && CanPerformAttack())
         {
-            if (animCon.m_Grounded && stats.loseStamina(15))
+            if (animCon.m_Grounded && stats.LoseStamina(15))
             {
                 // Add a vertical force to the player.
                 animCon.m_Grounded = false;
@@ -261,7 +261,7 @@ public abstract class ChampionClassController : MonoBehaviour
         }
     }
 
-    protected virtual IEnumerator jumpAttack()
+    protected virtual IEnumerator JumpAttack()
     {
         jumpAttacking = true; //Set status variable
         animCon.trigJumpAttack = true;
@@ -275,7 +275,7 @@ public abstract class ChampionClassController : MonoBehaviour
 
         // Deal damage to all enemies
         animCon.trigJumpAttackEnd = true;
-        StartCoroutine(doMeleeSkill_Hit(new MeleeSkill(0, 0, damage_JumpAttack, Skill.skillEffect.nothing, 0, 10, Skill.skillTarget.SingleTarget, 0, m_jumpAttackRadius)));
+        StartCoroutine(DoMeleeSkill_Hit(new MeleeSkill(0, 0, damage_JumpAttack, Skill.SkillEffect.nothing, 0, 10, Skill.SkillTarget.SingleTarget, 0, m_jumpAttackRadius)));
 
         Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
         jumpAttacking = false;
@@ -284,19 +284,19 @@ public abstract class ChampionClassController : MonoBehaviour
     /// <summary>
     /// Manages the attacking and Combos
     /// </summary>
-    public abstract void basicAttack(bool shouldAttack);
+    public abstract void BasicAttack(bool shouldAttack);
 
-    public abstract void skill1();
-    public abstract void skill2();
-    public abstract void skill3();
-    public abstract void skill4();
+    public abstract void Skill1();
+    public abstract void Skill2();
+    public abstract void Skill3();
+    public abstract void Skill4();
 
     //Dashes in the given direction
-    public virtual IEnumerator dash(int direction)
+    public virtual IEnumerator Dash(int direction)
     {
-        if (canPerformAction(true) && canPerformAttack())
+        if (CanPerformAction(true) && CanPerformAttack())
         {
-            if (direction != 0 && stats.loseStamina(m_dashStaminaCost))
+            if (direction != 0 && stats.LoseStamina(m_dashStaminaCost))
             {
                 if (m_CanDashForward)
                 {
@@ -322,8 +322,8 @@ public abstract class ChampionClassController : MonoBehaviour
                 stats.immovable = true;
 
                 stats.invincible = true; //Player is invincible for a period of time while dashing
-                yield return new WaitUntil(() => animCon.currentAnimation == AnimationController.AnimatorStates.Dash);
-                yield return new WaitUntil(() => animCon.currentAnimation != AnimationController.AnimatorStates.Dash);
+                yield return new WaitUntil(() => animCon.CurrentAnimation == AnimationController.AnimatorStates.Dash);
+                yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimatorStates.Dash);
                 dashing = false;
                 stats.invincible = false;
                 m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); //Stop moving
@@ -334,7 +334,7 @@ public abstract class ChampionClassController : MonoBehaviour
         }
     }
 
-    public void manageDefensive(bool pDefensive)
+    public void ManageDefensive(bool pDefensive)
     {
         if (pDefensive && animCon.m_Grounded)
         {
@@ -372,26 +372,26 @@ public abstract class ChampionClassController : MonoBehaviour
     /// set/reset the combo after 1 second
     /// </summary>
     /// <returns></returns>
-    protected IEnumerator setCombo()
+    protected IEnumerator SetCombo()
     {
         inCombo = true;
         yield return new WaitForSeconds(m_ComboExpire);
-        abortCombo();
+        AbortCombo();
     }
 
     /// <summary>
     /// (Re-)Sets the time of the combo
     /// </summary>
-    protected void resetComboTime()
+    protected void ResetComboTime()
     {
         if (comboRoutine != null) StopCoroutine(comboRoutine);
-        comboRoutine = StartCoroutine(setCombo());
+        comboRoutine = StartCoroutine(SetCombo());
     }
 
     /// <summary>
     /// Abort the combo and sets combo values to default
     /// </summary>
-    protected void abortCombo()
+    protected void AbortCombo()
     {
         if (comboRoutine != null) StopCoroutine(comboRoutine);
         inCombo = false;
@@ -414,39 +414,39 @@ public abstract class ChampionClassController : MonoBehaviour
     /// <param name="singleTarget">only the first target or all targets? (default: singleTarget - true)</param>
     /// <param name="skillRange">Range of the skill (default: meeleRange - 1.5f)</param>.
     /// </summary>
-    protected void doMeleeSkill(ref bool animationVar, MeleeSkill skillToPerform, bool NoValidation = false)
+    protected void DoMeleeSkill(ref bool animationVar, MeleeSkill skillToPerform, bool NoValidation = false)
     {
         //Validate that character is not attacking and standing on ground
-        if (NoValidation || canPerformAction(skillToPerform.needsToBeGrounded) && canPerformAttack())
+        if (NoValidation || CanPerformAction(skillToPerform.needsToBeGrounded) && CanPerformAttack())
         {
-            if (skillToPerform.notOnCooldown && stats.loseStamina(skillToPerform.staminaCost))
+            if (skillToPerform.notOnCooldown && stats.LoseStamina(skillToPerform.staminaCost))
             {
                 // set animation trigger
                 animationVar = true;
                 // do hit by coroutine
-                StartCoroutine(doMeleeSkill_Hit(skillToPerform));
+                StartCoroutine(DoMeleeSkill_Hit(skillToPerform));
             }
         }
     }
 
-    protected IEnumerator doMeleeSkill_Hit(MeleeSkill skillToPerform)
+    protected IEnumerator DoMeleeSkill_Hit(MeleeSkill skillToPerform)
     {
         // wait till delay ends
         yield return new WaitForSeconds(skillToPerform.delay);
 
         CharacterStats target;
         RaycastHit2D[] hits = null;
-        if (skillToPerform.targetType == Skill.skillTarget.SingleTarget)
+        if (skillToPerform.targetType == Skill.SkillTarget.SingleTarget)
         {
             // if single target skill - get only one hit
-            RaycastHit2D singleTargetHit = tryToHit(skillToPerform.range);
+            RaycastHit2D singleTargetHit = TryToHit(skillToPerform.range);
             if (singleTargetHit)
             {
                 hits = new RaycastHit2D[1];
                 hits[0] = singleTargetHit;
             }
         }
-        else if (skillToPerform.targetType == Skill.skillTarget.MultiTarget)
+        else if (skillToPerform.targetType == Skill.SkillTarget.MultiTarget)
         {
             // if multi target skill - get all hits
             hits = Physics2D.CircleCastAll(m_GroundCheck.position, skillToPerform.range, Vector2.up, 0.01f, m_whatToHit);
@@ -471,34 +471,34 @@ public abstract class ChampionClassController : MonoBehaviour
                 // add skill effect if required
                 switch (skillToPerform.effect)
                 {
-                    case Skill.skillEffect.nothing:
+                    case Skill.SkillEffect.nothing:
                         // do nothing
                         break;
-                    case Skill.skillEffect.stun:
-                        target.startStunned(skillToPerform.effectDuration);
+                    case Skill.SkillEffect.stun:
+                        target.StartStunned(skillToPerform.effectDuration);
                         break;
-                    case Skill.skillEffect.knockback:
-                        target.startKnockBack(transform.position);
+                    case Skill.SkillEffect.knockback:
+                        target.StartKnockBack(transform.position);
                         break;
-                    case Skill.skillEffect.bleed:
-                        target.startBleeding(skillToPerform.effectDuration);
+                    case Skill.SkillEffect.bleed:
+                        target.StartBleeding(skillToPerform.effectDuration);
                         break;
                     default:
                         // should not happen
                         throw new NotImplementedException();
                 }
                 // deal damage to target
-                stats.dealDamage(target, skillToPerform.damage, false);
+                stats.DealDamage(target, skillToPerform.damage, false);
             }
         }
 
-        StartCoroutine(setSkillOnCooldown(skillToPerform));
+        StartCoroutine(SetSkillOnCooldown(skillToPerform));
     }
 
     /// <summary>
     /// Checks if the character hit anything
     /// </summary>
-    protected RaycastHit2D tryToHit(float range)
+    protected RaycastHit2D TryToHit(float range)
     {
         Vector2 direction;// Direction to check in
         if (m_FacingRight) direction = Vector2.right;
@@ -512,19 +512,19 @@ public abstract class ChampionClassController : MonoBehaviour
 
     #region Ranged Skill
 
-    protected void doRangeSkill(ref bool animationVar, RangedSkill skillToPerform)
+    protected void DoRangeSkill(ref bool animationVar, RangedSkill skillToPerform)
     {
         //Validate that character is not attacking and standing on ground
-        if (canPerformAction(skillToPerform.needsToBeGrounded) && canPerformAttack() && skillToPerform.notOnCooldown && stats.loseStamina(skillToPerform.staminaCost))
+        if (CanPerformAction(skillToPerform.needsToBeGrounded) && CanPerformAttack() && skillToPerform.notOnCooldown && stats.LoseStamina(skillToPerform.staminaCost))
         {
             // set animation trigger
             animationVar = true;
             // do hit by coroutine
-            StartCoroutine(doRangeSkill_Hit(skillToPerform));
+            StartCoroutine(DoRangeSkill_Hit(skillToPerform));
         }
     }
 
-    private IEnumerator doRangeSkill_Hit(RangedSkill skillToPerform)
+    private IEnumerator DoRangeSkill_Hit(RangedSkill skillToPerform)
     {
         // wait till delay ends
         yield return new WaitForSeconds(skillToPerform.delay);
@@ -552,14 +552,14 @@ public abstract class ChampionClassController : MonoBehaviour
         Instantiate(goProjectile, transform.position + new Vector3(1f * direction, 0.3f), new Quaternion(goProjectile.transform.rotation.x,
             goProjectile.transform.rotation.y, goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));
 
-        StartCoroutine(setSkillOnCooldown(skillToPerform));
+        StartCoroutine(SetSkillOnCooldown(skillToPerform));
     }
 
     #endregion
 
     #region setOnCooldown
 
-    protected IEnumerator setSkillOnCooldown(Skill skillToPerform)
+    protected IEnumerator SetSkillOnCooldown(Skill skillToPerform)
     {
         //Set on cooldown
         if (skillToPerform.cooldown > 0)
@@ -581,7 +581,7 @@ public abstract class ChampionClassController : MonoBehaviour
     /// </summary>
     /// <param name="GroundCheck">Check also, if character is on ground</param>
     /// <returns></returns>
-    public bool canPerformAction(bool GroundCheck)
+    public bool CanPerformAction(bool GroundCheck)
     {
         if (GroundCheck && !animCon.m_Grounded)
             return false;
@@ -599,9 +599,9 @@ public abstract class ChampionClassController : MonoBehaviour
     /// Checks if character is not attacking
     /// </summary>
     /// <returns></returns>
-    public bool canPerformAttack()
+    public bool CanPerformAttack()
     {
-        switch (animCon.currentAnimation)
+        switch (animCon.CurrentAnimation)
         {
             case AnimationController.AnimatorStates.BasicAttack1:
             case AnimationController.AnimatorStates.BasicAttack2:
@@ -618,11 +618,11 @@ public abstract class ChampionClassController : MonoBehaviour
 
     public bool ShouldRegenerateStamina()
     {
-        if (!canPerformAttack())
+        if (!CanPerformAttack())
             return false;
         else
         {
-            switch (animCon.currentAnimation)
+            switch (animCon.CurrentAnimation)
             {
                 case AnimationController.AnimatorStates.Jump:
                 case AnimationController.AnimatorStates.Dash:

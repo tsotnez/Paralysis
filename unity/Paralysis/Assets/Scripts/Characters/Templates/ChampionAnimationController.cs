@@ -46,9 +46,9 @@
         else
         {
             // don't interrupt these animations (equivalent to HasExitTime)
-            if (additionalNotInterruptCondition(currentAnimation)) return;
+            if (AdditionalNotInterruptCondition(CurrentAnimation)) return;
 
-            switch (currentAnimation)
+            switch (CurrentAnimation)
             {
                 case AnimatorStates.Dash:
                 case AnimatorStates.DashFor:
@@ -77,7 +77,7 @@
             }
 
             // For character specific animations
-            if (additionalAnimationCondition()) return;
+            if (AdditionalAnimationCondition()) return;
 
             if (statBlock)
                 StartAnimation(AnimatorStates.Block);
@@ -150,6 +150,6 @@
         }
     }
 
-    protected abstract bool additionalNotInterruptCondition(AnimatorStates activeAnimation);
-    protected abstract bool additionalAnimationCondition();
+    protected abstract bool AdditionalNotInterruptCondition(AnimatorStates activeAnimation);
+    protected abstract bool AdditionalAnimationCondition();
 }

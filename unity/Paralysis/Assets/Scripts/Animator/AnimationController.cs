@@ -25,14 +25,14 @@ public abstract class AnimationController : MonoBehaviour
     #endregion
 
     // Public GET parameters
-    public AnimatorStates currentAnimation { get; private set; }            // current playing animation state
+    public AnimatorStates CurrentAnimation { get; private set; }            // current playing animation state
 
     //Private parameters
     private Dictionary<AnimatorStates, SpriteAtlas> animationSprites;       // Saves all Sprites to the Animations
     private Dictionary<AnimatorStates, SpriteAtlas> animationSpriteEnds;    // Saves all Sprite-End-Animations to the Animations
     private Dictionary<AnimatorStates, float> animationDuration;            // Saves all Speed of the Animations
     private Dictionary<AnimatorStates, bool> animationLoop;                 // Saves if animation should be looped
-    private AudioSource audioSource;                                        // reference to audio soirce for playing sounds
+    private AudioSource audioSource;                                        // Reference to audio source for playing sounds
 
     private bool finishedInitialization = false;                            // True if finished loading all the sprites
     private SpriteRenderer spriteRenderer;                                  // Sprite Renderer
@@ -135,12 +135,12 @@ public abstract class AnimationController : MonoBehaviour
 
     public void StartAnimation(AnimatorStates animation, TypeOfAnimation AnimationType = TypeOfAnimation.Animation)
     {
-        if (finishedInitialization && (currentAnimation != animation || (currentAnimation == animation && AnimationType == TypeOfAnimation.EndAnimation)))
+        if (finishedInitialization && (CurrentAnimation != animation || (CurrentAnimation == animation && AnimationType == TypeOfAnimation.EndAnimation)))
         {
             if (AnimationDictionaryHasAnimation(animation, AnimationType))
             {
                 // set current animation
-                currentAnimation = animation;
+                CurrentAnimation = animation;
 
                 // get sprite atlas
                 SpriteAtlas atlas = null;

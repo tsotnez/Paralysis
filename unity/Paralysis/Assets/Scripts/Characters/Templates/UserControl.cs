@@ -48,13 +48,13 @@ public abstract class UserControl : MonoBehaviour
         switch (inputDevice)
         {
             case InputDevice.XboxController:
-                checkInputForXboxController();
+                CheckInputForXboxController();
                 break;
             case InputDevice.KeyboardMouse:
-                checkInputForKeyboardAndMouse();
+                CheckInputForKeyboardAndMouse();
                 break;
             case InputDevice.Ps4Controller:
-                checkInputForPs4Controller();
+                CheckInputForPs4Controller();
                 break;
         }
     }
@@ -88,14 +88,14 @@ public abstract class UserControl : MonoBehaviour
             if (!defensive)
             {
                 // Pass all parameters to the character control script.
-                m_Character.jump(m_Jump);
-                m_Character.basicAttack(m_Attack);
+                m_Character.Jump(m_Jump);
+                m_Character.BasicAttack(m_Attack);
 
-                if (m_Skill1) m_Character.skill1();
-                if (m_Skill2) m_Character.skill2();
-                if (m_Skill3) m_Character.skill3();
-                if (m_Skill4) m_Character.skill4();
-                if (dash != 0) m_Character.StartCoroutine(m_Character.dash(dash));
+                if (m_Skill1) m_Character.Skill1();
+                if (m_Skill2) m_Character.Skill2();
+                if (m_Skill3) m_Character.Skill3();
+                if (m_Skill4) m_Character.Skill4();
+                if (dash != 0) m_Character.StartCoroutine(m_Character.Dash(dash));
             }
         }
     }
@@ -118,7 +118,7 @@ public abstract class UserControl : MonoBehaviour
     /// <summary>
     /// Checks inputs for Keyboard and Mouse
     /// </summary>
-    protected virtual void checkInputForKeyboardAndMouse()
+    protected virtual void CheckInputForKeyboardAndMouse()
     {
         move = Input.GetAxis("Horizontal");
         if (dash == 0)
@@ -171,7 +171,7 @@ public abstract class UserControl : MonoBehaviour
             defensive = Input.GetButton("Defensive");
         else defensive = false;
 
-        m_Character.manageDefensive(defensive);
+        m_Character.ManageDefensive(defensive);
     }
 
     #endregion
@@ -181,7 +181,7 @@ public abstract class UserControl : MonoBehaviour
     /// <summary>
     /// Checks input for Xbox Controllers
     /// </summary>
-    protected virtual void checkInputForXboxController()
+    protected virtual void CheckInputForXboxController()
     {
         //Set move to 0, 1 or -1 so character will move full speed or 0
         move = Input.GetAxis("Horizontal_Xbox" + playerNumber.ToString());
@@ -240,14 +240,14 @@ public abstract class UserControl : MonoBehaviour
         else defensive = false;
 
         lastVerticalValue = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
-        m_Character.manageDefensive(defensive);
+        m_Character.ManageDefensive(defensive);
     }
 
     #endregion
 
     #region PS4
 
-    protected virtual void checkInputForPs4Controller()
+    protected virtual void CheckInputForPs4Controller()
     {
         //Set move to 0, 1 or -1 so character will move full speed or 0
         move = Input.GetAxis("Horizontal_Ps4" + playerNumber.ToString());
@@ -296,7 +296,7 @@ public abstract class UserControl : MonoBehaviour
         else defensive = false;
 
         lastVerticalValue = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
-        m_Character.manageDefensive(defensive);
+        m_Character.ManageDefensive(defensive);
     }
 
     #endregion
