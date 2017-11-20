@@ -2667,11 +2667,6 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 212067300079279540, guid: e6f7d777ee6c44d448705ae811eebec4,
-        type: 2}
-      propertyPath: m_FlipX
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e6f7d777ee6c44d448705ae811eebec4, type: 2}
   m_IsPrefabParent: 0
