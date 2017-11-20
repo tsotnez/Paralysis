@@ -698,7 +698,7 @@ MonoBehaviour:
   invincible: 0
   reflect: 0
   knockBackForceX: 6
-  knockBackForceY: 6
+  knockBackForceY: 12
   hotbar: {fileID: 0}
   TeamColor: {fileID: 114531670223470868}
   Team1Color: {fileID: 21300000, guid: 1a78a4f52a148e74e94f1a45a0162c39, type: 3}
