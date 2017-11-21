@@ -6,7 +6,7 @@ public class RangedSkill : Skill
     public GameObject prefab;
     public Vector2 speed;
 
-    public RangedSkill(AnimationController.AnimatorStates skillName, bool skillOnHitEffect, Vector2 projectileSpeed, GameObject projectilePrefab, float skillDelay, int skillDamage, skillEffect skillSpecialEffect, int skillSpecialEffectTime, int skillStaminaCost, skillTarget skillTargetType, float skillCooldown, float skillRange, bool skillNeedsToBeGrounded = true) 
+    public RangedSkill(AnimationController.AnimatorStates skillName, bool skillOnHitEffect, Vector2 projectileSpeed, GameObject projectilePrefab, float skillDelay, int skillDamage, SkillEffect skillSpecialEffect, int skillSpecialEffectTime, int skillStaminaCost, SkillTarget skillTargetType, float skillCooldown, float skillRange, bool skillNeedsToBeGrounded = true) 
         : base(skillName, skillDelay, skillDamage, skillSpecialEffect, skillSpecialEffectTime, skillStaminaCost, skillTargetType, skillCooldown, skillRange, skillNeedsToBeGrounded)
     {
         onHitEffect = skillOnHitEffect;

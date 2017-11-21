@@ -7,7 +7,6 @@
 
     // Stats
     public bool statStunned = false;
-    public bool statKnockedBack = false;
     public bool statBlock = false;
 
     // Trigger
@@ -18,6 +17,8 @@
     public bool trigSkill2 = false;
     public bool trigSkill3 = false;
     public bool trigSkill4 = false;
+    public bool trigKnockedBack = false;
+    public bool trigKnockedBackEnd = false;
     public bool trigJump = false;
     public bool trigJumpAttack = false;
     public bool trigJumpAttackEnd = false;
@@ -37,14 +38,17 @@
         // Animations that work in any State
         if (statStunned)
             StartAnimation(AnimatorStates.Stunned);
-        else if (statKnockedBack)
+        else if (trigKnockedBack)
+        {
+            trigKnockedBack = false;
             StartAnimation(AnimatorStates.KnockedBack);
+        }
         else
         {
             // don't interrupt these animations (equivalent to HasExitTime)
-            if (additionalNotInterruptCondition(currentAnimation)) return;
+            if (AdditionalNotInterruptCondition(CurrentAnimation)) return;
 
-            switch (currentAnimation)
+            switch (CurrentAnimation)
             {
                 case AnimatorStates.Dash:
                 case AnimatorStates.DashFor:
@@ -56,6 +60,13 @@
                 case AnimatorStates.Skill3:
                 case AnimatorStates.Skill4:
                     return;
+                case AnimatorStates.KnockedBack:
+                    if (trigKnockedBackEnd)
+                    {
+                        trigKnockedBackEnd = false;
+                        StartAnimation(AnimatorStates.KnockedBack, TypeOfAnimation.EndAnimation);
+                    }
+                    return;
                 case AnimatorStates.JumpAttack:
                     if (trigJumpAttackEnd)
                     {
@@ -66,10 +77,12 @@
             }
 
             // For character specific animations
-            if (additionalAnimationCondition()) return;
+            if (AdditionalAnimationCondition()) return;
 
             if (statBlock)
                 StartAnimation(AnimatorStates.Block);
+            else if(statBlock && m_Speed > 0.001)
+                StartAnimation(AnimatorStates.BlockMove);
             else if (trigDash)
             {
                 trigDash = false;
@@ -139,6 +152,6 @@
         }
     }
 
-    protected abstract bool additionalNotInterruptCondition(AnimatorStates activeAnimation);
-    protected abstract bool additionalAnimationCondition();
+    protected abstract bool AdditionalNotInterruptCondition(AnimatorStates activeAnimation);
+    protected abstract bool AdditionalAnimationCondition();
 }

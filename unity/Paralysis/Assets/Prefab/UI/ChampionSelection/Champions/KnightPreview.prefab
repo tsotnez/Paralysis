@@ -52,7 +52,7 @@ Transform:
   m_GameObject: {fileID: 1694522185093378}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4662659095535300}
   m_RootOrder: 0
@@ -65,7 +65,7 @@ Transform:
   m_GameObject: {fileID: 1903508196159970}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -6.56, y: -5.8, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4638925856882956}
   m_Father: {fileID: 0}
@@ -209,7 +209,6 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  EndAnimationType: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   EndAtlasses:
   - {fileID: 0}
   - {fileID: 0}
@@ -231,8 +230,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  EndAnimationLoop: 00
-  EndAnimationDuration: []
   m_Grounded: 0
   m_vSpeed: 0
   m_Speed: 0
@@ -250,8 +247,8 @@ MonoBehaviour:
   trigJumpAttack: 0
   trigJumpAttackEnd: 0
   trigDash: 0
-  trigHit: 0
   trigDashForward: 0
+  trigHit: 0
   trigSkill2End: 0
 --- !u!212 &212762230075115702
 SpriteRenderer:

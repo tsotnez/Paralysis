@@ -1,12 +1,26 @@
 public class InfantryAnimationController : ChampionAnimationController
 {
-    protected override bool additionalAnimationCondition()
+// Trigger for character specific animations
+    public bool trigSkill1End = false;
+
+    protected override bool AdditionalAnimationCondition()
     {
         return false;
     }
 
-    protected override bool additionalNotInterruptCondition(AnimatorStates activeAnimation)
+    protected override bool AdditionalNotInterruptCondition(AnimatorStates activeAnimation)
     {
+        switch (CurrentAnimation)
+        {
+            case AnimatorStates.Skill1:
+                if (trigSkill1End)
+                {
+                    trigSkill1End = false;
+                    StartAnimation(AnimatorStates.Skill2, TypeOfAnimation.EndAnimation);
+                }
+                return true;
+        }
+
         return false;
     }
 }

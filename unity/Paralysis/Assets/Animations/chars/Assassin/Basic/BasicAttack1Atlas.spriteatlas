@@ -8,31 +8,29 @@ SpriteAtlas:
   m_Name: BasicAttack1Atlas
   m_EditorData:
     textureSettings:
-      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 0
+      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
-      sRGB: 0
     platformSettings: []
     packingParameters:
-      serializedVersion: 2
-      padding: 4
+      paddingPower: 2
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 0
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 96b7cdb60ad594e2ffd655a9d1660d62
+      Hash: 584db316b4db2b0168c54cf222d643bf
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 96b7cdb60ad594e2ffd655a9d1660d62
+    hashString: 584db316b4db2b0168c54cf222d643bf
     totalSpriteSurfaceArea: 5468160
     packables:
     - {fileID: 102900000, guid: 0483a9d61e4e44046af111efc4c5f7ca, type: 3}

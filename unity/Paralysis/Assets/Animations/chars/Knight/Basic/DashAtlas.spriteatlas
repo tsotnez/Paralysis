@@ -8,31 +8,29 @@ SpriteAtlas:
   m_Name: DashAtlas
   m_EditorData:
     textureSettings:
-      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 0
+      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
-      sRGB: 0
     platformSettings: []
     packingParameters:
-      serializedVersion: 2
-      padding: 4
+      paddingPower: 2
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 0
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: dca2bc08f8c2fc3d2e35db5ffd8a5a38
+      Hash: b6e589d072b1ae102633814b2a7cb66a
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: dca2bc08f8c2fc3d2e35db5ffd8a5a38
+    hashString: b6e589d072b1ae102633814b2a7cb66a
     totalSpriteSurfaceArea: 21280560
     packables:
     - {fileID: 102900000, guid: 213d8ce81d79e864bbe659590ab2d74f, type: 3}

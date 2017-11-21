@@ -22,21 +22,21 @@ public class AssassinController : ChampionClassController
         animCon = graphics.GetComponent<AssassinAnimationController>();
 
         //Instantiate skill variables
-        basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, Skill.skillTarget.SingleTarget, cooldown_BasicAttack1, meeleRange);
-        basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.skillEffect.nothing, 0, stamina_BasicAttack2, Skill.skillTarget.SingleTarget, cooldown_BasicAttack2, meeleRange);
-        basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack3, delay_BasicAttack3, damage_BasicAttack3, Skill.skillEffect.bleed, 6, stamina_BasicAttack3, Skill.skillTarget.SingleTarget, cooldown_BasicAttack3, meeleRange);
+        basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, meeleRange);
+        basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.SkillEffect.nothing, 0, stamina_BasicAttack2, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack2, meeleRange);
+        basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack3, delay_BasicAttack3, damage_BasicAttack3, Skill.SkillEffect.bleed, 6, stamina_BasicAttack3, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack3, meeleRange);
 
-        skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.skillEffect.nothing, 0, stamina_Skill1, Skill.skillTarget.SingleTarget, cooldown_Skill1, meeleRange);
+        skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.SkillEffect.nothing, 0, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, meeleRange);
         skill2_var = new Skill(AnimationController.AnimatorStates.Skill2, cooldown_Skill2);
         skill3_var = new Skill(AnimationController.AnimatorStates.Skill3, cooldown_Skill3);
-        skill4_var = new RangedSkill(AnimationController.AnimatorStates.Skill4, true, new Vector2(7, 0), bulletPrefab, delay_Skill4, damage_Skill4, Skill.skillEffect.knockback, 2, stamina_Skill4, Skill.skillTarget.SingleTarget, cooldown_Skill4, 5);
+        skill4_var = new RangedSkill(AnimationController.AnimatorStates.Skill4, true, new Vector2(7, 0), bulletPrefab, delay_Skill4, damage_Skill4, Skill.SkillEffect.knockback, 2, stamina_Skill4, Skill.SkillTarget.SingleTarget, cooldown_Skill4, 5);
     }
 
     protected override void Update()
     {
         base.Update();
-        if (stats.stunned && invisible) stopInvisible();
-        if (stats.knockedBack && invisible) stopInvisible();
+        if (stats.stunned && invisible) StopInvisible();
+        if (stats.knockedBack && invisible) StopInvisible();
     }
 
     #endregion
@@ -46,60 +46,60 @@ public class AssassinController : ChampionClassController
     /// <summary>
     /// Stun attack
     /// </summary>
-    public override void skill1()
+    public override void Skill1()
     {
-        if (invisible) stopInvisible();
-        doMeleeSkill(ref animCon.trigSkill1, (MeleeSkill)skill1_var);
+        if (invisible) StopInvisible();
+        DoMeleeSkill(ref animCon.trigSkill1, (MeleeSkill)skill1_var);
     }
 
     /// <summary>
     /// Vanish and become invisible
     /// </summary>
-    public override void skill2()
+    public override void Skill2()
     {
-        if (canPerformAction(true) && canPerformAttack() && skill2_var.notOnCooldown && stats.loseStamina(stamina_Skill2))
+        if (CanPerformAction(true) && CanPerformAttack() && skill2_var.notOnCooldown && stats.LoseStamina(stamina_Skill2))
         {
-            if (invisible) stopInvisible();
+            if (invisible) StopInvisible();
             if (invisRoutine != null) StopCoroutine(invisRoutine);
-            invisRoutine = StartCoroutine(manageInvisibility());
+            invisRoutine = StartCoroutine(ManageInvisibility());
         }
     }
 
     /// <summary>
     /// Teleport to closest enemy on same height and deal damage
     /// </summary>
-    public override void skill3()
+    public override void Skill3()
     {
-        if (canPerformAction(true) && canPerformAttack() && skill3_var.notOnCooldown && stats.loseStamina(stamina_Skill3))
+        if (CanPerformAction(true) && CanPerformAttack() && skill3_var.notOnCooldown && stats.LoseStamina(stamina_Skill3))
         {
-            if (invisible) stopInvisible();
-            StartCoroutine(shadowStepHit());
+            if (invisible) StopInvisible();
+            StartCoroutine(ShadowStepHit());
         }
     }
 
     /// <summary>
     /// Shoot pistol and knock back
     /// </summary>
-    public override void skill4()
+    public override void Skill4()
     {
-        if (invisible) stopInvisible();
-        doRangeSkill(ref animCon.trigSkill4, (RangedSkill)skill4_var);
+        if (invisible) StopInvisible();
+        DoRangeSkill(ref animCon.trigSkill4, (RangedSkill)skill4_var);
     }
 
     #endregion
 
     #region Basic Attack
 
-    public override void basicAttack(bool shouldAttack)
+    public override void BasicAttack(bool shouldAttack)
     {
-        if (shouldAttack && canPerformAttack() && !dashing)
+        if (shouldAttack && CanPerformAttack() && !dashing)
         {
             if (!animCon.m_Grounded && !invisible && doubleJumped) //Jump attack only when double jumped
             {
                 //Jump Attack
-                StartCoroutine(jumpAttack());
+                StartCoroutine(JumpAttack());
                 //reset combo
-                abortCombo();
+                AbortCombo();
             }
             else if (animCon.m_Grounded && invisible)
             {
@@ -109,42 +109,42 @@ public class AssassinController : ChampionClassController
             else if (animCon.m_Grounded && attackCount == 0 && !inCombo)
             {
                 //First attack - initialize combo coroutine
-                resetComboTime();
+                ResetComboTime();
                 attackCount = 1;
             }
             else if (animCon.m_Grounded && inCombo)
             {
                 //Already in combo
-                resetComboTime();
+                ResetComboTime();
                 attackCount++;
             }
 
             //Playing the correct animation depending on the attackCount and setting attacking status
-            if (stats.hasSufficientStamina(stamina_BasicAttack1))
+            if (stats.HasSufficientStamina(stamina_BasicAttack1))
             {
                 switch (attackCount)
                 {
                     case 1:
                         // do basic attack
-                        doMeleeSkill(ref animCon.trigBasicAttack1, (MeleeSkill)basicAttack1_var);
+                        DoMeleeSkill(ref animCon.trigBasicAttack1, (MeleeSkill)basicAttack1_var);
                         break;
                     case 2:
                         // do basic attack
-                        doMeleeSkill(ref animCon.trigBasicAttack2, (MeleeSkill)basicAttack2_var);
+                        DoMeleeSkill(ref animCon.trigBasicAttack2, (MeleeSkill)basicAttack3_var);
                         break;
                     case 3:
                         // do bleed attack
-                        doMeleeSkill(ref animCon.trigBasicAttack3, (MeleeSkill)basicAttack3_var);
+                        DoMeleeSkill(ref animCon.trigBasicAttack3, (MeleeSkill)basicAttack3_var);
                         //reset Combo
-                        abortCombo();
+                        AbortCombo();
                         break;
                     case 4:
                         // do ambush attack
-                        doMeleeSkill(ref animCon.trigSkill3, new MeleeSkill(0, delay_Skill3, ambushAttack_damage, Skill.skillEffect.nothing, 3, stamina_BasicAttack1, Skill.skillTarget.SingleTarget, 0, meeleRange));
+                        DoMeleeSkill(ref animCon.trigSkill3, new MeleeSkill(0, delay_Skill3, ambushAttack_damage, Skill.SkillEffect.nothing, 3, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, 0, meeleRange));
                         //reset Combo
-                        abortCombo();
+                        AbortCombo();
                         //end invisibility
-                        stopInvisible();
+                        StopInvisible();
                         break;
                 }
             }
@@ -155,13 +155,13 @@ public class AssassinController : ChampionClassController
 
     #region Teleport Skill
 
-    private IEnumerator shadowStepHit()
+    private IEnumerator ShadowStepHit()
     {
         animCon.trigSkill2 = true;
         stats.invincible = true;
 
-        yield return new WaitUntil(() => animCon.currentAnimation == AnimationController.AnimatorStates.Skill2);
-        yield return new WaitUntil(() => animCon.currentAnimation != AnimationController.AnimatorStates.Skill2); //Wait until intro animation is finished
+        yield return new WaitUntil(() => animCon.CurrentAnimation == AnimationController.AnimatorStates.Skill2);
+        yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimatorStates.Skill2); //Wait until intro animation is finished
 
         //Add walls and Ground to layermask so they are an obstacle for the raycast
         LayerMask temp = m_whatToHit;
@@ -202,7 +202,7 @@ public class AssassinController : ChampionClassController
                 m_Rigidbody2D.position = hit.transform.position + Vector3.left; //Viable target on the right
                 target = hit.collider.gameObject;
                 targetStats = target.GetComponent<CharacterStats>();
-                targetStats.startStunned(2);
+                targetStats.StartStunned(2);
                 if (!m_FacingRight) Flip();
             }
             else if (targetLocation == -1)
@@ -210,30 +210,30 @@ public class AssassinController : ChampionClassController
                 m_Rigidbody2D.position = hitLeft.transform.position + Vector3.right; //Viable target on the left
                 target = hitLeft.collider.gameObject;
                 targetStats = target.GetComponent<CharacterStats>();
-                targetStats.startStunned(2);
+                targetStats.StartStunned(2);
                 if (m_FacingRight) Flip();
             }
             m_Rigidbody2D.velocity = Vector2.zero;
             animCon.trigSkill3 = true;
             yield return new WaitForSeconds(delay_Skill3);
-            stats.dealDamage(targetStats, damage_Skill3, false);
+            stats.DealDamage(targetStats, damage_Skill3, false);
 
-            yield return new WaitUntil(() => animCon.currentAnimation != AnimationController.AnimatorStates.Skill3);
+            yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimatorStates.Skill3);
             stats.immovable = false;
         }
         stats.invincible = false;
-        StartCoroutine(setSkillOnCooldown(skill3_var));
+        StartCoroutine(SetSkillOnCooldown(skill3_var));
     }
 
     #endregion
 
     #region Invisibility
 
-    private IEnumerator manageInvisibility()
+    private IEnumerator ManageInvisibility()
     {
         yield return new WaitForSeconds(delay_Skill2);
         invisible = true;
-        StartCoroutine(setSkillOnCooldown(skill2_var));
+        StartCoroutine(SetSkillOnCooldown(skill2_var));
 
         // set animation
         animCon.trigSkill2 = true;
@@ -244,10 +244,10 @@ public class AssassinController : ChampionClassController
         transform.Find("graphics").GetComponent<SpriteRenderer>().color = oldCol;
 
         yield return new WaitForSeconds(5);
-        stopInvisible();
+        StopInvisible();
     }
 
-    private void stopInvisible()
+    private void StopInvisible()
     {
         invisible = false;
         if (invisRoutine != null) StopCoroutine(invisRoutine);

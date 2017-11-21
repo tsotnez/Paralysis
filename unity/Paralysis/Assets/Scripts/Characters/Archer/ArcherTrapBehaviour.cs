@@ -59,15 +59,15 @@ public class ArcherTrapBehaviour : MonoBehaviour {
             if (whatToHit == (whatToHit | (1 << collision.gameObject.layer)))
             {
                 CharacterStats targetStats = collision.gameObject.GetComponent<CharacterStats>();
-                targetStats.startStunned(3);
-                creator.GetComponent<CharacterStats>().dealDamage(targetStats, damage, true);
+                targetStats.StartStunned(3);
+                creator.GetComponent<CharacterStats>().DealDamage(targetStats, damage, true);
                 Camera.main.GetComponent<CameraBehaviour>().startShake();
-                explode();
+                Explode();
             }
         }
     }
 
-    void explode()
+    void Explode()
     {
         //Plays explosion effect and destroys the bullet
         if (explosionPrefab != null)

@@ -18,13 +18,13 @@ public class KnightController : ChampionClassController
     {
         animCon = graphics.GetComponent<KnightAnimationController>();
 
-        basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, Skill.skillTarget.SingleTarget, cooldown_BasicAttack1, meeleRange);
-        basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.skillEffect.nothing, 0, stamina_BasicAttack2, Skill.skillTarget.SingleTarget, cooldown_BasicAttack2, meeleRange);
+        basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, meeleRange);
+        basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack3, delay_BasicAttack3, damage_BasicAttack3, Skill.SkillEffect.nothing, 0, stamina_BasicAttack3, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack3, meeleRange);
 
-        skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.skillEffect.stun, 3, stamina_Skill1, Skill.skillTarget.MultiTarget, cooldown_Skill1, meeleRange);
-        skill2_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.skillEffect.stun, 3, stamina_Skill2, Skill.skillTarget.MultiTarget, cooldown_Skill2, meeleRange);
-        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.skillEffect.knockback, 0, stamina_Skill3, Skill.skillTarget.SingleTarget, cooldown_Skill3, meeleRange);
-        skill4_var = new RangedSkill(AnimationController.AnimatorStates.Skill4, false, new Vector2(7, 0), Skill4_Spear, delay_Skill4, damage_Skill4, Skill.skillEffect.nothing, 0, stamina_Skill4, Skill.skillTarget.SingleTarget, cooldown_Skill4, 5f);
+        skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.SkillEffect.stun, 3, stamina_Skill1, Skill.SkillTarget.MultiTarget, cooldown_Skill1, meeleRange);
+        skill2_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.SkillEffect.stun, 3, stamina_Skill2, Skill.SkillTarget.MultiTarget, cooldown_Skill2, meeleRange);
+        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.SkillEffect.knockback, 0, stamina_Skill3, Skill.SkillTarget.SingleTarget, cooldown_Skill3, meeleRange);
+        skill4_var = new RangedSkill(AnimationController.AnimatorStates.Skill4, false, new Vector2(7, 0), Skill4_Spear, delay_Skill4, damage_Skill4, Skill.SkillEffect.nothing, 0, stamina_Skill4, Skill.SkillTarget.SingleTarget, cooldown_Skill4, 5f);
     }
 
     // Update is called once per frame
@@ -55,21 +55,21 @@ public class KnightController : ChampionClassController
     /// strong hit: 10 dmg
     /// </summary>
     /// <param name="shouldAttack"></param>
-    public override void basicAttack(bool shouldAttack)
+    public override void BasicAttack(bool shouldAttack)
     {
-        if (shouldAttack && canPerformAction(false) && canPerformAttack())
+        if (shouldAttack && CanPerformAction(false) && CanPerformAttack())
         {
             if (animCon.m_Grounded)
             {
                 // Check if enough stamina for attack
-                if (stats.hasSufficientStamina(stamina_BasicAttack1) && (attackCount == 0 || attackCount == 1) || //Basic Attack
-                    stats.hasSufficientStamina(stamina_BasicAttack3) && (attackCount == 2)) // Strong Attack
+                if (stats.HasSufficientStamina(stamina_BasicAttack1) && (attackCount == 0 || attackCount == 1) || //Basic Attack
+                    stats.HasSufficientStamina(stamina_BasicAttack3) && (attackCount == 2)) // Strong Attack
                 {
                     // Already in combo?
                     if (!inCombo)
                     {
                         // First attack - initialize combo coroutine
-                        resetComboTime();
+                        ResetComboTime();
                         attackCount = 0;
                     }
 
@@ -82,19 +82,19 @@ public class KnightController : ChampionClassController
                         case 1:
                         case 2:
                             // do meele attack
-                            doMeleeSkill(ref animCon.trigBasicAttack1, (MeleeSkill)basicAttack1_var);
+                            DoMeleeSkill(ref animCon.trigBasicAttack1, (MeleeSkill)basicAttack1_var);
                             // Reset timer of combo
-                            resetComboTime();
+                            ResetComboTime();
                             break;
                         case 3:
                             // do meele attack
-                            doMeleeSkill(ref animCon.trigBasicAttack2, (MeleeSkill)basicAttack2_var);
+                            DoMeleeSkill(ref animCon.trigBasicAttack2, (MeleeSkill)basicAttack3_var);
                             // Reset Combo after combo-hit
-                            abortCombo();
+                            AbortCombo();
                             break;
                         default:
                             // Should not be triggered
-                            abortCombo();
+                            AbortCombo();
                             break;
 
                     }
@@ -104,12 +104,12 @@ public class KnightController : ChampionClassController
             else
             {
                 // Check if enough stamina is left
-                if (stats.loseStamina(stamina_JumpAttack))
+                if (stats.LoseStamina(stamina_JumpAttack))
                 {
                     // Jump Attack
-                    StartCoroutine(jumpAttack());
+                    StartCoroutine(JumpAttack());
                     // Abort combo
-                    abortCombo();
+                    AbortCombo();
                 }
             }
         }
@@ -129,9 +129,9 @@ public class KnightController : ChampionClassController
     /// Cooldown: 15 sec
     /// Stamina: 20
     /// </summary>
-    public override void skill1()
+    public override void Skill1()
     {
-        doMeleeSkill(ref animCon.trigSkill1, (MeleeSkill)skill1_var);
+        DoMeleeSkill(ref animCon.trigSkill1, (MeleeSkill)skill1_var);
     }
 
 
@@ -145,20 +145,20 @@ public class KnightController : ChampionClassController
     /// Cooldown: 20 sec
     /// Stamina: 15
     /// </summary>
-    public override void skill2()
+    public override void Skill2()
     {
         // Validate if skill can be performed
-        if (canPerformAction(true) && canPerformAttack() && skill2_var.notOnCooldown && stats.hasSufficientStamina(stamina_Skill2))
+        if (CanPerformAction(true) && CanPerformAttack() && skill2_var.notOnCooldown && stats.HasSufficientStamina(stamina_Skill2))
         {
             // set animation
             animCon.trigSkill2 = true;
 
             // start coroutine for hitting when reaching ground
-            StartCoroutine(skill2_Coroutine());
+            StartCoroutine(Skill2_Coroutine());
         }
     }
 
-    private IEnumerator skill2_Coroutine()
+    private IEnumerator Skill2_Coroutine()
     {
         stats.immovable = true;
         skill2_leap = true;
@@ -181,7 +181,7 @@ public class KnightController : ChampionClassController
         skill2_leap = false;
         stats.immovable = false;
 
-        doMeleeSkill(ref ((KnightAnimationController)animCon).trigSkill2End, (MeleeSkill)skill2_var, true);
+        DoMeleeSkill(ref ((KnightAnimationController)animCon).trigSkill2End, (MeleeSkill)skill2_var, true);
     }
 
     /// <summary>
@@ -194,9 +194,9 @@ public class KnightController : ChampionClassController
     /// Cooldown: 20 sec
     /// Stamina: 30
     /// </summary>
-    public override void skill3()
+    public override void Skill3()
     {
-        doMeleeSkill(ref animCon.trigSkill3, (MeleeSkill)skill3_var);
+        DoMeleeSkill(ref animCon.trigSkill3, (MeleeSkill)skill3_var);
     }
 
     /// <summary>
@@ -208,9 +208,9 @@ public class KnightController : ChampionClassController
     /// Cooldown: 25 sec
     /// Stamina: 20
     /// </summary>
-    public override void skill4()
+    public override void Skill4()
     {
-        doRangeSkill(ref animCon.trigSkill4, (RangedSkill)skill4_var);
+        DoRangeSkill(ref animCon.trigSkill4, (RangedSkill)skill4_var);
     }
 
     #endregion

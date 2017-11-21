@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections;
+using UnityEngine;
 
 public class InfantryContoller : ChampionClassController
 {
+    private bool skill1_hook = false;
+    private float skill1_hook_speed = 10f;
     #region default
 
     // Use this for initialization
@@ -9,13 +13,24 @@ public class InfantryContoller : ChampionClassController
     {
         animCon = graphics.GetComponent<InfantryAnimationController>();
 
-        basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, Skill.skillTarget.SingleTarget, cooldown_BasicAttack1, meeleRange);
-        basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.skillEffect.nothing, 0, stamina_BasicAttack2, Skill.skillTarget.SingleTarget, cooldown_BasicAttack2, meeleRange);
+        basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, meeleRange);
+        basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.SkillEffect.nothing, 0, stamina_BasicAttack2, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack2, meeleRange);
 
-        skill1_var = new Skill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.skillEffect.stun, 3, stamina_Skill1, Skill.skillTarget.SingleTarget, cooldown_Skill1, meeleRange);
-        skill2_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.skillEffect.stun, 3, stamina_Skill2, Skill.skillTarget.InFront, cooldown_Skill2, meeleRange);
-        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.skillEffect.nothing, 0, stamina_Skill3, Skill.skillTarget.MultiTarget, cooldown_Skill3, meeleRange);
-        skill4_var = new MeleeSkill(AnimationController.AnimatorStates.Skill4, delay_Skill4, damage_Skill4, Skill.skillEffect.knockback, 0, stamina_Skill4, Skill.skillTarget.InFront, cooldown_Skill4, meeleRange);
+        skill1_var = new Skill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.SkillEffect.stun, 3, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, 10f);
+        skill2_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.SkillEffect.stun, 3, stamina_Skill2, Skill.SkillTarget.InFront, cooldown_Skill2, meeleRange);
+        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.SkillEffect.nothing, 0, stamina_Skill3, Skill.SkillTarget.MultiTarget, cooldown_Skill3, meeleRange);
+        skill4_var = new MeleeSkill(AnimationController.AnimatorStates.Skill4, delay_Skill4, damage_Skill4, Skill.SkillEffect.knockback, 0, stamina_Skill4, Skill.SkillTarget.InFront, cooldown_Skill4, meeleRange);
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+        // Add force to infantry when leaping (Skill 1)
+        if (skill1_hook)
+        {
+            m_Rigidbody2D.velocity = new Vector2(skill1_hook_speed, m_Rigidbody2D.velocity.y);
+        }
     }
 
     #endregion
@@ -29,21 +44,21 @@ public class InfantryContoller : ChampionClassController
     /// strong hit: 7 dmg
     /// </summary>
     /// <param name="shouldAttack"></param>
-    public override void basicAttack(bool shouldAttack)
+    public override void BasicAttack(bool shouldAttack)
     {
-        if (shouldAttack && canPerformAction(false) && canPerformAttack())
+        if (shouldAttack && CanPerformAction(false) && CanPerformAttack())
         {
             if (animCon.m_Grounded)
             {
                 // Check if enough stamina for attack
-                if (stats.hasSufficientStamina(stamina_BasicAttack1) && (attackCount == 0) || //Basic Attack
-                    stats.hasSufficientStamina(stamina_BasicAttack2) && (attackCount == 1 || attackCount == 2)) // Strong Attack
+                if (stats.HasSufficientStamina(stamina_BasicAttack1) && (attackCount == 0) || //Basic Attack
+                    stats.HasSufficientStamina(stamina_BasicAttack2) && (attackCount == 1 || attackCount == 2)) // Strong Attack
                 {
                     // Already in combo?
                     if (!inCombo)
                     {
                         // First attack - initialize combo coroutine
-                        resetComboTime();
+                        ResetComboTime();
                         attackCount = 0;
                     }
 
@@ -55,20 +70,23 @@ public class InfantryContoller : ChampionClassController
                     {
                         case 1:
                             // do meele attack
-                            doMeleeSkill(ref animCon.trigBasicAttack1, (MeleeSkill)basicAttack1_var);
+                            DoMeleeSkill(ref animCon.trigBasicAttack1, (MeleeSkill)basicAttack1_var);
                             // Reset timer of combo
-                            resetComboTime();
+                            ResetComboTime();
                             break;
                         case 2:
+                            // do meele attack
+                            DoMeleeSkill(ref animCon.trigBasicAttack2, (MeleeSkill)basicAttack3_var);
+                            break;
                         case 3:
                             // do meele attack
-                            doMeleeSkill(ref animCon.trigBasicAttack2, (MeleeSkill)basicAttack2_var);
+                            DoMeleeSkill(ref animCon.trigBasicAttack2, (MeleeSkill)basicAttack3_var);
                             // Reset Combo after combo-hit
-                            abortCombo();
+                            AbortCombo();
                             break;
                         default:
                             // Should not be triggered
-                            abortCombo();
+                            AbortCombo();
                             break;
 
                     }
@@ -78,12 +96,12 @@ public class InfantryContoller : ChampionClassController
             else
             {
                 // Check if enough stamina is left
-                if (stats.loseStamina(stamina_JumpAttack))
+                if (stats.LoseStamina(stamina_JumpAttack))
                 {
                     // Jump Attack
-                    StartCoroutine(jumpAttack());
+                    StartCoroutine(JumpAttack());
                     // Abort combo
-                    abortCombo();
+                    AbortCombo();
                 }
             }
         }
@@ -103,9 +121,53 @@ public class InfantryContoller : ChampionClassController
     /// Cooldown: 15 sec
     /// Stamina: 10
     /// </summary>
-    public override void skill1()
+    public override void Skill1()
     {
-        throw new NotImplementedException();
+        // Validate if skill can be performed
+        if (CanPerformAction(true) && CanPerformAttack() && skill2_var.notOnCooldown && stats.LoseStamina(stamina_Skill2))
+        {
+            StartCoroutine(Skill1_Hook());
+        }
+    }
+
+    private IEnumerator Skill1_Hook()
+    {
+        stats.immovable = true;
+        skill1_hook = true;
+
+        // Get target and stun it
+        RaycastHit2D hit = TryToHit(skill1_var.range);
+        if (hit)
+        {
+            CharacterStats target = hit.transform.gameObject.GetComponent<CharacterStats>();
+            target.StartStunned();
+
+            // Calculate correct direction
+            if (!m_FacingRight)
+                skill1_hook_speed = Math.Abs(skill1_hook_speed) * (-1);
+            else
+                skill1_hook_speed = Math.Abs(skill1_hook_speed);
+
+            // Add a vertical force to the player.
+            animCon.trigSkill1 = true;
+            m_Rigidbody2D.velocity = Vector2.zero;
+            m_Rigidbody2D.AddForce(new Vector2(0, (70 * hit.distance))); // Distance 5.8f --> AddForce 400f --> 70 * Distance
+
+            // Wait until force is applied
+            yield return new WaitUntil(() => !animCon.m_Grounded);
+            // Wait while not on ground
+            yield return new WaitUntil(() => animCon.m_Grounded);
+            ((InfantryAnimationController)animCon).trigSkill1End = true;
+            Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
+
+            // Do melee hit after landing
+            stats.DealDamage(target, skill1_var.damage, true);
+            target.StopStunned();
+        }
+
+        StartCoroutine(SetSkillOnCooldown(skill1_var));
+        skill1_hook = false;
+        stats.immovable = false;
     }
 
     /// <summary>
@@ -117,9 +179,9 @@ public class InfantryContoller : ChampionClassController
     /// Cooldown: 20 sec
     /// Stamina: 15
     /// </summary>
-    public override void skill2()
+    public override void Skill2()
     {
-        throw new NotImplementedException();
+        DoMeleeSkill(ref animCon.trigSkill2, (MeleeSkill)skill2_var);
     }
 
     /// <summary>
@@ -131,9 +193,9 @@ public class InfantryContoller : ChampionClassController
     /// Cooldown: 25 sec
     /// Stamina: 20
     /// </summary>
-    public override void skill3()
+    public override void Skill3()
     {
-        doMeleeSkill(ref animCon.trigSkill3, (MeleeSkill)skill3_var);
+        DoMeleeSkill(ref animCon.trigSkill3, (MeleeSkill)skill3_var);
     }
 
     /// <summary>
@@ -145,9 +207,9 @@ public class InfantryContoller : ChampionClassController
     /// Cooldown: 20 sec
     /// Stamina: 15
     /// </summary>
-    public override void skill4()
+    public override void Skill4()
     {
-        throw new NotImplementedException();
+        DoMeleeSkill(ref animCon.trigSkill4, (MeleeSkill)skill4_var);
     }
 
     #endregion

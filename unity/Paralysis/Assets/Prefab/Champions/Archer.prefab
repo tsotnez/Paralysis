@@ -440,6 +440,7 @@ MonoBehaviour:
   m_jumpAttackForce: 10
   m_dashSpeed: 12
   m_dashStaminaCost: 10
+  m_CanDashForward: 0
   m_ComboExpire: 1
   delay_BasicAttack1: 0.3
   delay_BasicAttack2: 0
@@ -472,6 +473,8 @@ MonoBehaviour:
   cooldown_Skill2: 10
   cooldown_Skill3: 15
   cooldown_Skill4: 15
+  Trinket1: {fileID: 0}
+  Trinket2: {fileID: 0}
   className: Archer
   m_FacingRight: 0
   dashing: 0
@@ -575,7 +578,6 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  EndAnimationType: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   EndAtlasses:
   - {fileID: 0}
   - {fileID: 0}
@@ -584,6 +586,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: 04a73ac82802fc8438e62631b8b7ccb0, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -596,14 +599,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  EndAnimationLoop: 00
-  EndAnimationDuration: []
   m_Grounded: 0
   m_vSpeed: 0
   m_Speed: 0
   statStunned: 0
-  statKnockedBack: 0
   statBlock: 0
   trigBasicAttack1: 0
   trigBasicAttack2: 0
@@ -612,10 +611,13 @@ MonoBehaviour:
   trigSkill2: 0
   trigSkill3: 0
   trigSkill4: 0
+  trigKnockedBack: 0
+  trigKnockedBackEnd: 0
   trigJump: 0
   trigJumpAttack: 0
   trigJumpAttackEnd: 0
   trigDash: 0
+  trigDashForward: 0
   trigHit: 0
 --- !u!114 &114516750894318088
 MonoBehaviour:
@@ -665,15 +667,19 @@ MonoBehaviour:
   immovable: 0
   slowFactor: 1
   invincible: 0
-  trigHit: 0
+  reflect: 0
   knockBackForceX: 6
-  knockBackForceY: 8
+  knockBackForceY: 12
   hotbar: {fileID: 0}
   TeamColor: {fileID: 114768698869651556}
   Team1Color: {fileID: 21300000, guid: 1a78a4f52a148e74e94f1a45a0162c39, type: 3}
   Team2Color: {fileID: 21300000, guid: b6621b7fdd8965c4b9242b62287ce72a, type: 3}
   floatingHpBar: {fileID: 114516750894318088}
   floatingStaminaBar: {fileID: 114851331981223620}
+  PercentageMovement: 1
+  PercentageDamage: 1
+  NextHitDealsStun: 0
+  NextHitDealsBleed: 0
 --- !u!114 &114768698869651556
 MonoBehaviour:
   m_ObjectHideFlags: 1

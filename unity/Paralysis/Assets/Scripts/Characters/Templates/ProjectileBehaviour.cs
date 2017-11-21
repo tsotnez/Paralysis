@@ -14,7 +14,7 @@ public class ProjectileBehaviour : MonoBehaviour {
     public int direction = 0; //Direction to travel in, -1 if left, 1 if right
     public GameObject explosionPrefab;
     public float range = 5; //Distance to travel before dying
-    public Skill.skillEffect effect = Skill.skillEffect.nothing;
+    public Skill.SkillEffect effect = Skill.SkillEffect.nothing;
     public int effectDuration = 1;
     public int damage = 0;
     public LayerMask whatToHit;
@@ -34,9 +34,9 @@ public class ProjectileBehaviour : MonoBehaviour {
             if (Vector2.Distance(startPos, transform.position) >= range)
             {
                 if (explodeOnHit)
-                    explode(); //Explode if max range is reached
+                    Explode(); //Explode if max range is reached
                 else
-                    fallingRoutine = StartCoroutine(fallToGround());
+                    fallingRoutine = StartCoroutine(FallToGround());
             }
         }
     }
@@ -60,19 +60,19 @@ public class ProjectileBehaviour : MonoBehaviour {
 
                 switch (effect)
                 {
-                    case Skill.skillEffect.nothing:
+                    case Skill.SkillEffect.nothing:
                         break;
-                    case Skill.skillEffect.stun:
-                        targetStats.startStunned(effectDuration);
+                    case Skill.SkillEffect.stun:
+                        targetStats.StartStunned(effectDuration);
                         break;
-                    case Skill.skillEffect.knockback:
-                        targetStats.startKnockBack(transform.position);
+                    case Skill.SkillEffect.knockback:
+                        targetStats.StartKnockBack(transform.position);
                         break;
-                    case Skill.skillEffect.bleed:
-                        targetStats.startBleeding(effectDuration);
+                    case Skill.SkillEffect.bleed:
+                        targetStats.StartBleeding(effectDuration);
                         break;
                 }      
-                creator.GetComponent<CharacterStats>().dealDamage(targetStats, damage, false);
+                creator.GetComponent<CharacterStats>().DealDamage(targetStats, damage, false);
                 if (!explodeOnHit)
                 {
                     //Destroy on hit if no explosion effect is supposed to be played
@@ -81,13 +81,13 @@ public class ProjectileBehaviour : MonoBehaviour {
                 }
             }
             if (explodeOnHit)
-                explode();
+                Explode();
             else
-                StartCoroutine(getStuck());
+                StartCoroutine(GetStuck());
         }
     }
 
-    void explode()
+    void Explode()
     {
         //Plays explosion effect and destroys the bullet
         if(explosionPrefab != null)
@@ -95,7 +95,7 @@ public class ProjectileBehaviour : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    IEnumerator getStuck()
+    IEnumerator GetStuck()
     {
         //Stop moving and destroy after 5 seconds 
         stuck = true;
@@ -108,7 +108,7 @@ public class ProjectileBehaviour : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    IEnumerator fallToGround()
+    IEnumerator FallToGround()
     {
         //Move towards the ground while rotating 
         falling = true;

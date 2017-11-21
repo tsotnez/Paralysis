@@ -21,11 +21,11 @@ public class ArcherController : ChampionClassController
     {
         animCon = graphics.GetComponent<ArcherAnimationController>();
 
-        basicAttack1_var = new RangedSkill(AnimationController.AnimatorStates.BasicAttack1, false, new Vector2(9, 0), standartArrowPrefab, delay_BasicAttack1, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, Skill.skillTarget.SingleTarget, cooldown_BasicAttack1, 6);
+        basicAttack1_var = new RangedSkill(AnimationController.AnimatorStates.BasicAttack1, false, new Vector2(9, 0), standartArrowPrefab, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, 6);
 
-        skill1_var = new RangedSkill(AnimationController.AnimatorStates.Skill1, false, new Vector2(9, 0), greatArrowPrefab, delay_Skill1, damage_Skill1, Skill.skillEffect.knockback, 0, stamina_Skill1, Skill.skillTarget.SingleTarget, cooldown_Skill1, 7);
+        skill1_var = new RangedSkill(AnimationController.AnimatorStates.Skill1, false, new Vector2(9, 0), greatArrowPrefab, delay_Skill1, damage_Skill1, Skill.SkillEffect.knockback, 0, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, 7);
         skill2_var = new Skill(AnimationController.AnimatorStates.Skill2, cooldown_Skill2);
-        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.skillEffect.stun, 3, stamina_Skill3, Skill.skillTarget.MultiTarget, cooldown_Skill3, 3);
+        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.SkillEffect.stun, 3, stamina_Skill3, Skill.SkillTarget.MultiTarget, cooldown_Skill3, 3);
         skill4_var = new Skill(AnimationController.AnimatorStates.Skill4, cooldown_Skill4);
     }
 
@@ -42,35 +42,35 @@ public class ArcherController : ChampionClassController
 
     #endregion
 
-    public override void basicAttack(bool shouldAttack)
+    public override void BasicAttack(bool shouldAttack)
     {
         //Shoot a basic arrow 
         if (shouldAttack)
         {
             if (animCon.m_Grounded)
-                doRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill)basicAttack1_var);
+                DoRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill)basicAttack1_var);
             else if (doubleJumped) //jump Attack
-                doRangeSkill(ref animCon.trigJumpAttack, new RangedSkill(0, false, new Vector2(4, -9), jumpAttackArrowPrefab, 0.2f, damage_BasicAttack1, Skill.skillEffect.nothing, 0, stamina_BasicAttack1, Skill.skillTarget.SingleTarget, 0, 100, false));
+                DoRangeSkill(ref animCon.trigJumpAttack, new RangedSkill(0, false, new Vector2(4, -9), jumpAttackArrowPrefab, 0.2f, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, 0, 100, false));
         }
     }
 
-    public override void skill1()
+    public override void Skill1()
     {
         //Shoot a stronger arrow, causing knockback
-        doRangeSkill(ref animCon.trigSkill1, (RangedSkill)skill1_var);
+        DoRangeSkill(ref animCon.trigSkill1, (RangedSkill)skill1_var);
     }
 
-    public override void skill2()
+    public override void Skill2()
     {
-        if (canPerformAction(true) && canPerformAttack() && skill2_var.notOnCooldown && stats.loseStamina(stamina_Skill2))
+        if (CanPerformAction(true) && CanPerformAttack() && skill2_var.notOnCooldown && stats.LoseStamina(stamina_Skill2))
         {
             //Puts down a trap
             animCon.trigSkill2 = true;
-            Invoke("placeTrap", delay_Skill2);
+            Invoke("PlaceTrap", delay_Skill2);
         }
     }
 
-    private void placeTrap()
+    private void PlaceTrap()
     {
         GameObject trap = Instantiate(trapPrefab, m_GroundCheck.position, Quaternion.identity);
         ArcherTrapBehaviour trapScript = trap.GetComponent<ArcherTrapBehaviour>();
@@ -78,28 +78,28 @@ public class ArcherController : ChampionClassController
         trapScript.damage = damage_Skill2;
         trapScript.whatToHit = m_whatToHit;
         trapScript.ready = true;
-        StartCoroutine(setSkillOnCooldown(skill2_var));
+        StartCoroutine(SetSkillOnCooldown(skill2_var));
     }
 
-    public override void skill3()
+    public override void Skill3()
     {
         //Stomp the ground, stunning everyone in a given radius
-        doMeleeSkill(ref animCon.trigSkill3, (MeleeSkill)skill3_var);
+        DoMeleeSkill(ref animCon.trigSkill3, (MeleeSkill)skill3_var);
     }
 
-    public override void skill4()
+    public override void Skill4()
     {
-        if (canPerformAction(true) && canPerformAttack() && skill4_var.notOnCooldown && stats.loseStamina(stamina_Skill4))
+        if (CanPerformAction(true) && CanPerformAttack() && skill4_var.notOnCooldown && stats.LoseStamina(stamina_Skill4))
         {
-            placeTrap();
+            PlaceTrap();
             //Jump back while being invincible
             if (disengageRoutine != null)
                 StopCoroutine(disengageRoutine);
-            disengageRoutine = StartCoroutine(disengage());
+            disengageRoutine = StartCoroutine(Disengage());
         }
     }
 
-    private IEnumerator disengage()
+    private IEnumerator Disengage()
     {
         animCon.trigSkill4 = true;
         stats.immovable = true;
@@ -116,12 +116,12 @@ public class ArcherController : ChampionClassController
         disengaging = true;
         stats.invincible = true;
 
-        yield return new WaitUntil(() => animCon.currentAnimation == AnimationController.AnimatorStates.Skill4);
+        yield return new WaitUntil(() => animCon.CurrentAnimation == AnimationController.AnimatorStates.Skill4);
         //Wait until skill Animation is over
-        yield return new WaitUntil(() => animCon.currentAnimation != AnimationController.AnimatorStates.Skill4);
+        yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimatorStates.Skill4);
         stats.invincible = false;
         disengaging = false;
         stats.immovable = false;
-        StartCoroutine(setSkillOnCooldown(skill4_var));
+        StartCoroutine(SetSkillOnCooldown(skill4_var));
     }
 }

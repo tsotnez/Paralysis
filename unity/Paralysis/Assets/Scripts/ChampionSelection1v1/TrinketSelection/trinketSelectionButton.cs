@@ -11,11 +11,11 @@ public class trinketSelectionButton : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        GetComponent<Button>().onClick.AddListener(showAvailableTrinkets);
-        setSelectedTrinket(selectedTrinket);
+        GetComponent<Button>().onClick.AddListener(ShowAvailableTrinkets);
+        SetSelectedTrinket(selectedTrinket);
 	}
 	
-	void showAvailableTrinkets()
+	void ShowAvailableTrinkets()
     {
         //Show trinket selection and set target slot to this object
         if (availableTrinkets.activeInHierarchy == true)
@@ -25,7 +25,7 @@ public class trinketSelectionButton : MonoBehaviour {
         availableTrinkets.SetActive(true);
     }
 
-    public void setSelectedTrinket(Trinket.Trinkets value)
+    public void SetSelectedTrinket(Trinket.Trinkets value)
     {
         selectedTrinket = value;
 
@@ -48,6 +48,5 @@ public class trinketSelectionButton : MonoBehaviour {
             case ChampionSelectButton.players.Player4:
                 break;
         }
-
     }
 }

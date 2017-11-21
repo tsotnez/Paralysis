@@ -3,19 +3,14 @@ public class KnightAnimationController : ChampionAnimationController
     // Trigger for character specific animations
     public bool trigSkill2End = false;
 
-    protected override bool additionalAnimationCondition()
+    protected override bool AdditionalAnimationCondition()
     {
-        if (statBlock && m_Speed > 0.001)
-            StartAnimation(AnimatorStates.BlockMove);
-        else
-            return false;
-
-        return true;
+        return false;
     }
 
-    protected override bool additionalNotInterruptCondition(AnimatorStates activeAnimation)
+    protected override bool AdditionalNotInterruptCondition(AnimatorStates activeAnimation)
     {
-        switch (currentAnimation)
+        switch (CurrentAnimation)
         {
             case AnimatorStates.Skill2:
                 if (trigSkill2End)

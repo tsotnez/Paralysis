@@ -6,10 +6,10 @@ public class BulletExplosionBehaviour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Invoke("die", 0.4f);
+        Invoke("Die", 0.4f);
 	}
 	
-    void die()
+    void Die()
     {
         Destroy(gameObject);
     }

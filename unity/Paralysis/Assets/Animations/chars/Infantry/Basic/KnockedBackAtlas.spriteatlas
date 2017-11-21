@@ -8,127 +8,68 @@ SpriteAtlas:
   m_Name: KnockedBackAtlas
   m_EditorData:
     textureSettings:
-      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 0
+      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
-      sRGB: 0
     platformSettings: []
     packingParameters:
-      serializedVersion: 2
-      padding: 4
+      paddingPower: 2
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 1
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: fb606dae661837e37b51b96fa20a7ad0
+      Hash: 241bee2ed6a1f14ac307253b42621b38
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: fb606dae661837e37b51b96fa20a7ad0
-    totalSpriteSurfaceArea: 49128930
+    hashString: 241bee2ed6a1f14ac307253b42621b38
+    totalSpriteSurfaceArea: 18013941
     packables:
     - {fileID: 102900000, guid: 1d1d0c0d954724e499029daaf8dff79f, type: 3}
     packedSpriteRenderDataKeys:
-    - 26f6ce15d5f29f34a8cfbe9b854b71b7: 21300000
-    - 269b3f5effcf09c438101d552176497a: 21300000
-    - e72b2344b619f044dbacb80af7a14956: 21300000
-    - 9d0dbd3db3a29d34dbc516892ad3ff6c: 21300000
-    - 4b7141796a21186488a888ba24b4648a: 21300000
-    - 574401bbd9594a243a15cbc1a36a2722: 21300000
-    - 89d57fea63ac0bc44aef9729158f0d06: 21300000
-    - 07b1cfcaef4b5f946b60df5831307ffb: 21300000
-    - aa2d407dcf40bd54ca2a982490f38523: 21300000
-    - 03c131754629f474dabe83b137bf5047: 21300000
     - 4c661dba027bca14ab7f22baed9c8c07: 21300000
     - 0b21e4da54b417d42823937066123b1a: 21300000
     - 35adc21bce0701a4a86e6909a6104031: 21300000
     - d754ea0746c776641a100319234c46bd: 21300000
-    - 70776f4236837b34581286cdf120b753: 21300000
     - 1a53b4670a951ab428dcf0e04db9a713: 21300000
-    - c8ec01654e914a148b72d6721621bf55: 21300000
     - 20d284864ebfdb94fa1d537fb17ed3fa: 21300000
-    - c9da2ec569d2ec040b9056c4eb970419: 21300000
     - fb15f612029125b43bcf11c135f71659: 21300000
-    - e9ca30cc129fec54c84a297b770b4f5d: 21300000
     - 543c4ec40b2ce4840bad10fbed65383b: 21300000
-    - a8dbfc03fe78917429d772d8edc96538: 21300000
     - 79e1aea3ea0732646af90954304f9ade: 21300000
-    - 6470056b0eda2a245acfdce7ced7484c: 21300000
     - aacb78bd70c3b694baa33b5b8faaeb70: 21300000
-    - f6c67846dd036754980ce20824a9ef6e: 21300000
     - dd16c28e2cdc60d458a00a92ad24f5d9: 21300000
-    - c5c0e62127f3a1c4fb7b13ada5b1a0ab: 21300000
-    - 3033e2637c0c11142bd37c15da60e59a: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: 26f6ce15d5f29f34a8cfbe9b854b71b7, type: 3}
-  - {fileID: 21300000, guid: 269b3f5effcf09c438101d552176497a, type: 3}
-  - {fileID: 21300000, guid: e72b2344b619f044dbacb80af7a14956, type: 3}
-  - {fileID: 21300000, guid: 9d0dbd3db3a29d34dbc516892ad3ff6c, type: 3}
-  - {fileID: 21300000, guid: 4b7141796a21186488a888ba24b4648a, type: 3}
-  - {fileID: 21300000, guid: 574401bbd9594a243a15cbc1a36a2722, type: 3}
-  - {fileID: 21300000, guid: 89d57fea63ac0bc44aef9729158f0d06, type: 3}
-  - {fileID: 21300000, guid: 07b1cfcaef4b5f946b60df5831307ffb, type: 3}
-  - {fileID: 21300000, guid: aa2d407dcf40bd54ca2a982490f38523, type: 3}
-  - {fileID: 21300000, guid: 03c131754629f474dabe83b137bf5047, type: 3}
   - {fileID: 21300000, guid: 4c661dba027bca14ab7f22baed9c8c07, type: 3}
   - {fileID: 21300000, guid: 0b21e4da54b417d42823937066123b1a, type: 3}
   - {fileID: 21300000, guid: 35adc21bce0701a4a86e6909a6104031, type: 3}
   - {fileID: 21300000, guid: d754ea0746c776641a100319234c46bd, type: 3}
-  - {fileID: 21300000, guid: 70776f4236837b34581286cdf120b753, type: 3}
   - {fileID: 21300000, guid: 1a53b4670a951ab428dcf0e04db9a713, type: 3}
-  - {fileID: 21300000, guid: c8ec01654e914a148b72d6721621bf55, type: 3}
   - {fileID: 21300000, guid: 20d284864ebfdb94fa1d537fb17ed3fa, type: 3}
-  - {fileID: 21300000, guid: c9da2ec569d2ec040b9056c4eb970419, type: 3}
   - {fileID: 21300000, guid: fb15f612029125b43bcf11c135f71659, type: 3}
-  - {fileID: 21300000, guid: e9ca30cc129fec54c84a297b770b4f5d, type: 3}
   - {fileID: 21300000, guid: 543c4ec40b2ce4840bad10fbed65383b, type: 3}
-  - {fileID: 21300000, guid: a8dbfc03fe78917429d772d8edc96538, type: 3}
   - {fileID: 21300000, guid: 79e1aea3ea0732646af90954304f9ade, type: 3}
-  - {fileID: 21300000, guid: 6470056b0eda2a245acfdce7ced7484c, type: 3}
   - {fileID: 21300000, guid: aacb78bd70c3b694baa33b5b8faaeb70, type: 3}
-  - {fileID: 21300000, guid: f6c67846dd036754980ce20824a9ef6e, type: 3}
   - {fileID: 21300000, guid: dd16c28e2cdc60d458a00a92ad24f5d9, type: 3}
-  - {fileID: 21300000, guid: c5c0e62127f3a1c4fb7b13ada5b1a0ab, type: 3}
-  - {fileID: 21300000, guid: 3033e2637c0c11142bd37c15da60e59a, type: 3}
   m_PackedSpriteNamesToIndex:
-  - KnockedBack_28
-  - KnockedBack_29
-  - KnockedBack_24
-  - KnockedBack_25
-  - KnockedBack_26
-  - KnockedBack_27
-  - KnockedBack_20
-  - KnockedBack_21
-  - KnockedBack_22
-  - KnockedBack_23
   - KnockedBack_02
   - KnockedBack_03
   - KnockedBack_00
   - KnockedBack_01
-  - KnockedBack_15
   - KnockedBack_06
-  - KnockedBack_14
   - KnockedBack_07
-  - KnockedBack_17
   - KnockedBack_04
-  - KnockedBack_16
   - KnockedBack_05
-  - KnockedBack_11
   - KnockedBack_10
-  - KnockedBack_13
   - KnockedBack_08
-  - KnockedBack_12
   - KnockedBack_09
-  - KnockedBack_19
-  - KnockedBack_18
   m_Tag: KnockedBackAtlas
   m_IsVariant: 0
