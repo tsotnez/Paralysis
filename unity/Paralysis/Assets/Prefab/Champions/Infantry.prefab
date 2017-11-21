@@ -776,6 +776,10 @@ MonoBehaviour:
   dashing: 0
   blocking: 0
   hotbar: {fileID: 0}
+  Skill1_Hook: {fileID: 1159624417898122, guid: 6ce9800d51c562645971c77d62e59cee,
+    type: 2}
+  Skill1_Chain: {fileID: 1536203789617246, guid: 607fa3d9cb73add4ba26355c9a88aca1,
+    type: 2}
 --- !u!114 &114857346467757782
 MonoBehaviour:
   m_ObjectHideFlags: 1

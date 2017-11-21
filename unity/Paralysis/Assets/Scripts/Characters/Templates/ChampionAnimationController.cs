@@ -79,7 +79,7 @@
             // For character specific animations
             if (AdditionalAnimationCondition()) return;
 
-            if (statBlock)
+            if (statBlock && m_Speed <= 0)
                 StartAnimation(AnimatorStates.Block);
             else if(statBlock && m_Speed > 0.001)
                 StartAnimation(AnimatorStates.BlockMove);
