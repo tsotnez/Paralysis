@@ -1,0 +1,132 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: FallAtlas
+  m_EditorData:
+    textureSettings:
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      colorSpace: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+    platformSettings: []
+    packingParameters:
+      paddingPower: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    packedHash:
+      serializedVersion: 2
+      Hash: 6064b634535bcd0bc840f87204fc04ed
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 4
+    hashString: 6064b634535bcd0bc840f87204fc04ed
+    totalSpriteSurfaceArea: 18372390
+    packables:
+    - {fileID: 102900000, guid: d4166134190df5d43a1c4db4e43d067a, type: 3}
+    packedSpriteRenderDataKeys:
+    - 3abf5b3bc86ee6149b0338a18a0aac32: 21300000
+    - 36fafb4ad15d4de409b970f7083639a6: 21300000
+    - e3eb8ad91bab20d42bd73956e56a590e: 21300000
+    - 7a977aa5929b6d64cb12bbbe5a7d9248: 21300000
+    - fb0d6b49e4c1f4c4dadd10c166874a7c: 21300000
+    - 8fa81ea4703349c49b244c61d457f6d7: 21300000
+    - 0fa90dbced2bbb84a90a5e2eb36b79da: 21300000
+    - 754a6ea341fbb784eacf53815ceb2406: 21300000
+    - d5b3e02c7c9a1ab44bbf17ecf4aca0b5: 21300000
+    - 601fb02e5aa1b7644813dac9a4f66ebf: 21300000
+    - 0c440e1e5fc232b4196f715c0b3a049a: 21300000
+    - b6a031ff858af1944a7d156af5c5eea2: 21300000
+    - 98fa94a5585222040bf631c5e8cc64cc: 21300000
+    - 4dd3838850f292a4786b4c8a7cee31df: 21300000
+    - c43df49eef4fe97419c56d4206c600d1: 21300000
+    - d4673c89851ba0140ae2763075f7b4b2: 21300000
+    - bf927e5577124f04f970e92f7f8db06f: 21300000
+    - 7327d1cd80549474db4e8785694ef592: 21300000
+    - 160922642d7ad944f89d552efe75e245: 21300000
+    - 361f7ae12e530f94daf31eb8496be044: 21300000
+    - 3534e6d2e64688442939d265a4aaf786: 21300000
+    - 624640d873937e643919452c2cda71f2: 21300000
+    - 99d3b42d1b5c02847a7dd11ae64493a7: 21300000
+    - 437df2177ffa26e49bd65c30eac830fa: 21300000
+    - c8c3e99d396e5b74fb7de2bdb673d73e: 21300000
+    - a48cf2cf4879fe648a846f87363bb87d: 21300000
+    - 83d4852cbe3c98845b51b9cda2010f5e: 21300000
+    - 9f2fd649c1f836740ba6855259823da8: 21300000
+    - e37ecb7ca75be4f4ba1bf53fa4930eb6: 21300000
+    - a646fee6b0829574a92dc8a9d67d0978: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 3abf5b3bc86ee6149b0338a18a0aac32, type: 3}
+  - {fileID: 21300000, guid: 36fafb4ad15d4de409b970f7083639a6, type: 3}
+  - {fileID: 21300000, guid: e3eb8ad91bab20d42bd73956e56a590e, type: 3}
+  - {fileID: 21300000, guid: 7a977aa5929b6d64cb12bbbe5a7d9248, type: 3}
+  - {fileID: 21300000, guid: fb0d6b49e4c1f4c4dadd10c166874a7c, type: 3}
+  - {fileID: 21300000, guid: 8fa81ea4703349c49b244c61d457f6d7, type: 3}
+  - {fileID: 21300000, guid: 0fa90dbced2bbb84a90a5e2eb36b79da, type: 3}
+  - {fileID: 21300000, guid: 754a6ea341fbb784eacf53815ceb2406, type: 3}
+  - {fileID: 21300000, guid: d5b3e02c7c9a1ab44bbf17ecf4aca0b5, type: 3}
+  - {fileID: 21300000, guid: 601fb02e5aa1b7644813dac9a4f66ebf, type: 3}
+  - {fileID: 21300000, guid: 0c440e1e5fc232b4196f715c0b3a049a, type: 3}
+  - {fileID: 21300000, guid: b6a031ff858af1944a7d156af5c5eea2, type: 3}
+  - {fileID: 21300000, guid: 98fa94a5585222040bf631c5e8cc64cc, type: 3}
+  - {fileID: 21300000, guid: 4dd3838850f292a4786b4c8a7cee31df, type: 3}
+  - {fileID: 21300000, guid: c43df49eef4fe97419c56d4206c600d1, type: 3}
+  - {fileID: 21300000, guid: d4673c89851ba0140ae2763075f7b4b2, type: 3}
+  - {fileID: 21300000, guid: bf927e5577124f04f970e92f7f8db06f, type: 3}
+  - {fileID: 21300000, guid: 7327d1cd80549474db4e8785694ef592, type: 3}
+  - {fileID: 21300000, guid: 160922642d7ad944f89d552efe75e245, type: 3}
+  - {fileID: 21300000, guid: 361f7ae12e530f94daf31eb8496be044, type: 3}
+  - {fileID: 21300000, guid: 3534e6d2e64688442939d265a4aaf786, type: 3}
+  - {fileID: 21300000, guid: 624640d873937e643919452c2cda71f2, type: 3}
+  - {fileID: 21300000, guid: 99d3b42d1b5c02847a7dd11ae64493a7, type: 3}
+  - {fileID: 21300000, guid: 437df2177ffa26e49bd65c30eac830fa, type: 3}
+  - {fileID: 21300000, guid: c8c3e99d396e5b74fb7de2bdb673d73e, type: 3}
+  - {fileID: 21300000, guid: a48cf2cf4879fe648a846f87363bb87d, type: 3}
+  - {fileID: 21300000, guid: 83d4852cbe3c98845b51b9cda2010f5e, type: 3}
+  - {fileID: 21300000, guid: 9f2fd649c1f836740ba6855259823da8, type: 3}
+  - {fileID: 21300000, guid: e37ecb7ca75be4f4ba1bf53fa4930eb6, type: 3}
+  - {fileID: 21300000, guid: a646fee6b0829574a92dc8a9d67d0978, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Fall_07
+  - Fall_06
+  - Fall_05
+  - Fall_04
+  - Fall_03
+  - Fall_02
+  - Fall_01
+  - Fall_00
+  - Fall_29
+  - Fall_28
+  - Fall_09
+  - Fall_25
+  - Fall_08
+  - Fall_24
+  - Fall_27
+  - Fall_26
+  - Fall_21
+  - Fall_20
+  - Fall_23
+  - Fall_22
+  - Fall_14
+  - Fall_15
+  - Fall_16
+  - Fall_17
+  - Fall_10
+  - Fall_11
+  - Fall_12
+  - Fall_13
+  - Fall_18
+  - Fall_19
+  m_Tag: FallAtlas
+  m_IsVariant: 0
