@@ -534,7 +534,7 @@ MonoBehaviour:
   CharacterClass: archer
   CharacterSkin: basic
   GeneralSpeed: 0
-  AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000
+  AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000
   Atlasses:
   - {fileID: 4343727234628468602, guid: e1da7b4aa82ea9348ab5d8c8069f2fdb, type: 2}
   - {fileID: 4343727234628468602, guid: 857434a4a454f0e4d84252a7644a410b, type: 2}
@@ -556,7 +556,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  AnimationLoop: 0101000100000000010000000000000000000000
+  - {fileID: 4343727234628468602, guid: 6cb9a614f66a7184b9893814fd6c0dad, type: 2}
+  AnimationLoop: 010100010000000001000000000000000000000000
   AnimationDuration:
   - 0.6
   - 0.5
@@ -578,6 +579,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  - 0.4
   EndAtlasses:
   - {fileID: 0}
   - {fileID: 0}
@@ -599,9 +601,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   m_Grounded: 0
   m_vSpeed: 0
   m_Speed: 0
+  statDead: 0
   statStunned: 0
   statBlock: 0
   trigBasicAttack1: 0
@@ -658,9 +662,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  currentHealth: 0
   maxStamina: 100
-  currentStamina: 0
+  CurrentStamina: 0
+  CharacterDied: 0
   stunned: 0
   bleeding: 0
   knockedBack: 0

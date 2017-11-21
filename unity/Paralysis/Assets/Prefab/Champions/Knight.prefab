@@ -186,7 +186,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4000066448674090
 Transform:
   m_ObjectHideFlags: 1
@@ -484,7 +484,7 @@ MonoBehaviour:
   CharacterClass: knight
   CharacterSkin: basic
   GeneralSpeed: 0
-  AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000
+  AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000
   Atlasses:
   - {fileID: 4343727234628468602, guid: a98c461971034394fbf71437855b77ee, type: 2}
   - {fileID: 4343727234628468602, guid: 71530b4ecc31beb4eab9c539e37583eb, type: 2}
@@ -506,8 +506,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 4343727234628468602, guid: 1ffd50b12cf97fd4cbfd22ef8864c381, type: 2}
   - {fileID: 0}
-  AnimationLoop: 0101000100000000010000000000000000000100
+  - {fileID: 4343727234628468602, guid: e8c04db3b85c1b2409c2b41f7de2daa2, type: 2}
+  AnimationLoop: 010100010000000001000000000000000000010000
   AnimationDuration:
+  - 0
   - 0
   - 0
   - 0
@@ -549,9 +551,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   m_Grounded: 0
   m_vSpeed: 0
   m_Speed: 0
+  statDead: 0
   statStunned: 0
   statBlock: 0
   trigBasicAttack1: 0
@@ -784,9 +788,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  currentHealth: 0
   maxStamina: 100
-  currentStamina: 0
+  CurrentStamina: 0
+  CharacterDied: 0
   stunned: 0
   bleeding: 0
   knockedBack: 0
