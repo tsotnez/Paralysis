@@ -388,9 +388,9 @@ public abstract class ChampionClassController : MonoBehaviour
             if (animCon.m_Grounded)
             {
                 // Check if enough stamina for attack
-                if (stats.HasSufficientStamina(basicAttack1_var.staminaCost) && (attackCount == 0) || // Basic Attack 1
-                    stats.HasSufficientStamina(basicAttack2_var.staminaCost) && (attackCount == 1) || // Basic Attack 2
-                    stats.HasSufficientStamina(basicAttack3_var.staminaCost) && (attackCount == 2))   // Combo Attack
+                if ((stats.HasSufficientStamina(basicAttack1_var.staminaCost) && attackCount == 0) || // Basic Attack 1
+                    (stats.HasSufficientStamina(basicAttack2_var.staminaCost) && attackCount == 1) || // Basic Attack 2
+                    (stats.HasSufficientStamina(basicAttack3_var.staminaCost) && attackCount == 2))   // Combo Attack
                 {
                     // Already in combo?
                     if (!inCombo)
