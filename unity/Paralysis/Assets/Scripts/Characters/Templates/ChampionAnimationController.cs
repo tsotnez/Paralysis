@@ -146,7 +146,7 @@
                 trigSkill4 = false;
                 StartAnimation(AnimatorStates.Skill4);
             }
-            else if (!m_Grounded && m_vSpeed < 0)
+            else if (!m_Grounded && m_vSpeed <= 0)
                 StartAnimation(AnimatorStates.Fall);
             else if (!m_Grounded && m_vSpeed > 0 && trigJump)
             {

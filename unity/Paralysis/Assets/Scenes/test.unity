@@ -3090,6 +3090,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114352005746325332, guid: 0639eac30390dec449afda643c7fa53c,
+        type: 2}
+      propertyPath: AnimationDuration.Array.data[12]
+      value: 0.9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0639eac30390dec449afda643c7fa53c, type: 2}
   m_IsPrefabParent: 0
