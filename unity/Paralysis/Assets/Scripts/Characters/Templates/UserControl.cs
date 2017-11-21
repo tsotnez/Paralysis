@@ -61,8 +61,11 @@ public abstract class UserControl : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        CallMethods();
-        ResetValues();
+        if (!m_Stats.CharacterDied)
+        {
+            CallMethods();
+            ResetValues();
+        }
     }
 
     /// <summary>

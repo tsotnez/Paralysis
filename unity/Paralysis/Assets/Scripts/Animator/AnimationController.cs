@@ -64,12 +64,15 @@ public abstract class AnimationController : MonoBehaviour
         Skill3,
         Skill4,
 
-        //Assassin
+        // Assassin
         DoubleJump,
-        //Knight & Infantry
+        // Knight & Infantry
         BlockMove,
-        //Knight
-        DashFor
+        // ?
+        DashFor,
+
+        // End of the Game
+        Die
     }
 
     public enum TypeOfAnimation
@@ -79,7 +82,7 @@ public abstract class AnimationController : MonoBehaviour
 
     public enum AnimationPlayTypes
     {
-        Single, Loop, HoldOnEnd
+        Single, Loop, HoldOnEnd, Nothing
     }
 
     #endregion
@@ -133,7 +136,7 @@ public abstract class AnimationController : MonoBehaviour
 
     #region Manage Animations
 
-    public void StartAnimation(AnimatorStates animation, TypeOfAnimation AnimationType = TypeOfAnimation.Animation)
+    public void StartAnimation(AnimatorStates animation, TypeOfAnimation AnimationType = TypeOfAnimation.Animation, AnimationPlayTypes ForceAnimationPlayType = AnimationPlayTypes.Nothing)
     {
         if (finishedInitialization && (CurrentAnimation != animation || (CurrentAnimation == animation && AnimationType == TypeOfAnimation.EndAnimation)))
         {
@@ -153,14 +156,25 @@ public abstract class AnimationController : MonoBehaviour
                 float delay = animationDuration[animation] / (float)atlas.spriteCount;
 
                 // Calculating AnimationPlayType
-                AnimationPlayTypes AnimationPlayType = AnimationPlayTypes.Single;
-                if (AnimationType == TypeOfAnimation.Animation && AnimationDictionaryHasAnimation(animation, TypeOfAnimation.EndAnimation))
-                {   // if found a matching End-Animation to the choosen animation set the PlayType to HoldOnEnd
-                    AnimationPlayType = AnimationPlayTypes.HoldOnEnd;
-                }
-                else if (animationLoop[animation])
+                AnimationPlayTypes AnimationPlayType;
+                if (ForceAnimationPlayType == AnimationPlayTypes.Nothing)
                 {
-                    AnimationPlayType = AnimationPlayTypes.Loop;
+                    if (AnimationType == TypeOfAnimation.Animation && AnimationDictionaryHasAnimation(animation, TypeOfAnimation.EndAnimation))
+                    {   // if found a matching End-Animation to the choosen animation set the PlayType to HoldOnEnd
+                        AnimationPlayType = AnimationPlayTypes.HoldOnEnd;
+                    }
+                    else if (animationLoop[animation])
+                    {
+                        AnimationPlayType = AnimationPlayTypes.Loop;
+                    }
+                    else
+                    {
+                        AnimationPlayType = AnimationPlayTypes.Single;
+                    }
+                }
+                else
+                {
+                    AnimationPlayType = ForceAnimationPlayType;
                 }
 
                 // stop running coroutine

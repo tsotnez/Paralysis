@@ -139,7 +139,7 @@ public class LocalMultiplayerManager : MonoBehaviour {
 
         gameOverOverlay.Find("Title").GetComponent<Text>().text = winner + " won the game";
         gameOverOverlay.gameObject.SetActive(true);
-        deadPlayer.SetActive(false);
+        //deadPlayer.SetActive(false);
         Camera.main.GetComponent<CameraBehaviour>().gameRunning = false;
     }
 }

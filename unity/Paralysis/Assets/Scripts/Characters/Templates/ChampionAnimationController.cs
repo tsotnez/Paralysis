@@ -6,6 +6,7 @@
     public float m_Speed;                                                // Horizontal speed
 
     // Stats
+    public bool statDead = false;
     public bool statStunned = false;
     public bool statBlock = false;
 
@@ -28,7 +29,10 @@
 
     protected virtual void Update()
     {
-        AnimationManager();
+        if (CurrentAnimation != AnimatorStates.Die)
+        {
+            AnimationManager();
+        }
     }
 
     protected virtual void FixedUpdate() { }
@@ -36,7 +40,11 @@
     private void AnimationManager()
     {
         // Animations that work in any State
-        if (statStunned)
+        if (statDead)
+        {
+            StartAnimation(AnimatorStates.Die, TypeOfAnimation.Animation, AnimationPlayTypes.HoldOnEnd);
+        }
+        else if (statStunned)
             StartAnimation(AnimatorStates.Stunned);
         else if (trigKnockedBack)
         {
