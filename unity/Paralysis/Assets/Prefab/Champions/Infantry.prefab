@@ -593,7 +593,7 @@ MonoBehaviour:
   AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000
   Atlasses:
   - {fileID: 4343727234628468602, guid: 6db8b0344d022854eb5766ff8efb9d9b, type: 2}
-  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: be54d93e0abd06e44a11e81ed818221e, type: 2}
   - {fileID: 4343727234628468602, guid: 22fb6763762175149b6da762d7ebb4bc, type: 2}
   - {fileID: 4343727234628468602, guid: 0f1a689d2a50e76478ccc1361ad7c9d2, type: 2}
   - {fileID: 4343727234628468602, guid: 90d88b27ebc0b3641a8de4ecc065b742, type: 2}
@@ -612,7 +612,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 4343727234628468602, guid: 019f54fbc91fb884b9ce7593251b6e43, type: 2}
   - {fileID: 0}
-  AnimationLoop: 0100000100000000010000000000000000000100
+  AnimationLoop: 0101000100000100010000000000000000000100
   AnimationDuration:
   - 0
   - 0
@@ -648,7 +648,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 4343727234628468602, guid: 1df76f0ec864da847a7a93c238ca91de, type: 2}
-  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: 102d89634c129734c8f98400c7bcf2da, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -675,6 +675,7 @@ MonoBehaviour:
   trigDash: 0
   trigDashForward: 0
   trigHit: 0
+  trigSkill1End: 0
 --- !u!114 &114772719500942180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -775,6 +776,10 @@ MonoBehaviour:
   dashing: 0
   blocking: 0
   hotbar: {fileID: 0}
+  Skill1_Hook: {fileID: 1159624417898122, guid: 6ce9800d51c562645971c77d62e59cee,
+    type: 2}
+  Skill1_Chain: {fileID: 1536203789617246, guid: 607fa3d9cb73add4ba26355c9a88aca1,
+    type: 2}
 --- !u!114 &114857346467757782
 MonoBehaviour:
   m_ObjectHideFlags: 1

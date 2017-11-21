@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class InfantryContoller : ChampionClassController
 {
+    [SerializeField]
+    private GameObject Skill1_Hook;
+    [SerializeField]
+    private GameObject Skill1_Chain;
+
     private bool skill1_hook = false;
     private float skill1_hook_speed = 10f;
     #region default
@@ -124,23 +129,27 @@ public class InfantryContoller : ChampionClassController
     public override void Skill1()
     {
         // Validate if skill can be performed
-        if (CanPerformAction(true) && CanPerformAttack() && skill2_var.notOnCooldown && stats.LoseStamina(stamina_Skill2))
+        if (CanPerformAction(true) && CanPerformAttack() && skill2_var.notOnCooldown && stats.LoseStamina(skill2_var.staminaCost))
         {
-            StartCoroutine(Skill1_Hook());
+            StartCoroutine(DoSkill1_Hook());
         }
     }
 
-    private IEnumerator Skill1_Hook()
+    private IEnumerator DoSkill1_Hook()
     {
         stats.immovable = true;
         skill1_hook = true;
 
-        // Get target and stun it
+        // Try to find a target
         RaycastHit2D hit = TryToHit(skill1_var.range);
         if (hit)
         {
+            // get the target and stun it
             CharacterStats target = hit.transform.gameObject.GetComponent<CharacterStats>();
             target.StartStunned();
+
+            // Throw chain-hook to target
+            float DistanceToTarget = hit.distance;
 
             // Calculate correct direction
             if (!m_FacingRight)
@@ -151,7 +160,7 @@ public class InfantryContoller : ChampionClassController
             // Add a vertical force to the player.
             animCon.trigSkill1 = true;
             m_Rigidbody2D.velocity = Vector2.zero;
-            m_Rigidbody2D.AddForce(new Vector2(0, (70 * hit.distance))); // Distance 5.8f --> AddForce 400f --> 70 * Distance
+            m_Rigidbody2D.AddForce(new Vector2(0, (68 * DistanceToTarget))); // Distance 5.8f --> AddForce 400f --> 68 * Distance
 
             // Wait until force is applied
             yield return new WaitUntil(() => !animCon.m_Grounded);
@@ -160,11 +169,12 @@ public class InfantryContoller : ChampionClassController
             ((InfantryAnimationController)animCon).trigSkill1End = true;
             Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
 
-            // Do melee hit after landing
+            // Do melee hit after landing and remove stuneffect
             stats.DealDamage(target, skill1_var.damage, true);
             target.StopStunned();
         }
 
+        // start cooldown and let the method end
         StartCoroutine(SetSkillOnCooldown(skill1_var));
         skill1_hook = false;
         stats.immovable = false;
