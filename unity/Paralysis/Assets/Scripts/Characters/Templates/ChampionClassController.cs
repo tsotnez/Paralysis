@@ -23,7 +23,7 @@ public abstract class ChampionClassController : MonoBehaviour
     [SerializeField]
     protected float m_DoubleJumpForce = 600f;                               // Force added when doublejumping 
     [SerializeField]
-    protected float m_jumpAttackRadius = 10f;                               // Radius of jump Attack damage
+    protected float m_jumpAttackRadius = 1.5f;                               // Radius of jump Attack damage
     [SerializeField]
     protected float m_jumpAttackForce = 10f;                                // Amount of force added when the player jump attack
 
@@ -195,17 +195,17 @@ public abstract class ChampionClassController : MonoBehaviour
 
     public virtual void Move(float move)
     {
-        //only control the player if grounded or airControl is turned on and not jump attacking and not dashing
+        // only control the player if grounded or airControl is turned on and not jump attacking and not dashing
         if (!jumpAttacking && !stats.immovable)
         {
-            //Slow down the player if he's attacking or blocking
+            // Slow down the player if he's attacking or blocking
             float maxSpeed;
             if (!CanPerformAttack()) maxSpeed = m_MoveSpeedWhileAttacking;
             else if (blocking) maxSpeed = m_MoveSpeedWhileBlocking;
             else maxSpeed = m_MaxSpeed;
 
             // Add movement effects to the speed
-            maxSpeed += stats.PercentageMovement;
+            maxSpeed *= stats.PercentageMovement;
 
             // Prevent player from turning around while blocking
             //if (maxSpeed == 0) return;
@@ -224,7 +224,7 @@ public abstract class ChampionClassController : MonoBehaviour
             else if (move < 0 && m_FacingRight)
             {
                 if (!CanPerformAttack()) return;
-                // ... flip the player.
+                // flip the player.
                 Flip();
             }
 
@@ -263,21 +263,27 @@ public abstract class ChampionClassController : MonoBehaviour
 
     protected virtual IEnumerator JumpAttack()
     {
-        jumpAttacking = true; //Set status variable
+        // Set status variable
+        jumpAttacking = true; 
         animCon.trigJumpAttack = true;
 
+        // Calculate direction
         int direction;
         if (m_FacingRight) direction = 1;
         else direction = -1;
 
-        m_Rigidbody2D.velocity = new Vector2(4 * direction, -m_jumpAttackForce); //Add downwards force
-        yield return new WaitUntil(() => animCon.m_Grounded); //Jump attacking as long as not grounded
+        // Add downwards force
+        m_Rigidbody2D.velocity = new Vector2(4 * direction, -m_jumpAttackForce); 
+        yield return new WaitUntil(() => animCon.m_Grounded); // Jump attacking as long as not grounded
+        m_Rigidbody2D.velocity = Vector2.zero; // Set velocity to zero to prevent character from moving after landing on ground
+        Camera.main.GetComponent<CameraBehaviour>().startShake(); // Shake the camera
 
         // Deal damage to all enemies
         animCon.trigJumpAttackEnd = true;
-        StartCoroutine(DoMeleeSkill_Hit(new MeleeSkill(0, 0, damage_JumpAttack, Skill.SkillEffect.nothing, 0, 10, Skill.SkillTarget.SingleTarget, 0, m_jumpAttackRadius)));
+        StartCoroutine(DoMeleeSkill_Hit(new MeleeSkill(0, 0, damage_JumpAttack, Skill.SkillEffect.nothing, 0, 10, Skill.SkillTarget.MultiTarget, 0, m_jumpAttackRadius)));
 
-        Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
+        // Wait till animation is finished and end jump attack
+        yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimatorStates.JumpAttack);
         jumpAttacking = false;
     }
 
@@ -366,7 +372,78 @@ public abstract class ChampionClassController : MonoBehaviour
 
     #endregion
 
-    #region Combo coroutine
+    #region Combo
+
+    /// <summary>
+    /// Do a default ComboAttack
+    /// </summary>
+    /// <param name="shouldAttack">bool</param>
+    /// <param name="trigBA1">Animation Trigger Boolean for Basic Attack 1</param>
+    /// <param name="trigBA2">Animation Trigger Boolean for Basic Attack 2</param>
+    /// <param name="trigBA3">Animation Trigger Boolean for Basic Attack 3</param>
+    protected void DoComboBasicAttack(bool shouldAttack, ref bool trigBA1, ref bool trigBA2,ref bool trigBA3)
+    {
+        if (shouldAttack && CanPerformAction(false) && CanPerformAttack())
+        {
+            if (animCon.m_Grounded)
+            {
+                // Check if enough stamina for attack
+                if (stats.HasSufficientStamina(basicAttack1_var.staminaCost) && (attackCount == 0) || // Basic Attack 1
+                    stats.HasSufficientStamina(basicAttack2_var.staminaCost) && (attackCount == 1) || // Basic Attack 2
+                    stats.HasSufficientStamina(basicAttack3_var.staminaCost) && (attackCount == 2))   // Combo Attack
+                {
+                    // Already in combo?
+                    if (!inCombo)
+                    {
+                        // First attack - initialize combo coroutine
+                        ResetComboTime();
+                        attackCount = 0;
+                    }
+
+                    // AttackCount increase per attack
+                    attackCount++;
+
+                    // Playing the correct animation depending on the attackCount and setting attacking status
+                    switch (attackCount)
+                    {
+                        case 1:
+                            // do meele attack
+                            DoMeleeSkill(ref trigBA1, (MeleeSkill)basicAttack1_var);
+                            // Reset timer of combo
+                            ResetComboTime();
+                            break;
+                        case 2:
+                            // do meele attack
+                            DoMeleeSkill(ref trigBA2, (MeleeSkill)basicAttack2_var);
+                            break;
+                        case 3:
+                            // do meele attack
+                            DoMeleeSkill(ref trigBA3, (MeleeSkill)basicAttack3_var);
+                            // Reset Combo after combo-hit
+                            AbortCombo();
+                            break;
+                        default:
+                            // Should not be triggered
+                            AbortCombo();
+                            break;
+
+                    }
+                }
+            }
+            // Jump attack only when falling
+            else
+            {
+                // Check if enough stamina is left
+                if (stats.LoseStamina(stamina_JumpAttack))
+                {
+                    // Jump Attack
+                    StartCoroutine(JumpAttack());
+                    // Abort combo
+                    AbortCombo();
+                }
+            }
+        }
+    }
 
     /// <summary>
     /// set/reset the combo after 1 second

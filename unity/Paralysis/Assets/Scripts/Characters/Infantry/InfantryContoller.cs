@@ -11,6 +11,7 @@ public class InfantryContoller : ChampionClassController
 
     private bool skill1_hook = false;
     private float skill1_hook_speed = 10f;
+
     #region default
 
     // Use this for initialization
@@ -19,7 +20,8 @@ public class InfantryContoller : ChampionClassController
         animCon = graphics.GetComponent<InfantryAnimationController>();
 
         basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, meeleRange);
-        basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.SkillEffect.nothing, 0, stamina_BasicAttack2, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack2, meeleRange);
+        basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.SkillEffect.nothing, 0, stamina_BasicAttack2, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack2, meeleRange);
+        basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack3, delay_BasicAttack3, damage_BasicAttack3, Skill.SkillEffect.nothing, 0, stamina_BasicAttack3, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack3, meeleRange);
 
         skill1_var = new Skill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.SkillEffect.stun, 3, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, 10f);
         skill2_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.SkillEffect.stun, 3, stamina_Skill2, Skill.SkillTarget.InFront, cooldown_Skill2, meeleRange);
@@ -40,7 +42,7 @@ public class InfantryContoller : ChampionClassController
 
     #endregion
 
-    #region BasicAttack
+    #region BasicAttack and Skills
 
     /// <summary>
     /// Attack combo. 1 normal hit, 2 strong hits
@@ -51,70 +53,8 @@ public class InfantryContoller : ChampionClassController
     /// <param name="shouldAttack"></param>
     public override void BasicAttack(bool shouldAttack)
     {
-        if (shouldAttack && CanPerformAction(false) && CanPerformAttack())
-        {
-            if (animCon.m_Grounded)
-            {
-                // Check if enough stamina for attack
-                if (stats.HasSufficientStamina(stamina_BasicAttack1) && (attackCount == 0) || //Basic Attack
-                    stats.HasSufficientStamina(stamina_BasicAttack2) && (attackCount == 1 || attackCount == 2)) // Strong Attack
-                {
-                    // Already in combo?
-                    if (!inCombo)
-                    {
-                        // First attack - initialize combo coroutine
-                        ResetComboTime();
-                        attackCount = 0;
-                    }
-
-                    // AttackCount increase per attack
-                    attackCount++;
-
-                    // Playing the correct animation depending on the attackCount and setting attacking status
-                    switch (attackCount)
-                    {
-                        case 1:
-                            // do meele attack
-                            DoMeleeSkill(ref animCon.trigBasicAttack1, (MeleeSkill)basicAttack1_var);
-                            // Reset timer of combo
-                            ResetComboTime();
-                            break;
-                        case 2:
-                            // do meele attack
-                            DoMeleeSkill(ref animCon.trigBasicAttack2, (MeleeSkill)basicAttack3_var);
-                            break;
-                        case 3:
-                            // do meele attack
-                            DoMeleeSkill(ref animCon.trigBasicAttack2, (MeleeSkill)basicAttack3_var);
-                            // Reset Combo after combo-hit
-                            AbortCombo();
-                            break;
-                        default:
-                            // Should not be triggered
-                            AbortCombo();
-                            break;
-
-                    }
-                }
-            }
-            // Jump attack only when falling
-            else
-            {
-                // Check if enough stamina is left
-                if (stats.LoseStamina(stamina_JumpAttack))
-                {
-                    // Jump Attack
-                    StartCoroutine(JumpAttack());
-                    // Abort combo
-                    AbortCombo();
-                }
-            }
-        }
+        DoComboBasicAttack(shouldAttack, ref animCon.trigBasicAttack1, ref animCon.trigBasicAttack2, ref animCon.trigBasicAttack2);
     }
-
-    #endregion
-
-    #region Skills
 
     /// <summary>
     /// Retract Hook (Knockback)
@@ -129,7 +69,7 @@ public class InfantryContoller : ChampionClassController
     public override void Skill1()
     {
         // Validate if skill can be performed
-        if (CanPerformAction(true) && CanPerformAttack() && skill2_var.notOnCooldown && stats.LoseStamina(skill2_var.staminaCost))
+        if (CanPerformAction(true) && CanPerformAttack() && skill1_var.notOnCooldown && stats.LoseStamina(skill1_var.staminaCost))
         {
             StartCoroutine(DoSkill1_Hook());
         }

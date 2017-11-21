@@ -19,6 +19,7 @@ public class KnightController : ChampionClassController
         animCon = graphics.GetComponent<KnightAnimationController>();
 
         basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, meeleRange);
+        basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.SkillEffect.nothing, 0, stamina_BasicAttack2, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack2, meeleRange);
         basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack3, delay_BasicAttack3, damage_BasicAttack3, Skill.SkillEffect.nothing, 0, stamina_BasicAttack3, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack3, meeleRange);
 
         skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.SkillEffect.stun, 3, stamina_Skill1, Skill.SkillTarget.MultiTarget, cooldown_Skill1, meeleRange);
@@ -46,7 +47,7 @@ public class KnightController : ChampionClassController
 
     #endregion
 
-    #region BasicAttack
+    #region BasicAttack and Skills
 
     /// <summary>
     /// Attack combo. 2 normal hits, 1 strong hit
@@ -57,67 +58,8 @@ public class KnightController : ChampionClassController
     /// <param name="shouldAttack"></param>
     public override void BasicAttack(bool shouldAttack)
     {
-        if (shouldAttack && CanPerformAction(false) && CanPerformAttack())
-        {
-            if (animCon.m_Grounded)
-            {
-                // Check if enough stamina for attack
-                if (stats.HasSufficientStamina(stamina_BasicAttack1) && (attackCount == 0 || attackCount == 1) || //Basic Attack
-                    stats.HasSufficientStamina(stamina_BasicAttack3) && (attackCount == 2)) // Strong Attack
-                {
-                    // Already in combo?
-                    if (!inCombo)
-                    {
-                        // First attack - initialize combo coroutine
-                        ResetComboTime();
-                        attackCount = 0;
-                    }
-
-                    // AttackCount increase per attack
-                    attackCount++;
-
-                    // Playing the correct animation depending on the attackCount and setting attacking status
-                    switch (attackCount)
-                    {
-                        case 1:
-                        case 2:
-                            // do meele attack
-                            DoMeleeSkill(ref animCon.trigBasicAttack1, (MeleeSkill)basicAttack1_var);
-                            // Reset timer of combo
-                            ResetComboTime();
-                            break;
-                        case 3:
-                            // do meele attack
-                            DoMeleeSkill(ref animCon.trigBasicAttack2, (MeleeSkill)basicAttack3_var);
-                            // Reset Combo after combo-hit
-                            AbortCombo();
-                            break;
-                        default:
-                            // Should not be triggered
-                            AbortCombo();
-                            break;
-
-                    }
-                }
-            }
-            // Jump attack only when falling
-            else
-            {
-                // Check if enough stamina is left
-                if (stats.LoseStamina(stamina_JumpAttack))
-                {
-                    // Jump Attack
-                    StartCoroutine(JumpAttack());
-                    // Abort combo
-                    AbortCombo();
-                }
-            }
-        }
+        DoComboBasicAttack(shouldAttack, ref animCon.trigBasicAttack1, ref animCon.trigBasicAttack2, ref animCon.trigBasicAttack2);
     }
-
-    #endregion
-
-    #region Skills
 
     /// <summary>
     /// Ground Smash (Stun)

@@ -614,25 +614,25 @@ MonoBehaviour:
   - {fileID: 0}
   AnimationLoop: 0101000100000100010000000000000000000100
   AnimationDuration:
+  - 0.5
+  - 0.5
+  - 0.6
+  - 0.5
+  - 0.3
   - 0
+  - 0.45
+  - 0.45
+  - 0.5
+  - 0.3
+  - 0.3
   - 0
+  - 0.3
+  - 0.3
+  - 0.3
+  - 0.3
+  - 0.3
   - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
+  - 0.5
   - 0
   EndAtlasses:
   - {fileID: 0}
@@ -732,7 +732,7 @@ MonoBehaviour:
   m_MoveSpeedWhileBlocking: 3
   m_JumpForce: 700
   m_DoubleJumpForce: 600
-  m_jumpAttackRadius: 10
+  m_jumpAttackRadius: 1.5
   m_jumpAttackForce: 10
   m_dashSpeed: 12
   m_dashStaminaCost: 10
@@ -755,7 +755,7 @@ MonoBehaviour:
   stamina_Skill4: 15
   damage_BasicAttack1: 5
   damage_BasicAttack2: 7
-  damage_BasicAttack3: 0
+  damage_BasicAttack3: 7
   damage_JumpAttack: 5
   damage_Skill1: 5
   damage_Skill2: 5
