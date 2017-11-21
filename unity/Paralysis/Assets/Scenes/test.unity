@@ -204,17 +204,13 @@ MonoBehaviour:
   gameOverOverlay: {fileID: 1124908811}
   defaultPlayer1: {fileID: 1128103333960868, guid: e6f7d777ee6c44d448705ae811eebec4,
     type: 2}
-  defaultPlayer2: {fileID: 38667261}
+  defaultPlayer2: {fileID: 1903508196159970, guid: 0639eac30390dec449afda643c7fa53c,
+    type: 2}
   hotbarPrefab: {fileID: 1880548955337550, guid: 1af496c58dcb903408eaa6d024bfe250,
     type: 2}
   spawnPlayer1: {fileID: 980744926}
   spawnPlayer2: {fileID: 784897739}
   championSpriteOverlayColor: {r: 0.7647059, g: 0.7432369, b: 0.6634948, a: 1}
---- !u!1 &38667261 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1346435155503924, guid: 782001f3935837a48a557565b08b8c0c,
-    type: 2}
-  m_PrefabInternal: {fileID: 1047977480}
 --- !u!1001 &75901264
 Prefab:
   m_ObjectHideFlags: 0

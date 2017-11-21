@@ -24,26 +24,69 @@ public class AlchemistController : ChampionClassController
 
     #region BasicAttack and Skills
 
+    /// <summary>
+    /// Only Basic Attack
+    /// </summary>
+    /// <param name="shouldAttack"></param>
     public override void BasicAttack(bool shouldAttack)
     {
-        throw new NotImplementedException();
+        if (shouldAttack)
+        {
+            throw new NotImplementedException();
+        }
     }
 
+    /// <summary>
+    /// Alchemist casts a frost bolt at a fixed distance and altitute.
+    /// The first enemy hit by this effect will have a 50% decreased movement speed.
+    /// 
+    /// Damage: 5
+    /// Effect: slow
+    /// Cast time: 1.5s
+    /// Stamina: 15
+    /// </summary>
     public override void Skill1()
     {
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Alchemist teleports in the direction that he is moving or dashing.
+    /// If standing still, teleports in the direction he is facing.
+    /// If jumping, teleports on top platform.
+    /// If ducking, teleports on lower platform.
+    /// 
+    /// Cooldown: 15s
+    /// Stamina: 15
+    /// </summary>
     public override void Skill2()
     {
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Alchemist casts a spell at a fixed distance and altitude.
+    /// The first enemy stuck by this will be stunned.
+    /// 
+    /// Damage: 5
+    /// Effect: stun
+    /// Cooldown: 15s
+    /// Stamina: 15
+    /// </summary>
     public override void Skill3()
     {
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Alchemist uses his alchemy to explode and reconstruct himnself.
+    /// As he explodes, any enemy within the radius will receive a knockback.
+    /// 
+    /// Damage: 10
+    /// Effect: knockback
+    /// Cooldown: 25s
+    /// Stamina: 20
+    /// </summary>
     public override void Skill4()
     {
         throw new NotImplementedException();
