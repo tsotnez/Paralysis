@@ -9,9 +9,9 @@ using UnityEngine;
 public class UseTrinkets_NextHitDealsbleeding : UseTrinket
 {
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        DisplayName += "Next Hit Bleeds";
+        DisplayName += "Bloodstained Cloth";
 
         GeneralDuration = 10;
         PercentageEffectAdd = 0f;

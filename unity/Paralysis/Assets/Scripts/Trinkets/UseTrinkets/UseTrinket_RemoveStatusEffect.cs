@@ -8,9 +8,9 @@ using UnityEngine;
 public class UseTrinket_RemoveStatusEffect : UseTrinket
 {
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        DisplayName += "Free off Effects";
+        DisplayName += "Ghost Chain";
         GeneralDuration = 0.25f;
     }
 

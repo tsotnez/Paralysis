@@ -9,9 +9,9 @@ using UnityEngine;
 class PassiveTrinket_ChanceToStun : PassiveTrinket
 {
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        DisplayName += "Next Hit Stuns";
+        DisplayName += "Vengeful Puppet";
         TrinketTriggerType = TriggerType.DealDamage;
     }
 
