@@ -17,8 +17,8 @@ public class UseTrinket_RemoveStatusEffect : UseTrinket
     protected override IEnumerator ManageTrinketDuration(CharacterStats TrinketOwnerStats)
     {
         // Set Effects of Use-Trinket 
-        TrinketOwnerStats.stunned = false;
-        TrinketOwnerStats.bleeding = false;
+        TrinketOwnerStats.StopStunned();
+        TrinketOwnerStats.StopBleeding();
         TrinketOwnerStats.invincible = true;
 
         // Wait till duration ends

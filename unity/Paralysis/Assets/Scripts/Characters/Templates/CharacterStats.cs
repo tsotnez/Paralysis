@@ -324,6 +324,9 @@ public class CharacterStats : MonoBehaviour
     {
         if (!invincible)
         {
+            // Stop coroutine if running
+            if (stunnedRoutine != null) StopCoroutine(stunnedRoutine);
+
             rigid.velocity = Vector2.zero;
             stunned = true;
             stunnedSymbol.SetActive(true);
@@ -337,6 +340,10 @@ public class CharacterStats : MonoBehaviour
     {
         if (stunned)
         {
+            // Stop coroutine if running
+            if (stunnedRoutine != null) StopCoroutine(stunnedRoutine);
+
+            //manually disable stunned symbol and remove stunned effect
             stunnedSymbol.SetActive(false);
             stunned = false;
         }
@@ -404,6 +411,15 @@ public class CharacterStats : MonoBehaviour
         {
             if (bleedingRoutine != null) StopCoroutine(bleedingRoutine);
             bleedingRoutine = StartCoroutine(Bleed(time));
+        }
+    }
+
+    public void StopBleeding()
+    {
+        if (bleeding)
+        {
+            if (bleedingRoutine != null) StopCoroutine(bleedingRoutine);
+            bleeding = false;
         }
     }
 
