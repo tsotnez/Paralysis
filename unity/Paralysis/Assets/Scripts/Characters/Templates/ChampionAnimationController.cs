@@ -7,6 +7,7 @@
 
     // Stats
     public bool statDead = false;
+    public bool statPreview = false;
     public bool statStunned = false;
     public bool statBlock = false;
 
@@ -40,7 +41,17 @@
     private void AnimationManager()
     {
         // Animations that work in any State
-        if (statDead)
+        if (statPreview)
+        {
+            if (trigBasicAttack1)
+            {
+                trigBasicAttack1 = false;
+                StartAnimation(AnimatorStates.BasicAttack1);
+                return;
+            }
+            StartAnimation(AnimatorStates.Idle);
+        }
+        else if (statDead)
         {
             StartAnimation(AnimatorStates.Die, TypeOfAnimation.Animation, AnimationPlayTypes.HoldOnEnd);
         }

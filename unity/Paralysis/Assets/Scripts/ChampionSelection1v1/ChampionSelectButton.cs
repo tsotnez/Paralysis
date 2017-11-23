@@ -48,7 +48,7 @@ public class ChampionSelectButton : MonoBehaviour {
     void showChampion()
     {
         transform.parent.transform.parent.GetComponent<ChampionSelectButtonGroup>().setSelectedButton(this);
-        GameObject.Find("manager").GetComponent<ChampionSelectionManagerbehaviour>().showChamp(previewPrefab, championPrefab, playerNumber);
+        GameObject.Find("manager").GetComponent<ChampionSelectionManagerbehaviour>().ShowChamp(previewPrefab, championPrefab, playerNumber);
     }
 
     public void PointerEnter()
