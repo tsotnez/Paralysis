@@ -195,8 +195,17 @@ public abstract class ChampionClassController : MonoBehaviour
 
     public virtual void Move(float move)
     {
+        if (stats.stunned && !stats.knockedBack)
+        {
+            // Prevent from sliding after kncokback while stunned 
+            m_Rigidbody2D.velocity = Vector2.zero;
+        }
+        else if (stats.stunned ||stats.knockedBack)
+        {
+            // Ignore input while stunned or knockedback
+        }
         // only control the player if grounded or airControl is turned on and not jump attacking and not dashing
-        if (!jumpAttacking && !stats.immovable)
+        else if (!jumpAttacking && !stats.immovable)
         {
             // Slow down the player if he's attacking or blocking
             float maxSpeed;
@@ -287,16 +296,6 @@ public abstract class ChampionClassController : MonoBehaviour
         jumpAttacking = false;
     }
 
-    /// <summary>
-    /// Manages the attacking and Combos
-    /// </summary>
-    public abstract void BasicAttack(bool shouldAttack);
-
-    public abstract void Skill1();
-    public abstract void Skill2();
-    public abstract void Skill3();
-    public abstract void Skill4();
-
     //Dashes in the given direction
     public virtual IEnumerator Dash(int direction)
     {
@@ -369,6 +368,16 @@ public abstract class ChampionClassController : MonoBehaviour
         theScale.x *= -1;
         graphics.localScale = theScale;
     }
+
+    /// <summary>
+    /// Manages the attacking and Combos
+    /// </summary>
+    public abstract void BasicAttack(bool shouldAttack);
+
+    public abstract void Skill1();
+    public abstract void Skill2();
+    public abstract void Skill3();
+    public abstract void Skill4();
 
     #endregion
 

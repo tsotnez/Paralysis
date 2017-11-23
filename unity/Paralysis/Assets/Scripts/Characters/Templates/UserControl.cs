@@ -75,31 +75,29 @@ public abstract class UserControl : MonoBehaviour
     {
         if (m_Trinket1 && typeof(UseTrinket) == m_Character.Trinket1.GetType().BaseType)
         {
-            ((UseTrinket)m_Character.Trinket1).Use(m_Stats); 
-            
+            ((UseTrinket)m_Character.Trinket1).Use(m_Stats);
+
         }
         if (m_Trinket2 && typeof(UseTrinket) == m_Character.Trinket2.GetType().BaseType)
         {
             ((UseTrinket)m_Character.Trinket2).Use(m_Stats);
         }
 
+        // Always send input to Move --> Move handles all effects by itself
+        m_Character.Move(move);
+
         //Do things only when not stunned, defensive or being knocked back
-        if (!m_Stats.stunned && !m_Stats.knockedBack)
+        if (!m_Stats.stunned && !m_Stats.knockedBack && !defensive)
         {
-            m_Character.Move(move);
+            // Pass all parameters to the character control script.
+            m_Character.Jump(m_Jump);
+            m_Character.BasicAttack(m_Attack);
 
-            if (!defensive)
-            {
-                // Pass all parameters to the character control script.
-                m_Character.Jump(m_Jump);
-                m_Character.BasicAttack(m_Attack);
-
-                if (m_Skill1) m_Character.Skill1();
-                if (m_Skill2) m_Character.Skill2();
-                if (m_Skill3) m_Character.Skill3();
-                if (m_Skill4) m_Character.Skill4();
-                if (dash != 0) m_Character.StartCoroutine(m_Character.Dash(dash));
-            }
+            if (m_Skill1) m_Character.Skill1();
+            if (m_Skill2) m_Character.Skill2();
+            if (m_Skill3) m_Character.Skill3();
+            if (m_Skill4) m_Character.Skill4();
+            if (dash != 0) m_Character.StartCoroutine(m_Character.Dash(dash));
         }
     }
 

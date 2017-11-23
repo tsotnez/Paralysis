@@ -44,13 +44,13 @@
         {
             StartAnimation(AnimatorStates.Die, TypeOfAnimation.Animation, AnimationPlayTypes.HoldOnEnd);
         }
-        else if (statStunned)
-            StartAnimation(AnimatorStates.Stunned);
         else if (trigKnockedBack)
         {
             trigKnockedBack = false;
             StartAnimation(AnimatorStates.KnockedBack);
         }
+        else if (statStunned && CurrentAnimation != AnimatorStates.KnockedBack)
+            StartAnimation(AnimatorStates.Stunned);
         else
         {
             // don't interrupt these animations (equivalent to HasExitTime)
