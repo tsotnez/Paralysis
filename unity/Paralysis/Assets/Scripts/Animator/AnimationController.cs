@@ -239,15 +239,27 @@ public abstract class AnimationController : MonoBehaviour
         if (AnimationType == TypeOfAnimation.EndAnimation)
             AtlasNameAddition = "End";
 
+
+
         while (true)
         {
-
+            Resources.UnloadUnusedAssets(); // Unload assets with no references
+            Texture2D tex = null;
+            Sprite spr = null;
             // play each animation of the atlas
             for (int i = 0; i < atlas.spriteCount; i++)
             {
-                if (i < 10) spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + AtlasNameAddition + "_" + "0" + i.ToString());
-                else spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + AtlasNameAddition + "_" + i.ToString());
+                if (i < 10)
+                    spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + AtlasNameAddition + "_" + "0" + i.ToString());
+                else
+                    spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + AtlasNameAddition + "_" + i.ToString());
 
+                Destroy(spr);
+                spr = null;
+                Resources.UnloadAsset(tex); //Unload texture from RAM after it was shown for long enough
+                tex = null;
+                tex = spriteRenderer.sprite.texture;
+                spr = spriteRenderer.sprite;
                 yield return new WaitForSeconds(delay);
             }
 

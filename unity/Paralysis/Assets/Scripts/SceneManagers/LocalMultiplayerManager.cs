@@ -38,6 +38,7 @@ public class LocalMultiplayerManager : MonoBehaviour {
 
     private void Awake()
     {
+        Resources.UnloadUnusedAssets();
         instantiatePlayers();
         buildUI();
     }
