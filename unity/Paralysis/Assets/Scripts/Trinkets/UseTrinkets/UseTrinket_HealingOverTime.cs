@@ -8,9 +8,9 @@ using UnityEngine;
 public class UseTrinket_HealingOverTime : UseTrinket
 {
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        DisplayName += "Healing Over Time";
+        DisplayName += "Green Slime";
 
         GeneralDuration = 10;
         AmountEffect = 50;

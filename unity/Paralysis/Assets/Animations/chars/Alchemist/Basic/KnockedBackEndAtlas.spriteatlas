@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: KnockedBackEndAtlas
+  m_EditorData:
+    textureSettings:
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 1
+      colorSpace: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+    platformSettings: []
+    packingParameters:
+      paddingPower: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    packedHash:
+      serializedVersion: 2
+      Hash: 5089f3ac754819875e03cfcdb6b9e521
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 12
+    hashString: 5089f3ac754819875e03cfcdb6b9e521
+    totalSpriteSurfaceArea: 12737400
+    packables:
+    - {fileID: 102900000, guid: 977f1182c99cf6f48ab6d54f2fbe8d3c, type: 3}
+    packedSpriteRenderDataKeys:
+    - 95c46bcc31f5b42489560763cd730870: 21300000
+    - ae9de30d3bfcc174d80591598c62552b: 21300000
+    - 0443ec01d197d054cb2ed914377c1885: 21300000
+    - 707e5a2aba4aae2408e58ee579962bdd: 21300000
+    - a97132f44ed02004bbc3c4183a30c6a9: 21300000
+    - d455fa000469e1849ba67944c1d55f2f: 21300000
+    - 736d17ff569a04546b8c239c8eabf18e: 21300000
+    - 94f67d9f6a030eb47a9b6dec528eab64: 21300000
+    - b68bb9e7f10c5334aa648be02d9796e8: 21300000
+    - 4c15d9d12f76eec4eb5328b855144b74: 21300000
+    - 84198c48b6845374b86ae795de241ced: 21300000
+    - d1ec5d1bc92bae04bbe9e0031a1b5ca7: 21300000
+    - 39bb83585c4d39740b750b8d6ae9a7c9: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 95c46bcc31f5b42489560763cd730870, type: 3}
+  - {fileID: 21300000, guid: ae9de30d3bfcc174d80591598c62552b, type: 3}
+  - {fileID: 21300000, guid: 0443ec01d197d054cb2ed914377c1885, type: 3}
+  - {fileID: 21300000, guid: 707e5a2aba4aae2408e58ee579962bdd, type: 3}
+  - {fileID: 21300000, guid: a97132f44ed02004bbc3c4183a30c6a9, type: 3}
+  - {fileID: 21300000, guid: d455fa000469e1849ba67944c1d55f2f, type: 3}
+  - {fileID: 21300000, guid: 736d17ff569a04546b8c239c8eabf18e, type: 3}
+  - {fileID: 21300000, guid: 94f67d9f6a030eb47a9b6dec528eab64, type: 3}
+  - {fileID: 21300000, guid: b68bb9e7f10c5334aa648be02d9796e8, type: 3}
+  - {fileID: 21300000, guid: 4c15d9d12f76eec4eb5328b855144b74, type: 3}
+  - {fileID: 21300000, guid: 84198c48b6845374b86ae795de241ced, type: 3}
+  - {fileID: 21300000, guid: d1ec5d1bc92bae04bbe9e0031a1b5ca7, type: 3}
+  - {fileID: 21300000, guid: 39bb83585c4d39740b750b8d6ae9a7c9, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - KnockedBackEnd_12
+  - KnockedBackEnd_10
+  - KnockedBackEnd_11
+  - KnockedBackEnd_05
+  - KnockedBackEnd_04
+  - KnockedBackEnd_07
+  - KnockedBackEnd_06
+  - KnockedBackEnd_01
+  - KnockedBackEnd_00
+  - KnockedBackEnd_03
+  - KnockedBackEnd_02
+  - KnockedBackEnd_09
+  - KnockedBackEnd_08
+  m_Tag: KnockedBackEndAtlas
+  m_IsVariant: 0

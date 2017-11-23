@@ -8,17 +8,17 @@ using UnityEngine;
 public class UseTrinket_RemoveStatusEffect : UseTrinket
 {
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        DisplayName += "Free off Effects";
+        DisplayName += "Ghost Chain";
         GeneralDuration = 0.25f;
     }
 
     protected override IEnumerator ManageTrinketDuration(CharacterStats TrinketOwnerStats)
     {
         // Set Effects of Use-Trinket 
-        TrinketOwnerStats.stunned = false;
-        TrinketOwnerStats.bleeding = false;
+        TrinketOwnerStats.StopStunned();
+        TrinketOwnerStats.StopBleeding();
         TrinketOwnerStats.invincible = true;
 
         // Wait till duration ends

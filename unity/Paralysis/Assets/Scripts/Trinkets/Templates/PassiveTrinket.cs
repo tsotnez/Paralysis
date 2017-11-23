@@ -19,9 +19,8 @@ public abstract class PassiveTrinket : Trinket
     private int TriggerChance;
     private System.Random random;
 
-    protected virtual void Awake()
+    protected virtual void Start()
     {
-        DisplayName = "(PASSIVE) ";
         random = new System.Random();
 
         GeneralCooldown = 10;

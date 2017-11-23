@@ -6,6 +6,8 @@
     public float m_Speed;                                                // Horizontal speed
 
     // Stats
+    public bool statDead = false;
+    public bool statPreview = false;
     public bool statStunned = false;
     public bool statBlock = false;
 
@@ -28,7 +30,10 @@
 
     protected virtual void Update()
     {
-        AnimationManager();
+        if (CurrentAnimation != AnimatorStates.Die)
+        {
+            AnimationManager();
+        }
     }
 
     protected virtual void FixedUpdate() { }
@@ -36,13 +41,27 @@
     private void AnimationManager()
     {
         // Animations that work in any State
-        if (statStunned)
-            StartAnimation(AnimatorStates.Stunned);
+        if (statPreview)
+        {
+            if (trigBasicAttack1)
+            {
+                trigBasicAttack1 = false;
+                StartAnimation(AnimatorStates.BasicAttack1);
+                return;
+            }
+            StartAnimation(AnimatorStates.Idle);
+        }
+        else if (statDead)
+        {
+            StartAnimation(AnimatorStates.Die, TypeOfAnimation.Animation, AnimationPlayTypes.HoldOnEnd);
+        }
         else if (trigKnockedBack)
         {
             trigKnockedBack = false;
             StartAnimation(AnimatorStates.KnockedBack);
         }
+        else if (statStunned && CurrentAnimation != AnimatorStates.KnockedBack)
+            StartAnimation(AnimatorStates.Stunned);
         else
         {
             // don't interrupt these animations (equivalent to HasExitTime)
@@ -79,7 +98,7 @@
             // For character specific animations
             if (AdditionalAnimationCondition()) return;
 
-            if (statBlock)
+            if (statBlock && m_Speed <= 0)
                 StartAnimation(AnimatorStates.Block);
             else if(statBlock && m_Speed > 0.001)
                 StartAnimation(AnimatorStates.BlockMove);
@@ -138,7 +157,7 @@
                 trigSkill4 = false;
                 StartAnimation(AnimatorStates.Skill4);
             }
-            else if (!m_Grounded && m_vSpeed < 0)
+            else if (!m_Grounded && m_vSpeed <= 0)
                 StartAnimation(AnimatorStates.Fall);
             else if (!m_Grounded && m_vSpeed > 0 && trigJump)
             {

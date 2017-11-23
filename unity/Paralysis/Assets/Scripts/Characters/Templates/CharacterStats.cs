@@ -14,16 +14,27 @@ public class CharacterStats : MonoBehaviour
 
     [Header("Stats")]
     public int maxHealth = 100;
-    public int currentHealth;
+    private int currentHealth;
+    public int CurrentHealth
+    {
+        get { return currentHealth; }
+        set
+        {
+            currentHealth = value;
+            if (currentHealth <= 0)
+                Die();
+        }
+    }
     public int maxStamina = 100;
-    public int currentStamina;
+    public int CurrentStamina;
 
     private int staminaRegRate = 2;
     private int staminaRegRateWhileStanding = 4;
     private int callsSinceLastAction = 10;
 
     [Header("Statusses")]
-    public bool stunned = false;
+    public bool CharacterDied = false;          // Stores if character had died
+    public bool stunned = false;                // Stores if character is stunned
     public Coroutine stunnedRoutine = null;     // Stores the stunned Coroutine
     public bool bleeding = false;               // Takes damage while true
     public Coroutine bleedingRoutine = null;    // Stores the bleeding Coroutine
@@ -60,8 +71,8 @@ public class CharacterStats : MonoBehaviour
 
     void Awake()
     {
-        currentHealth = maxHealth;
-        currentStamina = maxStamina;
+        CurrentHealth = maxHealth;
+        CurrentStamina = maxStamina;
 
         animCon = transform.Find("graphics").GetComponent<ChampionAnimationController>();
         rigid = GetComponent<Rigidbody2D>();
@@ -83,10 +94,10 @@ public class CharacterStats : MonoBehaviour
 
     private void Update()
     {
-        float h = currentHealth;
+        float h = CurrentHealth;
         float mH = maxHealth;
 
-        float s = currentStamina;
+        float s = CurrentStamina;
         float mS = maxStamina;
 
         float hpPercent = h / mH;
@@ -110,14 +121,14 @@ public class CharacterStats : MonoBehaviour
     /// <param name="amount">Value of Heal</param>
     public void GetHealth(int amount)
     {
-        if (currentHealth + amount > maxHealth)
+        if (CurrentHealth + amount > maxHealth)
         {
-            amount = maxHealth - currentHealth;
-            currentHealth = maxHealth;
+            amount = maxHealth - CurrentHealth;
+            CurrentHealth = maxHealth;
         }
         else
         {
-            currentHealth += amount;
+            CurrentHealth += amount;
         }
 
         if (amount > 0)
@@ -132,6 +143,8 @@ public class CharacterStats : MonoBehaviour
     /// </summary>
     private void Die()
     {
+        CharacterDied = true;
+        animCon.statDead = true;
         GameObject.Find("manager").GetComponent<LocalMultiplayerManager>().gameOver(gameObject);
     }
 
@@ -142,7 +155,7 @@ public class CharacterStats : MonoBehaviour
     // Is called repeatetly to regenerate stamina value
     private void RegenerateStamina()
     {
-        if (currentStamina < maxStamina && !controller.blocking && controller.ShouldRegenerateStamina())
+        if (CurrentStamina < maxStamina && !controller.blocking && controller.ShouldRegenerateStamina())
         {
             if (callsSinceLastAction == 10) //regenerate only if characters hasnt done anything for a while
             {
@@ -154,8 +167,8 @@ public class CharacterStats : MonoBehaviour
                     regRate = staminaRegRate;
 
 
-                if (currentStamina + regRate > maxStamina) this.currentStamina = this.maxStamina;
-                else this.currentStamina += regRate;
+                if (CurrentStamina + regRate > maxStamina) this.CurrentStamina = this.maxStamina;
+                else this.CurrentStamina += regRate;
             }
             else
                 callsSinceLastAction++;
@@ -176,7 +189,7 @@ public class CharacterStats : MonoBehaviour
     {
         if (HasSufficientStamina(amount))
         {
-            currentStamina -= amount;
+            CurrentStamina -= amount;
             return true;
         }
         return false;
@@ -189,7 +202,7 @@ public class CharacterStats : MonoBehaviour
     /// <returns></returns>
     public bool HasSufficientStamina(int amount)
     {
-        if (currentStamina - amount >= 0) return true;
+        if (CurrentStamina - amount >= 0) return true;
         else return false;
     }
 
@@ -210,7 +223,7 @@ public class CharacterStats : MonoBehaviour
         TooglePassiveTrinkets(controller.Trinket2, PassiveTrinket.TriggerType.DealDamage);
 
         // Add percentage damage to the amount of damage
-        amount = (int)System.Math.Round(amount * this.PercentageDamage);
+        amount = (int)Math.Round(amount * PercentageDamage);
 
         // If target is reflecting damage, hit the own player
         if (StatsOfTheTarget.reflect)
@@ -251,9 +264,8 @@ public class CharacterStats : MonoBehaviour
                 //Show number of damage received
                 ShowFloatingText_Damage(amount);
 
-                this.currentHealth -= amount; //Substract health
+                this.CurrentHealth -= amount; //Substract health
                 if (playAnimation) animCon.trigHit = true; //Play hit animation
-                if (currentHealth <= 0) Die();
 
                 // If trinket 1 or trinket 2 is an passive trinket and has as triggertype TakeDamage, then use it passively
                 TooglePassiveTrinkets(controller.Trinket1, PassiveTrinket.TriggerType.TakeDamage);
@@ -298,8 +310,7 @@ public class CharacterStats : MonoBehaviour
         GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false); //Show number of damage received
         text.GetComponentInChildren<Text>().text = amount.ToString();
 
-        this.currentHealth -= amount; //Substract health
-        if (currentHealth <= 0) Die();
+        this.CurrentHealth -= amount; //Substract health
     }
 
     #endregion
@@ -313,6 +324,9 @@ public class CharacterStats : MonoBehaviour
     {
         if (!invincible)
         {
+            // Stop coroutine if running
+            if (stunnedRoutine != null) StopCoroutine(stunnedRoutine);
+
             rigid.velocity = Vector2.zero;
             stunned = true;
             stunnedSymbol.SetActive(true);
@@ -326,6 +340,10 @@ public class CharacterStats : MonoBehaviour
     {
         if (stunned)
         {
+            // Stop coroutine if running
+            if (stunnedRoutine != null) StopCoroutine(stunnedRoutine);
+
+            //manually disable stunned symbol and remove stunned effect
             stunnedSymbol.SetActive(false);
             stunned = false;
         }
@@ -393,6 +411,15 @@ public class CharacterStats : MonoBehaviour
         {
             if (bleedingRoutine != null) StopCoroutine(bleedingRoutine);
             bleedingRoutine = StartCoroutine(Bleed(time));
+        }
+    }
+
+    public void StopBleeding()
+    {
+        if (bleeding)
+        {
+            if (bleedingRoutine != null) StopCoroutine(bleedingRoutine);
+            bleeding = false;
         }
     }
 
@@ -465,28 +492,6 @@ public class CharacterStats : MonoBehaviour
     {
         ShowFloatingText(TriggerName.ToString() + Environment.NewLine + "has triggered", Color.yellow, -10);
     }
-
-    #endregion
-
-    //////////////////////////////////////////  D   E   B   U  G  //////////////////////////////////////////
-    #region Debug
-
-    //public void deSlow(float factor)
-    //{
-    //    StartCoroutine(slow(3, factor));
-    //}
-    //public void deStun(float time)
-    //{
-    //    StartCoroutine(stun(time));
-    //}
-    //public void deKnock(float time)
-    //{
-    //    startKnockBack(Vector3.zero);
-    //}
-    //public void deBleed(float time)
-    //{
-    //    StartCoroutine(Bleed(time));
-    //}
 
     #endregion
 

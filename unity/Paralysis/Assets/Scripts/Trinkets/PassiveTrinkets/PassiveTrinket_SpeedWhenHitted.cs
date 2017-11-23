@@ -9,9 +9,9 @@ using UnityEngine;
 class PassiveTrinket_SpeedWhenHitted : PassiveTrinket
 {
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        DisplayName += "Extra Movement Speed";
+        DisplayName += "Worn Boots";
         PercentageEffectAdd = 0.2f;
         TrinketTriggerType = TriggerType.TakeDamage;
     }

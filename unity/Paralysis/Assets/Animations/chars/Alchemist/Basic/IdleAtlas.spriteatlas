@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: IdleAtlas
+  m_EditorData:
+    textureSettings:
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 1
+      colorSpace: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+    platformSettings: []
+    packingParameters:
+      paddingPower: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    packedHash:
+      serializedVersion: 2
+      Hash: 91981751f6f3ca2b747af2139445eb74
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 12
+    hashString: 91981751f6f3ca2b747af2139445eb74
+    totalSpriteSurfaceArea: 7369800
+    packables:
+    - {fileID: 102900000, guid: da168b6041867294492794c2f2c84226, type: 3}
+    packedSpriteRenderDataKeys:
+    - e556db8e8608eae4e922c388d98e4f0a: 21300000
+    - 1a377148d3689a247a6c18af1880ae39: 21300000
+    - 4dac4a78da61bc948aad07b8ac9f1881: 21300000
+    - 0e102b9a0098cf846b5fff315f0269b0: 21300000
+    - 3633f4004ac541f408ee589f4a714daf: 21300000
+    - f33b700253a0e1643b9e25123047ed0c: 21300000
+    - af0f5ddb734549640977eb7e531a3a77: 21300000
+    - ead0b71a2f9e71940ae9d272ef33eaf5: 21300000
+    - 4f1e8fde73e601346bceb9c1255c2e6b: 21300000
+    - aa1e81a2e57e6014b90d034aa3fb287e: 21300000
+    - 82b13d5338f9af04b9a8393a47a0b188: 21300000
+    - 93e698378cf8f8f428423c08d844b291: 21300000
+    - 620f92430c8561146b3d65271d4fc28c: 21300000
+    - 92ebcb2db04f6214488ff1a114caac03: 21300000
+    - a7e6547d9d0d0304593311b72ec115df: 21300000
+    - a066a8995ae02574eb4b2cf33fe18f8d: 21300000
+    - 75e5e1ed880ca0346bb35f1f3f19b88b: 21300000
+    - e6b7fc8a36375624185697459b52962b: 21300000
+    - 62716c24b815c344993d83d342e395ec: 21300000
+    - 01eb40d0132a178459ed8ba3e5e3eede: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: e556db8e8608eae4e922c388d98e4f0a, type: 3}
+  - {fileID: 21300000, guid: 1a377148d3689a247a6c18af1880ae39, type: 3}
+  - {fileID: 21300000, guid: 4dac4a78da61bc948aad07b8ac9f1881, type: 3}
+  - {fileID: 21300000, guid: 0e102b9a0098cf846b5fff315f0269b0, type: 3}
+  - {fileID: 21300000, guid: 3633f4004ac541f408ee589f4a714daf, type: 3}
+  - {fileID: 21300000, guid: f33b700253a0e1643b9e25123047ed0c, type: 3}
+  - {fileID: 21300000, guid: af0f5ddb734549640977eb7e531a3a77, type: 3}
+  - {fileID: 21300000, guid: ead0b71a2f9e71940ae9d272ef33eaf5, type: 3}
+  - {fileID: 21300000, guid: 4f1e8fde73e601346bceb9c1255c2e6b, type: 3}
+  - {fileID: 21300000, guid: aa1e81a2e57e6014b90d034aa3fb287e, type: 3}
+  - {fileID: 21300000, guid: 82b13d5338f9af04b9a8393a47a0b188, type: 3}
+  - {fileID: 21300000, guid: 93e698378cf8f8f428423c08d844b291, type: 3}
+  - {fileID: 21300000, guid: 620f92430c8561146b3d65271d4fc28c, type: 3}
+  - {fileID: 21300000, guid: 92ebcb2db04f6214488ff1a114caac03, type: 3}
+  - {fileID: 21300000, guid: a7e6547d9d0d0304593311b72ec115df, type: 3}
+  - {fileID: 21300000, guid: a066a8995ae02574eb4b2cf33fe18f8d, type: 3}
+  - {fileID: 21300000, guid: 75e5e1ed880ca0346bb35f1f3f19b88b, type: 3}
+  - {fileID: 21300000, guid: e6b7fc8a36375624185697459b52962b, type: 3}
+  - {fileID: 21300000, guid: 62716c24b815c344993d83d342e395ec, type: 3}
+  - {fileID: 21300000, guid: 01eb40d0132a178459ed8ba3e5e3eede, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Idle_08
+  - Idle_09
+  - Idle_04
+  - Idle_05
+  - Idle_19
+  - Idle_06
+  - Idle_18
+  - Idle_07
+  - Idle_17
+  - Idle_00
+  - Idle_16
+  - Idle_01
+  - Idle_15
+  - Idle_02
+  - Idle_14
+  - Idle_03
+  - Idle_13
+  - Idle_12
+  - Idle_11
+  - Idle_10
+  m_Tag: IdleAtlas
+  m_IsVariant: 0

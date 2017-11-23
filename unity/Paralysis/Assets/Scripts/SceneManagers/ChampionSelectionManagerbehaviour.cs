@@ -6,9 +6,14 @@ using System;
 
 public class ChampionSelectionManagerbehaviour : MonoBehaviour {
 
+    //Set by team allocation scene
+    public static UserControl.PlayerNumbers[] team1;
+    public static UserControl.PlayerNumbers[] team2;
+
+    public static UserControl.InputDevice inputPlayer1;
+    public static UserControl.InputDevice inputPlayer2;
+
     public GameObject[] platforms;
-    public Dropdown inputPlayer1;
-    public Dropdown inputPlayer2;
 
     //Players trinkets
     public Trinket.Trinkets trinket1Player1;
@@ -16,7 +21,7 @@ public class ChampionSelectionManagerbehaviour : MonoBehaviour {
     public Trinket.Trinkets trinket1Player2;
     public Trinket.Trinkets trinket2Player2;
 
-    //Holds [Platform] as key and [previewPrefab][champoionPrefab] as value
+    //Holds [Platform] as key and [previewPrefab][championPrefab] as value
     private Dictionary<GameObject, GameObject[]> championsOnPlatforms = new Dictionary<GameObject, GameObject[]>();
     private Button btnStart;
 
@@ -24,7 +29,7 @@ public class ChampionSelectionManagerbehaviour : MonoBehaviour {
     void Start () {
         btnStart = GameObject.Find("ButtonStart").GetComponent<Button>();
         btnStart.interactable = false;
-        btnStart.onClick.AddListener(startGame);
+        btnStart.onClick.AddListener(StartGame);
 
         //Fill dictionary
         for (int i = 0; i < platforms.Length; i++)
@@ -45,13 +50,13 @@ public class ChampionSelectionManagerbehaviour : MonoBehaviour {
         btnStart.interactable = ready;
     }
 
-    void startGame()
+    void StartGame()
     {
-        //Pass players and theiir inputs and trinkets
+        //Pass players and their inputs and trinkets
         LocalMultiplayerManager.player1 = championsOnPlatforms[platforms[0]][1];
         LocalMultiplayerManager.player2 = championsOnPlatforms[platforms[1]][1];
-        LocalMultiplayerManager.inputP1 = (UserControl.InputDevice) Enum.Parse(typeof(UserControl.InputDevice), inputPlayer1.GetComponentInChildren<Text>().text);
-        LocalMultiplayerManager.inputP2 = (UserControl.InputDevice)Enum.Parse(typeof(UserControl.InputDevice), inputPlayer2.GetComponentInChildren<Text>().text);
+        LocalMultiplayerManager.inputP1 = inputPlayer1;
+        LocalMultiplayerManager.inputP2 = inputPlayer2;
 
         LocalMultiplayerManager.trinket1Player1 = trinket1Player1;
         LocalMultiplayerManager.trinket2Player1 = trinket2Player1;
@@ -62,26 +67,26 @@ public class ChampionSelectionManagerbehaviour : MonoBehaviour {
         SceneManager.LoadScene("scenes/test");
     }
 
-    public void showChamp(GameObject previewPrefab, GameObject championPrefab, ChampionSelectButton.players player)
+    public void ShowChamp(GameObject previewPrefab, GameObject championPrefab, ChampionSelectButton.players player)
     {
         switch (player)
         {
             case ChampionSelectButton.players.Player1:
-                instantiateChampion(previewPrefab, championPrefab, 0);
+                InstantiateChampion(previewPrefab, championPrefab, 0);
                 break;
             case ChampionSelectButton.players.Player2:
-                instantiateChampion(previewPrefab, championPrefab, 1);
+                InstantiateChampion(previewPrefab, championPrefab, 1);
                 break;
             case ChampionSelectButton.players.Player3:
-                instantiateChampion(previewPrefab, championPrefab, 2);
+                InstantiateChampion(previewPrefab, championPrefab, 2);
                 break;
             case ChampionSelectButton.players.Player4:
-                instantiateChampion(previewPrefab, championPrefab, 3);
+                InstantiateChampion(previewPrefab, championPrefab, 3);
                 break;
         }
     }
 
-    void instantiateChampion(GameObject previewPrefab, GameObject championPrefab, int index)
+    void InstantiateChampion(GameObject previewPrefab, GameObject championPrefab, int index)
     {
         //Delete champion from platform and show new one
         if (championsOnPlatforms[platforms[index]] != null)
@@ -99,7 +104,9 @@ public class ChampionSelectionManagerbehaviour : MonoBehaviour {
             champion.transform.localScale = theScale;
         }
         //Play basic attack animation
-        champion.transform.Find("graphics").GetComponent<ChampionAnimationController>().trigBasicAttack1 = true;
+        ChampionAnimationController animCon = champion.transform.Find("graphics").GetComponent<ChampionAnimationController>();
+        animCon.statPreview = true;
+        animCon.trigBasicAttack1 = true;
 
         GameObject[] prefabs = {champion, championPrefab };
         championsOnPlatforms[platforms[index]] = prefabs;

@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: DieAtlas
+  m_EditorData:
+    textureSettings:
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 1
+      colorSpace: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+    platformSettings: []
+    packingParameters:
+      paddingPower: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    packedHash:
+      serializedVersion: 2
+      Hash: 6ac733c5175d4e17a07f059b9bd0f814
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 12
+    hashString: 6ac733c5175d4e17a07f059b9bd0f814
+    totalSpriteSurfaceArea: 5470416
+    packables:
+    - {fileID: 102900000, guid: b3815f1dfc437ad40bc94617dd4031f8, type: 3}
+    packedSpriteRenderDataKeys:
+    - d04e8164da29f754691da852e41ae1f7: 21300000
+    - 69255f6a3b1bab844b9caa33042ffaec: 21300000
+    - dc7677b9825b05c41acb2a3c39a56aba: 21300000
+    - 2fac5b90dd6b42b4a96c0160e59190fe: 21300000
+    - f9e03bdf910278f4682432fc926013af: 21300000
+    - 8bc9e4d18e9703d49a8159456d6f456c: 21300000
+    - cda69cca0b4e5d544a3f51e76a91babb: 21300000
+    - 9a8274eda08153545b64cd052185d271: 21300000
+    - 08df27f2708b0714892e9a171ebc46ff: 21300000
+    - 8786a8c5d1a000941909b544f9c3cdf1: 21300000
+    - 2bf321211a4252345b2461df589c4ddb: 21300000
+    - 68c7e116acc2ed645bee37f731c8b8da: 21300000
+    - a5bc6c43121aef54d98aa898a1eacff2: 21300000
+    - afd98ec48657cdf41ade8ea39263546c: 21300000
+    - 695f86a9d2f2baa4ebacb3958899de35: 21300000
+    - 94f900666506dcb46bfeddcce03f327d: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: d04e8164da29f754691da852e41ae1f7, type: 3}
+  - {fileID: 21300000, guid: 69255f6a3b1bab844b9caa33042ffaec, type: 3}
+  - {fileID: 21300000, guid: dc7677b9825b05c41acb2a3c39a56aba, type: 3}
+  - {fileID: 21300000, guid: 2fac5b90dd6b42b4a96c0160e59190fe, type: 3}
+  - {fileID: 21300000, guid: f9e03bdf910278f4682432fc926013af, type: 3}
+  - {fileID: 21300000, guid: 8bc9e4d18e9703d49a8159456d6f456c, type: 3}
+  - {fileID: 21300000, guid: cda69cca0b4e5d544a3f51e76a91babb, type: 3}
+  - {fileID: 21300000, guid: 9a8274eda08153545b64cd052185d271, type: 3}
+  - {fileID: 21300000, guid: 08df27f2708b0714892e9a171ebc46ff, type: 3}
+  - {fileID: 21300000, guid: 8786a8c5d1a000941909b544f9c3cdf1, type: 3}
+  - {fileID: 21300000, guid: 2bf321211a4252345b2461df589c4ddb, type: 3}
+  - {fileID: 21300000, guid: 68c7e116acc2ed645bee37f731c8b8da, type: 3}
+  - {fileID: 21300000, guid: a5bc6c43121aef54d98aa898a1eacff2, type: 3}
+  - {fileID: 21300000, guid: afd98ec48657cdf41ade8ea39263546c, type: 3}
+  - {fileID: 21300000, guid: 695f86a9d2f2baa4ebacb3958899de35, type: 3}
+  - {fileID: 21300000, guid: 94f900666506dcb46bfeddcce03f327d, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Die_11
+  - Die_10
+  - Die_13
+  - Die_12
+  - Die_15
+  - Die_14
+  - Die_08
+  - Die_09
+  - Die_06
+  - Die_07
+  - Die_04
+  - Die_05
+  - Die_02
+  - Die_03
+  - Die_00
+  - Die_01
+  m_Tag: DieAtlas
+  m_IsVariant: 0

@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: JumpAtlas
+  m_EditorData:
+    textureSettings:
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 1
+      colorSpace: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+    platformSettings: []
+    packingParameters:
+      paddingPower: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    packedHash:
+      serializedVersion: 2
+      Hash: a63fd7bd74d5c509cac8fabb2b902b66
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 12
+    hashString: a63fd7bd74d5c509cac8fabb2b902b66
+    totalSpriteSurfaceArea: 9596412
+    packables:
+    - {fileID: 102900000, guid: 3fca97adfee82f74f873808d16584d2c, type: 3}
+    packedSpriteRenderDataKeys:
+    - 2b1b17f420cc03540abc4817350a9da0: 21300000
+    - 1f0780a67775f8848ae30eb57ba6b4be: 21300000
+    - ea32654f027ee2e4f8843b7acd01531b: 21300000
+    - 0d85cba454f8b114280dd373e522a08b: 21300000
+    - 366c6e181317d2d479d189c779107e68: 21300000
+    - 589a3c63b49f216439108c06fddba53d: 21300000
+    - b5de3d42572ff9d48a377a8bfac703bd: 21300000
+    - 01cd37b5b38b8ce468a356b71deba8cf: 21300000
+    - 2cb7394c11b09c742a5923e2658f7d3f: 21300000
+    - eb5c1dcec3739284b9b73341cc4c095e: 21300000
+    - cb5726826b1abd24cbb839c096e8d888: 21300000
+    - 4c58eb13d60909a459fc9ef96adce081: 21300000
+    - df59bc9c890fca84abaa8c2c03338c93: 21300000
+    - ac1102ed2a4b46a42915e89156e12a30: 21300000
+    - 044334b92cf445444b0c970a832bd81e: 21300000
+    - 2b471684a4a89ba4dbe6237cf3da3f1d: 21300000
+    - 087b307f3fe290c42b3363ebead25fd1: 21300000
+    - 98e154629a1a76f4d8008cadb70dffcb: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 2b1b17f420cc03540abc4817350a9da0, type: 3}
+  - {fileID: 21300000, guid: 1f0780a67775f8848ae30eb57ba6b4be, type: 3}
+  - {fileID: 21300000, guid: ea32654f027ee2e4f8843b7acd01531b, type: 3}
+  - {fileID: 21300000, guid: 0d85cba454f8b114280dd373e522a08b, type: 3}
+  - {fileID: 21300000, guid: 366c6e181317d2d479d189c779107e68, type: 3}
+  - {fileID: 21300000, guid: 589a3c63b49f216439108c06fddba53d, type: 3}
+  - {fileID: 21300000, guid: b5de3d42572ff9d48a377a8bfac703bd, type: 3}
+  - {fileID: 21300000, guid: 01cd37b5b38b8ce468a356b71deba8cf, type: 3}
+  - {fileID: 21300000, guid: 2cb7394c11b09c742a5923e2658f7d3f, type: 3}
+  - {fileID: 21300000, guid: eb5c1dcec3739284b9b73341cc4c095e, type: 3}
+  - {fileID: 21300000, guid: cb5726826b1abd24cbb839c096e8d888, type: 3}
+  - {fileID: 21300000, guid: 4c58eb13d60909a459fc9ef96adce081, type: 3}
+  - {fileID: 21300000, guid: df59bc9c890fca84abaa8c2c03338c93, type: 3}
+  - {fileID: 21300000, guid: ac1102ed2a4b46a42915e89156e12a30, type: 3}
+  - {fileID: 21300000, guid: 044334b92cf445444b0c970a832bd81e, type: 3}
+  - {fileID: 21300000, guid: 2b471684a4a89ba4dbe6237cf3da3f1d, type: 3}
+  - {fileID: 21300000, guid: 087b307f3fe290c42b3363ebead25fd1, type: 3}
+  - {fileID: 21300000, guid: 98e154629a1a76f4d8008cadb70dffcb, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Jump_10
+  - Jump_11
+  - Jump_09
+  - Jump_04
+  - Jump_15
+  - Jump_08
+  - Jump_14
+  - Jump_03
+  - Jump_07
+  - Jump_02
+  - Jump_01
+  - Jump_12
+  - Jump_05
+  - Jump_16
+  - Jump_13
+  - Jump_06
+  - Jump_17
+  - Jump_00
+  m_Tag: JumpAtlas
+  m_IsVariant: 0

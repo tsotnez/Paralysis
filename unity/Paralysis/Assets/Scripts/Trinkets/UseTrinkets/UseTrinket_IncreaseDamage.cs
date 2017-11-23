@@ -8,9 +8,9 @@ using UnityEngine;
 public class UseTrinket_IncreaseDamage : UseTrinket
 {
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        DisplayName += "Damage Increased";
+        DisplayName += "Iron Dagger";
 
         GeneralDuration = 5;
         PercentageEffectAdd = 0.2f;

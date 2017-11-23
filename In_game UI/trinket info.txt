@@ -1,0 +1,14 @@
+1. When trinket is used, Removes Stunned status effect 
+2. When trinket is used, Increases movement speed by 30-40%?
+3. When trinket is used, increase damage by 20%?
+4. On chance whole dealing damage, gain damage 10% damage. 2% chance to activate on hit.
+5. On chance while receiving damage, gain movement speed by 20%. 2% chance to activate on hit.
+6. When trinket is used, gain 30 hit points.
+7. when trinket is used,  Player is immune to everything for 5 seconds.
+8. when trinket is used, player reflects enemy damage for 5 seconds.
+9. when trinket is used, apply bleed to a target. with 3-5pts tick per second.
+10. On chance when hit, stun the enemy for 3 seconds.
+
+
+Give usable trinkets 30 second cooldowns
+prevent on chance trinkets from being activated at the same time or within 10 second intervals

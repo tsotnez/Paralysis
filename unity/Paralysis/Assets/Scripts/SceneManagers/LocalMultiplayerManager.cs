@@ -38,6 +38,7 @@ public class LocalMultiplayerManager : MonoBehaviour {
 
     private void Awake()
     {
+        Resources.UnloadUnusedAssets();
         instantiatePlayers();
         buildUI();
     }
@@ -50,6 +51,7 @@ public class LocalMultiplayerManager : MonoBehaviour {
         hotbar.transform.position = new Vector3(hotbar.transform.position.x, hotbar.transform.position.y, hotbar.transform.position.z);
         hotbar.GetComponent<HotbarController>().setChampionName(player1.name);
         hotbar.GetComponent<HotbarController>().initAbilityImages(player1.name);
+        hotbar.GetComponent<HotbarController>().initTrinketImages(players[0].GetComponents<Trinket>()[0].DisplayName, players[0].GetComponents<Trinket>()[1].DisplayName);
 
         //Assign hotbar to player
         players[0].GetComponent<CharacterStats>().hotbar = hotbar.GetComponent<HotbarController>();
@@ -59,6 +61,7 @@ public class LocalMultiplayerManager : MonoBehaviour {
         hotbar2.transform.position = new Vector3(4.4f, hotbar2.transform.position.y, hotbar.transform.position.z);
         hotbar2.GetComponent<HotbarController>().setChampionName(player2.name);
         hotbar2.GetComponent<HotbarController>().initAbilityImages(player2.name);
+        hotbar2.GetComponent<HotbarController>().initTrinketImages(players[1].GetComponents<Trinket>()[0].DisplayName, players[1].GetComponents<Trinket>()[1].DisplayName);
         players[1].GetComponent<CharacterStats>().hotbar = hotbar2.GetComponent<HotbarController>();
         players[1].GetComponent<ChampionClassController>().hotbar = hotbar2.GetComponent<HotbarController>();
     }
@@ -139,7 +142,7 @@ public class LocalMultiplayerManager : MonoBehaviour {
 
         gameOverOverlay.Find("Title").GetComponent<Text>().text = winner + " won the game";
         gameOverOverlay.gameObject.SetActive(true);
-        deadPlayer.SetActive(false);
+        //deadPlayer.SetActive(false);
         Camera.main.GetComponent<CameraBehaviour>().gameRunning = false;
     }
 }

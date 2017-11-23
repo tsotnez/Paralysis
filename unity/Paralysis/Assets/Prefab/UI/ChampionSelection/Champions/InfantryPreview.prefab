@@ -165,7 +165,7 @@ MonoBehaviour:
   CharacterClass: Infantry
   CharacterSkin: basic
   GeneralSpeed: 0
-  AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000
+  AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000140000001500000016000000
   Atlasses:
   - {fileID: 4343727234628468602, guid: 6db8b0344d022854eb5766ff8efb9d9b, type: 2}
   - {fileID: 0}
@@ -187,8 +187,12 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 4343727234628468602, guid: 019f54fbc91fb884b9ce7593251b6e43, type: 2}
   - {fileID: 0}
-  AnimationLoop: 0100000100000000010000000000000000000100
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  AnimationLoop: 0100000100000000010000000000000000000100000000
   AnimationDuration:
+  - 0.5
   - 0
   - 0
   - 0
@@ -196,6 +200,8 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  - 0
+  - 0.3
   - 0
   - 0
   - 0
@@ -230,11 +236,15 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   m_Grounded: 0
   m_vSpeed: 0
   m_Speed: 0
+  statDead: 0
+  statPreview: 0
   statStunned: 0
-  statKnockedBack: 0
   statBlock: 0
   trigBasicAttack1: 0
   trigBasicAttack2: 0
@@ -243,12 +253,15 @@ MonoBehaviour:
   trigSkill2: 0
   trigSkill3: 0
   trigSkill4: 0
+  trigKnockedBack: 0
+  trigKnockedBackEnd: 0
   trigJump: 0
   trigJumpAttack: 0
   trigJumpAttackEnd: 0
   trigDash: 0
   trigDashForward: 0
   trigHit: 0
+  trigSkill1End: 0
 --- !u!212 &212134641742280446
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -278,8 +291,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1496276277
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 11298e302170cd0459241177664013ad, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

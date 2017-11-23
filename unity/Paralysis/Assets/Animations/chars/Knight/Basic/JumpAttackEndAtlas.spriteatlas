@@ -8,32 +8,30 @@ SpriteAtlas:
   m_Name: JumpAttackEndAtlas
   m_EditorData:
     textureSettings:
-      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
-      textureCompression: 0
+      textureCompression: 1
+      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
-      sRGB: 0
     platformSettings: []
     packingParameters:
-      serializedVersion: 2
-      padding: 4
+      paddingPower: 2
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 1
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: d2fcabd396870926e221379bc2c42345
+      Hash: 5f748408a7ed5ef8537ddd32047df385
     variantMultiplier: 1
     bindAsDefault: 1
-    finalFormat: 4
-    hashString: d2fcabd396870926e221379bc2c42345
-    totalSpriteSurfaceArea: 21547620
+    finalFormat: 12
+    hashString: 5f748408a7ed5ef8537ddd32047df385
+    totalSpriteSurfaceArea: 7825950
     packables:
     - {fileID: 102900000, guid: cbdd3d6ac73904c4aa421419c8f1b41b, type: 3}
     packedSpriteRenderDataKeys:

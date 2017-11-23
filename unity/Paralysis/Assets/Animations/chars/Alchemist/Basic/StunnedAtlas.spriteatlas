@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: StunnedAtlas
+  m_EditorData:
+    textureSettings:
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 1
+      colorSpace: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+    platformSettings: []
+    packingParameters:
+      paddingPower: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    packedHash:
+      serializedVersion: 2
+      Hash: dd0ad55954c2f412d70f46bdf9c9e4b4
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 12
+    hashString: dd0ad55954c2f412d70f46bdf9c9e4b4
+    totalSpriteSurfaceArea: 6462540
+    packables:
+    - {fileID: 102900000, guid: 03b4c656b4566024e8360e07e31be1ee, type: 3}
+    packedSpriteRenderDataKeys:
+    - bf6687fdda386084b82c77c141e9302d: 21300000
+    - d0f901ea388ed964ab889003ab12f8b1: 21300000
+    - ad5100df5146364469247a305350c9a4: 21300000
+    - 51d4ad286f4d07d44943b792ca2d6760: 21300000
+    - b505b5a794f55dd449157d1974f134a7: 21300000
+    - 81ac3c4d4e5b0f542b21f61186df81be: 21300000
+    - 92b7b36253436e643a33cab9cabbe7bb: 21300000
+    - 204e97183f87077418531f102bcc8897: 21300000
+    - 8523c8d9b3cdf8c4e94c56032cf543e5: 21300000
+    - 0e4b7b7e2bf71f746b3988339577b546: 21300000
+    - 51b4b48131d0f704aacb23f2dafda6ac: 21300000
+    - 2b12592d1c631564c9d357d049a3b501: 21300000
+    - 4cca0f98708398146af0f38351af6c80: 21300000
+    - 526865d094bb240489e4948f44728375: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: bf6687fdda386084b82c77c141e9302d, type: 3}
+  - {fileID: 21300000, guid: d0f901ea388ed964ab889003ab12f8b1, type: 3}
+  - {fileID: 21300000, guid: ad5100df5146364469247a305350c9a4, type: 3}
+  - {fileID: 21300000, guid: 51d4ad286f4d07d44943b792ca2d6760, type: 3}
+  - {fileID: 21300000, guid: b505b5a794f55dd449157d1974f134a7, type: 3}
+  - {fileID: 21300000, guid: 81ac3c4d4e5b0f542b21f61186df81be, type: 3}
+  - {fileID: 21300000, guid: 92b7b36253436e643a33cab9cabbe7bb, type: 3}
+  - {fileID: 21300000, guid: 204e97183f87077418531f102bcc8897, type: 3}
+  - {fileID: 21300000, guid: 8523c8d9b3cdf8c4e94c56032cf543e5, type: 3}
+  - {fileID: 21300000, guid: 0e4b7b7e2bf71f746b3988339577b546, type: 3}
+  - {fileID: 21300000, guid: 51b4b48131d0f704aacb23f2dafda6ac, type: 3}
+  - {fileID: 21300000, guid: 2b12592d1c631564c9d357d049a3b501, type: 3}
+  - {fileID: 21300000, guid: 4cca0f98708398146af0f38351af6c80, type: 3}
+  - {fileID: 21300000, guid: 526865d094bb240489e4948f44728375, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Stunned_10
+  - Stunned_11
+  - Stunned_12
+  - Stunned_13
+  - Stunned_03
+  - Stunned_02
+  - Stunned_01
+  - Stunned_00
+  - Stunned_07
+  - Stunned_06
+  - Stunned_05
+  - Stunned_04
+  - Stunned_09
+  - Stunned_08
+  m_Tag: StunnedAtlas
+  m_IsVariant: 0
