@@ -26,70 +26,82 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 7f53f62d6b9e414f8a75e2214b584d97
+      Hash: 292678a0207acea0f2032557a3e1a0ea
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 7f53f62d6b9e414f8a75e2214b584d97
-    totalSpriteSurfaceArea: 29477358
+    hashString: 292678a0207acea0f2032557a3e1a0ea
+    totalSpriteSurfaceArea: 10928531
     packables:
     - {fileID: 102900000, guid: 2ef427e14cb7e5c4bb9473de153aeb29, type: 3}
     packedSpriteRenderDataKeys:
-    - 0d863b2eac700b14b835577030e00850: 21300000
-    - 545993b558d87434b90013c4df10ab97: 21300000
-    - 51dbbcc6484fb8348bdc0f31016a8d9e: 21300000
-    - de7b0f32211f69a4aa4e5945f857963e: 21300000
-    - 5e51e6f2abe61d64eaa17da69e9204a3: 21300000
-    - 15a6b4b233c7459459f6f29762f1cdb0: 21300000
-    - 068953ea297c33d4c93f1735018220e7: 21300000
+    - 3d1e7b484ff7037468eb5f0e7c38a920: 21300000
+    - f8d814c2401605f4aa182504818594a3: 21300000
+    - 247dd65d575675643bdda653e2c923ec: 21300000
+    - 7c9b4718b2f6ea946ba4f12d9e71eebd: 21300000
     - 1318a067bbed4e04c94d5380b022d7ed: 21300000
-    - 6c5da18922a62cf439acd91b556376d9: 21300000
-    - 7ddceea9606788c46adf25e678c39e99: 21300000
+    - f6618ba7ee70db542a94d11693e6469c: 21300000
+    - 068953ea297c33d4c93f1735018220e7: 21300000
     - a44708af2878f7946999ff15137c44bd: 21300000
     - 6a36289115ae1d24095b45efa4be15b6: 21300000
-    - 247dd65d575675643bdda653e2c923ec: 21300000
-    - f6618ba7ee70db542a94d11693e6469c: 21300000
+    - 5e51e6f2abe61d64eaa17da69e9204a3: 21300000
+    - 4fe62852bae05ae47bb439b6cf44a6b8: 21300000
+    - 545993b558d87434b90013c4df10ab97: 21300000
+    - 7ddceea9606788c46adf25e678c39e99: 21300000
+    - 0d863b2eac700b14b835577030e00850: 21300000
     - 5ceba71d1bd9b1240b926b91e4400e6a: 21300000
-    - 7c9b4718b2f6ea946ba4f12d9e71eebd: 21300000
+    - de7b0f32211f69a4aa4e5945f857963e: 21300000
+    - 15a6b4b233c7459459f6f29762f1cdb0: 21300000
+    - 51dbbcc6484fb8348bdc0f31016a8d9e: 21300000
+    - 6c5da18922a62cf439acd91b556376d9: 21300000
+    - a87469a05260db24fbfcad73dd8da522: 21300000
     - 2b04bc25b5b5d8a4cabf28dbf84ab383: 21300000
     - 703473f54316a874b9ebb01f69b0baa6: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: 0d863b2eac700b14b835577030e00850, type: 3}
-  - {fileID: 21300000, guid: 545993b558d87434b90013c4df10ab97, type: 3}
-  - {fileID: 21300000, guid: 51dbbcc6484fb8348bdc0f31016a8d9e, type: 3}
-  - {fileID: 21300000, guid: de7b0f32211f69a4aa4e5945f857963e, type: 3}
-  - {fileID: 21300000, guid: 5e51e6f2abe61d64eaa17da69e9204a3, type: 3}
-  - {fileID: 21300000, guid: 15a6b4b233c7459459f6f29762f1cdb0, type: 3}
-  - {fileID: 21300000, guid: 068953ea297c33d4c93f1735018220e7, type: 3}
+  - {fileID: 21300000, guid: 3d1e7b484ff7037468eb5f0e7c38a920, type: 3}
+  - {fileID: 21300000, guid: f8d814c2401605f4aa182504818594a3, type: 3}
+  - {fileID: 21300000, guid: 247dd65d575675643bdda653e2c923ec, type: 3}
+  - {fileID: 21300000, guid: 7c9b4718b2f6ea946ba4f12d9e71eebd, type: 3}
   - {fileID: 21300000, guid: 1318a067bbed4e04c94d5380b022d7ed, type: 3}
-  - {fileID: 21300000, guid: 6c5da18922a62cf439acd91b556376d9, type: 3}
-  - {fileID: 21300000, guid: 7ddceea9606788c46adf25e678c39e99, type: 3}
+  - {fileID: 21300000, guid: f6618ba7ee70db542a94d11693e6469c, type: 3}
+  - {fileID: 21300000, guid: 068953ea297c33d4c93f1735018220e7, type: 3}
   - {fileID: 21300000, guid: a44708af2878f7946999ff15137c44bd, type: 3}
   - {fileID: 21300000, guid: 6a36289115ae1d24095b45efa4be15b6, type: 3}
-  - {fileID: 21300000, guid: 247dd65d575675643bdda653e2c923ec, type: 3}
-  - {fileID: 21300000, guid: f6618ba7ee70db542a94d11693e6469c, type: 3}
+  - {fileID: 21300000, guid: 5e51e6f2abe61d64eaa17da69e9204a3, type: 3}
+  - {fileID: 21300000, guid: 4fe62852bae05ae47bb439b6cf44a6b8, type: 3}
+  - {fileID: 21300000, guid: 545993b558d87434b90013c4df10ab97, type: 3}
+  - {fileID: 21300000, guid: 7ddceea9606788c46adf25e678c39e99, type: 3}
+  - {fileID: 21300000, guid: 0d863b2eac700b14b835577030e00850, type: 3}
   - {fileID: 21300000, guid: 5ceba71d1bd9b1240b926b91e4400e6a, type: 3}
-  - {fileID: 21300000, guid: 7c9b4718b2f6ea946ba4f12d9e71eebd, type: 3}
+  - {fileID: 21300000, guid: de7b0f32211f69a4aa4e5945f857963e, type: 3}
+  - {fileID: 21300000, guid: 15a6b4b233c7459459f6f29762f1cdb0, type: 3}
+  - {fileID: 21300000, guid: 51dbbcc6484fb8348bdc0f31016a8d9e, type: 3}
+  - {fileID: 21300000, guid: 6c5da18922a62cf439acd91b556376d9, type: 3}
+  - {fileID: 21300000, guid: a87469a05260db24fbfcad73dd8da522, type: 3}
   - {fileID: 21300000, guid: 2b04bc25b5b5d8a4cabf28dbf84ab383, type: 3}
   - {fileID: 21300000, guid: 703473f54316a874b9ebb01f69b0baa6, type: 3}
   m_PackedSpriteNamesToIndex:
-  - Die_11
-  - Die_10
-  - Die_13
-  - Die_12
-  - Die_15
-  - Die_14
-  - Die_17
+  - Die_18
+  - Die_19
+  - Die_04
+  - Die_03
   - Die_16
-  - Die_08
-  - Die_09
+  - Die_05
+  - Die_17
   - Die_06
   - Die_07
-  - Die_04
-  - Die_05
+  - Die_15
+  - Die_20
+  - Die_10
+  - Die_09
+  - Die_11
   - Die_02
-  - Die_03
+  - Die_12
+  - Die_14
+  - Die_13
+  - Die_08
+  - Die_21
   - Die_00
   - Die_01
   m_Tag: DieAtlas
