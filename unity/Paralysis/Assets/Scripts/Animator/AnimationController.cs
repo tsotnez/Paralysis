@@ -254,7 +254,7 @@ public abstract class AnimationController : MonoBehaviour
                 else
                     spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + AtlasNameAddition + "_" + i.ToString());
 
-                Destroy(spr);
+                Destroy(spr); //Unload sprite 
                 spr = null;
                 Resources.UnloadAsset(tex); //Unload texture from RAM after it was shown for long enough
                 tex = null;

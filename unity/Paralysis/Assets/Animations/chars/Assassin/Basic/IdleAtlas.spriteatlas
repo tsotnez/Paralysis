@@ -11,7 +11,7 @@ SpriteAtlas:
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
-      textureCompression: 0
+      textureCompression: 1
       colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
@@ -26,11 +26,11 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 3486a66aa0b9916b190e273e00d2ca85
+      Hash: c2786cf3f7549e977c2cb417d8f39c1c
     variantMultiplier: 1
     bindAsDefault: 1
-    finalFormat: 4
-    hashString: 3486a66aa0b9916b190e273e00d2ca85
+    finalFormat: 12
+    hashString: c2786cf3f7549e977c2cb417d8f39c1c
     totalSpriteSurfaceArea: 3323400
     packables:
     - {fileID: 102900000, guid: 24e1eb0c75ad529439050d8b06aab8f0, type: 3}
