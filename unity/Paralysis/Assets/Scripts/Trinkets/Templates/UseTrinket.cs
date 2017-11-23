@@ -11,9 +11,8 @@ public abstract class UseTrinket : Trinket
     protected float PercentageEffectAdd;
     protected int AmountEffect;
 
-    protected virtual void Awake()
+    protected virtual void Start()
     {
-        DisplayName = "(TRINKET) ";
         GeneralCooldown = 60;
 
         TrinketRunning = false;

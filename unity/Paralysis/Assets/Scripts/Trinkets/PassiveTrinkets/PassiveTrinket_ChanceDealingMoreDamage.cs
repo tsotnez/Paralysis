@@ -9,9 +9,9 @@ using UnityEngine;
 class PassiveTrinket_ChanceDealingMoreDamage : PassiveTrinket
 {
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        DisplayName += "Extra Damage";
+        DisplayName += "Bronze Dagger";
         GeneralDuration = 3;
         PercentageEffectAdd = 0.2f;
         TrinketTriggerType = TriggerType.DealDamage;

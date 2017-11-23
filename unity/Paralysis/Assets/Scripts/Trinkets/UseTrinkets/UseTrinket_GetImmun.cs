@@ -8,10 +8,9 @@ using UnityEngine;
 public class UseTrinket_GetImmun : UseTrinket
 {
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        DisplayName += "Invincibility";
-
+        DisplayName += "Red Gem Shards";
         GeneralDuration = 2;
         PercentageEffectAdd = 0f;
     }

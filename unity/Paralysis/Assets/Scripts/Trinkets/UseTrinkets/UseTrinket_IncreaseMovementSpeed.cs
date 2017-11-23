@@ -8,9 +8,9 @@ using UnityEngine;
 public class UseTrinket_IncreaseMovementSpeed : UseTrinket
 {
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        DisplayName += "Movementspeed Increased";
+        DisplayName += "Hermes Boots";
 
         GeneralDuration = 5;
         PercentageEffectAdd = 0.2f;

@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: b7fd1463e3349204b99f254fcd0d389c
+timeCreated: 1511370619
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 40
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: AR ESSENCE
+  fontNames:
+  - AR ESSENCE
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 1
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

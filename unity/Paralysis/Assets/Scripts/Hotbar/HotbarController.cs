@@ -34,6 +34,12 @@ public class HotbarController : MonoBehaviour {
         basicAttackImage.sprite = Resources.Load<Sprite>("Sprites/AbilityImages/" + name + "/basic attack");
     }
 
+    public void initTrinketImages (string trinket1, string trinket2)
+    {
+        trinket1Image.sprite = Resources.Load<Sprite>("Sprites/AbilityImages/Trinkets/" + trinket1);
+        trinket2Image.sprite = Resources.Load<Sprite>("Sprites/AbilityImages/Trinkets/" + trinket2);
+    }
+
     public void setOnCooldown(AnimationController.AnimatorStates skill, float seconds)
     {
         Image skillImage = null;

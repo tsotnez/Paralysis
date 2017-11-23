@@ -8,9 +8,9 @@ using UnityEngine;
 public class UseTrinket_ReflectDamage : UseTrinket
 {
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        DisplayName += "Reflect Damage";
+        DisplayName += "Strange Mirror";
 
         GeneralDuration = 2;
         PercentageEffectAdd = 0f;

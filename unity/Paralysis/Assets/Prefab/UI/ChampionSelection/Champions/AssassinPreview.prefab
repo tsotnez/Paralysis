@@ -166,7 +166,7 @@ MonoBehaviour:
   CharacterClass: assassin
   CharacterSkin: basic
   GeneralSpeed: 0
-  AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000
+  AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000140000001500000016000000
   Atlasses:
   - {fileID: 4343727234628468602, guid: 043681e887c53954e990ca179fe0d8b1, type: 2}
   - {fileID: 4343727234628468602, guid: 98d622f74a152e843bb52e3560a2d018, type: 2}
@@ -188,7 +188,10 @@ MonoBehaviour:
   - {fileID: 4343727234628468602, guid: 9075431dc456cc740853a1d9bf837569, type: 2}
   - {fileID: 4343727234628468602, guid: d6be4dd066f99324397f7831ca5406ef, type: 2}
   - {fileID: 0}
-  AnimationLoop: 0101000100000000010000000000000000000000
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  AnimationLoop: 0101000100000000010000000000000000000000000000
   AnimationDuration:
   - 0.5
   - 0.5
@@ -210,7 +213,9 @@ MonoBehaviour:
   - 0.4
   - 0.5
   - 0
-  EndAnimationType: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  - 0
+  - 0
+  - 0
   EndAtlasses:
   - {fileID: 0}
   - {fileID: 0}
@@ -232,13 +237,14 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  EndAnimationLoop: 00
-  EndAnimationDuration: []
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   m_Grounded: 0
   m_vSpeed: 0
   m_Speed: 0
+  statDead: 0
   statStunned: 0
-  statKnockedBack: 0
   statBlock: 0
   trigBasicAttack1: 0
   trigBasicAttack2: 0
@@ -247,10 +253,13 @@ MonoBehaviour:
   trigSkill2: 0
   trigSkill3: 0
   trigSkill4: 0
+  trigKnockedBack: 0
+  trigKnockedBackEnd: 0
   trigJump: 0
   trigJumpAttack: 0
   trigJumpAttackEnd: 0
   trigDash: 0
+  trigDashForward: 0
   trigHit: 0
   trigDoubleJump: 0
 --- !u!212 &212178966560292566
