@@ -10,7 +10,6 @@ public class TeamAllocationManager : MonoBehaviour {
     public static int maxPlayers = 2;
 
     public GameObject playerPrefab;
-    public Sprite xBox;
     public Sprite keyboard;
     public Transform neutral;
 

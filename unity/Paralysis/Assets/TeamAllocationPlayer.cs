@@ -34,13 +34,13 @@ public class TeamAllocationPlayer : MonoBehaviour {
     {
         if (lastValue == 0)
         {
-            if (Input.GetAxis("Trinket1_Xbox" + playerNumber.ToString()) > 0) // D pad left
+            if (Input.GetAxis("Horizontal_Xbox" + playerNumber.ToString()) > 0) // D pad left
                 switchToTeam(1);
-            else if (Input.GetAxis("Trinket2_Xbox" + playerNumber.ToString()) < 0) // d pad right
+            else if (Input.GetAxis("Horizontal_Xbox" + playerNumber.ToString()) < 0) // d pad right
                 switchToTeam(-1);
         }
         //Both are same axis
-        lastValue = Input.GetAxis("Trinket2_Xbox" + playerNumber.ToString());
+        lastValue = Input.GetAxis("Horizontal_Xbox" + playerNumber.ToString());
     }
 
     void checkKeyboardInput()
