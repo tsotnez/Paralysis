@@ -78,18 +78,42 @@ public class InfantryContoller : ChampionClassController
     private IEnumerator DoSkill1_Hook()
     {
         stats.immovable = true;
-        skill1_hook = true;
 
-        // Try to find a target
-        RaycastHit2D hit = TryToHit(skill1_var.range);
-        if (hit)
+        // calculate direction
+        int direction;
+        if (m_FacingRight) direction = 1;
+        else direction = -1;
+
+        // generate GameObject
+        GameObject goProjectile = Skill1_Hook;
+        InfantryHookBehaviour projectile = goProjectile.GetComponent<InfantryHookBehaviour>();
+
+        // assign variables to projectile Script
+        projectile.direction = direction;
+        projectile.creator = this.gameObject;
+        projectile.whatToHit = m_whatToHit;
+        projectile.range = skill1_var.range;
+        projectile.speed = new Vector2(9, 0);
+        projectile.effect = Skill.SkillEffect.nothing;
+        projectile.explodeOnHit = false;
+        projectile.damage = skill1_var.damage;
+        projectile.effectDuration = skill1_var.effectDuration;
+
+        goProjectile = Instantiate(goProjectile, transform.position + new Vector3(1f * direction, 0.3f), new Quaternion(goProjectile.transform.rotation.x,
+            goProjectile.transform.rotation.y, goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));
+
+        projectile = goProjectile.GetComponent<InfantryHookBehaviour>();
+
+        yield return new WaitUntil(() => projectile.hitted != 0);
+
+        if (projectile.hitted == 1)
         {
             // get the target and stun it
-            CharacterStats target = hit.transform.gameObject.GetComponent<CharacterStats>();
+            CharacterStats target = projectile.targetStats;
             target.StartStunned();
 
             // Throw chain-hook to target
-            float DistanceToTarget = hit.distance;
+            float DistanceToTarget = Math.Abs(target.transform.position.x - this.transform.position.x);
 
             // Calculate correct direction
             if (!m_FacingRight)
@@ -98,14 +122,20 @@ public class InfantryContoller : ChampionClassController
                 skill1_hook_speed = Math.Abs(skill1_hook_speed);
 
             // Add a vertical force to the player.
+            skill1_hook = true;
             animCon.trigSkill1 = true;
-            m_Rigidbody2D.velocity = Vector2.zero;
-            m_Rigidbody2D.AddForce(new Vector2(0, (68 * DistanceToTarget))); // Distance 5.8f --> AddForce 400f --> 68 * Distance
 
-            // Wait until force is applied
-            yield return new WaitUntil(() => !animCon.m_Grounded);
-            // Wait while not on ground
-            yield return new WaitUntil(() => animCon.m_Grounded);
+            if (DistanceToTarget > 1)
+            {
+                m_Rigidbody2D.velocity = Vector2.zero;
+                m_Rigidbody2D.AddForce(new Vector2(0, (68 * DistanceToTarget))); // Distance 5.8f --> AddForce 400f --> 68 * Distance
+
+                // Wait until force is applied
+                yield return new WaitUntil(() => !animCon.m_Grounded);
+                // Wait while not on ground
+                yield return new WaitUntil(() => animCon.m_Grounded);
+            }
+
             ((InfantryAnimationController)animCon).trigSkill1End = true;
             Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
 

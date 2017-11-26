@@ -35,7 +35,7 @@ public abstract class UseTrinket : Trinket
             // Start trinket action
             StartCoroutine(ManageTrinketDuration(TrinketOwnerStats));
             // Start Cooldown
-            StartCoroutine(manageCooldown());
+            StartCoroutine(ManageCooldown());
             return true;
         }
         return false;
@@ -43,7 +43,7 @@ public abstract class UseTrinket : Trinket
 
     protected abstract IEnumerator ManageTrinketDuration(CharacterStats TrinketOwnerStats);
 
-    private IEnumerator manageCooldown()
+    private IEnumerator ManageCooldown()
     {
         GetComponent<ChampionClassController>().hotbar.greyOutTrinket(trinketNumber);
         yield return new WaitUntil(() => !TrinketRunning);

@@ -48,7 +48,7 @@ public class ProjectileBehaviour : MonoBehaviour {
             GetComponent<Rigidbody2D>().velocity = new Vector2(speed.x * direction, speed.y);
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    protected void OnCollisionEnter2D(Collision2D collision)
     {
 
         if (collision.collider.gameObject != creator)
@@ -87,7 +87,7 @@ public class ProjectileBehaviour : MonoBehaviour {
         }
     }
 
-    void Explode()
+    protected void Explode()
     {
         //Plays explosion effect and destroys the bullet
         if(explosionPrefab != null)
@@ -95,7 +95,7 @@ public class ProjectileBehaviour : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    IEnumerator GetStuck()
+    protected IEnumerator GetStuck()
     {
         //Stop moving and destroy after 5 seconds 
         stuck = true;
