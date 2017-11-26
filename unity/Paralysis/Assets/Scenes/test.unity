@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverOverlay: {fileID: 1124908811}
-  defaultPlayer1: {fileID: 1128103333960868, guid: e6f7d777ee6c44d448705ae811eebec4,
+  defaultPlayer1: {fileID: 1654434425598688, guid: 1c93aba00e9725e409b2a5a0a2b0e223,
     type: 2}
   defaultPlayer2: {fileID: 1903508196159970, guid: 0639eac30390dec449afda643c7fa53c,
     type: 2}
@@ -1162,7 +1162,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960, y: -803.9994}
+  m_AnchoredPosition: {x: 960, y: -803.99963}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &779978032
