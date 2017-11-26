@@ -8,29 +8,31 @@ SpriteAtlas:
   m_Name: WalkAtlas
   m_EditorData:
     textureSettings:
+      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 1
-      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
+      sRGB: 0
     platformSettings: []
     packingParameters:
-      paddingPower: 2
+      serializedVersion: 2
+      padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 1
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: a16ae3f077313ee9e44580cc48bb4563
+      Hash: 297c83d76d0cd70d9b0561eccf579b7c
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 12
-    hashString: a16ae3f077313ee9e44580cc48bb4563
+    hashString: 297c83d76d0cd70d9b0561eccf579b7c
     totalSpriteSurfaceArea: 8132760
     packables:
     - {fileID: 102900000, guid: 6802dabb0e379dc4496513bfc69d9f3f, type: 3}

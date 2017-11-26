@@ -45,6 +45,11 @@ public class MainMenuButton : MonoBehaviour {
         SceneManager.LoadScene("Scenes/TeamAllocation");
     }
 
+    public void loadSettingsInMainMenu()
+    {
+
+    }
+
     public void quit()
     {
         Application.Quit();

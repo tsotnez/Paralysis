@@ -8,29 +8,31 @@ SpriteAtlas:
   m_Name: DieAtlas
   m_EditorData:
     textureSettings:
+      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 1
-      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
+      sRGB: 0
     platformSettings: []
     packingParameters:
-      paddingPower: 2
+      serializedVersion: 2
+      padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 1
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 7d3be8408a9851a9785e7b6535c93d5b
+      Hash: 509416d408c9e493b4a3bef88537c8d0
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 12
-    hashString: 7d3be8408a9851a9785e7b6535c93d5b
+    hashString: 509416d408c9e493b4a3bef88537c8d0
     totalSpriteSurfaceArea: 23776200
     packables:
     - {fileID: 102900000, guid: c0708f79900cecd4483f963b5467313e, type: 3}
