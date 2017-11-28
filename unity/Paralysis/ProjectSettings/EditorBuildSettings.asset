@@ -6,10 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/Settings.unity
+    path: 
     guid: be7fdb1ce55854ba9b146bacc3a43307
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
+    guid: a9e4ef32df6695b42937c11b73951ea4
+  - enabled: 1
+    path: Assets/Scenes/TeamAllocation.unity
+    guid: cf754e69100108e47a83f29409c0eaca
+  - enabled: 0
+    path: 
     guid: 4b81a761a17f94f9b943ffa789d7f479
   - enabled: 1
     path: Assets/Scenes/ChampionSelect1v1.unity

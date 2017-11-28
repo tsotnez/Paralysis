@@ -8,29 +8,31 @@ SpriteAtlas:
   m_Name: JumpAtlas
   m_EditorData:
     textureSettings:
+      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 1
-      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
+      sRGB: 0
     platformSettings: []
     packingParameters:
-      paddingPower: 2
+      serializedVersion: 2
+      padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 0
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: d29b9065d8d7b8bfeb2f70b7c4547351
+      Hash: c8a4e408ac81dc4472bd3687cd03ac42
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 12
-    hashString: d29b9065d8d7b8bfeb2f70b7c4547351
+    hashString: c8a4e408ac81dc4472bd3687cd03ac42
     totalSpriteSurfaceArea: 11684362
     packables:
     - {fileID: 102900000, guid: 6ae567db95347f44d8554facaed52e78, type: 3}

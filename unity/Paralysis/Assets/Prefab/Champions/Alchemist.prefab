@@ -690,7 +690,7 @@ MonoBehaviour:
   CharacterClass: alchemist
   CharacterSkin: basic
   GeneralSpeed: 1
-  AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000140000001500000016000000
+  AnimationType: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000
   Atlasses:
   - {fileID: 4343727234628468602, guid: 6f9ab5a9b58e1ba449137b0f456744c4, type: 2}
   - {fileID: 4343727234628468602, guid: 3cde8648868586c4484123875602ab48, type: 2}
@@ -711,11 +711,10 @@ MonoBehaviour:
   - {fileID: 4343727234628468602, guid: 05c58bdc0c0f8c145bdff8ee7846598c, type: 2}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 4343727234628468602, guid: 275404c37b55f3b41945eb90f408115d, type: 2}
   - {fileID: 0}
   - {fileID: 4343727234628468602, guid: af76a006fc08941479f0b5953f818241, type: 2}
   - {fileID: 4343727234628468602, guid: 740cc6d86c3fe7d45835fb8732d2a49f, type: 2}
-  AnimationLoop: 0000000000000000000000000000000000000000000000
+  AnimationLoop: 00000000000000000000000000000000000000000000
   AnimationDuration:
   - 0
   - 0
@@ -739,7 +738,29 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 0
+  StartAtlasses:
+  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: 275404c37b55f3b41945eb90f408115d, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   EndAtlasses:
   - {fileID: 0}
   - {fileID: 4343727234628468602, guid: a5c165dc2a7a3fa49a161e1dc46acaf7, type: 2}
@@ -763,11 +784,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
   m_Grounded: 0
   m_vSpeed: 0
   m_Speed: 0
   statDead: 0
+  statPreview: 0
   statStunned: 0
   statBlock: 0
   trigBasicAttack1: 0

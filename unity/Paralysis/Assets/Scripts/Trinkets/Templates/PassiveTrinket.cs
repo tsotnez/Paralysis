@@ -45,7 +45,7 @@ public abstract class PassiveTrinket : Trinket
                 // Start trinket action
                 StartCoroutine(ManageTrinketDuration(TrinketOwnerStats));
                 // Start Cooldown
-                StartCoroutine(manageCooldown());
+                StartCoroutine(ManageCooldown());
                 return true;
             }
         }
@@ -55,7 +55,7 @@ public abstract class PassiveTrinket : Trinket
 
     protected abstract IEnumerator ManageTrinketDuration(CharacterStats TrinketOwnerStats);
 
-    private IEnumerator manageCooldown()
+    private IEnumerator ManageCooldown()
     {
         GetComponent<ChampionClassController>().hotbar.greyOutTrinket(trinketNumber); // grey out for time its active
         yield return new WaitUntil(() => !TrinketRunning);

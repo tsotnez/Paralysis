@@ -8,29 +8,31 @@ SpriteAtlas:
   m_Name: FallAtlas
   m_EditorData:
     textureSettings:
+      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 1
-      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
+      sRGB: 0
     platformSettings: []
     packingParameters:
-      paddingPower: 2
+      serializedVersion: 2
+      padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 0
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 95140f988c56546b01656cd1bea02cfd
+      Hash: e5e8f398a9ddfd08962c9cd10654224b
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 12
-    hashString: 95140f988c56546b01656cd1bea02cfd
+    hashString: e5e8f398a9ddfd08962c9cd10654224b
     totalSpriteSurfaceArea: 11455200
     packables:
     - {fileID: 102900000, guid: f4c690e038d316c4188c047a9b37c3a0, type: 3}

@@ -8,29 +8,31 @@ SpriteAtlas:
   m_Name: BlockAtlas
   m_EditorData:
     textureSettings:
+      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 1
-      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
+      sRGB: 0
     platformSettings: []
     packingParameters:
-      paddingPower: 2
+      serializedVersion: 2
+      padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 1
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: d5bc462f473a35800e93182acb4c8ee9
+      Hash: 99e88323b0c5a7b01eed46545d33a719
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 12
-    hashString: d5bc462f473a35800e93182acb4c8ee9
+    hashString: 99e88323b0c5a7b01eed46545d33a719
     totalSpriteSurfaceArea: 20814600
     packables:
     - {fileID: 102900000, guid: 6eb0c02b71cf86f4c80d4fe7ad747a9b, type: 3}
