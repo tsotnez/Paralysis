@@ -2,23 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileBehaviour : MonoBehaviour {
-    bool stuck = false;
-    bool falling = false; //True if projectile has reched maxRange already
-    Coroutine fallingRoutine = null;
-
-    public bool explodeOnHit = false; //If true, the projectile will play an explosion effect on hit. It well stuck into the Object it hit otherwise
+public class ProjectileBehaviour : MonoBehaviour
+{
+    // Public properties
     public GameObject creator;
-
-    public Vector2 speed = new Vector2(7, 0); //Max Speed of the bullet
-    public int direction = 0; //Direction to travel in, -1 if left, 1 if right
+    public LayerMask whatToHit;
+    public bool explodeOnHit = false;                                   //If true, the projectile will play an explosion effect on hit. It well stuck into the Object it hit otherwise
     public GameObject explosionPrefab;
-    public float range = 5; //Distance to travel before dying
+    public Vector2 speed = new Vector2(7, 0);                           //Max Speed of the bullet
+    public float range = 5;                                             //Distance to travel before dying
+    public int direction = 0;                                           //Direction to travel in, -1 if left, 1 if right
     public Skill.SkillEffect effect = Skill.SkillEffect.nothing;
     public int effectDuration = 1;
     public int damage = 0;
-    public LayerMask whatToHit;
-    Vector3 startPos;
+
+    // Private/Protected properties
+    protected Vector3 startPos;
+    bool stuck = false;
+    bool falling = false;                                               //True if projectile has reched maxRange already
+    Coroutine fallingRoutine = null;
 
     private void Start()
     {
@@ -26,7 +28,7 @@ public class ProjectileBehaviour : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Update()
+    protected void Update()
     {
         if (!stuck && !falling)
         {
@@ -42,9 +44,9 @@ public class ProjectileBehaviour : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    protected void FixedUpdate()
     {
-        if(!stuck && !falling)
+        if (!stuck && !falling)
             GetComponent<Rigidbody2D>().velocity = new Vector2(speed.x * direction, speed.y);
     }
 
@@ -71,7 +73,7 @@ public class ProjectileBehaviour : MonoBehaviour {
                     case Skill.SkillEffect.bleed:
                         targetStats.StartBleeding(effectDuration);
                         break;
-                }      
+                }
                 creator.GetComponent<CharacterStats>().DealDamage(targetStats, damage, false);
                 if (!explodeOnHit)
                 {
@@ -90,7 +92,7 @@ public class ProjectileBehaviour : MonoBehaviour {
     protected void Explode()
     {
         //Plays explosion effect and destroys the bullet
-        if(explosionPrefab != null)
+        if (explosionPrefab != null)
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
