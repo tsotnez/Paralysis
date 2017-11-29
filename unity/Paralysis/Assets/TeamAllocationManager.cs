@@ -120,10 +120,10 @@ public class TeamAllocationManager : MonoBehaviour {
                     ChampionSelectionManagerbehaviour.inputPlayer2 = activePlayers.First(x => x.playerNumber == UserControl.PlayerNumbers.Player2).inputDevice;
                     ChampionSelectionManagerbehaviour.team1 = team1.Select(x => x.playerNumber).ToArray();
                     ChampionSelectionManagerbehaviour.team2 = team2.Select(x => x.playerNumber).ToArray();
-                    SceneManager.LoadScene("ChampionSelect1v1");
+                    SceneManager.LoadScene("Scenes/LocalChampionSelection");
                     break;
                 case 4:
-                    SceneManager.LoadScene("ChampionSelect2v2");
+                    SceneManager.LoadScene("Scenes/LocalChampionSelection");
                     break;
             }
         }

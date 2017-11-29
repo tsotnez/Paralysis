@@ -43,8 +43,8 @@ public class MainMenuManager : MonoBehaviour {
     /// <param name="nextPage"></param>
     public void switchToPage(CanvasGroup nextPage)
     {
-        enablePage(nextPage);
         disablePage(currentPage);
+        enablePage(nextPage);
 
         currentPage = nextPage;
     }
