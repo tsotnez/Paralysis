@@ -98,6 +98,7 @@ public class InfantryContoller : ChampionClassController
         projectile.explodeOnHit = false;
         projectile.damage = skill1_var.damage;
         projectile.effectDuration = skill1_var.effectDuration;
+        projectile.ChainPrefab = Skill1_Chain;
 
         goProjectile = Instantiate(goProjectile, transform.position + new Vector3(1f * direction, 0.3f), new Quaternion(goProjectile.transform.rotation.x,
             goProjectile.transform.rotation.y, goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));

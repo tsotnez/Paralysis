@@ -22,7 +22,7 @@ public class ProjectileBehaviour : MonoBehaviour
     bool falling = false;                                               //True if projectile has reched maxRange already
     Coroutine fallingRoutine = null;
 
-    private void Start()
+    protected void Start()
     {
         startPos = transform.position; //Save starting position
     }
@@ -110,7 +110,7 @@ public class ProjectileBehaviour : MonoBehaviour
         Destroy(gameObject);
     }
 
-    IEnumerator FallToGround()
+    protected IEnumerator FallToGround()
     {
         //Move towards the ground while rotating 
         falling = true;
