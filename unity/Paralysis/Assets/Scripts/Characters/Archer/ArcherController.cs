@@ -19,6 +19,7 @@ public class ArcherController : ChampionClassController
     // Use this for initialization
     void Start()
     {
+        m_FacingRight = true;
         animCon = graphics.GetComponent<ArcherAnimationController>();
 
         basicAttack1_var = new RangedSkill(AnimationController.AnimatorStates.BasicAttack1, false, new Vector2(9, 0), standartArrowPrefab, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, 6);

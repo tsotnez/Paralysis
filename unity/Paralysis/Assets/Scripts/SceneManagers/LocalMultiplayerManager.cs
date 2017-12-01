@@ -8,20 +8,13 @@ public class LocalMultiplayerManager : MonoBehaviour {
     //GameOver overlay
     public Transform gameOverOverlay;
 
-    //Prefabs for players
-    public static GameObject player1 = null;
-    public static UserControl.InputDevice inputP1 = UserControl.InputDevice.XboxController;
-    public static Trinket.Trinkets trinket1Player1;
-    public static Trinket.Trinkets trinket2Player1;
-
-    public static GameObject player2 = null;
-    public static UserControl.InputDevice inputP2 = UserControl.InputDevice.KeyboardMouse;
-    public static Trinket.Trinkets trinket1Player2;
-    public static Trinket.Trinkets trinket2Player2;
+    //Team Arrays containing Players
+    public static Player[] team1;
+    public static Player[] team2;
 
     //Redundant variables so they can be assigned in the inspector (static ones cant)
-    public GameObject defaultPlayer1 = null;
-    public GameObject defaultPlayer2 = null;
+    public Player defaultPlayer1 = null;
+    public Player defaultPlayer2 = null;
 
     //Hotbar prefab
     public GameObject hotbarPrefab;
@@ -49,8 +42,8 @@ public class LocalMultiplayerManager : MonoBehaviour {
 
         GameObject hotbar = Instantiate(hotbarPrefab, parent, false);
         hotbar.transform.position = new Vector3(hotbar.transform.position.x, hotbar.transform.position.y, hotbar.transform.position.z);
-        hotbar.GetComponent<HotbarController>().setChampionName(player1.name);
-        hotbar.GetComponent<HotbarController>().initAbilityImages(player1.name);
+        hotbar.GetComponent<HotbarController>().setChampionName(team1[0].ChampionPrefab.name);
+        hotbar.GetComponent<HotbarController>().initAbilityImages(team1[0].ChampionPrefab.name);
         hotbar.GetComponent<HotbarController>().initTrinketImages(players[0].GetComponents<Trinket>()[0].DisplayName, players[0].GetComponents<Trinket>()[1].DisplayName);
 
         //Assign hotbar to player
@@ -59,8 +52,8 @@ public class LocalMultiplayerManager : MonoBehaviour {
 
         GameObject hotbar2 = Instantiate(hotbarPrefab, parent, false);
         hotbar2.transform.position = new Vector3(4.4f, hotbar2.transform.position.y, hotbar.transform.position.z);
-        hotbar2.GetComponent<HotbarController>().setChampionName(player2.name);
-        hotbar2.GetComponent<HotbarController>().initAbilityImages(player2.name);
+        hotbar2.GetComponent<HotbarController>().setChampionName(team2[0].ChampionPrefab.name);
+        hotbar2.GetComponent<HotbarController>().initAbilityImages(team2[0].ChampionPrefab.name);
         hotbar2.GetComponent<HotbarController>().initTrinketImages(players[1].GetComponents<Trinket>()[0].DisplayName, players[1].GetComponents<Trinket>()[1].DisplayName);
         players[1].GetComponent<CharacterStats>().hotbar = hotbar2.GetComponent<HotbarController>();
         players[1].GetComponent<ChampionClassController>().hotbar = hotbar2.GetComponent<HotbarController>();
@@ -68,30 +61,28 @@ public class LocalMultiplayerManager : MonoBehaviour {
 
     private void instantiatePlayers()
     {
-        if (player1 == null)
-            player1 = defaultPlayer1;
-        if (player2 == null)
-            player2 = defaultPlayer2;
+        //Defaults for debugging
+        if (team1 == null)
+            team1 = new Player[] {defaultPlayer1};
+        if (team2 == null)
+            team2 = new Player[] {defaultPlayer2};
 
-        if (player1 != null && player2 != null)
+        if (team1 != null && team2 != null)
         {
-            //Disable debug buttons
-            GameObject.Find("Button_changeCharacter").SetActive(false);
-            GameObject.Find("Button_switchMode").SetActive(false);
-
             //Player1
-            GameObject instPlayer1 = Instantiate(player1, spawnPlayer1.position, Quaternion.identity);
-            instPlayer1.GetComponent<UserControl>().inputDevice = inputP1;
+            GameObject instPlayer1 = Instantiate(team1[0].ChampionPrefab, spawnPlayer1.position, Quaternion.identity);
+            instPlayer1.GetComponent<UserControl>().inputDevice = team1[0].inputDevice;
             instPlayer1.layer = 11;
 
             LayerMask whatToHitP1 = new LayerMask();
             whatToHitP1 |= (1 << 12);
 
             instPlayer1.GetComponent<ChampionClassController>().m_whatToHit = whatToHitP1;
+            instPlayer1.GetComponent<UserControl>().playerNumber = team1[0].playerNumber;
 
             //Trinkets P1
-            instPlayer1.AddComponent(Trinket.trinketsForNames[trinket1Player1]);
-            instPlayer1.AddComponent(Trinket.trinketsForNames[trinket2Player1]);
+            instPlayer1.AddComponent(Trinket.trinketsForNames[team1[0].trinket1]);
+            instPlayer1.AddComponent(Trinket.trinketsForNames[team1[0].trinket2]);
             instPlayer1.GetComponent<ChampionClassController>().Trinket1 = instPlayer1.GetComponents<Trinket>()[0];
             instPlayer1.GetComponent<ChampionClassController>().Trinket2 = instPlayer1.GetComponents<Trinket>()[1];
             instPlayer1.GetComponent<ChampionClassController>().Trinket1.trinketNumber = 1;
@@ -100,7 +91,7 @@ public class LocalMultiplayerManager : MonoBehaviour {
             Camera.main.GetComponent<CameraBehaviour>().changeTarget(instPlayer1.transform);
 
             //Player 2
-            GameObject instPlayer2 = Instantiate(player2, spawnPlayer2.position, Quaternion.identity);
+            GameObject instPlayer2 = Instantiate(team2[0].ChampionPrefab, spawnPlayer2.position, Quaternion.identity);
             instPlayer2.layer = 12;
 
             //Change player2 prefab to be an enemy to player 1
@@ -108,14 +99,14 @@ public class LocalMultiplayerManager : MonoBehaviour {
             whatToHitP2 |= (1 << 11);
 
             instPlayer2.GetComponent<ChampionClassController>().m_whatToHit = whatToHitP2;
-            instPlayer2.GetComponent<UserControl>().inputDevice = inputP2;
-            instPlayer2.GetComponent<UserControl>().playerNumber = UserControl.PlayerNumbers.Player2;
+            instPlayer2.GetComponent<UserControl>().inputDevice = team2[0].inputDevice;
+            instPlayer2.GetComponent<UserControl>().playerNumber = team2[0].playerNumber;
 
             Camera.main.GetComponent<CameraBehaviour>().switchToMultiplayer(instPlayer2.GetComponent<Transform>());
 
             //Trinkets P2
-            instPlayer2.AddComponent(Trinket.trinketsForNames[trinket1Player2]);
-            instPlayer2.AddComponent(Trinket.trinketsForNames[trinket2Player2]);
+            instPlayer2.AddComponent(Trinket.trinketsForNames[team2[0].trinket1]);
+            instPlayer2.AddComponent(Trinket.trinketsForNames[team2[0].trinket2]);
             instPlayer2.GetComponent<ChampionClassController>().Trinket1 = instPlayer2.GetComponents<Trinket>()[0];
             instPlayer2.GetComponent<ChampionClassController>().Trinket2 = instPlayer2.GetComponents<Trinket>()[1];
             instPlayer2.GetComponent<ChampionClassController>().Trinket1.trinketNumber = 1;

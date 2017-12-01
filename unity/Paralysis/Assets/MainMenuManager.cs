@@ -19,6 +19,7 @@ public class MainMenuManager : MonoBehaviour {
             StandaloneInputModule eventSystem = FindObjectOfType<StandaloneInputModule>();
             eventSystem.verticalAxis = "Vertical_XboxPlayer1";
             eventSystem.horizontalAxis = "Horizontal_XboxPlayer1";
+            eventSystem.submitButton = "Skill4_XboxPlayer1";
         }
 
 

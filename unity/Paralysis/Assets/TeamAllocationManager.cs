@@ -8,12 +8,13 @@ using UnityEngine.SceneManagement;
 public class TeamAllocationManager : MonoBehaviour {
 
     public static int maxPlayers = 2;
-
+    
     public GameObject playerPrefab;
     public Sprite keyboard;
     public Transform neutral;
 
     string[] connectedControllers;
+
 
 	// Use this for initialization
 	void Start () {
@@ -116,10 +117,8 @@ public class TeamAllocationManager : MonoBehaviour {
             switch (maxPlayers)
             {
                 case 2:
-                    ChampionSelectionManagerbehaviour.inputPlayer1 = activePlayers.First(x => x.playerNumber == UserControl.PlayerNumbers.Player1).inputDevice;
-                    ChampionSelectionManagerbehaviour.inputPlayer2 = activePlayers.First(x => x.playerNumber == UserControl.PlayerNumbers.Player2).inputDevice;
-                    ChampionSelectionManagerbehaviour.team1 = team1.Select(x => x.playerNumber).ToArray();
-                    ChampionSelectionManagerbehaviour.team2 = team2.Select(x => x.playerNumber).ToArray();
+                    LocalChampionSelectionManager.team1 = team1.Select(x => new Player(x.playerNumber, x.inputDevice, 1)).ToArray();
+                    LocalChampionSelectionManager.team2 = team2.Select(x => new Player(x.playerNumber, x.inputDevice, 2)).ToArray();
                     SceneManager.LoadScene("Scenes/LocalChampionSelection");
                     break;
                 case 4:
