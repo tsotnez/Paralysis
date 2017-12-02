@@ -59,6 +59,7 @@ public class AssassinController : ChampionClassController
     {
         if (CanPerformAction(true) && CanPerformAttack() && skill2_var.notOnCooldown && stats.LoseStamina(stamina_Skill2))
         {
+            hotbar.StartCoroutine(hotbar.flashBlack(skill2_var.name));
             if (invisible) StopInvisible();
             if (invisRoutine != null) StopCoroutine(invisRoutine);
             invisRoutine = StartCoroutine(ManageInvisibility());
@@ -72,6 +73,7 @@ public class AssassinController : ChampionClassController
     {
         if (CanPerformAction(true) && CanPerformAttack() && skill3_var.notOnCooldown && stats.LoseStamina(stamina_Skill3))
         {
+            hotbar.StartCoroutine(hotbar.flashBlack(skill3_var.name));
             if (invisible) StopInvisible();
             StartCoroutine(ShadowStepHit());
         }

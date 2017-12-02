@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using System;
 
 public class TeamAllocationManager : MonoBehaviour {
 
@@ -24,8 +24,17 @@ public class TeamAllocationManager : MonoBehaviour {
         float yOffset = 0;
         int playerNumber = 1;
 
+        //Switch to controller Controls if a controller is connected
+        if (Array.Exists(Input.GetJoystickNames(), x => x == "Controller (XBOX 360 For Windows)"))
+        {
+            StandaloneInputModule eventSystem = FindObjectOfType<StandaloneInputModule>();
+            eventSystem.verticalAxis = "Vertical_XboxPlayer1";
+            eventSystem.horizontalAxis = "Horizontal_XboxPlayer1";
+            eventSystem.submitButton = "Skill4_XboxPlayer1";
+        }
+
         //Adding players for every controller connected
-        foreach(string controller in connectedControllers.ToList())
+        foreach (string controller in connectedControllers.ToList())
         {
             if (!string.IsNullOrEmpty(controller) && playerNumber <= maxPlayers)
             {

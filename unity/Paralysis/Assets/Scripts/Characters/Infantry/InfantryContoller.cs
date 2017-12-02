@@ -71,6 +71,7 @@ public class InfantryContoller : ChampionClassController
         // Validate if skill can be performed
         if (CanPerformAction(true) && CanPerformAttack() && skill1_var.notOnCooldown && stats.LoseStamina(skill1_var.staminaCost))
         {
+            hotbar.StartCoroutine(hotbar.flashBlack(skill1_var.name));
             StartCoroutine(DoSkill1_Hook());
         }
     }

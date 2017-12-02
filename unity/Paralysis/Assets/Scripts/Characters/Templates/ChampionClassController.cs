@@ -509,6 +509,7 @@ public abstract class ChampionClassController : MonoBehaviour
             {
                 // set animation trigger
                 animationVar = true;
+                hotbar.StartCoroutine(hotbar.flashBlack(skillToPerform.name));
                 // do hit by coroutine
                 StartCoroutine(DoMeleeSkill_Hit(skillToPerform));
             }
@@ -605,6 +606,7 @@ public abstract class ChampionClassController : MonoBehaviour
         {
             // set animation trigger
             animationVar = true;
+            hotbar.StartCoroutine(hotbar.flashBlack(skillToPerform.name));
             // do hit by coroutine
             StartCoroutine(DoRangeSkill_Hit(skillToPerform));
         }

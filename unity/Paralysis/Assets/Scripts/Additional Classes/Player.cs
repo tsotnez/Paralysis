@@ -25,11 +25,11 @@ public class Player {
     /// <summary>
     /// Type of first trinket
     /// </summary>
-    public Trinket.Trinkets trinket1;
+    public Trinket.Trinkets trinket1 = Trinket.Trinkets.UseTrinket_GetImmun;
     /// <summary>
     /// Type of second trinket
     /// </summary>
-    public Trinket.Trinkets trinket2;
+    public Trinket.Trinkets trinket2 = Trinket.Trinkets.UseTrinket_GetImmun;
 
     public Player(UserControl.PlayerNumbers pPlayerNumber, UserControl.InputDevice pInputDevice, int pTeam)
     {

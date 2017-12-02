@@ -66,6 +66,7 @@ public class ArcherController : ChampionClassController
         if (CanPerformAction(true) && CanPerformAttack() && skill2_var.notOnCooldown && stats.LoseStamina(stamina_Skill2))
         {
             //Puts down a trap
+            hotbar.StartCoroutine(hotbar.flashBlack(skill2_var.name));
             animCon.trigSkill2 = true;
             Invoke("PlaceTrap", delay_Skill2);
         }
@@ -92,6 +93,7 @@ public class ArcherController : ChampionClassController
     {
         if (CanPerformAction(true) && CanPerformAttack() && skill4_var.notOnCooldown && stats.LoseStamina(stamina_Skill4))
         {
+            hotbar.StartCoroutine(hotbar.flashBlack(skill4_var.name));
             PlaceTrap();
             //Jump back while being invincible
             if (disengageRoutine != null)

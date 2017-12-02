@@ -9,6 +9,10 @@ public class LocalChampionSelectionManager : MonoBehaviour {
 
     public static Player[] team2;
     public static Player[] team1;
+
+    /// <summary>
+    /// All players
+    /// </summary>
     private Player[] players;
 
     public CanvasGroup additionalPlatforms;
@@ -58,12 +62,12 @@ public class LocalChampionSelectionManager : MonoBehaviour {
         GameObject[] platformGroup;
         bool flip;
 
-        if(target.TeamNumber == 1) //If player is in team 2, use platforms of team 2 and flip the sprite
+        if(target.TeamNumber == 1) 
         {
             platformGroup = platformsTeam1;
             flip = false;
         }
-        else
+        else //If player is in team 2, use platforms of team 2 and flip the sprite
         {
             platformGroup = platformsTeam2;
             flip = true;
@@ -78,6 +82,7 @@ public class LocalChampionSelectionManager : MonoBehaviour {
             }
             else
             {
+                //Use first platform
                 DestroyAllChildren(platformGroup[0].transform);
                 ShowPrefab(Champion, platformGroup[0].transform, flip);
             }
@@ -133,9 +138,24 @@ public class LocalChampionSelectionManager : MonoBehaviour {
         Champion.SetActive(true);
     }
 
-    public void setTrinket(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName)
+    public void setTrinket1(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName)
     {
         players.First(x => x.playerNumber == targetPlayer).trinket1 = trinketName;
+    }
+
+    public void setTrinket2(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName)
+    {
+        players.First(x => x.playerNumber == targetPlayer).trinket2 = trinketName;
+    }
+
+    public void setTrinket(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName, Trinket.Trinkets toOverwrite)
+    {
+        Player target = players.First(x => x.playerNumber == targetPlayer);
+
+        if (target.trinket1 == toOverwrite)
+            target.trinket1 = trinketName;
+        else
+            target.trinket2 = trinketName;
     }
 
     /// <summary>
@@ -196,12 +216,11 @@ public class LocalChampionSelectionManager : MonoBehaviour {
 
     public void startGame()
     {
-        //Hardcode for debugging purposes
-        team1[0].trinket1 = Trinket.Trinkets.PassiveTrinket_ChanceDealingMoreDamage;
-        team1[0].trinket2 = Trinket.Trinkets.PassiveTrinket_SpeedWhenHitted;
-        team2[0].trinket1 = Trinket.Trinkets.PassiveTrinket_ChanceDealingMoreDamage;
-        team2[0].trinket2 = Trinket.Trinkets.PassiveTrinket_SpeedWhenHitted;
-
+        //Check if every player has selected a champion and 2 different trinkets
+        foreach (Player player in players)
+            if (player.ChampionPrefab == null || player.trinket1 == player.trinket2)
+                return;
+        
         LocalMultiplayerManager.team1 = team1;
         LocalMultiplayerManager.team2 = team2;
 

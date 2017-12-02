@@ -92,6 +92,7 @@ public class KnightController : ChampionClassController
         // Validate if skill can be performed
         if (CanPerformAction(true) && CanPerformAttack() && skill2_var.notOnCooldown && stats.HasSufficientStamina(stamina_Skill2))
         {
+            hotbar.StartCoroutine(hotbar.flashBlack(skill2_var.name));
             // set animation
             animCon.trigSkill2 = true;
 

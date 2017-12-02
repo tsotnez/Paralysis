@@ -42,8 +42,13 @@ public class HotbarController : MonoBehaviour {
 
     public void setOnCooldown(AnimationController.AnimatorStates skill, float seconds)
     {
-        Image skillImage = null;
+        Image skillImage = getImageForSkill(skill);
+        StartCoroutine(countDown(skillImage, seconds)); //Start coroutine
+    }
 
+    private Image getImageForSkill(AnimationController.AnimatorStates skill)
+    {
+        Image skillImage = null;
         switch (skill) //Get image 
         {
             case AnimationController.AnimatorStates.Skill1:
@@ -58,11 +63,14 @@ public class HotbarController : MonoBehaviour {
             case AnimationController.AnimatorStates.Skill4:
                 skillImage = spell4Image;
                 break;
-            default:
-                return;
+            case AnimationController.AnimatorStates.BasicAttack1:
+            case AnimationController.AnimatorStates.BasicAttack2:
+            case AnimationController.AnimatorStates.BasicAttack3:
+            case AnimationController.AnimatorStates.JumpAttack:
+                skillImage = basicAttackImage;
+                break;
         }
-
-        StartCoroutine(countDown(skillImage, seconds)); //Start coroutine
+        return skillImage;
     }
 
     //Sets trinket on Cooldown
@@ -98,11 +106,10 @@ public class HotbarController : MonoBehaviour {
         text.text = seconds.ToString();
         text.gameObject.SetActive(true);
 
-        spell.color = overlayWhenCooldown; //Enable overlay to grey out skill
-
         float counter = seconds;
         while(counter > 0) //Count down
         {
+            spell.color = overlayWhenCooldown;
             text.text = counter.ToString();
             yield return new WaitForSeconds(1);
             counter--;
@@ -111,5 +118,16 @@ public class HotbarController : MonoBehaviour {
         spell.color = Color.white; //Reset image and text
         text.gameObject.SetActive(false);
 
+    }
+
+    //The image flashes black for a short time, highlighting that the skill/trinket was used
+    public IEnumerator flashBlack(AnimationController.AnimatorStates skill)
+    {
+        Image spell = getImageForSkill(skill);
+        Color colorBefore = spell.color;
+
+        spell.color = new Color(0, 0, 0, .5f);
+        yield return new WaitForSeconds(.15f);
+        spell.color = colorBefore;
     }
 }
