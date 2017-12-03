@@ -11,7 +11,6 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
     public bool currentlySelected = false;
     [HideInInspector]
     public int selectedPos = 0; //Order in which this button was selected (The second selected will be removed when selecting a different trinket)
-    private bool ignoreDeselect = false; //True when this button was already highlighted by another player
 
     private Image img;
     private Image portrait;
@@ -35,8 +34,7 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
         img = GetComponent<Image>();
         portrait = transform.parent.Find("portrait").GetComponent<Image>();
         text = GetComponentInChildren<Text>();
-
-        switch(GetComponent<EventSystemGroup>().EventSystemID) //Set player number depending on eventsystemID
+        switch (GetComponent<EventSystemGroup>().EventSystemID) //Set player number depending on eventsystemID
         {
             case 1:
                 TargetPlayerNumber = UserControl.PlayerNumbers.Player1;
@@ -54,6 +52,20 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
     }
 
     /// <summary>
+    /// Checks if the current Champion/Trinket is also hovered over by another player and should therefore not transition to the shadow image.
+    /// </summary>
+    /// <returns></returns>
+    private bool isSelectedByOtherPlayer()
+    {
+        foreach (LocalCharacterSelectionSlotButton button in transform.parent.GetComponentsInChildren<LocalCharacterSelectionSlotButton>())
+        {
+            if (button != this && (button.img.enabled || button.currentlySelected))
+                return true;
+        }
+        return false;
+    }
+
+    /// <summary>
     /// Lose currently selected status
     /// </summary>
     public void loseFocus()
@@ -61,7 +73,8 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
         currentlySelected = false;
         text.enabled = false;
         selectedPos = 0;
-        transform.parent.Find("portrait").GetComponent<LocalChampionSelectionPortrait>().switchTo(0);
+        if(!isSelectedByOtherPlayer())
+            transform.parent.Find("portrait").GetComponent<LocalChampionSelectionPortrait>().switchTo(0);
     }
 
     /// <summary>
@@ -71,10 +84,19 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
     {
         img.enabled = true;
         LocalChampionSelectionPortrait portrait = transform.parent.Find("portrait").gameObject.GetComponent<LocalChampionSelectionPortrait>();
-        if (portrait.highlighted)
-            ignoreDeselect = true;
-        else
-            portrait.switchTo(1);
+        portrait.switchTo(1);
+
+        switch (targetValue)
+        {
+            case PlayerTargetValue.Trinket:
+                showTrinketPopUp();
+                break;
+            case PlayerTargetValue.Champion:
+                showSkillPopUps();
+                break;
+            case PlayerTargetValue.Skin:
+                break;
+        }
     }
 
     /// <summary>
@@ -83,9 +105,80 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
     public void hideFrame()
     {
         img.enabled = false;
-        if(!ignoreDeselect && !currentlySelected) //Only transition to shadow image if no other player higlights this button
+        if(!isSelectedByOtherPlayer() && !currentlySelected) //Only transition to shadow image if no other player higlights this button
             transform.parent.Find("portrait").GetComponent<LocalChampionSelectionPortrait>().switchTo(0);
-        ignoreDeselect = false;
+
+        switch (targetValue)
+        {
+            case PlayerTargetValue.Trinket:
+                transform.parent.parent.parent.Find("PopUpDesc").gameObject.SetActive(false);
+                break;
+            case PlayerTargetValue.Champion:
+                transform.parent.parent.parent.Find("PopUps").gameObject.SetActive(false);
+                break;
+            case PlayerTargetValue.Skin:
+                break;
+        }
+    }
+
+    private void showTrinketPopUp()
+    {
+        Transform popup = transform.parent.parent.parent.Find("PopUpDesc");
+
+        popup.Find("TrinketName").gameObject.GetComponent<Text>().text = ChampionAndTrinketDatabase.TrinketNames[trinket];
+        popup.Find("Desc").gameObject.GetComponent<Text>().text = ChampionAndTrinketDatabase.TrinketDescriptions[trinket];
+
+        popup.gameObject.SetActive(true);
+    }
+
+    private void showSkillPopUps()
+    {
+        Transform popup = transform.parent.parent.parent.Find("PopUps");
+        Transform lore = popup.transform.Find("PopUpLore");
+        Transform skills = popup.transform.Find("PopUpSkills");
+
+        //Set Values for popups. Reading from championDatabase
+        var dictionary = ChampionAndTrinketDatabase.database[Champion.GetComponent<ChampionClassController>().className];
+
+        lore.Find("ChampionName").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Name].ToUpper();
+        lore.Find("Lore").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Lore];
+
+        //Set Skill Images and text
+        setSkillInfos(skills, dictionary);
+
+        popup.gameObject.SetActive(true);
+    }
+
+    private void setSkillInfos(Transform skills, Dictionary<ChampionAndTrinketDatabase.Keys, string> dictionary)
+    {
+        int counter = 1;
+        foreach (Transform preview in skills)
+        {
+            switch (counter)
+            {
+                case 1:
+                    preview.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/AbilityImages/" + Champion.GetComponent<ChampionClassController>().className + "/Skill1");
+                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill1Name];
+                    preview.Find("Desc").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill1Text];
+                    break;
+                case 2:
+                    preview.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/AbilityImages/" + Champion.GetComponent<ChampionClassController>().className + "/Skill2");
+                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill2Name];
+                    preview.Find("Desc").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill2Text];
+                    break;
+                case 3:
+                    preview.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/AbilityImages/" + Champion.GetComponent<ChampionClassController>().className + "/Skill3");
+                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill3Name];
+                    preview.Find("Desc").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill3Text];
+                    break;
+                case 4:
+                    preview.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/AbilityImages/" + Champion.GetComponent<ChampionClassController>().className + "/Skill4");
+                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill4Name];
+                    preview.Find("Desc").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill4Text];
+                    break;
+            }
+            counter++;
+        }
     }
 
     /// <summary>

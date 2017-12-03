@@ -796,7 +796,7 @@ MonoBehaviour:
   cooldown_Skill4: 20
   Trinket1: {fileID: 0}
   Trinket2: {fileID: 0}
-  className: Infantry
+  className: 3
   m_FacingRight: 1
   dashing: 0
   blocking: 0

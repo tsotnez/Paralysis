@@ -267,7 +267,6 @@ public abstract class AnimationController : MonoBehaviour
         while (true)
         {
             Resources.UnloadUnusedAssets(); // Unload assets with no references
-            Texture2D tex = null;
             Sprite spr = null;
             // play each animation of the atlas
             for (int i = 0; i < atlas.spriteCount; i++)
@@ -279,9 +278,6 @@ public abstract class AnimationController : MonoBehaviour
 
                 Destroy(spr); //Unload sprite 
                 spr = null;
-                Resources.UnloadAsset(tex); //Unload texture from RAM after it was shown for long enough
-                tex = null;
-                tex = spriteRenderer.sprite.texture;
                 spr = spriteRenderer.sprite;
                 yield return new WaitForSeconds(delay);
             }

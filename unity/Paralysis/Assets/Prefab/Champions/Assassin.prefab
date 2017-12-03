@@ -528,7 +528,7 @@ MonoBehaviour:
   cooldown_Skill4: 25
   Trinket1: {fileID: 0}
   Trinket2: {fileID: 0}
-  className: Assassin
+  className: 0
   m_FacingRight: 1
   dashing: 0
   blocking: 0

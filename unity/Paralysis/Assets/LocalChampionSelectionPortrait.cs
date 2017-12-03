@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class LocalChampionSelectionPortrait : MonoBehaviour {
 
     private Image img;
-    public bool highlighted = false;
 
     public Sprite Default;
     public Sprite Hover;
@@ -25,12 +24,10 @@ public class LocalChampionSelectionPortrait : MonoBehaviour {
         if (target == 0)
         {
             img.sprite = Default;
-            highlighted = false;
         }
         else if (target == 1)
         {
             img.sprite = Hover;
-            highlighted = true;
         }
     }
 

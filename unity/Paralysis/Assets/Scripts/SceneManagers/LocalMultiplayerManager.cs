@@ -129,7 +129,7 @@ public class LocalMultiplayerManager : MonoBehaviour {
     public void gameOver(GameObject deadPlayer)
     {
         //Get the one player who is not dead
-        string winner = players.Where(x => x != deadPlayer).ToArray()[0].GetComponent<ChampionClassController>().className;
+        string winner = players.Where(x => x != deadPlayer).ToArray()[0].GetComponent<ChampionClassController>().className.ToString();
 
         gameOverOverlay.Find("Title").GetComponent<Text>().text = winner + " won the game";
         gameOverOverlay.gameObject.SetActive(true);

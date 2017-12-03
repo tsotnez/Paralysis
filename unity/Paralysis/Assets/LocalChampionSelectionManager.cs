@@ -15,7 +15,11 @@ public class LocalChampionSelectionManager : MonoBehaviour {
     /// </summary>
     private Player[] players;
 
+    //Containing 2 additional platforms for 4v4
     public CanvasGroup additionalPlatforms;
+
+    //Ready Button
+    public GameObject readyButton;
 
     public GameObject[] eventSystems;
     public GameObject[] firstSelecteds;
@@ -48,13 +52,25 @@ public class LocalChampionSelectionManager : MonoBehaviour {
         players = team1.Concat(team2).ToArray();
         setUpEventSystems();
 	}
-	
+
+    private void Update()
+    {
+        //Show Ready button only when everything is selected
+        bool allSelected = true;
+        //Check if every player has selected a champion and 2 different trinkets
+        foreach (Player player in players)
+            if (player.ChampionPrefab == null || player.trinket1 == player.trinket2)
+                allSelected = false;
+
+        readyButton.SetActive(allSelected);
+    }
+
     /// <summary>
     /// Sets the champion value for player object and shows a preview for the champion
     /// </summary>
     /// <param name="targetPlayer"></param>
     /// <param name="Champion"></param>
-	public void setChampion(UserControl.PlayerNumbers targetPlayer, GameObject Champion)
+    public void setChampion(UserControl.PlayerNumbers targetPlayer, GameObject Champion)
     {
         Player target = players.First(x => x.playerNumber == targetPlayer); //Get player object out of array
         target.ChampionPrefab = Champion;

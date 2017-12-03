@@ -127,7 +127,7 @@ public abstract class ChampionClassController : MonoBehaviour
     public Trinket Trinket1;
     public Trinket Trinket2;
 
-    public string className;
+    public ChampionAndTrinketDatabase.Champions className;
     public bool m_FacingRight = true;                                       // For determining which way the player is currently facing.
     public bool dashing = false;                                            // true while dashing
     public bool blocking = false;                                           // Is the character blocking?
