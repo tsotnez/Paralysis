@@ -105,17 +105,21 @@ public class HotbarController : MonoBehaviour {
         Text text = spell.transform.Find("CooldownText").GetComponent<Text>(); //Make cooldown text visible
         text.text = seconds.ToString();
         text.gameObject.SetActive(true);
+        Image overlay = spell.transform.Find("Overlay").gameObject.GetComponent<Image>();
+        overlay.enabled = true;
+
+        float totalCooldown = seconds;
 
         float counter = seconds;
         while(counter > 0) //Count down
         {
-            spell.color = overlayWhenCooldown;
+            overlay.fillAmount = counter / seconds;
             text.text = counter.ToString();
             yield return new WaitForSeconds(1);
             counter--;
         }
 
-        spell.color = Color.white; //Reset image and text
+        overlay.enabled = false;
         text.gameObject.SetActive(false);
 
     }
