@@ -11,7 +11,7 @@ SpriteAtlas:
       serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
-      maxTextureSize: 2048
+      maxTextureSize: 1024
       textureCompression: 1
       filterMode: 1
       generateMipMaps: 0
@@ -28,12 +28,12 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: d4c5be6c88bac5ea454af48f629729b5
+      Hash: b8f2cd933bb315655968163d2d9b5377
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 12
-    hashString: d4c5be6c88bac5ea454af48f629729b5
-    totalSpriteSurfaceArea: 13713408
+    hashString: b8f2cd933bb315655968163d2d9b5377
+    totalSpriteSurfaceArea: 15728640
     packables:
     - {fileID: 102900000, guid: 29486001b6f0f0b48b1e429edffcbdac, type: 3}
     packedSpriteRenderDataKeys:
@@ -46,7 +46,6 @@ SpriteAtlas:
     - 9a7412d72db04464492797bf7583807e: 21300000
     - 420a9efe6373c3e4d97569b523db3745: 21300000
     - 21b7d1093db9d8747af829369adda0e8: 21300000
-    - ee146b16916d4c7498918aab64534441: 21300000
     - 177c8fcecbc1b434a9c5a7314900728f: 21300000
     - 90edcba49d712c740babf3f2374d66d2: 21300000
     - 4562b45afebe01841bddc9ed835546ec: 21300000
@@ -64,7 +63,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 9a7412d72db04464492797bf7583807e, type: 3}
   - {fileID: 21300000, guid: 420a9efe6373c3e4d97569b523db3745, type: 3}
   - {fileID: 21300000, guid: 21b7d1093db9d8747af829369adda0e8, type: 3}
-  - {fileID: 21300000, guid: ee146b16916d4c7498918aab64534441, type: 3}
   - {fileID: 21300000, guid: 177c8fcecbc1b434a9c5a7314900728f, type: 3}
   - {fileID: 21300000, guid: 90edcba49d712c740babf3f2374d66d2, type: 3}
   - {fileID: 21300000, guid: 4562b45afebe01841bddc9ed835546ec, type: 3}
@@ -81,7 +79,6 @@ SpriteAtlas:
   - Skill2_03
   - Skill2_14
   - Skill2_02
-  - Skill2_15
   - Skill2_01
   - Skill2_00
   - Skill2_07

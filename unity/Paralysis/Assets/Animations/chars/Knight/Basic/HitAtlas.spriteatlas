@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: HitAtlas
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 1024
+      textureCompression: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    packedHash:
+      serializedVersion: 2
+      Hash: 2095b442d52793d1010041566822611f
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 12
+    hashString: 2095b442d52793d1010041566822611f
+    totalSpriteSurfaceArea: 15728640
+    packables:
+    - {fileID: 102900000, guid: 0df9aafae7e97074f8b233f73897b0ed, type: 3}
+    packedSpriteRenderDataKeys:
+    - e81eaa4a3a8642447acc41aaa72f3e5b: 21300000
+    - 40fe7a0a44a5d6247b1dfbcfa290bc97: 21300000
+    - 721f45d3964c064479904709e55d6004: 21300000
+    - b3cde2a4b03746149af55164fd9a5cca: 21300000
+    - 946e6f2e9f9a42046ad3fa8130749bae: 21300000
+    - ca56bc3289e94214cb03413cf4d55c17: 21300000
+    - f14421f00cb020b4ea808a1db85631f7: 21300000
+    - 60c82d9949c6d1b4e94033bb12aeea57: 21300000
+    - bc16c54e76d6c844ca1698cebfc172ad: 21300000
+    - f33d76d5f8cb3634bab5aea48ce6dfe5: 21300000
+    - 890d92a2b623c3d498a3820ee07439ed: 21300000
+    - 0b61f33851d5f8245bd5cfa55d72fbe9: 21300000
+    - 388a3dd68fd4a7742b2d533cfecf2b7f: 21300000
+    - 7d5ea6c05d461ea488193fc8c4373241: 21300000
+    - 1cd16c9450cbfb745bf4fbbebb5de698: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: e81eaa4a3a8642447acc41aaa72f3e5b, type: 3}
+  - {fileID: 21300000, guid: 40fe7a0a44a5d6247b1dfbcfa290bc97, type: 3}
+  - {fileID: 21300000, guid: 721f45d3964c064479904709e55d6004, type: 3}
+  - {fileID: 21300000, guid: b3cde2a4b03746149af55164fd9a5cca, type: 3}
+  - {fileID: 21300000, guid: 946e6f2e9f9a42046ad3fa8130749bae, type: 3}
+  - {fileID: 21300000, guid: ca56bc3289e94214cb03413cf4d55c17, type: 3}
+  - {fileID: 21300000, guid: f14421f00cb020b4ea808a1db85631f7, type: 3}
+  - {fileID: 21300000, guid: 60c82d9949c6d1b4e94033bb12aeea57, type: 3}
+  - {fileID: 21300000, guid: bc16c54e76d6c844ca1698cebfc172ad, type: 3}
+  - {fileID: 21300000, guid: f33d76d5f8cb3634bab5aea48ce6dfe5, type: 3}
+  - {fileID: 21300000, guid: 890d92a2b623c3d498a3820ee07439ed, type: 3}
+  - {fileID: 21300000, guid: 0b61f33851d5f8245bd5cfa55d72fbe9, type: 3}
+  - {fileID: 21300000, guid: 388a3dd68fd4a7742b2d533cfecf2b7f, type: 3}
+  - {fileID: 21300000, guid: 7d5ea6c05d461ea488193fc8c4373241, type: 3}
+  - {fileID: 21300000, guid: 1cd16c9450cbfb745bf4fbbebb5de698, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Hit_09
+  - Hit_12
+  - Hit_08
+  - Hit_13
+  - Hit_10
+  - Hit_11
+  - Hit_05
+  - Hit_04
+  - Hit_07
+  - Hit_14
+  - Hit_06
+  - Hit_01
+  - Hit_00
+  - Hit_03
+  - Hit_02
+  m_Tag: HitAtlas
+  m_IsVariant: 0

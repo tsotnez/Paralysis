@@ -11,7 +11,7 @@ SpriteAtlas:
       serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
-      maxTextureSize: 2048
+      maxTextureSize: 1024
       textureCompression: 1
       filterMode: 1
       generateMipMaps: 0
@@ -28,47 +28,134 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: bab925cf40b9462b440b5e0258535c99
+      Hash: 34dd6ce40884a3f65ab2bb192e81c5c0
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 12
-    hashString: bab925cf40b9462b440b5e0258535c99
-    totalSpriteSurfaceArea: 8586039
+    hashString: 34dd6ce40884a3f65ab2bb192e81c5c0
+    totalSpriteSurfaceArea: 41943040
     packables:
     - {fileID: 102900000, guid: 93b6808412dcdb2468ab7af7ca021073, type: 3}
     packedSpriteRenderDataKeys:
+    - 33746d68db8c7c4488be1fef433c8230: 21300000
     - b4a5760aa5471694297203d84349df75: 21300000
+    - 11bf37cb52a3152409fcb311214c57d4: 21300000
+    - 3bcef82b792b1f446bd8b4f45f8ad0ba: 21300000
+    - 03dae51f9790b384aa77aa0fe696f749: 21300000
+    - 079bd9f40924b224aaf2e7cdaa30579a: 21300000
+    - 2b2937a898929bf43b1d1a859cfaa755: 21300000
+    - 6059a2cb667686d419a097d41e6b3aa0: 21300000
+    - cc95d95246e4c9a41b4db4de82d6e112: 21300000
+    - 8c5df4b1a237eb446be75cb491f42b05: 21300000
+    - 786d86a526dd44b4caf61433624639bb: 21300000
+    - 60006154d0fdf504b87092592a2daace: 21300000
+    - b82c3a593f90e5d46b877ec710ebdf53: 21300000
+    - 93f0fed51f2a73742bbdee472940f52c: 21300000
+    - 40a996476ee822840824b42a48a24cb4: 21300000
+    - 765922dcb9418444085b928a6b2abe8c: 21300000
+    - a33d3ea1e9216344caae15e401eb193d: 21300000
+    - ed0e24a954cd8904fa4582381354bb88: 21300000
+    - d27bb042b7d9b264093b906739b69edb: 21300000
+    - a8f82f75a445ae347b96e7ccf8c76ae5: 21300000
+    - 129200c4f52afaa4aa7440e428f22e7c: 21300000
     - 645aff3f3723e7d47a9c2905385a8c6a: 21300000
+    - e2f5ae3a7922a4545b951be7eb5c050a: 21300000
+    - d8facc7aae5d763468d49c2e1e1fb839: 21300000
     - c1a543393896e884695fed515d4332e2: 21300000
+    - 776731a77c9f2e340bb18d6c9ffdb0ee: 21300000
+    - ff950e8af74ba604db0d0c3010d9f844: 21300000
     - d9b18082d9abe5d429edafc74cebdbb9: 21300000
+    - 44c7ea967b2e49042bd0797c1ce388b8: 21300000
+    - 186a393de06ba2c4892671e6a96cfa33: 21300000
     - b708e5a7a5fd601408662beff6a67a8f: 21300000
+    - 0ff67024002d7e14680bd6e24a028160: 21300000
     - 9166bc10dcfecae4fbd7f45352e33ec4: 21300000
+    - d9f2b798ae74c84428ac2b49a6050d3d: 21300000
     - b326adb4ae25be642ae604a19042574b: 21300000
+    - 991b59198da4c40428909ccbc5215179: 21300000
     - f276b06993aefcc48b049724b94d616c: 21300000
     - db4435da850190847bdfd2bdc9cf377b: 21300000
     - 75257ebacf650674c97f4c5ef5e2daef: 21300000
     - cd04f734e99ed8b4481ece91fb1ab479: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 33746d68db8c7c4488be1fef433c8230, type: 3}
   - {fileID: 21300000, guid: b4a5760aa5471694297203d84349df75, type: 3}
+  - {fileID: 21300000, guid: 11bf37cb52a3152409fcb311214c57d4, type: 3}
+  - {fileID: 21300000, guid: 3bcef82b792b1f446bd8b4f45f8ad0ba, type: 3}
+  - {fileID: 21300000, guid: 03dae51f9790b384aa77aa0fe696f749, type: 3}
+  - {fileID: 21300000, guid: 079bd9f40924b224aaf2e7cdaa30579a, type: 3}
+  - {fileID: 21300000, guid: 2b2937a898929bf43b1d1a859cfaa755, type: 3}
+  - {fileID: 21300000, guid: 6059a2cb667686d419a097d41e6b3aa0, type: 3}
+  - {fileID: 21300000, guid: cc95d95246e4c9a41b4db4de82d6e112, type: 3}
+  - {fileID: 21300000, guid: 8c5df4b1a237eb446be75cb491f42b05, type: 3}
+  - {fileID: 21300000, guid: 786d86a526dd44b4caf61433624639bb, type: 3}
+  - {fileID: 21300000, guid: 60006154d0fdf504b87092592a2daace, type: 3}
+  - {fileID: 21300000, guid: b82c3a593f90e5d46b877ec710ebdf53, type: 3}
+  - {fileID: 21300000, guid: 93f0fed51f2a73742bbdee472940f52c, type: 3}
+  - {fileID: 21300000, guid: 40a996476ee822840824b42a48a24cb4, type: 3}
+  - {fileID: 21300000, guid: 765922dcb9418444085b928a6b2abe8c, type: 3}
+  - {fileID: 21300000, guid: a33d3ea1e9216344caae15e401eb193d, type: 3}
+  - {fileID: 21300000, guid: ed0e24a954cd8904fa4582381354bb88, type: 3}
+  - {fileID: 21300000, guid: d27bb042b7d9b264093b906739b69edb, type: 3}
+  - {fileID: 21300000, guid: a8f82f75a445ae347b96e7ccf8c76ae5, type: 3}
+  - {fileID: 21300000, guid: 129200c4f52afaa4aa7440e428f22e7c, type: 3}
   - {fileID: 21300000, guid: 645aff3f3723e7d47a9c2905385a8c6a, type: 3}
+  - {fileID: 21300000, guid: e2f5ae3a7922a4545b951be7eb5c050a, type: 3}
+  - {fileID: 21300000, guid: d8facc7aae5d763468d49c2e1e1fb839, type: 3}
   - {fileID: 21300000, guid: c1a543393896e884695fed515d4332e2, type: 3}
+  - {fileID: 21300000, guid: 776731a77c9f2e340bb18d6c9ffdb0ee, type: 3}
+  - {fileID: 21300000, guid: ff950e8af74ba604db0d0c3010d9f844, type: 3}
   - {fileID: 21300000, guid: d9b18082d9abe5d429edafc74cebdbb9, type: 3}
+  - {fileID: 21300000, guid: 44c7ea967b2e49042bd0797c1ce388b8, type: 3}
+  - {fileID: 21300000, guid: 186a393de06ba2c4892671e6a96cfa33, type: 3}
   - {fileID: 21300000, guid: b708e5a7a5fd601408662beff6a67a8f, type: 3}
+  - {fileID: 21300000, guid: 0ff67024002d7e14680bd6e24a028160, type: 3}
   - {fileID: 21300000, guid: 9166bc10dcfecae4fbd7f45352e33ec4, type: 3}
+  - {fileID: 21300000, guid: d9f2b798ae74c84428ac2b49a6050d3d, type: 3}
   - {fileID: 21300000, guid: b326adb4ae25be642ae604a19042574b, type: 3}
+  - {fileID: 21300000, guid: 991b59198da4c40428909ccbc5215179, type: 3}
   - {fileID: 21300000, guid: f276b06993aefcc48b049724b94d616c, type: 3}
   - {fileID: 21300000, guid: db4435da850190847bdfd2bdc9cf377b, type: 3}
   - {fileID: 21300000, guid: 75257ebacf650674c97f4c5ef5e2daef, type: 3}
   - {fileID: 21300000, guid: cd04f734e99ed8b4481ece91fb1ab479, type: 3}
   m_PackedSpriteNamesToIndex:
+  - Die_11
   - Die_10
+  - Die_13
+  - Die_12
+  - Die_15
+  - Die_14
+  - Die_17
+  - Die_16
+  - Die_19
+  - Die_18
+  - Die_28
+  - Die_29
+  - Die_39
+  - Die_38
+  - Die_20
+  - Die_21
+  - Die_22
+  - Die_23
+  - Die_33
+  - Die_24
+  - Die_32
   - Die_08
+  - Die_25
+  - Die_31
   - Die_09
+  - Die_26
+  - Die_30
   - Die_06
+  - Die_27
+  - Die_37
   - Die_07
+  - Die_36
   - Die_04
+  - Die_35
   - Die_05
+  - Die_34
   - Die_02
   - Die_03
   - Die_00
