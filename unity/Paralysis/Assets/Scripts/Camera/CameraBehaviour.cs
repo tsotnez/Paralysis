@@ -17,9 +17,7 @@ public class CameraBehaviour : MonoBehaviour {
     [SerializeField]
     float lerpSpeed = 15f;
     [SerializeField]
-    float minSize = 5f;
-    [SerializeField]
-    float maxSize = 6f;
+    float minSizeY = 5f;
     [SerializeField]
     float zoomSpeed = 2f;
 
@@ -86,15 +84,29 @@ public class CameraBehaviour : MonoBehaviour {
     {
         Vector3 middleBetweenPlayers = target.position + ((target2.position- target.position) / 2); //Middle is target's position plus half of the vector leading to target2's position
 
+        SetCameraSize();
         //Zoom correctly
-        float desiredSize =  Mathf.Clamp(Vector3.Distance(target.position, target2.position) * 0.3f, minSize, maxSize);
-        cam.orthographicSize = Mathf.Clamp(cam.orthographicSize + ((desiredSize -  cam.orthographicSize) * Time.deltaTime * zoomSpeed), minSize, maxSize);
+        //float desiredSize =  Mathf.Clamp(Vector3.Distance(target.position, target2.position) * 0.3f, minSize, maxSize);
+        //cam.orthographicSize = Mathf.Clamp(cam.orthographicSize + ((desiredSize -  cam.orthographicSize) * Time.deltaTime * zoomSpeed), minSize, maxSize);
 
         //clamp new position between min and max values and lerp to that position
         Vector3 desiredPos = new Vector3(Mathf.Clamp(middleBetweenPlayers.x + offsetX, minX, maxX), Mathf.Clamp(middleBetweenPlayers.y + offsetY, minY, maxY), transform.position.z);
         transform.position = Vector3.Lerp(transform.position, desiredPos, lerpSpeed * Time.deltaTime);
     }
-    
+
+    void SetCameraSize()
+    {
+
+        //horizontal size is based on actual screen ratio
+        float minSizeX = minSizeY * Screen.width / Screen.height;
+        //multiplying by 0.5, because the ortographicSize is actually half the height
+        float width = Mathf.Abs(target.position.x - target2.position.x) * 0.5f;
+        float height = Mathf.Abs(target.position.y - target2.position.y) * 0.5f;
+        //computing the size
+        float camSizeX = Mathf.Max(width, minSizeX);
+        cam.orthographicSize += ((Mathf.Max(height, camSizeX * Screen.height / Screen.width, minSizeY)) - cam.orthographicSize) * Time.deltaTime * zoomSpeed;
+    }
+
     public void switchToMultiplayer(Transform player2)
     {
         target2 = player2;

@@ -38,10 +38,9 @@ public class LocalMultiplayerManager : MonoBehaviour {
 
     private void buildUI()
     {
-        Transform parent = GameObject.Find("MainCanvas").transform.Find("Hotbars");
+        Transform parent = GameObject.Find("Hotbars").transform;
 
         GameObject hotbar = Instantiate(hotbarPrefab, parent, false);
-        hotbar.transform.position = new Vector3(hotbar.transform.position.x, hotbar.transform.position.y, hotbar.transform.position.z);
         hotbar.GetComponent<HotbarController>().setChampionName(team1[0].ChampionPrefab.name);
         hotbar.GetComponent<HotbarController>().initAbilityImages(team1[0].ChampionPrefab.name);
         hotbar.GetComponent<HotbarController>().initTrinketImages(players[0].GetComponents<Trinket>()[0].DisplayName, players[0].GetComponents<Trinket>()[1].DisplayName);
@@ -51,7 +50,12 @@ public class LocalMultiplayerManager : MonoBehaviour {
         players[0].GetComponent<ChampionClassController>().hotbar = hotbar.GetComponent<HotbarController>();
 
         GameObject hotbar2 = Instantiate(hotbarPrefab, parent, false);
-        hotbar2.transform.position = new Vector3(4.4f, hotbar2.transform.position.y, hotbar.transform.position.z);
+
+        RectTransform t = hotbar2.GetComponent<RectTransform>();
+
+        t.anchorMax = new Vector2(1, 0.5f);
+        t.anchorMin = new Vector2(1, 0.5f);
+        t.anchoredPosition = new Vector2(-407f, 0);
         hotbar2.GetComponent<HotbarController>().setChampionName(team2[0].ChampionPrefab.name);
         hotbar2.GetComponent<HotbarController>().initAbilityImages(team2[0].ChampionPrefab.name);
         hotbar2.GetComponent<HotbarController>().initTrinketImages(players[1].GetComponents<Trinket>()[0].DisplayName, players[1].GetComponents<Trinket>()[1].DisplayName);
