@@ -11,7 +11,7 @@ SpriteAtlas:
       serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
-      maxTextureSize: 2048
+      maxTextureSize: 1024
       textureCompression: 1
       filterMode: 1
       generateMipMaps: 0
@@ -28,12 +28,12 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: d45bb178d4005003e01e952aad2ae5d3
+      Hash: aa4859a43a301146f440c3e2021ee0d6
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 12
-    hashString: d45bb178d4005003e01e952aad2ae5d3
-    totalSpriteSurfaceArea: 20294274
+    hashString: aa4859a43a301146f440c3e2021ee0d6
+    totalSpriteSurfaceArea: 34603008
     packables:
     - {fileID: 102900000, guid: 847db669ce7c36e4f80f31233b6ada7f, type: 3}
     packedSpriteRenderDataKeys:
@@ -57,12 +57,19 @@ SpriteAtlas:
     - 0580cff87c6ab5c4690002f7d9203671: 21300000
     - 6268deeced1201d43adb791e4e623b79: 21300000
     - 6dab095f11e44484a96e90b4bc732ae9: 21300000
+    - d14f800d1b3c9c240b29c8b581e7cd5f: 21300000
+    - be08bf52cfaeaa246839328cb3b91a05: 21300000
+    - a12e34a844ad08c4d93d313f759ed7ee: 21300000
+    - ca520810bcd293b4da9ec735c1f08313: 21300000
     - d8ac00577d5a73a4a9e48cea9eeff7bd: 21300000
     - 75bfeee375cb43a4795423d712271f3a: 21300000
     - e5303d819976fe24ea988a5f1160ab3e: 21300000
     - fb93c1685446a82478aa2f1427950bcb: 21300000
     - 2bef28e0f991c8a4c97777e91b2479ef: 21300000
     - 778b2107f6523f645804ab6f9164efea: 21300000
+    - cced204fac6b7ab42a1b06a450ec3769: 21300000
+    - 1c6a1d1fb958b1141af3cba1b2b574f9: 21300000
+    - 7368b78f117c4f84ea184964a56bec96: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 473d1b7f460b8e84ea3bc7139218f3d9, type: 3}
@@ -85,12 +92,19 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 0580cff87c6ab5c4690002f7d9203671, type: 3}
   - {fileID: 21300000, guid: 6268deeced1201d43adb791e4e623b79, type: 3}
   - {fileID: 21300000, guid: 6dab095f11e44484a96e90b4bc732ae9, type: 3}
+  - {fileID: 21300000, guid: d14f800d1b3c9c240b29c8b581e7cd5f, type: 3}
+  - {fileID: 21300000, guid: be08bf52cfaeaa246839328cb3b91a05, type: 3}
+  - {fileID: 21300000, guid: a12e34a844ad08c4d93d313f759ed7ee, type: 3}
+  - {fileID: 21300000, guid: ca520810bcd293b4da9ec735c1f08313, type: 3}
   - {fileID: 21300000, guid: d8ac00577d5a73a4a9e48cea9eeff7bd, type: 3}
   - {fileID: 21300000, guid: 75bfeee375cb43a4795423d712271f3a, type: 3}
   - {fileID: 21300000, guid: e5303d819976fe24ea988a5f1160ab3e, type: 3}
   - {fileID: 21300000, guid: fb93c1685446a82478aa2f1427950bcb, type: 3}
   - {fileID: 21300000, guid: 2bef28e0f991c8a4c97777e91b2479ef, type: 3}
   - {fileID: 21300000, guid: 778b2107f6523f645804ab6f9164efea, type: 3}
+  - {fileID: 21300000, guid: cced204fac6b7ab42a1b06a450ec3769, type: 3}
+  - {fileID: 21300000, guid: 1c6a1d1fb958b1141af3cba1b2b574f9, type: 3}
+  - {fileID: 21300000, guid: 7368b78f117c4f84ea184964a56bec96, type: 3}
   m_PackedSpriteNamesToIndex:
   - KnockedBackEnd_12
   - KnockedBackEnd_13
@@ -112,11 +126,18 @@ SpriteAtlas:
   - KnockedBackEnd_19
   - KnockedBackEnd_09
   - KnockedBackEnd_08
+  - KnockedBackEnd_29
+  - KnockedBackEnd_28
+  - KnockedBackEnd_27
+  - KnockedBackEnd_26
   - KnockedBackEnd_25
   - KnockedBackEnd_24
   - KnockedBackEnd_23
   - KnockedBackEnd_22
   - KnockedBackEnd_21
   - KnockedBackEnd_20
+  - KnockedBackEnd_30
+  - KnockedBackEnd_31
+  - KnockedBackEnd_32
   m_Tag: KnockedBackEndAtlas
   m_IsVariant: 0
