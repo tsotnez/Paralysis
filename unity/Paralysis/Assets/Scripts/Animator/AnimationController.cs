@@ -71,8 +71,9 @@ public abstract class AnimationController : MonoBehaviour
         DoubleJump,
         // Knight & Infantry
         BlockMove,
-        // ?
+        // Knight
         DashFor,
+        // ?
         Walk,
 
         // End of the Game
