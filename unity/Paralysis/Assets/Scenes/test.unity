@@ -215,7 +215,7 @@ MonoBehaviour:
     trinket1: 0
     trinket2: 0
   defaultPlayer2:
-    ChampionPrefab: {fileID: 1128103333960868, guid: e6f7d777ee6c44d448705ae811eebec4,
+    ChampionPrefab: {fileID: 1903508196159970, guid: 0639eac30390dec449afda643c7fa53c,
       type: 2}
     playerNumber: 1
     TeamNumber: 2
@@ -1747,7 +1747,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1338282774}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -26.845947, z: 0}
+  m_LocalPosition: {x: 0, y: -43.602875, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1235169481}
@@ -2228,7 +2228,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1920324647}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.000061035156, y: 256.84595, z: 0}
+  m_LocalPosition: {x: -0.000061035156, y: 273.60287, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1124908811}
@@ -2715,7 +2715,7 @@ RectTransform:
   m_GameObject: {fileID: 2102363445}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.04, y: 0, z: 99.65}
-  m_LocalScale: {x: 0.006536439, y: 0.006536439, z: 0.006536439}
+  m_LocalScale: {x: 0.006303198, y: 0.006303198, z: 0.006303198}
   m_Children:
   - {fileID: 1338282775}
   - {fileID: 1124908811}
@@ -2740,7 +2740,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4662659095535300, guid: 0639eac30390dec449afda643c7fa53c, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -5.65
+      value: -5.85
       objectReference: {fileID: 0}
     - target: {fileID: 4662659095535300, guid: 0639eac30390dec449afda643c7fa53c, type: 2}
       propertyPath: m_LocalPosition.z
