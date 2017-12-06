@@ -1,17 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using System;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour {
 
+    public CanvasGroup mainCanvas;
     public CanvasGroup startPage;
     private CanvasGroup currentPage; //Page which is shown currently
 
-	// Use this for initialization
-	void Start () {
+    public CursorLockMode CursorLockMode { get; private set; }
+
+    // Use this for initialization
+    void Start () {
 
         //Switch to controller Controls if a controller is connected
         if (Array.Exists(Input.GetJoystickNames(), x => x == "Controller (XBOX 360 For Windows)"))
@@ -26,6 +27,8 @@ public class MainMenuManager : MonoBehaviour {
         //Disable all pages and enable starting page
         foreach (CanvasGroup item in FindObjectsOfType<CanvasGroup>())
         {
+            if (item == mainCanvas)
+                continue;
             disablePage(item);
         }
 
@@ -35,7 +38,6 @@ public class MainMenuManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
 	}
 
     /// <summary>
@@ -48,6 +50,7 @@ public class MainMenuManager : MonoBehaviour {
         enablePage(nextPage);
 
         currentPage = nextPage;
+        FindObjectOfType<EventSystem>().SetSelectedGameObject(currentPage.gameObject.GetComponentInChildren<Selectable>().gameObject);
     }
 
     private void disablePage(CanvasGroup toDisable)
