@@ -59,7 +59,7 @@ class InfantryHookBehaviour : ProjectileBehaviour
     protected new void Update()
     {
         base.Update();
-        ChainBehaviour();
+        //ChainBehaviour();
     }
 
     private void ChainBehaviour()
@@ -67,10 +67,10 @@ class InfantryHookBehaviour : ProjectileBehaviour
         DistanceToCreator = Math.Abs(this.transform.position.x - startPos.x);
         if (DistanceToCreator - LengthOfChain >= LengthOfChainElement)
         {
+            // Calculate next chain element position 
             Vector3 newPos;
             if (ChainElements.Count == 0)
             {
-                // Calculate next chain element position 
                 newPos = this.transform.position;
                 newPos.x = this.transform.position.x - LengthOfHook;
             }
@@ -78,9 +78,6 @@ class InfantryHookBehaviour : ProjectileBehaviour
             {
                 newPos = ChainElements.Last().transform.position;
                 newPos.x = ChainElements.Last().transform.position.x - LengthOfChainElement;
-
-                //newPos = ChainElements.Last().transform.position;
-                //newPos.x = ChainElements.Last().transform.position.x - ChainElements.Last().GetComponent<HingeJoint2D>().anchor.x;
             }
 
             // Instantiate new ChainElement
