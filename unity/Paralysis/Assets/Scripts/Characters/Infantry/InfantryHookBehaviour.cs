@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,8 @@ class InfantryHookBehaviour : ProjectileBehaviour
         ChainElements = new List<GameObject>();
         LengthOfHook = this.GetComponent<Renderer>().bounds.size.x;
         LengthOfChainElement = ChainPrefab.GetComponent<Renderer>().bounds.size.x;
+
+        this.GetComponent<Rigidbody2D>().freezeRotation = true;
     }
 
     protected new void OnCollisionEnter2D(Collision2D collision)
@@ -44,7 +47,19 @@ class InfantryHookBehaviour : ProjectileBehaviour
         }
     }
 
-    protected new void Die()
+    protected new IEnumerator GetStuck()
+    {
+        // Stop moving of all chain elements
+        foreach (GameObject ChainElement in ChainElements)
+        {
+            Rigidbody2D rigChainElement = ChainElement.GetComponent<Rigidbody2D>();
+            rigChainElement.velocity = new Vector2(0, 0); //Stop moving
+            rigChainElement.gravityScale = 1;
+        }
+        yield return base.GetStuck();
+    }
+
+    protected override void Die()
     {
         // Destory every ChainElement
         foreach (GameObject ChainElement in ChainElements)
@@ -59,7 +74,11 @@ class InfantryHookBehaviour : ProjectileBehaviour
     protected new void Update()
     {
         base.Update();
-        //ChainBehaviour();
+
+        if (hitted == 0)
+        {
+            ChainBehaviour();
+        }
     }
 
     private void ChainBehaviour()
@@ -67,34 +86,47 @@ class InfantryHookBehaviour : ProjectileBehaviour
         DistanceToCreator = Math.Abs(this.transform.position.x - startPos.x);
         if (DistanceToCreator - LengthOfChain >= LengthOfChainElement)
         {
-            // Calculate next chain element position 
             Vector3 newPos;
+            Transform prevObjTransform;
+            float prevObjLength;
             if (ChainElements.Count == 0)
             {
-                newPos = this.transform.position;
-                newPos.x = this.transform.position.x - LengthOfHook;
+                // Hook Values
+                prevObjTransform = this.transform;
+                prevObjLength = LengthOfHook;
             }
             else
             {
-                newPos = ChainElements.Last().transform.position;
-                newPos.x = ChainElements.Last().transform.position.x - LengthOfChainElement;
+                // Chain Values
+                prevObjTransform = ChainElements.Last().transform;
+                prevObjLength = LengthOfChainElement;
             }
+
+            // Calculate next chain element position 
+            newPos = prevObjTransform.position;
+            newPos.x = prevObjTransform.position.x + (prevObjLength * direction * -1);
 
             // Instantiate new ChainElement
             GameObject ChainElement = Instantiate(ChainPrefab, newPos, new Quaternion(ChainPrefab.transform.rotation.x,
             ChainPrefab.transform.rotation.y, ChainPrefab.transform.rotation.z * direction, ChainPrefab.transform.rotation.w));
 
             // Flip chain element if direction is left
-            if (direction == -1) ChainElement.GetComponent<SpriteRenderer>().flipX = true;
+            if (direction == -1)
+            {
+                // Multiply the player's x local scale by -1.
+                Vector3 theScale = ChainElement.transform.localScale;
+                theScale.x *= -1;
+                ChainElement.transform.localScale = theScale;
+            }
 
             if (ChainElements.Count == 0)
             {
-                //If the List is empty, its the first chain element and needs to be connected to the hook
+                // If the List is empty, its the first chain element and needs to be connected to the hook
                 ChainElement.GetComponent<HingeJoint2D>().connectedBody = this.GetComponent<Rigidbody2D>();
             }
             else
             {
-                //Connect last element with the new element
+                // Connect last element with the new element
                 ChainElement.GetComponent<HingeJoint2D>().connectedBody = ChainElements.Last<GameObject>().GetComponent<Rigidbody2D>();
             }
             ChainElements.Add(ChainElement);
