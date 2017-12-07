@@ -303,16 +303,28 @@ public abstract class ChampionClassController : MonoBehaviour
         {
             if (direction != 0 && stats.LoseStamina(m_dashStaminaCost))
             {
+                AnimationController.AnimatorStates RequiredAnimState;
                 if (m_CanDashForward)
                 {
                     // set var for dash or dashForward
                     if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight)
-                        animCon.trigDash = true;
-                    else
+                    {
+                        // set correct animation for validation
+                        RequiredAnimState = AnimationController.AnimatorStates.DashFor;
                         animCon.trigDashForward = true;
+                    }
+                    else
+                    {
+                        // set correct animation for validation
+                        RequiredAnimState = AnimationController.AnimatorStates.Dash;
+                        animCon.trigDash = true;
+                    }
                 }
                 else
                 {
+                    // set correct animation for validation
+                    RequiredAnimState = AnimationController.AnimatorStates.Dash;
+
                     // flip if necessary
                     if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight)
                         Flip();
@@ -327,8 +339,8 @@ public abstract class ChampionClassController : MonoBehaviour
                 stats.immovable = true;
 
                 stats.invincible = true; //Player is invincible for a period of time while dashing
-                yield return new WaitUntil(() => animCon.CurrentAnimation == AnimationController.AnimatorStates.Dash);
-                yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimatorStates.Dash);
+                yield return new WaitUntil(() => animCon.CurrentAnimation == RequiredAnimState);
+                yield return new WaitUntil(() => animCon.CurrentAnimation != RequiredAnimState);
                 dashing = false;
                 stats.invincible = false;
                 m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); //Stop moving
@@ -486,7 +498,7 @@ public abstract class ChampionClassController : MonoBehaviour
 
     #endregion
 
-    #region Meele Skill
+    #region Melee Skill
 
     /// <summary>
     /// do a complete skill

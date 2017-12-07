@@ -78,7 +78,7 @@ public class ProjectileBehaviour : MonoBehaviour
                 if (!explodeOnHit)
                 {
                     //Destroy on hit if no explosion effect is supposed to be played
-                    Destroy(gameObject);
+                    Die();
                     return;
                 }
             }
@@ -94,7 +94,7 @@ public class ProjectileBehaviour : MonoBehaviour
         //Plays explosion effect and destroys the bullet
         if (explosionPrefab != null)
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        Die();
     }
 
     protected IEnumerator GetStuck()
@@ -107,7 +107,7 @@ public class ProjectileBehaviour : MonoBehaviour
         GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0); //Stop moving
         GetComponent<Rigidbody2D>().freezeRotation = true;
         yield return new WaitForSeconds(5);
-        Destroy(gameObject);
+        Die();
     }
 
     protected IEnumerator FallToGround()
@@ -141,5 +141,10 @@ public class ProjectileBehaviour : MonoBehaviour
                 GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(horizontal + 0.3f, -speed.x, 0), vertical - 0.3f);
             }
         }
+    }
+
+    protected void Die()
+    {
+        Destroy(gameObject);
     }
 }
