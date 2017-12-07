@@ -748,7 +748,7 @@ MonoBehaviour:
   m_jumpAttackForce: 10
   m_dashSpeed: 12
   m_dashStaminaCost: 10
-  m_CanDashForward: 0
+  m_CanDashForward: 1
   m_ComboExpire: 1
   delay_BasicAttack1: 0
   delay_BasicAttack2: 0

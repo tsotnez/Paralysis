@@ -7,7 +7,7 @@ using UnityEditor;
 public class ChampionClassEditor : Editor {
 
     SerializedProperty WhatIsGround, WhatToHit, MoveSpeed, MoveSpeedWhileAttacking, MoveSpeedWhileBlocking, JumpForce, JumpAttackRadius, JumpAttackForce,
-        DashSpeed, DashStaminaCost, ComboExpire, ClassName, DoubleJumpForce;
+        DashSpeed, DashStaminaCost, CanDashForward, ComboExpire, ClassName, DoubleJumpForce;
 
 	void OnEnable()
     {
@@ -22,6 +22,7 @@ public class ChampionClassEditor : Editor {
         JumpAttackForce = serializedObject.FindProperty("m_jumpAttackForce");
         DashSpeed = serializedObject.FindProperty("m_dashSpeed");
         DashStaminaCost = serializedObject.FindProperty("m_dashStaminaCost");
+        CanDashForward = serializedObject.FindProperty("m_CanDashForward");
         ComboExpire = serializedObject.FindProperty("m_ComboExpire");
         ClassName = serializedObject.FindProperty("className");
         DoubleJumpForce = serializedObject.FindProperty("m_DoubleJumpForce");
@@ -65,11 +66,13 @@ public class ChampionClassEditor : Editor {
         GUILayout.BeginHorizontal();
         GUILayout.Label("Speed");
         GUILayout.Label("Stamina Cost");
+        GUILayout.Label("Can Dash Forward");
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(DashSpeed, new GUIContent(""), true);
         EditorGUILayout.PropertyField(DashStaminaCost, new GUIContent(""), true);
+        EditorGUILayout.PropertyField(CanDashForward, new GUIContent(""), true);
         GUILayout.EndHorizontal();
 
         GUILayout.Label("Attacks & Skills", EditorStyles.boldLabel);
