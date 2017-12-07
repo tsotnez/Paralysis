@@ -28,12 +28,12 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: ddc960e9ab8c9fbfb234fe20e4f2f7ac
+      Hash: 9336f547ae3ebfe278abc3e6e55466f9
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 12
-    hashString: ddc960e9ab8c9fbfb234fe20e4f2f7ac
-    totalSpriteSurfaceArea: 20971520
+    hashString: 9336f547ae3ebfe278abc3e6e55466f9
+    totalSpriteSurfaceArea: 16777216
     packables:
     - {fileID: 102900000, guid: c0c3500e7be5df346b346f97c5b95ca7, type: 3}
     packedSpriteRenderDataKeys:
@@ -47,10 +47,6 @@ SpriteAtlas:
     - c96f216cb01b5bc4bbc4ec7d10e59a57: 21300000
     - 8fba9aa0826468c4882cddc36caef5a2: 21300000
     - b8df4d04f08114d4887dc126620d9c6e: 21300000
-    - d4caacc10f860514093a55b4ac3a94bb: 21300000
-    - 09414a36d4471fa4b9b7e95197cf8bcb: 21300000
-    - b592bc8326154394cb99d286a377b37b: 21300000
-    - 8b2fdadf8f545c64e891d106e4ce47bf: 21300000
     - c99ba2d5bb7706f4aa03cf794029fad4: 21300000
     - 1058830ebc4f1334faeaab01c0066018: 21300000
     - 94ef0b3f9850574419666787b64d367e: 21300000
@@ -69,10 +65,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: c96f216cb01b5bc4bbc4ec7d10e59a57, type: 3}
   - {fileID: 21300000, guid: 8fba9aa0826468c4882cddc36caef5a2, type: 3}
   - {fileID: 21300000, guid: b8df4d04f08114d4887dc126620d9c6e, type: 3}
-  - {fileID: 21300000, guid: d4caacc10f860514093a55b4ac3a94bb, type: 3}
-  - {fileID: 21300000, guid: 09414a36d4471fa4b9b7e95197cf8bcb, type: 3}
-  - {fileID: 21300000, guid: b592bc8326154394cb99d286a377b37b, type: 3}
-  - {fileID: 21300000, guid: 8b2fdadf8f545c64e891d106e4ce47bf, type: 3}
   - {fileID: 21300000, guid: c99ba2d5bb7706f4aa03cf794029fad4, type: 3}
   - {fileID: 21300000, guid: 1058830ebc4f1334faeaab01c0066018, type: 3}
   - {fileID: 21300000, guid: 94ef0b3f9850574419666787b64d367e, type: 3}
@@ -90,10 +82,6 @@ SpriteAtlas:
   - Skill4_06
   - Skill4_09
   - Skill4_08
-  - Skill4_18
-  - Skill4_19
-  - Skill4_16
-  - Skill4_17
   - Skill4_14
   - Skill4_15
   - Skill4_12

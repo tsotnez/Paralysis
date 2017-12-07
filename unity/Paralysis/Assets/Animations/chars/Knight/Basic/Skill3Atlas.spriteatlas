@@ -28,12 +28,12 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: b6651792f48fc7e859d765fe67c6a742
+      Hash: 2a405eaf41208ccff0d74e01081225f1
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 12
-    hashString: b6651792f48fc7e859d765fe67c6a742
-    totalSpriteSurfaceArea: 31457280
+    hashString: 2a405eaf41208ccff0d74e01081225f1
+    totalSpriteSurfaceArea: 20971520
     packables:
     - {fileID: 102900000, guid: 7d6a7b9ea1445634faa6d3d6e3c421b8, type: 3}
     packedSpriteRenderDataKeys:
@@ -51,22 +51,12 @@ SpriteAtlas:
     - c8465f386e1fa9c4baa2d937badc0a4c: 21300000
     - 6479808927573b843a62754f0ca240bc: 21300000
     - 47c2d0ea5049bd44ebbfd70adb940720: 21300000
-    - d44199417c8cc9b4f9f6aef0bdae57a7: 21300000
     - beef954a05e947549b88bba3ea33c763: 21300000
-    - 0bb9858f695173b4ab2f9033135b826e: 21300000
     - b2308fda1dcddfb49ba8db2f3f033c25: 21300000
-    - 0682cbafd4df22a4a822ac82ae325e64: 21300000
     - 0973a8c4573ede44e843442c6d30c37e: 21300000
-    - bc9256af052e0bc40b57eda451979ca9: 21300000
     - 150974f4c8bacf74cabdcd0e8bda3f32: 21300000
-    - 3d6d1b08c2e6fa24f9544f5cadcffe23: 21300000
-    - a20334434e0bca9428bfaf7d61a31357: 21300000
-    - d0b4f130c6f731648bf7de57d0a0e664: 21300000
     - cb31a0c366385f845bd141701457f43f: 21300000
-    - 715640ea303c0ef40839bbac628bfc21: 21300000
     - 165e17dc044c7f548af965aebd82ff6e: 21300000
-    - f4ffea0a6a0948e408c6ce10f45d110f: 21300000
-    - 2c1d6f3c5c591c14f8110ee538afa230: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 7e9a9afe301b8754588a12c7c3f36bbb, type: 3}
@@ -83,22 +73,12 @@ SpriteAtlas:
   - {fileID: 21300000, guid: c8465f386e1fa9c4baa2d937badc0a4c, type: 3}
   - {fileID: 21300000, guid: 6479808927573b843a62754f0ca240bc, type: 3}
   - {fileID: 21300000, guid: 47c2d0ea5049bd44ebbfd70adb940720, type: 3}
-  - {fileID: 21300000, guid: d44199417c8cc9b4f9f6aef0bdae57a7, type: 3}
   - {fileID: 21300000, guid: beef954a05e947549b88bba3ea33c763, type: 3}
-  - {fileID: 21300000, guid: 0bb9858f695173b4ab2f9033135b826e, type: 3}
   - {fileID: 21300000, guid: b2308fda1dcddfb49ba8db2f3f033c25, type: 3}
-  - {fileID: 21300000, guid: 0682cbafd4df22a4a822ac82ae325e64, type: 3}
   - {fileID: 21300000, guid: 0973a8c4573ede44e843442c6d30c37e, type: 3}
-  - {fileID: 21300000, guid: bc9256af052e0bc40b57eda451979ca9, type: 3}
   - {fileID: 21300000, guid: 150974f4c8bacf74cabdcd0e8bda3f32, type: 3}
-  - {fileID: 21300000, guid: 3d6d1b08c2e6fa24f9544f5cadcffe23, type: 3}
-  - {fileID: 21300000, guid: a20334434e0bca9428bfaf7d61a31357, type: 3}
-  - {fileID: 21300000, guid: d0b4f130c6f731648bf7de57d0a0e664, type: 3}
   - {fileID: 21300000, guid: cb31a0c366385f845bd141701457f43f, type: 3}
-  - {fileID: 21300000, guid: 715640ea303c0ef40839bbac628bfc21, type: 3}
   - {fileID: 21300000, guid: 165e17dc044c7f548af965aebd82ff6e, type: 3}
-  - {fileID: 21300000, guid: f4ffea0a6a0948e408c6ce10f45d110f, type: 3}
-  - {fileID: 21300000, guid: 2c1d6f3c5c591c14f8110ee538afa230, type: 3}
   m_PackedSpriteNamesToIndex:
   - Skill3_00
   - Skill3_01
@@ -114,21 +94,11 @@ SpriteAtlas:
   - Skill3_12
   - Skill3_11
   - Skill3_10
-  - Skill3_26
   - Skill3_17
-  - Skill3_27
   - Skill3_16
-  - Skill3_24
   - Skill3_15
-  - Skill3_25
   - Skill3_14
-  - Skill3_22
-  - Skill3_23
-  - Skill3_20
   - Skill3_19
-  - Skill3_21
   - Skill3_18
-  - Skill3_28
-  - Skill3_29
   m_Tag: Skill3Atlas
   m_IsVariant: 0
