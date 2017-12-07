@@ -498,7 +498,7 @@ public abstract class ChampionClassController : MonoBehaviour
 
     #endregion
 
-    #region Meele Skill
+    #region Melee Skill
 
     /// <summary>
     /// do a complete skill
