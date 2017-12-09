@@ -16,15 +16,23 @@ public class ProjectileBehaviour : MonoBehaviour
     public int effectDuration = 1;
     public int damage = 0;
 
-    // Private/Protected properties
+    // Protected properties
+    protected Rigidbody2D ProjectileRigid;
     protected Vector3 startPos;
-    bool stuck = false;
-    bool falling = false;                                               //True if projectile has reched maxRange already
+    protected bool stuck = false;
+    protected bool falling = false;                                     //True if projectile has reched maxRange already
     Coroutine fallingRoutine = null;
 
     protected void Start()
     {
         startPos = transform.position; //Save starting position
+        ProjectileRigid = this.GetComponent<Rigidbody2D>();
+
+        //Flip sprite if necessary
+        if (direction == -1)
+        {
+            Flip(this);
+        }
     }
 
     // Use this for initialization
@@ -32,7 +40,6 @@ public class ProjectileBehaviour : MonoBehaviour
     {
         if (!stuck && !falling)
         {
-            if (direction == -1) GetComponent<SpriteRenderer>().flipX = true; //Flip sprite if necessary
             if (Vector2.Distance(startPos, transform.position) >= range)
             {
                 if (explodeOnHit)
@@ -47,7 +54,7 @@ public class ProjectileBehaviour : MonoBehaviour
     protected void FixedUpdate()
     {
         if (!stuck && !falling)
-            GetComponent<Rigidbody2D>().velocity = new Vector2(speed.x * direction, speed.y);
+            ProjectileRigid.velocity = new Vector2(speed.x * direction, speed.y);
     }
 
     protected void OnCollisionEnter2D(Collision2D collision)
@@ -104,8 +111,8 @@ public class ProjectileBehaviour : MonoBehaviour
         if (fallingRoutine != null)
             StopCoroutine(fallingRoutine);
         GetComponent<Collider2D>().enabled = false; //Disable collider
-        GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0); //Stop moving
-        GetComponent<Rigidbody2D>().freezeRotation = true;
+        ProjectileRigid.velocity = new Vector2(0, 0); //Stop moving
+        ProjectileRigid.freezeRotation = true;
         yield return new WaitForSeconds(5);
         Die();
     }
@@ -114,7 +121,7 @@ public class ProjectileBehaviour : MonoBehaviour
     {
         //Move towards the ground while rotating 
         falling = true;
-        GetComponent<Rigidbody2D>().velocity = new Vector2(speed.x * direction, -5);
+        ProjectileRigid.velocity = new Vector2(speed.x * direction, -5);
 
         //Turn to face the ground
         if (direction > 0)
@@ -124,9 +131,9 @@ public class ProjectileBehaviour : MonoBehaviour
                 transform.Rotate(new Vector3(0, 0, -4));
                 yield return new WaitForSeconds(0.02f);
 
-                float vertical = GetComponent<Rigidbody2D>().velocity.y;
-                float horizontal = GetComponent<Rigidbody2D>().velocity.x;
-                GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(horizontal - 0.3f, 0, speed.x), vertical - 0.3f);
+                float vertical = ProjectileRigid.velocity.y;
+                float horizontal = ProjectileRigid.velocity.x;
+                ProjectileRigid.velocity = new Vector2(Mathf.Clamp(horizontal - 0.3f, 0, speed.x), vertical - 0.3f);
             }
         }
         else
@@ -136,9 +143,9 @@ public class ProjectileBehaviour : MonoBehaviour
                 transform.Rotate(new Vector3(0, 0, 4));
                 yield return new WaitForSeconds(0.02f);
 
-                float vertical = GetComponent<Rigidbody2D>().velocity.y;
-                float horizontal = GetComponent<Rigidbody2D>().velocity.x;
-                GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Clamp(horizontal + 0.3f, -speed.x, 0), vertical - 0.3f);
+                float vertical = ProjectileRigid.velocity.y;
+                float horizontal = ProjectileRigid.velocity.x;
+                ProjectileRigid.velocity = new Vector2(Mathf.Clamp(horizontal + 0.3f, -speed.x, 0), vertical - 0.3f);
             }
         }
     }
@@ -146,5 +153,21 @@ public class ProjectileBehaviour : MonoBehaviour
     protected virtual void Die()
     {
         Destroy(gameObject);
+    }
+
+    public static void Flip(Component ObjectToFlip)
+    {
+                // Multiply the sprites x local scale by -1.
+        Vector3 theScale = ObjectToFlip.transform.localScale;
+        theScale.x *= -1;
+        ObjectToFlip.transform.localScale = theScale;
+    }
+
+    public static void Flip(GameObject ObjectToFlip)
+    {
+        // Multiply the sprites x local scale by -1.
+        Vector3 theScale = ObjectToFlip.transform.localScale;
+        theScale.x *= -1;
+        ObjectToFlip.transform.localScale = theScale;
     }
 }
