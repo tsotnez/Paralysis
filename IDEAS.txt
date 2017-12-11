@@ -1,0 +1,48 @@
+ID names:
+Frostblade, Reaper, Scythe, Abaddon, Crystal Shard + Entertainment/Interactive/Studios,crystal shard interactive, DreamLink Productions, Gravity Games, 
+Pathfinder Interactive, Phantom Games, Sonoma Productions, tempest games, Eureka games, Lucid Productions, Dharma Productions, affiliate productions
+
+
+Spells:
+- Teleport to ally shielding him
+- teleport to an ally
+- teleport an ally to it's position
+- switching positions with ally/foe
+
+- Makes a wall to block spells
+- Revive
+- Placing totem which heals
+- freezes the target and turns them to stone
+- Creates an exact clone of you
+- disarms your target
+- Lowers someones runspeed
+- Disarming, can only use basic attacks
+- reflect
+
+- aoe heal that deals damage on foes
+- Makes you immortal for a bit
+- Creates a shield around you
+- Creates a beam of light that comes down from the sky
+- random totem with heal/damage reduce or for friendly units till it's destroyed
+- Creates a blast from the sky that heals your target
+- shield for an ally.
+- healing and shield over time, 10 sec duration
+- direct healing.
+- dealing damage to self, healing for amount
+- heals whoever it hits with lot of health
+
+Game Modes:
+- Item spawns that gives player wielding it double damage
+- One player is OP and fights angainst the others
+- COOP Mode fighting bosses only
+- basic attack only
+- super low CD
+- respwan and objectives to do for getting points like collecting and save an item or defend an neutral unit against the other players.
+- how about 3 fixed respawns per person with some lootboxes (need 30 damage to get destroyed) where random items appear 
+- I'd like to get a little story and killing bosses. It will be enough to have 10 levels and 4 difficulties and I every on you get an 
+   boss with extra spells and skills - so that every difficultie can be seen as own level.
+- Payload, slow carts
+- free for all
+- op player with low defense, team must kill the target. everytime a target dies, a new player is chosen. there is always one on each team.
+- survival, will need AI and more - for future
+- more then two teams, eg: 3 teams of 2
