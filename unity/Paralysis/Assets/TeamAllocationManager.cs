@@ -27,7 +27,7 @@ public class TeamAllocationManager : MonoBehaviour {
         //Switch to controller Controls if a controller is connected
         if (Array.Exists(Input.GetJoystickNames(), x => x == "Controller (XBOX 360 For Windows)"))
         {
-            StandaloneInputModule eventSystem = FindObjectOfType<StandaloneInputModule>();
+            MyStandaloneInputModule eventSystem = FindObjectOfType<MyStandaloneInputModule>();
             eventSystem.verticalAxis = "Vertical_XboxPlayer1";
             eventSystem.horizontalAxis = "Horizontal_XboxPlayer1";
             eventSystem.submitButton = "Skill4_XboxPlayer1";

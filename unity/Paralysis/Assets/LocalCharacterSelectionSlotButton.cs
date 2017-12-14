@@ -83,8 +83,6 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
     public void showFrame()
     {
         img.enabled = true;
-        LocalChampionSelectionPortrait portrait = transform.parent.Find("portrait").gameObject.GetComponent<LocalChampionSelectionPortrait>();
-        portrait.switchTo(1);
 
         switch (targetValue)
         {
@@ -93,6 +91,8 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
                 break;
             case PlayerTargetValue.Champion:
                 showSkillPopUps();
+                LocalChampionSelectionPortrait portrait = transform.parent.Find("portrait").gameObject.GetComponent<LocalChampionSelectionPortrait>();
+                portrait.switchTo(1);
                 break;
             case PlayerTargetValue.Skin:
                 break;
@@ -105,8 +105,6 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
     public void hideFrame()
     {
         img.enabled = false;
-        if(!isSelectedByOtherPlayer() && !currentlySelected) //Only transition to shadow image if no other player higlights this button
-            transform.parent.Find("portrait").GetComponent<LocalChampionSelectionPortrait>().switchTo(0);
 
         switch (targetValue)
         {
@@ -115,6 +113,8 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
                 break;
             case PlayerTargetValue.Champion:
                 transform.parent.parent.parent.Find("PopUps").gameObject.SetActive(false);
+                if (!isSelectedByOtherPlayer() && !currentlySelected) //Only transition to shadow image if no other player higlights this button
+                    transform.parent.Find("portrait").GetComponent<LocalChampionSelectionPortrait>().switchTo(0);
                 break;
             case PlayerTargetValue.Skin:
                 break;

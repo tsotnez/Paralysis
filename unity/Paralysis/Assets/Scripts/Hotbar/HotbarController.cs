@@ -108,8 +108,6 @@ public class HotbarController : MonoBehaviour {
         Image overlay = spell.transform.Find("Overlay").gameObject.GetComponent<Image>();
         overlay.enabled = true;
 
-        float totalCooldown = seconds;
-
         float counter = seconds;
         while(counter > 0) //Count down
         {

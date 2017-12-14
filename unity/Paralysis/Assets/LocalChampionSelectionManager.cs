@@ -209,7 +209,7 @@ public class LocalChampionSelectionManager : MonoBehaviour {
         Transform parent = GameObject.Find("EventSystems").transform;
 
         GameObject newSystem = Instantiate(eventSystems[ID - 1], parent, false);
-        StandaloneInputModule inputModule = newSystem.GetComponent<StandaloneInputModule>();
+        MyStandaloneInputModule inputModule = newSystem.GetComponent<MyStandaloneInputModule>();
 
         //Set first selected by getting Array Value
         newSystem.GetComponent<EventSystem>().firstSelectedGameObject = firstSelecteds[ID - 1];
