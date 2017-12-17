@@ -1,0 +1,36 @@
+ID Name:
+CrystalShard Entertainment
+
+
+PALADIN
+
+basic
+disarm
+reflect for a duration, can be applied to allies
+places a totem which heals allies/slows down enemies
+become immune for 5 secs
+
+
+
+
+PRIEST
+
+basic
+heals
+aoe heal that deals dameage to foe
+shield for you/ally
+teleport to ally shielding him for 5 seconds and explode, caqusing knockback to enemy
+	unless stunned
+
+
+
+Game Modes
+
+Arenas 1v1,2v2,3v3
+
+Free For All
+- op player with low defense, team must kill the target. everytime a target dies, a new player is chosen. there is always one on each team.
+- Item spawns that gives player wielding it double damage
+- respwan and objectives to do for getting points like collecting and save an item or defend an neutral unit against the other players.
+- how about 3 fixed respawns per person with some lootboxes (need 30 damage to get destroyed) where random items appear 
+- more then two teams, eg: 3 teams of 2
