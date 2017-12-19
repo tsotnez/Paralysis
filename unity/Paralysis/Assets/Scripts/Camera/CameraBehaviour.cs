@@ -62,7 +62,7 @@ public class CameraBehaviour : MonoBehaviour {
     // Update is called once per frame
     void LateUpdate ()
     {
-        if (gameRunning)
+        if (gameRunning && target != null)
         {
             if (multiplayer)
                 Multiplayer();
