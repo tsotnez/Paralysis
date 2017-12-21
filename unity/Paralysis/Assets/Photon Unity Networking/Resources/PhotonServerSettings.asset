@@ -42,4 +42,20 @@ MonoBehaviour:
   - RequestForPickupItems
   - RequestForPickupTimes
   - TaggedPlayer
+  - setTrigger
+  - setBasicAttack1
+  - setBasicAttack2
+  - setBasicAttack3
+  - setDash
+  - setDashForward
+  - setHit
+  - setJump
+  - setJumpAttack
+  - setJumpAttackEnd
+  - setKnockedBack
+  - setKnockedBackEnd
+  - setSkill1
+  - setSkill2
+  - setSkill3
+  - setSkill4
   DisableAutoOpenWizard: 1

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class NetworkVersusManager : Photon.MonoBehaviour
@@ -23,17 +21,19 @@ public class NetworkVersusManager : Photon.MonoBehaviour
 
     private void InstantiatePlayers()
     {
-        //if (player1 == null)
-        //    player1 = rPlayer1;
-
-        //Player1
+        //Player
         GameObject instPlayer1 = PhotonNetwork.Instantiate(player1.ChampionPrefab.name, spawnPlayer1.position, Quaternion.identity, 0);
+        instPlayer1.GetComponent<UserControl>().enabled = true;
         instPlayer1.GetComponent<UserControl>().inputDevice = player1.inputDevice;
         instPlayer1.layer = 11;
+
+        //Rigidbody
+        instPlayer1.GetComponent<Rigidbody2D>().simulated = true;
 
         LayerMask whatToHitP1 = new LayerMask();
         whatToHitP1 |= (1 << 12); //Add Team2 as target layer
 
+        instPlayer1.GetComponent<ChampionClassController>().enabled = true;
         instPlayer1.GetComponent<ChampionClassController>().m_whatToHit = whatToHitP1;
         instPlayer1.GetComponent<UserControl>().playerNumber = player1.playerNumber;
 
@@ -45,7 +45,15 @@ public class NetworkVersusManager : Photon.MonoBehaviour
         instPlayer1.GetComponent<ChampionClassController>().Trinket1.trinketNumber = 1;
         instPlayer1.GetComponent<ChampionClassController>().Trinket2.trinketNumber = 2;
 
-        Camera.main.GetComponent<CameraBehaviour>().changeTarget(instPlayer1.transform);
+
+        //Instaniate camera
+        GameObject cam = Instantiate(Resources.Load<GameObject>("Main Camera Network"), new Vector3(0, 0, -0.5f), Quaternion.identity);
+
+        cam.GetComponent<CameraBehaviour>().changeTarget(instPlayer1.transform);
+
+        //Disable default cam
+        GameObject.Find("LobbyCam").SetActive(false);
+
         myPlayer = instPlayer1;
     }
 
@@ -61,6 +69,7 @@ public class NetworkVersusManager : Photon.MonoBehaviour
         //Assign hotbar to player
         myPlayer.GetComponent<CharacterStats>().hotbar = hotbar.GetComponent<HotbarController>();
         myPlayer.GetComponent<ChampionClassController>().hotbar = hotbar.GetComponent<HotbarController>();
+        myPlayer.GetComponent<CharacterStats>().enabled = true;
     }
 
     private void Update()

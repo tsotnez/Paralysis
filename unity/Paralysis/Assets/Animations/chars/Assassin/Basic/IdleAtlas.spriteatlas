@@ -26,47 +26,10 @@ SpriteAtlas:
       allowAlphaSplitting: 0
       enableRotation: 0
       enableTightPacking: 1
-    packedHash:
-      serializedVersion: 2
-      Hash: 4e678956f9945d5d6430af67dadbccf9
     variantMultiplier: 1
-    bindAsDefault: 1
-    finalFormat: 12
-    hashString: 4e678956f9945d5d6430af67dadbccf9
-    totalSpriteSurfaceArea: 3323400
     packables:
     - {fileID: 102900000, guid: 24e1eb0c75ad529439050d8b06aab8f0, type: 3}
-    packedSpriteRenderDataKeys:
-    - 7ff390b1cceaee04f93bbf2d3bfa6aa8: 21300000
-    - 93563028e10d8bc4bb6982457e787355: 21300000
-    - 592ac866b9366ad4aa887b763fee3b3d: 21300000
-    - 5d334861afc101a428e4b2234c265e84: 21300000
-    - 0ef2fcc4cc42eef46b12cd6d2327d78f: 21300000
-    - e9ddb1eccabcf4e489762692a4bf5c7c: 21300000
-    - 306b998956dbc624d889b517afe7868a: 21300000
-    - 7b1e3a50e6037fc42ba602cf8bc93342: 21300000
-    - 2c34e1af0cc237643829308b34bffc0f: 21300000
-    - d3f18d5cd6c496f4ab97b2657bc38396: 21300000
-    - 64c19bb9fd3d0444a8afb2d1c4e78299: 21300000
-    - 31ccfed02fd5a924faca4f4f2f576a37: 21300000
-    - 200247912f3eb3e418220160a7c1d258: 21300000
-    - 8978c612febc2c34fa4b5d9b40c49b28: 21300000
-    - c59da8a1c556edd4fa7a5b14a4d2e345: 21300000
-    - 1117b01e97ca2224fad7e388f2f8d88b: 21300000
-    - 8b25365c9b31e6f4ba7638fd647fe594: 21300000
-    - b8e64319baf9b7d4690edee6054ed3e4: 21300000
-    - de627ae659a68ff439b23922ee9ee714: 21300000
-    - c3a04ad57fe8f2e4ebea448c4052091e: 21300000
-    - 33c02db32e282234096f1793738292b0: 21300000
-    - ac201276aeeb6e4489c7c6cc6bf7a640: 21300000
-    - c56c9afc6bc441f418b632c752cd18c8: 21300000
-    - b3411455de505f0458292e68468483a1: 21300000
-    - 8d0533ed136bd7043a6439b986f33f49: 21300000
-    - e3ab3c97e5e42b84182b7fdb8c4f4ec3: 21300000
-    - 418f209c7141cc24c8e746c6aa0ee88b: 21300000
-    - cf4851b57885ffa428fe8a14800ca511: 21300000
-    - d7a28b46da1e70b449c32151e290f3bf: 21300000
-    - 0749474e30b70ba4cbb0e74438c98657: 21300000
+    bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 7ff390b1cceaee04f93bbf2d3bfa6aa8, type: 3}

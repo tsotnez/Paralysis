@@ -126,10 +126,13 @@ public class HotbarController : MonoBehaviour {
     public IEnumerator flashBlack(AnimationController.AnimatorStates skill)
     {
         Image spell = getImageForSkill(skill);
-        Color colorBefore = spell.color;
+        if (spell != null)
+        {
+            Color colorBefore = spell.color;
 
-        spell.color = new Color(0, 0, 0, .5f);
-        yield return new WaitForSeconds(.15f);
-        spell.color = colorBefore;
+            spell.color = new Color(0, 0, 0, .5f);
+            yield return new WaitForSeconds(.15f);
+            spell.color = colorBefore;
+        }
     }
 }
