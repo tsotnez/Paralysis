@@ -29,6 +29,7 @@ public class LocalChampionSelectionManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        PhotonNetwork.offlineMode = true;
 
         //Set default Values for debugging
         if(team1 == null && team2 == null)

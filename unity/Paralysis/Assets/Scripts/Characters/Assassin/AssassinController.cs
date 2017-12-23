@@ -13,12 +13,14 @@ public class AssassinController : ChampionClassController
 
     public bool invisible = false;
     Coroutine invisRoutine = null;
+    Color col;
 
     #region default
 
     // Use this for initialization
     void Start()
     {
+        col = graphics.GetComponent<SpriteRenderer>().color;
         animCon = graphics.GetComponent<AssassinAnimationController>();
 
         //Instantiate skill variables
@@ -253,7 +255,7 @@ public class AssassinController : ChampionClassController
     {
         invisible = false;
         if (invisRoutine != null) StopCoroutine(invisRoutine);
-        transform.Find("graphics").GetComponent<SpriteRenderer>().color = Color.white;
+        transform.Find("graphics").GetComponent<SpriteRenderer>().color = col;
     }
 
     #endregion

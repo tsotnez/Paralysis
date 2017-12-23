@@ -20,6 +20,7 @@ public class ArcherTrapBehaviour : MonoBehaviour {
     // Use this for initialization
 	void Start () {
         groundCheck = transform.Find("groundCheck").transform;
+        StartCoroutine(die());
 	}
 	
 	// Update is called once per frame
@@ -59,7 +60,7 @@ public class ArcherTrapBehaviour : MonoBehaviour {
             if (whatToHit == (whatToHit | (1 << collision.gameObject.layer)))
             {
                 CharacterStats targetStats = collision.gameObject.GetComponent<CharacterStats>();
-                targetStats.StartStunned(3);
+                targetStats.StartStunned(2f);
                 creator.GetComponent<CharacterStats>().DealDamage(targetStats, damage, true);
                 Camera.main.GetComponent<CameraBehaviour>().startShake();
                 Explode();
@@ -72,6 +73,12 @@ public class ArcherTrapBehaviour : MonoBehaviour {
         //Plays explosion effect and destroys the bullet
         if (explosionPrefab != null)
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+    }
+
+    IEnumerator die()
+    {
+        yield return new WaitForSeconds(20);
         Destroy(gameObject);
     }
 

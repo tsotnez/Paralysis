@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class NetworkVersusManager : Photon.MonoBehaviour
 {
@@ -25,13 +26,25 @@ public class NetworkVersusManager : Photon.MonoBehaviour
         GameObject instPlayer1 = PhotonNetwork.Instantiate(player1.ChampionPrefab.name, spawnPlayer1.position, Quaternion.identity, 0);
         instPlayer1.GetComponent<UserControl>().enabled = true;
         instPlayer1.GetComponent<UserControl>().inputDevice = player1.inputDevice;
-        instPlayer1.layer = 11;
+
 
         //Rigidbody
         instPlayer1.GetComponent<Rigidbody2D>().simulated = true;
 
         LayerMask whatToHitP1 = new LayerMask();
-        whatToHitP1 |= (1 << 12); //Add Team2 as target layer
+
+        //Join the team with lesser players
+        if (GameObject.FindGameObjectsWithTag("MainPlayer").Where(x => x.layer == 11).Count() <=
+            GameObject.FindGameObjectsWithTag("MainPlayer").Where(x => x.layer == 12).Count())
+        {
+            instPlayer1.layer = 11;
+            whatToHitP1 |= (1 << 12); //Add Team2 as target layer
+        }
+        else
+        {
+            instPlayer1.layer = 12;
+            whatToHitP1 |= (1 << 11); //Add Team2 as target layer
+        }
 
         instPlayer1.GetComponent<ChampionClassController>().enabled = true;
         instPlayer1.GetComponent<ChampionClassController>().m_whatToHit = whatToHitP1;

@@ -177,7 +177,7 @@ namespace UnityEngine.EventSystems
             }
 
             //Commented out to Disable Mouse Processing
-            //ProcessMouseEvent();
+            ProcessMouseEvent();
         }
 
         /// <summary>
@@ -202,6 +202,18 @@ namespace UnityEngine.EventSystems
             Vector2 move = Vector2.zero;
             move.x = Input.GetAxisRaw(m_HorizontalAxis);
             move.y = Input.GetAxisRaw(m_VerticalAxis);
+
+            //Jan --- Added because joystick input was weird and too low sometimes //////////
+            if (move.x > 0.01)
+                move.x = 1;
+            if (move.x < -0.01)
+                move.x = -1;
+
+            if (move.y > 0.02)
+                move.y = 1;
+            if (move.y < -0.02)
+                move.y = -1;
+            //////////////////////////////////////////////////////////////////////////////////
 
             if (Input.GetButtonDown(m_HorizontalAxis))
             {
@@ -243,6 +255,12 @@ namespace UnityEngine.EventSystems
                 // If direction didn't change at least 90 degrees, wait for delay before allowing consequtive event.
                 if (similarDir && m_ConsecutiveMoveCount == 1)
                     allow = (time > m_PrevActionTime + m_RepeatDelay);
+
+                //Jan --- Added to prevent random jumping between buttons because input sensitivity was set higher +++++++
+                else if (!similarDir && m_ConsecutiveMoveCount == 1)
+                    allow = (time > m_PrevActionTime + 0.5f);
+                //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
                 // If direction changed at least 90 degree, or we already had the delay, repeat at repeat rate.
                 else
                     allow = (time > m_PrevActionTime + 1f / m_InputActionsPerSecond);
@@ -251,7 +269,8 @@ namespace UnityEngine.EventSystems
                 return false;
 
             // Debug.Log(m_ProcessingEvent.rawType + " axis:" + m_AllowAxisEvents + " value:" + "(" + x + "," + y + ")");
-            var axisEventData = GetAxisEventData(movement.x, movement.y, 0.6f);
+            Debug.Log(movement.y);
+            var axisEventData = GetAxisEventData(movement.x, movement.y, 0.4f);
             ExecuteEvents.Execute(eventSystem.currentSelectedGameObject, axisEventData, ExecuteEvents.moveHandler);
             if (!similarDir)
                 m_ConsecutiveMoveCount = 0;

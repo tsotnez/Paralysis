@@ -586,8 +586,17 @@ public abstract class ChampionClassController : MonoBehaviour
                         // should not happen
                         throw new NotImplementedException();
                 }
+
                 // deal damage to target
-                stats.DealDamage(target, skillToPerform.damage, false);
+
+                if(PhotonNetwork.offlineMode)
+                    stats.DealDamage(target, skillToPerform.damage, false);
+                else
+                    stats.gameObject.GetComponent<PhotonView>().RPC("DealDamage",
+                                                                    PhotonTargets.All,
+                                                                    target,
+                                                                    skillToPerform.damage,
+                                                                    false);
             }
         }
 

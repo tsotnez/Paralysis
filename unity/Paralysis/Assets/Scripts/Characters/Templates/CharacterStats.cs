@@ -103,7 +103,9 @@ public class CharacterStats : MonoBehaviour
         float hpPercent = h / mH;
         float staminaPercent = s / mS;
 
-        hotbar.setFillAmounts(hpPercent, staminaPercent);
+        if(hotbar != null)
+            hotbar.setFillAmounts(hpPercent, staminaPercent);
+
         floatingHpBar.fillAmount = hpPercent;
         floatingStaminaBar.fillAmount = staminaPercent;
 
@@ -216,6 +218,7 @@ public class CharacterStats : MonoBehaviour
     /// <param name="StatsOfTheTarget">Enemy Player/Target of the Damage</param>
     /// <param name="amount">Amount of Damage</param>
     /// <param name="playAnimation">shall the HIT-animation be played at the target</param>
+    [PunRPC]
     public void DealDamage(CharacterStats StatsOfTheTarget, int amount, bool playAnimation)
     {
         // If trinket 1 or trinket 2 is an passive trinket and has as triggertype DealDamage, then use it passively
@@ -353,7 +356,7 @@ public class CharacterStats : MonoBehaviour
     /// Sets the stunned value for given amount of time.
     /// </summary>
     /// <param name="time"></param>
-    public void StartStunned(int time)
+    public void StartStunned(float time)
     {
         if (!invincible)
         {

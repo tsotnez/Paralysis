@@ -31,6 +31,7 @@ public class LocalMultiplayerManager : MonoBehaviour {
 
     private void Awake()
     {
+        PhotonNetwork.offlineMode = true;
         instantiatePlayers();
         buildUI();
     }
