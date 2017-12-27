@@ -40,8 +40,18 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 1a688426e7804304e9a599acdc437901, type: 3}
   - {fileID: 21300000, guid: ac4c1dc81cc26d346a4b91d02110fe17, type: 3}
   - {fileID: 21300000, guid: 53a64e03dc24da746ab1138d85792d34, type: 3}
+  - {fileID: 21300000, guid: 4fc78da7b6c177a4397e1a893e15120b, type: 3}
+  - {fileID: 21300000, guid: 0848edf5647534b4ab8831f9c5c6c3aa, type: 3}
   - {fileID: 21300000, guid: da26d696c22b63c40a7814ee1f3fb05b, type: 3}
+  - {fileID: 21300000, guid: e9f7f41d2d28ed249ae1704b95a64cfd, type: 3}
   - {fileID: 21300000, guid: 77f9a2e5b5103234387db14a80d42ad3, type: 3}
+  - {fileID: 21300000, guid: 3ad4d2d73ad453143bc1a99bb64c4b79, type: 3}
+  - {fileID: 21300000, guid: 7c5d1d9b5f963fe46ab1fe698b63fa4c, type: 3}
+  - {fileID: 21300000, guid: ff479f92871cb9640a0ffbb896bda670, type: 3}
+  - {fileID: 21300000, guid: 779c6067bca77db4f8048d0f6f14a97a, type: 3}
+  - {fileID: 21300000, guid: f39cf497548fb8b4ab4c4302c0f7883c, type: 3}
+  - {fileID: 21300000, guid: 22e6860b42e02a94391ee598ce58724b, type: 3}
+  - {fileID: 21300000, guid: 034c8ccac8ba5db458a98053d183f020, type: 3}
   - {fileID: 21300000, guid: 811f7acfb6a8050479b9eef9060d6392, type: 3}
   - {fileID: 21300000, guid: 150d39dba660ab44ead1855ab4863d7f, type: 3}
   - {fileID: 21300000, guid: cc4a4a03fe65d834fb239f841df8b668, type: 3}
@@ -61,8 +71,18 @@ SpriteAtlas:
   - Fall_02
   - Fall_01
   - Fall_00
+  - Fall_29
+  - Fall_28
   - Fall_09
+  - Fall_25
   - Fall_08
+  - Fall_24
+  - Fall_27
+  - Fall_26
+  - Fall_21
+  - Fall_20
+  - Fall_23
+  - Fall_22
   - Fall_14
   - Fall_15
   - Fall_16

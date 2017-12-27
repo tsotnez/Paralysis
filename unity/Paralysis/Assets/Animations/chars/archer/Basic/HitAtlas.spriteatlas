@@ -32,11 +32,23 @@ SpriteAtlas:
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: f3e967ab0952a0b46a3de3299a38e927, type: 3}
+  - {fileID: 21300000, guid: 3c51f047da83b3b4498d01dc0ac6ec5f, type: 3}
+  - {fileID: 21300000, guid: 4c51789f0359fc142b5ef9d516b4aa3b, type: 3}
+  - {fileID: 21300000, guid: f29f710372a5f954ca118fcb74d4ea8f, type: 3}
+  - {fileID: 21300000, guid: f849ec357995aee4dbbb53dafa248066, type: 3}
+  - {fileID: 21300000, guid: ebc80ca69c4837242a2c8dc46a4ecd40, type: 3}
   - {fileID: 21300000, guid: cdf0e6a25270bd94a8e18e6ff0597caa, type: 3}
   - {fileID: 21300000, guid: 3f914b502c2707c48b32e554a64f545d, type: 3}
   - {fileID: 21300000, guid: e5dc3655969b9d24194f6af3427d1a9e, type: 3}
   - {fileID: 21300000, guid: 58e1566af1b18724fb325985e5a10d96, type: 3}
   m_PackedSpriteNamesToIndex:
+  - Hit_09
+  - Hit_08
+  - Hit_05
+  - Hit_04
+  - Hit_07
+  - Hit_06
   - Hit_01
   - Hit_00
   - Hit_03

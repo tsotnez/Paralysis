@@ -36,6 +36,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: da7ac34eee347ba4e916dd0a8cf4f93d, type: 3}
   - {fileID: 21300000, guid: 2b005c23a9efa9141915fc20af2a0606, type: 3}
   - {fileID: 21300000, guid: 4eee04a690ccaec4187e43dde6590ecc, type: 3}
+  - {fileID: 21300000, guid: 66425fc906039b640983a6c8be2de997, type: 3}
+  - {fileID: 21300000, guid: 7ec202485bb66c84089eeac1eea7558c, type: 3}
   - {fileID: 21300000, guid: a6069daddf3523b4a96d6386d6633d16, type: 3}
   - {fileID: 21300000, guid: c04be2395eb07fd459d900acf13d75c6, type: 3}
   - {fileID: 21300000, guid: d232b7c1846150f4d911e7a80a8a6c26, type: 3}
@@ -51,6 +53,8 @@ SpriteAtlas:
   - Die_10
   - Die_13
   - Die_12
+  - Die_15
+  - Die_14
   - Die_08
   - Die_09
   - Die_06
