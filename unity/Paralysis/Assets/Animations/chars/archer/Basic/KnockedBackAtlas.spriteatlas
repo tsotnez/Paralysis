@@ -36,8 +36,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 2398f23b70ae5a14ab957b6ddf940726, type: 3}
   - {fileID: 21300000, guid: 8249dec337affa84eb86b11f421ab568, type: 3}
   - {fileID: 21300000, guid: b87c7d985a84950458756d5f5483e911, type: 3}
-  - {fileID: 21300000, guid: abb3f79f8f30fe2418e80b28abe03924, type: 3}
-  - {fileID: 21300000, guid: a0a04aea27a512649993f2ca152bb5d4, type: 3}
   - {fileID: 21300000, guid: 1ad2cfbaf3af9ea498c7aac9c750a2a0, type: 3}
   - {fileID: 21300000, guid: 75944411e6efa604d8b1433d9cdf7931, type: 3}
   m_PackedSpriteNamesToIndex:
@@ -45,8 +43,6 @@ SpriteAtlas:
   - KnockedBack_03
   - KnockedBack_00
   - KnockedBack_01
-  - KnockedBack_06
-  - KnockedBack_07
   - KnockedBack_04
   - KnockedBack_05
   m_Tag: KnockedBackAtlas

@@ -34,10 +34,6 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: 9a0b94de7ab77054993576e5684efc66, type: 3}
   - {fileID: 21300000, guid: 1e83a8f540a2048438b422a3c6ad3655, type: 3}
-  - {fileID: 21300000, guid: aa9517d69a594c14bb7350fddefe318d, type: 3}
-  - {fileID: 21300000, guid: 3569d9b9b7430dd4fbd4da21bd580e55, type: 3}
-  - {fileID: 21300000, guid: 7ab251db28e68cd47baf2f2b7cb7817c, type: 3}
-  - {fileID: 21300000, guid: 9593ae95504475d4990551ef364428da, type: 3}
   - {fileID: 21300000, guid: 3502e3d657c2cf046bb9d26a1143ea7e, type: 3}
   - {fileID: 21300000, guid: e63f97282f0be2e42aa3cd6ed814f474, type: 3}
   - {fileID: 21300000, guid: c97d4550deeba4745a7a22060f987674, type: 3}
@@ -51,10 +47,6 @@ SpriteAtlas:
   m_PackedSpriteNamesToIndex:
   - Die_11
   - Die_10
-  - Die_13
-  - Die_12
-  - Die_15
-  - Die_14
   - Die_08
   - Die_09
   - Die_06

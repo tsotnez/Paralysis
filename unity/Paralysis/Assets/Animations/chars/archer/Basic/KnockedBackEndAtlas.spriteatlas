@@ -32,6 +32,8 @@ SpriteAtlas:
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 1f67c59c7735b1f4bbec59411d2cec15, type: 3}
+  - {fileID: 21300000, guid: 18577d7300345b34cb04ac8eaecbf7ba, type: 3}
   - {fileID: 21300000, guid: 2695e58d8eed6054291e9964cc27cf0e, type: 3}
   - {fileID: 21300000, guid: 0f729c0f657a968448f9819f16939f87, type: 3}
   - {fileID: 21300000, guid: 38d6edc32bc164249b4aee39fc6bc016, type: 3}
@@ -45,6 +47,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 6409c9520908ada459a29738da607897, type: 3}
   - {fileID: 21300000, guid: 62e6123766bddfa4e9724b34baa30b4c, type: 3}
   m_PackedSpriteNamesToIndex:
+  - KnockedBackEnd_12
+  - KnockedBackEnd_13
   - KnockedBackEnd_10
   - KnockedBackEnd_11
   - KnockedBackEnd_05

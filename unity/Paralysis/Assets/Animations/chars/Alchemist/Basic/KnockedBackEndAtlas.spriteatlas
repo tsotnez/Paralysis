@@ -33,11 +33,13 @@ SpriteAtlas:
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 95c46bcc31f5b42489560763cd730870, type: 3}
+  - {fileID: 21300000, guid: 2cebb1877ffb57443ba3d4912bef4804, type: 3}
   - {fileID: 21300000, guid: ae9de30d3bfcc174d80591598c62552b, type: 3}
   - {fileID: 21300000, guid: 0443ec01d197d054cb2ed914377c1885, type: 3}
   - {fileID: 21300000, guid: 707e5a2aba4aae2408e58ee579962bdd, type: 3}
   - {fileID: 21300000, guid: a97132f44ed02004bbc3c4183a30c6a9, type: 3}
   - {fileID: 21300000, guid: d455fa000469e1849ba67944c1d55f2f, type: 3}
+  - {fileID: 21300000, guid: 248916e932386a84fbde6e292ce3ee0f, type: 3}
   - {fileID: 21300000, guid: 736d17ff569a04546b8c239c8eabf18e, type: 3}
   - {fileID: 21300000, guid: 94f67d9f6a030eb47a9b6dec528eab64, type: 3}
   - {fileID: 21300000, guid: b68bb9e7f10c5334aa648be02d9796e8, type: 3}
@@ -47,11 +49,13 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 39bb83585c4d39740b750b8d6ae9a7c9, type: 3}
   m_PackedSpriteNamesToIndex:
   - KnockedBackEnd_12
+  - KnockedBackEnd_13
   - KnockedBackEnd_10
   - KnockedBackEnd_11
   - KnockedBackEnd_05
   - KnockedBackEnd_04
   - KnockedBackEnd_07
+  - KnockedBackEnd_14
   - KnockedBackEnd_06
   - KnockedBackEnd_01
   - KnockedBackEnd_00

@@ -42,9 +42,15 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 7355dae0118edf242a383ce23f5b913e, type: 3}
   - {fileID: 21300000, guid: 9520645a18cd4484bafcf2860d073343, type: 3}
   - {fileID: 21300000, guid: 63437c95c7c378346b9a1bf3094ddbeb, type: 3}
+  - {fileID: 21300000, guid: 0b09d4669e2c20042b7fce5014f9e8ec, type: 3}
   - {fileID: 21300000, guid: 6a6296aa6e30fc946b35729392658324, type: 3}
   - {fileID: 21300000, guid: b1afc2dbd567425428c7feb6a5e8ee2d, type: 3}
   - {fileID: 21300000, guid: 4dcfdfdcf6c837f4f928ff0fa8e8f813, type: 3}
+  - {fileID: 21300000, guid: 141d9d8259e11224dbb445a004522a8e, type: 3}
+  - {fileID: 21300000, guid: 0073199b49c73c44fb7ca0055529b55d, type: 3}
+  - {fileID: 21300000, guid: ad707ed3252bc1043bf5d85d60e151e1, type: 3}
+  - {fileID: 21300000, guid: 3dc3feb8770f07e4f8fe677bb795c140, type: 3}
+  - {fileID: 21300000, guid: d4b290c887b95474791c1f56faf2b236, type: 3}
   m_PackedSpriteNamesToIndex:
   - BasicAttack1_09
   - BasicAttack1_08
@@ -56,8 +62,14 @@ SpriteAtlas:
   - BasicAttack1_06
   - BasicAttack1_05
   - BasicAttack1_04
+  - BasicAttack1_18
   - BasicAttack1_10
   - BasicAttack1_11
   - BasicAttack1_12
+  - BasicAttack1_13
+  - BasicAttack1_14
+  - BasicAttack1_15
+  - BasicAttack1_16
+  - BasicAttack1_17
   m_Tag: BasicAttack1Atlas
   m_IsVariant: 0

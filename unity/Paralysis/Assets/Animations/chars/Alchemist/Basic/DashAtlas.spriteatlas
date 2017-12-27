@@ -39,14 +39,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 9c739a7c0854c6743b71e1555527c781, type: 3}
   - {fileID: 21300000, guid: 4f0b1d8a9c15d9c4c9b0ca72f1c1ee9f, type: 3}
   - {fileID: 21300000, guid: 41c711c0d0ce09640a0c58512aefaf32, type: 3}
-  - {fileID: 21300000, guid: 68ccd9a8eae958e43994f0430196f150, type: 3}
   - {fileID: 21300000, guid: 7ced1fdfc2d967e40b71c1c4e70c9eab, type: 3}
   - {fileID: 21300000, guid: 7bb80170ec9dbc84e811f14db12c3da5, type: 3}
   - {fileID: 21300000, guid: 8aea90254f0c45148989f3453d83a96f, type: 3}
-  - {fileID: 21300000, guid: be8ffd33691713e4182bd19bf3941c03, type: 3}
-  - {fileID: 21300000, guid: 2f4615c52d642024b92a56947a8cc2a2, type: 3}
-  - {fileID: 21300000, guid: 7c6b46378a1c3ab47baa15cb53501ba6, type: 3}
-  - {fileID: 21300000, guid: 955170a5708e3ba4da83e97fd7d95855, type: 3}
   m_PackedSpriteNamesToIndex:
   - Dash_08
   - Dash_09
@@ -55,13 +50,8 @@ SpriteAtlas:
   - Dash_00
   - Dash_01
   - Dash_06
-  - Dash_14
   - Dash_07
   - Dash_04
   - Dash_05
-  - Dash_11
-  - Dash_10
-  - Dash_13
-  - Dash_12
   m_Tag: DashAtlas
   m_IsVariant: 0

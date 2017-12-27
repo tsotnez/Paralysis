@@ -32,16 +32,7 @@ SpriteAtlas:
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: c6ed1b98725fc3841b3ac8c64db2c850, type: 3}
-  - {fileID: 21300000, guid: 5517053f5f9c61a428bd2e21a8456325, type: 3}
-  - {fileID: 21300000, guid: 58f6f4d0a00c3cd42b5c07c1f9a8f2d0, type: 3}
-  - {fileID: 21300000, guid: e4df05e9b54ff4d438ba5330321cc39d, type: 3}
   - {fileID: 21300000, guid: 935a6c9d3b5f6a34281e2b4573b3bc89, type: 3}
-  - {fileID: 21300000, guid: 7f0a09487b8d58d4cbb668578743a5a3, type: 3}
-  - {fileID: 21300000, guid: 5c4c5b94511473e40bca6da12f2681a1, type: 3}
-  - {fileID: 21300000, guid: 72654d071db59f34d96e249ed1d79dee, type: 3}
-  - {fileID: 21300000, guid: 5d8f30719c52261468f759b1c2b22680, type: 3}
-  - {fileID: 21300000, guid: 8073929610098d74ca6707ada2af1b71, type: 3}
   - {fileID: 21300000, guid: fa020b5c1b1ba1a448bc1f5d205b0a03, type: 3}
   - {fileID: 21300000, guid: b180a08b4015bb14c9bccab8f2099c61, type: 3}
   - {fileID: 21300000, guid: 2b7fa56b6299d6c42bf19c96eb3b592f, type: 3}
@@ -53,16 +44,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 888da3b2ef73722418977da558f017e2, type: 3}
   - {fileID: 21300000, guid: 1b82f25bc9667b04ca296658d8a99802, type: 3}
   m_PackedSpriteNamesToIndex:
-  - DashFor_14
-  - DashFor_15
-  - DashFor_16
-  - DashFor_17
   - DashFor_10
-  - DashFor_11
-  - DashFor_12
-  - DashFor_13
-  - DashFor_18
-  - DashFor_19
   - DashFor_07
   - DashFor_06
   - DashFor_05
