@@ -34,8 +34,6 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: 4152316de4b89854c8efb4e24c264283, type: 3}
   - {fileID: 21300000, guid: 0309ac16d4f4f7e49b37b23ffd8915d2, type: 3}
-  - {fileID: 21300000, guid: 36daeb8613d86ad4b877686c7f9207bd, type: 3}
-  - {fileID: 21300000, guid: 59e0494a3b2c8cb449393c000cff26a7, type: 3}
   - {fileID: 21300000, guid: ff18db5d79843a245b2b8b93507e1816, type: 3}
   - {fileID: 21300000, guid: 6c1ad4f3e68f96f469433a1cdc72c34c, type: 3}
   - {fileID: 21300000, guid: e4cbb19f480f1a34c9a1d53824b9ca54, type: 3}
@@ -47,8 +45,6 @@ SpriteAtlas:
   m_PackedSpriteNamesToIndex:
   - Hit_09
   - Hit_08
-  - Hit_10
-  - Hit_11
   - Hit_05
   - Hit_04
   - Hit_07

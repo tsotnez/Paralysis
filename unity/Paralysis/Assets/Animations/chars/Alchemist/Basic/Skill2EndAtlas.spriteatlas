@@ -42,11 +42,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 8c527de4f393df247a9896cd3eea243d, type: 3}
   - {fileID: 21300000, guid: 88db28b4eced0b045b55050ec768a47f, type: 3}
   - {fileID: 21300000, guid: 9b61d8ed52c8cc24f971185c4987ee1e, type: 3}
-  - {fileID: 21300000, guid: 7b54cdcd3fc9fc6459391cabb7c04c64, type: 3}
-  - {fileID: 21300000, guid: 92c941f7d994b0840874300a5302271d, type: 3}
-  - {fileID: 21300000, guid: 6c499e95860afa94689a1042fc1935fe, type: 3}
-  - {fileID: 21300000, guid: 3a79076ce785a364abcca3c59ef0f292, type: 3}
-  - {fileID: 21300000, guid: 877bd95888179bd4f82521bd7d6152bc, type: 3}
   m_PackedSpriteNamesToIndex:
   - Skill2End_08
   - Skill2End_09
@@ -58,10 +53,5 @@ SpriteAtlas:
   - Skill2End_03
   - Skill2End_00
   - Skill2End_01
-  - Skill2End_11
-  - Skill2End_10
-  - Skill2End_13
-  - Skill2End_12
-  - Skill2End_14
   m_Tag: Skill2EndAtlas
   m_IsVariant: 0
