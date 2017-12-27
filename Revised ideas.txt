@@ -19,8 +19,7 @@ basic
 heals
 aoe heal that deals dameage to foe
 shield for you/ally
-teleport to ally shielding him for 5 seconds and explode, caqusing knockback to enemy
-	unless stunned
+Makes a wall to block spells
 
 
 
