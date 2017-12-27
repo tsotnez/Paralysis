@@ -32,7 +32,16 @@ SpriteAtlas:
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: c8ab00ebd23c9b7499b3fd69c7f1f50d, type: 3}
+  - {fileID: 21300000, guid: 8e14f79ecf729f648a70d34305f90dca, type: 3}
+  - {fileID: 21300000, guid: 05a4f4e75c1e42e41ab37518b606fb80, type: 3}
+  - {fileID: 21300000, guid: 6f8e4409d913b14438c063edf72e8ce2, type: 3}
   - {fileID: 21300000, guid: f3530764023b81f45b1413721baad322, type: 3}
+  - {fileID: 21300000, guid: e5cbefcc7ca1b9249b5cfe7eea4f440c, type: 3}
+  - {fileID: 21300000, guid: 91565d8a5fa4a2f4096ead9157f64033, type: 3}
+  - {fileID: 21300000, guid: fe1886178bc740b41ab4fad64ef3c6bd, type: 3}
+  - {fileID: 21300000, guid: 3bb53591d406789478d5c327d571a34e, type: 3}
+  - {fileID: 21300000, guid: ad07c04f3516808409bb3ca19f8db56e, type: 3}
   - {fileID: 21300000, guid: 22eb1b2ffd631fa45986cb985fa12253, type: 3}
   - {fileID: 21300000, guid: f7d540e9a0e3fe1489848219bf38e4d4, type: 3}
   - {fileID: 21300000, guid: 21acd76cf02271f408d2c4cad60365dd, type: 3}
@@ -44,7 +53,16 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 31e1519be37dbd04dbde8d20248f4ead, type: 3}
   - {fileID: 21300000, guid: dddbfbe182dd29240a53758c1b30f374, type: 3}
   m_PackedSpriteNamesToIndex:
+  - Run_18
+  - Run_19
+  - Run_12
+  - Run_13
   - Run_10
+  - Run_11
+  - Run_16
+  - Run_17
+  - Run_14
+  - Run_15
   - Run_09
   - Run_08
   - Run_05

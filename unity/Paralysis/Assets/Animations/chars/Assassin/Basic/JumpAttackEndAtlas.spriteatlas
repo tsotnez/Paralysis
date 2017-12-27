@@ -32,11 +32,15 @@ SpriteAtlas:
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 17109f1a6868c5d41a8f5f69d9d43a52, type: 3}
+  - {fileID: 21300000, guid: 32c3702732fa12740af595e047441b8a, type: 3}
   - {fileID: 21300000, guid: fd125dcb0d12fb440bcacb45dd7b7183, type: 3}
   - {fileID: 21300000, guid: e5f0781d7bfad334da2f0c9a3fff23fe, type: 3}
   - {fileID: 21300000, guid: d8c5092b0b2b42e4c94e7dea78378372, type: 3}
   - {fileID: 21300000, guid: bfb1dede5899cfc4cb45dc6293e6c899, type: 3}
   m_PackedSpriteNamesToIndex:
+  - JumpAttackEnd_05
+  - JumpAttackEnd_04
   - JumpAttackEnd_01
   - JumpAttackEnd_00
   - JumpAttackEnd_03

@@ -41,7 +41,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 03c8f248735826a4e8443ca29328982f, type: 3}
   - {fileID: 21300000, guid: dab7062b07118f34bb8736f3c7cd77ae, type: 3}
   - {fileID: 21300000, guid: 3c0d9acd1b6435c4eba316d19e032bd1, type: 3}
-  - {fileID: 21300000, guid: d0b0de131d1e3c64d999519f7d059bd7, type: 3}
   - {fileID: 21300000, guid: e9a3769a7a59c904783ceaed05e5488e, type: 3}
   - {fileID: 21300000, guid: 08c92de01ebc82a41a7bebf3dd62e07f, type: 3}
   - {fileID: 21300000, guid: 4d191e7991daa654f9682cf417916980, type: 3}
@@ -58,7 +57,6 @@ SpriteAtlas:
   - Skill2_03
   - Skill2_14
   - Skill2_02
-  - Skill2_15
   - Skill2_01
   - Skill2_00
   - Skill2_07

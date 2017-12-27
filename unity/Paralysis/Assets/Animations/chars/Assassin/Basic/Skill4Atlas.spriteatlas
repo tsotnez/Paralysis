@@ -32,8 +32,8 @@ SpriteAtlas:
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: 2f68d7df73d01db4887f8c79ec6a1f8f, type: 3}
   - {fileID: 21300000, guid: 41ea071e063ba0343b858a40e367a59a, type: 3}
+  - {fileID: 21300000, guid: 2f68d7df73d01db4887f8c79ec6a1f8f, type: 3}
   - {fileID: 21300000, guid: 44e327c926c21854d8bf93667ea0c19c, type: 3}
   - {fileID: 21300000, guid: 42aa40265c3539e44a576e0ddc026da7, type: 3}
   - {fileID: 21300000, guid: 2b0179196c87e994ba2f1d03ccbd435c, type: 3}
@@ -42,7 +42,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4c4ddaec145690a448f873f2dd6e360c, type: 3}
   - {fileID: 21300000, guid: 84284d6489dac6847b2fa021878894af, type: 3}
   - {fileID: 21300000, guid: a954128d5ac2e5545b9680bbc578ba5e, type: 3}
-  - {fileID: 21300000, guid: dad085dfc1244dc4a9fcef376f9ce5a7, type: 3}
   - {fileID: 21300000, guid: 15ad9d6ca52c0ec4d9d89aca4ffda6b5, type: 3}
   - {fileID: 21300000, guid: 88802e9b1b76a9a40a51a639c5ac4710, type: 3}
   - {fileID: 21300000, guid: 0989b24e4e265924ba319814a78a546b, type: 3}
@@ -52,8 +51,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4bce9f2339a25c740a16942e0b9e60b5, type: 3}
   - {fileID: 21300000, guid: b966638598b9c6e48b51946ed70a2bb1, type: 3}
   m_PackedSpriteNamesToIndex:
-  - Skill4_00
   - Skill4_01
+  - Skill4_00
   - Skill4_03
   - Skill4_02
   - Skill4_05
@@ -62,7 +61,6 @@ SpriteAtlas:
   - Skill4_06
   - Skill4_09
   - Skill4_08
-  - Skill4_18
   - Skill4_16
   - Skill4_17
   - Skill4_14

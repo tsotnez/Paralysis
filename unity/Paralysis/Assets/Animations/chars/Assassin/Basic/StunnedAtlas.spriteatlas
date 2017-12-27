@@ -41,7 +41,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 2692d47936703ce4b8da47dbd5fdf84e, type: 3}
   - {fileID: 21300000, guid: b116e6fa35f9e034f88ffbd74e4137ed, type: 3}
   - {fileID: 21300000, guid: 12e566a93440e674bbe3d2b654b422eb, type: 3}
-  - {fileID: 21300000, guid: 3f96725c713ac264eb027bb8edc3081e, type: 3}
   - {fileID: 21300000, guid: dc63bf7a9a477a0458a1124d0db0fa51, type: 3}
   - {fileID: 21300000, guid: 66bdb51be958ac2479e7013ba521e4d2, type: 3}
   - {fileID: 21300000, guid: 7fd7d0ad94822264283fc04c3f4b16f5, type: 3}
@@ -59,7 +58,6 @@ SpriteAtlas:
   - Stunned_02
   - Stunned_15
   - Stunned_01
-  - Stunned_16
   - Stunned_00
   - Stunned_07
   - Stunned_06
