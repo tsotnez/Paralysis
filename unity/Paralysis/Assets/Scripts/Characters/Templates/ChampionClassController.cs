@@ -197,7 +197,7 @@ public abstract class ChampionClassController : MonoBehaviour
     {
         if (stats.stunned && !stats.knockedBack)
         {
-            // Prevent from sliding after kncokback while stunned 
+            // Prevent from sliding after knockback while stunned 
             m_Rigidbody2D.velocity = Vector2.zero;
         }
         else if (stats.stunned ||stats.knockedBack)
