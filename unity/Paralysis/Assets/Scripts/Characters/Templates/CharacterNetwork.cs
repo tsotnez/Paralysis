@@ -1,19 +1,24 @@
 ﻿using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// Synchronizes game mechanic values (excluding the transform)
+/// </summary>
 public class CharacterNetwork : Photon.MonoBehaviour {
 
-    ChampionAnimationController animCon;
     SpriteRenderer r;
     Transform graphicsTransform;
     CharacterStats stats;
+    SpriteRenderer shadowRenderer;
+    GameObject stunnedSymbol;
 
     private void Awake()
     {
-        animCon = GetComponentInChildren<ChampionAnimationController>();
         r = transform.Find("graphics").GetComponent<SpriteRenderer>();
         graphicsTransform = transform.Find("graphics");
         stats = GetComponent<CharacterStats>();
+        shadowRenderer = transform.Find("graphics").GetComponent<SpriteRenderer>();
+        stunnedSymbol = transform.Find("stunnedSymbol").gameObject;
     }
 
     private void Start()
@@ -40,35 +45,27 @@ public class CharacterNetwork : Photon.MonoBehaviour {
         if (stream.isWriting)
         {
             //This is our player, sending info
-            stream.SendNext(animCon.m_Grounded);
-            stream.SendNext(animCon.m_vSpeed);
-            stream.SendNext(animCon.m_Speed);
-            stream.SendNext(animCon.statDead);
-            stream.SendNext(animCon.statPreview);
-            stream.SendNext(animCon.statStunned);
-            stream.SendNext(animCon.statBlock);
             stream.SendNext(r.flipX);
             stream.SendNext(graphicsTransform.localScale);
             stream.SendNext(stats.CurrentHealth);
             stream.SendNext(stats.CurrentStamina);
+            stream.SendNext(shadowRenderer.enabled);
+            stream.SendNext(stunnedSymbol.activeSelf);
         }
         else
         {
             //Someone elses Player, receive info and set values
-            animCon.m_Grounded = (bool)stream.ReceiveNext();
-            animCon.m_vSpeed = (float)stream.ReceiveNext();
-            animCon.m_Speed = (float)stream.ReceiveNext();
-            animCon.statDead = (bool)stream.ReceiveNext();
-            animCon.statPreview = (bool)stream.ReceiveNext();
-            animCon.statStunned = (bool)stream.ReceiveNext();
-            animCon.statBlock = (bool)stream.ReceiveNext();
             r.flipX = (bool)stream.ReceiveNext();
             graphicsTransform.localScale = (Vector3)stream.ReceiveNext();
             stats.CurrentHealth = (int)stream.ReceiveNext();
             stats.CurrentStamina = (int)stream.ReceiveNext();
+            shadowRenderer.enabled = (bool)stream.ReceiveNext();
+            stunnedSymbol.SetActive(((bool)stream.ReceiveNext()));
         }
     }
 
+    #region RPC
+    //Jan --- RPC Methods for networking. These are called from the client instance
     [PunRPC]
     void SetTeam(int team, int teamToHit)
     {
@@ -80,4 +77,5 @@ public class CharacterNetwork : Photon.MonoBehaviour {
 
         stats.setTeamColor();
     }
+    #endregion 
 }

@@ -11,16 +11,11 @@ public class AssassinController : ChampionClassController
     [SerializeField]
     private int ambushAttack_damage = 13;
 
-    public bool invisible = false;
-    Coroutine invisRoutine = null;
-    Color col;
-
     #region default
 
     // Use this for initialization
     void Start()
     {
-        col = graphics.GetComponent<SpriteRenderer>().color;
         animCon = graphics.GetComponent<AssassinAnimationController>();
 
         //Instantiate skill variables
@@ -37,8 +32,8 @@ public class AssassinController : ChampionClassController
     protected override void Update()
     {
         base.Update();
-        if (stats.stunned && invisible) StopInvisible();
-        if (stats.knockedBack && invisible) StopInvisible();
+        if (stats.stunned && stats.invisible) stats.StopInvisible();
+        if (stats.knockedBack && stats.invisible) stats.StopInvisible();
     }
 
     #endregion
@@ -50,7 +45,7 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void Skill1()
     {
-        if (invisible) StopInvisible();
+        if (stats.invisible) stats.StopInvisible();
         DoMeleeSkill(ref animCon.trigSkill1, (MeleeSkill)skill1_var);
     }
 
@@ -62,9 +57,9 @@ public class AssassinController : ChampionClassController
         if (CanPerformAction(true) && CanPerformAttack() && skill2_var.notOnCooldown && stats.LoseStamina(stamina_Skill2))
         {
             hotbar.StartCoroutine(hotbar.flashBlack(skill2_var.name));
-            if (invisible) StopInvisible();
-            if (invisRoutine != null) StopCoroutine(invisRoutine);
-            invisRoutine = StartCoroutine(ManageInvisibility());
+            if (stats.invisible) stats.StopInvisible();           
+            StartCoroutine(SetSkillOnCooldown(skill2_var));
+            stats.startInvisible(delay_Skill2, 5);
         }
     }
 
@@ -76,7 +71,7 @@ public class AssassinController : ChampionClassController
         if (CanPerformAction(true) && CanPerformAttack() && skill3_var.notOnCooldown && stats.LoseStamina(stamina_Skill3))
         {
             hotbar.StartCoroutine(hotbar.flashBlack(skill3_var.name));
-            if (invisible) StopInvisible();
+            if (stats.invisible) stats.StopInvisible();
             StartCoroutine(ShadowStepHit());
         }
     }
@@ -86,7 +81,7 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void Skill4()
     {
-        if (invisible) StopInvisible();
+        if (stats.invisible) stats.StopInvisible();
         DoRangeSkill(ref animCon.trigSkill4, (RangedSkill)skill4_var);
     }
 
@@ -98,14 +93,14 @@ public class AssassinController : ChampionClassController
     {
         if (shouldAttack && CanPerformAttack() && !dashing)
         {
-            if (!animCon.m_Grounded && !invisible && doubleJumped) //Jump attack only when double jumped
+            if (!animCon.m_Grounded && !stats.invisible && doubleJumped) //Jump attack only when double jumped
             {
                 //Jump Attack
                 StartCoroutine(JumpAttack());
                 //reset combo
                 AbortCombo();
             }
-            else if (animCon.m_Grounded && invisible)
+            else if (animCon.m_Grounded && stats.invisible)
             {
                 attackCount = 4;
             }
@@ -148,7 +143,7 @@ public class AssassinController : ChampionClassController
                         //reset Combo
                         AbortCombo();
                         //end invisibility
-                        StopInvisible();
+                        stats.StopInvisible();
                         break;
                 }
             }
@@ -231,33 +226,5 @@ public class AssassinController : ChampionClassController
 
     #endregion
 
-    #region Invisibility
-
-    private IEnumerator ManageInvisibility()
-    {
-        yield return new WaitForSeconds(delay_Skill2);
-        invisible = true;
-        StartCoroutine(SetSkillOnCooldown(skill2_var));
-
-        // set animation
-        animCon.trigSkill2 = true;
-
-        // set transparency
-        Color oldCol = transform.Find("graphics").GetComponent<SpriteRenderer>().color;
-        oldCol.a = 0.5f;
-        transform.Find("graphics").GetComponent<SpriteRenderer>().color = oldCol;
-
-        yield return new WaitForSeconds(5);
-        StopInvisible();
-    }
-
-    private void StopInvisible()
-    {
-        invisible = false;
-        if (invisRoutine != null) StopCoroutine(invisRoutine);
-        transform.Find("graphics").GetComponent<SpriteRenderer>().color = col;
-    }
-
-    #endregion
 }
 

@@ -61,4 +61,11 @@ MonoBehaviour:
   - DealDamage
   - SetTeam
   - TakeDamage
+  - startInvisibile
+  - StopInvisible
+  - startInvisible
+  - StartKnockBack
+  - StartStunned
+  - StartBleeding
+  - TakeBleedDamage
   DisableAutoOpenWizard: 1

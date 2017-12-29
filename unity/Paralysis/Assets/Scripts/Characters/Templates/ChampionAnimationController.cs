@@ -3,9 +3,9 @@
     PhotonView view;
 
     /// <summary>
-    /// Indicates wheter a trigger was set by a RPC
+    /// Indicates wheter a trigger was set by an RPC
     /// </summary>
-    protected bool setByRPC = false;
+    public bool setByRPC = false;
 
     // Vars
     public bool m_Grounded;                                              // Whether or not the player is grounded.
@@ -50,6 +50,17 @@
 
     protected virtual void FixedUpdate() { }
 
+    /// <summary>
+    /// Issues an RPC if needed
+    /// </summary>
+    private void synchronizeTrigger(string methodName)
+    {
+        //Jan --- Dont issue RPC when already called by RPC 
+        if (!setByRPC && !PhotonNetwork.offlineMode)
+            view.RPC(methodName, PhotonTargets.Others);
+        setByRPC = false;
+    }
+
     private void AnimationManager()
     {
         // Animations that work in any State
@@ -57,14 +68,9 @@
         {
             if (trigBasicAttack1)
             {
-                //Jan --- Dont issue RPC when already called by RPC 
-                //if(!setByRPC)
-                //    view.RPC("setBasicAttack1", PhotonTargets.Others);
+                synchronizeTrigger("setBasicAttack1");
                 trigBasicAttack1 = false;
                 StartAnimation(AnimatorStates.BasicAttack1);
-
-                //Reset indicator of RPC
-                setByRPC = false;
                 return;
             }
             StartAnimation(AnimatorStates.Idle);
@@ -75,11 +81,9 @@
         }
         else if (trigKnockedBack)
         {
-            if (!setByRPC && !PhotonNetwork.offlineMode)
-                view.RPC("setKnockedBack", PhotonTargets.Others);
+            synchronizeTrigger("setKnockedBack");
             trigKnockedBack = false;
             StartAnimation(AnimatorStates.KnockedBack);
-            setByRPC = false;
         }
         else if (statStunned && CurrentAnimation != AnimatorStates.KnockedBack)
             StartAnimation(AnimatorStates.Stunned);
@@ -103,21 +107,17 @@
                 case AnimatorStates.KnockedBack:
                     if (trigKnockedBackEnd)
                     {
-                        if (!setByRPC && !PhotonNetwork.offlineMode)
-                            view.RPC("setKnockedBackEnd", PhotonTargets.Others);
+                        synchronizeTrigger("setKnockedBackEnd");
                         trigKnockedBackEnd = false;
                         StartAnimation(AnimatorStates.KnockedBack, TypeOfAnimation.EndAnimation);
-                        setByRPC = false;
                     }
                     return;
                 case AnimatorStates.JumpAttack:
                     if (trigJumpAttackEnd)
                     {
-                        if (!setByRPC && !PhotonNetwork.offlineMode)
-                            view.RPC("setJumpAttackEnd", PhotonTargets.Others);
+                        synchronizeTrigger("setJumpAttackEnd");
                         trigJumpAttackEnd = false;
                         StartAnimation(AnimatorStates.JumpAttack, TypeOfAnimation.EndAnimation);
-                        setByRPC = false;
                     }
                     return;
             }
@@ -131,101 +131,77 @@
                 StartAnimation(AnimatorStates.BlockMove);
             else if (trigDash)
             {
-                if (!setByRPC && !PhotonNetwork.offlineMode)
-                    view.RPC("setDash", PhotonTargets.Others);
+                synchronizeTrigger("setDash");
                 trigDash = false;
                 StartAnimation(AnimatorStates.Dash);
-                setByRPC = false;
             }
             else if (trigDashForward)
             {
-                if (!setByRPC && !PhotonNetwork.offlineMode)
-                    view.RPC("setDashForward", PhotonTargets.Others);
+                synchronizeTrigger("setDashForward");
                 trigDashForward = false;
                 StartAnimation(AnimatorStates.DashFor);
-                setByRPC = false;
             }
             else if (trigHit)
             {
-                if (!setByRPC && !PhotonNetwork.offlineMode)
-                    view.RPC("setHit", PhotonTargets.Others);
+                synchronizeTrigger("setHit");
                 trigHit = false;
                 StartAnimation(AnimatorStates.Hit);
-                setByRPC = false;
             }
             else if (trigJumpAttack)
             {
-                if (!setByRPC && !PhotonNetwork.offlineMode)
-                    view.RPC("setJumpAttack", PhotonTargets.Others);
+                synchronizeTrigger("setJumpAttack");
                 trigJumpAttack = false;
                 StartAnimation(AnimatorStates.JumpAttack);
-                setByRPC = false;
             }
             else if (trigBasicAttack1)
             {
-                if (!setByRPC && !PhotonNetwork.offlineMode)
-                    view.RPC("setBasicAttack1", PhotonTargets.Others);
+                synchronizeTrigger("setBasicAttack1");
                 trigBasicAttack1 = false;
                 StartAnimation(AnimatorStates.BasicAttack1);
-                setByRPC = false;
             }
             else if (trigBasicAttack2)
             {
-                if (!setByRPC && !PhotonNetwork.offlineMode)
-                    view.RPC("setBasicAttack2", PhotonTargets.Others);
+                synchronizeTrigger("setBasicAttack2");
                 trigBasicAttack2 = false;
                 StartAnimation(AnimatorStates.BasicAttack2);
-                setByRPC = false;
             }
             else if (trigBasicAttack3)
             {
-                if (!setByRPC && !PhotonNetwork.offlineMode)
-                    view.RPC("setBasicAttack3", PhotonTargets.Others);
+                synchronizeTrigger("setBasicAttack3");
                 trigBasicAttack3 = false;
                 StartAnimation(AnimatorStates.BasicAttack3);
-                setByRPC = false;
             }
             else if (trigSkill1)
             {
-                if (!setByRPC && !PhotonNetwork.offlineMode)
-                    view.RPC("setSkill1", PhotonTargets.Others);
+                synchronizeTrigger("setSkill1");
                 trigSkill1 = false;
                 StartAnimation(AnimatorStates.Skill1);
-                setByRPC = false;
             }
             else if (trigSkill2)
             {
-                if (!setByRPC && !PhotonNetwork.offlineMode)
-                    view.RPC("setSkill2", PhotonTargets.Others);
+                synchronizeTrigger("setSkill2");
                 trigSkill2 = false;
                 StartAnimation(AnimatorStates.Skill2);
-                setByRPC = false;
             }
             else if (trigSkill3)
             {
-                if (!setByRPC && !PhotonNetwork.offlineMode)
-                    view.RPC("setSkill3", PhotonTargets.Others);
+                synchronizeTrigger("setSkill3");
                 trigSkill3 = false;
                 StartAnimation(AnimatorStates.Skill3);
-                setByRPC = false;
             }
             else if (trigSkill4)
             {
-                if (!setByRPC && !PhotonNetwork.offlineMode)
-                    view.RPC("setSkill4", PhotonTargets.Others);
+                synchronizeTrigger("setSkill4");
                 trigSkill4 = false;
                 StartAnimation(AnimatorStates.Skill4);
-                setByRPC = false;
             }
             else if (!m_Grounded && m_vSpeed <= 0)
                 StartAnimation(AnimatorStates.Fall);
             else if (!m_Grounded && m_vSpeed > 0 && trigJump)
             {
-                if (!setByRPC && !PhotonNetwork.offlineMode)
-                    view.RPC("setJump", PhotonTargets.Others);
+                synchronizeTrigger("setJump");
                 StartAnimation(AnimatorStates.Jump);
                 trigJump = false;
-                setByRPC = false;
             }
             else if (m_Grounded && m_Speed > 0)
                 StartAnimation(AnimatorStates.Run);

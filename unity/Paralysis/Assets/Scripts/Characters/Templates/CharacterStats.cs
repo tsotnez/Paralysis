@@ -33,7 +33,7 @@ public class CharacterStats : Photon.MonoBehaviour
     private int callsSinceLastAction = 10;
 
     [Header("Statusses")]
-    public bool CharacterDied = false;          // Stores if character had died
+    public bool CharacterDied = false;          // Stores if character has died
     public bool stunned = false;                // Stores if character is stunned
     public Coroutine stunnedRoutine = null;     // Stores the stunned Coroutine
     public bool bleeding = false;               // Takes damage while true
@@ -44,6 +44,8 @@ public class CharacterStats : Photon.MonoBehaviour
     public float slowFactor = 1;                // Setting this to a value below 1 will slow down the character
     public bool invincible = false;             // If true, character cant be harmed 
     public bool reflect = false;                // If true, character reflect damage to its dealer
+    public bool invisible = false;              // Is the character invisible
+    Coroutine invisRoutine = null;              // Stores the invisible coroutine
 
     [Header("Knock Back")]
     [SerializeField]
@@ -67,6 +69,8 @@ public class CharacterStats : Photon.MonoBehaviour
     public bool NextHitDealsStun = false;
     public bool NextHitDealsBleed = false;
 
+    Color col;                                  // Color of the sprite renderer. Used to store default color while invisible
+
     #region default
 
     void Awake()
@@ -83,6 +87,7 @@ public class CharacterStats : Photon.MonoBehaviour
     void Start()
     {
         InvokeRepeating("RegenerateStamina", 0f, 0.1f);
+        col = transform.Find("graphics").GetComponent<SpriteRenderer>().color;
     }
 
     public void setTeamColor()
@@ -111,8 +116,9 @@ public class CharacterStats : Photon.MonoBehaviour
         floatingHpBar.fillAmount = hpPercent;
         floatingStaminaBar.fillAmount = staminaPercent;
 
-        // tell the animationController when player is stunned
-        animCon.statStunned = this.stunned;
+        // tell the animationController when player is stunned (only if local Client --- Jan)
+        if(photonView.isMine)
+            animCon.statStunned = this.stunned;
     }
 
     #endregion
@@ -272,12 +278,15 @@ public class CharacterStats : Photon.MonoBehaviour
                 //Show number of damage received
                 ShowFloatingText_Damage(amount);
 
-                this.CurrentHealth -= amount; //Substract health
-                if (playAnimation) animCon.trigHit = true; //Play hit animation
+                if (photonView.isMine) //only substract healt and check for trinkets if running on originial instance
+                {
+                    this.CurrentHealth -= amount; //Substract health
+                    if (playAnimation) animCon.trigHit = true; //Play hit animation
 
-                // If trinket 1 or trinket 2 is an passive trinket and has as triggertype TakeDamage, then use it passively
-                TooglePassiveTrinkets(controller.Trinket1, PassiveTrinket.TriggerType.TakeDamage);
-                TooglePassiveTrinkets(controller.Trinket2, PassiveTrinket.TriggerType.TakeDamage);
+                    // If trinket 1 or trinket 2 is an passive trinket and has as triggertype TakeDamage, then use it passively
+                    TooglePassiveTrinkets(controller.Trinket1, PassiveTrinket.TriggerType.TakeDamage);
+                    TooglePassiveTrinkets(controller.Trinket2, PassiveTrinket.TriggerType.TakeDamage);
+                }
             }
             else
             {
@@ -313,12 +322,17 @@ public class CharacterStats : Photon.MonoBehaviour
     /// <summary>
     /// Same as "takeDamage" but no check if invincible and wont lower damage if blocking
     /// </summary>
-    private void TakeBleedDamage(int amount)
+    [PunRPC]
+    private void TakeBleedDamage(int amount, bool issueRPC = true)
     {
+        if (!PhotonNetwork.offlineMode && issueRPC)
+            photonView.RPC("TakeBleedDamage", PhotonTargets.Others, amount, false);
+
         GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false); //Show number of damage received
         text.GetComponentInChildren<Text>().text = amount.ToString();
 
-        this.CurrentHealth -= amount; //Substract health
+        if(photonView.isMine)
+            this.CurrentHealth -= amount; //Substract health
     }
 
     #endregion
@@ -328,8 +342,16 @@ public class CharacterStats : Photon.MonoBehaviour
     /// <summary>
     /// Sets the stunned value till disable
     /// </summary>
-    public void StartStunned()
+    [PunRPC]
+    public void StartStunned(bool issueRPC = true)
     {
+        //If called from a copy, issue rpc on original instance
+        if (!PhotonNetwork.offlineMode && !photonView.isMine && issueRPC)
+        {
+            photonView.RPC("StartKnockBack", PhotonTargets.Others, false);
+            return;
+        }
+
         if (!invincible)
         {
             // Stop coroutine if running
@@ -361,8 +383,16 @@ public class CharacterStats : Photon.MonoBehaviour
     /// Sets the stunned value for given amount of time.
     /// </summary>
     /// <param name="time"></param>
-    public void StartStunned(float time)
+    [PunRPC]
+    public void StartStunned(float time, bool issueRPC = true)
     {
+        //If called from a copy, issue rpc on original instance
+        if (!PhotonNetwork.offlineMode && !photonView.isMine && issueRPC)
+        {
+            photonView.RPC("StartStunned", PhotonTargets.Others, time, false);
+            return;
+        }
+
         if (!invincible)
         {
             if (stunnedRoutine != null) StopCoroutine(stunnedRoutine);
@@ -380,8 +410,16 @@ public class CharacterStats : Photon.MonoBehaviour
         stunned = false;
     }
 
-    public void StartKnockBack(Vector3 origin)
+    [PunRPC]
+    public void StartKnockBack(Vector3 origin, bool issueRPC = true)
     {
+        //If called from a copy, issue rpc on original instance
+        if (!PhotonNetwork.offlineMode && !photonView.isMine && issueRPC)
+        {
+            photonView.RPC("StartKnockBack", PhotonTargets.Others, origin, false);
+            return;
+        }
+
         if (!invincible && !controller.blocking) //Only knock back if not blocking and not invincible
         {
             if (knockBackRoutine != null) StopCoroutine(knockBackRoutine);
@@ -413,8 +451,16 @@ public class CharacterStats : Photon.MonoBehaviour
         knockedBack = false;
     }
 
-    public void StartBleeding(int time)
+    [PunRPC]
+    public void StartBleeding(int time, bool issueRPC = true)
     {
+        //If called from a copy, issue rpc on original instance
+        if (!PhotonNetwork.offlineMode && !photonView.isMine && issueRPC)
+        {
+            photonView.RPC("StartBleeding", PhotonTargets.Others, time, false);
+            return;
+        }
+
         if (!invincible)
         {
             if (bleedingRoutine != null) StopCoroutine(bleedingRoutine);
@@ -453,6 +499,81 @@ public class CharacterStats : Photon.MonoBehaviour
         slowFactor = factor;
         yield return new WaitForSeconds(time);
         slowFactor = 1;
+    }
+
+    #endregion
+
+    #region Invisibility
+
+    /// <summary>
+    /// Called to start the invis routine from network or local
+    /// </summary>
+    /// <param name="delay"></param>
+    /// <param name="seconds"></param>
+    /// <param name="issueRpc"></param>
+    [PunRPC]
+    public void startInvisible(float delay, int seconds, bool issueRpc = true)
+    {
+        if (!PhotonNetwork.offlineMode && issueRpc)
+            photonView.RPC("startInvisible", PhotonTargets.Others, delay, seconds, false);
+
+        if (invisRoutine != null) StopCoroutine(invisRoutine);
+        invisRoutine = StartCoroutine(ManageInvisibility(delay, seconds));
+    }
+
+    /// <summary>
+    /// Turns the character invisible, setting the staus variable and changing the sprite renderes color
+    /// </summary>
+    /// <param name="delay"></param>
+    /// <param name="seconds"></param>
+    /// <returns></returns>
+    private IEnumerator ManageInvisibility(float delay, int seconds)
+    {
+        Debug.Log("started");
+        
+        // set animation
+        animCon.trigSkill2 = true;
+
+        yield return new WaitForSeconds(delay);
+        invisible = true;
+
+        
+
+        //Set Alpha to 0 if on different client (Character should be in fact invisible) and to 0.5f if on the controlling client for a visual represanttation of invisibility
+        //Also disable floating status bar
+        float newAlpha;
+        if (!PhotonNetwork.offlineMode && photonView.isMine)
+            newAlpha = 0.5f;
+        else
+        {
+            newAlpha = 0f;
+            floatingHpBar.transform.parent.parent.gameObject.SetActive(false);
+        }
+
+        // set transparency
+        SpriteRenderer ren = transform.Find("graphics").GetComponent<SpriteRenderer>();
+        Color oldCol = ren.color;
+        oldCol.a = newAlpha;
+        ren.color = oldCol;
+
+        yield return new WaitForSeconds(seconds);
+        StopInvisible();
+    }
+
+    /// <summary>
+    /// Resets invsi values and sprite renderer color
+    /// </summary>
+    /// <param name="issueRpc"></param>
+    [PunRPC]
+    public void StopInvisible(bool issueRpc = true)
+    {
+        if (!PhotonNetwork.offlineMode && issueRpc)
+            photonView.RPC("StopInvisible", PhotonTargets.Others, false);
+
+        invisible = false;
+        if (invisRoutine != null) StopCoroutine(invisRoutine);
+        transform.Find("graphics").GetComponent<SpriteRenderer>().color = col;
+        floatingHpBar.transform.parent.parent.gameObject.SetActive(true);
     }
 
     #endregion

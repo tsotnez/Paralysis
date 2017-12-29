@@ -28,11 +28,11 @@ public class ProjectileBehaviour : MonoBehaviour
         startPos = transform.position; //Save starting position
         ProjectileRigid = this.GetComponent<Rigidbody2D>();
 
-        //Flip sprite if necessary
-        if (direction == -1)
-        {
-            Flip(this);
-        }
+        ////Flip sprite if necessary
+        //if (direction == -1)
+        //{
+        //    Flip(this);
+        //}
     }
 
     // Use this for initialization
@@ -50,7 +50,6 @@ public class ProjectileBehaviour : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     protected void FixedUpdate()
     {
         if (!stuck && !falling)
@@ -152,12 +151,15 @@ public class ProjectileBehaviour : MonoBehaviour
 
     protected virtual void Die()
     {
-        Destroy(gameObject);
+        if (!PhotonNetwork.offlineMode)
+            PhotonNetwork.Destroy(gameObject);
+        else
+            Destroy(gameObject);
     }
 
     public static void Flip(Component ObjectToFlip)
     {
-                // Multiply the sprites x local scale by -1.
+        // Multiply the sprites x local scale by -1.
         Vector3 theScale = ObjectToFlip.transform.localScale;
         theScale.x *= -1;
         ObjectToFlip.transform.localScale = theScale;

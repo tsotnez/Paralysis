@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ChampionClassController : MonoBehaviour
+public abstract class ChampionClassController : Photon.MonoBehaviour
 {
     #region Parameters for Inspector
 
@@ -641,24 +641,47 @@ public abstract class ChampionClassController : MonoBehaviour
         if (m_FacingRight) direction = 1;
         else direction = -1;
 
-        // generate GameObject
-        GameObject goProjectile = skillToPerform.prefab;
-        ProjectileBehaviour projectile = goProjectile.GetComponent<ProjectileBehaviour>();
+        if (PhotonNetwork.offlineMode)
+        {
+            // generate GameObject
+            GameObject goProjectile = skillToPerform.prefab;
+            ProjectileBehaviour projectile = goProjectile.GetComponent<ProjectileBehaviour>();
 
-        // assign variables to projectile Script
-        projectile.direction = direction;
-        projectile.creator = this.gameObject;
-        projectile.whatToHit = m_whatToHit;
-        projectile.range = skillToPerform.range;
-        projectile.speed = skillToPerform.speed;
-        projectile.effect = skillToPerform.effect;
-        projectile.explodeOnHit = skillToPerform.onHitEffect;
-        projectile.damage = skillToPerform.damage;
-        projectile.effectDuration = skillToPerform.effectDuration;
+            // assign variables to projectile Script
+            projectile.direction = direction;
+            projectile.creator = this.gameObject;
+            projectile.whatToHit = m_whatToHit;
+            projectile.range = skillToPerform.range;
+            projectile.speed = skillToPerform.speed;
+            projectile.effect = skillToPerform.effect;
+            projectile.explodeOnHit = skillToPerform.onHitEffect;
+            projectile.damage = skillToPerform.damage;
+            projectile.effectDuration = skillToPerform.effectDuration;
 
-        Instantiate(goProjectile, transform.position + new Vector3(1f * direction, 0.3f), new Quaternion(goProjectile.transform.rotation.x,
-            goProjectile.transform.rotation.y, goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));
+            Instantiate(goProjectile, transform.position + new Vector3(1f * direction, 0.3f), new Quaternion(goProjectile.transform.rotation.x,
+                goProjectile.transform.rotation.y, goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));
+        }
+        else
+        {
+            GameObject goProjectile = PhotonNetwork.Instantiate("Bullet_AssassinSkill4", transform.position + new Vector3(1f * direction, 0.3f), new Quaternion(0,
+                0, direction, 0), 0);
 
+            ProjectileBehaviour projectile = goProjectile.GetComponent<ProjectileBehaviour>();
+
+            // assign variables to projectile Script
+            projectile.direction = direction;
+            projectile.creator = this.gameObject;
+            projectile.whatToHit = m_whatToHit;
+            projectile.range = skillToPerform.range;
+            projectile.speed = skillToPerform.speed;
+            projectile.effect = skillToPerform.effect;
+            projectile.explodeOnHit = skillToPerform.onHitEffect;
+            projectile.damage = skillToPerform.damage;
+            projectile.effectDuration = skillToPerform.effectDuration;
+
+            goProjectile.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            projectile.enabled = true;
+        }
         StartCoroutine(SetSkillOnCooldown(skillToPerform));
     }
 

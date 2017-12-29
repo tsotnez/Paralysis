@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 114488746061249168}
   - component: {fileID: 82746743460711678}
   - component: {fileID: 114604494009971110}
+  - component: {fileID: 114216904159129928}
   m_Layer: 11
   m_Name: graphics
   m_TagString: Untagged
@@ -93,12 +94,12 @@ GameObject:
   - component: {fileID: 114142516449129584}
   - component: {fileID: 114396894774937620}
   - component: {fileID: 114131817971326720}
-  - component: {fileID: 58991988324204054}
-  - component: {fileID: 50672724684977714}
-  - component: {fileID: 61382073066533806}
   - component: {fileID: 114639130651757522}
   - component: {fileID: 114696959837777344}
   - component: {fileID: 114503325441814468}
+  - component: {fileID: 58991988324204054}
+  - component: {fileID: 50672724684977714}
+  - component: {fileID: 61382073066533806}
   m_Layer: 11
   m_Name: Assassin
   m_TagString: MainPlayer
@@ -499,11 +500,11 @@ MonoBehaviour:
   m_dashStaminaCost: 10
   m_CanDashForward: 0
   m_ComboExpire: 1
-  delay_BasicAttack1: 0.15
-  delay_BasicAttack2: 0.15
-  delay_BasicAttack3: 0.2
+  delay_BasicAttack1: 0.05
+  delay_BasicAttack2: 0.1
+  delay_BasicAttack3: 0.1
   delay_Skill1: 0
-  delay_Skill2: 0
+  delay_Skill2: 0.43
   delay_Skill3: 0
   delay_Skill4: 0.25
   stamina_BasicAttack1: 10
@@ -540,7 +541,17 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1999998842244028, guid: 1382e079f46c9e848b29efd69252a8b5,
     type: 2}
   ambushAttack_damage: 13
-  invisible: 0
+--- !u!114 &114216904159129928
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1329833219150200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86ce530a311eab046871cc340ea8841b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114396894774937620
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -563,6 +574,7 @@ MonoBehaviour:
   slowFactor: 1
   invincible: 0
   reflect: 0
+  invisible: 0
   knockBackForceX: 6
   knockBackForceY: 12
   hotbar: {fileID: 0}
@@ -636,9 +648,9 @@ MonoBehaviour:
   - 0.4
   - 0.3
   - 0.4
+  - 0.33
   - 0.4
-  - 0.4
-  - 0.4
+  - 0.33
   - 0.2
   - 0.4
   - 0.4
@@ -695,6 +707,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  setByRPC: 0
   m_Grounded: 0
   m_vSpeed: 0
   m_Speed: 0
@@ -744,12 +757,12 @@ MonoBehaviour:
   group: 0
   OwnerShipWasTransfered: 0
   prefixBackup: -1
-  synchronization: 0
+  synchronization: 3
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 114216904159129928}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
