@@ -42,7 +42,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: ccd5678354e47234c8f636af7bba22ee, type: 3}
   - {fileID: 21300000, guid: 0347310b59cb1324281ccb0a4812ea4d, type: 3}
   - {fileID: 21300000, guid: 1fd113e66b60af444b80c9b170220e57, type: 3}
-  - {fileID: 21300000, guid: a4894b876fa0c80458336a2d067084dd, type: 3}
   m_PackedSpriteNamesToIndex:
   - JumpAttack_08
   - JumpAttack_09
@@ -54,6 +53,5 @@ SpriteAtlas:
   - JumpAttack_07
   - JumpAttack_04
   - JumpAttack_05
-  - JumpAttack_10
   m_Tag: JumpAttackAtlas
   m_IsVariant: 0

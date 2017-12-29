@@ -59,4 +59,6 @@ MonoBehaviour:
   - setSkill3
   - setSkill4
   - DealDamage
+  - SetTeam
+  - TakeDamage
   DisableAutoOpenWizard: 1

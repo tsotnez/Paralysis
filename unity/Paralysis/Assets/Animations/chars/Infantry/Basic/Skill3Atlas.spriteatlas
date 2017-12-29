@@ -42,8 +42,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 3f56c1575d8c0cd4ca41de131b1cf259, type: 3}
   - {fileID: 21300000, guid: dd71d044c4790cc4f9b5c560a7da14b6, type: 3}
   - {fileID: 21300000, guid: 0259a0806e6b23c488afa8aa1e419130, type: 3}
-  - {fileID: 21300000, guid: d0b985d730762164cb1abc2027465ab0, type: 3}
-  - {fileID: 21300000, guid: 1b7a39d42438f4242bcfeada648f06a6, type: 3}
   m_PackedSpriteNamesToIndex:
   - Skill3_00
   - Skill3_01
@@ -55,7 +53,5 @@ SpriteAtlas:
   - Skill3_07
   - Skill3_08
   - Skill3_09
-  - Skill3_11
-  - Skill3_10
   m_Tag: Skill3Atlas
   m_IsVariant: 0

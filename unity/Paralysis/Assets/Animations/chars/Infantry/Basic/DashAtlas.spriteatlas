@@ -32,56 +32,22 @@ SpriteAtlas:
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: 7ae9694c27669c54c83b46e0aa6c7b25, type: 3}
-  - {fileID: 21300000, guid: 996b414af15994e408149d22ca55866d, type: 3}
-  - {fileID: 21300000, guid: d386902f61174bc41922f5820d86f306, type: 3}
-  - {fileID: 21300000, guid: d7ecdab11904fbc45a7a27ab3e0ddbff, type: 3}
-  - {fileID: 21300000, guid: 45e24cfb66107a5438351fea903cf6e2, type: 3}
-  - {fileID: 21300000, guid: 7835ede54802e704ab9d7e4d24f3de47, type: 3}
-  - {fileID: 21300000, guid: 76d69f7e2174f314490886e91ce386a3, type: 3}
-  - {fileID: 21300000, guid: 79bef56a4d306da42bd93675b2dc1a32, type: 3}
   - {fileID: 21300000, guid: eefa968696e198840bcaf7164def70c3, type: 3}
-  - {fileID: 21300000, guid: a4d496820fb1fa34ba0ef14ebbbeada1, type: 3}
   - {fileID: 21300000, guid: 03a443821e5e57c46a95c80664552aeb, type: 3}
   - {fileID: 21300000, guid: 681a9f50d4a7efe4c927dcba69cceda4, type: 3}
   - {fileID: 21300000, guid: b0f8a52a52790614ca78a91b2f0565f4, type: 3}
-  - {fileID: 21300000, guid: 6fef76b913a1ce448b9f0cbf263de546, type: 3}
   - {fileID: 21300000, guid: 65672173ee7b97f43aba29655a6f11e7, type: 3}
-  - {fileID: 21300000, guid: c57609aa30607994787d7436104bbf36, type: 3}
   - {fileID: 21300000, guid: 33ece34f9c82be1428349f56fdbb2734, type: 3}
-  - {fileID: 21300000, guid: 86ad28bf16a2ecf40abccc73f10cbce9, type: 3}
   - {fileID: 21300000, guid: 72e5453367c3cfe478f178b6a36afb72, type: 3}
-  - {fileID: 21300000, guid: 4598cfdca12f4de449056af301c5503e, type: 3}
   - {fileID: 21300000, guid: 47798e465f091524bb784c8d4fb5279a, type: 3}
-  - {fileID: 21300000, guid: a86db2575b20b5e49be4a52bc52b7bc4, type: 3}
-  - {fileID: 21300000, guid: a4f7269cdbd588b43bf4f2afbe022ef5, type: 3}
-  - {fileID: 21300000, guid: 6c6516cc142c52f428ace30457f11a03, type: 3}
-  - {fileID: 21300000, guid: fa7c231b87bec0f4298825247e46179b, type: 3}
   m_PackedSpriteNamesToIndex:
-  - Dash_24
-  - Dash_20
-  - Dash_21
-  - Dash_22
-  - Dash_23
-  - Dash_08
-  - Dash_09
-  - Dash_19
   - Dash_02
-  - Dash_18
   - Dash_03
   - Dash_00
   - Dash_01
-  - Dash_15
   - Dash_06
-  - Dash_14
   - Dash_07
-  - Dash_17
   - Dash_04
-  - Dash_16
   - Dash_05
-  - Dash_11
-  - Dash_10
-  - Dash_13
-  - Dash_12
   m_Tag: DashAtlas
   m_IsVariant: 0

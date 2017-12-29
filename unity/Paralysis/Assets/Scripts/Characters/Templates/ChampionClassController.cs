@@ -191,6 +191,12 @@ public abstract class ChampionClassController : MonoBehaviour
 
     #endregion
 
+    /// <summary>
+    /// Called by network manager to set team
+    /// </summary>
+    /// <param name="team"></param>
+    /// <param name="teamToHit"></param>
+
     #region Normal character things (Move, Jump, JumpAttack, BasicAttack, Skills, ...)
 
     public virtual void Move(float move)
@@ -588,15 +594,7 @@ public abstract class ChampionClassController : MonoBehaviour
                 }
 
                 // deal damage to target
-
-                if(PhotonNetwork.offlineMode)
-                    stats.DealDamage(target, skillToPerform.damage, false);
-                else
-                    stats.gameObject.GetComponent<PhotonView>().RPC("DealDamage",
-                                                                    PhotonTargets.All,
-                                                                    target,
-                                                                    skillToPerform.damage,
-                                                                    false);
+                stats.DealDamage(target, skillToPerform.damage, false);
             }
         }
 

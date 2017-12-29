@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System.Collections.Generic;
 
 public class NetworkVersusManager : Photon.MonoBehaviour
 {
@@ -14,11 +15,37 @@ public class NetworkVersusManager : Photon.MonoBehaviour
 
     private GameObject myPlayer;
 
+    #region default
     // Use this for initialization
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings("Paralysis alpha");
     }
+
+    public virtual void OnJoinedRoom()
+    {
+        InstantiatePlayers();
+        BuildUi();
+    }
+
+
+    private void Update()
+    {
+        connectionStatusText.text = PhotonNetwork.connectionStateDetailed.ToString();
+    }
+
+    public virtual void OnJoinedLobby()
+    {
+        Debug.Log("Joined Lobby");
+        PhotonNetwork.JoinOrCreateRoom("Room", null, null);
+    }
+
+    public virtual void OnConnectedToMaster()
+    {
+        Debug.Log("connected");
+        PhotonNetwork.JoinLobby();
+    }
+    #endregion
 
     private void InstantiatePlayers()
     {
@@ -27,24 +54,10 @@ public class NetworkVersusManager : Photon.MonoBehaviour
         instPlayer1.GetComponent<UserControl>().enabled = true;
         instPlayer1.GetComponent<UserControl>().inputDevice = player1.inputDevice;
 
-
         //Rigidbody
-        instPlayer1.GetComponent<Rigidbody2D>().simulated = true;
+        instPlayer1.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
         LayerMask whatToHitP1 = new LayerMask();
-
-        //Join the team with lesser players
-        if (GameObject.FindGameObjectsWithTag("MainPlayer").Where(x => x.layer == 11).Count() <=
-            GameObject.FindGameObjectsWithTag("MainPlayer").Where(x => x.layer == 12).Count())
-        {
-            instPlayer1.layer = 11;
-            whatToHitP1 |= (1 << 12); //Add Team2 as target layer
-        }
-        else
-        {
-            instPlayer1.layer = 12;
-            whatToHitP1 |= (1 << 11); //Add Team2 as target layer
-        }
 
         instPlayer1.GetComponent<ChampionClassController>().enabled = true;
         instPlayer1.GetComponent<ChampionClassController>().m_whatToHit = whatToHitP1;
@@ -57,7 +70,6 @@ public class NetworkVersusManager : Photon.MonoBehaviour
         instPlayer1.GetComponent<ChampionClassController>().Trinket2 = instPlayer1.GetComponents<Trinket>()[1];
         instPlayer1.GetComponent<ChampionClassController>().Trinket1.trinketNumber = 1;
         instPlayer1.GetComponent<ChampionClassController>().Trinket2.trinketNumber = 2;
-
 
         //Instaniate camera
         GameObject cam = Instantiate(Resources.Load<GameObject>("Main Camera Network"), new Vector3(0, 0, -0.5f), Quaternion.identity);
@@ -83,29 +95,6 @@ public class NetworkVersusManager : Photon.MonoBehaviour
         myPlayer.GetComponent<CharacterStats>().hotbar = hotbar.GetComponent<HotbarController>();
         myPlayer.GetComponent<ChampionClassController>().hotbar = hotbar.GetComponent<HotbarController>();
         myPlayer.GetComponent<CharacterStats>().enabled = true;
-    }
-
-    private void Update()
-    {
-        connectionStatusText.text = PhotonNetwork.connectionStateDetailed.ToString();
-    }
-
-    public virtual void OnJoinedLobby()
-    {
-        Debug.Log("Joined Lobby");
-        PhotonNetwork.JoinOrCreateRoom("Room", null, null);
-    }
-
-    public virtual void OnConnectedToMaster()
-    {
-        Debug.Log("connected");
-        PhotonNetwork.JoinLobby();
-    }
-
-    public virtual void OnJoinedRoom()
-    {
-        InstantiatePlayers();
-        BuildUi();
     }
 
 }

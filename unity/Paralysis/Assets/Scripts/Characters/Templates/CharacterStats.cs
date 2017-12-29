@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class CharacterStats : MonoBehaviour
+public class CharacterStats : Photon.MonoBehaviour
 {
     private ChampionAnimationController animCon;
     private Rigidbody2D rigid;
@@ -83,13 +83,15 @@ public class CharacterStats : MonoBehaviour
     void Start()
     {
         InvokeRepeating("RegenerateStamina", 0f, 0.1f);
+    }
 
+    public void setTeamColor()
+    {
         //Assign team Color
         if (gameObject.layer == 11)
             TeamColor.sprite = Team1Color;
         else
             TeamColor.sprite = Team2Color;
-
     }
 
     private void Update()
@@ -218,7 +220,6 @@ public class CharacterStats : MonoBehaviour
     /// <param name="StatsOfTheTarget">Enemy Player/Target of the Damage</param>
     /// <param name="amount">Amount of Damage</param>
     /// <param name="playAnimation">shall the HIT-animation be played at the target</param>
-    [PunRPC]
     public void DealDamage(CharacterStats StatsOfTheTarget, int amount, bool playAnimation)
     {
         // If trinket 1 or trinket 2 is an passive trinket and has as triggertype DealDamage, then use it passively
@@ -256,8 +257,12 @@ public class CharacterStats : MonoBehaviour
     /// </summary>
     /// <param name="amount">Damage that shall be recieved</param>
     /// <param name="playAnimation">shall the HIT-animation be played</param>
-    public void TakeDamage(int amount, bool playAnimation)
+    [PunRPC]
+    public void TakeDamage(int amount, bool playAnimation, bool issueRPC = true)
     {
+        if (!PhotonNetwork.offlineMode && issueRPC)
+            photonView.RPC("TakeDamage", PhotonTargets.Others, amount, playAnimation, false);
+
         if (amount > 0)
         {
             if (!invincible)

@@ -52,6 +52,16 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 12180c57825d8394eba2d8bb7c145483, type: 3}
   - {fileID: 21300000, guid: a49cb061c779fae40af36448f016edec, type: 3}
   - {fileID: 21300000, guid: 9a2e3bf2671db3e43b2b67e7de9ec133, type: 3}
+  - {fileID: 21300000, guid: 2d114b11d2009e746ad5ea18381fae87, type: 3}
+  - {fileID: 21300000, guid: 3f6a449391b2e71459155e9ff5cae690, type: 3}
+  - {fileID: 21300000, guid: b841445658bcdb949b415c05781fc601, type: 3}
+  - {fileID: 21300000, guid: e5ff8dbdfba47314292a47a6a7496f02, type: 3}
+  - {fileID: 21300000, guid: 0c6da82c25f1f2c44b6969084c299678, type: 3}
+  - {fileID: 21300000, guid: 08c9a8e1bda72174b9a493e3f388aeea, type: 3}
+  - {fileID: 21300000, guid: 8a38accd6c9c1af42b66f762b9c10a03, type: 3}
+  - {fileID: 21300000, guid: 610c10ee303d7ac45be08b27f5d9410b, type: 3}
+  - {fileID: 21300000, guid: 2d7783f3318f90346901ae8bc99f8d1e, type: 3}
+  - {fileID: 21300000, guid: e2cabef0ace548347b273e0091b3410b, type: 3}
   m_PackedSpriteNamesToIndex:
   - Block_12
   - Block_13
@@ -73,5 +83,15 @@ SpriteAtlas:
   - Block_19
   - Block_09
   - Block_08
+  - Block_29
+  - Block_28
+  - Block_27
+  - Block_26
+  - Block_25
+  - Block_24
+  - Block_23
+  - Block_22
+  - Block_21
+  - Block_20
   m_Tag: BlockAtlas
   m_IsVariant: 0
