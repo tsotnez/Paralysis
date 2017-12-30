@@ -516,7 +516,7 @@ MonoBehaviour:
   - {fileID: 4343727234628468602, guid: 22fb6763762175149b6da762d7ebb4bc, type: 2}
   - {fileID: 4343727234628468602, guid: 0f1a689d2a50e76478ccc1361ad7c9d2, type: 2}
   - {fileID: 4343727234628468602, guid: 90d88b27ebc0b3641a8de4ecc065b742, type: 2}
-  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: 091659250bc9d70448c762e3fac47fe7, type: 2}
   - {fileID: 4343727234628468602, guid: f3dfcd954382c49419b1e3e494776393, type: 2}
   - {fileID: 4343727234628468602, guid: f88efd6674f6b164ab5d5d8777787c39, type: 2}
   - {fileID: 4343727234628468602, guid: 577a7bad3f97ba145bd7b03dfa3a2f04, type: 2}
@@ -540,7 +540,7 @@ MonoBehaviour:
   - 0.4
   - 0.5
   - 0.3
-  - 0
+  - 0.3
   - 0.45
   - 0.45
   - 0.5
@@ -603,6 +603,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  setByRPC: 0
   m_Grounded: 0
   m_vSpeed: 0
   m_Speed: 0
@@ -723,6 +724,7 @@ MonoBehaviour:
   slowFactor: 1
   invincible: 0
   reflect: 0
+  invisible: 0
   knockBackForceX: 6
   knockBackForceY: 12
   hotbar: {fileID: 0}

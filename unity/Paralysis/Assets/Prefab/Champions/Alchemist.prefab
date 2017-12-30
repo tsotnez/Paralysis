@@ -275,9 +275,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.06, y: -0.56}
+  m_Offset: {x: 0.060000002, y: -0.25}
   serializedVersion: 2
-  m_Radius: 0.16000009
+  m_Radius: 0.16
 --- !u!61 &61093525736054152
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -422,6 +422,7 @@ MonoBehaviour:
   slowFactor: 1
   invincible: 0
   reflect: 0
+  invisible: 0
   knockBackForceX: 400
   knockBackForceY: 600
   hotbar: {fileID: 0}
@@ -689,28 +690,28 @@ MonoBehaviour:
   - {fileID: 4343727234628468602, guid: 740cc6d86c3fe7d45835fb8732d2a49f, type: 2}
   AnimationLoop: 01010001000000000100000000000000000000000100
   AnimationDuration:
+  - 0.5
+  - 0.4
+  - 0.4
+  - 0.4
+  - 0.5
+  - 0.5
+  - 0.5
+  - 0.5
+  - 0.5
+  - 0.5
+  - 0
+  - 0
+  - 0.5
+  - 0.5
+  - 0.5
+  - 0.5
+  - 0.5
   - 0
   - 0
   - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
+  - 0.5
+  - 0.5
   StartAtlasses:
   - {fileID: 0}
   - {fileID: 4343727234628468602, guid: 275404c37b55f3b41945eb90f408115d, type: 2}
@@ -757,6 +758,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  setByRPC: 0
   m_Grounded: 0
   m_vSpeed: 0
   m_Speed: 0

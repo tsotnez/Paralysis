@@ -184,13 +184,13 @@ public abstract class AnimationController : MonoBehaviour
             AnimationPlayTypes AnimationPlayType;
             if (ForceAnimationPlayType == AnimationPlayTypes.Nothing)
             {
-                if (AnimationType == TypeOfAnimation.Animation && AnimationDictionaryHasAnimation(animation, TypeOfAnimation.EndAnimation))
-                {   // if found a matching End-Animation to the choosen animation set the PlayType to HoldOnEnd
-                    AnimationPlayType = AnimationPlayTypes.HoldOnEnd;
-                }
-                else if (animationLoop[animation])
+                if (animationLoop[animation])
                 {
                     AnimationPlayType = AnimationPlayTypes.Loop;
+                }
+                else if (AnimationType == TypeOfAnimation.Animation && AnimationDictionaryHasAnimation(animation, TypeOfAnimation.EndAnimation))
+                {   // if found a matching End-Animation to the choosen animation set the PlayType to HoldOnEnd
+                    AnimationPlayType = AnimationPlayTypes.HoldOnEnd;
                 }
                 else
                 {
@@ -238,7 +238,54 @@ public abstract class AnimationController : MonoBehaviour
 
     IEnumerator PlayAnimation(AnimatorStates animation, SpriteAtlas atlas, float delay, TypeOfAnimation AnimationType, AnimationPlayTypes AnimationPlayType)
     {
-        //Handle audio
+        // Handle audio
+        PlayAnimationAudio(animation);
+
+        // Add end to the filename if its an EndAnimation
+        string SpriteNameAddition = "";
+        if (AnimationType == TypeOfAnimation.StartAnimation)
+            SpriteNameAddition = "Start";
+        else if (AnimationType == TypeOfAnimation.EndAnimation)
+            SpriteNameAddition = "End";
+        
+        while (true)
+        {
+            Resources.UnloadUnusedAssets(); // Unload assets with no references
+            Sprite spr = null;
+            // play each animation of the atlas
+            for (int i = 0; i < atlas.spriteCount; i++)
+            {
+                // ToString parameter "D2" formats the integer with 2 chars (leading 0 if nessessary)
+                spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + SpriteNameAddition + "_" + i.ToString("D2"));
+
+                // Unload sprite
+                Destroy(spr);  
+                spr = null;
+                spr = spriteRenderer.sprite;
+                yield return new WaitForSeconds(delay);
+            }
+
+            if (AnimationType == TypeOfAnimation.StartAnimation)
+            {
+                StartAnimation(animation, TypeOfAnimation.Animation);
+            }
+            else if (AnimationPlayType == AnimationPlayTypes.HoldOnEnd)
+                // wait till signal for end is recived
+                while (true)
+                {
+                    yield return new WaitForSeconds(0.1f);
+                }
+            else if (AnimationPlayType == AnimationPlayTypes.Loop)
+                // loop
+                yield return null;
+            else
+                // revert to idle if present
+                StartAnimation(AnimatorStates.Idle);
+        }
+    }
+
+    private void PlayAnimationAudio(AnimatorStates animation)
+    {
         AudioClip clip = Resources.Load<AudioClip>("Audio/Characters/" + CharacterClass + "/" + animation.ToString());
         if (clip != null)
         {
@@ -259,46 +306,6 @@ public abstract class AnimationController : MonoBehaviour
         }
         else
             audioSource.Stop();
-
-        // Add end to the filename if its an EndAnimation
-        string AtlasNameAddition = "";
-        if (AnimationType == TypeOfAnimation.EndAnimation)
-            AtlasNameAddition = "End";
-
-        while (true)
-        {
-            Resources.UnloadUnusedAssets(); // Unload assets with no references
-            Sprite spr = null;
-            // play each animation of the atlas
-            for (int i = 0; i < atlas.spriteCount; i++)
-            {
-                if (i < 10)
-                    spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + AtlasNameAddition + "_" + "0" + i.ToString());
-                else
-                    spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + AtlasNameAddition + "_" + i.ToString());
-
-                Destroy(spr); //Unload sprite 
-                spr = null;
-                spr = spriteRenderer.sprite;
-                yield return new WaitForSeconds(delay);
-            }
-
-            if (AnimationType == TypeOfAnimation.StartAnimation)
-            {
-                StartAnimation(animation, TypeOfAnimation.Animation);
-            }
-            else if (AnimationPlayType == AnimationPlayTypes.HoldOnEnd)
-                while (true)
-                {
-                    yield return new WaitForSeconds(0.1f);
-                }
-            else if (AnimationPlayType == AnimationPlayTypes.Loop)
-                //loop
-                yield return null;
-            else
-                //revert to idle if present
-                StartAnimation(AnimatorStates.Idle);
-        }
     }
 
     #endregion

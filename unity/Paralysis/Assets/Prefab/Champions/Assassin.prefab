@@ -538,7 +538,6 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1999998842244028, guid: 1382e079f46c9e848b29efd69252a8b5,
     type: 2}
   ambushAttack_damage: 13
-  invisible: 0
 --- !u!114 &114396894774937620
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -561,6 +560,7 @@ MonoBehaviour:
   slowFactor: 1
   invincible: 0
   reflect: 0
+  invisible: 0
   knockBackForceX: 6
   knockBackForceY: 12
   hotbar: {fileID: 0}
@@ -606,7 +606,7 @@ MonoBehaviour:
   - {fileID: 4343727234628468602, guid: c1fa476dcb4daa9408d53bac4b02fd0a, type: 2}
   - {fileID: 4343727234628468602, guid: 7701ac59b4bbd4c4b8aaa46a79ad629a, type: 2}
   - {fileID: 4343727234628468602, guid: 5a6c84ba07732bb4fa006142729eed17, type: 2}
-  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: e2efeecfcfdc6cd4c9f148e8e5e3248b, type: 2}
   - {fileID: 4343727234628468602, guid: 624053e3fb22b7e4289016438b538172, type: 2}
   - {fileID: 4343727234628468602, guid: 0f39f1a69d82c304697b461e985ab9f7, type: 2}
   - {fileID: 4343727234628468602, guid: bc527b6457f920247b16ddd5344065d8, type: 2}
@@ -693,6 +693,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  setByRPC: 0
   m_Grounded: 0
   m_vSpeed: 0
   m_Speed: 0

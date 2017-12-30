@@ -117,7 +117,7 @@ public class CharacterStats : Photon.MonoBehaviour
         floatingStaminaBar.fillAmount = staminaPercent;
 
         // tell the animationController when player is stunned (only if local Client --- Jan)
-        if(photonView.isMine)
+        if(photonView != null && photonView.isMine)
             animCon.statStunned = this.stunned;
     }
 
