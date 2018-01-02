@@ -450,10 +450,10 @@ MonoBehaviour:
   - {fileID: 4343727234628468602, guid: 8f19a9d2b8c2b7845bdd0afedc808383, type: 2}
   - {fileID: 0}
   - {fileID: 4343727234628468602, guid: 89e6ef7082be92641a87458da6ca0e46, type: 2}
-  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: 3010266f2db32b447b6e2442f6d3da6c, type: 2}
   - {fileID: 4343727234628468602, guid: 2d10b9008df9fde4c980aefc463cb281, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: 3bbc8158f73f9b744b48613e918855e8, type: 2}
+  - {fileID: 4343727234628468602, guid: 3757e03ffc170574dafe6b0c86afc193, type: 2}
   - {fileID: 0}
   - {fileID: 4343727234628468602, guid: 1ffd50b12cf97fd4cbfd22ef8864c381, type: 2}
   - {fileID: 4343727234628468602, guid: bba0133260a2204438ae13c8d35e0485, type: 2}
@@ -529,6 +529,7 @@ MonoBehaviour:
   - {fileID: 4343727234628468602, guid: 4ea1a4f46703d3c4fb31a16ec6d4b999, type: 2}
   - {fileID: 0}
   - {fileID: 0}
+  setByRPC: 0
   m_Grounded: 0
   m_vSpeed: 0
   m_Speed: 0
@@ -549,7 +550,9 @@ MonoBehaviour:
   trigJumpAttack: 0
   trigJumpAttackEnd: 0
   trigDash: 0
+  trigDashEnd: 0
   trigDashForward: 0
+  trigDashForwardEnd: 0
   trigHit: 0
   trigSkill2End: 0
 --- !u!114 &114448836999763978
@@ -825,6 +828,7 @@ MonoBehaviour:
   slowFactor: 1
   invincible: 0
   reflect: 0
+  invisible: 0
   knockBackForceX: 6
   knockBackForceY: 12
   hotbar: {fileID: 0}

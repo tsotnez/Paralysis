@@ -27,7 +27,8 @@ public abstract class AnimationController : MonoBehaviour
     #endregion
 
     // Public GET parameters
-    public AnimatorStates CurrentAnimation { get; private set; }            // current playing animation state
+    public AnimatorStates CurrentAnimation { get; private set; }            // current playing animation 
+    public AnimationState CurrentAnimationState { get; private set; }       // current playing animation state
 
     //Private parameters
     private Dictionary<AnimatorStates, SpriteAtlas> animationSprites;       // Saves all Sprites to the Animations
@@ -88,6 +89,11 @@ public abstract class AnimationController : MonoBehaviour
     public enum AnimationPlayTypes
     {
         Single, Loop, HoldOnEnd, Nothing
+    }
+
+    public enum AnimationState
+    {
+        Playing, Looping, Waiting
     }
 
     #endregion
@@ -167,6 +173,7 @@ public abstract class AnimationController : MonoBehaviour
         {
             // set current animation
             CurrentAnimation = animation;
+            CurrentAnimationState = AnimationState.Playing;
 
             // get sprite atlas
             SpriteAtlas atlas = null;
@@ -215,7 +222,7 @@ public abstract class AnimationController : MonoBehaviour
         }
     }
 
-    private bool AnimationDictionaryHasAnimation(AnimatorStates Animation, TypeOfAnimation AnimationType)
+    public bool AnimationDictionaryHasAnimation(AnimatorStates Animation, TypeOfAnimation AnimationType)
     {
         if (AnimationType == TypeOfAnimation.Animation)
         {
@@ -224,7 +231,7 @@ public abstract class AnimationController : MonoBehaviour
         }
         else if (AnimationType == TypeOfAnimation.StartAnimation)
         {
-            if (animationSpriteStart.ContainsKey(Animation) && animationSprites[Animation] != null)
+            if (animationSpriteStart.ContainsKey(Animation) && animationSpriteStart[Animation] != null)
                 return true;
         }
         else
@@ -250,8 +257,10 @@ public abstract class AnimationController : MonoBehaviour
         
         while (true)
         {
-            Resources.UnloadUnusedAssets(); // Unload assets with no references
+            // Unload assets with no references
+            Resources.UnloadUnusedAssets(); 
             Sprite spr = null;
+
             // play each animation of the atlas
             for (int i = 0; i < atlas.spriteCount; i++)
             {
@@ -270,14 +279,20 @@ public abstract class AnimationController : MonoBehaviour
                 StartAnimation(animation, TypeOfAnimation.Animation);
             }
             else if (AnimationPlayType == AnimationPlayTypes.HoldOnEnd)
+            {
                 // wait till signal for end is recived
+                CurrentAnimationState = AnimationState.Waiting;
                 while (true)
                 {
                     yield return new WaitForSeconds(0.1f);
                 }
+            }
             else if (AnimationPlayType == AnimationPlayTypes.Loop)
+            {
                 // loop
+                CurrentAnimationState = AnimationState.Looping;
                 yield return null;
+            }
             else
                 // revert to idle if present
                 StartAnimation(AnimatorStates.Idle);

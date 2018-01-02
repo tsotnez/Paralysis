@@ -59,7 +59,7 @@ public class AssassinController : ChampionClassController
             hotbar.StartCoroutine(hotbar.flashBlack(skill2_var.name));
             if (stats.invisible) stats.StopInvisible();           
             StartCoroutine(SetSkillOnCooldown(skill2_var));
-            stats.startInvisible(delay_Skill2, 5);
+            stats.StartInvisible(delay_Skill2, 5);
         }
     }
 

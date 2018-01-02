@@ -68,4 +68,5 @@ MonoBehaviour:
   - StartStunned
   - StartBleeding
   - TakeBleedDamage
+  - StartInvisible
   DisableAutoOpenWizard: 1

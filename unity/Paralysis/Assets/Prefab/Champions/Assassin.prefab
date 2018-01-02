@@ -714,7 +714,9 @@ MonoBehaviour:
   trigJumpAttack: 0
   trigJumpAttackEnd: 0
   trigDash: 0
+  trigDashEnd: 0
   trigDashForward: 0
+  trigDashForwardEnd: 0
   trigHit: 0
   trigDoubleJump: 0
 --- !u!114 &114625500605877628

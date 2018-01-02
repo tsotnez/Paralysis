@@ -75,7 +75,7 @@ public class CharacterNetwork : Photon.MonoBehaviour {
         whatToHit |= (1 << teamToHit);
         GetComponent<ChampionClassController>().m_whatToHit = whatToHit;
 
-        stats.setTeamColor();
+        stats.SetTeamColor();
     }
     #endregion 
 }

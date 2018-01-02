@@ -302,7 +302,11 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         jumpAttacking = false;
     }
 
-    //Dashes in the given direction
+    /// <summary>
+    /// Dashes in the given direction
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns></returns>
     public virtual IEnumerator Dash(int direction)
     {
         if (CanPerformAction(true) && CanPerformAttack())
@@ -344,14 +348,31 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 dashing = true;
                 stats.immovable = true;
 
-                stats.invincible = true; //Player is invincible for a period of time while dashing
-                yield return new WaitUntil(() => animCon.CurrentAnimation == RequiredAnimState);
-                yield return new WaitUntil(() => animCon.CurrentAnimation != RequiredAnimState);
-                dashing = false;
-                stats.invincible = false;
-                m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); //Stop moving
+                // Player is invincible for a period of time while dashing
+                stats.invincible = true; 
+                yield return new WaitUntil(() => animCon.CurrentAnimation == RequiredAnimState);                                    // Wait till animation has started
 
-                yield return new WaitForSeconds(0.04f); //Short time where character cant move after dashing
+                // If an EndAnimation is present do some extra stuff
+                if (animCon.AnimationDictionaryHasAnimation(RequiredAnimState, AnimationController.TypeOfAnimation.EndAnimation))
+                {
+                    yield return new WaitUntil(() => animCon.CurrentAnimationState == AnimationController.AnimationState.Waiting);  // Wait till animation is in state waiting
+                    yield return new WaitUntil(() => animCon.m_Grounded);                                                           // Wait till character is on ground
+
+                    // Start EndAnimation
+                    dashing = false;
+                    if (RequiredAnimState == AnimationController.AnimatorStates.DashFor) animCon.trigDashForwardEnd = true;
+                    else animCon.trigDashEnd = true;
+                }
+
+                yield return new WaitUntil(() => animCon.CurrentAnimation != RequiredAnimState);                                    // Wait till next animation is present
+                stats.invincible = false;
+
+                // Set end of dash
+                dashing = false; 
+
+                // Short time where character can't move after dashing
+                m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); // Stop moving
+                yield return new WaitForSeconds(0.04f); 
                 stats.immovable = false;
             }
         }

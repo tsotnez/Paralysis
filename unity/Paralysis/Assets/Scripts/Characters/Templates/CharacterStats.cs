@@ -90,7 +90,7 @@ public class CharacterStats : Photon.MonoBehaviour
         col = transform.Find("graphics").GetComponent<SpriteRenderer>().color;
     }
 
-    public void setTeamColor()
+    public void SetTeamColor()
     {
         //Assign team Color
         if (gameObject.layer == 11)
@@ -512,7 +512,7 @@ public class CharacterStats : Photon.MonoBehaviour
     /// <param name="seconds"></param>
     /// <param name="issueRpc"></param>
     [PunRPC]
-    public void startInvisible(float delay, int seconds, bool issueRpc = true)
+    public void StartInvisible(float delay, int seconds, bool issueRpc = true)
     {
         if (!PhotonNetwork.offlineMode && issueRpc)
             photonView.RPC("startInvisible", PhotonTargets.Others, delay, seconds, false);
