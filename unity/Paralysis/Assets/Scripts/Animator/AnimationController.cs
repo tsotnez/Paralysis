@@ -150,6 +150,31 @@ public abstract class AnimationController : MonoBehaviour
 
     #endregion
 
+    #region Validation
+
+    public bool AnimationDictionaryHasAnimation(AnimatorStates Animation, TypeOfAnimation AnimationType)
+    {
+        if (AnimationType == TypeOfAnimation.Animation)
+        {
+            if (animationSprites.ContainsKey(Animation) && animationSprites[Animation] != null)
+                return true;
+        }
+        else if (AnimationType == TypeOfAnimation.StartAnimation)
+        {
+            if (animationSpriteStart.ContainsKey(Animation) && animationSpriteStart[Animation] != null)
+                return true;
+        }
+        else
+        {
+            if (animationSpriteEnd.ContainsKey(Animation) && animationSpriteEnd[Animation] != null)
+                return true;
+        }
+
+        return false;
+    }
+
+    #endregion
+
     #region Manage Animations
 
     public void StartAnimation(AnimatorStates animation)
@@ -222,27 +247,6 @@ public abstract class AnimationController : MonoBehaviour
         }
     }
 
-    public bool AnimationDictionaryHasAnimation(AnimatorStates Animation, TypeOfAnimation AnimationType)
-    {
-        if (AnimationType == TypeOfAnimation.Animation)
-        {
-            if (animationSprites.ContainsKey(Animation) && animationSprites[Animation] != null)
-                return true;
-        }
-        else if (AnimationType == TypeOfAnimation.StartAnimation)
-        {
-            if (animationSpriteStart.ContainsKey(Animation) && animationSpriteStart[Animation] != null)
-                return true;
-        }
-        else
-        {
-            if (animationSpriteEnd.ContainsKey(Animation) && animationSpriteEnd[Animation] != null)
-                return true;
-        }
-
-        return false;
-    }
-
     IEnumerator PlayAnimation(AnimatorStates animation, SpriteAtlas atlas, float delay, TypeOfAnimation AnimationType, AnimationPlayTypes AnimationPlayType)
     {
         // Handle audio
@@ -266,6 +270,7 @@ public abstract class AnimationController : MonoBehaviour
             {
                 // ToString parameter "D2" formats the integer with 2 chars (leading 0 if nessessary)
                 spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + SpriteNameAddition + "_" + i.ToString("D2"));
+                Debug.Log("Active Sprite: " + animation.ToString() + SpriteNameAddition + "_" + i.ToString("D2"));
 
                 // Unload sprite
                 Destroy(spr);  
@@ -294,8 +299,10 @@ public abstract class AnimationController : MonoBehaviour
                 yield return null;
             }
             else
+            {
                 // revert to idle if present
                 StartAnimation(AnimatorStates.Idle);
+            }
         }
     }
 
