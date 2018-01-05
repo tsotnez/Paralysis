@@ -461,6 +461,16 @@ MonoBehaviour:
   - {fileID: 4343727234628468602, guid: e8c04db3b85c1b2409c2b41f7de2daa2, type: 2}
   AnimationLoop: 01010001000000000100000000000000000001000000
   AnimationDuration:
+  - 0.5
+  - 0.3
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0.1
   - 0
   - 0
   - 0
@@ -469,17 +479,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
+  - 0.75
   - 0
   - 0
   - 0
@@ -742,7 +742,7 @@ MonoBehaviour:
   m_whatToHit:
     serializedVersion: 2
     m_Bits: 0
-  m_MaxSpeed: 6
+  m_MaxSpeed: 5
   m_MoveSpeedWhileAttacking: 0.5
   m_MoveSpeedWhileBlocking: 3
   m_JumpForce: 700

@@ -642,7 +642,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected void DoRangeSkill(ref bool animationVar, RangedSkill skillToPerform)
     {
         //Validate that character is not attacking and standing on ground
-        if (CanPerformAction(skillToPerform.needsToBeGrounded) && CanPerformAttack() && skillToPerform.notOnCooldown && stats.LoseStamina(skillToPerform.staminaCost))
+        if (CanPerformAction(skillToPerform.needsToBeGrounded) && CanPerformAttack() 
+            && skillToPerform.notOnCooldown && stats.LoseStamina(skillToPerform.staminaCost))
         {
             // set animation trigger
             animationVar = true;
@@ -678,14 +679,21 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             projectile.explodeOnHit = skillToPerform.onHitEffect;
             projectile.damage = skillToPerform.damage;
             projectile.effectDuration = skillToPerform.effectDuration;
-
-            Instantiate(goProjectile, transform.position + new Vector3(1f * direction, 0.3f), new Quaternion(goProjectile.transform.rotation.x,
-                goProjectile.transform.rotation.y, goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));
+            goProjectile.transform.localScale = new Vector3(direction,
+                                                            projectile.transform.localScale.y,
+                                                            projectile.transform.localScale.z);
+            Instantiate(goProjectile, transform.position + new Vector3(1f * direction, 0.3f), 
+                new Quaternion(goProjectile.transform.rotation.x,
+                goProjectile.transform.rotation.y, 
+                goProjectile.transform.rotation.z * direction, 
+                goProjectile.transform.rotation.w));
         }
         else
         {
-            GameObject goProjectile = PhotonNetwork.Instantiate("Bullet_AssassinSkill4", transform.position + new Vector3(1f * direction, 0.3f), new Quaternion(0,
-                0, direction, 0), 0);
+            GameObject goProjectile = PhotonNetwork.Instantiate("Bullet_AssassinSkill4", 
+                transform.position + new Vector3(1f * direction, 0.3f), 
+                new Quaternion(0, 0, direction, 0), 
+                0);
 
             ProjectileBehaviour projectile = goProjectile.GetComponent<ProjectileBehaviour>();
 

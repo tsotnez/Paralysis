@@ -270,7 +270,7 @@ public abstract class AnimationController : MonoBehaviour
             {
                 // ToString parameter "D2" formats the integer with 2 chars (leading 0 if nessessary)
                 spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + SpriteNameAddition + "_" + i.ToString("D2"));
-                Debug.Log("Active Sprite: " + animation.ToString() + SpriteNameAddition + "_" + i.ToString("D2"));
+                //Debug.Log("Active Sprite: " + animation.ToString() + SpriteNameAddition + "_" + i.ToString("D2"));
 
                 // Unload sprite
                 Destroy(spr);  

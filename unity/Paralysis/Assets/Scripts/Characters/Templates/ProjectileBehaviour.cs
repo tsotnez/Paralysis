@@ -27,12 +27,6 @@ public class ProjectileBehaviour : MonoBehaviour
     {
         startPos = transform.position; //Save starting position
         ProjectileRigid = this.GetComponent<Rigidbody2D>();
-
-        ////Flip sprite if necessary
-        //if (direction == -1)
-        //{
-        //    Flip(this);
-        //}
     }
 
     // Use this for initialization
@@ -43,7 +37,7 @@ public class ProjectileBehaviour : MonoBehaviour
             if (Vector2.Distance(startPos, transform.position) >= range)
             {
                 if (explodeOnHit)
-                    Explode(); //Explode if max range is reached
+                    Die(); //Explode if max range is reached
                 else
                     fallingRoutine = StartCoroutine(FallToGround());
             }
@@ -81,26 +75,13 @@ public class ProjectileBehaviour : MonoBehaviour
                         break;
                 }
                 creator.GetComponent<CharacterStats>().DealDamage(targetStats, damage, false);
-                if (!explodeOnHit)
-                {
-                    //Destroy on hit if no explosion effect is supposed to be played
-                    Die();
-                    return;
-                }
+                Die();
             }
             if (explodeOnHit)
-                Explode();
+                Die();
             else
                 StartCoroutine(GetStuck());
         }
-    }
-
-    protected void Explode()
-    {
-        //Plays explosion effect and destroys the bullet
-        if (explosionPrefab != null)
-            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        Die();
     }
 
     protected IEnumerator GetStuck()
@@ -151,6 +132,13 @@ public class ProjectileBehaviour : MonoBehaviour
 
     protected virtual void Die()
     {
+        //Plays explosion effect and destroys the bullet
+        if (explodeOnHit && explosionPrefab != null)
+            if(!PhotonNetwork.offlineMode)
+                PhotonNetwork.Instantiate(explosionPrefab.name, transform.position, Quaternion.identity, 0);
+            else
+                Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+
         if (!PhotonNetwork.offlineMode)
             PhotonNetwork.Destroy(gameObject);
         else
