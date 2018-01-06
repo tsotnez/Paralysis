@@ -24,8 +24,8 @@ public class NetworkVersusManager : GameplayManager
 
     void Start()
     {
-        PhotonNetwork.sendRate = 40;
-        PhotonNetwork.sendRateOnSerialize = 25;
+        PhotonNetwork.sendRate = 20;
+        PhotonNetwork.sendRateOnSerialize = 10;
         PhotonNetwork.ConnectUsingSettings("Paralysis alpha");
 
         if(localPlayer.inputDevice == UserControl.InputDevice.XboxController)
@@ -46,7 +46,7 @@ public class NetworkVersusManager : GameplayManager
 
     private void Update()
     {
-        connectionStatusText.text = PhotonNetwork.connectionStateDetailed.ToString();
+        connectionStatusText.text = "Ping: " + PhotonNetwork.GetPing() + " " + PhotonNetwork.connectionStateDetailed.ToString();
     }
 
     public virtual void OnJoinedLobby()

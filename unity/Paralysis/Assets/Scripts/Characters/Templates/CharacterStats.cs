@@ -527,7 +527,7 @@ public class CharacterStats : Photon.MonoBehaviour
     public void StartInvisible(float delay, int seconds, bool issueRpc = true)
     {
         if (!PhotonNetwork.offlineMode && issueRpc)
-            photonView.RPC("startInvisible", PhotonTargets.Others, delay, seconds, false);
+            photonView.RPC("StartInvisible", PhotonTargets.Others, delay, seconds, false);
 
         if (invisRoutine != null) StopCoroutine(invisRoutine);
         invisRoutine = StartCoroutine(ManageInvisibility(delay, seconds));
