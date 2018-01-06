@@ -13,6 +13,9 @@ public class NetworkVersusManager : GameplayManager
     public GameObject hotbarPrefab;
 
     public Transform spawnPlayer1;
+    public int CustomSendRate = 50;
+    public int CustomSendRateOnSerialize = 30;
+
 
     private GameObject myPlayerInstance;
 
@@ -24,8 +27,8 @@ public class NetworkVersusManager : GameplayManager
 
     void Start()
     {
-        PhotonNetwork.sendRate = 20;
-        PhotonNetwork.sendRateOnSerialize = 10;
+        PhotonNetwork.sendRate = CustomSendRate;
+        PhotonNetwork.sendRateOnSerialize = CustomSendRateOnSerialize;
         PhotonNetwork.ConnectUsingSettings("Paralysis alpha");
 
         if(localPlayer.inputDevice == UserControl.InputDevice.XboxController)
@@ -129,6 +132,7 @@ public class NetworkVersusManager : GameplayManager
     protected override void GameOver(string winner)
     {
         base.GameOver(winner);
+        myPlayerInstance.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         photonView.RPC("setGameOverRemote", PhotonTargets.Others, winner);
     }
 

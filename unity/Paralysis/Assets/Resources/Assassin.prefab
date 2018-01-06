@@ -527,7 +527,7 @@ MonoBehaviour:
   delay_BasicAttack2: 0.15
   delay_BasicAttack3: 0.2
   delay_Skill1: 0
-  delay_Skill2: 0
+  delay_Skill2: 0.4
   delay_Skill3: 0
   delay_Skill4: 0.25
   stamina_BasicAttack1: 10
@@ -843,7 +843,7 @@ MonoBehaviour:
     TeleportIfDistanceGreaterThan: 3
     InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 7
-    InterpolateLerpSpeed: 10
+    InterpolateLerpSpeed: 20
     InterpolateMoveTowardsAcceleration: 2
     InterpolateMoveTowardsDeceleration: 2
     InterpolateSpeedCurve:

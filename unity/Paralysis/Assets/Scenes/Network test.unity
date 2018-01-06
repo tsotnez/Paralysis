@@ -243,6 +243,8 @@ MonoBehaviour:
   hotbarPrefab: {fileID: 1880548955337550, guid: 1af496c58dcb903408eaa6d024bfe250,
     type: 2}
   spawnPlayer1: {fileID: 980744926}
+  CustomSendRate: 70
+  CustomSendRateOnSerialize: 50
 --- !u!1 &119987662
 GameObject:
   m_ObjectHideFlags: 0

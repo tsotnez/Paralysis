@@ -44,10 +44,7 @@
 
     protected virtual void Update()
     {
-        if (CurrentAnimation != AnimatorStates.Die)
-        {
-            AnimationManager();
-        }
+        AnimationManager();
     }
 
     protected virtual void FixedUpdate() { }
