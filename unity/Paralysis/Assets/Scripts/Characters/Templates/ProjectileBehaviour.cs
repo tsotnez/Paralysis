@@ -76,6 +76,7 @@ public class ProjectileBehaviour : MonoBehaviour
                 }
                 creator.GetComponent<CharacterStats>().DealDamage(targetStats, damage, false);
                 Die();
+                return;
             }
             if (explodeOnHit)
                 Die();
@@ -134,23 +135,12 @@ public class ProjectileBehaviour : MonoBehaviour
     {
         //Plays explosion effect and destroys the bullet
         if (explodeOnHit && explosionPrefab != null)
-            if(!PhotonNetwork.offlineMode)
-                PhotonNetwork.Instantiate(explosionPrefab.name, transform.position, Quaternion.identity, 0);
-            else
                 Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
         if (!PhotonNetwork.offlineMode)
             PhotonNetwork.Destroy(gameObject);
         else
             Destroy(gameObject);
-    }
-
-    public static void Flip(Component ObjectToFlip)
-    {
-        // Multiply the sprites x local scale by -1.
-        Vector3 theScale = ObjectToFlip.transform.localScale;
-        theScale.x *= -1;
-        ObjectToFlip.transform.localScale = theScale;
     }
 
     public static void Flip(GameObject ObjectToFlip)

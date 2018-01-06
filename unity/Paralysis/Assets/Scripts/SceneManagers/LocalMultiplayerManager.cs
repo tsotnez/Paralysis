@@ -3,18 +3,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
 
-public class LocalMultiplayerManager : MonoBehaviour {
-
-    //GameOver overlay
-    public Transform gameOverOverlay;
-
-    //Team Arrays containing Players
-    public static Player[] team1;
-    public static Player[] team2;
-
-    //Redundant variables so they can be assigned in the inspector (static ones cant)
-    public Player defaultPlayer1 = null;
-    public Player defaultPlayer2 = null;
+public class LocalMultiplayerManager : GameplayManager {
 
     //Hotbar prefab
     public GameObject hotbarPrefab;
@@ -23,20 +12,7 @@ public class LocalMultiplayerManager : MonoBehaviour {
     public Transform spawnPlayer1;
     public Transform spawnPlayer2;
 
-    //Color to apply to player images to fit the environemts lighting
-    public Color championSpriteOverlayColor;
-
-    //Array containign all player game objects
-    private List<GameObject> players = new List<GameObject>();
-
-    private void Awake()
-    {
-        PhotonNetwork.offlineMode = true;
-        instantiatePlayers();
-        buildUI();
-    }
-
-    private void buildUI()
+    protected override void buildUI()
     {
         Transform parent = GameObject.Find("Hotbars").transform;
 
@@ -63,7 +39,7 @@ public class LocalMultiplayerManager : MonoBehaviour {
         players[1].GetComponent<ChampionClassController>().hotbar = hotbar2.GetComponent<HotbarController>();
     }
 
-    private void instantiatePlayers()
+    protected override void instantiatePlayers()
     {
         //Defaults for debugging
         if (team1 == null)
@@ -124,20 +100,5 @@ public class LocalMultiplayerManager : MonoBehaviour {
             players.Add(instPlayer1);
             players.Add(instPlayer2);
         }
-    }
-
-    /// <summary>
-    /// Called when a player dies. The duel is over. Show end Screen.
-    /// </summary>
-    /// <param name="deadPlayer"></param>
-    public void gameOver(GameObject deadPlayer)
-    {
-        //Get the one player who is not dead
-        string winner = players.Where(x => x != deadPlayer).ToArray()[0].GetComponent<ChampionClassController>().className.ToString();
-
-        gameOverOverlay.Find("Title").GetComponent<Text>().text = winner + " won the game";
-        gameOverOverlay.gameObject.SetActive(true);
-        //deadPlayer.SetActive(false);
-        Camera.main.GetComponent<CameraBehaviour>().gameRunning = false;
     }
 }

@@ -85,8 +85,13 @@ public class CharacterStats : Photon.MonoBehaviour
         stunnedSymbol = transform.Find("stunnedSymbol").gameObject;
     }
     void Start()
-    {
+    { 
+
         InvokeRepeating("RegenerateStamina", 0f, 0.1f);
+
+        if (PhotonNetwork.offlineMode)
+            SetTeamColor();
+
         col = transform.Find("graphics").GetComponent<SpriteRenderer>().color;
     }
 
@@ -155,7 +160,8 @@ public class CharacterStats : Photon.MonoBehaviour
     {
         CharacterDied = true;
         animCon.statDead = true;
-        GameObject.Find("manager").GetComponent<LocalMultiplayerManager>().gameOver(gameObject);
+        if(PhotonNetwork.offlineMode || photonView.isMine)
+            GameObject.Find("manager").GetComponent<GameplayManager>().playerDied(gameObject);
     }
 
     #endregion
@@ -269,7 +275,7 @@ public class CharacterStats : Photon.MonoBehaviour
         if (!PhotonNetwork.offlineMode && issueRPC)
             photonView.RPC("TakeDamage", PhotonTargets.Others, amount, playAnimation, false);
 
-        if (amount > 0)
+        if (amount > 0 && !CharacterDied)
         {
             if (!invincible)
             {
@@ -278,9 +284,9 @@ public class CharacterStats : Photon.MonoBehaviour
                 //Show number of damage received
                 ShowFloatingText_Damage(amount);
 
-                if (photonView.isMine) //only substract healt and check for trinkets if running on originial instance
+                if (photonView.isMine) //only substract health and check for trinkets if running on originial instance
                 {
-                    this.CurrentHealth -= amount; //Substract health
+                    CurrentHealth = Mathf.Clamp(this.CurrentHealth -= amount, 0, maxHealth); //Substract health
                     if (playAnimation) animCon.trigHit = true; //Play hit animation
 
                     // If trinket 1 or trinket 2 is an passive trinket and has as triggertype TakeDamage, then use it passively
@@ -325,6 +331,9 @@ public class CharacterStats : Photon.MonoBehaviour
     [PunRPC]
     private void TakeBleedDamage(int amount, bool issueRPC = true)
     {
+        if (CharacterDied)
+            return;
+
         if (!PhotonNetwork.offlineMode && issueRPC)
             photonView.RPC("TakeBleedDamage", PhotonTargets.Others, amount, false);
 
@@ -332,7 +341,7 @@ public class CharacterStats : Photon.MonoBehaviour
         text.GetComponentInChildren<Text>().text = amount.ToString();
 
         if(photonView.isMine)
-            this.CurrentHealth -= amount; //Substract health
+            CurrentHealth = Mathf.Clamp(this.CurrentHealth -= amount, 0, maxHealth); //Substract health
     }
 
     #endregion

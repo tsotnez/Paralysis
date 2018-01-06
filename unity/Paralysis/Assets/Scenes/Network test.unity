@@ -154,6 +154,7 @@ GameObject:
   m_Component:
   - component: {fileID: 33478042}
   - component: {fileID: 33478043}
+  - component: {fileID: 33478041}
   m_Layer: 0
   m_Name: manager
   m_TagString: Untagged
@@ -161,6 +162,32 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &33478041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 33478040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 1
+  instantiationId: 1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!4 &33478042
 Transform:
   m_ObjectHideFlags: 0
@@ -185,11 +212,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1fc125b65530e48929206c78292d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1:
+  gameMode: 0
+  gameOverOverlay: {fileID: 1124908811}
+  defaultPlayer1:
+    ChampionPrefab: {fileID: 0}
+    playerNumber: 0
+    TeamNumber: 0
+    inputDevice: 0
+    trinket1: 0
+    trinket2: 0
+  defaultPlayer2:
+    ChampionPrefab: {fileID: 0}
+    playerNumber: 0
+    TeamNumber: 0
+    inputDevice: 0
+    trinket1: 0
+    trinket2: 0
+  championSpriteOverlayColor: {r: 0.7647059, g: 0.7432369, b: 0.6634948, a: 1}
+  players: []
+  localPlayer:
     ChampionPrefab: {fileID: 1468821578159268, guid: afeff5be3f8bb464aab0433060c18cb4,
       type: 2}
     playerNumber: 0
-    TeamNumber: 0
+    TeamNumber: 1
     inputDevice: 1
     trinket1: 0
     trinket2: 0

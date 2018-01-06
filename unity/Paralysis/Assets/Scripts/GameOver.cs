@@ -14,7 +14,12 @@ public class GameOver : MonoBehaviour {
     public void Restart()
     {
         //Restart game
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (PhotonNetwork.offlineMode)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        else
+        {
+            GameObject.Find("manager").GetComponent<GameplayManager>().restart();
+        }
     }
 
     public void BackToChampionSelection()

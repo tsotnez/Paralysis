@@ -1,31 +1,38 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 
-public class NetworkVersusManager : Photon.MonoBehaviour
+public class NetworkVersusManager : GameplayManager
 {
-
-    public Player player1;
+    public Player localPlayer;
     public string pathToChampionPrefabs;
     public Text connectionStatusText;
     public GameObject hotbarPrefab;
 
     public Transform spawnPlayer1;
 
-    private GameObject myPlayer;
+    private GameObject myPlayerInstance;
 
     #region default
-    // Use this for initialization
+    protected override void Awake()
+    {
+     
+    }
+
+
     void Start()
     {
+        PhotonNetwork.sendRate = 40;
+        PhotonNetwork.sendRateOnSerialize = 25;
         PhotonNetwork.ConnectUsingSettings("Paralysis alpha");
     }
 
     public virtual void OnJoinedRoom()
     {
-        InstantiatePlayers();
-        BuildUi();
+        instantiatePlayers();
+        buildUI();
     }
 
 
@@ -47,12 +54,12 @@ public class NetworkVersusManager : Photon.MonoBehaviour
     }
     #endregion
 
-    private void InstantiatePlayers()
+    protected override void instantiatePlayers()
     {
         //Player
-        GameObject instPlayer1 = PhotonNetwork.Instantiate(player1.ChampionPrefab.name, spawnPlayer1.position, Quaternion.identity, 0);
+        GameObject instPlayer1 = PhotonNetwork.Instantiate(localPlayer.ChampionPrefab.name, spawnPlayer1.position, Quaternion.identity, 0);
         instPlayer1.GetComponent<UserControl>().enabled = true;
-        instPlayer1.GetComponent<UserControl>().inputDevice = player1.inputDevice;
+        instPlayer1.GetComponent<UserControl>().inputDevice = localPlayer.inputDevice;
 
         //Rigidbody
         instPlayer1.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
@@ -61,40 +68,68 @@ public class NetworkVersusManager : Photon.MonoBehaviour
 
         instPlayer1.GetComponent<ChampionClassController>().enabled = true;
         instPlayer1.GetComponent<ChampionClassController>().m_whatToHit = whatToHitP1;
-        instPlayer1.GetComponent<UserControl>().playerNumber = player1.playerNumber;
+        instPlayer1.GetComponent<UserControl>().playerNumber = localPlayer.playerNumber;
 
         //Trinkets P1
-        instPlayer1.AddComponent(Trinket.trinketsForNames[player1.trinket1]);
-        instPlayer1.AddComponent(Trinket.trinketsForNames[player1.trinket2]);
+        instPlayer1.AddComponent(Trinket.trinketsForNames[localPlayer.trinket1]);
+        instPlayer1.AddComponent(Trinket.trinketsForNames[localPlayer.trinket2]);
         instPlayer1.GetComponent<ChampionClassController>().Trinket1 = instPlayer1.GetComponents<Trinket>()[0];
         instPlayer1.GetComponent<ChampionClassController>().Trinket2 = instPlayer1.GetComponents<Trinket>()[1];
         instPlayer1.GetComponent<ChampionClassController>().Trinket1.trinketNumber = 1;
         instPlayer1.GetComponent<ChampionClassController>().Trinket2.trinketNumber = 2;
 
         //Instaniate camera
-        GameObject cam = Instantiate(Resources.Load<GameObject>("Main Camera Network"), new Vector3(0, 0, -0.5f), Quaternion.identity);
+        CameraBehaviour cam = Instantiate(Resources.Load<GameObject>("Main Camera Network"), new Vector3(0, 0, -0.5f), Quaternion.identity).GetComponent<CameraBehaviour>();
 
-        cam.GetComponent<CameraBehaviour>().changeTarget(instPlayer1.transform);
+        cam.changeTarget(instPlayer1.transform);
 
         //Disable default cam
         GameObject.Find("LobbyCam").SetActive(false);
 
-        myPlayer = instPlayer1;
+        GameObject.Find("MainCanvas").GetComponent<Canvas>().worldCamera = Camera.main;
+
+        myPlayerInstance = instPlayer1;
+
+        //Wait before joining team, because scene needs time to synchronize
+        StartCoroutine(test());
+
+    }
+    
+    IEnumerator test()
+    {
+        yield return new WaitForSeconds(.2f);
+        myPlayerInstance.GetComponent<CharacterNetwork>().joinTeam();
     }
 
-    private void BuildUi()
+    protected override void buildUI()
     {
         Transform parent = GameObject.Find("Hotbars").transform;
 
         GameObject hotbar = Instantiate(hotbarPrefab, parent, false);
-        hotbar.GetComponent<HotbarController>().setChampionName(player1.ChampionPrefab.name);
-        hotbar.GetComponent<HotbarController>().initAbilityImages(player1.ChampionPrefab.name);
-        hotbar.GetComponent<HotbarController>().initTrinketImages(myPlayer.GetComponents<Trinket>()[0].DisplayName, myPlayer.GetComponents<Trinket>()[1].DisplayName);
+        hotbar.GetComponent<HotbarController>().setChampionName(localPlayer.ChampionPrefab.name);
+        hotbar.GetComponent<HotbarController>().initAbilityImages(localPlayer.ChampionPrefab.name);
+        hotbar.GetComponent<HotbarController>().initTrinketImages(myPlayerInstance.GetComponents<Trinket>()[0].DisplayName, myPlayerInstance.GetComponents<Trinket>()[1].DisplayName);
 
         //Assign hotbar to player
-        myPlayer.GetComponent<CharacterStats>().hotbar = hotbar.GetComponent<HotbarController>();
-        myPlayer.GetComponent<ChampionClassController>().hotbar = hotbar.GetComponent<HotbarController>();
-        myPlayer.GetComponent<CharacterStats>().enabled = true;
+        myPlayerInstance.GetComponent<CharacterStats>().hotbar = hotbar.GetComponent<HotbarController>();
+        myPlayerInstance.GetComponent<ChampionClassController>().hotbar = hotbar.GetComponent<HotbarController>();
+        myPlayerInstance.GetComponent<CharacterStats>().enabled = true;
     }
 
+    protected override void GameOver(string winner)
+    {
+        base.GameOver(winner);
+
+        photonView.RPC("setGameOverRemote", PhotonTargets.Others, winner);
+    }
+
+    /// <summary>
+    /// Called by remote instances when game over
+    /// </summary>
+    /// <param name="winner"></param>
+    [PunRPC]
+    void setGameOverRemote(string winner)
+    {
+        base.GameOver(winner);
+    }
 }

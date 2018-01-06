@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 61382073066533806}
   - component: {fileID: 114639130651757522}
   - component: {fileID: 114696959837777344}
+  - component: {fileID: 114091167701783140}
   m_Layer: 11
   m_Name: Assassin
   m_TagString: MainPlayer
@@ -456,6 +457,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Assassin
+--- !u!114 &114091167701783140
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1468821578159268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3828d4ee0cda9fd4991e28945427cfde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerName: Player
 --- !u!114 &114131817971326720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -629,7 +642,7 @@ MonoBehaviour:
   - 0.5
   - 0.6
   - 0.2
-  - 0.33
+  - 0
   - 0
   - 0.4
   - 0.3

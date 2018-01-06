@@ -153,7 +153,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 33478042}
-  - component: {fileID: 33478041}
   - component: {fileID: 33478043}
   m_Layer: 0
   m_Name: manager
@@ -162,26 +161,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &33478041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 33478040}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 283b0b0641ae1524986aac7513290fe7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnPlayer1: {fileID: 980744926}
-  spawnPlayer2: {fileID: 784897739}
-  championSpriteOverlayColor: {r: 0.7647059, g: 0.7432369, b: 0.6634948, a: 1}
-  champions:
-  - {fileID: 1654434425598688, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
-  - {fileID: 1468821578159268, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b, type: 2}
-  - {fileID: 1903508196159970, guid: 0639eac30390dec449afda643c7fa53c, type: 2}
-  - {fileID: 1128103333960868, guid: e6f7d777ee6c44d448705ae811eebec4, type: 2}
-  startChar: 1
 --- !u!4 &33478042
 Transform:
   m_ObjectHideFlags: 0
@@ -216,7 +195,7 @@ MonoBehaviour:
     trinket1: 0
     trinket2: 0
   defaultPlayer2:
-    ChampionPrefab: {fileID: 1346435155503924, guid: 782001f3935837a48a557565b08b8c0c,
+    ChampionPrefab: {fileID: 1468821578159268, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b,
       type: 2}
     playerNumber: 1
     TeamNumber: 2

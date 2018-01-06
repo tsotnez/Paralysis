@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public abstract class ChampionClassController : Photon.MonoBehaviour
 {
@@ -145,7 +146,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     #region default methods
 
     protected virtual void Awake()
-    {
+    { 
         // Setting up references.
         m_GroundCheck = transform.Find("GroundCheck");
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -156,6 +157,13 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     }
 
     protected virtual void Update() { }
+
+    protected virtual void Start()
+    {
+        //Refresh manager instance list of players
+        if (!PhotonNetwork.offlineMode)
+            photonView.RPC("OnNewPlayerInstantiated", PhotonTargets.All);
+    }
 
     protected virtual void FixedUpdate()
     {
@@ -363,6 +371,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                     if (RequiredAnimState == AnimationController.AnimatorStates.DashFor) animCon.trigDashForwardEnd = true;
                     else animCon.trigDashEnd = true;
                 }
+                else
+                    Debug.LogError("Dash Animation not found");
 
                 yield return new WaitUntil(() => animCon.CurrentAnimation != RequiredAnimState);                                    // Wait till next animation is present
                 stats.invincible = false;
@@ -692,7 +702,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         {
             GameObject goProjectile = PhotonNetwork.Instantiate("Bullet_AssassinSkill4", 
                 transform.position + new Vector3(1f * direction, 0.3f), 
-                new Quaternion(0, 0, direction, 0), 
+                Quaternion.identity, 
                 0);
 
             ProjectileBehaviour projectile = goProjectile.GetComponent<ProjectileBehaviour>();
@@ -707,6 +717,9 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             projectile.explodeOnHit = skillToPerform.onHitEffect;
             projectile.damage = skillToPerform.damage;
             projectile.effectDuration = skillToPerform.effectDuration;
+            goProjectile.transform.localScale = new Vector3(direction,
+                                                            projectile.transform.localScale.y,
+                                                            projectile.transform.localScale.z);
 
             goProjectile.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             projectile.enabled = true;

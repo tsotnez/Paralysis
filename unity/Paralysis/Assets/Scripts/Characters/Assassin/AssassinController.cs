@@ -14,8 +14,9 @@ public class AssassinController : ChampionClassController
     #region default
 
     // Use this for initialization
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         animCon = graphics.GetComponent<AssassinAnimationController>();
 
         //Instantiate skill variables

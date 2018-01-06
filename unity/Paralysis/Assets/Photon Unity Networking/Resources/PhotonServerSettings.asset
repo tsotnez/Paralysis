@@ -69,4 +69,11 @@ MonoBehaviour:
   - StartBleeding
   - TakeBleedDamage
   - StartInvisible
+  - setDashEnd
+  - setDashForwardEnd
+  - addNewPlayerToList
+  - OnNewPlayerInstantiated
+  - sendLayer
+  - setLayer
+  - setGameOverRemote
   DisableAutoOpenWizard: 1

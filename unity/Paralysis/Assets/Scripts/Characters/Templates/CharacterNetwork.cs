@@ -6,6 +6,8 @@ using System.Linq;
 /// </summary>
 public class CharacterNetwork : Photon.MonoBehaviour {
 
+
+    public string PlayerName = "Player";
     SpriteRenderer r;
     Transform graphicsTransform;
     CharacterStats stats;
@@ -21,15 +23,15 @@ public class CharacterNetwork : Photon.MonoBehaviour {
         stunnedSymbol = transform.Find("stunnedSymbol").gameObject;
     }
 
-    private void Start()
+    public void joinTeam()
     {
         if (photonView.isMine)
-        {   
-            GameObject[] players = GameObject.FindGameObjectsWithTag("MainPlayer");
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("MainPlayer").Where(x => x != gameObject).ToArray();
 
             //Join the team with lesser players
-            if (players.Where(x => x.layer == 11).Count() - 1 <= players.Where(x => x.layer == 12).Count())
-                photonView.RPC("SetTeam", PhotonTargets.All, 11, 12);
+            if (players.Where(x => x.layer == 11).Count() <= players.Where(x => x.layer == 12).Count())
+                photonView.RPC("SetTeam", PhotonTargets.All, 11, 12); //Join Team 1
             else
                 photonView.GetComponent<PhotonView>().RPC("SetTeam", PhotonTargets.All, 12, 11);
         }
@@ -51,6 +53,7 @@ public class CharacterNetwork : Photon.MonoBehaviour {
             stream.SendNext(stats.CurrentStamina);
             stream.SendNext(shadowRenderer.enabled);
             stream.SendNext(stunnedSymbol.activeSelf);
+            stream.SendNext(gameObject.layer);
         }
         else
         {
@@ -61,6 +64,8 @@ public class CharacterNetwork : Photon.MonoBehaviour {
             stats.CurrentStamina = (int)stream.ReceiveNext();
             shadowRenderer.enabled = (bool)stream.ReceiveNext();
             stunnedSymbol.SetActive(((bool)stream.ReceiveNext()));
+            gameObject.layer = (int)stream.ReceiveNext();
+            stats.SetTeamColor();
         }
     }
 
@@ -76,6 +81,15 @@ public class CharacterNetwork : Photon.MonoBehaviour {
         GetComponent<ChampionClassController>().m_whatToHit = whatToHit;
 
         stats.SetTeamColor();
+    }
+
+    /// <summary>
+    /// Refreshes the list of player instances when a new player gets instantiated
+    /// </summary>
+    [PunRPC]
+    private void OnNewPlayerInstantiated()
+    {
+        GameObject.Find("manager").GetComponent<GameplayManager>().players = GameObject.FindGameObjectsWithTag("MainPlayer").ToList();
     }
     #endregion 
 }

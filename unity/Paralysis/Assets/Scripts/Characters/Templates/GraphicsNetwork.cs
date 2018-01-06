@@ -6,10 +6,17 @@
 public class GraphicsNetwork : MonoBehaviour {
 
     ChampionAnimationController animCon;
+    SpriteRenderer ren;
 
     // Use this for initialization
     void Awake () {
         animCon = GetComponent<ChampionAnimationController>();
+        ren = GetComponent<SpriteRenderer>();
+    }
+
+    void Start()
+    {
+        ren.color = GameObject.Find("manager").GetComponent<GameplayManager>().championSpriteOverlayColor;
     }
 
     /// <summary>
@@ -124,9 +131,21 @@ public class GraphicsNetwork : MonoBehaviour {
         animCon.setByRPC = true;
     }
     [PunRPC]
+    void setDashEnd()
+    {
+        animCon.trigDashEnd = true;
+        animCon.setByRPC = true;
+    }
+    [PunRPC]
     void setDashForward()
     {
         animCon.trigDashForward = true;
+        animCon.setByRPC = true;
+    }
+    [PunRPC]
+    void setDashForwardEnd()
+    {
+        animCon.trigDashForwardEnd = true;
         animCon.setByRPC = true;
     }
     [PunRPC]
