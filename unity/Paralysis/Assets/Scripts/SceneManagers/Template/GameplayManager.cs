@@ -67,13 +67,16 @@ public abstract class GameplayManager : Photon.MonoBehaviour {
     /// <param name="winner"></param>
     protected virtual void GameOver(string winner)
     {
+        //Disable user input so players cant control their chamnpions when game is over
+        players.Select(x => x.GetComponent<UserControl>().enabled = false).ToList();
+
         gameOverOverlay.Find("Title").GetComponent<Text>().text = winner + " won the game";
         gameOverOverlay.gameObject.SetActive(true);
         Camera.main.GetComponent<CameraBehaviour>().gameRunning = false;
     }
 
     /// <summary>
-    /// restarts the current gamemode with all active players
+    /// Called, when the restart button in the game over menu is clicked
     /// </summary>
     public virtual void restart()
     {

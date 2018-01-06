@@ -76,4 +76,5 @@ MonoBehaviour:
   - sendLayer
   - setLayer
   - setGameOverRemote
+  - restart
   DisableAutoOpenWizard: 1

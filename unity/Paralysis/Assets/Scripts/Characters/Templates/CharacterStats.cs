@@ -106,6 +106,9 @@ public class CharacterStats : Photon.MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown("k"))
+            TakeDamage(100, false);
+
         float h = CurrentHealth;
         float mH = maxHealth;
 
@@ -631,6 +634,26 @@ public class CharacterStats : Photon.MonoBehaviour
         ShowFloatingText(TriggerName.ToString() + Environment.NewLine + "has triggered", Color.yellow, -10);
     }
 
+    #endregion
+
+    #region reset
+    public void ResetValues()
+    {
+        StopAllCoroutines();
+        CurrentHealth = 100;
+        CurrentStamina = maxStamina;
+
+        animCon.statDead = false;
+        CharacterDied = false;          
+        stunned = false;    
+        bleeding = false;   
+        knockedBack = false;
+        immovable = false;  
+        slowFactor = 1;     
+        invincible = false;
+        reflect = false;               
+        invisible = false;              
+    }
     #endregion
 
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -134,5 +135,33 @@ public class HotbarController : MonoBehaviour {
             yield return new WaitForSeconds(.15f);
             spell.color = colorBefore;
         }
+    }
+
+    /// <summary>
+    /// Resets everything so the game may be restarted
+    /// </summary>
+    public void resetValues()
+    {
+        StopAllCoroutines();
+
+        resetImage(spell1Image);
+        resetImage(spell2Image);
+        resetImage(spell3Image);
+        resetImage(spell4Image);
+        resetImage(basicAttackImage);
+        resetImage(trinket1Image);
+        resetImage(trinket2Image);
+    }
+
+    private void resetImage(Image spell)
+    {
+        if (spell != basicAttackImage)
+        {
+            Text text = spell.transform.Find("CooldownText").GetComponent<Text>(); //Make cooldown text visible
+            text.gameObject.SetActive(false);
+        }
+
+        Image overlay = spell.transform.Find("Overlay").gameObject.GetComponent<Image>();
+        overlay.enabled = false;
     }
 }

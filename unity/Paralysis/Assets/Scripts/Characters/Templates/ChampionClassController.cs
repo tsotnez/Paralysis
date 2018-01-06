@@ -808,4 +808,22 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     }
 
     #endregion
+
+    #region reset
+    /// <summary>
+    /// Resets everything, so the game can be restarted
+    /// </summary>
+    public void resetValues()
+    {
+        basicAttack1_var.notOnCooldown = true;
+        basicAttack2_var.notOnCooldown = true;
+        basicAttack3_var.notOnCooldown = true;
+        skill1_var.notOnCooldown = true;
+        skill2_var.notOnCooldown = true;
+        skill3_var.notOnCooldown = true;
+        skill4_var.notOnCooldown = true;
+
+        hotbar.resetValues();
+    }
+    #endregion
 }
