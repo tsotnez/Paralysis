@@ -173,6 +173,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
         Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
         for (int i = 0; i < colliders.Length; i++)
+
         {
             if (colliders[i].gameObject != gameObject)
             {
@@ -198,12 +199,6 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     }
 
     #endregion
-
-    /// <summary>
-    /// Called by network manager to set team
-    /// </summary>
-    /// <param name="team"></param>
-    /// <param name="teamToHit"></param>
 
     #region Normal character things (Move, Jump, JumpAttack, BasicAttack, Skills, ...)
 
@@ -303,7 +298,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
         // Deal damage to all enemies
         animCon.trigJumpAttackEnd = true;
-        StartCoroutine(DoMeleeSkill_Hit(new MeleeSkill(0, 0, damage_JumpAttack, Skill.SkillEffect.nothing, 0, 10, Skill.SkillTarget.MultiTarget, 0, m_jumpAttackRadius)));
+        StartCoroutine(DoMeleeSkill_Hit(new MeleeSkill(0, 0, damage_JumpAttack, Skill.SkillEffect.nothing, 0, 0, 10, Skill.SkillTarget.MultiTarget, 0, m_jumpAttackRadius)));
 
         // Wait till animation is finished and end jump attack
         yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimatorStates.JumpAttack);
@@ -619,6 +614,9 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                     case Skill.SkillEffect.bleed:
                         target.StartBleeding(skillToPerform.effectDuration);
                         break;
+                    case Skill.SkillEffect.slow:
+                        target.StartSlow(skillToPerform.effectDuration, skillToPerform.effectValue);
+                        break;
                     default:
                         // should not happen
                         throw new NotImplementedException();
@@ -689,6 +687,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             projectile.explodeOnHit = skillToPerform.onHitEffect;
             projectile.damage = skillToPerform.damage;
             projectile.effectDuration = skillToPerform.effectDuration;
+            projectile.effectValue = skillToPerform.effectValue;
             goProjectile.transform.localScale = new Vector3(direction,
                                                             projectile.transform.localScale.y,
                                                             projectile.transform.localScale.z);
@@ -701,9 +700,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         else
         {
             GameObject goProjectile = PhotonNetwork.Instantiate("Bullet_AssassinSkill4", 
-                transform.position + new Vector3(1f * direction, 0.3f), 
-                Quaternion.identity, 
-                0);
+                transform.position + new Vector3(1f * direction, 0.3f), Quaternion.identity, 0);
 
             ProjectileBehaviour projectile = goProjectile.GetComponent<ProjectileBehaviour>();
 
@@ -717,6 +714,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             projectile.explodeOnHit = skillToPerform.onHitEffect;
             projectile.damage = skillToPerform.damage;
             projectile.effectDuration = skillToPerform.effectDuration;
+            projectile.effectValue = skillToPerform.effectValue;
             goProjectile.transform.localScale = new Vector3(direction,
                                                             projectile.transform.localScale.y,
                                                             projectile.transform.localScale.z);
@@ -809,11 +807,12 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     #endregion
 
-    #region reset
+    #region Reset
+
     /// <summary>
     /// Resets everything, so the game can be restarted
     /// </summary>
-    public void resetValues()
+    public void ResetValues()
     {
         basicAttack1_var.notOnCooldown = true;
         basicAttack2_var.notOnCooldown = true;
@@ -825,5 +824,6 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
         hotbar.resetValues();
     }
+
     #endregion
 }

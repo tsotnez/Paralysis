@@ -19,6 +19,7 @@ public class UseTrinket_RemoveStatusEffect : UseTrinket
         // Set Effects of Use-Trinket 
         TrinketOwnerStats.StopStunned();
         TrinketOwnerStats.StopBleeding();
+        TrinketOwnerStats.StopSlow();
         TrinketOwnerStats.invincible = true;
 
         // Wait till duration ends

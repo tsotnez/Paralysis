@@ -157,7 +157,7 @@ public class NetworkVersusManager : GameplayManager
         myPlayerInstance.GetComponent<UserControl>().enabled = true;
         myPlayerInstance.transform.position = Vector3.zero;
         myPlayerInstance.GetComponent<CharacterStats>().ResetValues();
-        myPlayerInstance.GetComponent<ChampionClassController>().resetValues();
+        myPlayerInstance.GetComponent<ChampionClassController>().ResetValues();
         myPlayerInstance.transform.Find("graphics").gameObject.GetComponent<ChampionAnimationController>().StartAnimation(AnimationController.AnimatorStates.Idle);
         Camera.main.GetComponent<CameraBehaviour>().gameRunning = true;
 

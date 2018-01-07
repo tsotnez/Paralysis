@@ -40,8 +40,9 @@ public class CharacterStats : Photon.MonoBehaviour
     public Coroutine bleedingRoutine = null;    // Stores the bleeding Coroutine
     public bool knockedBack = false;            // Prevents actions while being knocked back
     public Coroutine knockBackRoutine = null;   // Stores the knockBack Coroutine
-    public bool immovable = false;              // Stores if character is immoveable
     public float slowFactor = 1;                // Setting this to a value below 1 will slow down the character
+    public Coroutine slowRoutine = null;        // Stores the slow Coroutine
+    public bool immovable = false;              // Stores if character is immoveable
     public bool invincible = false;             // If true, character cant be harmed 
     public bool reflect = false;                // If true, character reflect damage to its dealer
     public bool invisible = false;              // Is the character invisible
@@ -349,7 +350,9 @@ public class CharacterStats : Photon.MonoBehaviour
 
     #endregion
 
-    #region Stun, KnockBack, Bleed, Slow
+    #region Skill Special Effects
+
+    #region Stun
 
     /// <summary>
     /// Sets the stunned value till disable
@@ -422,6 +425,10 @@ public class CharacterStats : Photon.MonoBehaviour
         stunned = false;
     }
 
+    #endregion
+
+    #region KnockBack
+
     [PunRPC]
     public void StartKnockBack(Vector3 origin, bool issueRPC = true)
     {
@@ -462,6 +469,10 @@ public class CharacterStats : Photon.MonoBehaviour
         animCon.trigKnockedBackEnd = true;
         knockedBack = false;
     }
+
+    #endregion
+
+    #region Bleed
 
     [PunRPC]
     public void StartBleeding(int time, bool issueRPC = true)
@@ -505,13 +516,41 @@ public class CharacterStats : Photon.MonoBehaviour
         if (bleeding) Invoke("BleedDamage", 1);
     }
 
-    //Slows down the character by the given factor for the given time
-    public IEnumerator Slow(float time, float factor)
+    #endregion
+
+    #region Slow
+
+    /// <summary>
+    /// Slows down the character by the given factor for the given time
+    /// </summary>
+    /// <param name="time">duration of slow</param>
+    /// <param name="factor">factor of slowing | 0,2 causes a movementspeed of 0,8 (80%)</param>
+    public void StartSlow(float time, float factor)
     {
-        slowFactor = factor;
+        if (!invincible)
+        {
+            if (slowRoutine != null) StopCoroutine(slowRoutine);
+            slowRoutine = StartCoroutine(Slow(time, factor));
+        }
+    }
+
+    public void StopSlow()
+    {
+        if (slowFactor < 1)
+        {
+            if (slowRoutine != null) StopCoroutine(slowRoutine);
+            slowFactor = 1;
+        }
+    }
+
+    private IEnumerator Slow(float time, float factor)
+    {
+        slowFactor -= slowFactor * factor;
         yield return new WaitForSeconds(time);
         slowFactor = 1;
     }
+
+    #endregion
 
     #endregion
 

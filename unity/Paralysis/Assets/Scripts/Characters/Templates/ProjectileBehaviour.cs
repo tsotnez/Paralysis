@@ -14,6 +14,7 @@ public class ProjectileBehaviour : MonoBehaviour
     public int direction = 0;                                           //Direction to travel in, -1 if left, 1 if right
     public Skill.SkillEffect effect = Skill.SkillEffect.nothing;
     public int effectDuration = 1;
+    public float effectValue = 0f;
     public int damage = 0;
 
     // Protected properties
@@ -52,7 +53,6 @@ public class ProjectileBehaviour : MonoBehaviour
 
     protected void OnCollisionEnter2D(Collision2D collision)
     {
-
         if (collision.collider.gameObject != creator)
         {
             //On collision, check if collider is in whatToHit layermask
@@ -72,6 +72,9 @@ public class ProjectileBehaviour : MonoBehaviour
                         break;
                     case Skill.SkillEffect.bleed:
                         targetStats.StartBleeding(effectDuration);
+                        break;
+                    case Skill.SkillEffect.slow:
+                        targetStats.StartSlow(effectDuration, effectValue);
                         break;
                 }
                 creator.GetComponent<CharacterStats>().DealDamage(targetStats, damage, false);
