@@ -5,6 +5,7 @@ using UnityEngine;
 public class ProjectileBehaviour : MonoBehaviour
 {
     // Public properties
+    public bool castFinished = false;
     public GameObject creator;
     public LayerMask whatToHit;
     public bool explodeOnHit = false;                                   //If true, the projectile will play an explosion effect on hit. It well stuck into the Object it hit otherwise
@@ -24,13 +25,13 @@ public class ProjectileBehaviour : MonoBehaviour
     protected bool falling = false;                                     //True if projectile has reched maxRange already
     Coroutine fallingRoutine = null;
 
+    // Use this for initialization
     protected void Start()
     {
         startPos = transform.position; //Save starting position
         ProjectileRigid = this.GetComponent<Rigidbody2D>();
     }
 
-    // Use this for initialization
     protected void Update()
     {
         if (!stuck && !falling)
@@ -47,13 +48,13 @@ public class ProjectileBehaviour : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        if (!stuck && !falling)
+        if (castFinished && !stuck && !falling)
             ProjectileRigid.velocity = new Vector2(speed.x * direction, speed.y);
     }
 
     protected void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.collider.gameObject == creator)
+        if (collision.collider.gameObject == creator)
         {
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.collider);
         }
@@ -142,7 +143,7 @@ public class ProjectileBehaviour : MonoBehaviour
     {
         //Plays explosion effect and destroys the bullet
         if (explodeOnHit && explosionPrefab != null)
-                Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
         if (!PhotonNetwork.offlineMode)
             PhotonNetwork.Destroy(gameObject);

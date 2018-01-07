@@ -671,54 +671,50 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         if (m_FacingRight) direction = 1;
         else direction = -1;
 
+        GameObject goProjectile;
         if (PhotonNetwork.offlineMode)
         {
-            // generate GameObject
-            GameObject goProjectile = skillToPerform.prefab;
-            ProjectileBehaviour projectile = goProjectile.GetComponent<ProjectileBehaviour>();
-
-            // assign variables to projectile Script
-            projectile.direction = direction;
-            projectile.creator = this.gameObject;
-            projectile.whatToHit = m_whatToHit;
-            projectile.range = skillToPerform.range;
-            projectile.speed = skillToPerform.speed;
-            projectile.effect = skillToPerform.effect;
-            projectile.explodeOnHit = skillToPerform.onHitEffect;
-            projectile.damage = skillToPerform.damage;
-            projectile.effectDuration = skillToPerform.effectDuration;
-            projectile.effectValue = skillToPerform.effectValue;
-            goProjectile.transform.localScale = new Vector3(direction,
-                                                            projectile.transform.localScale.y,
-                                                            projectile.transform.localScale.z);
-            Instantiate(goProjectile, transform.position, 
-                new Quaternion(goProjectile.transform.rotation.x,
-                goProjectile.transform.rotation.y, 
-                goProjectile.transform.rotation.z * direction, 
-                goProjectile.transform.rotation.w));
+            // load GameObject
+            goProjectile = skillToPerform.prefab;
         }
         else
         {
-            GameObject goProjectile = PhotonNetwork.Instantiate("Bullet_AssassinSkill4", 
+            // Instantiate by Network
+            goProjectile = PhotonNetwork.Instantiate("Bullet_AssassinSkill4",
                 transform.position, Quaternion.identity, 0);
+        }
 
-            ProjectileBehaviour projectile = goProjectile.GetComponent<ProjectileBehaviour>();
+        // assign variables to projectile Script
+        ProjectileBehaviour projectile = goProjectile.GetComponent<ProjectileBehaviour>();
+        projectile.castFinished = false;
+        projectile.direction = direction;
+        projectile.creator = this.gameObject;
+        projectile.whatToHit = m_whatToHit;
+        projectile.range = skillToPerform.range;
+        projectile.speed = skillToPerform.speed;
+        projectile.effect = skillToPerform.effect;
+        projectile.explodeOnHit = skillToPerform.onHitEffect;
+        projectile.damage = skillToPerform.damage;
+        projectile.effectDuration = skillToPerform.effectDuration;
+        projectile.effectValue = skillToPerform.effectValue;
+        goProjectile.transform.localScale = new Vector3(direction,
+                                                        projectile.transform.localScale.y,
+                                                        projectile.transform.localScale.z);
 
-            // assign variables to projectile Script
-            projectile.direction = direction;
-            projectile.creator = this.gameObject;
-            projectile.whatToHit = m_whatToHit;
-            projectile.range = skillToPerform.range;
-            projectile.speed = skillToPerform.speed;
-            projectile.effect = skillToPerform.effect;
-            projectile.explodeOnHit = skillToPerform.onHitEffect;
-            projectile.damage = skillToPerform.damage;
-            projectile.effectDuration = skillToPerform.effectDuration;
-            projectile.effectValue = skillToPerform.effectValue;
-            goProjectile.transform.localScale = new Vector3(direction,
-                                                            projectile.transform.localScale.y,
-                                                            projectile.transform.localScale.z);
+        if (PhotonNetwork.offlineMode)
+        {
+            goProjectile = Instantiate(goProjectile, transform.position,
+                new Quaternion(goProjectile.transform.rotation.x,
+                goProjectile.transform.rotation.y,
+                goProjectile.transform.rotation.z * direction,
+                goProjectile.transform.rotation.w));
+            projectile = goProjectile.GetComponent<ProjectileBehaviour>();
 
+            yield return new WaitForSeconds(skillToPerform.castTime);
+            projectile.castFinished = true;
+        }
+        else
+        {
             goProjectile.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             projectile.enabled = true;
         }

@@ -79,4 +79,5 @@ MonoBehaviour:
   - restart
   - ShowFloatingText
   - ShowFloatingTextSerialized
+  - StartSlow
   DisableAutoOpenWizard: 1

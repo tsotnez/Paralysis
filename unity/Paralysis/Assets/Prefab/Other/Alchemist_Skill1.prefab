@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 212933135164625420}
   - component: {fileID: 70979219519191244}
   - component: {fileID: 50473561798098414}
+  - component: {fileID: 114359911979461124}
   m_Layer: 0
   m_Name: Alchemist_Skill1
   m_TagString: Untagged
@@ -38,7 +39,7 @@ Transform:
   m_GameObject: {fileID: 1806743027263652}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.5149956, y: -5.4331264, z: 0.42624694}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -95,6 +96,31 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114359911979461124
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1806743027263652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03a3743c547dfd04bb8b2abc3bedcc4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  castFinished: 0
+  creator: {fileID: 0}
+  whatToHit:
+    serializedVersion: 2
+    m_Bits: 2048
+  explodeOnHit: 1
+  explosionPrefab: {fileID: 0}
+  speed: {x: 9, y: 0}
+  range: 7
+  direction: -1
+  effect: 4
+  effectDuration: 3
+  effectValue: 0
+  damage: 5
 --- !u!212 &212933135164625420
 SpriteRenderer:
   m_ObjectHideFlags: 1

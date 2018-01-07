@@ -10,6 +10,9 @@ public class AlchemistController : ChampionClassController
     public GameObject GoSkill1_Frostbolt;
     public GameObject GoSkill3_Stun;
 
+    public float CastTime_Skill1 = 1.5f;
+    public float CastTime_Skill3 = 1.5f;
+
     #region default
 
     // Use this for initialization
@@ -21,9 +24,9 @@ public class AlchemistController : ChampionClassController
         //Instantiate skill variables
         basicAttack1_var = new RangedSkill(AnimationController.AnimatorStates.BasicAttack1, true, new Vector2(9, 0), GoBasicAttack, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, 7f);
 
-        skill1_var = new RangedSkill(AnimationController.AnimatorStates.Skill1, true, new Vector2(9, 0), GoSkill1_Frostbolt, delay_Skill1, damage_Skill1, Skill.SkillEffect.slow, 3, 0.5f, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, 7f);
+        skill1_var = new RangedSkill(AnimationController.AnimatorStates.Skill1, true, new Vector2(9, 0), GoSkill1_Frostbolt, delay_Skill1, damage_Skill1, Skill.SkillEffect.slow, 3, 0.5f, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, 7f, true, CastTime_Skill1);
         skill2_var = new Skill(AnimationController.AnimatorStates.Skill2, cooldown_Skill2);
-        skill3_var = new RangedSkill(AnimationController.AnimatorStates.Skill3, true, new Vector2(9, 0), GoSkill3_Stun, delay_Skill3, damage_Skill3, Skill.SkillEffect.stun, 3, 0, stamina_Skill3, Skill.SkillTarget.SingleTarget, cooldown_Skill3, 7f);
+        skill3_var = new RangedSkill(AnimationController.AnimatorStates.Skill3, true, new Vector2(9, 0), GoSkill3_Stun, delay_Skill3, damage_Skill3, Skill.SkillEffect.stun, 3, 0, stamina_Skill3, Skill.SkillTarget.SingleTarget, cooldown_Skill3, 7f, true, CastTime_Skill3);
         skill4_var = new MeleeSkill(AnimationController.AnimatorStates.Skill4, delay_Skill4, damage_Skill4, Skill.SkillEffect.knockback, 0, 0, stamina_Skill4, Skill.SkillTarget.MultiTarget, cooldown_Skill4, 3f);
     }
 
