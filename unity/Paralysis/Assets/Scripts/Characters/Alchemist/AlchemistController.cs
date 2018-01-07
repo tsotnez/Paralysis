@@ -2,22 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 public class AlchemistController : ChampionClassController
 {
+    public GameObject GoBasicAttack;
+    public GameObject GoSkill1_Frostbolt;
+    public GameObject GoSkill3_Stun;
+
     #region default
 
     // Use this for initialization
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         animCon = graphics.GetComponent<AlchemistAnimationController>();
 
-        //basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, meeleRange);
+        //Instantiate skill variables
+        basicAttack1_var = new RangedSkill(AnimationController.AnimatorStates.BasicAttack1, true, new Vector2(9, 0), GoBasicAttack, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, 7f);
 
-        //skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.SkillEffect.stun, 3, stamina_Skill1, Skill.SkillTarget.MultiTarget, cooldown_Skill1, meeleRange);
-        //skill2_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.SkillEffect.stun, 3, stamina_Skill2, Skill.SkillTarget.MultiTarget, cooldown_Skill2, meeleRange);
-        //skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.SkillEffect.knockback, 0, stamina_Skill3, Skill.SkillTarget.SingleTarget, cooldown_Skill3, meeleRange);
-        //skill4_var = new RangedSkill(AnimationController.AnimatorStates.Skill4, false, new Vector2(7, 0), Skill4_Spear, delay_Skill4, damage_Skill4, Skill.SkillEffect.nothing, 0, stamina_Skill4, Skill.SkillTarget.SingleTarget, cooldown_Skill4, 5f);
+        skill1_var = new RangedSkill(AnimationController.AnimatorStates.Skill1, true, new Vector2(9, 0), GoSkill1_Frostbolt, delay_Skill1, damage_Skill1, Skill.SkillEffect.slow, 3, 0.5f, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, 7f);
+        skill2_var = new Skill(AnimationController.AnimatorStates.Skill2, cooldown_Skill2);
+        skill3_var = new RangedSkill(AnimationController.AnimatorStates.Skill3, true, new Vector2(9, 0), GoSkill3_Stun, delay_Skill3, damage_Skill3, Skill.SkillEffect.stun, 3, 0, stamina_Skill3, Skill.SkillTarget.SingleTarget, cooldown_Skill3, 7f);
+        skill4_var = new MeleeSkill(AnimationController.AnimatorStates.Skill4, delay_Skill4, damage_Skill4, Skill.SkillEffect.knockback, 0, 0, stamina_Skill4, Skill.SkillTarget.MultiTarget, cooldown_Skill4, 3f);
     }
 
     #endregion
@@ -32,7 +39,7 @@ public class AlchemistController : ChampionClassController
     {
         if (shouldAttack)
         {
-            throw new NotImplementedException();
+            DoRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill)basicAttack1_var);
         }
     }
 
@@ -47,7 +54,7 @@ public class AlchemistController : ChampionClassController
     /// </summary>
     public override void Skill1()
     {
-        throw new NotImplementedException();
+        DoRangeSkill(ref animCon.trigSkill1, (RangedSkill)skill1_var);
     }
 
     /// <summary>
@@ -75,7 +82,7 @@ public class AlchemistController : ChampionClassController
     /// </summary>
     public override void Skill3()
     {
-        throw new NotImplementedException();
+        DoRangeSkill(ref animCon.trigSkill3, (RangedSkill)skill3_var);
     }
 
     /// <summary>
@@ -89,7 +96,7 @@ public class AlchemistController : ChampionClassController
     /// </summary>
     public override void Skill4()
     {
-        throw new NotImplementedException();
+        DoMeleeSkill(ref animCon.trigSkill4, (MeleeSkill)skill4_var);
     }
 
     #endregion
