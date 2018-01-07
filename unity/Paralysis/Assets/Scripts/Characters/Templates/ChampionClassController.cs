@@ -691,7 +691,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             goProjectile.transform.localScale = new Vector3(direction,
                                                             projectile.transform.localScale.y,
                                                             projectile.transform.localScale.z);
-            Instantiate(goProjectile, transform.position + new Vector3(1f * direction, 0.3f), 
+            Instantiate(goProjectile, transform.position, 
                 new Quaternion(goProjectile.transform.rotation.x,
                 goProjectile.transform.rotation.y, 
                 goProjectile.transform.rotation.z * direction, 
@@ -700,7 +700,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         else
         {
             GameObject goProjectile = PhotonNetwork.Instantiate("Bullet_AssassinSkill4", 
-                transform.position + new Vector3(1f * direction, 0.3f), Quaternion.identity, 0);
+                transform.position, Quaternion.identity, 0);
 
             ProjectileBehaviour projectile = goProjectile.GetComponent<ProjectileBehaviour>();
 

@@ -53,7 +53,11 @@ public class ProjectileBehaviour : MonoBehaviour
 
     protected void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.gameObject != creator)
+        if(collision.collider.gameObject == creator)
+        {
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.collider);
+        }
+        else
         {
             //On collision, check if collider is in whatToHit layermask
             if (whatToHit == (whatToHit | (1 << collision.gameObject.layer)))
