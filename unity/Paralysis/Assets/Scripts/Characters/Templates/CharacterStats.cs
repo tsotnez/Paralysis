@@ -527,8 +527,16 @@ public class CharacterStats : Photon.MonoBehaviour
     /// </summary>
     /// <param name="time">duration of slow</param>
     /// <param name="factor">factor of slowing | 0,2 causes a movementspeed of 0,8 (80%)</param>
-    public void StartSlow(float time, float factor)
+    [PunRPC]
+    public void StartSlow(float time, float factor, bool issueRPC = true)
     {
+        //If called from a copy, issue rpc on original instance
+        if (!PhotonNetwork.offlineMode && !photonView.isMine && issueRPC)
+        {
+            photonView.RPC("StartSlow", PhotonTargets.Others, time, factor, false);
+            return;
+        }
+
         if (!invincible)
         {
             if (slowRoutine != null) StopCoroutine(slowRoutine);
