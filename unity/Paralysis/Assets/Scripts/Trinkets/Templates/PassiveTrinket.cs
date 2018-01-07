@@ -10,9 +10,7 @@ public abstract class PassiveTrinket : Trinket
 
     public TriggerType TrinketTriggerType { get; protected set; }
     public bool TrinketRunning { get; protected set; }
-    public bool TrinketReady { get; private set; }
 
-    protected int GeneralCooldown;
     protected int GeneralDuration;
     protected float PercentageEffectAdd;
 

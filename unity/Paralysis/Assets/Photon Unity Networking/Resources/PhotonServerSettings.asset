@@ -77,4 +77,6 @@ MonoBehaviour:
   - setLayer
   - setGameOverRemote
   - restart
+  - ShowFloatingText
+  - ShowFloatingTextSerialized
   DisableAutoOpenWizard: 1

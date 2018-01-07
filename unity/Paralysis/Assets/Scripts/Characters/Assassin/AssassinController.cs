@@ -60,8 +60,18 @@ public class AssassinController : ChampionClassController
             hotbar.StartCoroutine(hotbar.flashBlack(skill2_var.name));
             if (stats.invisible) stats.StopInvisible();           
             StartCoroutine(SetSkillOnCooldown(skill2_var));
-            stats.StartInvisible(delay_Skill2, 5);
+            animCon.trigSkill2 = true;
+            StartCoroutine(skill2Routine());
         }
+    }
+
+    /// <summary>
+    /// Starts the Invis routine after a appropiat delay
+    /// </summary>
+    IEnumerator skill2Routine()
+    {
+        yield return new WaitForSeconds(skill2_var.delay);
+        stats.StartInvisible(5);
     }
 
     /// <summary>

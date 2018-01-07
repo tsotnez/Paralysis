@@ -19,7 +19,7 @@ public class CharacterNetwork : Photon.MonoBehaviour {
         r = transform.Find("graphics").GetComponent<SpriteRenderer>();
         graphicsTransform = transform.Find("graphics");
         stats = GetComponent<CharacterStats>();
-        shadowRenderer = transform.Find("graphics").GetComponent<SpriteRenderer>();
+        shadowRenderer = transform.Find("GroundCheck").GetComponent<SpriteRenderer>();
         stunnedSymbol = transform.Find("stunnedSymbol").gameObject;
     }
 

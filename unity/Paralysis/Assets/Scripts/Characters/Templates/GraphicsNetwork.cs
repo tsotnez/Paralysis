@@ -12,10 +12,6 @@ public class GraphicsNetwork : MonoBehaviour {
     void Awake () {
         animCon = GetComponent<ChampionAnimationController>();
         ren = GetComponent<SpriteRenderer>();
-    }
-
-    void Start()
-    {
         ren.color = GameObject.Find("manager").GetComponent<GameplayManager>().championSpriteOverlayColor;
     }
 

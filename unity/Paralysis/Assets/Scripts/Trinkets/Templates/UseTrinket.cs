@@ -4,10 +4,8 @@ using UnityEngine;
 public abstract class UseTrinket : Trinket
 {
     public bool TrinketRunning { get; protected set; }
-    public bool TrinketReady { get; private set; }
 
     protected float GeneralDuration;
-    protected int GeneralCooldown;
     protected float PercentageEffectAdd;
     protected int AmountEffect;
 
