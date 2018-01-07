@@ -7,6 +7,9 @@ public abstract class Trinket : MonoBehaviour
     public string DisplayName;
     public int trinketNumber;
 
+    public bool TrinketReady { get; protected set; }
+    protected int GeneralCooldown;
+
     public static Dictionary<Trinkets, System.Type> trinketsForNames = new Dictionary<Trinkets, System.Type>()
     {
         {Trinkets.UseTrinket_GetImmun,                      typeof(UseTrinket_GetImmun)},
@@ -33,5 +36,11 @@ public abstract class Trinket : MonoBehaviour
         PassiveTrinket_ChanceDealingMoreDamage,
         PassiveTrinket_ChanceToStun,
         PassiveTrinket_SpeedWhenHitted
+    }
+
+    public void resetValues()
+    {
+        TrinketReady = true;
+        StopAllCoroutines();
     }
 }

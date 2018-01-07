@@ -822,6 +822,9 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         skill3_var.notOnCooldown = true;
         skill4_var.notOnCooldown = true;
 
+        Trinket1.resetValues();
+        Trinket2.resetValues();
+
         hotbar.resetValues();
     }
 

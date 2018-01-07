@@ -1,4 +1,6 @@
-﻿public abstract class ChampionAnimationController : AnimationController
+﻿using UnityEngine;
+
+public abstract class ChampionAnimationController : AnimationController
 {
     PhotonView view;
 

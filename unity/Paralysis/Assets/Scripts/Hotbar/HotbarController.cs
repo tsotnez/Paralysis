@@ -149,19 +149,25 @@ public class HotbarController : MonoBehaviour {
         resetImage(spell3Image);
         resetImage(spell4Image);
         resetImage(basicAttackImage);
-        resetImage(trinket1Image);
-        resetImage(trinket2Image);
+        resetImage(trinket1Image, true);
+        resetImage(trinket2Image, true);
     }
 
-    private void resetImage(Image spell)
+    private void resetImage(Image spell, bool trinket = false)
     {
+        Text text;
+        Image overlay;
+
+        overlay = spell.transform.Find("Overlay").gameObject.GetComponent<Image>();
+
         if (spell != basicAttackImage)
         {
-            Text text = spell.transform.Find("CooldownText").GetComponent<Text>(); //Make cooldown text visible
+            text = spell.transform.Find("CooldownText").GetComponent<Text>();
             text.gameObject.SetActive(false);
         }
 
-        Image overlay = spell.transform.Find("Overlay").gameObject.GetComponent<Image>();
         overlay.enabled = false;
+
+        spell.color = Color.white;
     }
 }

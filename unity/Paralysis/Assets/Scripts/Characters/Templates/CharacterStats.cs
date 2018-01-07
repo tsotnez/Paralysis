@@ -87,7 +87,6 @@ public class CharacterStats : Photon.MonoBehaviour
     }
     void Start()
     { 
-
         InvokeRepeating("RegenerateStamina", 0f, 0.1f);
 
         if (PhotonNetwork.offlineMode)
@@ -276,8 +275,11 @@ public class CharacterStats : Photon.MonoBehaviour
     [PunRPC]
     public void TakeDamage(int amount, bool playAnimation, bool issueRPC = true)
     {
-        if (!PhotonNetwork.offlineMode && issueRPC)
+        if (!photonView.isMine && issueRPC && !PhotonNetwork.offlineMode)
+        {
             photonView.RPC("TakeDamage", PhotonTargets.Others, amount, playAnimation, false);
+            return;
+        }
 
         if (amount > 0 && !CharacterDied)
         {
@@ -338,8 +340,8 @@ public class CharacterStats : Photon.MonoBehaviour
         if (CharacterDied)
             return;
 
-        if (!PhotonNetwork.offlineMode && issueRPC)
-            photonView.RPC("TakeBleedDamage", PhotonTargets.Others, amount, false);
+        //if (!PhotonNetwork.offlineMode && issueRPC)
+        //    photonView.RPC("TakeBleedDamage", PhotonTargets.Others, amount, false);
 
         GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false); //Show number of damage received
         text.GetComponentInChildren<Text>().text = amount.ToString();
@@ -563,13 +565,13 @@ public class CharacterStats : Photon.MonoBehaviour
     /// <param name="seconds"></param>
     /// <param name="issueRpc"></param>
     [PunRPC]
-    public void StartInvisible(float delay, int seconds, bool issueRpc = true)
+    public void StartInvisible(int seconds, bool issueRpc = true)
     {
         if (!PhotonNetwork.offlineMode && issueRpc)
-            photonView.RPC("StartInvisible", PhotonTargets.Others, delay, seconds, false);
+            photonView.RPC("StartInvisible", PhotonTargets.Others, seconds, false);
 
         if (invisRoutine != null) StopCoroutine(invisRoutine);
-        invisRoutine = StartCoroutine(ManageInvisibility(delay, seconds));
+            invisRoutine = StartCoroutine(ManageInvisibility(seconds));
     }
 
     /// <summary>
@@ -578,17 +580,9 @@ public class CharacterStats : Photon.MonoBehaviour
     /// <param name="delay"></param>
     /// <param name="seconds"></param>
     /// <returns></returns>
-    private IEnumerator ManageInvisibility(float delay, int seconds)
-    {
-        Debug.Log("started");
-        
-        // set animation
-        animCon.trigSkill2 = true;
-
-        yield return new WaitForSeconds(delay);
+    private IEnumerator ManageInvisibility(int seconds)
+    {   
         invisible = true;
-
-        
 
         //Set Alpha to 0 if on different client (Character should be in fact invisible) and to 0.5f if on the controlling client for a visual represanttation of invisibility
         //Also disable floating status bar
@@ -638,6 +632,29 @@ public class CharacterStats : Photon.MonoBehaviour
     /// <param name="ColorValue">Color of the text</param>
     public void ShowFloatingText(string TextValue, Color ColorValue, int changeFontSizeBy)
     {
+        if (!PhotonNetwork.offlineMode)
+            photonView.RPC("ShowFloatingTextSerialized", PhotonTargets.Others, TextValue, ColorValue.a, ColorValue.r, ColorValue.g, ColorValue.b, changeFontSizeBy);
+
+        GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false);
+        Text component = text.GetComponentInChildren<Text>();
+
+        component.text = TextValue;
+        component.color = ColorValue;
+        component.fontSize += changeFontSizeBy;
+    }
+
+    /// <summary>
+    /// Called by RPC cause Color cant be serialized
+    /// </summary>
+    [PunRPC]
+    public void ShowFloatingTextSerialized(string TextValue, float a, float r, float g, float b, int changeFontSizeBy)
+    {
+        Color ColorValue = new Color();
+        ColorValue.a = a;
+        ColorValue.r = r;
+        ColorValue.g = g;
+        ColorValue.b = b;
+
         GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false);
         Text component = text.GetComponentInChildren<Text>();
 
@@ -650,7 +667,7 @@ public class CharacterStats : Photon.MonoBehaviour
     /// Shows healing amout in front of the player
     /// </summary>
     /// <param name="value">Healing amount</param>
-    public void ShowFloatingText_Heal(int value)
+    public void ShowFloatingText_Heal(int value, bool issueRPC = true)
     {
         ShowFloatingText(value.ToString(), Color.green, 0);
     }
@@ -659,7 +676,7 @@ public class CharacterStats : Photon.MonoBehaviour
     /// Shows damage taken amout in front of the player
     /// </summary>
     /// <param name="value">Damage amount</param>
-    public void ShowFloatingText_Damage(int value)
+    public void ShowFloatingText_Damage(int value, bool issueRPC = true)
     {
         ShowFloatingText(value.ToString(), Color.red, 0);
     }
@@ -668,7 +685,7 @@ public class CharacterStats : Photon.MonoBehaviour
     /// Shows which trigger has activated in front of the player
     /// </summary>
     /// <param name="TriggerName">Name of the trigger</param>
-    public void ShowFloatingText_TrinketTriggered(string TriggerName)
+    public void ShowFloatingText_TrinketTriggered(string TriggerName, bool issueRPC = true)
     {
         ShowFloatingText(TriggerName.ToString() + Environment.NewLine + "has triggered", Color.yellow, -10);
     }
