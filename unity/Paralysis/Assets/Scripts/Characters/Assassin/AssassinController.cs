@@ -238,4 +238,3 @@ public class AssassinController : ChampionClassController
     #endregion
 
 }
-
