@@ -38,7 +38,7 @@ Transform:
   m_GameObject: {fileID: 1686816382022230}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.206376, y: -5.6707716, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -72,7 +72,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.046991795}
@@ -103,14 +103,8 @@ MonoBehaviour:
   whatToHit:
     serializedVersion: 2
     m_Bits: 2048
-  explodeOnHit: 0
   explosionPrefab: {fileID: 0}
-  speed: {x: 7, y: 0}
-  range: 5
   direction: -1
-  effect: 0
-  effectDuration: 0
-  damage: 15
 --- !u!212 &212181927283793142
 SpriteRenderer:
   m_ObjectHideFlags: 1
