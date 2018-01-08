@@ -32,32 +32,30 @@ SpriteAtlas:
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: 8a674ee53830fdb489efd5e5e0afcad9, type: 3}
   - {fileID: 21300000, guid: 5db216a20ec32d84392f8163bf7da5e6, type: 3}
-  - {fileID: 21300000, guid: 9ea370ffd1ad56b48ba66cff07e05e48, type: 3}
+  - {fileID: 21300000, guid: efdbd89453c169949936a91c8ea8c6a9, type: 3}
   - {fileID: 21300000, guid: 65d0e8ea3c4cca54692c26d1c6dd264a, type: 3}
-  - {fileID: 21300000, guid: 9a53012b8ed30aa40b6c274a09c3da03, type: 3}
   - {fileID: 21300000, guid: f1f764dc4dd03724390d48f12b22ecdc, type: 3}
-  - {fileID: 21300000, guid: 563df39b8e710a84d8b714d2d4cbfe61, type: 3}
   - {fileID: 21300000, guid: 76547df302e593b47818eb9e41d69885, type: 3}
-  - {fileID: 21300000, guid: 87ab9f93433b88746894b494a507b7bd, type: 3}
-  - {fileID: 21300000, guid: 2ba7aebd80a523a48812e30ac1a9cc9e, type: 3}
-  - {fileID: 21300000, guid: 374cba8669be54f458763e00188b7297, type: 3}
+  - {fileID: 21300000, guid: 9a53012b8ed30aa40b6c274a09c3da03, type: 3}
+  - {fileID: 21300000, guid: 8a674ee53830fdb489efd5e5e0afcad9, type: 3}
+  - {fileID: 21300000, guid: 563df39b8e710a84d8b714d2d4cbfe61, type: 3}
   - {fileID: 21300000, guid: e25989794b9c46249a9edd821c94b092, type: 3}
-  - {fileID: 21300000, guid: 161f2c9932281b34dbfefb38b8bdd201, type: 3}
+  - {fileID: 21300000, guid: 87ab9f93433b88746894b494a507b7bd, type: 3}
   - {fileID: 21300000, guid: 605b01eee59ddb143b97b44178799713, type: 3}
-  - {fileID: 21300000, guid: 5114399677edfbf48adb0d8996f01eb2, type: 3}
+  - {fileID: 21300000, guid: 374cba8669be54f458763e00188b7297, type: 3}
   - {fileID: 21300000, guid: 6e967862f52cd0f41bab0d94a5916e3f, type: 3}
+  - {fileID: 21300000, guid: 161f2c9932281b34dbfefb38b8bdd201, type: 3}
+  - {fileID: 21300000, guid: 9ea370ffd1ad56b48ba66cff07e05e48, type: 3}
+  - {fileID: 21300000, guid: 5114399677edfbf48adb0d8996f01eb2, type: 3}
   - {fileID: 21300000, guid: 1e26963c5ea054347b000644f592bdbc, type: 3}
   - {fileID: 21300000, guid: 8b907f2e737ca5844bf98bda0fedf0da, type: 3}
   - {fileID: 21300000, guid: 158e7215c26a8d744bcb92e7936ff855, type: 3}
-  - {fileID: 21300000, guid: efdbd89453c169949936a91c8ea8c6a9, type: 3}
   m_PackedSpriteNamesToIndex:
   - Idle_08
   - Idle_09
   - Idle_04
   - Idle_05
-  - Idle_19
   - Idle_06
   - Idle_18
   - Idle_07

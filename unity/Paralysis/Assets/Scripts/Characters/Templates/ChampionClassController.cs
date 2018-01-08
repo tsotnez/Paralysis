@@ -681,6 +681,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         if (m_FacingRight) direction = 1;
         else direction = -1;
 
+        Vector3 offset = new Vector3(.1f * direction, .2f);
+
         GameObject goProjectile;
         if (PhotonNetwork.offlineMode)
         {
@@ -691,7 +693,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         {
             // Instantiate by Network
             goProjectile = PhotonNetwork.Instantiate("Bullet_AssassinSkill4",
-                transform.position + new Vector3(1f * direction, 0.3f), Quaternion.identity, 0);
+                transform.position + offset, Quaternion.identity, 0);
         }
 
         // assign variables to projectile Script
@@ -699,11 +701,15 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         projectile.direction = direction;
         projectile.creator = this.gameObject;
         projectile.whatToHit = m_whatToHit;
-        goProjectile.transform.localScale = new Vector3(direction, projectile.transform.localScale.y, projectile.transform.localScale.z);
+
+        if (direction == -1)
+            goProjectile.GetComponent<SpriteRenderer>().flipX = true;
+        else
+            goProjectile.GetComponent<SpriteRenderer>().flipX = false;
 
         if (PhotonNetwork.offlineMode)
         {
-            goProjectile = Instantiate(goProjectile, transform.position + new Vector3(1f * direction, 0.3f),
+            goProjectile = Instantiate(goProjectile, transform.position + offset,
                 new Quaternion(goProjectile.transform.rotation.x, goProjectile.transform.rotation.y,
                     goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));
             projectile = goProjectile.GetComponent<ProjectileBehaviour>();

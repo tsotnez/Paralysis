@@ -72,11 +72,11 @@ public class ProjectileBehaviour : MonoBehaviour
         castFinished = true;
     }
 
-    protected void OnCollisionEnter2D(Collision2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.collider.gameObject == creator)
+        if (collision.gameObject == creator)
         {
-            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.collider);
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision);
         }
         else
         {
