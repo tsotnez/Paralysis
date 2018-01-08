@@ -712,6 +712,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         else
         {
             goProjectile.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            projectile = goProjectile.GetComponent<ProjectileBehaviour>();
+            projectile.SkillValues = skillToPerform;
             projectile.enabled = true;
         }
         StartCoroutine(SetSkillOnCooldown(skillToPerform));

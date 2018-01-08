@@ -99,20 +99,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a3743c547dfd04bb8b2abc3bedcc4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  castFinished: 0
   creator: {fileID: 0}
   whatToHit:
     serializedVersion: 2
     m_Bits: 2048
-  explodeOnHit: 0
   explosionPrefab: {fileID: 0}
-  speed: {x: 9, y: 0}
-  range: 6
   direction: -1
-  effect: 0
-  effectDuration: 0
-  effectValue: 0
-  damage: 7
 --- !u!212 &212785438580124604
 SpriteRenderer:
   m_ObjectHideFlags: 1

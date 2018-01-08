@@ -615,6 +615,7 @@ MonoBehaviour:
   delay_BasicAttack1: 0
   delay_BasicAttack2: 0
   delay_BasicAttack3: 0
+  delay_JumpAttack: 0
   delay_Skill1: 0
   delay_Skill2: 0
   delay_Skill3: 0
@@ -690,7 +691,7 @@ MonoBehaviour:
   - {fileID: 4343727234628468602, guid: c07ac3bbac13e0e4f9c599e1f9e9195d, type: 2}
   - {fileID: 4343727234628468602, guid: 2304c087c835cfb4a80acd76a16ff719, type: 2}
   - {fileID: 4343727234628468602, guid: 9a42104f1cb7b9d47a77b24e038af03a, type: 2}
-  - {fileID: 4343727234628468602, guid: 2304c087c835cfb4a80acd76a16ff719, type: 2}
+  - {fileID: 4343727234628468602, guid: 16e9d437b7b384444b8133aac70eaa70, type: 2}
   - {fileID: 4343727234628468602, guid: 05c58bdc0c0f8c145bdff8ee7846598c, type: 2}
   - {fileID: 0}
   - {fileID: 0}
