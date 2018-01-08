@@ -42,7 +42,10 @@ public class AlchemistController : ChampionClassController
     {
         if (shouldAttack)
         {
-            DoRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill)basicAttack1_var);
+            if (animCon.m_Grounded) // Basic Attack
+                DoRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill)basicAttack1_var);
+            else if (doubleJumped) // Jump Attack
+                StartCoroutine(JumpAttack());
         }
     }
 

@@ -25,6 +25,7 @@ public class ArcherController : ChampionClassController
 
         //Instantiate skill variables
         basicAttack1_var = new RangedSkill(AnimationController.AnimatorStates.BasicAttack1, false, new Vector2(9, 0), standartArrowPrefab, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, 6);
+        jumpAttack_var = new RangedSkill(0, false, new Vector2(4, -9), jumpAttackArrowPrefab, 0.2f, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, 0, 100, false);
 
         skill1_var = new RangedSkill(AnimationController.AnimatorStates.Skill1, false, new Vector2(9, 0), greatArrowPrefab, delay_Skill1, damage_Skill1, Skill.SkillEffect.knockback, 0, 0, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, 7);
         skill2_var = new Skill(AnimationController.AnimatorStates.Skill2, cooldown_Skill2);
@@ -53,7 +54,7 @@ public class ArcherController : ChampionClassController
             if (animCon.m_Grounded)
                 DoRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill)basicAttack1_var);
             else if (doubleJumped) //jump Attack
-                DoRangeSkill(ref animCon.trigJumpAttack, new RangedSkill(0, false, new Vector2(4, -9), jumpAttackArrowPrefab, 0.2f, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, 0, 100, false));
+                DoRangeSkill(ref animCon.trigJumpAttack, (RangedSkill)jumpAttack_var);
         }
     }
 

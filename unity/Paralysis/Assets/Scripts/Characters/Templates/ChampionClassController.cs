@@ -24,7 +24,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     [SerializeField]
     protected float m_DoubleJumpForce = 600f;                               // Force added when doublejumping 
     [SerializeField]
-    protected float m_jumpAttackRadius = 1.5f;                               // Radius of jump Attack damage
+    protected float m_jumpAttackRadius = 1.5f;                              // Radius of jump Attack damage
     [SerializeField]
     protected float m_jumpAttackForce = 10f;                                // Amount of force added when the player jump attack
 
@@ -50,6 +50,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected float delay_BasicAttack2 = 0;
     [SerializeField]
     protected float delay_BasicAttack3 = 0;
+    [SerializeField]
+    protected float delay_JumpAttack = 0;
     [SerializeField]
     protected float delay_Skill1 = 0;
     [SerializeField]
@@ -120,6 +122,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected Skill basicAttack1_var;
     protected Skill basicAttack2_var;
     protected Skill basicAttack3_var;
+    protected Skill jumpAttack_var;
     protected Skill skill1_var;
     protected Skill skill2_var;
     protected Skill skill3_var;
@@ -147,7 +150,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     #region default methods
 
     protected virtual void Awake()
-    { 
+    {
         // Setting up references.
         m_GroundCheck = transform.Find("GroundCheck");
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -164,6 +167,9 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         //Refresh manager instance list of players
         if (!PhotonNetwork.offlineMode)
             photonView.RPC("OnNewPlayerInstantiated", PhotonTargets.All);
+
+        // Set default JumpAttack
+        jumpAttack_var = new MeleeSkill(0, 0, damage_JumpAttack, Skill.SkillEffect.nothing, 0, 0, 10, Skill.SkillTarget.MultiTarget, 0, m_jumpAttackRadius);
     }
 
     protected virtual void FixedUpdate()
@@ -210,7 +216,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             // Prevent from sliding after knockback while stunned 
             m_Rigidbody2D.velocity = Vector2.zero;
         }
-        else if (stats.stunned ||stats.knockedBack)
+        else if (stats.stunned || stats.knockedBack)
         {
             // Ignore input while stunned or knockedback
         }
@@ -282,28 +288,32 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     protected virtual IEnumerator JumpAttack()
     {
-        // Set status variable
-        jumpAttacking = true; 
-        animCon.trigJumpAttack = true;
+        // Check if enough stamina is left
+        if (stats.LoseStamina(stamina_JumpAttack))
+        {
+            // Set status variable
+            jumpAttacking = true;
+            animCon.trigJumpAttack = true;
 
-        // Calculate direction
-        int direction;
-        if (m_FacingRight) direction = 1;
-        else direction = -1;
+            // Calculate direction
+            int direction;
+            if (m_FacingRight) direction = 1;
+            else direction = -1;
 
-        // Add downwards force
-        m_Rigidbody2D.velocity = new Vector2(4 * direction, -m_jumpAttackForce); 
-        yield return new WaitUntil(() => animCon.m_Grounded); // Jump attacking as long as not grounded
-        m_Rigidbody2D.velocity = Vector2.zero; // Set velocity to zero to prevent character from moving after landing on ground
-        Camera.main.GetComponent<CameraBehaviour>().startShake(); // Shake the camera
+            // Add downwards force
+            m_Rigidbody2D.velocity = new Vector2(4 * direction, -m_jumpAttackForce);
+            yield return new WaitUntil(() => animCon.m_Grounded); // Jump attacking as long as not grounded
+            m_Rigidbody2D.velocity = Vector2.zero; // Set velocity to zero to prevent character from moving after landing on ground
+            Camera.main.GetComponent<CameraBehaviour>().startShake(); // Shake the camera
 
-        // Deal damage to all enemies
-        animCon.trigJumpAttackEnd = true;
-        StartCoroutine(DoMeleeSkill_Hit(new MeleeSkill(0, 0, damage_JumpAttack, Skill.SkillEffect.nothing, 0, 0, 10, Skill.SkillTarget.MultiTarget, 0, m_jumpAttackRadius)));
+            // Deal damage to all enemies
+            animCon.trigJumpAttackEnd = true;
+            StartCoroutine(DoMeleeSkill_Hit((MeleeSkill)jumpAttack_var));
 
-        // Wait till animation is finished and end jump attack
-        yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimatorStates.JumpAttack);
-        jumpAttacking = false;
+            // Wait till animation is finished and end jump attack
+            yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimatorStates.JumpAttack);
+            jumpAttacking = false;
+        }
     }
 
     /// <summary>
@@ -354,7 +364,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 stats.immovable = true;
 
                 // Player is invincible for a period of time while dashing
-                stats.invincible = true; 
+                stats.invincible = true;
                 yield return new WaitUntil(() => animCon.CurrentAnimation == RequiredAnimState);                                    // Wait till animation has started
 
                 // If an EndAnimation is present do some extra stuff
@@ -370,18 +380,18 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                     else animCon.trigDashEnd = true;
                 }
                 else
-                    Debug.LogError("Dash Animation not found");
+                    Debug.LogAssertion("DashEnd-Animation not found. Only Dash-Animation has been played!");
 
                 yield return new WaitUntil(() => animCon.CurrentAnimation != RequiredAnimState);                                    // Wait till next animation is present
                 stats.invincible = false;
 
                 // Set end of dash
                 applyDashingForce = false;
-                dashing = false; 
+                dashing = false;
 
                 // Short time where character can't move after dashing
                 m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); // Stop moving
-                yield return new WaitForSeconds(0.04f); 
+                yield return new WaitForSeconds(0.04f);
                 stats.immovable = false;
             }
         }
@@ -438,7 +448,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     /// <param name="trigBA1">Animation Trigger Boolean for Basic Attack 1</param>
     /// <param name="trigBA2">Animation Trigger Boolean for Basic Attack 2</param>
     /// <param name="trigBA3">Animation Trigger Boolean for Basic Attack 3</param>
-    protected void DoComboBasicAttack(bool shouldAttack, ref bool trigBA1, ref bool trigBA2,ref bool trigBA3)
+    protected void DoComboBasicAttack(bool shouldAttack, ref bool trigBA1, ref bool trigBA2, ref bool trigBA3)
     {
         if (shouldAttack && CanPerformAction(false) && CanPerformAttack())
         {
@@ -488,16 +498,12 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 }
             }
             // Jump attack only when falling
-            else
+            else if (doubleJumped)
             {
-                // Check if enough stamina is left
-                if (stats.LoseStamina(stamina_JumpAttack))
-                {
-                    // Jump Attack
-                    StartCoroutine(JumpAttack());
-                    // Abort combo
-                    AbortCombo();
-                }
+                // Jump Attack
+                StartCoroutine(JumpAttack());
+                // Abort combo
+                AbortCombo();
             }
         }
     }
@@ -592,7 +598,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             Vector3 postion = m_GroundCheck.position;
             if (m_FacingRight) postion.x += (skillToPerform.range / 2);
             else postion.x -= (skillToPerform.range / 2);
-            hits = Physics2D.CircleCastAll(postion, skillToPerform.range/2, Vector2.up, 0.01f, m_whatToHit);
+            hits = Physics2D.CircleCastAll(postion, skillToPerform.range / 2, Vector2.up, 0.01f, m_whatToHit);
         }
 
         // only if something is in range
@@ -654,7 +660,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected void DoRangeSkill(ref bool animationVar, RangedSkill skillToPerform)
     {
         //Validate that character is not attacking and standing on ground
-        if (CanPerformAction(skillToPerform.needsToBeGrounded) && CanPerformAttack() 
+        if (CanPerformAction(skillToPerform.needsToBeGrounded) && CanPerformAttack()
             && skillToPerform.notOnCooldown && stats.LoseStamina(skillToPerform.staminaCost))
         {
             // set animation trigger

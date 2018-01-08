@@ -107,6 +107,12 @@ public class ChampionClassEditor : Editor {
         EditorGUILayout.PropertyField(serializedObject.FindProperty("cooldown_BasicAttack3"), new GUIContent(""), true);
         GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("delay_JumpAttack"), new GUIContent("Jump Attack"), true);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("stamina_JumpAttack"), new GUIContent(""), true);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("damage_JumpAttack"), new GUIContent(""), true);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("cooldown_JumpAttack"), new GUIContent(""), true);
+        GUILayout.EndHorizontal();
+        GUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(serializedObject.FindProperty("delay_Skill1"), new GUIContent("Skill 1"), true);
         EditorGUILayout.PropertyField(serializedObject.FindProperty("stamina_Skill1"), new GUIContent(""), true);
         EditorGUILayout.PropertyField(serializedObject.FindProperty("damage_Skill1"), new GUIContent(""), true);

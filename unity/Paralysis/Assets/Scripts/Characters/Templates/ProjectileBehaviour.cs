@@ -20,7 +20,7 @@ public class ProjectileBehaviour : MonoBehaviour
 
     // Private properties
     Coroutine fallingRoutine = null;                                    // Falling Routine 
-    Coroutine castRoutine = null;                                       // Falling Routine 
+    Coroutine castRoutine = null;                                       // Cast Routine 
 
     // Use this for initialization
     protected void Start()

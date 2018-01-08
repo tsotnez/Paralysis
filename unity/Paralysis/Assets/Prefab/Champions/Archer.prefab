@@ -570,6 +570,7 @@ MonoBehaviour:
   delay_BasicAttack1: 0.3
   delay_BasicAttack2: 0
   delay_BasicAttack3: 0
+  delay_JumpAttack: 0
   delay_Skill1: 0.4
   delay_Skill2: 0.4
   delay_Skill3: 0.4
@@ -577,7 +578,7 @@ MonoBehaviour:
   stamina_BasicAttack1: 15
   stamina_BasicAttack2: 0
   stamina_BasicAttack3: 0
-  stamina_JumpAttack: 0
+  stamina_JumpAttack: 5
   stamina_Skill1: 20
   stamina_Skill2: 15
   stamina_Skill3: 15
