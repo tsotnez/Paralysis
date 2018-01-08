@@ -686,32 +686,18 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
         // assign variables to projectile Script
         ProjectileBehaviour projectile = goProjectile.GetComponent<ProjectileBehaviour>();
-        projectile.castFinished = false;
         projectile.direction = direction;
         projectile.creator = this.gameObject;
         projectile.whatToHit = m_whatToHit;
-        projectile.range = skillToPerform.range;
-        projectile.speed = skillToPerform.speed;
-        projectile.effect = skillToPerform.effect;
-        projectile.explodeOnHit = skillToPerform.onHitEffect;
-        projectile.damage = skillToPerform.damage;
-        projectile.effectDuration = skillToPerform.effectDuration;
-        projectile.effectValue = skillToPerform.effectValue;
-        goProjectile.transform.localScale = new Vector3(direction,
-                                                        projectile.transform.localScale.y,
-                                                        projectile.transform.localScale.z);
+        goProjectile.transform.localScale = new Vector3(direction, projectile.transform.localScale.y, projectile.transform.localScale.z);
 
         if (PhotonNetwork.offlineMode)
         {
             goProjectile = Instantiate(goProjectile, transform.position,
-                new Quaternion(goProjectile.transform.rotation.x,
-                goProjectile.transform.rotation.y,
-                goProjectile.transform.rotation.z * direction,
-                goProjectile.transform.rotation.w));
+                new Quaternion(goProjectile.transform.rotation.x, goProjectile.transform.rotation.y,
+                    goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));
             projectile = goProjectile.GetComponent<ProjectileBehaviour>();
-
-            yield return new WaitForSeconds(skillToPerform.castTime);
-            projectile.castFinished = true;
+            projectile.SkillValues = skillToPerform;
         }
         else
         {

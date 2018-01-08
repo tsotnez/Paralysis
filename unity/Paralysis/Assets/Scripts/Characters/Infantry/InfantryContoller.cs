@@ -95,12 +95,7 @@ public class InfantryContoller : ChampionClassController
         projectile.direction = direction;
         projectile.creator = this.gameObject;
         projectile.whatToHit = m_whatToHit;
-        projectile.range = skill1_var.range;
-        projectile.speed = new Vector2(9, 0);
-        projectile.effect = Skill.SkillEffect.nothing;
-        projectile.explodeOnHit = false;
-        projectile.damage = skill1_var.damage;
-        projectile.effectDuration = skill1_var.effectDuration;
+        projectile.SkillValues = (RangedSkill)skill1_var;
         projectile.ChainPrefab = Skill1_Chain;
 
         goProjectile = Instantiate(goProjectile, transform.position + new Vector3(1f * direction, 0.3f), new Quaternion(goProjectile.transform.rotation.x,

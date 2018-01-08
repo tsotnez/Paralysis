@@ -1,44 +1,51 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class ProjectileBehaviour : MonoBehaviour
 {
     // Public properties
-    public bool castFinished = false;
-    public GameObject creator;
-    public LayerMask whatToHit;
-    public bool explodeOnHit = false;                                   //If true, the projectile will play an explosion effect on hit. It well stuck into the Object it hit otherwise
-    public GameObject explosionPrefab;
-    public Vector2 speed = new Vector2(7, 0);                           //Max Speed of the bullet
-    public float range = 5;                                             //Distance to travel before dying
-    public int direction = 0;                                           //Direction to travel in, -1 if left, 1 if right
-    public Skill.SkillEffect effect = Skill.SkillEffect.nothing;
-    public int effectDuration = 1;
-    public float effectValue = 0f;
-    public int damage = 0;
+    public GameObject creator;                                          // Creator of the projectile
+    public LayerMask whatToHit;                                         // Layer that shall be hitted
+    public GameObject explosionPrefab;                                  // Prefab that shall be played on explosion
+    public int direction = 0;                                           // Direction to travel in, -1 if left, 1 if right
+    public RangedSkill SkillValues;                                     // Stuff that is placed in the skill
 
     // Protected properties
-    protected Rigidbody2D ProjectileRigid;
-    protected Vector3 startPos;
-    protected bool stuck = false;
-    protected bool falling = false;                                     //True if projectile has reched maxRange already
-    Coroutine fallingRoutine = null;
+    protected Rigidbody2D ProjectileRigid;                              // Rigidbody of the projectile
+    protected Vector3 startPos;                                         // Position where the projectile has spwaned
+    protected bool stuck = false;                                       // True if projectile has successfully collided with an object
+    protected bool falling = false;                                     // True if projectile has reched maxRange already
+    protected bool castFinished = false;                                // While false, the projectile will not move foreward
+
+    // Private properties
+    Coroutine fallingRoutine = null;                                    // Falling Routine 
+    Coroutine castRoutine = null;                                       // Falling Routine 
 
     // Use this for initialization
     protected void Start()
     {
         startPos = transform.position; //Save starting position
         ProjectileRigid = this.GetComponent<Rigidbody2D>();
+
+        if (SkillValues.castTime <= 0)
+        {
+            castFinished = true;
+        }
+        else
+        {
+            // Freeze Rigid that it can not fall down while casting
+            ProjectileRigid.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
     }
 
     protected void Update()
     {
         if (!stuck && !falling)
         {
-            if (Vector2.Distance(startPos, transform.position) >= range)
+            if (Vector2.Distance(startPos, transform.position) >= SkillValues.range)
             {
-                if (explodeOnHit)
+                if (SkillValues.onHitEffect)
                     Die(); //Explode if max range is reached
                 else
                     fallingRoutine = StartCoroutine(FallToGround());
@@ -49,7 +56,20 @@ public class ProjectileBehaviour : MonoBehaviour
     protected void FixedUpdate()
     {
         if (castFinished && !stuck && !falling)
-            ProjectileRigid.velocity = new Vector2(speed.x * direction, speed.y);
+        {
+            ProjectileRigid.velocity = new Vector2(SkillValues.speed.x * direction, SkillValues.speed.y);
+        }
+        else if (!castFinished && castRoutine == null)
+        {
+            castRoutine = StartCoroutine(DoCast());
+        }
+    }
+
+    private IEnumerator DoCast()
+    {
+        yield return new WaitForSeconds(SkillValues.castTime);
+        ProjectileRigid.constraints = RigidbodyConstraints2D.None;
+        castFinished = true;
     }
 
     protected void OnCollisionEnter2D(Collision2D collision)
@@ -65,28 +85,28 @@ public class ProjectileBehaviour : MonoBehaviour
             {
                 CharacterStats targetStats = collision.gameObject.GetComponent<CharacterStats>();
 
-                switch (effect)
+                switch (SkillValues.effect)
                 {
                     case Skill.SkillEffect.nothing:
                         break;
                     case Skill.SkillEffect.stun:
-                        targetStats.StartStunned(effectDuration);
+                        targetStats.StartStunned(SkillValues.effectDuration);
                         break;
                     case Skill.SkillEffect.knockback:
                         targetStats.StartKnockBack(transform.position);
                         break;
                     case Skill.SkillEffect.bleed:
-                        targetStats.StartBleeding(effectDuration);
+                        targetStats.StartBleeding(SkillValues.effectDuration);
                         break;
                     case Skill.SkillEffect.slow:
-                        targetStats.StartSlow(effectDuration, effectValue);
+                        targetStats.StartSlow(SkillValues.effectDuration, SkillValues.effectValue);
                         break;
                 }
-                creator.GetComponent<CharacterStats>().DealDamage(targetStats, damage, false);
+                creator.GetComponent<CharacterStats>().DealDamage(targetStats, SkillValues.damage, false);
                 Die();
                 return;
             }
-            if (explodeOnHit)
+            if (((RangedSkill)SkillValues).onHitEffect)
                 Die();
             else
                 StartCoroutine(GetStuck());
@@ -110,7 +130,7 @@ public class ProjectileBehaviour : MonoBehaviour
     {
         //Move towards the ground while rotating 
         falling = true;
-        ProjectileRigid.velocity = new Vector2(speed.x * direction, -5);
+        ProjectileRigid.velocity = new Vector2(SkillValues.speed.x * direction, -5);
 
         //Turn to face the ground
         if (direction > 0)
@@ -122,7 +142,7 @@ public class ProjectileBehaviour : MonoBehaviour
 
                 float vertical = ProjectileRigid.velocity.y;
                 float horizontal = ProjectileRigid.velocity.x;
-                ProjectileRigid.velocity = new Vector2(Mathf.Clamp(horizontal - 0.3f, 0, speed.x), vertical - 0.3f);
+                ProjectileRigid.velocity = new Vector2(Mathf.Clamp(horizontal - 0.3f, 0, SkillValues.speed.x), vertical - 0.3f);
             }
         }
         else
@@ -134,7 +154,7 @@ public class ProjectileBehaviour : MonoBehaviour
 
                 float vertical = ProjectileRigid.velocity.y;
                 float horizontal = ProjectileRigid.velocity.x;
-                ProjectileRigid.velocity = new Vector2(Mathf.Clamp(horizontal + 0.3f, -speed.x, 0), vertical - 0.3f);
+                ProjectileRigid.velocity = new Vector2(Mathf.Clamp(horizontal + 0.3f, -SkillValues.speed.x, 0), vertical - 0.3f);
             }
         }
     }
@@ -142,7 +162,7 @@ public class ProjectileBehaviour : MonoBehaviour
     protected virtual void Die()
     {
         //Plays explosion effect and destroys the bullet
-        if (explodeOnHit && explosionPrefab != null)
+        if (SkillValues.onHitEffect && explosionPrefab != null)
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
         if (!PhotonNetwork.offlineMode)
