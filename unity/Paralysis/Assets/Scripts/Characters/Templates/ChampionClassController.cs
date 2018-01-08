@@ -115,6 +115,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     #endregion
 
     protected Transform m_GroundCheck;                                      // A position marking where to check if the player is grounded.
+    protected Transform ProjectilePosition;                                 // A position marking where a projectile shall be spawned.
     protected SpriteRenderer shadowRenderer;
     protected const float k_GroundedRadius = .02f;                          // Radius of the overlap circle to determine if grounded
     protected bool doubleJumped = false;                                    // Has the character double jumped already?
@@ -153,6 +154,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     {
         // Setting up references.
         m_GroundCheck = transform.Find("GroundCheck");
+        ProjectilePosition = transform.Find("ProjectilePosition");
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         graphics = transform.Find("graphics");
         stats = GetComponent<CharacterStats>();
@@ -425,6 +427,11 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         Vector3 theScale = graphics.localScale;
         theScale.x *= -1;
         graphics.localScale = theScale;
+
+        // Flip ProjectilePosition
+        theScale = ProjectilePosition.transform.localPosition;
+        theScale.x *= -1;
+        ProjectilePosition.transform.localPosition = theScale;
     }
 
     /// <summary>
@@ -681,19 +688,17 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         if (m_FacingRight) direction = 1;
         else direction = -1;
 
-        Vector3 offset = new Vector3(.1f * direction, .2f);
-
         GameObject goProjectile;
         if (PhotonNetwork.offlineMode)
         {
-            // load GameObject
+            // load GameObjecta
             goProjectile = skillToPerform.prefab;
         }
         else
         {
             // Instantiate by Network
             goProjectile = PhotonNetwork.Instantiate("Bullet_AssassinSkill4",
-                transform.position + offset, Quaternion.identity, 0);
+                ProjectilePosition.position, Quaternion.identity, 0);
         }
 
         // assign variables to projectile Script
@@ -709,19 +714,20 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
         if (PhotonNetwork.offlineMode)
         {
-            goProjectile = Instantiate(goProjectile, transform.position + offset,
+            goProjectile = Instantiate(goProjectile, ProjectilePosition.position,
                 new Quaternion(goProjectile.transform.rotation.x, goProjectile.transform.rotation.y,
                     goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));
-            projectile = goProjectile.GetComponent<ProjectileBehaviour>();
-            projectile.SkillValues = skillToPerform;
         }
         else
         {
             goProjectile.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-            projectile = goProjectile.GetComponent<ProjectileBehaviour>();
-            projectile.SkillValues = skillToPerform;
             projectile.enabled = true;
         }
+
+        // Apply skill to projectile
+        projectile = goProjectile.GetComponent<ProjectileBehaviour>();
+        projectile.SkillValues = skillToPerform;
+
         StartCoroutine(SetSkillOnCooldown(skillToPerform));
     }
 

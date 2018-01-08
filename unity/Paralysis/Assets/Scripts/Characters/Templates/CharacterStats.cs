@@ -275,7 +275,7 @@ public class CharacterStats : Photon.MonoBehaviour
     [PunRPC]
     public void TakeDamage(int amount, bool playAnimation, bool issueRPC = true)
     {
-        if (!photonView.isMine && issueRPC && !PhotonNetwork.offlineMode)
+        if (!PhotonNetwork.offlineMode && !photonView.isMine && issueRPC)
         {
             photonView.RPC("TakeDamage", PhotonTargets.Others, amount, playAnimation, false);
             return;

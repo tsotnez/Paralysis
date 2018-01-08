@@ -112,7 +112,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   explosionPrefab: {fileID: 0}
-  direction: -1
+  direction: 1
 --- !u!212 &212628534895008078
 SpriteRenderer:
   m_ObjectHideFlags: 1

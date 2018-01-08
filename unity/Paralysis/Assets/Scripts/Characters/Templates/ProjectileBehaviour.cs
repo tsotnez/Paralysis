@@ -25,7 +25,7 @@ public class ProjectileBehaviour : MonoBehaviour
     // Use this for initialization
     protected void Start()
     {
-        startPos = transform.position; //Save starting position
+        startPos = transform.position; // Save starting position
         ProjectileRigid = this.GetComponent<Rigidbody2D>();
 
         if (SkillValues.castTime <= 0)
@@ -46,7 +46,7 @@ public class ProjectileBehaviour : MonoBehaviour
             if (Vector2.Distance(startPos, transform.position) >= SkillValues.range)
             {
                 if (SkillValues.onHitEffect)
-                    Die(); //Explode if max range is reached
+                    Die(); // Explode if max range is reached
                 else
                     fallingRoutine = StartCoroutine(FallToGround());
             }
@@ -67,8 +67,11 @@ public class ProjectileBehaviour : MonoBehaviour
 
     private IEnumerator DoCast()
     {
+        CharacterStats CreatorStats = creator.GetComponent<CharacterStats>();
+        CreatorStats.immovable = true;
         yield return new WaitForSeconds(SkillValues.castTime);
         ProjectileRigid.constraints = RigidbodyConstraints2D.None;
+        CreatorStats.immovable = false;
         castFinished = true;
     }
 
@@ -80,7 +83,7 @@ public class ProjectileBehaviour : MonoBehaviour
         }
         else
         {
-            //On collision, check if collider is in whatToHit layermask
+            // On collision, check if collider is in whatToHit layermask
             if (whatToHit == (whatToHit | (1 << collision.gameObject.layer)))
             {
                 CharacterStats targetStats = collision.gameObject.GetComponent<CharacterStats>();
@@ -106,7 +109,7 @@ public class ProjectileBehaviour : MonoBehaviour
                 Die();
                 return;
             }
-            if (((RangedSkill)SkillValues).onHitEffect)
+            if (SkillValues.onHitEffect)
                 Die();
             else
                 StartCoroutine(GetStuck());
@@ -115,24 +118,24 @@ public class ProjectileBehaviour : MonoBehaviour
 
     protected IEnumerator GetStuck()
     {
-        //Stop moving and destroy after 5 seconds 
+        // Stop moving and destroy after 5 seconds 
         stuck = true;
         if (fallingRoutine != null)
             StopCoroutine(fallingRoutine);
-        GetComponent<Collider2D>().enabled = false; //Disable collider
-        ProjectileRigid.velocity = new Vector2(0, 0); //Stop moving
+        GetComponent<Collider2D>().enabled = false;     // Disable collider
+        ProjectileRigid.velocity = new Vector2(0, 0);   // Stop moving
         ProjectileRigid.freezeRotation = true;
         yield return new WaitForSeconds(5);
         Die();
     }
-
+    
     protected IEnumerator FallToGround()
     {
-        //Move towards the ground while rotating 
+        // Move towards the ground while rotating 
         falling = true;
         ProjectileRigid.velocity = new Vector2(SkillValues.speed.x * direction, -5);
 
-        //Turn to face the ground
+        // Turn to face the ground
         if (direction > 0)
         {
             while (transform.eulerAngles.z > -83 && !stuck)
