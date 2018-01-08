@@ -539,7 +539,7 @@ MonoBehaviour:
   - 0.5
   - 0.4
   - 0.5
-  - 0.3
+  - 0.1
   - 0.3
   - 0.45
   - 0.45
@@ -585,7 +585,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 4343727234628468602, guid: 82eebcb415981bf499a6d4588646d000, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 4343727234628468602, guid: 46cc76496fd57f8489613f4e43c6568d, type: 2}
@@ -624,7 +624,9 @@ MonoBehaviour:
   trigJumpAttack: 0
   trigJumpAttackEnd: 0
   trigDash: 0
+  trigDashEnd: 0
   trigDashForward: 0
+  trigDashForwardEnd: 0
   trigHit: 0
   trigSkill1End: 0
 --- !u!114 &114695671816308672
@@ -720,8 +722,8 @@ MonoBehaviour:
   stunned: 0
   bleeding: 0
   knockedBack: 0
-  immovable: 0
   slowFactor: 1
+  immovable: 0
   invincible: 0
   reflect: 0
   invisible: 0
@@ -801,6 +803,7 @@ MonoBehaviour:
   className: 3
   m_FacingRight: 1
   dashing: 0
+  applyDashingForce: 0
   blocking: 0
   hotbar: {fileID: 0}
   Skill1_Hook: {fileID: 1159624417898122, guid: 6ce9800d51c562645971c77d62e59cee,

@@ -131,6 +131,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     public ChampionAndTrinketDatabase.Champions className;
     public bool m_FacingRight = true;                                       // For determining which way the player is currently facing.
     public bool dashing = false;                                            // true while dashing
+    public bool applyDashingForce = false;                                  // true while force for dashing shall be applied
     public bool blocking = false;                                           // Is the character blocking?
 
     protected Rigidbody2D m_Rigidbody2D;                                    // Reference to the players rigidbody
@@ -192,7 +193,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         animCon.m_vSpeed = m_Rigidbody2D.velocity.y;
 
         //Move the character if dashing
-        if (dashing && animCon.m_Grounded)
+        if (applyDashingForce && animCon.m_Grounded)
         {
             m_Rigidbody2D.velocity = new Vector2(m_dashSpeed, m_Rigidbody2D.velocity.y);
         }
@@ -349,6 +350,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 m_Rigidbody2D.velocity = Vector2.zero;
 
                 dashing = true;
+                applyDashingForce = true;
                 stats.immovable = true;
 
                 // Player is invincible for a period of time while dashing
@@ -362,7 +364,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                     yield return new WaitUntil(() => animCon.m_Grounded);                                                           // Wait till character is on ground
 
                     // Start EndAnimation
-                    dashing = false;
+                    applyDashingForce = false;
+
                     if (RequiredAnimState == AnimationController.AnimatorStates.DashFor) animCon.trigDashForwardEnd = true;
                     else animCon.trigDashEnd = true;
                 }
@@ -373,6 +376,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 stats.invincible = false;
 
                 // Set end of dash
+                applyDashingForce = false;
                 dashing = false; 
 
                 // Short time where character can't move after dashing

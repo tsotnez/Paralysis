@@ -465,7 +465,7 @@ MonoBehaviour:
   - 0.3
   - 0
   - 0
-  - 0
+  - 0.1
   - 0
   - 0
   - 0
@@ -480,7 +480,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0.75
-  - 0
+  - 0.1
   - 0
   - 0
   StartAtlasses:
@@ -789,6 +789,7 @@ MonoBehaviour:
   className: 2
   m_FacingRight: 1
   dashing: 0
+  applyDashingForce: 0
   blocking: 0
   hotbar: {fileID: 0}
   Skill4_Spear: {fileID: 1686816382022230, guid: 60be7605c6f8ae34c9df248ad63aff85,
@@ -824,8 +825,8 @@ MonoBehaviour:
   stunned: 0
   bleeding: 0
   knockedBack: 0
-  immovable: 0
   slowFactor: 1
+  immovable: 0
   invincible: 0
   reflect: 0
   invisible: 0

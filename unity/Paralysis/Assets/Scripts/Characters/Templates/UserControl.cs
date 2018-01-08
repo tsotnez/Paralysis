@@ -2,33 +2,29 @@
 
 public abstract class UserControl : MonoBehaviour
 {
-    public InputDevice inputDevice = InputDevice.KeyboardMouse; //Whick input device is used?
+    public InputDevice inputDevice = InputDevice.KeyboardMouse; // Whick input device is used?
     public PlayerNumbers playerNumber = PlayerNumbers.Player1;
-    protected ChampionClassController m_Character;
-    protected CharacterStats m_Stats;
-    protected bool m_Jump;
-    protected bool m_Attack;
-    protected int dash = 0;
-    protected bool defensive;
-    protected float move = 0;
+    protected ChampionClassController GoCharacter;
+    protected CharacterStats CharStats;
+    protected float lastVerticalValue = 0;                      // Saves the last value for the jump-sticks horizontal input
 
-    protected bool m_Skill1;
-    protected bool m_Skill2;
-    protected bool m_Skill3;
-    protected bool m_Skill4;
+    protected bool inputJump;
+    protected bool inputAttack;
+    protected int inputDashDirection = 0;
+    protected bool inputBlock;
+    protected float inputMove = 0;
+    protected bool inputSkill1;
+    protected bool inputSkill2;
+    protected bool inputSkill3;
+    protected bool inputSkill4;
+    protected bool inputTrinket1;
+    protected bool inputTrinket2;
 
-    protected bool m_Trinket1;
-    protected bool m_Trinket2;
-
-
-    protected float lastVerticalValue = 0; //Saves the last value for the jump-sticks horizontal input
-
+    #region Enums
 
     public enum InputDevice
     {
-        XboxController,
-        KeyboardMouse,
-        Ps4Controller
+        XboxController, KeyboardMouse, Ps4Controller
     }
 
     public enum PlayerNumbers
@@ -36,10 +32,14 @@ public abstract class UserControl : MonoBehaviour
         Player1, Player2, Player3, Player4
     }
 
+    #endregion
+
+    #region Default
+
     protected void Awake()
     {
-        m_Character = GetComponent<ChampionClassController>();
-        m_Stats = GetComponent<CharacterStats>();
+        GoCharacter = GetComponent<ChampionClassController>();
+        CharStats = GetComponent<CharacterStats>();
     }
 
     protected void Update()
@@ -61,57 +61,59 @@ public abstract class UserControl : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        if (!m_Stats.CharacterDied)
+        if (!CharStats.CharacterDied)
         {
             CallMethods();
             ResetValues();
         }
     }
 
+    #endregion
+
     /// <summary>
     /// Calls the Methods inside of a champion class controller, depending on given Input
     /// </summary>
     protected virtual void CallMethods()
     {
-        if (m_Trinket1 && typeof(UseTrinket) == m_Character.Trinket1.GetType().BaseType)
+        if (inputTrinket1 && typeof(UseTrinket) == GoCharacter.Trinket1.GetType().BaseType)
         {
-            ((UseTrinket)m_Character.Trinket1).Use(m_Stats);
+            ((UseTrinket)GoCharacter.Trinket1).Use(CharStats);
 
         }
-        if (m_Trinket2 && typeof(UseTrinket) == m_Character.Trinket2.GetType().BaseType)
+        if (inputTrinket2 && typeof(UseTrinket) == GoCharacter.Trinket2.GetType().BaseType)
         {
-            ((UseTrinket)m_Character.Trinket2).Use(m_Stats);
+            ((UseTrinket)GoCharacter.Trinket2).Use(CharStats);
         }
 
         // Always send input to Move --> Move handles all effects by itself
-        m_Character.Move(move);
+        GoCharacter.Move(inputMove);
 
         //Do things only when not stunned, defensive or being knocked back
-        if (!m_Stats.stunned && !m_Stats.knockedBack && !defensive)
+        if (!CharStats.stunned && !CharStats.knockedBack && !inputBlock && !GoCharacter.dashing)
         {
             // Pass all parameters to the character control script.
-            m_Character.Jump(m_Jump);
-            m_Character.BasicAttack(m_Attack);
+            GoCharacter.Jump(inputJump);
+            GoCharacter.BasicAttack(inputAttack);
 
-            if (m_Skill1) m_Character.Skill1();
-            if (m_Skill2) m_Character.Skill2();
-            if (m_Skill3) m_Character.Skill3();
-            if (m_Skill4) m_Character.Skill4();
-            if (dash != 0) m_Character.StartCoroutine(m_Character.Dash(dash));
+            if (inputSkill1) GoCharacter.Skill1();
+            if (inputSkill2) GoCharacter.Skill2();
+            if (inputSkill3) GoCharacter.Skill3();
+            if (inputSkill4) GoCharacter.Skill4();
+            if (inputDashDirection != 0) GoCharacter.StartCoroutine(GoCharacter.Dash(inputDashDirection));
         }
     }
 
     protected virtual void ResetValues()
     {
-        m_Attack = false;
-        m_Jump = false;
-        m_Skill1 = false;
-        m_Skill2 = false;
-        m_Skill3 = false;
-        m_Skill4 = false;
-        m_Trinket1 = false;
-        m_Trinket2 = false;
-        dash = 0;
+        inputAttack = false;
+        inputJump = false;
+        inputSkill1 = false;
+        inputSkill2 = false;
+        inputSkill3 = false;
+        inputSkill4 = false;
+        inputTrinket1 = false;
+        inputTrinket2 = false;
+        inputDashDirection = 0;
     }
 
     #region Keyboard & Mouse
@@ -121,58 +123,58 @@ public abstract class UserControl : MonoBehaviour
     /// </summary>
     protected virtual void CheckInputForKeyboardAndMouse()
     {
-        move = Input.GetAxis("Horizontal");
-        if (dash == 0)
+        inputMove = Input.GetAxis("Horizontal");
+        if (inputDashDirection == 0)
         {
-            if (Input.GetButtonDown("DashLeft")) dash = -1;
-            else if (Input.GetButtonDown("DashRight")) dash = 1;
+            if (Input.GetButtonDown("DashLeft")) inputDashDirection = -1;
+            else if (Input.GetButtonDown("DashRight")) inputDashDirection = 1;
         }
 
-        if (!m_Attack)
+        if (!inputAttack)
         {
-            m_Attack = Input.GetButtonDown("Fire1");
+            inputAttack = Input.GetButtonDown("Fire1");
         }
 
-        if (!m_Skill1)
+        if (!inputSkill1)
         {
-            m_Skill1 = Input.GetButtonDown("Skill1");
+            inputSkill1 = Input.GetButtonDown("Skill1");
         }
 
-        if (!m_Skill2)
+        if (!inputSkill2)
         {
-            m_Skill2 = Input.GetButtonDown("Skill2");
+            inputSkill2 = Input.GetButtonDown("Skill2");
         }
 
-        if (!m_Skill3)
+        if (!inputSkill3)
         {
-            m_Skill3 = Input.GetButtonDown("Skill3");
+            inputSkill3 = Input.GetButtonDown("Skill3");
         }
 
-        if (!m_Skill4)
+        if (!inputSkill4)
         {
-            m_Skill4 = Input.GetButtonDown("Skill4");
+            inputSkill4 = Input.GetButtonDown("Skill4");
         }
 
-        if (!m_Trinket1)
+        if (!inputTrinket1)
         {
-            m_Trinket1 = Input.GetButtonDown("Trinket1");
+            inputTrinket1 = Input.GetButtonDown("Trinket1");
         }
 
-        if (!m_Trinket2)
+        if (!inputTrinket2)
         {
-            m_Trinket2 = Input.GetButtonDown("Trinket2");
+            inputTrinket2 = Input.GetButtonDown("Trinket2");
         }
 
-        if (!m_Jump)
+        if (!inputJump)
         {
             // Read the jump input in Update so button presses aren't missed.
-            m_Jump = Input.GetButtonDown("Jump");
+            inputJump = Input.GetButtonDown("Jump");
         }
-        if (!m_Stats.stunned && !m_Stats.knockedBack)
-            defensive = Input.GetButton("Defensive");
-        else defensive = false;
+        if (!CharStats.stunned && !CharStats.knockedBack)
+            inputBlock = Input.GetButton("Defensive");
+        else inputBlock = false;
 
-        m_Character.ManageDefensive(defensive);
+        GoCharacter.ManageDefensive(inputBlock);
     }
 
     #endregion
@@ -185,63 +187,63 @@ public abstract class UserControl : MonoBehaviour
     protected virtual void CheckInputForXboxController()
     {
         //Set move to 0, 1 or -1 so character will move full speed or 0
-        move = Input.GetAxis("Horizontal_Xbox" + playerNumber.ToString());
-        if (move > 0) move = 1;
-        else if (move < 0) move = -1;
-        else move = 0;
+        inputMove = Input.GetAxis("Horizontal_Xbox" + playerNumber.ToString());
+        if (inputMove > 0) inputMove = 1;
+        else if (inputMove < 0) inputMove = -1;
+        else inputMove = 0;
 
-        if (dash == 0)
+        if (inputDashDirection == 0)
         {
-            if (Input.GetButtonDown("DashLeft_Xbox" + playerNumber.ToString())) dash = -1;
-            else if (Input.GetButtonDown("DashRight_Xbox" + playerNumber.ToString())) dash = 1;
+            if (Input.GetButtonDown("DashLeft_Xbox" + playerNumber.ToString())) inputDashDirection = -1;
+            else if (Input.GetButtonDown("DashRight_Xbox" + playerNumber.ToString())) inputDashDirection = 1;
         }
 
-        if (!m_Attack)
+        if (!inputAttack)
         {
-            m_Attack = Input.GetAxis("BasicAttack_Xbox" + playerNumber.ToString()) < 0;
+            inputAttack = Input.GetAxis("BasicAttack_Xbox" + playerNumber.ToString()) < 0;
         }
 
-        if (!m_Skill1)
+        if (!inputSkill1)
         {
-            m_Skill1 = Input.GetButtonDown("Skill1_Xbox" + playerNumber.ToString());
+            inputSkill1 = Input.GetButtonDown("Skill1_Xbox" + playerNumber.ToString());
         }
 
-        if (!m_Skill2)
+        if (!inputSkill2)
         {
-            m_Skill2 = Input.GetButtonDown("Skill2_Xbox" + playerNumber.ToString());
+            inputSkill2 = Input.GetButtonDown("Skill2_Xbox" + playerNumber.ToString());
         }
 
-        if (!m_Skill3)
+        if (!inputSkill3)
         {
-            m_Skill3 = Input.GetButtonDown("Skill3_Xbox" + playerNumber.ToString());
+            inputSkill3 = Input.GetButtonDown("Skill3_Xbox" + playerNumber.ToString());
         }
 
-        if (!m_Skill4)
+        if (!inputSkill4)
         {
-            m_Skill4 = Input.GetButtonDown("Skill4_Xbox" + playerNumber.ToString());
+            inputSkill4 = Input.GetButtonDown("Skill4_Xbox" + playerNumber.ToString());
         }
 
-        if (!m_Trinket1)
+        if (!inputTrinket1)
         {
-            m_Trinket1 = Input.GetAxis("Trinket1_Xbox" + playerNumber.ToString()) < 0;
+            inputTrinket1 = Input.GetAxis("Trinket1_Xbox" + playerNumber.ToString()) < 0;
         }
 
-        if (!m_Trinket2)
+        if (!inputTrinket2)
         {
-            m_Trinket2 = Input.GetAxis("Trinket2_Xbox" + playerNumber.ToString()) > 0;
+            inputTrinket2 = Input.GetAxis("Trinket2_Xbox" + playerNumber.ToString()) > 0;
         }
 
-        if (!m_Jump)
+        if (!inputJump)
         {
             if (lastVerticalValue >= 0)
-                m_Jump = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()) < 0;
+                inputJump = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()) < 0;
         }
-        if (!m_Stats.stunned && !m_Stats.knockedBack)
-            defensive = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()) > 0;
-        else defensive = false;
+        if (!CharStats.stunned && !CharStats.knockedBack)
+            inputBlock = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()) > 0;
+        else inputBlock = false;
 
         lastVerticalValue = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
-        m_Character.ManageDefensive(defensive);
+        GoCharacter.ManageDefensive(inputBlock);
     }
 
     #endregion
@@ -251,53 +253,53 @@ public abstract class UserControl : MonoBehaviour
     protected virtual void CheckInputForPs4Controller()
     {
         //Set move to 0, 1 or -1 so character will move full speed or 0
-        move = Input.GetAxis("Horizontal_Ps4" + playerNumber.ToString());
-        if (move > 0) move = 1;
-        else if (move < 0) move = -1;
-        else move = 0;
+        inputMove = Input.GetAxis("Horizontal_Ps4" + playerNumber.ToString());
+        if (inputMove > 0) inputMove = 1;
+        else if (inputMove < 0) inputMove = -1;
+        else inputMove = 0;
 
-        if (dash == 0)
+        if (inputDashDirection == 0)
         {
-            if (Input.GetButtonDown("DashLeft_Ps4" + playerNumber.ToString())) dash = -1;
-            else if (Input.GetButtonDown("DashRight_Ps4" + playerNumber.ToString())) dash = 1;
+            if (Input.GetButtonDown("DashLeft_Ps4" + playerNumber.ToString())) inputDashDirection = -1;
+            else if (Input.GetButtonDown("DashRight_Ps4" + playerNumber.ToString())) inputDashDirection = 1;
         }
 
-        if (!m_Attack)
+        if (!inputAttack)
         {
-            m_Attack = Input.GetAxis("BasicAttack_Ps4" + playerNumber.ToString()) < 0;
+            inputAttack = Input.GetAxis("BasicAttack_Ps4" + playerNumber.ToString()) < 0;
         }
 
-        if (!m_Skill1)
+        if (!inputSkill1)
         {
-            m_Skill1 = Input.GetButtonDown("Skill1_Ps4" + playerNumber.ToString());
+            inputSkill1 = Input.GetButtonDown("Skill1_Ps4" + playerNumber.ToString());
         }
 
-        if (!m_Skill2)
+        if (!inputSkill2)
         {
-            m_Skill2 = Input.GetButtonDown("Skill2_Ps4" + playerNumber.ToString());
+            inputSkill2 = Input.GetButtonDown("Skill2_Ps4" + playerNumber.ToString());
         }
 
-        if (!m_Skill3)
+        if (!inputSkill3)
         {
-            m_Skill3 = Input.GetButtonDown("Skill3_Ps4" + playerNumber.ToString());
+            inputSkill3 = Input.GetButtonDown("Skill3_Ps4" + playerNumber.ToString());
         }
 
-        if (!m_Skill4)
+        if (!inputSkill4)
         {
-            m_Skill4 = Input.GetButtonDown("Skill4_Ps4" + playerNumber.ToString());
+            inputSkill4 = Input.GetButtonDown("Skill4_Ps4" + playerNumber.ToString());
         }
 
-        if (!m_Jump)
+        if (!inputJump)
         {
             if (lastVerticalValue >= 0)
-                m_Jump = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()) < 0;
+                inputJump = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()) < 0;
         }
-        if (!m_Stats.stunned && !m_Stats.knockedBack)
-            defensive = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()) > 0;
-        else defensive = false;
+        if (!CharStats.stunned && !CharStats.knockedBack)
+            inputBlock = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()) > 0;
+        else inputBlock = false;
 
         lastVerticalValue = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
-        m_Character.ManageDefensive(defensive);
+        GoCharacter.ManageDefensive(inputBlock);
     }
 
     #endregion

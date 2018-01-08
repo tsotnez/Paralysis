@@ -546,6 +546,7 @@ MonoBehaviour:
   className: 0
   m_FacingRight: 1
   dashing: 0
+  applyDashingForce: 0
   blocking: 0
   hotbar: {fileID: 0}
   bulletPrefab: {fileID: 1999998842244028, guid: 1382e079f46c9e848b29efd69252a8b5,
@@ -569,8 +570,8 @@ MonoBehaviour:
   stunned: 0
   bleeding: 0
   knockedBack: 0
-  immovable: 0
   slowFactor: 1
+  immovable: 0
   invincible: 0
   reflect: 0
   invisible: 0
@@ -642,7 +643,7 @@ MonoBehaviour:
   - 0.5
   - 0.6
   - 0.2
-  - 0
+  - 0.2
   - 0
   - 0.4
   - 0.3

@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: DashEndAtlas
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 51caeb4b14ffc4840a891cfdfc20ed3b, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 38997ee68b81c1b43ae3fdbc306414f8, type: 3}
+  - {fileID: 21300000, guid: f64e762a8c083cf49bda867142c0e068, type: 3}
+  - {fileID: 21300000, guid: c5ddec4eb1826ce4e926b67ddf18afc0, type: 3}
+  - {fileID: 21300000, guid: f2543f758cc23a445ba4d01bf1b1a6b5, type: 3}
+  - {fileID: 21300000, guid: ab3ff76a6a08f574aad1c32f762ef503, type: 3}
+  - {fileID: 21300000, guid: 96e5a3b0946729846a3f381e95f96e65, type: 3}
+  - {fileID: 21300000, guid: cc88250271ad8a94aaf62be06f85370c, type: 3}
+  - {fileID: 21300000, guid: 30d777bbdb27a614f8234743208eea1e, type: 3}
+  - {fileID: 21300000, guid: 746d9041cc2710d42afc1fcb8bae2caf, type: 3}
+  - {fileID: 21300000, guid: 322daff77c1c27e4aa04611e0fd1a3b7, type: 3}
+  - {fileID: 21300000, guid: 211e6b827b8639f4790d8119a072d5b4, type: 3}
+  - {fileID: 21300000, guid: a2fce70f0c1ded34db1ed96760609b4f, type: 3}
+  - {fileID: 21300000, guid: 0df35717e8c3e664ea5a26864aba250b, type: 3}
+  - {fileID: 21300000, guid: 04b8b12bbe505c34c992e46578fb0bdf, type: 3}
+  - {fileID: 21300000, guid: 4be218a010697584997af7c2fd8c3eeb, type: 3}
+  - {fileID: 21300000, guid: 957b0897dc6515a4181687569147dbf1, type: 3}
+  - {fileID: 21300000, guid: 6b88f759fb6ecde4abc3b4b6e6ad8ce7, type: 3}
+  - {fileID: 21300000, guid: 13663138c1fceef418fdffbab2e8bc69, type: 3}
+  - {fileID: 21300000, guid: 38616122ad276534ea0317420309d442, type: 3}
+  - {fileID: 21300000, guid: 0e3bb0a743a1a6047a1f24624882f68d, type: 3}
+  - {fileID: 21300000, guid: 245a3c988bd3b6744acf39e01f4e5b02, type: 3}
+  - {fileID: 21300000, guid: 07d18b248312d984d8c9fdb32b0fe919, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - DashEnd_09
+  - DashEnd_12
+  - DashEnd_08
+  - DashEnd_13
+  - DashEnd_10
+  - DashEnd_11
+  - DashEnd_05
+  - DashEnd_16
+  - DashEnd_04
+  - DashEnd_17
+  - DashEnd_07
+  - DashEnd_14
+  - DashEnd_06
+  - DashEnd_15
+  - DashEnd_01
+  - DashEnd_00
+  - DashEnd_03
+  - DashEnd_02
+  - DashEnd_21
+  - DashEnd_20
+  - DashEnd_18
+  - DashEnd_19
+  m_Tag: DashEndAtlas
+  m_IsVariant: 0

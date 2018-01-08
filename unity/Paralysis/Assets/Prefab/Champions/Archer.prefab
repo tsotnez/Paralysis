@@ -603,6 +603,7 @@ MonoBehaviour:
   className: 1
   m_FacingRight: 0
   dashing: 0
+  applyDashingForce: 0
   blocking: 0
   hotbar: {fileID: 0}
   standartArrowPrefab: {fileID: 1365143412859840, guid: 7de1c85d9954b954a93e03f5597f6e80,
@@ -683,7 +684,7 @@ MonoBehaviour:
   - 0.5
   - 0.45
   - 0.2
-  - 0.3
+  - 0.2
   - 0
   - 0.4
   - 0.4
@@ -747,6 +748,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  setByRPC: 0
   m_Grounded: 0
   m_vSpeed: 0
   m_Speed: 0
@@ -767,7 +769,9 @@ MonoBehaviour:
   trigJumpAttack: 0
   trigJumpAttackEnd: 0
   trigDash: 0
+  trigDashEnd: 0
   trigDashForward: 0
+  trigDashForwardEnd: 0
   trigHit: 0
 --- !u!114 &114447478334566738
 MonoBehaviour:
@@ -824,10 +828,11 @@ MonoBehaviour:
   stunned: 0
   bleeding: 0
   knockedBack: 0
-  immovable: 0
   slowFactor: 1
+  immovable: 0
   invincible: 0
   reflect: 0
+  invisible: 0
   knockBackForceX: 6
   knockBackForceY: 12
   hotbar: {fileID: 0}

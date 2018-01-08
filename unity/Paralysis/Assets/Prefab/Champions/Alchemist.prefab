@@ -418,8 +418,8 @@ MonoBehaviour:
   stunned: 0
   bleeding: 0
   knockedBack: 0
-  immovable: 0
   slowFactor: 1
+  immovable: 0
   invincible: 0
   reflect: 0
   invisible: 0
@@ -639,7 +639,7 @@ MonoBehaviour:
   cooldown_BasicAttack2: 0
   cooldown_BasicAttack3: 0
   cooldown_JumpAttack: 0
-  cooldown_Skill1: 0
+  cooldown_Skill1: 15
   cooldown_Skill2: 15
   cooldown_Skill3: 15
   cooldown_Skill4: 25
@@ -648,6 +648,7 @@ MonoBehaviour:
   className: 4
   m_FacingRight: 1
   dashing: 0
+  applyDashingForce: 0
   blocking: 0
   hotbar: {fileID: 0}
   GoBasicAttack: {fileID: 1470268350350890, guid: 1443ea3c3580ee5499a90819360b8a65,
@@ -656,6 +657,8 @@ MonoBehaviour:
     type: 2}
   GoSkill3_Stun: {fileID: 1559905968728678, guid: 7ffecbe061e52564a83b2c7955abcc0d,
     type: 2}
+  CastTime_Skill1: 1.5
+  CastTime_Skill3: 1.5
 --- !u!114 &114863279025727096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -700,7 +703,7 @@ MonoBehaviour:
   - 0.4
   - 0.4
   - 0.4
-  - 0.5
+  - 0.17
   - 0.5
   - 0.5
   - 0.5
