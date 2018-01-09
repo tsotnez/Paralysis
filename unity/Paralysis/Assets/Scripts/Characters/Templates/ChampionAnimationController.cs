@@ -46,7 +46,10 @@ public abstract class ChampionAnimationController : AnimationController
 
     protected virtual void Update()
     {
-        AnimationManager();
+        if (!statDead || CurrentAnimation != AnimatorStates.Die)
+        {
+            AnimationManager();
+        }
     }
 
     protected virtual void FixedUpdate() { }
