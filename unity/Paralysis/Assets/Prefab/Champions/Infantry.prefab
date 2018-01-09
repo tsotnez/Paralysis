@@ -791,7 +791,6 @@ MonoBehaviour:
   stunned: 0
   bleeding: 0
   knockedBack: 0
-  slowFactor: 1
   immovable: 0
   invincible: 0
   reflect: 0
@@ -828,14 +827,15 @@ MonoBehaviour:
   m_MaxSpeed: 6
   m_MoveSpeedWhileAttacking: 0.5
   m_MoveSpeedWhileBlocking: 3
+  CanTurnAroundWhileBlocking: 1
   m_JumpForce: 700
   m_DoubleJumpForce: 600
   m_jumpAttackRadius: 1.5
   m_jumpAttackForce: 10
   m_dashSpeed: 12
   m_dashStaminaCost: 10
-  m_CanDashForward: 0
-  m_ComboExpire: 1
+  CanDashForward: 0
+  ComboExpire: 1
   delay_BasicAttack1: 0
   delay_BasicAttack2: 0
   delay_BasicAttack3: 0
@@ -868,14 +868,13 @@ MonoBehaviour:
   cooldown_Skill2: 20
   cooldown_Skill3: 25
   cooldown_Skill4: 20
+  className: 3
+  hotbar: {fileID: 0}
   Trinket1: {fileID: 0}
   Trinket2: {fileID: 0}
-  className: 3
-  m_FacingRight: 1
+  FacingRight: 1
   dashing: 0
-  applyDashingForce: 0
   blocking: 0
-  hotbar: {fileID: 0}
   Skill1_Hook: {fileID: 1159624417898122, guid: 6ce9800d51c562645971c77d62e59cee,
     type: 2}
   Skill1_Chain: {fileID: 1536203789617246, guid: 607fa3d9cb73add4ba26355c9a88aca1,

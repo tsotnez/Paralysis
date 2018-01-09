@@ -3,7 +3,6 @@
 /// </summary>
 public class Skill
 {
-
     public enum SkillEffect
     {
         nothing,
@@ -41,6 +40,7 @@ public class Skill
         damage = skillDamage;
         effect = skillSpecialEffect;
         effectDuration = skillSpecialEffectTime;
+        effectValue = skillSpecialEffectValue;
         cooldown = skillCooldown;
         staminaCost = skillStaminaCost;
         needsToBeGrounded = skillNeedsToBeGrounded;

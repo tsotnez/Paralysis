@@ -194,7 +194,7 @@ MonoBehaviour:
     TeamNumber: 1
     inputDevice: 0
     trinket1: 0
-    trinket2: 0
+    trinket2: 4
   defaultPlayer2:
     ChampionPrefab: {fileID: 1346435155503924, guid: 782001f3935837a48a557565b08b8c0c,
       type: 2}
@@ -202,7 +202,7 @@ MonoBehaviour:
     TeamNumber: 2
     inputDevice: 1
     trinket1: 0
-    trinket2: 0
+    trinket2: 4
   championSpriteOverlayColor: {r: 0.7647059, g: 0.7432369, b: 0.6634948, a: 1}
   players: []
   hotbarPrefab: {fileID: 1880548955337550, guid: 1af496c58dcb903408eaa6d024bfe250,
@@ -1335,10 +1335,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 1346435155503924, guid: 782001f3935837a48a557565b08b8c0c, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 114980512912421980, guid: 782001f3935837a48a557565b08b8c0c,
         type: 2}
       propertyPath: viewIdField
@@ -1348,6 +1344,10 @@ Prefab:
         type: 2}
       propertyPath: instantiationId
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1346435155503924, guid: 782001f3935837a48a557565b08b8c0c, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 782001f3935837a48a557565b08b8c0c, type: 2}
@@ -1986,10 +1986,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 1654434425598688, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 114175144795379952, guid: 1c93aba00e9725e409b2a5a0a2b0e223,
         type: 2}
       propertyPath: viewIdField
@@ -1999,6 +1995,10 @@ Prefab:
         type: 2}
       propertyPath: instantiationId
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654434425598688, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
@@ -2402,10 +2402,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 1128103333960868, guid: e6f7d777ee6c44d448705ae811eebec4, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 114675377048277192, guid: e6f7d777ee6c44d448705ae811eebec4,
         type: 2}
       propertyPath: viewIdField
@@ -2415,6 +2411,10 @@ Prefab:
         type: 2}
       propertyPath: instantiationId
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1128103333960868, guid: e6f7d777ee6c44d448705ae811eebec4, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e6f7d777ee6c44d448705ae811eebec4, type: 2}
@@ -2919,10 +2919,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 1903508196159970, guid: 0639eac30390dec449afda643c7fa53c, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 114947349493547472, guid: 0639eac30390dec449afda643c7fa53c,
         type: 2}
       propertyPath: viewIdField
@@ -2932,6 +2928,10 @@ Prefab:
         type: 2}
       propertyPath: instantiationId
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903508196159970, guid: 0639eac30390dec449afda643c7fa53c, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0639eac30390dec449afda643c7fa53c, type: 2}

@@ -22,8 +22,8 @@ public class ChampionClassEditor : Editor {
         JumpAttackForce = serializedObject.FindProperty("m_jumpAttackForce");
         DashSpeed = serializedObject.FindProperty("m_dashSpeed");
         DashStaminaCost = serializedObject.FindProperty("m_dashStaminaCost");
-        CanDashForward = serializedObject.FindProperty("m_CanDashForward");
-        ComboExpire = serializedObject.FindProperty("m_ComboExpire");
+        CanDashForward = serializedObject.FindProperty("CanDashForward");
+        ComboExpire = serializedObject.FindProperty("ComboExpire");
         ClassName = serializedObject.FindProperty("className");
         DoubleJumpForce = serializedObject.FindProperty("m_DoubleJumpForce");
     }

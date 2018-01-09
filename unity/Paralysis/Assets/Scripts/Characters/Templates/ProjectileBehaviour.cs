@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class ProjectileBehaviour : MonoBehaviour
 {
+    // Getter & Setter
+    public bool CastFinished { get; protected set; }                    // While false, the projectile will not move foreward
+    public bool Stuck { get; protected set; }                           // True if projectile has successfully collided with an object
+    public bool Falling { get; protected set; }                         // True if projectile has reched maxRange already  
+    public bool Interrupted { get; protected set; }                     // True if creator got stunned or knockedback while casting
+
     // Public properties
     public GameObject creator;                                          // Creator of the projectile
     public LayerMask whatToHit;                                         // Layer that shall be hitted
@@ -12,36 +18,50 @@ public class ProjectileBehaviour : MonoBehaviour
     public RangedSkill SkillValues;                                     // Stuff that is placed in the skill
 
     // Protected properties
+    protected CharacterStats CreatorStats;                              // CharacterStats of the creator
     protected Rigidbody2D ProjectileRigid;                              // Rigidbody of the projectile
-    protected Vector3 startPos;                                         // Position where the projectile has spwaned
-    protected bool stuck = false;                                       // True if projectile has successfully collided with an object
-    protected bool falling = false;                                     // True if projectile has reched maxRange already
-    protected bool castFinished = false;                                // While false, the projectile will not move foreward
+    protected Collider2D ProjectileCollider;                            // Collider of the projectile
+    protected Vector3 startPos;                                         // Position where the projectile has spawned
 
     // Private properties
-    Coroutine fallingRoutine = null;                                    // Falling Routine 
-    Coroutine castRoutine = null;                                       // Cast Routine 
+    Coroutine fallingRoutine = null;                                    // Falling Routine  
+    Coroutine observeRoutine = null;                                    // Observe Routine
 
     // Use this for initialization
     protected void Start()
     {
-        startPos = transform.position; // Save starting position
-        ProjectileRigid = this.GetComponent<Rigidbody2D>();
+        // Save starting position
+        startPos = transform.position;
+
+        // Get Objects
+        ProjectileRigid = GetComponent<Rigidbody2D>();
+        ProjectileCollider = GetComponent<Collider2D>();
+        CreatorStats = creator.GetComponent<CharacterStats>();
 
         if (SkillValues.castTime <= 0)
         {
-            castFinished = true;
+            CastFinished = true;
+            ProjectileCollider.enabled = true;
         }
         else
         {
             // Freeze Rigid that it can not fall down while casting
             ProjectileRigid.constraints = RigidbodyConstraints2D.FreezeAll;
+            // Disable collider to prevent collisions while casting
+            ProjectileCollider.enabled = false;
+
+            // Start cast and observe stats
+            StartCoroutine(DoCast());
+            observeRoutine = StartCoroutine(ObserveCreatorStats());
         }
+
+        Stuck = false;
+        Falling = false;
     }
 
     protected void Update()
     {
-        if (!stuck && !falling)
+        if (!Stuck && !Falling)
         {
             if (Vector2.Distance(startPos, transform.position) >= SkillValues.range)
             {
@@ -55,24 +75,49 @@ public class ProjectileBehaviour : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        if (castFinished && !stuck && !falling)
+        if (CastFinished && !Interrupted && !Stuck && !Falling)
         {
             ProjectileRigid.velocity = new Vector2(SkillValues.speed.x * direction, SkillValues.speed.y);
         }
-        else if (!castFinished && castRoutine == null)
-        {
-            castRoutine = StartCoroutine(DoCast());
-        }
     }
 
+    /// <summary>
+    /// Manage casting
+    /// </summary>
+    /// <returns>IEnumerator</returns>
     private IEnumerator DoCast()
     {
-        CharacterStats CreatorStats = creator.GetComponent<CharacterStats>();
-        CreatorStats.immovable = true;
+        // Begin cast
+        CastFinished = false;
+
+        // Wait till cast ends
         yield return new WaitForSeconds(SkillValues.castTime);
+
+        // Stop Observing creator
+        StopCoroutine(observeRoutine);
+
+        // End freeze and let the projectile fly far far away and crash something to death!
         ProjectileRigid.constraints = RigidbodyConstraints2D.None;
-        CreatorStats.immovable = false;
-        castFinished = true;
+        ProjectileCollider.enabled = true;
+        CastFinished = true;
+    }
+
+    /// <summary>
+    /// Observe the creator while casting if it gets stunned or knockedback
+    /// If so let the projectile die
+    /// </summary>
+    /// <returns>IEnumerator</returns>
+    private IEnumerator ObserveCreatorStats()
+    {
+        // Wait till Creator got stunned or knockedback
+        yield return new WaitUntil(() => CreatorStats.stunned || CreatorStats.knockedBack);
+        Interrupted = true;
+        ProjectileCollider.enabled = false;
+
+        // Wait before dying that Champion can recognize it
+        yield return new WaitForSeconds(0.05f);
+        // Let the projectile die
+        Die(); // explosion or disapear animation?!?
     }
 
     protected void OnTriggerEnter2D(Collider2D collision)
@@ -105,7 +150,7 @@ public class ProjectileBehaviour : MonoBehaviour
                         targetStats.StartSlow(SkillValues.effectDuration, SkillValues.effectValue);
                         break;
                 }
-                creator.GetComponent<CharacterStats>().DealDamage(targetStats, SkillValues.damage, false);
+                CreatorStats.DealDamage(targetStats, SkillValues.damage, false);
                 Die();
                 return;
             }
@@ -119,7 +164,7 @@ public class ProjectileBehaviour : MonoBehaviour
     protected IEnumerator GetStuck()
     {
         // Stop moving and destroy after 5 seconds 
-        stuck = true;
+        Stuck = true;
         if (fallingRoutine != null)
             StopCoroutine(fallingRoutine);
         GetComponent<Collider2D>().enabled = false;     // Disable collider
@@ -128,17 +173,17 @@ public class ProjectileBehaviour : MonoBehaviour
         yield return new WaitForSeconds(5);
         Die();
     }
-    
+
     protected IEnumerator FallToGround()
     {
         // Move towards the ground while rotating 
-        falling = true;
+        Falling = true;
         ProjectileRigid.velocity = new Vector2(SkillValues.speed.x * direction, -5);
 
         // Turn to face the ground
         if (direction > 0)
         {
-            while (transform.eulerAngles.z > -83 && !stuck)
+            while (transform.eulerAngles.z > -83 && !Stuck)
             {
                 transform.Rotate(new Vector3(0, 0, -4));
                 yield return new WaitForSeconds(0.02f);
@@ -150,7 +195,7 @@ public class ProjectileBehaviour : MonoBehaviour
         }
         else
         {
-            while (transform.eulerAngles.z < 83 && !stuck)
+            while (transform.eulerAngles.z < 83 && !Stuck)
             {
                 transform.Rotate(new Vector3(0, 0, 4));
                 yield return new WaitForSeconds(0.02f);

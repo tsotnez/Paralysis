@@ -31,11 +31,15 @@ class InfantryHookBehaviour : ProjectileBehaviour
         ProjectileRigid.freezeRotation = true;
     }
 
-    protected new void OnCollisionEnter2D(Collision2D collision)
+    protected new void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.collider.gameObject != creator)
+        if (collision.gameObject == creator)
         {
-            //On collision, check if collider is in whatToHit layermask
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision);
+        }
+        else
+        {
+            // On collision, check if collider is in whatToHit layermask
             if (whatToHit == (whatToHit | (1 << collision.gameObject.layer)))
             {
                 targetStats = collision.gameObject.GetComponent<CharacterStats>();
@@ -52,9 +56,10 @@ class InfantryHookBehaviour : ProjectileBehaviour
     protected new IEnumerator GetStuck()
     {
         // Stop moving of all chain elements
+        Rigidbody2D rigChainElement = null;
         foreach (GameObject ChainElement in ChainElements)
         {
-            Rigidbody2D rigChainElement = ChainElement.GetComponent<Rigidbody2D>();
+            rigChainElement = ChainElement.GetComponent<Rigidbody2D>();
             rigChainElement.velocity = new Vector2(0, 0); //Stop moving
             rigChainElement.gravityScale = 1;
         }
@@ -77,11 +82,11 @@ class InfantryHookBehaviour : ProjectileBehaviour
     {
         base.Update();
 
-        if (hitted == 0 && !falling)
+        if (hitted == 0 && !Falling)
         {
             ChainBehaviour();
         }
-        else if (falling && !setValuesForFalling)
+        else if (Falling && !setValuesForFalling)
         {
             ProjectileRigid.freezeRotation = false;
             ProjectileRigid.constraints = RigidbodyConstraints2D.None;

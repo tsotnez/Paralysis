@@ -21,14 +21,14 @@ public class InfantryContoller : ChampionClassController
         animCon = graphics.GetComponent<InfantryAnimationController>();
 
         //Instantiate skill variables
-        basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, meeleRange);
-        basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack2, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack2, meeleRange);
-        basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack3, delay_BasicAttack3, damage_BasicAttack3, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack3, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack3, meeleRange);
+        basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, MeeleRange);
+        basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack2, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack2, MeeleRange);
+        basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack3, delay_BasicAttack3, damage_BasicAttack3, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack3, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack3, MeeleRange);
 
         skill1_var = new Skill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.SkillEffect.stun, 3, 0, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, 10f);
-        skill2_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.SkillEffect.stun, 3, 0, stamina_Skill2, Skill.SkillTarget.InFront, cooldown_Skill2, meeleRange);
-        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.SkillEffect.nothing, 0, 0, stamina_Skill3, Skill.SkillTarget.MultiTarget, cooldown_Skill3, meeleRange);
-        skill4_var = new MeleeSkill(AnimationController.AnimatorStates.Skill4, delay_Skill4, damage_Skill4, Skill.SkillEffect.knockback, 0, 0, stamina_Skill4, Skill.SkillTarget.InFront, cooldown_Skill4, meeleRange);
+        skill2_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.SkillEffect.stun, 3, 0, stamina_Skill2, Skill.SkillTarget.InFront, cooldown_Skill2, MeeleRange);
+        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.SkillEffect.nothing, 0, 0, stamina_Skill3, Skill.SkillTarget.MultiTarget, cooldown_Skill3, MeeleRange);
+        skill4_var = new MeleeSkill(AnimationController.AnimatorStates.Skill4, delay_Skill4, damage_Skill4, Skill.SkillEffect.knockback, 0, 0, stamina_Skill4, Skill.SkillTarget.InFront, cooldown_Skill4, MeeleRange);
     }
 
     protected override void FixedUpdate()
@@ -84,7 +84,7 @@ public class InfantryContoller : ChampionClassController
 
         // calculate direction
         int direction;
-        if (m_FacingRight) direction = 1;
+        if (FacingRight) direction = 1;
         else direction = -1;
 
         // generate GameObject
@@ -115,7 +115,7 @@ public class InfantryContoller : ChampionClassController
             float DistanceToTarget = Math.Abs(target.transform.position.x - this.transform.position.x);
 
             // Calculate correct direction
-            if (!m_FacingRight)
+            if (!FacingRight)
                 skill1_hook_speed = Math.Abs(skill1_hook_speed) * (-1);
             else
                 skill1_hook_speed = Math.Abs(skill1_hook_speed);

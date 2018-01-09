@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class CharacterStats : Photon.MonoBehaviour
 {
     private ChampionAnimationController animCon;
@@ -40,7 +39,6 @@ public class CharacterStats : Photon.MonoBehaviour
     public Coroutine bleedingRoutine = null;    // Stores the bleeding Coroutine
     public bool knockedBack = false;            // Prevents actions while being knocked back
     public Coroutine knockBackRoutine = null;   // Stores the knockBack Coroutine
-    public float slowFactor = 1;                // Setting this to a value below 1 will slow down the character
     public Coroutine slowRoutine = null;        // Stores the slow Coroutine
     public bool immovable = false;              // Stores if character is immoveable
     public bool invincible = false;             // If true, character cant be harmed 
@@ -50,9 +48,9 @@ public class CharacterStats : Photon.MonoBehaviour
 
     [Header("Knock Back")]
     [SerializeField]
-    private float knockBackForceX = 400;        // Force used when knockbacking X
+    private float knockBackForceX = 6;          // Force used when knockbacking X
     [SerializeField]
-    private float knockBackForceY = 600;        // Force used when knockbacking Y
+    private float knockBackForceY = 12;         // Force used when knockbacking Y
 
     [HideInInspector]
     public HotbarController hotbar;
@@ -458,8 +456,8 @@ public class CharacterStats : Photon.MonoBehaviour
         if (transform.position.x < origin.x) direction = -1;
 
         //flipping the character if facing the wrong direction
-        if (controller.m_FacingRight && direction > 0) controller.Flip();
-        else if (!controller.m_FacingRight && direction < 0) controller.Flip();
+        if (controller.FacingRight && direction > 0) controller.Flip();
+        else if (!controller.FacingRight && direction < 0) controller.Flip();
 
         //Zeroing out velocity
         rigid.velocity = Vector2.zero;
@@ -546,18 +544,18 @@ public class CharacterStats : Photon.MonoBehaviour
 
     public void StopSlow()
     {
-        if (slowFactor < 1)
+        if (PercentageMovement < 1)
         {
             if (slowRoutine != null) StopCoroutine(slowRoutine);
-            slowFactor = 1;
+            PercentageMovement = 1;
         }
     }
 
     private IEnumerator Slow(float time, float factor)
     {
-        slowFactor -= slowFactor * factor;
+        PercentageMovement -= PercentageMovement * factor;
         yield return new WaitForSeconds(time);
-        slowFactor = 1;
+        PercentageMovement = 1;
     }
 
     #endregion
@@ -657,11 +655,13 @@ public class CharacterStats : Photon.MonoBehaviour
     [PunRPC]
     public void ShowFloatingTextSerialized(string TextValue, float a, float r, float g, float b, int changeFontSizeBy)
     {
-        Color ColorValue = new Color();
-        ColorValue.a = a;
-        ColorValue.r = r;
-        ColorValue.g = g;
-        ColorValue.b = b;
+        Color ColorValue = new Color
+        {
+            a = a,
+            r = r,
+            g = g,
+            b = b
+        };
 
         GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false);
         Text component = text.GetComponentInChildren<Text>();
@@ -700,7 +700,8 @@ public class CharacterStats : Photon.MonoBehaviour
 
     #endregion
 
-    #region reset
+    #region Reset
+
     public void ResetValues()
     {
         StopAllCoroutines();
@@ -713,11 +714,10 @@ public class CharacterStats : Photon.MonoBehaviour
         bleeding = false;   
         knockedBack = false;
         immovable = false;  
-        slowFactor = 1;     
         invincible = false;
         reflect = false;               
         invisible = false;              
     }
-    #endregion
 
+    #endregion
 }

@@ -6,19 +6,27 @@ using System.Linq;
 
 public abstract class ChampionClassController : Photon.MonoBehaviour
 {
+    // Constraints
+    protected const float GroundedRadius = .02f;                            // Radius of the overlap circle to determine if grounded
+    protected const float MeeleRange = 1.5f;                                // Default range for meele attacks
+
     #region Parameters for Inspector
 
-    [SerializeField]
-    protected LayerMask m_WhatIsGround;                                     // A mask determining what is ground to the character
+    // Layers
+    public LayerMask m_WhatIsGround;                                        // A mask determining what is ground to the character
     public LayerMask m_whatToHit;                                           // What to hit when checking for hits while attacking
 
+    // Movement
     [SerializeField]
     protected float m_MaxSpeed = 6f;                                        // The fastest the player can travel in the x axis.
     [SerializeField]
     protected float m_MoveSpeedWhileAttacking = 0.5f;                       // Max speed while attacking
     [SerializeField]
     protected float m_MoveSpeedWhileBlocking = 0f;                          // Max speed while blocking
+    [SerializeField]
+    protected bool CanTurnAroundWhileBlocking = true;                       // Can turn around while blocking
 
+    // Jump & JumpAttack
     [SerializeField]
     protected float m_JumpForce = 700f;                                     // Amount of force added when the player jumps.  
     [SerializeField]
@@ -28,22 +36,21 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     [SerializeField]
     protected float m_jumpAttackForce = 10f;                                // Amount of force added when the player jump attack
 
+    // Dash
     [SerializeField]
     protected float m_dashSpeed = 12f;                                      // Force applied when dashing
     [SerializeField]
-    protected int m_dashStaminaCost = 10;
+    protected int m_dashStaminaCost = 10;                                   // Stamina Costs of Skill Dash
     [SerializeField]
-    protected bool m_CanDashForward = false;
+    protected bool CanDashForward = false;                                  // Indicates whether the character can dash forward or have to turn around before dashing
 
+    // Combo
     [SerializeField]
-    protected const float meeleRange = 1.5f;                                // Default range for meele attacks
-
+    protected float ComboExpire = 1;                                        // How long the next combostage is reachable (seconds)
     protected int attackCount = 0;                                          // The ComboState 0 means the character has not attacked yet
     protected bool inCombo = false;                                         // When true, the next comboStage can be reached
-    [SerializeField]
-    protected float m_ComboExpire = 1;                                      // How long the next combostage is reachable (seconds)
-    protected bool jumpAttacking = false;                                   // True while the character is jump attacking
 
+    // Skill Delay
     [SerializeField]
     protected float delay_BasicAttack1 = 0;
     [SerializeField]
@@ -61,6 +68,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     [SerializeField]
     protected float delay_Skill4 = 0;
 
+    // Skills Stamina Costs
     [SerializeField]
     protected int stamina_BasicAttack1 = 5;
     [SerializeField]
@@ -78,6 +86,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     [SerializeField]
     protected int stamina_Skill4 = 0;
 
+    // Skill Damage
     [SerializeField]
     protected int damage_BasicAttack1 = 0;
     [SerializeField]
@@ -95,6 +104,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     [SerializeField]
     protected int damage_Skill4 = 0;
 
+    // Skill Cooldown
     [SerializeField]
     protected int cooldown_BasicAttack1 = 0;
     [SerializeField]
@@ -114,12 +124,19 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     #endregion
 
+    // Objects
+    public ChampionAndTrinketDatabase.Champions className;
     protected Transform m_GroundCheck;                                      // A position marking where to check if the player is grounded.
     protected Transform ProjectilePosition;                                 // A position marking where a projectile shall be spawned.
     protected SpriteRenderer shadowRenderer;
-    protected const float k_GroundedRadius = .02f;                          // Radius of the overlap circle to determine if grounded
-    protected bool doubleJumped = false;                                    // Has the character double jumped already?
+    protected Rigidbody2D m_Rigidbody2D;                                    // Reference to the players rigidbody
+    protected CharacterStats stats;                                         // Reference to stats
+    protected Transform graphics;                                           // Reference to the graphics child
+    protected ChampionAnimationController animCon;                          // Reference to the Animation Contoller
+    [HideInInspector]
+    public HotbarController hotbar;
 
+    // Skills & Trinkets
     protected Skill basicAttack1_var;
     protected Skill basicAttack2_var;
     protected Skill basicAttack3_var;
@@ -128,22 +145,17 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected Skill skill2_var;
     protected Skill skill3_var;
     protected Skill skill4_var;
-
     public Trinket Trinket1;
     public Trinket Trinket2;
 
-    public ChampionAndTrinketDatabase.Champions className;
-    public bool m_FacingRight = true;                                       // For determining which way the player is currently facing.
+    // Stats
+    public bool FacingRight = true;                                         // For determining which way the player is currently facing.
     public bool dashing = false;                                            // true while dashing
-    public bool applyDashingForce = false;                                  // true while force for dashing shall be applied
     public bool blocking = false;                                           // Is the character blocking?
-
-    protected Rigidbody2D m_Rigidbody2D;                                    // Reference to the players rigidbody
-    protected CharacterStats stats;                                         // Reference to stats
-    protected Transform graphics;                                           // Reference to the graphics child
-    protected ChampionAnimationController animCon;                          // Reference to the Animation Contoller
-    [HideInInspector]
-    public HotbarController hotbar;
+    protected bool casting = false;                                         // Is the character casting (RangeAttack)?
+    protected bool applyDashingForce = false;                               // true while force for dashing shall be applied
+    protected bool doubleJumped = false;                                    // Has the character double jumped already?
+    protected bool jumpAttacking = false;                                   // True while the character is jump attacking
 
     //Coroutines
     protected Coroutine comboRoutine;
@@ -180,7 +192,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, GroundedRadius, m_WhatIsGround);
         for (int i = 0; i < colliders.Length; i++)
 
         {
@@ -235,20 +247,20 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             maxSpeed *= stats.PercentageMovement;
 
             // Prevent player from turning around while blocking
-            //if (maxSpeed == 0) return;
+            if (!CanTurnAroundWhileBlocking && maxSpeed == 0) return;
 
             // The Speed animator parameter is set to the absolute value of the horizontal input.
             animCon.m_Speed = Mathf.Abs(move);
 
             // If the input is moving the player right and the player is facing left...
-            if (move > 0 && !m_FacingRight)
+            if (move > 0 && !FacingRight)
             {
                 if (!CanPerformAttack()) return; // prevent player from turning around while attacking
                 // ... flip the player.
                 Flip();
             }
             // Otherwise if the input is moving the player left and the player is facing right...
-            else if (move < 0 && m_FacingRight)
+            else if (move < 0 && FacingRight)
             {
                 if (!CanPerformAttack()) return;
                 // flip the player.
@@ -256,7 +268,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             }
 
             // Move the character      
-            m_Rigidbody2D.velocity = new Vector2(move * maxSpeed * stats.slowFactor, m_Rigidbody2D.velocity.y);
+            m_Rigidbody2D.velocity = new Vector2(move * maxSpeed, m_Rigidbody2D.velocity.y);
         }
     }
 
@@ -299,7 +311,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
             // Calculate direction
             int direction;
-            if (m_FacingRight) direction = 1;
+            if (FacingRight) direction = 1;
             else direction = -1;
 
             // Add downwards force
@@ -330,10 +342,10 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             if (direction != 0 && stats.LoseStamina(m_dashStaminaCost))
             {
                 AnimationController.AnimatorStates RequiredAnimState;
-                if (m_CanDashForward)
+                if (CanDashForward)
                 {
                     // set var for dash or dashForward
-                    if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight)
+                    if (direction < 0 && !FacingRight || direction > 0 && FacingRight)
                     {
                         // set correct animation for validation
                         RequiredAnimState = AnimationController.AnimatorStates.DashFor;
@@ -352,7 +364,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                     RequiredAnimState = AnimationController.AnimatorStates.Dash;
 
                     // flip if necessary
-                    if (direction < 0 && !m_FacingRight || direction > 0 && m_FacingRight)
+                    if (direction < 0 && !FacingRight || direction > 0 && FacingRight)
                         Flip();
                     animCon.trigDash = true;
                 }
@@ -421,7 +433,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     public virtual void Flip()
     {
         // Switch the way the player is labelled as facing.
-        m_FacingRight = !m_FacingRight;
+        FacingRight = !FacingRight;
 
         // Multiply the player's x local scale by -1.
         Vector3 theScale = graphics.localScale;
@@ -522,7 +534,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected IEnumerator SetCombo()
     {
         inCombo = true;
-        yield return new WaitForSeconds(m_ComboExpire);
+        yield return new WaitForSeconds(ComboExpire);
         AbortCombo();
     }
 
@@ -603,7 +615,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         {
             // Only enemys in front of the character
             Vector3 postion = m_GroundCheck.position;
-            if (m_FacingRight) postion.x += (skillToPerform.range / 2);
+            if (FacingRight) postion.x += (skillToPerform.range / 2);
             else postion.x -= (skillToPerform.range / 2);
             hits = Physics2D.CircleCastAll(postion, skillToPerform.range / 2, Vector2.up, 0.01f, m_whatToHit);
         }
@@ -653,7 +665,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected RaycastHit2D TryToHit(float range)
     {
         Vector2 direction;// Direction to check in
-        if (m_FacingRight) direction = Vector2.right;
+        if (FacingRight) direction = Vector2.right;
         else direction = Vector2.left;
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, range, m_whatToHit); //Send raycast
@@ -685,7 +697,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
         // calculate direction
         int direction;
-        if (m_FacingRight) direction = 1;
+        if (FacingRight) direction = 1;
         else direction = -1;
 
         GameObject goProjectile;
@@ -728,6 +740,18 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         projectile = goProjectile.GetComponent<ProjectileBehaviour>();
         projectile.SkillValues = skillToPerform;
 
+        // Wait till cast is finished to interrupt new skills/actions
+        if (skillToPerform.castTime > 0)
+        {
+            casting = true;
+            stats.immovable = true;
+            yield return new WaitUntil(() => !projectile.CastFinished || projectile.Interrupted); // Wait till cast has started
+            yield return new WaitUntil(() => projectile.CastFinished || projectile.Interrupted);  // Wait till cast is finished
+            stats.immovable = false;
+            casting = false;
+        }
+
+        // Start cooldwon after cast is finished
         StartCoroutine(SetSkillOnCooldown(skillToPerform));
     }
 
@@ -788,6 +812,10 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             case AnimationController.AnimatorStates.Skill3:
             case AnimationController.AnimatorStates.Skill4:
                 return false;
+        }
+        if (casting)
+        {
+            return false;
         }
         return true;
     }

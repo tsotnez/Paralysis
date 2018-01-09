@@ -20,7 +20,7 @@ public class ArcherController : ChampionClassController
     protected override void Start()
     {
         base.Start();
-        m_FacingRight = true;
+        FacingRight = true;
         animCon = graphics.GetComponent<ArcherAnimationController>();
 
         //Instantiate skill variables
@@ -112,7 +112,7 @@ public class ArcherController : ChampionClassController
 
         //Determing direction to disengage in
         float direction;
-        if (m_FacingRight)
+        if (FacingRight)
             direction = -1;
         else
             direction = 1;
