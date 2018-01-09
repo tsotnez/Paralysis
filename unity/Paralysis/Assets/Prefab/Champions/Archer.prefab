@@ -709,6 +709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a70140056e40f68489e513993cf476c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DebugLogging: 0
   CharacterClass: archer
   CharacterSkin: basic
   GeneralSpeed: 0

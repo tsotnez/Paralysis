@@ -464,6 +464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ae9091143ce8db4180c3166f902c8dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DebugLogging: 0
   CharacterClass: knight
   CharacterSkin: basic
   GeneralSpeed: 0

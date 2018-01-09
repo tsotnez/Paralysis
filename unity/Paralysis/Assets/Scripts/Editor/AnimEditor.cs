@@ -11,7 +11,7 @@ using System;
 public class AnimEditor : Editor
 {
     // Default Properties for Animator
-    SerializedProperty GeneralAnimationSpeed, CharacterClass, CharacterSkin, CharacterName;
+    SerializedProperty GeneralAnimationSpeed, CharacterClass, CharacterSkin, DebugLogging;
     // Properties for Animation-Dictionarys
     SerializedProperty Animations, Atlasses, Looping, CustomSpeeds;
     // Properties for Additional Animations-Dictionarys
@@ -27,6 +27,7 @@ public class AnimEditor : Editor
         CharacterClass = serializedObject.FindProperty("CharacterClass");
         CharacterSkin = serializedObject.FindProperty("CharacterSkin");
         GeneralAnimationSpeed = serializedObject.FindProperty("GeneralSpeed");
+        DebugLogging = serializedObject.FindProperty("DebugLogging");
 
         // Dictionary Properties for Animation
         Animations = serializedObject.FindProperty("AnimationType");
@@ -48,6 +49,7 @@ public class AnimEditor : Editor
         EditorGUILayout.PropertyField(CharacterClass, new GUIContent("Character class"), true);
         EditorGUILayout.PropertyField(CharacterSkin, new GUIContent("Character skin"), true);
         EditorGUILayout.PropertyField(GeneralAnimationSpeed, new GUIContent("General animation speed"), true);
+        EditorGUILayout.PropertyField(DebugLogging, new GUIContent("Debug Logging"), true);
 
         // Dictionary Properties for Animation
         Animations = serializedObject.FindProperty("AnimationType");

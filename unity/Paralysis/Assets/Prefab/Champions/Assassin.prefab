@@ -639,6 +639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec329f3ff493bd4aaf8b7e72e19607d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DebugLogging: 0
   CharacterClass: assassin
   CharacterSkin: basic
   GeneralSpeed: 0

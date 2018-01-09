@@ -10,6 +10,9 @@ public abstract class AnimationController : MonoBehaviour
 {
     #region Public parameters for Editor-Inspector
 
+    //Logging
+    public bool DebugLogging = false;                                       // En-/Disable Logging
+
     // Default Properties
     public string CharacterClass = "_master";                               // Foldername to the selected char
     public string CharacterSkin = "basic";                                  // Foldername to the selected skin
@@ -40,6 +43,7 @@ public abstract class AnimationController : MonoBehaviour
 
     private bool finishedInitialization = false;                            // True if finished loading all the sprites
     private SpriteRenderer spriteRenderer;                                  // Sprite Renderer
+    private Coroutine AnimationRoutine;                                     // Animation Routine
 
     #region Enums
 
@@ -235,9 +239,9 @@ public abstract class AnimationController : MonoBehaviour
             }
 
             // stop running coroutine
-            StopAllCoroutines();
+            if (AnimationRoutine != null) StopCoroutine(AnimationRoutine);
             // start next animation as coroutine
-            StartCoroutine(PlayAnimation(animation, atlas, delay, AnimationType, AnimationPlayType));
+            AnimationRoutine = StartCoroutine(PlayAnimation(animation, atlas, delay, AnimationType, AnimationPlayType));
         }
         else
         {
@@ -249,6 +253,13 @@ public abstract class AnimationController : MonoBehaviour
 
     IEnumerator PlayAnimation(AnimatorStates animation, SpriteAtlas atlas, float delay, TypeOfAnimation AnimationType, AnimationPlayTypes AnimationPlayType)
     {
+        // Log Running Animation
+        if (DebugLogging)
+        {
+            Debug.Log("Character: " + CharacterClass + "| Animation: " + animation.ToString() + " with AnimationType: " + AnimationType.ToString() + " and AnimationPlayType: " + AnimationPlayType.ToString() + " is now running");
+        }
+        bool debugTmp = false;
+
         // Handle audio
         PlayAnimationAudio(animation);
 
@@ -258,11 +269,22 @@ public abstract class AnimationController : MonoBehaviour
             SpriteNameAddition = "Start";
         else if (AnimationType == TypeOfAnimation.EndAnimation)
             SpriteNameAddition = "End";
-        
+
         while (true)
         {
+            if (DebugLogging)
+            {
+                if (debugTmp)
+                {
+                    Debug.Log("Character: " + CharacterClass + "| Looping: " + animation.ToString());
+                }
+                else
+                {
+                    debugTmp = true;
+                }
+            }
             // Unload assets with no references
-            Resources.UnloadUnusedAssets(); 
+            Resources.UnloadUnusedAssets();
             Sprite spr = null;
 
             // play each animation of the atlas
@@ -270,18 +292,27 @@ public abstract class AnimationController : MonoBehaviour
             {
                 // ToString parameter "D2" formats the integer with 2 chars (leading 0 if nessessary)
                 spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + SpriteNameAddition + "_" + i.ToString("D2"));
-                //Debug.Log("Active Sprite: " + animation.ToString() + SpriteNameAddition + "_" + i.ToString("D2"));
+
+                if (DebugLogging)
+                {
+                    Debug.Log("Active Sprite: " + animation.ToString() + SpriteNameAddition + "_" + i.ToString("D2"));
+                }
 
                 // Unload sprite
-                Destroy(spr);  
+                Destroy(spr);
                 spr = null;
                 spr = spriteRenderer.sprite;
                 yield return new WaitForSeconds(delay);
             }
 
+            // Unload
+            Resources.UnloadUnusedAssets();
+            spr = null;
+
             if (AnimationType == TypeOfAnimation.StartAnimation)
             {
                 StartAnimation(animation, TypeOfAnimation.Animation);
+                break;
             }
             else if (AnimationPlayType == AnimationPlayTypes.HoldOnEnd)
             {
@@ -300,8 +331,9 @@ public abstract class AnimationController : MonoBehaviour
             }
             else
             {
-                // revert to idle if present
+                // revert to idle
                 StartAnimation(AnimatorStates.Idle);
+                break;
             }
         }
     }

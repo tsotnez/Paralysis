@@ -538,6 +538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c7fb4ce49072d34e9d6b2ee270aed06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DebugLogging: 0
   CharacterClass: Infantry
   CharacterSkin: basic
   GeneralSpeed: 0
