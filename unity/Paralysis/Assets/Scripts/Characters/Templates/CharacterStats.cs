@@ -84,7 +84,7 @@ public class CharacterStats : Photon.MonoBehaviour
         stunnedSymbol = transform.Find("stunnedSymbol").gameObject;
     }
     void Start()
-    { 
+    {
         InvokeRepeating("RegenerateStamina", 0f, 0.1f);
 
         if (PhotonNetwork.offlineMode)
@@ -116,14 +116,14 @@ public class CharacterStats : Photon.MonoBehaviour
         float hpPercent = h / mH;
         float staminaPercent = s / mS;
 
-        if(hotbar != null)
+        if (hotbar != null)
             hotbar.setFillAmounts(hpPercent, staminaPercent);
 
         floatingHpBar.fillAmount = hpPercent;
         floatingStaminaBar.fillAmount = staminaPercent;
 
         // tell the animationController when player is stunned (only if local Client --- Jan)
-        if(photonView != null && photonView.isMine)
+        if (photonView != null && photonView.isMine)
             animCon.statStunned = this.stunned;
     }
 
@@ -161,8 +161,24 @@ public class CharacterStats : Photon.MonoBehaviour
     {
         CharacterDied = true;
         animCon.statDead = true;
-        if(PhotonNetwork.offlineMode || photonView.isMine)
+        if (PhotonNetwork.offlineMode || photonView.isMine)
             GameObject.Find("manager").GetComponent<GameplayManager>().playerDied(gameObject);
+
+        // Prevent body from sliding when killed in air or with knockback
+        if (knockedBack || !animCon.m_Grounded)
+        {
+            StartCoroutine(Die_ManageFallingToGround());
+        }
+    }
+
+    private IEnumerator Die_ManageFallingToGround()
+    {
+        if (animCon.m_Grounded)
+        {
+            yield return new WaitUntil(() => !animCon.m_Grounded);
+        }
+        yield return new WaitUntil(() => animCon.m_Grounded);
+        rigid.velocity = Vector2.zero;
     }
 
     #endregion
@@ -326,7 +342,7 @@ public class CharacterStats : Photon.MonoBehaviour
                     ShowFloatingText_TrinketTriggered(TrinketToTrigger.DisplayName);
                 }
             }
-        }     
+        }
     }
 
     /// <summary>
@@ -344,7 +360,7 @@ public class CharacterStats : Photon.MonoBehaviour
         GameObject text = Instantiate(floatingTextPrefab, transform.Find("Canvas"), false); //Show number of damage received
         text.GetComponentInChildren<Text>().text = amount.ToString();
 
-        if(photonView.isMine)
+        if (photonView.isMine)
             CurrentHealth = Mathf.Clamp(this.CurrentHealth -= amount, 0, maxHealth); //Substract health
     }
 
@@ -372,7 +388,7 @@ public class CharacterStats : Photon.MonoBehaviour
             // Stop coroutine if running
             if (stunnedRoutine != null) StopCoroutine(stunnedRoutine);
 
-            rigid.velocity = Vector2.zero;
+            rigid.velocity = new Vector2(0, rigid.velocity.y);
             stunned = true;
             stunnedSymbol.SetActive(true);
         }
@@ -577,7 +593,7 @@ public class CharacterStats : Photon.MonoBehaviour
             photonView.RPC("StartInvisible", PhotonTargets.Others, seconds, false);
 
         if (invisRoutine != null) StopCoroutine(invisRoutine);
-            invisRoutine = StartCoroutine(ManageInvisibility(seconds));
+        invisRoutine = StartCoroutine(ManageInvisibility(seconds));
     }
 
     /// <summary>
@@ -587,7 +603,7 @@ public class CharacterStats : Photon.MonoBehaviour
     /// <param name="seconds"></param>
     /// <returns></returns>
     private IEnumerator ManageInvisibility(int seconds)
-    {   
+    {
         invisible = true;
 
         //Set Alpha to 0 if on different client (Character should be in fact invisible) and to 0.5f if on the controlling client for a visual represanttation of invisibility
@@ -709,14 +725,14 @@ public class CharacterStats : Photon.MonoBehaviour
         CurrentStamina = maxStamina;
 
         animCon.statDead = false;
-        CharacterDied = false;          
-        stunned = false;    
-        bleeding = false;   
+        CharacterDied = false;
+        stunned = false;
+        bleeding = false;
         knockedBack = false;
-        immovable = false;  
+        immovable = false;
         invincible = false;
-        reflect = false;               
-        invisible = false;              
+        reflect = false;
+        invisible = false;
     }
 
     #endregion

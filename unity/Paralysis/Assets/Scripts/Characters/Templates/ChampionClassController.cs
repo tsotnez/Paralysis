@@ -194,7 +194,6 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
         Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, GroundedRadius, m_WhatIsGround);
         for (int i = 0; i < colliders.Length; i++)
-
         {
             if (colliders[i].gameObject != gameObject)
             {
@@ -250,7 +249,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             if (!CanTurnAroundWhileBlocking && maxSpeed == 0) return;
 
             // The Speed animator parameter is set to the absolute value of the horizontal input.
-            animCon.m_Speed = Mathf.Abs(move);
+            animCon.m_Speed = Mathf.Abs(move * maxSpeed);
 
             // If the input is moving the player right and the player is facing left...
             if (move > 0 && !FacingRight)
@@ -445,7 +444,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         theScale.x *= -1;
         ProjectilePosition.transform.localPosition = theScale;
     }
-
+    
     /// <summary>
     /// Manages the attacking and Combos
     /// </summary>
