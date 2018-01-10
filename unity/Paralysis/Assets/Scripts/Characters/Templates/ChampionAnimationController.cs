@@ -143,11 +143,7 @@ public abstract class ChampionAnimationController : AnimationController
             // For character specific animations
             if (AdditionalAnimationCondition()) return;
 
-            if (statBlock && m_Speed <= 0)
-                StartAnimation(AnimatorStates.Block);
-            else if(statBlock && m_Speed > 0.001)
-                StartAnimation(AnimatorStates.BlockMove);
-            else if (trigDash)
+            if (trigDash)
             {
                 SynchronizeTrigger("setDash");
                 trigDash = false;
@@ -213,6 +209,10 @@ public abstract class ChampionAnimationController : AnimationController
                 trigSkill4 = false;
                 StartAnimation(AnimatorStates.Skill4);
             }
+            else if(statBlock && m_Speed <= 0)
+                StartAnimation(AnimatorStates.Block);
+            else if (statBlock && m_Speed > 0.001)
+                StartAnimation(AnimatorStates.BlockMove);
             else if (!m_Grounded && m_vSpeed <= 0)
                 StartAnimation(AnimatorStates.Fall);
             else if (!m_Grounded && m_vSpeed > 0 && trigJump)

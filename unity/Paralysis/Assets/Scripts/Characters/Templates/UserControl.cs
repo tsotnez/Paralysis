@@ -89,17 +89,21 @@ public abstract class UserControl : MonoBehaviour
         GoCharacter.Move(inputMove);
 
         //Do things only when not stunned, defensive or being knocked back
-        if (!CharStats.stunned && !CharStats.knockedBack && !inputBlock && !GoCharacter.dashing)
+        if (!CharStats.stunned && !CharStats.knockedBack && !GoCharacter.dashing)
         {
             // Pass all parameters to the character control script.
-            GoCharacter.Jump(inputJump);
             GoCharacter.BasicAttack(inputAttack);
-
             if (inputSkill1) GoCharacter.Skill1();
             if (inputSkill2) GoCharacter.Skill2();
             if (inputSkill3) GoCharacter.Skill3();
             if (inputSkill4) GoCharacter.Skill4();
-            if (inputDashDirection != 0) GoCharacter.StartCoroutine(GoCharacter.Dash(inputDashDirection));
+
+            if (!inputBlock)
+            {
+                GoCharacter.Jump(inputJump);
+                if (inputDashDirection != 0) GoCharacter.StartCoroutine(GoCharacter.Dash(inputDashDirection));
+            }
+            
         }
     }
 

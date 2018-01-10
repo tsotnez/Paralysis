@@ -412,7 +412,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     public void ManageDefensive(bool pDefensive)
     {
-        if (pDefensive && animCon.m_Grounded)
+        if (pDefensive && animCon.m_Grounded && CanPerformAttack())
         {
             //Start being defensive only if not defensive already and grounded  
             if (!blocking)
