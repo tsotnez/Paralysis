@@ -75,7 +75,7 @@ public class AlchemistController : ChampionClassController
     /// </summary>
     public override void Skill2()
     {
-        if (CanPerformAction(false) && CanPerformAttack() && stats.LoseStamina(skill2_var.staminaCost))
+        if (CanPerformAction(false) && CanPerformAttack() && skill2_var.notOnCooldown && stats.LoseStamina(skill2_var.staminaCost))
         {
             // Get the direction first --> save the effects on skill enter
             TeleportDirection direction = TeleportDirection.forward;
