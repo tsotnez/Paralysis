@@ -737,7 +737,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 4343727234628468602, guid: 6cb9a614f66a7184b9893814fd6c0dad, type: 2}
-  AnimationLoop: 01010001000000000100000000000000000000000000
+  AnimationLoop: 01010001000001000100000000000000000000000000
   AnimationDuration:
   - 0.6
   - 0.5

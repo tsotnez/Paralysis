@@ -108,7 +108,7 @@ public class AlchemistController : ChampionClassController
     {
         // trigger animation for getting invisible
         animCon.trigSkill2 = true;
-
+        
         // the alchemist is invincible while teleporting
         stats.invincible = true;
         stats.immovable = true;
@@ -141,9 +141,9 @@ public class AlchemistController : ChampionClassController
                 // If a wall is to close teleport to this wall and positioning close to it
                 newPos.x = hit.transform.position.x;
                 if (FacingRight)
-                    newPos.x -= 0.5f;
+                    newPos.x -= GetComponent<BoxCollider2D>().bounds.size.x + 0.1f;
                 else
-                    newPos.x += 0.5f;
+                    newPos.x += GetComponent<BoxCollider2D>().bounds.size.x + 0.1f;
             }
             else
             {
@@ -164,11 +164,11 @@ public class AlchemistController : ChampionClassController
             {
                 if (hit.collider.gameObject.tag != "TopBorder")
                 {
-                    newPos.y = hit.transform.position.y + 0.75f;
+                    newPos.y = hit.transform.position.y + (hit.collider.bounds.size.y / 2) + Math.Abs(m_GroundCheck.localPosition.y);
                 }
                 else if (hit.collider.gameObject.tag == "TopBorder")
                 {
-                    newPos.y = hit.transform.position.y - (hit.transform.localScale.y / 2) - (this.transform.localScale.y / 2);
+                    newPos.y = hit.transform.position.y - (hit.collider.bounds.size.y / 2) - Math.Abs(m_GroundCheck.localPosition.y);
                 }
             }
         }
@@ -179,7 +179,7 @@ public class AlchemistController : ChampionClassController
             // First hit ground where alchemist is standing - Second hit next ground
             if (hits.Length > 1)
             {
-                newPos.y = hits[1].transform.position.y + 0.5f;
+                newPos.y = hits[1].transform.position.y + (hits[1].collider.bounds.size.y / 2) + Math.Abs(m_GroundCheck.localPosition.y);
             }
         }
 

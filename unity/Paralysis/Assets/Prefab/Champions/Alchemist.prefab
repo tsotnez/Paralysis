@@ -730,7 +730,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 4343727234628468602, guid: af76a006fc08941479f0b5953f818241, type: 2}
   - {fileID: 4343727234628468602, guid: 740cc6d86c3fe7d45835fb8732d2a49f, type: 2}
-  AnimationLoop: 01010001000000000100000000000000000000000100
+  AnimationLoop: 01010001000001000100000000000000000000000100
   AnimationDuration:
   - 0.5
   - 0.4
@@ -825,6 +825,7 @@ MonoBehaviour:
   trigDashForward: 0
   trigDashForwardEnd: 0
   trigHit: 0
+  trigSkill2End: 0
 --- !u!114 &114867163884349206
 MonoBehaviour:
   m_ObjectHideFlags: 1
