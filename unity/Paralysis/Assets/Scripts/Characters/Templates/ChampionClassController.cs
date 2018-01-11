@@ -555,17 +555,11 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     #region Melee Skill
 
     /// <summary>
-    /// do a complete skill
+    /// do a complete melee skill
     /// </summary>
-    /// <param name="animationVar">Trigger to set</param>
-    /// <param name="skillDelay">Delay of skill if requiered, else 0</param>
-    /// <param name="skillDamage">Damage of the skill</param>
-    /// <param name="skillSpecialEffect">Special effect of the skill like nothing, stun, knockback or bleed</param>
-    /// <param name="skillSpecialEffectTime">Duration of the special effect (only required for stun and bleed)</param>
-    /// <param name="skillStaminaCost">Stamina costs of the skill</param>
-    /// <param name="singleTarget">only the first target or all targets? (default: singleTarget - true)</param>
-    /// <param name="skillRange">Range of the skill (default: meeleRange - 1.5f)</param>.
-    /// </summary>
+    /// <param name="animationVar">Animation Trigger</param>
+    /// <param name="skillToPerform">MeleeSkill that shall be performed</param>
+    /// <param name="NoValidation"></param>
     protected void DoMeleeSkill(ref bool animationVar, MeleeSkill skillToPerform, bool NoValidation = false)
     {
         //Validate that character is not attacking and standing on ground
