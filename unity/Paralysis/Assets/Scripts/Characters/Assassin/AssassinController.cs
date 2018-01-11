@@ -58,7 +58,7 @@ public class AssassinController : ChampionClassController
         if (CanPerformAction(true) && CanPerformAttack() && skill2_var.notOnCooldown && stats.LoseStamina(stamina_Skill2))
         {
             hotbar.StartCoroutine(hotbar.flashBlack(skill2_var.name));
-            if (stats.invisible) stats.StopInvisible();           
+            if (stats.invisible) stats.StopInvisible();
             StartCoroutine(SetSkillOnCooldown(skill2_var));
             animCon.trigSkill2 = true;
             StartCoroutine(Skill2Routine());
@@ -100,9 +100,9 @@ public class AssassinController : ChampionClassController
 
     #region Basic Attack
 
-    public override void BasicAttack(bool shouldAttack)
+    public override void BasicAttack()
     {
-        if (shouldAttack && CanPerformAttack() && !dashing)
+        if (CanPerformAttack() && !dashing)
         {
             if (!animCon.m_Grounded && !stats.invisible && doubleJumped) //Jump attack only when double jumped
             {

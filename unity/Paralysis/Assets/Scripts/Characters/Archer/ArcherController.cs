@@ -46,16 +46,14 @@ public class ArcherController : ChampionClassController
 
     #endregion
 
-    public override void BasicAttack(bool shouldAttack)
+    public override void BasicAttack()
     {
-        //Shoot a basic arrow 
-        if (shouldAttack)
-        {
-            if (animCon.m_Grounded)
-                DoRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill)basicAttack1_var);
-            else if (doubleJumped) //jump Attack
-                DoRangeSkill(ref animCon.trigJumpAttack, (RangedSkill)jumpAttack_var);
-        }
+        // Shoot a basic arrow 
+        if (animCon.m_Grounded)
+            DoRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill)basicAttack1_var);
+        // Jump Attack
+        else if (doubleJumped)
+            DoRangeSkill(ref animCon.trigJumpAttack, (RangedSkill)jumpAttack_var);
     }
 
     public override void Skill1()

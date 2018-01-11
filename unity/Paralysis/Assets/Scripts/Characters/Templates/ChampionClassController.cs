@@ -444,11 +444,11 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         theScale.x *= -1;
         ProjectilePosition.transform.localPosition = theScale;
     }
-    
+
     /// <summary>
     /// Manages the attacking and Combos
     /// </summary>
-    public abstract void BasicAttack(bool shouldAttack);
+    public abstract void BasicAttack();
 
     public abstract void Skill1();
     public abstract void Skill2();
@@ -466,9 +466,9 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     /// <param name="trigBA1">Animation Trigger Boolean for Basic Attack 1</param>
     /// <param name="trigBA2">Animation Trigger Boolean for Basic Attack 2</param>
     /// <param name="trigBA3">Animation Trigger Boolean for Basic Attack 3</param>
-    protected void DoComboBasicAttack(bool shouldAttack, ref bool trigBA1, ref bool trigBA2, ref bool trigBA3)
+    protected void DoComboBasicAttack(ref bool trigBA1, ref bool trigBA2, ref bool trigBA3)
     {
-        if (shouldAttack && CanPerformAction(false) && CanPerformAttack())
+        if (CanPerformAction(false) && CanPerformAttack())
         {
             if (animCon.m_Grounded)
             {
