@@ -21,8 +21,9 @@ public abstract class UserControl : MonoBehaviour
     protected bool inputTrinket1;
     protected bool inputTrinket2;
 
-	protected float fallThroughTime = .5f;
+	private const float fallThroughTime = .75f;
 	private float fallThroughTimer;
+	private bool fallThroughNextPress = false;
 
     #region Enums
 
@@ -131,20 +132,22 @@ public abstract class UserControl : MonoBehaviour
 			if (fallThroughTimer == 0)
 			{
 				fallThroughTimer = Time.time;
-				return false;
+				fallThroughNextPress = true;
 			}
-			//if fall through timer not 0 and its been shorter or
-			//equal to the fall through time set fall through to true
-			//reset the timer
-			else if (Time.time - fallThroughTimer <= fallThroughTime)
+		}
+
+		if(fallThroughNextPress && inputDown)
+		{
+			if (Time.time - fallThroughTimer <= fallThroughTime)
 			{
 				fallThroughTimer = 0;
+				fallThroughNextPress = false;
 				return GoCharacter.CheckFallThrough();
 			}
 			else
 			{
 				fallThroughTimer = 0;
-				return false;
+				fallThroughNextPress = false;
 			}
 		}
 		return false;
