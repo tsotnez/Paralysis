@@ -9,12 +9,14 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     // Constraints
     protected const float GroundedRadius = .02f;                            // Radius of the overlap circle to determine if grounded
     protected const float MeeleRange = 1.5f;                                // Default range for meele attacks
+	protected const float FallThroughDuration = .5f;						// Duration of falling through a platform
 
     #region Parameters for Inspector
 
     // Layers
     public LayerMask m_WhatIsGround;                                        // A mask determining what is ground to the character
     public LayerMask m_whatToHit;                                           // What to hit when checking for hits while attacking
+	public LayerMask m_fallThroughMask;										// A layermask to determine if a player can fall through something
 
     // Movement
     [SerializeField]
@@ -156,6 +158,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected bool applyDashingForce = false;                               // true while force for dashing shall be applied
     protected bool doubleJumped = false;                                    // Has the character double jumped already?
     protected bool jumpAttacking = false;                                   // True while the character is jump attacking
+	protected bool fallingThrough = false;									// True while we are falling through a platform
 
     //Coroutines
     protected Coroutine comboRoutine;
@@ -298,6 +301,31 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             }
         }
     }
+
+	public virtual bool CheckFallThrough()
+	{		
+		//If we are currently not falling through check
+		if (!fallingThrough)
+		{
+			RaycastHit2D hit = Physics2D.Raycast (m_GroundCheck.position, transform.up * -1,
+				                  1f, m_fallThroughMask);		
+			if ((hit && animCon.m_Grounded)) 
+			{
+				StartCoroutine (fallThrough(hit.collider.gameObject));
+				return true;
+			}
+		}
+		return false;
+	}
+
+	protected virtual IEnumerator fallThrough(GameObject fallThroughObj)
+	{
+		fallingThrough = true;
+		Physics2D.IgnoreLayerCollision (gameObject.layer, fallThroughObj.layer, fallingThrough);
+		yield return new WaitForSeconds(FallThroughDuration);
+		fallingThrough = false;
+		Physics2D.IgnoreLayerCollision (gameObject.layer, fallThroughObj.layer, fallingThrough);
+	}
 
     protected virtual IEnumerator JumpAttack()
     {

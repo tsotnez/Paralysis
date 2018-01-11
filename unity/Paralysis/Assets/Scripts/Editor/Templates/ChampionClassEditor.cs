@@ -6,13 +6,14 @@ using UnityEditor;
 [CustomEditor(typeof(ChampionClassController))] 
 public class ChampionClassEditor : Editor {
 
-    SerializedProperty WhatIsGround, WhatToHit, MoveSpeed, MoveSpeedWhileAttacking, MoveSpeedWhileBlocking, JumpForce, JumpAttackRadius, JumpAttackForce,
+    SerializedProperty WhatIsGround, WhatIsFallThrough, WhatToHit, MoveSpeed, MoveSpeedWhileAttacking, MoveSpeedWhileBlocking, JumpForce, JumpAttackRadius, JumpAttackForce,
         DashSpeed, DashStaminaCost, CanDashForward, ComboExpire, ClassName, DoubleJumpForce;
 
 	void OnEnable()
     {
         //Get properties from script
         WhatIsGround = serializedObject.FindProperty("m_WhatIsGround");
+		WhatIsFallThrough = serializedObject.FindProperty("m_fallThroughMask");
         WhatToHit = serializedObject.FindProperty("m_whatToHit");
         MoveSpeed =  serializedObject.FindProperty("m_MaxSpeed");
         MoveSpeedWhileAttacking = serializedObject.FindProperty("m_MoveSpeedWhileAttacking");
@@ -32,6 +33,7 @@ public class ChampionClassEditor : Editor {
     {
         serializedObject.Update();
         EditorGUILayout.PropertyField(WhatIsGround, new GUIContent("What Is ground"), true);
+		EditorGUILayout.PropertyField(WhatIsFallThrough, new GUIContent("Can Fall Through"), true);
         EditorGUILayout.PropertyField(ClassName, new GUIContent("Class Name"), true);
 
         GUILayout.Label("Speeds", EditorStyles.boldLabel);

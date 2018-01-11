@@ -7,11 +7,12 @@ public abstract class UserControl : MonoBehaviour
     protected ChampionClassController GoCharacter;
     protected CharacterStats CharStats;
     protected float lastVerticalValue = 0;                      // Saves the last value for the jump-sticks horizontal input
+	protected bool lastInputDown;							// Saves the last input down value
 
     protected bool inputJump;
     protected bool inputAttack;
     protected int inputDashDirection = 0;
-    protected bool inputBlock;
+    protected bool inputDown;
     protected float inputMove = 0;
     protected bool inputSkill1;
     protected bool inputSkill2;
@@ -19,6 +20,9 @@ public abstract class UserControl : MonoBehaviour
     protected bool inputSkill4;
     protected bool inputTrinket1;
     protected bool inputTrinket2;
+
+	protected float fallThroughTime = .5f;
+	private float fallThroughTimer;
 
     #region Enums
 
@@ -44,6 +48,9 @@ public abstract class UserControl : MonoBehaviour
 
     protected void Update()
     {
+		// Set last inputDown value
+		lastInputDown = inputDown;
+
         //Call Input method depending on Input device
         switch (inputDevice)
         {
@@ -98,7 +105,11 @@ public abstract class UserControl : MonoBehaviour
             if (inputSkill3) GoCharacter.Skill3();
             if (inputSkill4) GoCharacter.Skill4();
 
-            if (!inputBlock)
+			// Checks if the player entered the correct sequence to fall through platform
+			CheckFallThrough();
+
+
+            if (!inputDown)
             {
                 GoCharacter.Jump(inputJump);
                 if (inputDashDirection != 0) GoCharacter.StartCoroutine(GoCharacter.Dash(inputDashDirection));
@@ -106,6 +117,38 @@ public abstract class UserControl : MonoBehaviour
             
         }
     }
+
+	/// <summary>
+	/// Checks to see if the player has tapped fall through in quick succession
+	/// Returns whether or not the character actually fell through
+	/// </summary>
+	protected virtual bool CheckFallThrough()
+	{
+		//Occurs whent the last input was down and we released
+		if (lastInputDown && !inputDown)
+		{
+			//Start the fall through timer
+			if (fallThroughTimer == 0)
+			{
+				fallThroughTimer = Time.time;
+				return false;
+			}
+			//if fall through timer not 0 and its been shorter or
+			//equal to the fall through time set fall through to true
+			//reset the timer
+			else if (Time.time - fallThroughTimer <= fallThroughTime)
+			{
+				fallThroughTimer = 0;
+				return GoCharacter.CheckFallThrough();
+			}
+			else
+			{
+				fallThroughTimer = 0;
+				return false;
+			}
+		}
+		return false;
+	}
 
     protected virtual void ResetValues()
     {
@@ -175,10 +218,10 @@ public abstract class UserControl : MonoBehaviour
             inputJump = Input.GetButtonDown("Jump");
         }
         if (!CharStats.stunned && !CharStats.knockedBack)
-            inputBlock = Input.GetButton("Defensive");
-        else inputBlock = false;
+            inputDown = Input.GetButton("Defensive");
+        else inputDown = false;
 
-        GoCharacter.ManageDefensive(inputBlock);
+        GoCharacter.ManageDefensive(inputDown);
     }
 
     #endregion
@@ -239,15 +282,15 @@ public abstract class UserControl : MonoBehaviour
 
         if (!inputJump)
         {
-            if (lastVerticalValue >= 0)
+            if ( lastVerticalValue >= 0)
                 inputJump = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()) < 0;
         }
         if (!CharStats.stunned && !CharStats.knockedBack)
-            inputBlock = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()) > 0;
-        else inputBlock = false;
+            inputDown = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()) > 0;
+        else inputDown = false;
 
         lastVerticalValue = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
-        GoCharacter.ManageDefensive(inputBlock);
+        GoCharacter.ManageDefensive(inputDown);
     }
 
     #endregion
@@ -299,11 +342,11 @@ public abstract class UserControl : MonoBehaviour
                 inputJump = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()) < 0;
         }
         if (!CharStats.stunned && !CharStats.knockedBack)
-            inputBlock = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()) > 0;
-        else inputBlock = false;
+            inputDown = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()) > 0;
+        else inputDown = false;
 
         lastVerticalValue = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
-        GoCharacter.ManageDefensive(inputBlock);
+        GoCharacter.ManageDefensive(inputDown);
     }
 
     #endregion

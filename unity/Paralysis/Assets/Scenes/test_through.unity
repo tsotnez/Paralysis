@@ -907,7 +907,7 @@ GameObject:
   - component: {fileID: 512858079}
   - component: {fileID: 512858078}
   - component: {fileID: 512858077}
-  m_Layer: 9
+  m_Layer: 14
   m_Name: throughplatform (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -934,7 +934,7 @@ PlatformEffector2D:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 512858075}
   m_Enabled: 1
-  m_UseColliderMask: 1
+  m_UseColliderMask: 0
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -2841,7 +2841,7 @@ GameObject:
   - component: {fileID: 1926311742}
   - component: {fileID: 1926311741}
   - component: {fileID: 1926311740}
-  m_Layer: 9
+  m_Layer: 14
   m_Name: throughplatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2868,7 +2868,7 @@ PlatformEffector2D:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1926311738}
   m_Enabled: 1
-  m_UseColliderMask: 1
+  m_UseColliderMask: 0
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -3220,7 +3220,7 @@ GameObject:
   - component: {fileID: 2059383277}
   - component: {fileID: 2059383276}
   - component: {fileID: 2059383275}
-  m_Layer: 9
+  m_Layer: 14
   m_Name: throughplatform (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3247,7 +3247,7 @@ PlatformEffector2D:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2059383273}
   m_Enabled: 1
-  m_UseColliderMask: 1
+  m_UseColliderMask: 0
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
