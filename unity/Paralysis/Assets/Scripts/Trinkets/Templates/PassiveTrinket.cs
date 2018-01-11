@@ -55,9 +55,14 @@ public abstract class PassiveTrinket : Trinket
 
     private IEnumerator ManageCooldown()
     {
-        GetComponent<ChampionClassController>().hotbar.greyOutTrinket(trinketNumber); // grey out for time its active
+        ChampionClassController controller = GetComponent<ChampionClassController>();
+        CharacterStats stats = GetComponent<CharacterStats>();
+
+        stats.StartTrinketEffects();
+        controller.hotbar.greyOutTrinket(trinketNumber); // grey out for time its active
         yield return new WaitUntil(() => !TrinketRunning);
-        GetComponent<ChampionClassController>().hotbar.setTrinketOnCooldown(trinketNumber, GeneralCooldown); // Set actual visual cooldown
+        stats.StopTrinketEffects();
+        controller.hotbar.setTrinketOnCooldown(trinketNumber, GeneralCooldown); // Set actual visual cooldown
         TrinketReady = false;
         yield return new WaitForSeconds(GeneralCooldown);
         TrinketReady = true;

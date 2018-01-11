@@ -645,6 +645,22 @@ public class CharacterStats : Photon.MonoBehaviour
 
     #endregion
 
+    #region Trinket Stuff
+
+    public void StartTrinketEffects()
+    {
+        controller.transform.Find("graphics").parent.localScale = new Vector3(1.2f, 1.2f, 1f);
+        controller.transform.Find("effectOverlay").gameObject.SetActive(true);
+    }
+
+    public void StopTrinketEffects()
+    {
+        controller.transform.Find("graphics").parent.localScale = Vector3.one;
+        controller.transform.Find("effectOverlay").gameObject.SetActive(false);
+    }
+
+    #endregion
+
     #region Floating Text
 
     /// <summary>
