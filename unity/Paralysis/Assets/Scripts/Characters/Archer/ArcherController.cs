@@ -46,14 +46,19 @@ public class ArcherController : ChampionClassController
 
     #endregion
 
+    #region Basic Attack & Skills
+
     public override void BasicAttack()
     {
         // Shoot a basic arrow 
         if (animCon.m_Grounded)
             DoRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill)basicAttack1_var);
-        // Jump Attack
-        else if (doubleJumped)
-            DoRangeSkill(ref animCon.trigJumpAttack, (RangedSkill)jumpAttack_var);
+    }
+
+    public override IEnumerator JumpAttack()
+    {
+        DoRangeSkill(ref animCon.trigJumpAttack, (RangedSkill)jumpAttack_var);
+        yield return new WaitForSeconds(0.1f);
     }
 
     public override void Skill1()
@@ -128,4 +133,6 @@ public class ArcherController : ChampionClassController
         stats.immovable = false;
         StartCoroutine(SetSkillOnCooldown(skill4_var));
     }
+
+    #endregion
 }

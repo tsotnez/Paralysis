@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 public class AssassinController : ChampionClassController
@@ -40,7 +38,6 @@ public class AssassinController : ChampionClassController
 
     #region Basic Attack & Skills
 
-
     public override void BasicAttack()
     {
         if (CanPerformAttack())
@@ -49,9 +46,9 @@ public class AssassinController : ChampionClassController
             {
                 // do ambush attack
                 DoMeleeSkill(ref animCon.trigSkill3, new MeleeSkill(0, delay_Skill3, ambushAttack_damage, Skill.SkillEffect.nothing, 3, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, 0, MeeleRange));
-                //reset Combo
+                // reset Combo
                 AbortCombo();
-                //end invisibility
+                // end invisibility
                 stats.StopInvisible();
             }
             else
