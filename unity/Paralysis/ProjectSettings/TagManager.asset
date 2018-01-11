@@ -11,6 +11,7 @@ TagManager:
   - TopBorder
   - BottomBorder
   - MainPlayer2
+  - CastBar
   layers:
   - Default
   - TransparentFX

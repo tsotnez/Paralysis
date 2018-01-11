@@ -20,14 +20,14 @@ public class KnightController : ChampionClassController
         animCon = graphics.GetComponent<KnightAnimationController>();
 
         //Instantiate skill variables
-        basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, MeeleRange);
-        basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack2, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack2, MeeleRange);
-        basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack3, delay_BasicAttack3, damage_BasicAttack3, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack3, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack3, MeeleRange);
+        basicAttack1_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, MeeleRange, ChampionAndTrinketDatabase.Champions.Alchemist);
+        basicAttack2_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack2, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack2, MeeleRange, ChampionAndTrinketDatabase.Champions.Alchemist);
+        basicAttack3_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.BasicAttack3, delay_BasicAttack3, damage_BasicAttack3, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack3, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack3, MeeleRange, ChampionAndTrinketDatabase.Champions.Alchemist);
 
-        skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.SkillEffect.stun, 3, 0, stamina_Skill1, Skill.SkillTarget.MultiTarget, cooldown_Skill1, MeeleRange);
-        skill2_var = new MeleeSkill(AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.SkillEffect.stun, 3, 0, stamina_Skill2, Skill.SkillTarget.MultiTarget, cooldown_Skill2, MeeleRange);
-        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.SkillEffect.knockback, 0, 0, stamina_Skill3, Skill.SkillTarget.SingleTarget, cooldown_Skill3, MeeleRange);
-        skill4_var = new RangedSkill(AnimationController.AnimatorStates.Skill4, false, new Vector2(7, 0), Skill4_Spear, delay_Skill4, damage_Skill4, Skill.SkillEffect.nothing, 0, 0, stamina_Skill4, Skill.SkillTarget.SingleTarget, cooldown_Skill4, 5f);
+        skill1_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.Skill1, delay_Skill1, damage_Skill1, Skill.SkillEffect.stun, 3, 0, stamina_Skill1, Skill.SkillTarget.MultiTarget, cooldown_Skill1, MeeleRange, ChampionAndTrinketDatabase.Champions.Alchemist);
+        skill2_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.Skill2, delay_Skill2, damage_Skill2, Skill.SkillEffect.stun, 3, 0, stamina_Skill2, Skill.SkillTarget.MultiTarget, cooldown_Skill2, MeeleRange, ChampionAndTrinketDatabase.Champions.Alchemist);
+        skill3_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.Skill3, delay_Skill3, damage_Skill3, Skill.SkillEffect.knockback, 0, 0, stamina_Skill3, Skill.SkillTarget.SingleTarget, cooldown_Skill3, MeeleRange, ChampionAndTrinketDatabase.Champions.Alchemist);
+        skill4_var = new RangedSkill(ChampionAndTrinketDatabase.Keys.Skill4, false, new Vector2(7, 0), Skill4_Spear, delay_Skill4, damage_Skill4, Skill.SkillEffect.nothing, 0, 0, stamina_Skill4, Skill.SkillTarget.SingleTarget, cooldown_Skill4, 5f, ChampionAndTrinketDatabase.Champions.Alchemist);
     }
 
     // Update is called once per frame
@@ -94,7 +94,7 @@ public class KnightController : ChampionClassController
         // Validate if skill can be performed
         if (CanPerformAction(true) && CanPerformAttack() && skill2_var.notOnCooldown && stats.HasSufficientStamina(stamina_Skill2))
         {
-            hotbar.StartCoroutine(hotbar.flashBlack(skill2_var.name));
+            hotbar.StartCoroutine(hotbar.flashBlack(skill2_var.type));
             // set animation
             animCon.trigSkill2 = true;
 

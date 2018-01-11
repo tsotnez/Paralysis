@@ -13,7 +13,7 @@ public static class ChampionAndTrinketDatabase {
 
     public enum Keys
     {
-        Skill1Name, Skill2Name, Skill3Name, Skill4Name, Skill1Text, Skill2Text, Skill3Text, Skill4Text, Lore, Name
+        Skill1, Skill2, Skill3, Skill4, Skill1Text, Skill2Text, Skill3Text, Skill4Text, Lore, Name, JumpAttack, BasicAttack1, BasicAttack2, BasicAttack3
     }
 
     //Set Values for each Dictionary (hardcoded)
@@ -21,101 +21,132 @@ public static class ChampionAndTrinketDatabase {
     #region Assassin
     public static Dictionary<Keys, string> Assassin = new Dictionary<Keys, string>()
     {
-        {Keys.Skill1Name, "Paralysing Poison"},
+        {Keys.Skill1, "Paralysing Poison"},
         {Keys.Skill1Text, "Assassins blades are infused with a strong poison, stunning the enemy he hits."},
 
-        {Keys.Skill2Name, "Vanish"},
+        {Keys.Skill2, "Vanish"},
         {Keys.Skill2Text, "Become invisible and next basic attack deals increased damage."},
 
-        {Keys.Skill3Name, "Shadowstep"},
+        {Keys.Skill3, "Shadowstep"},
         {Keys.Skill3Text, "A quick teleport to the nearest target on same height allows Assassin to surprise his victim and stun it."},
 
-        {Keys.Skill4Name, "Longfang"},
+        {Keys.Skill4, "Longfang"},
         {Keys.Skill4Text, "Assassin shoots his pistol dealing massive damage and knocking back the poor victim."},
 
         {Keys.Name, "Assassin, the Shadowwalker"},
         {Keys.Lore, "This unknown warrior wandered trough the wastelands for a long time after the world faced its doom. He learned to " +
-            "survive on his own and salvaged strong tech on his journeys which allow him to perform a variety of skills."}
+            "survive on his own and salvaged strong tech on his journeys which allow him to perform a variety of skills."},
+
+        {Keys.BasicAttack1, "Basic Attack 1"},
+        {Keys.BasicAttack2, "Basic Attack 2"},
+
+        {Keys.BasicAttack3, "Basic Attack 3"},
+        {Keys.JumpAttack, "Jump Attack"}
     };
     #endregion
 
     #region Archer
     public static Dictionary<Keys, string> Archer = new Dictionary<Keys, string>()
     {
-        {Keys.Skill1Name, "Eagles Talon"},
+        {Keys.Skill1, "Eagles Talon"},
         {Keys.Skill1Text, ""},
 
-        {Keys.Skill2Name, "Sharks Teeth"},
+        {Keys.Skill2, "Sharks Teeth"},
         {Keys.Skill2Text, ""},
 
-        {Keys.Skill3Name, "Bears Strength"},
+        {Keys.Skill3, "Bears Strength"},
         {Keys.Skill3Text, ""},
 
-        {Keys.Skill4Name, "Falcons Speed"},
+        {Keys.Skill4, "Falcons Speed"},
         {Keys.Skill4Text, ""},
 
         {Keys.Name, "Archer, the Huntress"},
-        {Keys.Lore, ""}
+        {Keys.Lore, ""},
+
+        {Keys.BasicAttack1, "Basic Attack 1"},
+        {Keys.BasicAttack2, "Basic Attack 2"},
+
+        {Keys.BasicAttack3, "Basic Attack 3"},
+        {Keys.JumpAttack, "Jump Attack"}
+
     };
     #endregion
 
     #region Knight
     public static Dictionary<Keys, string> Knight = new Dictionary<Keys, string>()
     {
-        {Keys.Skill1Name, "Earthquake"},
+        {Keys.Skill1, "Earthquake"},
         {Keys.Skill1Text, ""},
 
-        {Keys.Skill2Name, "Engage!"},
+        {Keys.Skill2, "Engage!"},
         {Keys.Skill2Text, ""},
 
-        {Keys.Skill3Name, "Shield Bash"},
+        {Keys.Skill3, "Shield Bash"},
         {Keys.Skill3Text, ""},
 
-        {Keys.Skill4Name, "Battering Ram"},
+        {Keys.Skill4, "Battering Ram"},
         {Keys.Skill4Text, ""},
 
         {Keys.Name, "Knight, the Fortress"},
-        {Keys.Lore, ""}
+        {Keys.Lore, ""},
+
+        {Keys.BasicAttack1, "Basic Attack 1"},
+        {Keys.BasicAttack2, "Basic Attack 2"},
+
+        {Keys.BasicAttack3, "Basic Attack 3"},
+        {Keys.JumpAttack, "Jump Attack"}
     };
     #endregion
 
     #region Infantry
     public static Dictionary<Keys, string> Infantry = new Dictionary<Keys, string>()
     {
-        {Keys.Skill1Name, "Grappling Hook"},
+        {Keys.Skill1, "Grappling Hook"},
         {Keys.Skill1Text, ""},
 
-        {Keys.Skill2Name, "Ground Break"},
+        {Keys.Skill2, "Ground Break"},
         {Keys.Skill2Text, ""},
 
-        {Keys.Skill3Name, "Storm of Blades"},
+        {Keys.Skill3, "Storm of Blades"},
         {Keys.Skill3Text, ""},
 
-        {Keys.Skill4Name, "Tornado"},
+        {Keys.Skill4, "Tornado"},
         {Keys.Skill4Text, ""},
 
         {Keys.Name, "Infantry, Killer for Coin"},
-        {Keys.Lore, ""}
+        {Keys.Lore, ""},
+
+        {Keys.BasicAttack1, "Basic Attack 1"},
+        {Keys.BasicAttack2, "Basic Attack 2"},
+
+        {Keys.BasicAttack3, "Basic Attack 3"},
+        {Keys.JumpAttack, "Jump Attack"},
     };
     #endregion
 
     #region Alchemist
     public static Dictionary<Keys, string> Alchemist = new Dictionary<Keys, string>()
     {
-        {Keys.Skill1Name, "Frostbolt"},
+        {Keys.Skill1, "Frostbolt"},
         {Keys.Skill1Text, ""},
 
-        {Keys.Skill2Name, "Teleport"},
+        {Keys.Skill2, "Teleport"},
         {Keys.Skill2Text, ""},
 
-        {Keys.Skill3Name, "Lightning Strikes"},
+        {Keys.Skill3, "Melted Stone"},
         {Keys.Skill3Text, ""},
 
-        {Keys.Skill4Name, "Molecular Reconstruction"},
+        {Keys.Skill4, "Molecular Reconstruction"},
         {Keys.Skill4Text, ""},
 
         {Keys.Name, "Alchemist, the Solitair"},
-        {Keys.Lore, ""}
+        {Keys.Lore, ""},
+
+        {Keys.BasicAttack1, "Basic Attack 1"},
+        {Keys.BasicAttack2, "Basic Attack 2"},
+
+        {Keys.BasicAttack3, "Basic Attack 3"},
+        {Keys.JumpAttack, "Jump Attack"},
     };
     #endregion
 

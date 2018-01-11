@@ -41,33 +41,33 @@ public class HotbarController : MonoBehaviour {
         trinket2Image.sprite = Resources.Load<Sprite>("Sprites/AbilityImages/Trinkets/" + trinket2);
     }
 
-    public void setOnCooldown(AnimationController.AnimatorStates skill, float seconds)
+    public void setOnCooldown(ChampionAndTrinketDatabase.Keys skill, float seconds)
     {
         Image skillImage = getImageForSkill(skill);
         StartCoroutine(countDown(skillImage, seconds)); //Start coroutine
     }
 
-    private Image getImageForSkill(AnimationController.AnimatorStates skill)
+    private Image getImageForSkill(ChampionAndTrinketDatabase.Keys skill)
     {
         Image skillImage = null;
         switch (skill) //Get image 
         {
-            case AnimationController.AnimatorStates.Skill1:
+            case ChampionAndTrinketDatabase.Keys.Skill1:
                 skillImage = spell1Image;
                 break;
-            case AnimationController.AnimatorStates.Skill2:
+            case ChampionAndTrinketDatabase.Keys.Skill2:
                 skillImage = spell2Image;
                 break;
-            case AnimationController.AnimatorStates.Skill3:
+            case ChampionAndTrinketDatabase.Keys.Skill3:
                 skillImage = spell3Image;
                 break;
-            case AnimationController.AnimatorStates.Skill4:
+            case ChampionAndTrinketDatabase.Keys.Skill4:
                 skillImage = spell4Image;
                 break;
-            case AnimationController.AnimatorStates.BasicAttack1:
-            case AnimationController.AnimatorStates.BasicAttack2:
-            case AnimationController.AnimatorStates.BasicAttack3:
-            case AnimationController.AnimatorStates.JumpAttack:
+            case ChampionAndTrinketDatabase.Keys.BasicAttack1:
+            case ChampionAndTrinketDatabase.Keys.BasicAttack2:
+            case ChampionAndTrinketDatabase.Keys.BasicAttack3:
+            case ChampionAndTrinketDatabase.Keys.JumpAttack:
                 skillImage = basicAttackImage;
                 break;
         }
@@ -124,7 +124,7 @@ public class HotbarController : MonoBehaviour {
     }
 
     //The image flashes black for a short time, highlighting that the skill/trinket was used
-    public IEnumerator flashBlack(AnimationController.AnimatorStates skill)
+    public IEnumerator flashBlack(ChampionAndTrinketDatabase.Keys skill)
     {
         Image spell = getImageForSkill(skill);
         if (spell != null)

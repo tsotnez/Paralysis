@@ -17,7 +17,9 @@ public class Skill
         SingleTarget, MultiTarget, InFront
     }
 
-    public AnimationController.AnimatorStates name;
+    public ChampionAndTrinketDatabase.Keys type;
+    public ChampionAndTrinketDatabase.Champions champion;
+    public string name;
     public SkillEffect effect;
     public int effectDuration;
     public float effectValue;
@@ -32,10 +34,11 @@ public class Skill
     public bool notOnCooldown = true;
 
 
-    public Skill(AnimationController.AnimatorStates skillName, float skillDelay, int skillDamage, Skill.SkillEffect skillSpecialEffect, int skillSpecialEffectTime, float skillSpecialEffectValue, int skillStaminaCost, SkillTarget skillTargetType,
-        float skillCooldown, float skillRange, bool skillNeedsToBeGrounded = true)
+    public Skill(ChampionAndTrinketDatabase.Keys skillType, float skillDelay, int skillDamage, Skill.SkillEffect skillSpecialEffect, int skillSpecialEffectTime, float skillSpecialEffectValue, int skillStaminaCost, SkillTarget skillTargetType,
+        float skillCooldown, float skillRange, ChampionAndTrinketDatabase.Champions skillChamp, bool skillNeedsToBeGrounded = true)
     {
-        name = skillName;
+        champion = skillChamp;
+        type = skillType;
         delay = skillDelay;
         damage = skillDamage;
         effect = skillSpecialEffect;
@@ -46,11 +49,13 @@ public class Skill
         needsToBeGrounded = skillNeedsToBeGrounded;
         range = skillRange;
         targetType = skillTargetType;
+        name = ChampionAndTrinketDatabase.database[champion][type];
     }
 
-    public Skill(AnimationController.AnimatorStates skillName, float skillCooldown)
+    public Skill(ChampionAndTrinketDatabase.Keys skillType, ChampionAndTrinketDatabase.Champions skillChampion, float skillCooldown)
     {
+        champion = skillChampion;
         cooldown = skillCooldown;
-        name = skillName;
+        type = skillType;
     }
 }

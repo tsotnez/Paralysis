@@ -158,22 +158,22 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
             {
                 case 1:
                     preview.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/AbilityImages/" + Champion.GetComponent<ChampionClassController>().className + "/Skill1");
-                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill1Name];
+                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill1];
                     preview.Find("Desc").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill1Text];
                     break;
                 case 2:
                     preview.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/AbilityImages/" + Champion.GetComponent<ChampionClassController>().className + "/Skill2");
-                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill2Name];
+                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill2];
                     preview.Find("Desc").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill2Text];
                     break;
                 case 3:
                     preview.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/AbilityImages/" + Champion.GetComponent<ChampionClassController>().className + "/Skill3");
-                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill3Name];
+                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill3];
                     preview.Find("Desc").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill3Text];
                     break;
                 case 4:
                     preview.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/AbilityImages/" + Champion.GetComponent<ChampionClassController>().className + "/Skill4");
-                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill4Name];
+                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill4];
                     preview.Find("Desc").gameObject.GetComponent<Text>().text = dictionary[ChampionAndTrinketDatabase.Keys.Skill4Text];
                     break;
             }

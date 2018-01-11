@@ -186,7 +186,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             photonView.RPC("OnNewPlayerInstantiated", PhotonTargets.All);
 
         // Set default JumpAttack
-        jumpAttack_var = new MeleeSkill(0, 0, damage_JumpAttack, Skill.SkillEffect.nothing, 0, 0, 10, Skill.SkillTarget.MultiTarget, 0, m_jumpAttackRadius);
+        jumpAttack_var = new MeleeSkill(0, 0, damage_JumpAttack, Skill.SkillEffect.nothing, 0, 0, 10, Skill.SkillTarget.MultiTarget, 0, m_jumpAttackRadius, ChampionAndTrinketDatabase.Champions.Alchemist);
     }
 
     protected virtual void FixedUpdate()
@@ -609,7 +609,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             {
                 // set animation trigger
                 animationVar = true;
-                hotbar.StartCoroutine(hotbar.flashBlack(skillToPerform.name));
+                hotbar.StartCoroutine(hotbar.flashBlack(skillToPerform.type));
                 // do hit by coroutine
                 StartCoroutine(DoMeleeSkill_Hit(skillToPerform));
             }
@@ -711,7 +711,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         {
             // set animation trigger
             animationVar = true;
-            hotbar.StartCoroutine(hotbar.flashBlack(skillToPerform.name));
+            hotbar.StartCoroutine(hotbar.flashBlack(skillToPerform.type));
             // do hit by coroutine
             StartCoroutine(DoRangeSkill_Hit(skillToPerform));
         }
@@ -730,7 +730,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         GameObject goProjectile;
         if (PhotonNetwork.offlineMode)
         {
-            // load GameObjecta
+            // load GameObject
             goProjectile = skillToPerform.prefab;
         }
         else
@@ -793,7 +793,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         //Set on cooldown
         if (skillToPerform.cooldown > 0)
         {
-            hotbar.setOnCooldown(skillToPerform.name, skillToPerform.cooldown);
+            hotbar.setOnCooldown(skillToPerform.type, skillToPerform.cooldown);
 
             skillToPerform.notOnCooldown = false;
             yield return new WaitForSeconds(skillToPerform.cooldown);

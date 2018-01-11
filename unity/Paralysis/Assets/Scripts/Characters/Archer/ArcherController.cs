@@ -24,13 +24,13 @@ public class ArcherController : ChampionClassController
         animCon = graphics.GetComponent<ArcherAnimationController>();
 
         //Instantiate skill variables
-        basicAttack1_var = new RangedSkill(AnimationController.AnimatorStates.BasicAttack1, false, new Vector2(9, 0), standartArrowPrefab, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, 6);
-        jumpAttack_var = new RangedSkill(0, false, new Vector2(4, -9), jumpAttackArrowPrefab, 0.2f, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, 0, 100, false);
+        basicAttack1_var = new RangedSkill(ChampionAndTrinketDatabase.Keys.BasicAttack1, false, new Vector2(9, 0), standartArrowPrefab, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, 6, ChampionAndTrinketDatabase.Champions.Alchemist);
+        jumpAttack_var = new RangedSkill(0, false, new Vector2(4, -9), jumpAttackArrowPrefab, 0.2f, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, 0, 100, ChampionAndTrinketDatabase.Champions.Alchemist, false);
 
-        skill1_var = new RangedSkill(AnimationController.AnimatorStates.Skill1, false, new Vector2(9, 0), greatArrowPrefab, delay_Skill1, damage_Skill1, Skill.SkillEffect.knockback, 0, 0, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, 7);
-        skill2_var = new Skill(AnimationController.AnimatorStates.Skill2, cooldown_Skill2);
-        skill3_var = new MeleeSkill(AnimationController.AnimatorStates.Skill3, delay_Skill3, damage_Skill3, Skill.SkillEffect.stun, 3, 0, stamina_Skill3, Skill.SkillTarget.MultiTarget, cooldown_Skill3, 3);
-        skill4_var = new Skill(AnimationController.AnimatorStates.Skill4, cooldown_Skill4);
+        skill1_var = new RangedSkill(ChampionAndTrinketDatabase.Keys.Skill1, false, new Vector2(9, 0), greatArrowPrefab, delay_Skill1, damage_Skill1, Skill.SkillEffect.knockback, 0, 0, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, 7, ChampionAndTrinketDatabase.Champions.Alchemist);
+        skill2_var = new Skill(ChampionAndTrinketDatabase.Keys.Skill2, ChampionAndTrinketDatabase.Champions.Alchemist, cooldown_Skill2);
+        skill3_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.Skill3, delay_Skill3, damage_Skill3, Skill.SkillEffect.stun, 3, 0, stamina_Skill3, Skill.SkillTarget.MultiTarget, cooldown_Skill3, 3, ChampionAndTrinketDatabase.Champions.Alchemist);
+        skill4_var = new Skill(ChampionAndTrinketDatabase.Keys.Skill4, ChampionAndTrinketDatabase.Champions.Alchemist, cooldown_Skill4);
     }
 
     protected override void FixedUpdate()
@@ -72,7 +72,7 @@ public class ArcherController : ChampionClassController
         if (CanPerformAction(true) && CanPerformAttack() && skill2_var.notOnCooldown && stats.LoseStamina(stamina_Skill2))
         {
             //Puts down a trap
-            hotbar.StartCoroutine(hotbar.flashBlack(skill2_var.name));
+            hotbar.StartCoroutine(hotbar.flashBlack(skill2_var.type));
             animCon.trigSkill2 = true;
             Invoke("PlaceTrap", delay_Skill2);
         }
@@ -99,7 +99,7 @@ public class ArcherController : ChampionClassController
     {
         if (CanPerformAction(true) && CanPerformAttack() && skill4_var.notOnCooldown && stats.LoseStamina(stamina_Skill4))
         {
-            hotbar.StartCoroutine(hotbar.flashBlack(skill4_var.name));
+            hotbar.StartCoroutine(hotbar.flashBlack(skill4_var.type));
             PlaceTrap();
             //Jump back while being invincible
             if (disengageRoutine != null)

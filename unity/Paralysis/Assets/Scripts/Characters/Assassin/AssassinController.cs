@@ -18,14 +18,14 @@ public class AssassinController : ChampionClassController
         animCon = graphics.GetComponent<AssassinAnimationController>();
 
         // Instantiate skill variables
-        basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, MeeleRange);
-        basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack2, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack2, MeeleRange);
-        basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack3, delay_BasicAttack3, damage_BasicAttack3, Skill.SkillEffect.bleed, 6, 1, stamina_BasicAttack3, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack3, MeeleRange);
+        basicAttack1_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, MeeleRange, ChampionAndTrinketDatabase.Champions.Alchemist);
+        basicAttack2_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack2, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack2, MeeleRange, ChampionAndTrinketDatabase.Champions.Alchemist);
+        basicAttack3_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.BasicAttack3, delay_BasicAttack3, damage_BasicAttack3, Skill.SkillEffect.bleed, 6, 1, stamina_BasicAttack3, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack3, MeeleRange, ChampionAndTrinketDatabase.Champions.Alchemist);
 
-        skill1_var = new MeleeSkill(AnimationController.AnimatorStates.Skill1, delay_Skill1, damage_Skill1, Skill.SkillEffect.nothing, 0, 0, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, MeeleRange);
-        skill2_var = new Skill(AnimationController.AnimatorStates.Skill2, cooldown_Skill2);
-        skill3_var = new Skill(AnimationController.AnimatorStates.Skill3, cooldown_Skill3);
-        skill4_var = new RangedSkill(AnimationController.AnimatorStates.Skill4, true, new Vector2(7, 0), bulletPrefab, delay_Skill4, damage_Skill4, Skill.SkillEffect.knockback, 2, 0, stamina_Skill4, Skill.SkillTarget.SingleTarget, cooldown_Skill4, 5);
+        skill1_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.Skill1, delay_Skill1, damage_Skill1, Skill.SkillEffect.nothing, 0, 0, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, MeeleRange, ChampionAndTrinketDatabase.Champions.Alchemist);
+        skill2_var = new Skill(ChampionAndTrinketDatabase.Keys.Skill2, ChampionAndTrinketDatabase.Champions.Alchemist, cooldown_Skill2);
+        skill3_var = new Skill(ChampionAndTrinketDatabase.Keys.Skill3, ChampionAndTrinketDatabase.Champions.Alchemist, cooldown_Skill3);
+        skill4_var = new RangedSkill(ChampionAndTrinketDatabase.Keys.Skill4, true, new Vector2(7, 0), bulletPrefab, delay_Skill4, damage_Skill4, Skill.SkillEffect.knockback, 2, 0, stamina_Skill4, Skill.SkillTarget.SingleTarget, cooldown_Skill4, 5, ChampionAndTrinketDatabase.Champions.Alchemist);
     }
 
     protected override void Update()
@@ -45,7 +45,7 @@ public class AssassinController : ChampionClassController
             if (animCon.m_Grounded && stats.invisible)
             {
                 // do ambush attack
-                DoMeleeSkill(ref animCon.trigSkill3, new MeleeSkill(0, delay_Skill3, ambushAttack_damage, Skill.SkillEffect.nothing, 3, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, 0, MeeleRange));
+                DoMeleeSkill(ref animCon.trigSkill3, new MeleeSkill(0, delay_Skill3, ambushAttack_damage, Skill.SkillEffect.nothing, 3, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, 0, MeeleRange, ChampionAndTrinketDatabase.Champions.Alchemist));
                 // reset Combo
                 AbortCombo();
                 // end invisibility
@@ -74,7 +74,7 @@ public class AssassinController : ChampionClassController
     {
         if (CanPerformAction(true) && CanPerformAttack() && skill2_var.notOnCooldown && stats.LoseStamina(stamina_Skill2))
         {
-            hotbar.StartCoroutine(hotbar.flashBlack(skill2_var.name));
+            hotbar.StartCoroutine(hotbar.flashBlack(skill2_var.type));
             if (stats.invisible) stats.StopInvisible();
             StartCoroutine(SetSkillOnCooldown(skill2_var));
             animCon.trigSkill2 = true;
@@ -98,7 +98,7 @@ public class AssassinController : ChampionClassController
     {
         if (CanPerformAction(true) && CanPerformAttack() && skill3_var.notOnCooldown && stats.LoseStamina(stamina_Skill3))
         {
-            hotbar.StartCoroutine(hotbar.flashBlack(skill3_var.name));
+            hotbar.StartCoroutine(hotbar.flashBlack(skill3_var.type));
             if (stats.invisible) stats.StopInvisible();
             StartCoroutine(ShadowStepHit());
         }

@@ -89,6 +89,10 @@ public class ProjectileBehaviour : MonoBehaviour
     {
         // Begin cast
         CastFinished = false;
+        
+        //Show castBAr
+        GameObject castBar = GameObject.FindGameObjectWithTag("CastBar");
+        castBar.GetComponent<CastBarBehaviour>().startCast(SkillValues.castTime, SkillValues.name);
 
         // Wait till cast ends
         yield return new WaitForSeconds(SkillValues.castTime);
