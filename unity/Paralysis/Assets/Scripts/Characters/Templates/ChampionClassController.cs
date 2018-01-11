@@ -308,7 +308,9 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 		if (!fallingThrough)
 		{
 			RaycastHit2D hit = Physics2D.Raycast (m_GroundCheck.position, transform.up * -1,
-				                  1f, m_fallThroughMask);		
+				                  1f, m_fallThroughMask);
+
+			//If the raycast hit and we are grounded make the player fall through
 			if ((hit && animCon.m_Grounded)) 
 			{
 				StartCoroutine (fallThrough(hit.collider.gameObject));
