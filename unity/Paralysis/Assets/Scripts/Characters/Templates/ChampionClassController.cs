@@ -730,6 +730,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         // Wait till cast is finished to interrupt new skills/actions
         if (skillToPerform.castTime > 0)
         {
+            // Stop Moving
+            m_Rigidbody2D.velocity = Vector2.zero;
             casting = true;
             stats.immovable = true;
             yield return new WaitUntil(() => !projectile.CastFinished || projectile.Interrupted); // Wait till cast has started
