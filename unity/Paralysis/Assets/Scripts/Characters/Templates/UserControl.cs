@@ -8,7 +8,7 @@ public abstract class UserControl : MonoBehaviour
     protected CharacterStats CharStats;
     protected float lastVerticalValue = 0;                      // Saves the last value for the jump-sticks horizontal input
 
-	protected bool inputJump;
+    protected bool inputJump;
     protected bool inputAttack;
     protected int inputDashDirection = 0;
     protected bool inputDown;
@@ -20,9 +20,9 @@ public abstract class UserControl : MonoBehaviour
     protected bool inputTrinket1;
     protected bool inputTrinket2;
 
-	private const float fallThroughTime = .2f;
-	private float fallThroughTimer;
-	private bool inputWasDown = false;
+    private const float fallThroughTime = .2f;
+    private float fallThroughTimer;
+    private bool inputWasDown = false;
 
     #region Enums
 
@@ -102,8 +102,8 @@ public abstract class UserControl : MonoBehaviour
             if (inputSkill3) GoCharacter.Skill3();
             if (inputSkill4) GoCharacter.Skill4();
 
-			// Checks if the player entered the correct sequence to fall through platform
-			CheckFallThrough();
+            // Checks if the player entered the correct sequence to fall through platform
+            CheckFallThrough();
 
             if (!inputDown)
             {
@@ -114,37 +114,37 @@ public abstract class UserControl : MonoBehaviour
         }
     }
 
-	/// <summary>
-	/// Checks to see if the player has tapped fall through button
-	/// Returns whether or not the character actually fell through
-	/// </summary>
-	protected virtual bool CheckFallThrough()
-	{
-		//Occurs whent the last input was down and we released
-		if (inputDown && fallThroughTimer == 0)
-		{
-			fallThroughTimer = Time.time;
-			inputWasDown = true;
-			return false;
-		}
+    /// <summary>
+    /// Checks to see if the player has tapped fall through button
+    /// Returns whether or not the character actually fell through
+    /// </summary>
+    protected virtual bool CheckFallThrough()
+    {
+        //Occurs whent the last input was down and we released
+        if (inputDown && fallThroughTimer == 0)
+        {
+            fallThroughTimer = Time.time;
+            inputWasDown = true;
+            return false;
+        }
 
-		//If input was down and isn't anymore check how much time
-		//has passed, to see if we want to fall through
-		if(inputWasDown && !inputDown)
-		{
-			inputWasDown = false;
-			if (Time.time - fallThroughTimer <= fallThroughTime)
-			{
-				fallThroughTimer = 0;
-				return GoCharacter.CheckFallThrough();
-			}
-			else
-			{
-				fallThroughTimer = 0;
-			}
-		}
-		return false;
-	}
+        //If input was down and isn't anymore check how much time
+        //has passed, to see if we want to fall through
+        if(inputWasDown && !inputDown)
+        {
+            inputWasDown = false;
+            if (Time.time - fallThroughTimer <= fallThroughTime)
+            {
+                fallThroughTimer = 0;
+                return GoCharacter.CheckFallThrough();
+            }
+            else
+            {
+                fallThroughTimer = 0;
+            }
+        }
+        return false;
+    }
 
     protected virtual void ResetValues()
     {
@@ -278,7 +278,7 @@ public abstract class UserControl : MonoBehaviour
 
         if (!inputJump)
         {
-            if ( lastVerticalValue >= 0)
+            if (lastVerticalValue >= 0)
                 inputJump = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()) < 0;
         }
         if (!CharStats.stunned && !CharStats.knockedBack)
