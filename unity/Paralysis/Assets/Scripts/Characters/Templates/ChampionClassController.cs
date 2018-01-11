@@ -322,11 +322,21 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     protected virtual IEnumerator fallThrough(GameObject fallThroughObj)
     {
+        //Get all the colliders and set them to ignore the falling through obj
         fallingThrough = true;
-        Physics2D.IgnoreLayerCollision (gameObject.layer, fallThroughObj.layer, fallingThrough);
+        Collider2D[] colliders = GetComponents<Collider2D>();
+        foreach(Collider2D collider in colliders)
+        {
+            Physics2D.IgnoreCollision(collider, fallThroughObj.GetComponent<Collider2D>(), fallingThrough);
+        }
         yield return new WaitForSeconds(FallThroughDuration);
+
+        //Then set them back
         fallingThrough = false;
-        Physics2D.IgnoreLayerCollision (gameObject.layer, fallThroughObj.layer, fallingThrough);
+        foreach(Collider2D collider in colliders)
+        {
+            Physics2D.IgnoreCollision(collider, fallThroughObj.GetComponent<Collider2D>(), fallingThrough);
+        }
     }
 
     protected virtual IEnumerator JumpAttack()
