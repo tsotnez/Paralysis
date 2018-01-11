@@ -19,7 +19,7 @@ public class AssassinController : ChampionClassController
         base.Start();
         animCon = graphics.GetComponent<AssassinAnimationController>();
 
-        //Instantiate skill variables
+        // Instantiate skill variables
         basicAttack1_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, MeeleRange);
         basicAttack2_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack2, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack2, MeeleRange);
         basicAttack3_var = new MeleeSkill(AnimationController.AnimatorStates.BasicAttack3, delay_BasicAttack3, damage_BasicAttack3, Skill.SkillEffect.bleed, 6, 1, stamina_BasicAttack3, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack3, MeeleRange);
@@ -33,13 +33,33 @@ public class AssassinController : ChampionClassController
     protected override void Update()
     {
         base.Update();
-        if (stats.stunned && stats.invisible) stats.StopInvisible();
-        if (stats.knockedBack && stats.invisible) stats.StopInvisible();
+        if ((stats.knockedBack || stats.stunned) && stats.invisible) stats.StopInvisible();
     }
 
     #endregion
 
-    #region Skills
+    #region Basic Attack & Skills
+
+
+    public override void BasicAttack()
+    {
+        if (CanPerformAttack())
+        {
+            if (animCon.m_Grounded && stats.invisible)
+            {
+                // do ambush attack
+                DoMeleeSkill(ref animCon.trigSkill3, new MeleeSkill(0, delay_Skill3, ambushAttack_damage, Skill.SkillEffect.nothing, 3, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, 0, MeeleRange));
+                //reset Combo
+                AbortCombo();
+                //end invisibility
+                stats.StopInvisible();
+            }
+            else
+            {
+                DoComboBasicAttack(ref animCon.trigBasicAttack1, ref animCon.trigBasicAttack2, ref animCon.trigBasicAttack3);
+            }
+        }
+    }
 
     /// <summary>
     /// Stun attack
@@ -94,71 +114,6 @@ public class AssassinController : ChampionClassController
     {
         if (stats.invisible) stats.StopInvisible();
         DoRangeSkill(ref animCon.trigSkill4, (RangedSkill)skill4_var);
-    }
-
-    #endregion
-
-    #region Basic Attack
-
-    public override void BasicAttack()
-    {
-        if (CanPerformAttack() && !dashing)
-        {
-            if (!animCon.m_Grounded && !stats.invisible && doubleJumped) //Jump attack only when double jumped
-            {
-                //Jump Attack
-                StartCoroutine(JumpAttack());
-                //reset combo
-                AbortCombo();
-            }
-            else if (animCon.m_Grounded && stats.invisible)
-            {
-                attackCount = 4;
-            }
-            // Determining the attackCount
-            else if (animCon.m_Grounded && attackCount == 0 && !inCombo)
-            {
-                //First attack - initialize combo coroutine
-                ResetComboTime();
-                attackCount = 1;
-            }
-            else if (animCon.m_Grounded && inCombo)
-            {
-                //Already in combo
-                ResetComboTime();
-                attackCount++;
-            }
-
-            //Playing the correct animation depending on the attackCount and setting attacking status
-            if (stats.HasSufficientStamina(stamina_BasicAttack1))
-            {
-                switch (attackCount)
-                {
-                    case 1:
-                        // do basic attack
-                        DoMeleeSkill(ref animCon.trigBasicAttack1, (MeleeSkill)basicAttack1_var);
-                        break;
-                    case 2:
-                        // do basic attack
-                        DoMeleeSkill(ref animCon.trigBasicAttack2, (MeleeSkill)basicAttack2_var);
-                        break;
-                    case 3:
-                        // do bleed attack
-                        DoMeleeSkill(ref animCon.trigBasicAttack3, (MeleeSkill)basicAttack3_var);
-                        //reset Combo
-                        AbortCombo();
-                        break;
-                    case 4:
-                        // do ambush attack
-                        DoMeleeSkill(ref animCon.trigSkill3, new MeleeSkill(0, delay_Skill3, ambushAttack_damage, Skill.SkillEffect.nothing, 3, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, 0, MeeleRange));
-                        //reset Combo
-                        AbortCombo();
-                        //end invisibility
-                        stats.StopInvisible();
-                        break;
-                }
-            }
-        }
     }
 
     #endregion
