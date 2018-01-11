@@ -269,7 +269,6 @@ namespace UnityEngine.EventSystems
                 return false;
 
             // Debug.Log(m_ProcessingEvent.rawType + " axis:" + m_AllowAxisEvents + " value:" + "(" + x + "," + y + ")");
-            Debug.Log(movement.y);
             var axisEventData = GetAxisEventData(movement.x, movement.y, 0.4f);
             ExecuteEvents.Execute(eventSystem.currentSelectedGameObject, axisEventData, ExecuteEvents.moveHandler);
             if (!similarDir)
