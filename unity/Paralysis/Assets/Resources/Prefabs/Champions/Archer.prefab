@@ -552,24 +552,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 17920
   m_whatToHit:
     serializedVersion: 2
     m_Bits: 4096
+  m_fallThroughMask:
+    serializedVersion: 2
+    m_Bits: 16384
   m_MaxSpeed: 6
   m_MoveSpeedWhileAttacking: 5
   m_MoveSpeedWhileBlocking: 0
+  CanTurnAroundWhileBlocking: 1
   m_JumpForce: 700
   m_DoubleJumpForce: 600
   m_jumpAttackRadius: 1
   m_jumpAttackForce: 10
   m_dashSpeed: 12
   m_dashStaminaCost: 10
-  m_CanDashForward: 0
-  m_ComboExpire: 1
+  CanDashForward: 0
+  ComboExpire: 1
   delay_BasicAttack1: 0.3
   delay_BasicAttack2: 0
   delay_BasicAttack3: 0
+  delay_JumpAttack: 0
   delay_Skill1: 0.4
   delay_Skill2: 0.4
   delay_Skill3: 0.4
@@ -598,13 +603,13 @@ MonoBehaviour:
   cooldown_Skill2: 10
   cooldown_Skill3: 15
   cooldown_Skill4: 15
+  className: 1
+  hotbar: {fileID: 0}
   Trinket1: {fileID: 0}
   Trinket2: {fileID: 0}
-  className: 1
-  m_FacingRight: 0
+  FacingRight: 1
   dashing: 0
   blocking: 0
-  hotbar: {fileID: 0}
   standartArrowPrefab: {fileID: 1365143412859840, guid: 7de1c85d9954b954a93e03f5597f6e80,
     type: 2}
   jumpAttackArrowPrefab: {fileID: 1365143412859840, guid: b78f2406196d67d4e8e70af69e1138c6,
@@ -650,6 +655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a70140056e40f68489e513993cf476c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DebugLogging: 0
   CharacterClass: archer
   CharacterSkin: basic
   GeneralSpeed: 0
@@ -747,6 +753,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  setByRPC: 0
   m_Grounded: 0
   m_vSpeed: 0
   m_Speed: 0
@@ -767,7 +774,9 @@ MonoBehaviour:
   trigJumpAttack: 0
   trigJumpAttackEnd: 0
   trigDash: 0
+  trigDashEnd: 0
   trigDashForward: 0
+  trigDashForwardEnd: 0
   trigHit: 0
 --- !u!114 &114447478334566738
 MonoBehaviour:
@@ -825,9 +834,9 @@ MonoBehaviour:
   bleeding: 0
   knockedBack: 0
   immovable: 0
-  slowFactor: 1
   invincible: 0
   reflect: 0
+  invisible: 0
   knockBackForceX: 6
   knockBackForceY: 12
   hotbar: {fileID: 0}

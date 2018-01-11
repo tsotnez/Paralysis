@@ -848,10 +848,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 17920
   m_whatToHit:
     serializedVersion: 2
     m_Bits: 0
+  m_fallThroughMask:
+    serializedVersion: 2
+    m_Bits: 16384
   m_MaxSpeed: 5
   m_MoveSpeedWhileAttacking: 0.5
   m_MoveSpeedWhileBlocking: 3
@@ -971,7 +974,8 @@ MonoBehaviour:
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1

@@ -11,7 +11,7 @@ public abstract class UserControl : MonoBehaviour
     protected bool inputJump;
     protected bool inputAttack;
     protected int inputDashDirection = 0;
-    protected bool inputBlock;
+    protected bool inputDown;
     protected float inputMove = 0;
     protected bool inputSkill1;
     protected bool inputSkill2;
@@ -57,6 +57,13 @@ public abstract class UserControl : MonoBehaviour
                 CheckInputForPs4Controller();
                 break;
         }
+
+        //If the player isn't falling through, then check blocking
+        if(!CheckFallThrough())
+        {
+            GoCharacter.ManageDefensive(inputDown);
+        }
+
     }
 
     protected void FixedUpdate()
@@ -109,13 +116,28 @@ public abstract class UserControl : MonoBehaviour
             if (inputSkill3) GoCharacter.Skill3();
             if (inputSkill4) GoCharacter.Skill4();
 
-            if (!inputBlock)
+            if (!inputDown)
             {
                 GoCharacter.Jump(inputJump);
                 if (inputDashDirection != 0) GoCharacter.StartCoroutine(GoCharacter.Dash(inputDashDirection));
             }
             
         }
+    }
+
+    /// <summary>
+    /// Checks to see if the player has tapped fall through button
+    /// Returns whether or not the character actually fell through
+    /// </summary>
+    protected virtual bool CheckFallThrough()
+    {
+        //Occurs whent the last input was down and the play selects
+        //dash in any direcction
+        if (inputDown && inputDashDirection != 0)
+        {
+            return GoCharacter.CheckFallThrough();
+        }
+        return false;
     }
 
     protected virtual void ResetValues()
@@ -186,10 +208,8 @@ public abstract class UserControl : MonoBehaviour
             inputJump = Input.GetButtonDown("Jump");
         }
         if (!CharStats.stunned && !CharStats.knockedBack)
-            inputBlock = Input.GetButton("Defensive");
-        else inputBlock = false;
-
-        GoCharacter.ManageDefensive(inputBlock);
+            inputDown = Input.GetButton("Defensive");
+        else inputDown = false;
     }
 
     #endregion
@@ -254,11 +274,10 @@ public abstract class UserControl : MonoBehaviour
                 inputJump = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()) < 0;
         }
         if (!CharStats.stunned && !CharStats.knockedBack)
-            inputBlock = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()) > 0;
-        else inputBlock = false;
+            inputDown = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()) > 0;
+        else inputDown = false;
 
         lastVerticalValue = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
-        GoCharacter.ManageDefensive(inputBlock);
     }
 
     #endregion
@@ -310,11 +329,10 @@ public abstract class UserControl : MonoBehaviour
                 inputJump = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()) < 0;
         }
         if (!CharStats.stunned && !CharStats.knockedBack)
-            inputBlock = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()) > 0;
-        else inputBlock = false;
+            inputDown = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()) > 0;
+        else inputDown = false;
 
         lastVerticalValue = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
-        GoCharacter.ManageDefensive(inputBlock);
     }
 
     #endregion
