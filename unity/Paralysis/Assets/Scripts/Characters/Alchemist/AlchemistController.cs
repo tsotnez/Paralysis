@@ -79,18 +79,18 @@ public class AlchemistController : ChampionClassController
         {
             // Get the direction first --> save the effects on skill enter
             TeleportDirection direction = TeleportDirection.forward;
-            // If standing still, teleports in the direction he is facing.
+            // If ducking, teleports on lower platform.
             if (animCon.statBlock)
             {
                 direction = TeleportDirection.down;
             }
             // If jumping, teleports on top platform.
-            else if (!animCon.m_Grounded)
+            else if (!animCon.m_Grounded && animCon.m_Speed == 0)
             {
                 direction = TeleportDirection.up;
             }
-            // If ducking, teleports on lower platform.
-            else if (animCon.m_Grounded)
+            // If standing still, teleports in the direction he is facing.
+            else
             {
                 direction = TeleportDirection.forward;
             }
