@@ -200,18 +200,18 @@ namespace UnityEngine.EventSystems
         private Vector2 GetRawMoveVector()
         {
             Vector2 move = Vector2.zero;
-            move.x = Input.GetAxisRaw(m_HorizontalAxis);
-            move.y = Input.GetAxisRaw(m_VerticalAxis);
+            move.x = Input.GetAxis(m_HorizontalAxis);
+            move.y = Input.GetAxis(m_VerticalAxis);
 
             //Jan --- Added because joystick input was weird and too low sometimes //////////
-            if (move.x > 0.01)
+            if (move.x > 0)
                 move.x = 1;
-            if (move.x < -0.01)
+            if (move.x < -0)
                 move.x = -1;
 
-            if (move.y > 0.02)
+            if (move.y > 0)
                 move.y = 1;
-            if (move.y < -0.02)
+            if (move.y < -0)
                 move.y = -1;
             //////////////////////////////////////////////////////////////////////////////////
 
@@ -269,7 +269,6 @@ namespace UnityEngine.EventSystems
                 return false;
 
             // Debug.Log(m_ProcessingEvent.rawType + " axis:" + m_AllowAxisEvents + " value:" + "(" + x + "," + y + ")");
-            Debug.Log(movement.y);
             var axisEventData = GetAxisEventData(movement.x, movement.y, 0.4f);
             ExecuteEvents.Execute(eventSystem.currentSelectedGameObject, axisEventData, ExecuteEvents.moveHandler);
             if (!similarDir)

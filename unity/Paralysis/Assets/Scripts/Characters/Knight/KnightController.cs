@@ -58,9 +58,9 @@ public class KnightController : ChampionClassController
     /// strong hit: 10 dmg
     /// </summary>
     /// <param name="shouldAttack"></param>
-    public override void BasicAttack(bool shouldAttack)
+    public override void BasicAttack()
     {
-        DoComboBasicAttack(shouldAttack, ref animCon.trigBasicAttack1, ref animCon.trigBasicAttack1, ref animCon.trigBasicAttack2);
+        DoComboBasicAttack(ref animCon.trigBasicAttack1, ref animCon.trigBasicAttack1, ref animCon.trigBasicAttack2);
     }
 
     /// <summary>

@@ -213,9 +213,6 @@ public abstract class AnimationController : MonoBehaviour
             else if (AnimationType == TypeOfAnimation.EndAnimation)
                 atlas = animationSpriteEnd[animation];
 
-            //set speed
-            float delay = animationDuration[animation] / (float)atlas.spriteCount;
-
             // Calculating AnimationPlayType
             AnimationPlayTypes AnimationPlayType;
             if (ForceAnimationPlayType == AnimationPlayTypes.Nothing)
@@ -241,7 +238,7 @@ public abstract class AnimationController : MonoBehaviour
             // stop running coroutine
             if (AnimationRoutine != null) StopCoroutine(AnimationRoutine);
             // start next animation as coroutine
-            AnimationRoutine = StartCoroutine(PlayAnimation(animation, atlas, delay, AnimationType, AnimationPlayType));
+            AnimationRoutine = StartCoroutine(PlayAnimation(animation, atlas, animationDuration[animation], AnimationType, AnimationPlayType));
         }
         else
         {
@@ -257,11 +254,16 @@ public abstract class AnimationController : MonoBehaviour
         if (DebugLogging)
         {
             Debug.Log("Character: " + CharacterClass + "| Animation: " + animation.ToString() + " with AnimationType: " + AnimationType.ToString() + " and AnimationPlayType: " + AnimationPlayType.ToString() + " is now running");
+            Debug.Log("Delay: " + delay + " - SpriteCount: " + atlas.spriteCount + " --> Delay per Sprite: " + (delay / (float)atlas.spriteCount));
         }
         bool debugTmp = false;
 
+
         // Handle audio
         PlayAnimationAudio(animation);
+
+        // Calculate correct delay
+        delay = (delay / (float)atlas.spriteCount);
 
         // Add end to the filename if its an EndAnimation
         string SpriteNameAddition = "";
@@ -295,7 +297,7 @@ public abstract class AnimationController : MonoBehaviour
 
                 if (DebugLogging)
                 {
-                    Debug.Log("Active Sprite: " + animation.ToString() + SpriteNameAddition + "_" + i.ToString("D2"));
+                    Debug.Log("Active Sprite: " + animation.ToString() + SpriteNameAddition + "_" + i.ToString("D2") + " at Time: " + DateTime.Now.TimeOfDay);
                 }
 
                 // Unload sprite

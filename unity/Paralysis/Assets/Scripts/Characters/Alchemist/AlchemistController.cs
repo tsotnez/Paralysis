@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 public class AlchemistController : ChampionClassController
@@ -26,7 +23,7 @@ public class AlchemistController : ChampionClassController
         basicAttack1_var = new RangedSkill(AnimationController.AnimatorStates.BasicAttack1, true, new Vector2(9, 0), GoBasicAttack, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, 7f);
 
         skill1_var = new RangedSkill(AnimationController.AnimatorStates.Skill1, true, new Vector2(9, 0), GoSkill1_Frostbolt, delay_Skill1, damage_Skill1, Skill.SkillEffect.slow, 3, 0.5f, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, 7f, true, CastTime_Skill1);
-        skill2_var = new Skill(AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.SkillEffect.nothing, 0,0,stamina_Skill2, Skill.SkillTarget.SingleTarget, cooldown_Skill2, 12f, false);
+        skill2_var = new Skill(AnimationController.AnimatorStates.Skill2, delay_Skill2, damage_Skill2, Skill.SkillEffect.nothing, 0, 0, stamina_Skill2, Skill.SkillTarget.SingleTarget, cooldown_Skill2, 12f, false);
         skill3_var = new RangedSkill(AnimationController.AnimatorStates.Skill3, true, new Vector2(9, 0), GoSkill3_Stun, delay_Skill3, damage_Skill3, Skill.SkillEffect.stun, 3, 0, stamina_Skill3, Skill.SkillTarget.SingleTarget, cooldown_Skill3, 7f, true, CastTime_Skill3);
         skill4_var = new MeleeSkill(AnimationController.AnimatorStates.Skill4, delay_Skill4, damage_Skill4, Skill.SkillEffect.knockback, 0, 0, stamina_Skill4, Skill.SkillTarget.MultiTarget, cooldown_Skill4, 3f);
     }
@@ -38,16 +35,10 @@ public class AlchemistController : ChampionClassController
     /// <summary>
     /// Only Basic Attack
     /// </summary>
-    /// <param name="shouldAttack"></param>
-    public override void BasicAttack(bool shouldAttack)
+    public override void BasicAttack()
     {
-        if (shouldAttack)
-        {
-            if (animCon.m_Grounded) // Basic Attack
-                DoRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill)basicAttack1_var);
-            else if (doubleJumped) // Jump Attack
-                StartCoroutine(JumpAttack());
-        }
+        if (animCon.m_Grounded) // Basic Attack
+            DoRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill)basicAttack1_var);
     }
 
     /// <summary>
@@ -79,18 +70,18 @@ public class AlchemistController : ChampionClassController
         {
             // Get the direction first --> save the effects on skill enter
             TeleportDirection direction = TeleportDirection.forward;
-            // If standing still, teleports in the direction he is facing.
+            // If ducking, teleports on lower platform.
             if (animCon.statBlock)
             {
                 direction = TeleportDirection.down;
             }
             // If jumping, teleports on top platform.
-            else if (!animCon.m_Grounded)
+            else if (!animCon.m_Grounded && animCon.m_Speed == 0)
             {
                 direction = TeleportDirection.up;
             }
-            // If ducking, teleports on lower platform.
-            else if (animCon.m_Grounded)
+            // If standing still, teleports in the direction he is facing.
+            else
             {
                 direction = TeleportDirection.forward;
             }
@@ -98,6 +89,38 @@ public class AlchemistController : ChampionClassController
             StartCoroutine(DoSkill2(direction));
         }
     }
+
+    /// <summary>
+    /// Alchemist casts a spell at a fixed distance and altitude.
+    /// The first enemy stuck by this will be stunned.
+    /// 
+    /// Damage: 5
+    /// Effect: stun
+    /// Cooldown: 15s
+    /// Stamina: 15
+    /// </summary>
+    public override void Skill3()
+    {
+        DoRangeSkill(ref animCon.trigSkill3, (RangedSkill)skill3_var);
+    }
+
+    /// <summary>
+    /// Alchemist uses his alchemy to explode and reconstruct himnself.
+    /// As he explodes, any enemy within the radius will receive a knockback.
+    /// 
+    /// Damage: 10
+    /// Effect: knockback
+    /// Cooldown: 25s
+    /// Stamina: 20
+    /// </summary>
+    public override void Skill4()
+    {
+        DoMeleeSkill(ref animCon.trigSkill4, (MeleeSkill)skill4_var);
+    }
+
+    #endregion
+
+    #region Teleport Skill
 
     private enum TeleportDirection
     {
@@ -108,13 +131,13 @@ public class AlchemistController : ChampionClassController
     {
         // trigger animation for getting invisible
         animCon.trigSkill2 = true;
-        
+
         // the alchemist is invincible while teleporting
         stats.invincible = true;
         stats.immovable = true;
         m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y); // Stop moving
 
-        // Freeze Rigid that it can not fall down while AnimationEnd is played
+        // Freeze Rigid that it can not fall down while Animation is played
         RigidbodyConstraints2D oldConstraints = m_Rigidbody2D.constraints;
         m_Rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
 
@@ -209,34 +232,5 @@ public class AlchemistController : ChampionClassController
         StartCoroutine(SetSkillOnCooldown(skill2_var));
     }
 
-    /// <summary>
-    /// Alchemist casts a spell at a fixed distance and altitude.
-    /// The first enemy stuck by this will be stunned.
-    /// 
-    /// Damage: 5
-    /// Effect: stun
-    /// Cooldown: 15s
-    /// Stamina: 15
-    /// </summary>
-    public override void Skill3()
-    {
-        DoRangeSkill(ref animCon.trigSkill3, (RangedSkill)skill3_var);
-    }
-
-    /// <summary>
-    /// Alchemist uses his alchemy to explode and reconstruct himnself.
-    /// As he explodes, any enemy within the radius will receive a knockback.
-    /// 
-    /// Damage: 10
-    /// Effect: knockback
-    /// Cooldown: 25s
-    /// Stamina: 20
-    /// </summary>
-    public override void Skill4()
-    {
-        DoMeleeSkill(ref animCon.trigSkill4, (MeleeSkill)skill4_var);
-    }
-
     #endregion
-
 }

@@ -39,6 +39,10 @@ public abstract class ChampionAnimationController : AnimationController
     public bool trigDashForwardEnd = false;
     public bool trigHit = false;
 
+    // Revert to Idle Frames
+    private int RevertIdleNeededFrames = 3;
+    private int RevertIdleActualFrames = 0;
+
     private void Awake()
     {
         view = GetComponent<PhotonView>();
@@ -209,7 +213,7 @@ public abstract class ChampionAnimationController : AnimationController
                 trigSkill4 = false;
                 StartAnimation(AnimatorStates.Skill4);
             }
-            else if(statBlock && m_Speed <= 0)
+            else if (statBlock && m_Speed <= 0)
                 StartAnimation(AnimatorStates.Block);
             else if (statBlock && m_Speed > 0.001)
                 StartAnimation(AnimatorStates.BlockMove);
@@ -224,7 +228,17 @@ public abstract class ChampionAnimationController : AnimationController
             else if (m_Grounded && m_Speed > 0)
                 StartAnimation(AnimatorStates.Run);
             else if (m_Grounded)
-                StartAnimation(AnimatorStates.Idle);
+            {
+                if (RevertIdleActualFrames >= RevertIdleNeededFrames)
+                {
+                    StartAnimation(AnimatorStates.Idle);
+                    RevertIdleActualFrames = 0;
+                }
+                else
+                {
+                    RevertIdleActualFrames++;
+                }
+            }
         }
     }
 

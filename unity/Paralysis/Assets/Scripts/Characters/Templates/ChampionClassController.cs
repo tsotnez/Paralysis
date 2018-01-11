@@ -154,11 +154,11 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     public bool FacingRight = true;                                         // For determining which way the player is currently facing.
     public bool dashing = false;                                            // true while dashing
     public bool blocking = false;                                           // Is the character blocking?
+    public bool doubleJumped = false;                                       // Has the character double jumped already?
     protected bool casting = false;                                         // Is the character casting (RangeAttack)?
-    protected bool applyDashingForce = false;                               // true while force for dashing shall be applied
-    protected bool doubleJumped = false;                                    // Has the character double jumped already?
     protected bool jumpAttacking = false;                                   // True while the character is jump attacking
-    protected bool fallingThrough = false;                                    // True while we are falling through a platform
+    protected bool fallingThrough = false;                                  // True while we are falling through a platform
+    private bool applyDashingForce = false;                                 // true while force for dashing shall be applieds
 
     //Coroutines
     protected Coroutine comboRoutine;
@@ -181,7 +181,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     protected virtual void Start()
     {
-        //Refresh manager instance list of players
+        // Refresh manager instance list of players
         if (!PhotonNetwork.offlineMode)
             photonView.RPC("OnNewPlayerInstantiated", PhotonTargets.All);
 
@@ -204,17 +204,17 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             }
         }
 
-        //Reset doubleJumped when touching ground
+        // Reset doubleJumped when touching ground
         if (animCon.m_Grounded) doubleJumped = false;
 
-        //Disable shadow if mid air
+        // Disable shadow if mid air
         if (shadowRenderer != null)
             shadowRenderer.enabled = animCon.m_Grounded;
 
         // Determines the vertical speed
         animCon.m_vSpeed = m_Rigidbody2D.velocity.y;
 
-        //Move the character if dashing
+        // Move the character if dashing
         if (applyDashingForce && animCon.m_Grounded)
         {
             m_Rigidbody2D.velocity = new Vector2(m_dashSpeed, m_Rigidbody2D.velocity.y);
@@ -258,7 +258,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             if (move > 0 && !FacingRight)
             {
                 if (!CanPerformAttack()) return; // prevent player from turning around while attacking
-                // ... flip the player.
+                // flip the player.
                 Flip();
             }
             // Otherwise if the input is moving the player left and the player is facing right...
@@ -339,14 +339,15 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         }
     }
 
-    protected virtual IEnumerator JumpAttack()
+    public virtual IEnumerator JumpAttack()
     {
         // Check if enough stamina is left
-        if (stats.LoseStamina(stamina_JumpAttack))
+        if (CanPerformAttack() && stats.LoseStamina(stamina_JumpAttack))
         {
             // Set status variable
             jumpAttacking = true;
             animCon.trigJumpAttack = true;
+            yield return new WaitForSeconds(jumpAttack_var.delay);
 
             // Calculate direction
             int direction;
@@ -355,9 +356,9 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
             // Add downwards force
             m_Rigidbody2D.velocity = new Vector2(4 * direction, -m_jumpAttackForce);
-            yield return new WaitUntil(() => animCon.m_Grounded); // Jump attacking as long as not grounded
-            m_Rigidbody2D.velocity = Vector2.zero; // Set velocity to zero to prevent character from moving after landing on ground
-            Camera.main.GetComponent<CameraBehaviour>().startShake(); // Shake the camera
+            yield return new WaitUntil(() => animCon.m_Grounded);                       // Jump attacking as long as not grounded
+            m_Rigidbody2D.velocity = Vector2.zero;                                      // Set velocity to zero to prevent character from moving after landing on ground
+            Camera.main.GetComponent<CameraBehaviour>().startShake();                   // Shake the camera
 
             // Deal damage to all enemies
             animCon.trigJumpAttackEnd = true;
@@ -366,6 +367,10 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             // Wait till animation is finished and end jump attack
             yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimatorStates.JumpAttack);
             jumpAttacking = false;
+            doubleJumped = false;
+
+            // Stop Combo
+            AbortCombo();
         }
     }
 
@@ -454,7 +459,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     {
         if (pDefensive && animCon.m_Grounded && CanPerformAttack())
         {
-            //Start being defensive only if not defensive already and grounded  
+            // Start being defensive only if not defensive already and grounded  
             if (!blocking)
             {
                 // Stop moving
@@ -484,11 +489,11 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         theScale.x *= -1;
         ProjectilePosition.transform.localPosition = theScale;
     }
-    
+
     /// <summary>
     /// Manages the attacking and Combos
     /// </summary>
-    public abstract void BasicAttack(bool shouldAttack);
+    public abstract void BasicAttack();
 
     public abstract void Skill1();
     public abstract void Skill2();
@@ -506,62 +511,51 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     /// <param name="trigBA1">Animation Trigger Boolean for Basic Attack 1</param>
     /// <param name="trigBA2">Animation Trigger Boolean for Basic Attack 2</param>
     /// <param name="trigBA3">Animation Trigger Boolean for Basic Attack 3</param>
-    protected void DoComboBasicAttack(bool shouldAttack, ref bool trigBA1, ref bool trigBA2, ref bool trigBA3)
+    protected void DoComboBasicAttack(ref bool trigBA1, ref bool trigBA2, ref bool trigBA3)
     {
-        if (shouldAttack && CanPerformAction(false) && CanPerformAttack())
+        if (CanPerformAction(false) && CanPerformAttack() && animCon.m_Grounded)
         {
-            if (animCon.m_Grounded)
+            // Check if enough stamina for attack
+            if ((stats.HasSufficientStamina(basicAttack1_var.staminaCost) && attackCount == 0) || // Basic Attack 1
+                (stats.HasSufficientStamina(basicAttack2_var.staminaCost) && attackCount == 1) || // Basic Attack 2
+                (stats.HasSufficientStamina(basicAttack3_var.staminaCost) && attackCount == 2))   // Combo Attack
             {
-                // Check if enough stamina for attack
-                if ((stats.HasSufficientStamina(basicAttack1_var.staminaCost) && attackCount == 0) || // Basic Attack 1
-                    (stats.HasSufficientStamina(basicAttack2_var.staminaCost) && attackCount == 1) || // Basic Attack 2
-                    (stats.HasSufficientStamina(basicAttack3_var.staminaCost) && attackCount == 2))   // Combo Attack
+                // Already in combo?
+                if (!inCombo)
                 {
-                    // Already in combo?
-                    if (!inCombo)
-                    {
-                        // First attack - initialize combo coroutine
-                        ResetComboTime();
-                        attackCount = 0;
-                    }
-
-                    // AttackCount increase per attack
-                    attackCount++;
-
-                    // Playing the correct animation depending on the attackCount and setting attacking status
-                    switch (attackCount)
-                    {
-                        case 1:
-                            // do meele attack
-                            DoMeleeSkill(ref trigBA1, (MeleeSkill)basicAttack1_var);
-                            // Reset timer of combo
-                            ResetComboTime();
-                            break;
-                        case 2:
-                            // do meele attack
-                            DoMeleeSkill(ref trigBA2, (MeleeSkill)basicAttack2_var);
-                            break;
-                        case 3:
-                            // do meele attack
-                            DoMeleeSkill(ref trigBA3, (MeleeSkill)basicAttack3_var);
-                            // Reset Combo after combo-hit
-                            AbortCombo();
-                            break;
-                        default:
-                            // Should not be triggered
-                            AbortCombo();
-                            break;
-
-                    }
+                    // First attack - initialize combo coroutine
+                    ResetComboTime();
+                    attackCount = 0;
                 }
-            }
-            // Jump attack only when falling
-            else if (doubleJumped)
-            {
-                // Jump Attack
-                StartCoroutine(JumpAttack());
-                // Abort combo
-                AbortCombo();
+
+                // AttackCount increase per attack
+                attackCount++;
+
+                // Playing the correct animation depending on the attackCount and setting attacking status
+                switch (attackCount)
+                {
+                    case 1:
+                        // do meele attack
+                        DoMeleeSkill(ref trigBA1, (MeleeSkill)basicAttack1_var);
+                        // Reset timer of combo
+                        ResetComboTime();
+                        break;
+                    case 2:
+                        // do meele attack
+                        DoMeleeSkill(ref trigBA2, (MeleeSkill)basicAttack2_var);
+                        break;
+                    case 3:
+                        // do meele attack
+                        DoMeleeSkill(ref trigBA3, (MeleeSkill)basicAttack3_var);
+                        // Reset Combo after combo-hit
+                        AbortCombo();
+                        break;
+                    default:
+                        // Should not be triggered
+                        AbortCombo();
+                        break;
+
+                }
             }
         }
     }
@@ -601,17 +595,11 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     #region Melee Skill
 
     /// <summary>
-    /// do a complete skill
+    /// do a complete melee skill
     /// </summary>
-    /// <param name="animationVar">Trigger to set</param>
-    /// <param name="skillDelay">Delay of skill if requiered, else 0</param>
-    /// <param name="skillDamage">Damage of the skill</param>
-    /// <param name="skillSpecialEffect">Special effect of the skill like nothing, stun, knockback or bleed</param>
-    /// <param name="skillSpecialEffectTime">Duration of the special effect (only required for stun and bleed)</param>
-    /// <param name="skillStaminaCost">Stamina costs of the skill</param>
-    /// <param name="singleTarget">only the first target or all targets? (default: singleTarget - true)</param>
-    /// <param name="skillRange">Range of the skill (default: meeleRange - 1.5f)</param>.
-    /// </summary>
+    /// <param name="animationVar">Animation Trigger</param>
+    /// <param name="skillToPerform">MeleeSkill that shall be performed</param>
+    /// <param name="NoValidation"></param>
     protected void DoMeleeSkill(ref bool animationVar, MeleeSkill skillToPerform, bool NoValidation = false)
     {
         //Validate that character is not attacking and standing on ground
@@ -782,6 +770,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         // Wait till cast is finished to interrupt new skills/actions
         if (skillToPerform.castTime > 0)
         {
+            // Stop Moving
+            m_Rigidbody2D.velocity = Vector2.zero;
             casting = true;
             stats.immovable = true;
             yield return new WaitUntil(() => !projectile.CastFinished || projectile.Interrupted); // Wait till cast has started

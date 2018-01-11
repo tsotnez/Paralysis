@@ -582,6 +582,7 @@ MonoBehaviour:
   FacingRight: 1
   dashing: 0
   blocking: 0
+  doubleJumped: 0
   bulletPrefab: {fileID: 1999998842244028, guid: 1382e079f46c9e848b29efd69252a8b5,
     type: 2}
   ambushAttack_damage: 13

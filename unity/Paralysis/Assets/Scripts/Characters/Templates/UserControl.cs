@@ -96,7 +96,18 @@ public abstract class UserControl : MonoBehaviour
         if (!CharStats.stunned && !CharStats.knockedBack && !GoCharacter.dashing)
         {
             // Pass all parameters to the character control script.
-            GoCharacter.BasicAttack(inputAttack);
+            if (inputAttack)
+            {
+                if (GoCharacter.doubleJumped)
+                {
+                    StartCoroutine(GoCharacter.JumpAttack());
+                }
+                else
+                {
+                    GoCharacter.BasicAttack();
+                }
+            }
+
             if (inputSkill1) GoCharacter.Skill1();
             if (inputSkill2) GoCharacter.Skill2();
             if (inputSkill3) GoCharacter.Skill3();

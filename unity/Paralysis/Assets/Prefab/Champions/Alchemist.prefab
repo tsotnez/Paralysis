@@ -225,7 +225,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1410559574704970}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.885, y: 0.2, z: 0}
+  m_LocalPosition: {x: 0.885, y: 0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4775220813067206}
@@ -686,6 +686,7 @@ MonoBehaviour:
   FacingRight: 1
   dashing: 0
   blocking: 0
+  doubleJumped: 0
   GoBasicAttack: {fileID: 1470268350350890, guid: 1443ea3c3580ee5499a90819360b8a65,
     type: 2}
   GoSkill1_Frostbolt: {fileID: 1806743027263652, guid: 6190419a7df12f6438f7959faca00ad6,
@@ -748,9 +749,9 @@ MonoBehaviour:
   - 0
   - 0
   - 0.5
+  - 0.8
   - 0.5
-  - 0.5
-  - 0.5
+  - 1.3
   - 0.5
   - 0
   - 0
