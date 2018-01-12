@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: a9e4ef32df6695b42937c11b73951ea4
   - enabled: 0
@@ -18,17 +15,11 @@ EditorBuildSettings:
     path: Assets/Scenes/LocalChampionSelection.unity
     guid: ab64ab27a4ef575449d85d37227ce41f
   - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
     path: Assets/Scenes/test.unity
     guid: 0c9f28be97001594e8efeab6d4c81226
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/NetworkAPITestKW.unity
+    guid: 80735c4e206ab724b9cfa6a47c469fbc
   - enabled: 1
     path: Assets/Scenes/Network test.unity
     guid: 58686bd5c4cd6e64ea39a3d1085c20b9

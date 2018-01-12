@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 public class NetworkVersusManager : GameplayManager
 {
     public Player localPlayer;
+
     public string pathToChampionPrefabs;
     public Text connectionStatusText;
     public GameObject hotbarPrefab;
@@ -25,12 +26,13 @@ public class NetworkVersusManager : GameplayManager
      
     }
 
+    protected override void instantiatePlayers()
+    {
+
+    }
+
     void Start()
     {
-        PhotonNetwork.sendRate = CustomSendRate;
-        PhotonNetwork.sendRateOnSerialize = CustomSendRateOnSerialize;
-        PhotonNetwork.ConnectUsingSettings("Paralysis alpha");
-
         if(localPlayer.inputDevice == UserControl.InputDevice.XboxController)
         {
             StandaloneInputModule mod = GameObject.FindObjectOfType<StandaloneInputModule>();
@@ -40,32 +42,9 @@ public class NetworkVersusManager : GameplayManager
         }
     }
 
-    public virtual void OnJoinedRoom()
-    {
-        instantiatePlayers();
-        buildUI();
-    }
-
-
-    private void Update()
-    {
-        connectionStatusText.text = "Ping: " + PhotonNetwork.GetPing() + " " + PhotonNetwork.connectionStateDetailed.ToString();
-    }
-
-    public virtual void OnJoinedLobby()
-    {
-        Debug.Log("Joined Lobby");
-        PhotonNetwork.JoinOrCreateRoom("Room", null, null);
-    }
-
-    public virtual void OnConnectedToMaster()
-    {
-        Debug.Log("connected");
-        PhotonNetwork.JoinLobby();
-    }
     #endregion
 
-    protected override void instantiatePlayers()
+    public void spawnPlayer()
     {
         //Player
         GameObject instPlayer1 = PhotonNetwork.Instantiate(localPlayer.ChampionPrefab.name, spawnPlayer1.position, Quaternion.identity, 0);
@@ -105,9 +84,13 @@ public class NetworkVersusManager : GameplayManager
 
         //Wait before joining team, because scene needs time to synchronize
         StartCoroutine(test());
-
     }
-    
+
+    private void Update()
+    {
+        connectionStatusText.text = "Ping: " + PhotonNetwork.GetPing() + " " + PhotonNetwork.connectionStateDetailed.ToString();
+    }
+
     IEnumerator test()
     {
         yield return new WaitForSeconds(.2f);

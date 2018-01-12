@@ -16,11 +16,18 @@ public class CharacterNetwork : Photon.MonoBehaviour {
 
     private void Awake()
     {
-        r = transform.Find("graphics").GetComponent<SpriteRenderer>();
-        graphicsTransform = transform.Find("graphics");
-        stats = GetComponent<CharacterStats>();
-        shadowRenderer = transform.Find("GroundCheck").GetComponent<SpriteRenderer>();
-        stunnedSymbol = transform.Find("stunnedSymbol").gameObject;
+        if(PhotonNetwork.offlineMode)
+        {
+            enabled = false;
+        }
+        else
+        {
+            r = transform.Find("graphics").GetComponent<SpriteRenderer>();
+            graphicsTransform = transform.Find("graphics");
+            stats = GetComponent<CharacterStats>();
+            shadowRenderer = transform.Find("GroundCheck").GetComponent<SpriteRenderer>();
+            stunnedSymbol = transform.Find("stunnedSymbol").gameObject;
+        }
     }
 
     public void joinTeam()

@@ -80,4 +80,7 @@ MonoBehaviour:
   - ShowFloatingText
   - ShowFloatingTextSerialized
   - StartSlow
+  - RPC_CreatePlayer
+  - RPC_LoadedGameScene
+  - RPC_LoadGameOthers
   DisableAutoOpenWizard: 1
