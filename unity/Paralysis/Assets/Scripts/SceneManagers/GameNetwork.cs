@@ -120,7 +120,9 @@ public class GameNetwork : MonoBehaviour {
 
         manager = GameObject.Find("manager");
 
-        //If is game scene level....
+        //TODO If is game scene level there must be a manager in it..
+        //we should probably switch this to check for scene names and not
+        //an object
         if(manager != null)
         {
             if (offlineMode)
@@ -164,6 +166,39 @@ public class GameNetwork : MonoBehaviour {
         print("photon player name set to: " + playerName);
     }
 
+    public bool createRoom(string roomName, bool isVisible, bool isOpen = true)
+    {
+        RoomOptions roomOptions = new RoomOptions() {
+            IsVisible = isVisible,
+            IsOpen = isOpen,
+            MaxPlayers = maxPlayers };
+
+        if (PhotonNetwork.CreateRoom(TEST_ROOM_NAME, roomOptions, TypedLobby.Default))
+        {
+            print("create room successfully sent.");
+            return true;
+        }
+        else
+        {
+            print("create room failed to send");
+            return false;
+        }
+    }
+
+    public bool joinRoom(string roomName)
+    {
+        if (PhotonNetwork.JoinRoom(TEST_ROOM_NAME))
+        {
+            print("Joined room: " + roomName);
+            return true;
+        }
+        else
+        {
+            print("Join room failed: " + roomName);
+            return false;
+        }
+    }
+
     #region Photon callbacks
 
     //Photon Callback
@@ -174,29 +209,11 @@ public class GameNetwork : MonoBehaviour {
         PhotonNetwork.playerName = GameNetwork.Instance.PlayerName;
         PhotonNetwork.JoinLobby(TypedLobby.Default);
 
+        //TODO remove this when we implement our own room creator/joiner
 #if UNITY_EDITOR
-        RoomOptions roomOptions = new RoomOptions() {
-            IsVisible = true,
-            IsOpen = true,
-            MaxPlayers = maxPlayers };
-
-        if (PhotonNetwork.CreateRoom(TEST_ROOM_NAME, roomOptions, TypedLobby.Default))
-        {
-            print("create room successfully sent.");
-        }
-        else
-        {
-            print("create room failed to send");
-        }
+        createRoom(TEST_ROOM_NAME, true, true);
 #else
-        if (PhotonNetwork.JoinRoom(TEST_ROOM_NAME))
-        {
-            print("Joined room.");
-        }
-        else
-        {
-            print("Join room failed!!!.");
-        }
+        joinRoom(TEST_ROOM_NAME);
 #endif
     }
 
