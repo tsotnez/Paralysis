@@ -16,10 +16,11 @@ public class GameNetwork : MonoBehaviour {
     public byte maxPlayers = 4;
     public string levelToLoad = "Network Test";
     public string gameVersion = "0.0.1-Apla";
-
-    public string PlayerName { get; set; }
+    private string playerName;
+    public string PlayerName { get { return playerName; } }
     private PhotonView photonV;
     private PhotonPlayer photonPlayer;
+
     private int playersInGame = 0;
     public int PlayersInGame { get { return playersInGame; } }
 
@@ -39,8 +40,7 @@ public class GameNetwork : MonoBehaviour {
         instance = this;
         photonV = GetComponent<PhotonView>();
 
-        PlayerName = "Player#" + Random.Range(1000, 9999);
-
+        setPlayerName("Player#" + Random.Range(1000, 9999));
         PhotonNetwork.sendRate = sendRate;
         PhotonNetwork.sendRateOnSerialize = sendRateSerialize;
 
@@ -152,6 +152,17 @@ public class GameNetwork : MonoBehaviour {
         }
     }
 
+    public RoomInfo[] getCurrenRooms()
+    {
+        return PhotonNetwork.GetRoomList();
+    }
+
+    public void setPlayerName(string playerName)
+    {
+        PhotonNetwork.playerName = playerName;
+        this.playerName = playerName;
+        print("photon player name set to: " + playerName);
+    }
 
     #region Photon callbacks
 
@@ -216,7 +227,7 @@ public class GameNetwork : MonoBehaviour {
     //Photon Callback
     private void OnPhotonPlayerConnected(PhotonPlayer photonPlayer)
     {
-        print("player connected...");
+        print("player connected: " + photonPlayer.NickName);
     }
 
     //Photon Callback
