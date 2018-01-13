@@ -83,4 +83,5 @@ MonoBehaviour:
   - RPC_CreatePlayer
   - RPC_LoadedGameScene
   - RPC_LoadGameOthers
+  - RPC_ClientJoinedRoom
   DisableAutoOpenWizard: 1

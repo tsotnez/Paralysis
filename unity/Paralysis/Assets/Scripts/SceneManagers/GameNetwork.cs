@@ -16,15 +16,19 @@ public class GameNetwork : MonoBehaviour {
     public byte maxPlayers = 4;
     public string levelToLoad = "Network Test";
     public string gameVersion = "0.0.1-Apla";
+    public bool offlineMode = false;
+
+    private PhotonView photonV;
+
+    private int playersFinishedLoadingScene = 0;
+    public int PlayersInGame { get { return PhotonNetwork.playerList.Length; } }
     private string playerName;
     public string PlayerName { get { return playerName; } }
-    private PhotonView photonV;
-    private PhotonPlayer photonPlayer;
+    private int playerNetworkNumber = 1;
+    public int PlayerNetworkNumber { get { return playerNetworkNumber; } }
 
-    private int playersInGame = 0;
-    public int PlayersInGame { get { return playersInGame; } }
-
-    public bool offlineMode = false;
+    public bool IsMasterClient { get { return PhotonNetwork.isMasterClient; } }
+    private Dictionary<int , PhotonPlayer> playerDic; 
 
     private const string TEST_ROOM_NAME = "TEST_ROOM";
 
@@ -56,6 +60,51 @@ public class GameNetwork : MonoBehaviour {
         }
     }
 
+    // Unity Call back
+    private void OnSceneFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
+        clearNewScene();
+
+        if(offlineMode){
+            return;
+        }
+
+        manager = GameObject.Find("manager");
+
+        //TODO If is game scene level there must be a manager in it..
+        //we should probably switch this to check for scene names and not
+        //an object
+        if(manager != null)
+        {
+            if (offlineMode)
+            {
+                RPC_CreatePlayer();
+            }
+            if (PhotonNetwork.isMasterClient)
+            {
+                MasterLoadedGame();
+            }
+            else
+            {
+                NonMasterLoadedGame();
+            }
+        }
+    }
+
+    private void clearNewScene()
+    {
+        manager = null;
+
+        if (offlineMode)
+        {
+            playersFinishedLoadingScene = 1;
+        }
+        else
+        {
+            playersFinishedLoadingScene = 0;
+        }
+    }
+
     public void setOfflineMode()
     {
         if (offlineMode) return;
@@ -63,12 +112,15 @@ public class GameNetwork : MonoBehaviour {
         offlineMode = true;
         PhotonNetwork.offlineMode = true;
         PhotonNetwork.CreateRoom("OfflineRoom");
-        playersInGame = 1;
+        playersFinishedLoadingScene = 1;
+        playerNetworkNumber = 1;
     }
 
     public void setOnlineMode()
     {
         if (!offlineMode) return;
+        playerNetworkNumber = 1;
+        playersFinishedLoadingScene = 0;
 
         offlineMode = false;
         if (PhotonNetwork.inRoom)
@@ -109,51 +161,6 @@ public class GameNetwork : MonoBehaviour {
         }
     }
 
-    // Unity Call back
-    private void OnSceneFinishedLoading(Scene scene, LoadSceneMode mode)
-    {
-        clearNewScene();
-
-        if(offlineMode){
-            return;
-        }
-
-        manager = GameObject.Find("manager");
-
-        //TODO If is game scene level there must be a manager in it..
-        //we should probably switch this to check for scene names and not
-        //an object
-        if(manager != null)
-        {
-            if (offlineMode)
-            {
-                RPC_CreatePlayer(playersInGame);
-            }
-            if (PhotonNetwork.isMasterClient)
-            {
-                MasterLoadedGame();
-            }
-            else
-            {
-                NonMasterLoadedGame();
-            }
-        }
-    }
-
-    private void clearNewScene()
-    {
-        manager = null;
-        
-        if (offlineMode)
-        {
-            playersInGame = 1;
-        }
-        else
-        {
-            playersInGame = 0;
-        }
-    }
-
     public RoomInfo[] getCurrenRooms()
     {
         return PhotonNetwork.GetRoomList();
@@ -166,7 +173,7 @@ public class GameNetwork : MonoBehaviour {
         print("photon player name set to: " + playerName);
     }
 
-    public bool createRoom(string roomName, bool isVisible, bool isOpen = true)
+    public bool createRoom(string roomName, byte maxPlayers, bool isVisible, bool isOpen = true)
     {
         RoomOptions roomOptions = new RoomOptions() {
             IsVisible = isVisible,
@@ -199,6 +206,14 @@ public class GameNetwork : MonoBehaviour {
         }
     }
 
+    public void leaveCurrentRoom()
+    {
+        if(PhotonNetwork.inRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+    }
+
     #region Photon callbacks
 
     //Photon Callback
@@ -211,7 +226,7 @@ public class GameNetwork : MonoBehaviour {
 
         //TODO remove this when we implement our own room creator/joiner
 #if UNITY_EDITOR
-        createRoom(TEST_ROOM_NAME, true, true);
+        createRoom(TEST_ROOM_NAME, 4, true, true);
 #else
         joinRoom(TEST_ROOM_NAME);
 #endif
@@ -232,7 +247,14 @@ public class GameNetwork : MonoBehaviour {
     //Photon Callback
     private void OnJoinedRoom()
     {
-        print("Joined room.");
+        playerNetworkNumber = PhotonNetwork.playerList.Length;
+        print("Joined room: " + playerNetworkNumber);
+    }
+
+    //Photon Callback
+    private void OnCreatedRoom()
+    {
+
     }
 
     //Photon Callback
@@ -250,7 +272,12 @@ public class GameNetwork : MonoBehaviour {
     //Photon Callback
     private void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
     {
-        playersInGame--;
+        print("player disconnected: " + otherPlayer.NickName);
+        //If we arnt the master client decrease are network number, someone left
+        if(!PhotonNetwork.isMasterClient)
+        {
+            playerNetworkNumber--;
+        }
     }
 
     #endregion
@@ -260,13 +287,13 @@ public class GameNetwork : MonoBehaviour {
     //RPC stuff
     private void MasterLoadedGame()
     {
-        RPC_LoadedGameScene(PhotonNetwork.player);
+        RPC_LoadedGameScene();
         photonV.RPC("RPC_LoadGameOthers", PhotonTargets.Others, SceneManager.GetActiveScene().name);
     }
 
     private void NonMasterLoadedGame()
     {
-        photonV.RPC("RPC_LoadedGameScene", PhotonTargets.MasterClient, PhotonNetwork.player);
+        photonV.RPC("RPC_LoadedGameScene", PhotonTargets.MasterClient);
     }
 
     [PunRPC]
@@ -277,28 +304,21 @@ public class GameNetwork : MonoBehaviour {
 
     [PunRPC]
     //This method is only called by the server
-    private void RPC_LoadedGameScene(PhotonPlayer photonPlayer)
+    private void RPC_LoadedGameScene()
     {
-        print("Player joined.");
-        playersInGame++;
-        if (playersInGame == PhotonNetwork.playerList.Length)
+        print("Player finished loading sceen.");
+        playersFinishedLoadingScene++;
+        if (playersFinishedLoadingScene == PhotonNetwork.playerList.Length)
         {
+            playersFinishedLoadingScene = 0;
             print("All players are in the game scene.");
-            photonV.RPC("RPC_CreatePlayer", PhotonTargets.All, playersInGame);
+            photonV.RPC("RPC_CreatePlayer", PhotonTargets.All);
         }
     }
 
     [PunRPC]
-    public void RPC_CreatePlayer(int playersInGame)
+    public void RPC_CreatePlayer()
     {
-        if (!PhotonNetwork.isMasterClient)
-        {
-            this.playersInGame = playersInGame;
-        }
-
-        //set photon player
-        photonPlayer = PhotonNetwork.player;
-
         //Tell the manager to spawn the player
         manager.GetComponent<NetworkVersusManager>().spawnPlayer();
     }
