@@ -155,6 +155,11 @@ public class GameNetwork : MonoBehaviour {
         return PhotonNetwork.GetRoomList();
     }
 
+    public PhotonPlayer[] getPlayerList()
+    {
+        return PhotonNetwork.playerList;
+    }
+
     public void setPlayerName(string playerName)
     {
         PhotonNetwork.playerName = playerName;
@@ -230,6 +235,11 @@ public class GameNetwork : MonoBehaviour {
             PhotonNetwork.room.IsOpen = !setLocked;
             PhotonNetwork.room.IsVisible = !setLocked;
         }
+    }
+
+    public bool IsConnected()
+    {
+        return PhotonNetwork.connected && !PhotonNetwork.offlineMode;
     }
 
     #region Photon callbacks

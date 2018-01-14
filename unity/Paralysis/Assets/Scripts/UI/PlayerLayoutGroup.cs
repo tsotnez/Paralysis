@@ -18,6 +18,16 @@ public class PlayerLayoutGroup : MonoBehaviour
         get { return playerListings; }
     }
 
+    private void Start()
+    {
+        playerListings = new List<PlayerListing>();
+        PhotonPlayer[] photonPlayers = GameNetwork.Instance.getPlayerList();
+        for (int i = 0; i < photonPlayers.Length; i++)
+        {
+            PlayerJoinedRoom(photonPlayers[i]);
+        }
+    }
+
     private void PlayerJoinedRoom(PhotonPlayer photonPlayer)
     {
         if (photonPlayer == null)
@@ -48,22 +58,6 @@ public class PlayerLayoutGroup : MonoBehaviour
     private void OnMasterClientSwitched(PhotonPlayer newMasterClient)
     {
         GameNetwork.Instance.leaveCurrentRoom();
-    }
-
-    //Called by photon whenever you join a room.
-    private void OnJoinedRoom()
-    {
-        playerListings = new List<PlayerListing>();
-        foreach (Transform child in transform)
-        {
-            Destroy(child.gameObject);
-        }
-        LobbyManager.Instance.joinedRoom();
-        PhotonPlayer[] photonPlayers = PhotonNetwork.playerList;
-        for (int i = 0; i < photonPlayers.Length; i++)
-        {
-            PlayerJoinedRoom(photonPlayers[i]);
-        }
     }
 
     //Called by photon when a player joins the room.

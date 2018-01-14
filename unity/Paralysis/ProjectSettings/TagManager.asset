@@ -13,6 +13,7 @@ TagManager:
   - MainPlayer2
   - CastBar
   - SpawnPoint
+  - GameNetwork
   layers:
   - Default
   - TransparentFX
