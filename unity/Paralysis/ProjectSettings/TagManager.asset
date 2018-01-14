@@ -12,6 +12,7 @@ TagManager:
   - BottomBorder
   - MainPlayer2
   - CastBar
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX

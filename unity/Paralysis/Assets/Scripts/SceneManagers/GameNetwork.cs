@@ -28,7 +28,7 @@ public class GameNetwork : MonoBehaviour {
     public int PlayerNetworkNumber { get { return playerNetworkNumber; } }
 
     public bool IsMasterClient { get { return PhotonNetwork.isMasterClient; } }
-    private Dictionary<int , PhotonPlayer> playerDic; 
+    private Dictionary<PhotonPlayer , int> playerDic;
 
     private const string TEST_ROOM_NAME = "TEST_ROOM";
 
@@ -108,9 +108,10 @@ public class GameNetwork : MonoBehaviour {
     public void setOfflineMode()
     {
         if (offlineMode) return;
-
+        leaveCurrentRoom();
+        PhotonNetwork.Disconnect();
         offlineMode = true;
-        PhotonNetwork.offlineMode = true;
+        PhotonNetwork.offlineMode = offlineMode;
         PhotonNetwork.CreateRoom("OfflineRoom");
         playersFinishedLoadingScene = 1;
         playerNetworkNumber = 1;
@@ -143,21 +144,6 @@ public class GameNetwork : MonoBehaviour {
                     }
                 }
             }
-        }
-    }
-
-    public void StartGame()
-    {
-        if(PhotonNetwork.isMasterClient)
-        {
-            PhotonNetwork.room.IsOpen = false;
-            PhotonNetwork.room.IsVisible = false;
-            PhotonNetwork.LoadLevel(levelToLoad);
-            print("Start game clicked...");
-        }
-        else 
-        {
-            print("Not master client.");
         }
     }
 
@@ -214,6 +200,33 @@ public class GameNetwork : MonoBehaviour {
         }
     }
 
+    public void StartGame()
+    {
+        if(PhotonNetwork.isMasterClient)
+        {
+            PhotonNetwork.room.IsOpen = false;
+            PhotonNetwork.room.IsVisible = false;
+            PhotonNetwork.LoadLevel(levelToLoad);
+            print("Start game clicked...");
+        }
+        else 
+        {
+            print("Not master client.");
+        }
+    }
+
+    // This is a temporary method
+    public void createDefaultRoom()
+    {
+        createRoom(TEST_ROOM_NAME, 4, true, true);
+    }
+
+    // This is a temporary method
+    public void joinDefaultRoom()
+    {
+        joinRoom(TEST_ROOM_NAME);
+    }
+
     #region Photon callbacks
 
     //Photon Callback
@@ -223,13 +236,6 @@ public class GameNetwork : MonoBehaviour {
         PhotonNetwork.automaticallySyncScene = false;
         PhotonNetwork.playerName = GameNetwork.Instance.PlayerName;
         PhotonNetwork.JoinLobby(TypedLobby.Default);
-
-        //TODO remove this when we implement our own room creator/joiner
-#if UNITY_EDITOR
-        createRoom(TEST_ROOM_NAME, 4, true, true);
-#else
-        joinRoom(TEST_ROOM_NAME);
-#endif
     }
 
     //Photon Callback
@@ -248,13 +254,13 @@ public class GameNetwork : MonoBehaviour {
     private void OnJoinedRoom()
     {
         playerNetworkNumber = PhotonNetwork.playerList.Length;
-        print("Joined room: " + playerNetworkNumber);
+        print("Joined room, my player network number: " + playerNetworkNumber);
     }
 
     //Photon Callback
     private void OnCreatedRoom()
     {
-
+        playerDic = new Dictionary<PhotonPlayer, int>();
     }
 
     //Photon Callback
@@ -267,16 +273,21 @@ public class GameNetwork : MonoBehaviour {
     private void OnPhotonPlayerConnected(PhotonPlayer photonPlayer)
     {
         print("player connected: " + photonPlayer.NickName);
+        if(PhotonNetwork.isMasterClient)
+        {
+            playerDic.Add(photonPlayer, PlayersInGame);
+        }
     }
 
     //Photon Callback
     private void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
     {
         print("player disconnected: " + otherPlayer.NickName);
-        //If we arnt the master client decrease are network number, someone left
-        if(!PhotonNetwork.isMasterClient)
+        if(PhotonNetwork.isMasterClient && playerDic.ContainsKey(otherPlayer))
         {
-            playerNetworkNumber--;
+            short playerLeftNum = (short)playerDic[otherPlayer];
+            print("Telling others player number: " + playerLeftNum + " left");
+            photonV.RPC("RPC_PlayerLeftUpdateNum", PhotonTargets.Others, (short)playerDic[otherPlayer]);
         }
     }
 
@@ -306,6 +317,13 @@ public class GameNetwork : MonoBehaviour {
     //This method is only called by the server
     private void RPC_LoadedGameScene()
     {
+        if(PhotonNetwork.playerList.Length == 1)
+        {
+            setOfflineMode();
+            RPC_CreatePlayer();
+            return;
+        }
+
         print("Player finished loading sceen.");
         playersFinishedLoadingScene++;
         if (playersFinishedLoadingScene == PhotonNetwork.playerList.Length)
@@ -323,6 +341,16 @@ public class GameNetwork : MonoBehaviour {
         manager.GetComponent<NetworkVersusManager>().spawnPlayer();
     }
 
+    [PunRPC]
+    public void RPC_PlayerLeftUpdateNum(short playerLeftNum)
+    {
+        //If the player that left had a number greater than you decrement
+        if(playerNetworkNumber > playerLeftNum)
+        {
+            playerNetworkNumber--;
+        }
+    }
+
     #endregion
 
 
@@ -330,12 +358,11 @@ public class GameNetwork : MonoBehaviour {
     {
         print("Quitting game...");
         PhotonNetwork.Disconnect();
-
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#else
         Application.Quit();
-        #endif
+#endif
     }
 }
 

@@ -9,21 +9,15 @@ public class NetworkVersusManager : GameplayManager
 {
     public Player localPlayer;
 
-    public string pathToChampionPrefabs;
     public Text connectionStatusText;
     public GameObject hotbarPrefab;
-
-    public Transform spawnPlayer1;
-    public int CustomSendRate = 50;
-    public int CustomSendRateOnSerialize = 30;
-
-
     private GameObject myPlayerInstance;
+    private GameObject[] spawnPoints;
 
     #region default
     protected override void Awake()
     {
-     
+        spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
     }
 
     protected override void instantiatePlayers()
@@ -46,8 +40,21 @@ public class NetworkVersusManager : GameplayManager
 
     public void spawnPlayer()
     {
+        // Get players corresponding spawn point
+        SpawnPoint spawnPoint = null;
+        foreach(GameObject spawnObj in spawnPoints)
+        {
+            spawnPoint = spawnObj.GetComponent<SpawnPoint>();
+            if(spawnPoint.playerNumber == GameNetwork.Instance.PlayerNetworkNumber)
+            {
+                break;
+            }
+        }
+        // This shouldn't happen but just in case.
+        if(spawnPoint == null)spawnPoint = new SpawnPoint();
+
         //Player
-        GameObject instPlayer1 = PhotonNetwork.Instantiate(localPlayer.ChampionPrefab.name, spawnPlayer1.position, Quaternion.identity, 0);
+        GameObject instPlayer1 = PhotonNetwork.Instantiate(localPlayer.ChampionPrefab.name, spawnPoint.transform.position, Quaternion.identity, 0);
         instPlayer1.GetComponent<UserControl>().enabled = true;
         instPlayer1.GetComponent<UserControl>().inputDevice = localPlayer.inputDevice;
 
@@ -57,7 +64,10 @@ public class NetworkVersusManager : GameplayManager
         LayerMask whatToHitP1 = new LayerMask();
 
         ChampionClassController con = instPlayer1.GetComponent<ChampionClassController>();
-
+        if(spawnPoint.facingDir == SpawnPoint.SpawnFacing.left)
+        {
+            con.Flip();
+        }
         con.enabled = true;
         con.m_whatToHit = whatToHitP1;
         instPlayer1.GetComponent<UserControl>().playerNumber = localPlayer.playerNumber;
