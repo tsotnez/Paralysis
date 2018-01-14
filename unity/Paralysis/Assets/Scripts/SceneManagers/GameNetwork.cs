@@ -20,6 +20,9 @@ public class GameNetwork : MonoBehaviour {
 
     private PhotonView photonV;
 
+    private bool inGame = false;
+    public bool InGame { get { return inGame; } }
+
     private int playersFinishedLoadingScene = 0;
     public int PlayersInGame { get { return PhotonNetwork.playerList.Length; } }
     private string playerName;
@@ -30,7 +33,7 @@ public class GameNetwork : MonoBehaviour {
     public bool IsMasterClient { get { return PhotonNetwork.isMasterClient; } }
     private Dictionary<PhotonPlayer , int> playerDic;
 
-    private const string TEST_ROOM_NAME = "TEST_ROOM";
+    public const byte MAX_PLAYERS = 4;
 
     // Use this for initialization
     private void Awake ()
@@ -166,7 +169,7 @@ public class GameNetwork : MonoBehaviour {
             IsOpen = isOpen,
             MaxPlayers = maxPlayers };
 
-        if (PhotonNetwork.CreateRoom(TEST_ROOM_NAME, roomOptions, TypedLobby.Default))
+        if (PhotonNetwork.CreateRoom(roomName, roomOptions, TypedLobby.Default))
         {
             print("create room successfully sent.");
             return true;
@@ -180,7 +183,7 @@ public class GameNetwork : MonoBehaviour {
 
     public bool joinRoom(string roomName)
     {
-        if (PhotonNetwork.JoinRoom(TEST_ROOM_NAME))
+        if (PhotonNetwork.JoinRoom(roomName))
         {
             print("Joined room: " + roomName);
             return true;
@@ -215,16 +218,18 @@ public class GameNetwork : MonoBehaviour {
         }
     }
 
-    // This is a temporary method
-    public void createDefaultRoom()
+    public bool isRoomLocked()
     {
-        createRoom(TEST_ROOM_NAME, 4, true, true);
+        return PhotonNetwork.inRoom && !PhotonNetwork.room.IsOpen && !PhotonNetwork.room.IsVisible;
     }
 
-    // This is a temporary method
-    public void joinDefaultRoom()
+    public void lockCurrentRoom(bool setLocked)
     {
-        joinRoom(TEST_ROOM_NAME);
+        if(PhotonNetwork.isMasterClient && PhotonNetwork.inRoom)
+        {
+            PhotonNetwork.room.IsOpen = !setLocked;
+            PhotonNetwork.room.IsVisible = !setLocked;
+        }
     }
 
     #region Photon callbacks
@@ -266,7 +271,9 @@ public class GameNetwork : MonoBehaviour {
     //Photon Callback
     private void OnMasterClientSwitched(PhotonPlayer newMasterClient)
     {
-        quitGame();
+        if(inGame){
+            quitGame();
+        }
     }
 
     //Photon Callback
