@@ -26,6 +26,8 @@ public class AssassinController : ChampionClassController
         skill2_var = new Skill(ChampionAndTrinketDatabase.Keys.Skill2, ChampionAndTrinketDatabase.Champions.Alchemist, cooldown_Skill2);
         skill3_var = new Skill(ChampionAndTrinketDatabase.Keys.Skill3, ChampionAndTrinketDatabase.Champions.Alchemist, cooldown_Skill3);
         skill4_var = new RangedSkill(ChampionAndTrinketDatabase.Keys.Skill4, true, new Vector2(7, 0), bulletPrefab, delay_Skill4, damage_Skill4, Skill.SkillEffect.knockback, 2, 0, stamina_Skill4, Skill.SkillTarget.SingleTarget, cooldown_Skill4, 5, ChampionAndTrinketDatabase.Champions.Alchemist);
+
+        print("added assign skills");
     }
 
     protected override void Update()

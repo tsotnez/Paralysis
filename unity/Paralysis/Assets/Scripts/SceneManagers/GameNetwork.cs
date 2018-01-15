@@ -299,7 +299,7 @@ public class GameNetwork : MonoBehaviour {
     private void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
     {
         print("player disconnected: " + otherPlayer.NickName);
-        if(PhotonNetwork.isMasterClient && playerDic.ContainsKey(otherPlayer))
+        if(PhotonNetwork.isMasterClient && playerDic != null && playerDic.ContainsKey(otherPlayer))
         {
             short playerLeftNum = (short)playerDic[otherPlayer];
             print("Telling others player number: " + playerLeftNum + " left");

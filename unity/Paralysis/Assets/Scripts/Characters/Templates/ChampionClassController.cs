@@ -736,18 +736,27 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         if (FacingRight) direction = 1;
         else direction = -1;
 
-        GameObject goProjectile;
-        if (PhotonNetwork.offlineMode)
+        if(PhotonNetwork.offlineMode)
         {
-            // load GameObject
-            goProjectile = skillToPerform.prefab;
+            StartCoroutine(rangedSkill(skillToPerform, direction, ProjectilePosition.position));
         }
         else
         {
-            // Instantiate by Network
-            goProjectile = PhotonNetwork.Instantiate("Bullet_AssassinSkill4",
-                ProjectilePosition.position, Quaternion.identity, 0);
+            photonView.RPC("RPC_spawnRangedSkill", PhotonTargets.All, skillToPerform.rangedSkillId, (short) direction, ProjectilePosition.position);
         }
+    }
+
+    [PunRPC]
+    public void RPC_spawnRangedSkill(int rangedSkillId, short direction, Vector3 position)
+    {
+        RangedSkill skillToPerform = RangedSkill.rangedSkillDict[rangedSkillId];
+        StartCoroutine(rangedSkill(skillToPerform, direction, position));
+    }
+
+    public IEnumerator rangedSkill(RangedSkill skillToPerform, int direction, Vector3 position)
+    {
+        GameObject goProjectile;
+        goProjectile = skillToPerform.prefab;
 
         // assign variables to projectile Script
         ProjectileBehaviour projectile = goProjectile.GetComponent<ProjectileBehaviour>();
@@ -760,17 +769,15 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         else
             goProjectile.GetComponent<SpriteRenderer>().flipX = false;
 
-        if (PhotonNetwork.offlineMode)
-        {
-            goProjectile = Instantiate(goProjectile, ProjectilePosition.position,
-                new Quaternion(goProjectile.transform.rotation.x, goProjectile.transform.rotation.y,
-                    goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));
-        }
-        else
-        {
-            goProjectile.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-            projectile.enabled = true;
-        }
+        goProjectile = Instantiate(goProjectile, position,
+            new Quaternion(goProjectile.transform.rotation.x, goProjectile.transform.rotation.y,
+                goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));    
+
+        /*
+        goProjectile = Instantiate(goProjectile, ProjectilePosition.position,
+            new Quaternion(goProjectile.transform.rotation.x, goProjectile.transform.rotation.y,
+                goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));        
+        */
 
         // Apply skill to projectile
         projectile = goProjectile.GetComponent<ProjectileBehaviour>();
@@ -789,9 +796,12 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             casting = false;
         }
 
-        // Start cooldwon after cast is finished
-        StartCoroutine(SetSkillOnCooldown(skillToPerform));
+        if(PhotonNetwork.offlineMode || photonView.isMine)
+        {
+            StartCoroutine(SetSkillOnCooldown(skillToPerform));
+        }
     }
+
 
     #endregion
 

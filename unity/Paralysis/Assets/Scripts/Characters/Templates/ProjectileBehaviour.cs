@@ -28,16 +28,6 @@ public class ProjectileBehaviour : MonoBehaviour
     Coroutine fallingRoutine = null;                                    // Falling Routine  
     Coroutine observeRoutine = null;                                    // Observe Routine
 
-    protected PhotonView photonV;
-
-    protected void Awake()
-    {
-        if(!PhotonNetwork.offlineMode)
-        {
-            enabled = false;
-        }
-    }
-
     // Use this for initialization
     protected void Start()
     {
@@ -228,10 +218,7 @@ public class ProjectileBehaviour : MonoBehaviour
         if (SkillValues.onHitEffect && explosionPrefab != null)
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
-        if (!PhotonNetwork.offlineMode)
-            PhotonNetwork.Destroy(gameObject);
-        else
-            Destroy(gameObject);
+        Destroy(gameObject);
     }
 
     public static void Flip(GameObject ObjectToFlip)

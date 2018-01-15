@@ -86,7 +86,7 @@ public class NetworkVersusManager : GameplayManager
         GameObject.Find("MainCanvas").GetComponent<Canvas>().worldCamera = Camera.main;
 
         myPlayerInstance = instPlayer1;
-
+        buildUI();
         //Wait before joining team, because scene needs time to synchronize
         StartCoroutine(test());
     }
