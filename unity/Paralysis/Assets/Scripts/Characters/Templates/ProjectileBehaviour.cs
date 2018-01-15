@@ -11,6 +11,7 @@ public class ProjectileBehaviour : MonoBehaviour
     public bool Interrupted { get; protected set; }                     // True if creator got stunned or knockedback while casting
 
     // Public properties
+    [HideInInspector]
     public GameObject creator;                                          // Creator of the projectile
     public LayerMask whatToHit;                                         // Layer that shall be hitted
     public GameObject explosionPrefab;                                  // Prefab that shall be played on explosion
