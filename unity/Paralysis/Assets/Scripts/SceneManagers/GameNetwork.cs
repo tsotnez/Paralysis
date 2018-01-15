@@ -50,11 +50,10 @@ public class GameNetwork : MonoBehaviour {
         setPlayerName("Player#" + Random.Range(1000, 9999));
         PhotonNetwork.sendRate = sendRate;
         PhotonNetwork.sendRateOnSerialize = sendRateSerialize;
-
         SceneManager.sceneLoaded += OnSceneFinishedLoading;
     }
 
-    private void Start()
+    public void Connect()
     {
         if(!offlineMode)
         {
@@ -370,6 +369,10 @@ public class GameNetwork : MonoBehaviour {
 
     #endregion
 
+    private void OnDestroy()
+    {
+        PhotonNetwork.Disconnect();
+    }
 
     public void quitGame()
     {

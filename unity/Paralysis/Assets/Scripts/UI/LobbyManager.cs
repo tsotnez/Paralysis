@@ -14,6 +14,7 @@ public class LobbyManager : MonoBehaviour {
     public Button createRoomButton;
     public Button backButton;
     public string roomScene = "NetworkAPITestRoom";
+    public string backScene = "NetworkAPITest_Start";
 
     public GameObject gameNetwork;
 
@@ -23,10 +24,6 @@ public class LobbyManager : MonoBehaviour {
     private void Awake()
     {
         Instance = this;
-        if(GameObject.FindGameObjectWithTag("GameNetwork") == null)
-        {
-            Instantiate(gameNetwork);
-        }
     }
 
     // Use this for initialization
@@ -75,19 +72,12 @@ public class LobbyManager : MonoBehaviour {
     {
         //Make sure to destroy the gameNetwork
         Destroy(GameNetwork.Instance.gameObject);
-
-        //TODO, go back a scene don't quit
-        GameNetwork.Instance.quitGame();
+        SceneManager.LoadScene(backScene);
     }
 
     //TODO - KW phton callback
     private void OnJoinedRoom()
     {
         SceneManager.LoadScene(roomScene);
-    }
-
-    private void OnConnectedToMaster()
-    {
-        createRoomButton.interactable = true;
     }
 }

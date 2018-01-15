@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerLayoutGroup : MonoBehaviour
 {
+    private const float TIME_TO_WAIT = 1f;
 
     [SerializeField]
     private GameObject playerListingPrefab;
@@ -20,6 +21,12 @@ public class PlayerLayoutGroup : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(waitToPopulate());
+    }
+
+    private IEnumerator waitToPopulate()
+    {
+        yield return new WaitForSecondsRealtime(TIME_TO_WAIT);
         playerListings = new List<PlayerListing>();
         PhotonPlayer[] photonPlayers = GameNetwork.Instance.getPlayerList();
         for (int i = 0; i < photonPlayers.Length; i++)
