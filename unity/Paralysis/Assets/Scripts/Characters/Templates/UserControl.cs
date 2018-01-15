@@ -20,6 +20,8 @@ public abstract class UserControl : MonoBehaviour
     protected bool inputTrinket1;
     protected bool inputTrinket2;
 
+    protected PhotonView photonV;
+
     #region Enums
 
     public enum InputDevice
@@ -40,6 +42,12 @@ public abstract class UserControl : MonoBehaviour
     {
         GoCharacter = GetComponent<ChampionClassController>();
         CharStats = GetComponent<CharacterStats>();
+        photonV = GetComponent<PhotonView>();
+
+        if(!PhotonNetwork.offlineMode && !photonV.isMine)
+        {
+            enabled = false;
+        }
     }
 
     protected void Update()

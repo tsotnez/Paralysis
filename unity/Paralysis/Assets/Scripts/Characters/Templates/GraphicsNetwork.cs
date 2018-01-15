@@ -10,9 +10,16 @@ public class GraphicsNetwork : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
-        animCon = GetComponent<ChampionAnimationController>();
-        ren = GetComponent<SpriteRenderer>();
-        ren.color = GameObject.Find("manager").GetComponent<GameplayManager>().championSpriteOverlayColor;
+
+        if(!PhotonNetwork.offlineMode) 
+        {
+            animCon = GetComponent<ChampionAnimationController>();
+            ren = GetComponent<SpriteRenderer>();
+            ren.color = GameObject.Find("manager").GetComponent<GameplayManager>().championSpriteOverlayColor;
+        }
+        else {
+            enabled = false;
+        }
     }
 
     /// <summary>

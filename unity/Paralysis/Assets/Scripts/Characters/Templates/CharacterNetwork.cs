@@ -87,6 +87,8 @@ public class CharacterNetwork : Photon.MonoBehaviour {
         whatToHit |= (1 << teamToHit);
         GetComponent<ChampionClassController>().m_whatToHit = whatToHit;
 
+        if(stats == null)
+            stats = GetComponent<CharacterStats>();
         stats.SetTeamColor();
     }
 

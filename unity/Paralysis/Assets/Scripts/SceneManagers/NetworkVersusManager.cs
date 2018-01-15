@@ -14,6 +14,8 @@ public class NetworkVersusManager : GameplayManager
     private GameObject myPlayerInstance;
     private GameObject[] spawnPoints;
 
+    public const string CHAMP_LOCATION = "Prefabs/Champions/";
+
     #region default
     protected override void Awake()
     {
@@ -54,13 +56,8 @@ public class NetworkVersusManager : GameplayManager
         if(spawnPoint == null)spawnPoint = new SpawnPoint();
 
         //Player
-        GameObject instPlayer1 = PhotonNetwork.Instantiate(localPlayer.ChampionPrefab.name, spawnPoint.transform.position, Quaternion.identity, 0);
-        instPlayer1.GetComponent<UserControl>().enabled = true;
+        GameObject instPlayer1 = PhotonNetwork.Instantiate(CHAMP_LOCATION + localPlayer.ChampionPrefab.name, spawnPoint.transform.position, Quaternion.identity, 0);
         instPlayer1.GetComponent<UserControl>().inputDevice = localPlayer.inputDevice;
-
-        //Rigidbody
-        instPlayer1.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-
         LayerMask whatToHitP1 = new LayerMask();
 
         ChampionClassController con = instPlayer1.GetComponent<ChampionClassController>();
@@ -68,7 +65,6 @@ public class NetworkVersusManager : GameplayManager
         {
             con.Flip();
         }
-        con.enabled = true;
         con.m_whatToHit = whatToHitP1;
         instPlayer1.GetComponent<UserControl>().playerNumber = localPlayer.playerNumber;
 
@@ -87,7 +83,6 @@ public class NetworkVersusManager : GameplayManager
 
         //Disable default cam
         GameObject.Find("LobbyCam").SetActive(false);
-
         GameObject.Find("MainCanvas").GetComponent<Canvas>().worldCamera = Camera.main;
 
         myPlayerInstance = instPlayer1;

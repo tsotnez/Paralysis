@@ -28,6 +28,16 @@ public class ProjectileBehaviour : MonoBehaviour
     Coroutine fallingRoutine = null;                                    // Falling Routine  
     Coroutine observeRoutine = null;                                    // Observe Routine
 
+    protected PhotonView photonV;
+
+    protected void Awake()
+    {
+        if(!PhotonNetwork.offlineMode)
+        {
+            enabled = false;
+        }
+    }
+
     // Use this for initialization
     protected void Start()
     {

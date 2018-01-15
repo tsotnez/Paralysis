@@ -183,7 +183,16 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     {
         // Refresh manager instance list of players
         if (!PhotonNetwork.offlineMode)
+        {
             photonView.RPC("OnNewPlayerInstantiated", PhotonTargets.All);
+            //If the player is not mine set the rigidbody to not kinematic
+            //and Disable updates on this object
+            if(!photonView.isMine)
+            {
+                enabled = false;
+                m_Rigidbody2D.isKinematic = true;
+            }
+        }
 
         // Set default JumpAttack
         jumpAttack_var = new MeleeSkill(0, 0, damage_JumpAttack, Skill.SkillEffect.nothing, 0, 0, 10, Skill.SkillTarget.MultiTarget, 0, m_jumpAttackRadius, ChampionAndTrinketDatabase.Champions.Alchemist);

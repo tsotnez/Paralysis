@@ -231,7 +231,7 @@ MonoBehaviour:
   championSpriteOverlayColor: {r: 0.7647059, g: 0.7432369, b: 0.6634948, a: 1}
   players: []
   localPlayer:
-    ChampionPrefab: {fileID: 1468821578159268, guid: 24aba8d053e78ac44b097c4f9e7f2908,
+    ChampionPrefab: {fileID: 1468821578159268, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b,
       type: 2}
     playerNumber: 0
     TeamNumber: 1
@@ -241,6 +241,7 @@ MonoBehaviour:
   connectionStatusText: {fileID: 757792269}
   hotbarPrefab: {fileID: 1880548955337550, guid: 1af496c58dcb903408eaa6d024bfe250,
     type: 2}
+  championLocation: Prefabs/Champions
 --- !u!1 &77389989
 GameObject:
   m_ObjectHideFlags: 0
