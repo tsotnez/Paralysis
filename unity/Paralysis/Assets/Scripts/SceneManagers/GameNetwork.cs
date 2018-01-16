@@ -53,12 +53,23 @@ public class GameNetwork : MonoBehaviour {
         SceneManager.sceneLoaded += OnSceneFinishedLoading;
     }
 
-    public void Connect()
+    public void Connect(string region = "eu")
     {
         if(!offlineMode)
         {
-            print("Connecting to server..");
-            PhotonNetwork.ConnectUsingSettings(gameVersion);
+            print("Connecting to server: " + region);
+            if(region.ToLower().Equals("us"))
+            {
+                PhotonNetwork.ConnectToRegion(CloudRegionCode.us, gameVersion);
+            }
+            else if(region.ToLower().Equals("eu"))
+            {
+                PhotonNetwork.ConnectToRegion(CloudRegionCode.eu, gameVersion);
+            }
+            else
+            {
+                PhotonNetwork.ConnectUsingSettings(gameVersion);
+            }
         }
     }
 

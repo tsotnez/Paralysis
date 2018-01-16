@@ -7,12 +7,16 @@ using UnityEngine.EventSystems;
 
 public class NetworkVersusManager : GameplayManager
 {
-    public Player localPlayer;
+    public Player assassin;
+    public Player alchemist;
 
     public Text connectionStatusText;
     public GameObject hotbarPrefab;
     private GameObject myPlayerInstance;
     private GameObject[] spawnPoints;
+
+    private Player localPlayer;
+    private int playerNetworkNum;
 
     public const string CHAMP_LOCATION = "Prefabs/Champions/";
 
@@ -20,6 +24,17 @@ public class NetworkVersusManager : GameplayManager
     protected override void Awake()
     {
         spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
+        playerNetworkNum = GameNetwork.Instance.PlayerNetworkNumber;
+
+        // Set players champ based on number for now
+        if(playerNetworkNum == 1)
+        {
+            localPlayer = assassin;
+        }
+        else
+        {
+            localPlayer = alchemist;
+        }
     }
 
     protected override void instantiatePlayers()
@@ -47,13 +62,11 @@ public class NetworkVersusManager : GameplayManager
         foreach(GameObject spawnObj in spawnPoints)
         {
             spawnPoint = spawnObj.GetComponent<SpawnPoint>();
-            if(spawnPoint.playerNumber == GameNetwork.Instance.PlayerNetworkNumber)
+            if(spawnPoint.playerNumber == playerNetworkNum)
             {
                 break;
             }
         }
-        // This shouldn't happen but just in case.
-        if(spawnPoint == null)spawnPoint = new SpawnPoint();
 
         //Player
         GameObject instPlayer1 = PhotonNetwork.Instantiate(CHAMP_LOCATION + localPlayer.ChampionPrefab.name, spawnPoint.transform.position, Quaternion.identity, 0);

@@ -34,6 +34,17 @@ public class CharacterNetwork : Photon.MonoBehaviour {
     {
         if (photonView.isMine)
         {
+            int playerNetworkNum = GameNetwork.Instance.PlayerNetworkNumber;
+            if(playerNetworkNum == 1 || playerNetworkNum == 3)
+            {
+                photonView.RPC("SetTeam", PhotonTargets.All, 11, 12); //Join Team 1
+            }
+            else 
+            {
+                photonView.RPC("SetTeam", PhotonTargets.All, 12, 11); //Join Team 2
+            }
+
+            /*
             GameObject[] players = GameObject.FindGameObjectsWithTag("MainPlayer").Where(x => x != gameObject).ToArray();
 
             //Join the team with lesser players
@@ -41,6 +52,7 @@ public class CharacterNetwork : Photon.MonoBehaviour {
                 photonView.RPC("SetTeam", PhotonTargets.All, 11, 12); //Join Team 1
             else
                 photonView.GetComponent<PhotonView>().RPC("SetTeam", PhotonTargets.All, 12, 11);
+            */
         }
     }
 

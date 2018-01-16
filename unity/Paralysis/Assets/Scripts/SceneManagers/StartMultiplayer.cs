@@ -8,10 +8,12 @@ public class StartMultiplayer : MonoBehaviour {
 
     public string sceneToLoad = "NetworkAPITestLobby";
     public Button startMultiplayerButton;
+    public Dropdown regionDropDown;
 
     public void onClickStartMultiplayer()
     {
-        GameNetwork.Instance.Connect();
+        string region = regionDropDown.options[regionDropDown.value].text;
+        GameNetwork.Instance.Connect(region);
         startMultiplayerButton.interactable = false;
     }
 
