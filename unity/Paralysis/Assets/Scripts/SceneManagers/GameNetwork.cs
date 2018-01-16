@@ -382,6 +382,7 @@ public class GameNetwork : MonoBehaviour {
 
     private void OnDestroy()
     {
+        SceneManager.sceneLoaded -= OnSceneFinishedLoading;
         PhotonNetwork.Disconnect();
     }
 

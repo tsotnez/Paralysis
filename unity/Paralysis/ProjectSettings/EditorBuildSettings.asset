@@ -14,9 +14,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/LocalChampionSelection.unity
     guid: ab64ab27a4ef575449d85d37227ce41f
-  - enabled: 0
-    path: Assets/Scenes/test.unity
-    guid: 0c9f28be97001594e8efeab6d4c81226
   - enabled: 1
     path: Assets/Scenes/NetworkAPITest/NetworkAPITest_Start.unity
     guid: 70182fac42a01d746aeeddbfcea077b3
@@ -29,3 +26,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Network test.unity
     guid: 58686bd5c4cd6e64ea39a3d1085c20b9
+  - enabled: 1
+    path: Assets/Scenes/test.unity
+    guid: 0c9f28be97001594e8efeab6d4c81226
