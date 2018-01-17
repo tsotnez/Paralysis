@@ -32,4 +32,5 @@ public class ChangeImageColor : MonoBehaviour {
     {
         img.color = onClickCol;
     }
+
 }

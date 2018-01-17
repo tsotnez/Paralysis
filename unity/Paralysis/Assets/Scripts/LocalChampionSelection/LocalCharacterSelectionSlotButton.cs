@@ -73,7 +73,7 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
         currentlySelected = false;
         text.enabled = false;
         selectedPos = 0;
-        if(!isSelectedByOtherPlayer())
+        if(!isSelectedByOtherPlayer() && targetValue == PlayerTargetValue.Champion)
             transform.parent.Find("portrait").GetComponent<LocalChampionSelectionPortrait>().switchTo(0);
     }
 

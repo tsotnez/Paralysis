@@ -29,7 +29,6 @@ public class RoomTableManager : MonoBehaviour {
         bool locked = dialogueScript.Locked.isOn;
 
         DialogueWindow.SetActive(false);
-
     }
 
     //Call this Method when refreshing rooms

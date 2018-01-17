@@ -751,8 +751,8 @@ MonoBehaviour:
     type: 2}
   GoSkill3_Stun: {fileID: 1559905968728678, guid: 7ffecbe061e52564a83b2c7955abcc0d,
     type: 2}
-  CastTime_Skill1: 1.5
-  CastTime_Skill3: 1.5
+  CastTime_Skill1: 0.5
+  CastTime_Skill3: 0.5
 --- !u!114 &114863279025727096
 MonoBehaviour:
   m_ObjectHideFlags: 1

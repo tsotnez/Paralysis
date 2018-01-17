@@ -8,8 +8,12 @@ public class MainMenuManager : MonoBehaviour {
     public CanvasGroup mainCanvas;
     public CanvasGroup startPage;
     private CanvasGroup currentPage; //Page which is shown currently
-
     public CursorLockMode CursorLockMode { get; private set; }
+
+    public CanvasGroup[] MenuPages;
+
+    //Set from outside to change to a certain menu page immediatly after loading the scene
+    public static int DefaultPageIndex = -1;
 
     // Use this for initialization
     void Start () {
@@ -23,6 +27,10 @@ public class MainMenuManager : MonoBehaviour {
             eventSystem.submitButton = "Skill4_XboxPlayer1";
         }
 
+        if (DefaultPageIndex != -1)
+            startPage = MenuPages[DefaultPageIndex];
+
+        DefaultPageIndex = -1;
 
         //Disable all pages and enable starting page
         foreach (CanvasGroup item in FindObjectsOfType<CanvasGroup>())
