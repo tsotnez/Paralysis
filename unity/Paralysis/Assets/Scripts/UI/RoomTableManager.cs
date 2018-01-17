@@ -21,7 +21,7 @@ public class RoomTableManager : MonoBehaviour {
         dialogueScript = DialogueWindow.GetComponent<CreateRoomDialogue>();
     }
 
-    //Called, when the user created a room via dialogue. Will transition to the room scene
+    //Called, when the user created a room via dialogue. Will transition to the room scene (todo)
     public void createRoom()
     {
         string GM = dialogueScript.GameMode.text;

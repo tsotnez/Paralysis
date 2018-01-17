@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class InRoomManager : MonoBehaviour {
 
+    //Please notice: The PlayerListEntry objects have a ready image which is supposed to show whether the player has entered the ready state
+    //Note 2: The Start-Button in the bottom center may be replaced by a ready button depending on whether the local player owns the room
+
     public Object currentScene;
     public Image MapPreviewImage;
     public Text MapPreviewText;
