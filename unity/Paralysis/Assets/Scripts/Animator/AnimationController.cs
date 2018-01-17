@@ -44,6 +44,7 @@ public abstract class AnimationController : MonoBehaviour
     private bool finishedInitialization = false;                            // True if finished loading all the sprites
     private SpriteRenderer spriteRenderer;                                  // Sprite Renderer
     private Coroutine AnimationRoutine;                                     // Animation Routine
+    private PhotonView photonView;
 
     #region Enums
 
@@ -51,53 +52,53 @@ public abstract class AnimationController : MonoBehaviour
     public enum AnimatorStates
     {
         //Default
-        Idle,
-        Run,
-        Jump,
-        Fall,
-        Dash,
-        Hit,
+        Idle = 0,
+        Run = 1,
+        Jump = 2,
+        Fall = 3,
+        Dash = 4,
+        Hit = 5,
         //Status
-        Stunned,
-        KnockedBack,
-        Block,
+        Stunned = 6,
+        KnockedBack = 7,
+        Block = 8,
         //Attack
-        BasicAttack1,
-        BasicAttack2,
-        BasicAttack3,
-        JumpAttack,
+        BasicAttack1 = 9,
+        BasicAttack2 = 10,
+        BasicAttack3 = 11,
+        JumpAttack = 12,
         //Skills
-        Skill1,
-        Skill2,
-        Skill3,
-        Skill4,
+        Skill1 = 13,
+        Skill2 = 14,
+        Skill3 = 15,
+        Skill4 = 16,
 
         // Assassin
-        DoubleJump,
+        DoubleJump = 17,
         // Knight & Infantry
-        BlockMove,
+        BlockMove = 18,
         // Knight
-        DashFor,
+        DashFor = 19,
         // ?
-        Walk,
+        Walk = 20,
 
         // End of the Game
-        Die
+        Die = 21
     }
 
     public enum TypeOfAnimation
     {
-        Animation, StartAnimation, EndAnimation
+        Animation = 0, StartAnimation = 1, EndAnimation = 2
     }
 
     public enum AnimationPlayTypes
     {
-        Single, Loop, HoldOnEnd, Nothing
+        Single = 0, Loop = 1, HoldOnEnd = 2, Nothing = 3
     }
 
     public enum AnimationState
     {
-        Playing, Looping, Waiting
+        Playing = 0, Looping = 1, Waiting = 2
     }
 
     #endregion
@@ -105,7 +106,7 @@ public abstract class AnimationController : MonoBehaviour
     #region Init
 
     void Start()
-    {
+    {        
         // initiate dictionarys
         animationSprites = new Dictionary<AnimatorStates, SpriteAtlas>();
         animationSpriteEnd = new Dictionary<AnimatorStates, SpriteAtlas>();
@@ -113,6 +114,7 @@ public abstract class AnimationController : MonoBehaviour
         animationDuration = new Dictionary<AnimatorStates, float>();
         animationLoop = new Dictionary<AnimatorStates, bool>();
         audioSource = GetComponent<AudioSource>();
+        photonView = GetComponent<PhotonView>();
 
         // initiate Components
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -198,6 +200,23 @@ public abstract class AnimationController : MonoBehaviour
 
     public void StartAnimation(AnimatorStates animation, TypeOfAnimation AnimationType, AnimationPlayTypes ForceAnimationPlayType = AnimationPlayTypes.Nothing)
     {
+        if(!PhotonNetwork.offlineMode)
+        {
+            photonView.RPC("RPC_StartAnimation", PhotonTargets.All, (short)animation, (short)AnimationType, (short)ForceAnimationPlayType);
+        }
+        else
+        {
+            RPC_StartAnimation((short)animation, (short)AnimationType, (short)ForceAnimationPlayType);
+        }
+    }
+
+    [PunRPC]
+    public void RPC_StartAnimation(short animationN, short AnimationTypeN, short ForceAnimationPlayTypeN)
+    {
+        AnimatorStates animation = (AnimatorStates)animationN;
+        TypeOfAnimation AnimationType = (TypeOfAnimation)AnimationTypeN;
+        AnimationPlayTypes ForceAnimationPlayType = (AnimationPlayTypes)ForceAnimationPlayTypeN;
+
         if (AnimationDictionaryHasAnimation(animation, AnimationType))
         {
             // set current animation

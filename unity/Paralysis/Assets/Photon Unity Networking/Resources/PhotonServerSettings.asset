@@ -86,4 +86,5 @@ MonoBehaviour:
   - RPC_ClientJoinedRoom
   - RPC_PlayerLeftUpdateNum
   - RPC_spawnRangedSkill
+  - RPC_StartAnimation
   DisableAutoOpenWizard: 1

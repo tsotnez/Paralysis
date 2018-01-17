@@ -2,8 +2,6 @@
 
 public abstract class ChampionAnimationController : AnimationController
 {
-    PhotonView view;
-
     /// <summary>
     /// Indicates wheter a trigger was set by an RPC
     /// </summary>
@@ -43,11 +41,6 @@ public abstract class ChampionAnimationController : AnimationController
     private int RevertIdleNeededFrames = 3;
     private int RevertIdleActualFrames = 0;
 
-    private void Awake()
-    {
-        view = GetComponent<PhotonView>();
-    }
-
     protected virtual void Update()
     {
         if (!statDead || CurrentAnimation != AnimatorStates.Die)
@@ -58,17 +51,6 @@ public abstract class ChampionAnimationController : AnimationController
 
     protected virtual void FixedUpdate() { }
 
-    /// <summary>
-    /// Issues an RPC if needed
-    /// </summary>
-    private void SynchronizeTrigger(string methodName)
-    {
-        //Jan --- Dont issue RPC when already called by RPC 
-        if (!setByRPC && !PhotonNetwork.offlineMode)
-            view.RPC(methodName, PhotonTargets.Others);
-        setByRPC = false;
-    }
-
     private void AnimationManager()
     {
         // Animations that work in any State
@@ -76,7 +58,6 @@ public abstract class ChampionAnimationController : AnimationController
         {
             if (trigBasicAttack1)
             {
-                SynchronizeTrigger("setBasicAttack1");
                 trigBasicAttack1 = false;
                 StartAnimation(AnimatorStates.BasicAttack1);
                 return;
@@ -89,7 +70,6 @@ public abstract class ChampionAnimationController : AnimationController
         }
         else if (trigKnockedBack)
         {
-            SynchronizeTrigger("setKnockedBack");
             trigKnockedBack = false;
             StartAnimation(AnimatorStates.KnockedBack);
         }
@@ -113,7 +93,6 @@ public abstract class ChampionAnimationController : AnimationController
                 case AnimatorStates.KnockedBack:
                     if (trigKnockedBackEnd)
                     {
-                        SynchronizeTrigger("setKnockedBackEnd");
                         trigKnockedBackEnd = false;
                         StartAnimation(AnimatorStates.KnockedBack, TypeOfAnimation.EndAnimation);
                     }
@@ -121,7 +100,6 @@ public abstract class ChampionAnimationController : AnimationController
                 case AnimatorStates.JumpAttack:
                     if (trigJumpAttackEnd)
                     {
-                        SynchronizeTrigger("setJumpAttackEnd");
                         trigJumpAttackEnd = false;
                         StartAnimation(AnimatorStates.JumpAttack, TypeOfAnimation.EndAnimation);
                     }
@@ -129,7 +107,6 @@ public abstract class ChampionAnimationController : AnimationController
                 case AnimatorStates.Dash:
                     if (trigDashEnd)
                     {
-                        SynchronizeTrigger("setDashEnd");
                         trigDashEnd = false;
                         StartAnimation(AnimatorStates.Dash, TypeOfAnimation.EndAnimation);
                     }
@@ -137,7 +114,6 @@ public abstract class ChampionAnimationController : AnimationController
                 case AnimatorStates.DashFor:
                     if (trigDashForwardEnd)
                     {
-                        SynchronizeTrigger("setDashForwardEnd");
                         trigDashForwardEnd = false;
                         StartAnimation(AnimatorStates.DashFor, TypeOfAnimation.EndAnimation);
                     }
@@ -149,67 +125,56 @@ public abstract class ChampionAnimationController : AnimationController
 
             if (trigDash)
             {
-                SynchronizeTrigger("setDash");
                 trigDash = false;
                 StartAnimation(AnimatorStates.Dash);
             }
             else if (trigDashForward)
             {
-                SynchronizeTrigger("setDashForward");
                 trigDashForward = false;
                 StartAnimation(AnimatorStates.DashFor);
             }
             else if (trigHit)
             {
-                SynchronizeTrigger("setHit");
                 trigHit = false;
                 StartAnimation(AnimatorStates.Hit);
             }
             else if (trigJumpAttack)
             {
-                SynchronizeTrigger("setJumpAttack");
                 trigJumpAttack = false;
                 StartAnimation(AnimatorStates.JumpAttack);
             }
             else if (trigBasicAttack1)
             {
-                SynchronizeTrigger("setBasicAttack1");
                 trigBasicAttack1 = false;
                 StartAnimation(AnimatorStates.BasicAttack1);
             }
             else if (trigBasicAttack2)
             {
-                SynchronizeTrigger("setBasicAttack2");
                 trigBasicAttack2 = false;
                 StartAnimation(AnimatorStates.BasicAttack2);
             }
             else if (trigBasicAttack3)
             {
-                SynchronizeTrigger("setBasicAttack3");
                 trigBasicAttack3 = false;
                 StartAnimation(AnimatorStates.BasicAttack3);
             }
             else if (trigSkill1)
             {
-                SynchronizeTrigger("setSkill1");
                 trigSkill1 = false;
                 StartAnimation(AnimatorStates.Skill1);
             }
             else if (trigSkill2)
             {
-                SynchronizeTrigger("setSkill2");
                 trigSkill2 = false;
                 StartAnimation(AnimatorStates.Skill2);
             }
             else if (trigSkill3)
             {
-                SynchronizeTrigger("setSkill3");
                 trigSkill3 = false;
                 StartAnimation(AnimatorStates.Skill3);
             }
             else if (trigSkill4)
             {
-                SynchronizeTrigger("setSkill4");
                 trigSkill4 = false;
                 StartAnimation(AnimatorStates.Skill4);
             }
@@ -221,7 +186,6 @@ public abstract class ChampionAnimationController : AnimationController
                 StartAnimation(AnimatorStates.Fall);
             else if (!m_Grounded && m_vSpeed > 0 && trigJump)
             {
-                SynchronizeTrigger("setJump");
                 StartAnimation(AnimatorStates.Jump);
                 trigJump = false;
             }

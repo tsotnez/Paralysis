@@ -17,7 +17,8 @@ public class GraphicsNetwork : MonoBehaviour {
             ren = GetComponent<SpriteRenderer>();
             ren.color = GameObject.Find("manager").GetComponent<GameplayManager>().championSpriteOverlayColor;
         }
-        else {
+        else 
+        {
             enabled = false;
         }
     }
@@ -52,110 +53,4 @@ public class GraphicsNetwork : MonoBehaviour {
             animCon.statBlock = (bool)stream.ReceiveNext();
         }
     }
-
-    #region RPC
-    //Jan --- RPC Methods for networking. These are called from the client instance to syncronize animation
-    [PunRPC]
-    void setBasicAttack1()
-    {
-        animCon.trigBasicAttack1 = true;
-        animCon.setByRPC = true;
-    }
-    [PunRPC]
-    void setBasicAttack2()
-    {
-        animCon.trigBasicAttack2 = true;
-        animCon.setByRPC = true;
-    }
-    [PunRPC]
-    void setBasicAttack3()
-    {
-        animCon.trigBasicAttack3 = true;
-        animCon.setByRPC = true;
-    }
-    [PunRPC]
-    void setSkill1()
-    {
-        animCon.trigSkill1 = true;
-        animCon.setByRPC = true;
-    }
-    [PunRPC]
-    void setSkill2()
-    {
-        animCon.trigSkill2 = true;
-        animCon.setByRPC = true;
-    }
-    [PunRPC]
-    void setSkill3()
-    {
-        animCon.trigSkill3 = true;
-        animCon.setByRPC = true;
-    }
-    [PunRPC]
-    void setSkill4()
-    {
-        animCon.trigSkill4 = true;
-        animCon.setByRPC = true;
-    }
-    [PunRPC]
-    void setKnockedBack()
-    {
-        animCon.trigKnockedBack = true;
-        animCon.setByRPC = true;
-    }
-    [PunRPC]
-    void setKnockedBackEnd()
-    {
-        animCon.trigKnockedBackEnd = true;
-        animCon.setByRPC = true;
-    }
-    [PunRPC]
-    void setJump()
-    {
-        animCon.trigJump = true;
-        animCon.setByRPC = true;
-    }
-    [PunRPC]
-    void setJumpAttack()
-    {
-        animCon.trigJumpAttack = true;
-        animCon.setByRPC = true;
-    }
-    [PunRPC]
-    void setJumpAttackEnd()
-    {
-        animCon.trigJumpAttackEnd = true;
-        animCon.setByRPC = true;
-    }
-    [PunRPC]
-    void setDash()
-    {
-        animCon.trigDash = true;
-        animCon.setByRPC = true;
-    }
-    [PunRPC]
-    void setDashEnd()
-    {
-        animCon.trigDashEnd = true;
-        animCon.setByRPC = true;
-    }
-    [PunRPC]
-    void setDashForward()
-    {
-        animCon.trigDashForward = true;
-        animCon.setByRPC = true;
-    }
-    [PunRPC]
-    void setDashForwardEnd()
-    {
-        animCon.trigDashForwardEnd = true;
-        animCon.setByRPC = true;
-    }
-    [PunRPC]
-    void setHit()
-    {
-        animCon.trigHit = true;
-        animCon.setByRPC = true;
-    }
-    #endregion 
 }
