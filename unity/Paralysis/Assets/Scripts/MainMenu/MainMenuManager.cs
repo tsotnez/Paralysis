@@ -11,6 +11,8 @@ public class MainMenuManager : MonoBehaviour {
     public CursorLockMode CursorLockMode { get; private set; }
 
     public CanvasGroup[] MenuPages;
+    public GameObject[] firstSelectedObjects;
+    public EventSystem es;
 
     //Set from outside to change to a certain menu page immediatly after loading the scene
     public static int DefaultPageIndex = -1;
@@ -21,14 +23,17 @@ public class MainMenuManager : MonoBehaviour {
         //Switch to controller Controls if a controller is connected
         if (Array.Exists(Input.GetJoystickNames(), x => x == "Controller (XBOX 360 For Windows)"))
         {
-            MyStandaloneInputModule eventSystem = FindObjectOfType<MyStandaloneInputModule>();
-            eventSystem.verticalAxis = "Vertical_XboxPlayer1";
-            eventSystem.horizontalAxis = "Horizontal_XboxPlayer1";
-            eventSystem.submitButton = "Skill4_XboxPlayer1";
+            MyStandaloneInputModule module = FindObjectOfType<MyStandaloneInputModule>();
+            module.verticalAxis = "Vertical_XboxPlayer1";
+            module.horizontalAxis = "Horizontal_XboxPlayer1";
+            module.submitButton = "Skill4_XboxPlayer1";
         }
 
         if (DefaultPageIndex != -1)
+        {
             startPage = MenuPages[DefaultPageIndex];
+            es.SetSelectedGameObject(firstSelectedObjects[DefaultPageIndex]);
+        }
 
         DefaultPageIndex = -1;
 

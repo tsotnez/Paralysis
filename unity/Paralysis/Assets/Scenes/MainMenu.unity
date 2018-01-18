@@ -1958,6 +1958,11 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 530649627}
+--- !u!1 &578504787 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1324545019161532, guid: 856b26a64d484414c909b077b26fa050,
+    type: 2}
+  m_PrefabInternal: {fileID: 971842890}
 --- !u!114 &649375179 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114895218715918484, guid: 17ae6e833ff4e814fb9d3e405618d7c8,
@@ -4328,6 +4333,11 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 12832550}
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!1 &1546451655 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1324545019161532, guid: 856b26a64d484414c909b077b26fa050,
+    type: 2}
+  m_PrefabInternal: {fileID: 915643243}
 --- !u!1 &1562632999
 GameObject:
   m_ObjectHideFlags: 0
@@ -4982,6 +4992,13 @@ MonoBehaviour:
   - {fileID: 1924255349}
   - {fileID: 466145580}
   - {fileID: 33490633}
+  firstSelectedObjects:
+  - {fileID: 1545109567}
+  - {fileID: 1562632999}
+  - {fileID: 578504787}
+  - {fileID: 2005334192}
+  - {fileID: 1546451655}
+  es: {fileID: 1176022297}
 --- !u!4 &1887682822
 Transform:
   m_ObjectHideFlags: 0
