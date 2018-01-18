@@ -302,7 +302,7 @@ Prefab:
         type: 2}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
-      objectReference: {fileID: 465831681}
+      objectReference: {fileID: 0}
     - target: {fileID: 114766201961859296, guid: 17ae6e833ff4e814fb9d3e405618d7c8,
         type: 2}
       propertyPath: m_Navigation.m_SelectOnDown
@@ -1620,7 +1620,7 @@ Prefab:
         type: 2}
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
-      objectReference: {fileID: 1545109571}
+      objectReference: {fileID: 0}
     - target: {fileID: 114766201961859296, guid: 17ae6e833ff4e814fb9d3e405618d7c8,
         type: 2}
       propertyPath: m_Navigation.m_SelectOnLeft
@@ -1641,6 +1641,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 1239514610}
     m_Modifications:
+    - target: {fileID: 114766201961859296, guid: 17ae6e833ff4e814fb9d3e405618d7c8,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224171264811847760, guid: 17ae6e833ff4e814fb9d3e405618d7c8,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -1846,6 +1851,31 @@ Prefab:
       propertyPath: m_Navigation.m_SelectOnRight
       value: 
       objectReference: {fileID: 1007640407}
+    - target: {fileID: 114766201961859296, guid: 17ae6e833ff4e814fb9d3e405618d7c8,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114766201961859296, guid: 17ae6e833ff4e814fb9d3e405618d7c8,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114766201961859296, guid: 17ae6e833ff4e814fb9d3e405618d7c8,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1409648296}
+    - target: {fileID: 114766201961859296, guid: 17ae6e833ff4e814fb9d3e405618d7c8,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: changePage
+      objectReference: {fileID: 0}
+    - target: {fileID: 114766201961859296, guid: 17ae6e833ff4e814fb9d3e405618d7c8,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17ae6e833ff4e814fb9d3e405618d7c8, type: 2}
   m_IsPrefabParent: 0
@@ -3850,6 +3880,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1404381012}
+--- !u!114 &1409648296 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114895218715918484, guid: 17ae6e833ff4e814fb9d3e405618d7c8,
+    type: 2}
+  m_PrefabInternal: {fileID: 513003393}
+  m_Script: {fileID: 11500000, guid: 776a23b9f4ff0504bb0723c9b6c30d7b, type: 3}
 --- !u!1 &1412960761
 GameObject:
   m_ObjectHideFlags: 0
@@ -4474,7 +4510,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: NetworkRoomSelection
+          m_StringArgument: NetworkChoseQueueTarget
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
