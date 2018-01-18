@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 73411569}
   - component: {fileID: 73411568}
   - component: {fileID: 73411567}
+  - component: {fileID: 73411570}
   m_Layer: 5
   m_Name: Available
   m_TagString: Untagged
@@ -360,7 +361,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Content: {fileID: 117360346}
   m_Horizontal: 1
-  m_Vertical: 1
+  m_Vertical: 0
   m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
@@ -378,6 +379,21 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.ScrollRect+ScrollRectEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &73411570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 73411565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1649bb281749604591de34da70454de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  es: {fileID: 1010492900}
+  LerpSpeed: 1.3
+  contentTrans: {fileID: 117360346}
+  viewPort: {fileID: 2120868536}
 --- !u!1001 &97599762
 Prefab:
   m_ObjectHideFlags: 0
@@ -567,7 +583,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -523.62726, y: 0}
+  m_AnchoredPosition: {x: -532.72833, y: 0.0000076293945}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &117360347
@@ -1211,7 +1227,7 @@ Prefab:
     - target: {fileID: 224098343013012374, guid: 8c27a0be1c2b934498a1ca51bebd6467,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 224098343013012374, guid: 8c27a0be1c2b934498a1ca51bebd6467,
         type: 2}
@@ -2166,7 +2182,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.56078434, g: 0.16862746, b: 0, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.56078434, g: 0.16862746, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2184,7 +2200,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1479809915}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.20995519
+  m_Size: 0.51721203
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2400,8 +2416,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 727649476}
   m_HandleRect: {fileID: 727649475}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.9999998
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3349,7 +3365,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2120868537
 MonoBehaviour:
   m_ObjectHideFlags: 0
