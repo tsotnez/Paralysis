@@ -18,6 +18,8 @@ public class InRoomManager : MonoBehaviour {
     public Text PlayerCount;
     public Text RoomNameText;
     public Button startGameButton;
+    public Button backButton;
+    public string backScene = "NetworkChoseQueueTarget";
 
     int CurrentPlayers = 1;
     int MaxPlayers = 4;
@@ -26,6 +28,7 @@ public class InRoomManager : MonoBehaviour {
 
     private void Start()
     {
+        backButton.onClick.AddListener(backPressed);
         startGameButton.onClick.AddListener(startGame);
 
         RoomNameText.text = GameNetwork.Instance.CurrentRoomInfo.Name;
@@ -35,6 +38,7 @@ public class InRoomManager : MonoBehaviour {
         if(GameNetwork.Instance.IsMasterClient)
         {
             hostEntryText.text = GameNetwork.Instance.PlayerName;
+            startGameButton.interactable = true;
         }
         else
         {
@@ -45,7 +49,7 @@ public class InRoomManager : MonoBehaviour {
             {
                 if(player.IsMasterClient)
                 {
-                    hostEntryText.text = GameNetwork.Instance.PlayerName;
+                    hostEntryText.text = player.NickName;
                     playerDict.Add(player, hostEntry);
                 }
                 else
@@ -69,16 +73,6 @@ public class InRoomManager : MonoBehaviour {
     public void ChangeCurrentMap(Object newMap)
     {
         currentScene = newMap;
-    }
-
-    private void OnPhotonPlayerConnected(PhotonPlayer player)
-    {
-        AddPlayerToList(player);
-    }
-
-    private void OnPhotonPlayerDisconnected(PhotonPlayer player)
-    {
-        RemovePlayerFromList(player);
     }
 
     //Call this when a player Joins
@@ -106,4 +100,29 @@ public class InRoomManager : MonoBehaviour {
     {
         GameNetwork.Instance.StartGame();
     }
+
+    private void backPressed()
+    {
+        Destroy(GameNetwork.Instance);
+        SceneManager.LoadScene(backScene);
+    }
+
+    #region PhotonCallbacks
+
+    private void OnMasterClientSwitched(PhotonPlayer newMasterClient)
+    {
+        backPressed();
+    }
+
+    private void OnPhotonPlayerConnected(PhotonPlayer player)
+    {
+        AddPlayerToList(player);
+    }
+
+    private void OnPhotonPlayerDisconnected(PhotonPlayer player)
+    {
+        RemovePlayerFromList(player);
+    }
+
+    #endregion
 }

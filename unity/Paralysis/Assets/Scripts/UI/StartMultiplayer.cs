@@ -49,6 +49,10 @@ public class StartMultiplayer : MonoBehaviour {
             GameNetwork.Instance.Connect(region);
             joiningRoom = true;
         }
+        else
+        {
+            showError("Room name field empty.");
+        }
     }
 
     public void onClickStartSinglePlayer()

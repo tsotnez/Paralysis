@@ -589,7 +589,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1030, y: 0.0000076293945}
+  m_AnchoredPosition: {x: -533.0002, y: 0.0000076293945}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &117360347
@@ -712,7 +712,7 @@ GameObject:
   - component: {fileID: 383565778}
   - component: {fileID: 383565777}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: MapText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1270,6 +1270,8 @@ MonoBehaviour:
   PlayerCount: {fileID: 393051523}
   RoomNameText: {fileID: 1690982638}
   startGameButton: {fileID: 1468938521}
+  backButton: {fileID: 1687068284}
+  backScene: NetworkChoseQueueTarget
 --- !u!4 &432506514
 Transform:
   m_ObjectHideFlags: 0
@@ -1344,7 +1346,7 @@ Prefab:
     - target: {fileID: 224098343013012374, guid: 8c27a0be1c2b934498a1ca51bebd6467,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -35
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224098343013012374, guid: 8c27a0be1c2b934498a1ca51bebd6467,
         type: 2}
@@ -1756,7 +1758,7 @@ Prefab:
     - target: {fileID: 224060198041015780, guid: 946de5a4e9388b24ba6b56a6542b4e81,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -100
+      value: -91.5
       objectReference: {fileID: 0}
     - target: {fileID: 224060198041015780, guid: 946de5a4e9388b24ba6b56a6542b4e81,
         type: 2}
@@ -2013,7 +2015,7 @@ Prefab:
     - target: {fileID: 224060198041015780, guid: 946de5a4e9388b24ba6b56a6542b4e81,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -100
+      value: -91.5
       objectReference: {fileID: 0}
     - target: {fileID: 224060198041015780, guid: 946de5a4e9388b24ba6b56a6542b4e81,
         type: 2}
@@ -2432,7 +2434,7 @@ Prefab:
     - target: {fileID: 224060198041015780, guid: 946de5a4e9388b24ba6b56a6542b4e81,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -100
+      value: -91.5
       objectReference: {fileID: 0}
     - target: {fileID: 224060198041015780, guid: 946de5a4e9388b24ba6b56a6542b4e81,
         type: 2}
@@ -2617,7 +2619,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1479809916}
   m_HandleRect: {fileID: 1479809915}
   m_Direction: 0
-  m_Value: 0.9999999
+  m_Value: 0
   m_Size: 0.5174758
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2896,7 +2898,7 @@ GameObject:
   - component: {fileID: 1636905336}
   - component: {fileID: 1636905335}
   m_Layer: 5
-  m_Name: Image
+  m_Name: MapImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3596,7 +3598,7 @@ Prefab:
     - target: {fileID: 224060198041015780, guid: 946de5a4e9388b24ba6b56a6542b4e81,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -100
+      value: -91.5
       objectReference: {fileID: 0}
     - target: {fileID: 224060198041015780, guid: 946de5a4e9388b24ba6b56a6542b4e81,
         type: 2}

@@ -736,24 +736,26 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         if (FacingRight) direction = 1;
         else direction = -1;
 
+        Vector2 position = ProjectilePosition.position;
+
         if(PhotonNetwork.offlineMode)
         {
-            StartCoroutine(rangedSkill(skillToPerform, direction, ProjectilePosition.position));
+            StartCoroutine(rangedSkill(skillToPerform, direction, position));
         }
         else
         {
-            photonView.RPC("RPC_spawnRangedSkill", PhotonTargets.All, skillToPerform.rangedSkillId, (short) direction, ProjectilePosition.position);
+            photonView.RPC("RPC_spawnRangedSkill", PhotonTargets.All, skillToPerform.rangedSkillId, (short) direction, position);
         }
     }
 
     [PunRPC]
-    public void RPC_spawnRangedSkill(int rangedSkillId, short direction, Vector3 position)
+    public void RPC_spawnRangedSkill(int rangedSkillId, short direction, Vector2 position)
     {
         RangedSkill skillToPerform = RangedSkill.rangedSkillDict[rangedSkillId];
         StartCoroutine(rangedSkill(skillToPerform, direction, position));
     }
 
-    public IEnumerator rangedSkill(RangedSkill skillToPerform, int direction, Vector3 position)
+    public IEnumerator rangedSkill(RangedSkill skillToPerform, int direction, Vector2 position)
     {
         GameObject goProjectile;
         goProjectile = skillToPerform.prefab;

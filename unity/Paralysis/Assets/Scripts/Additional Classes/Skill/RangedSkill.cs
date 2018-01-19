@@ -23,7 +23,7 @@ public class RangedSkill : Skill
         //set an id of the ranged skill to be used for networking
         rangedSkillId = projectilePrefab.name.GetHashCode();
         rangedSkillId = (rangedSkillId * 397) ^ skillDamage.GetHashCode();
-        rangedSkillId = (rangedSkillId * 397) ^ (int)castTime.GetHashCode();
+        rangedSkillId = (rangedSkillId * 397) ^ (int)castTime * 100.GetHashCode();
         rangedSkillId = (rangedSkillId * 397) ^ (int)speed.x.GetHashCode();
 
         if(!rangedSkillDict.ContainsKey(rangedSkillId))
