@@ -66,7 +66,7 @@ class InfantryHookBehaviour : ProjectileBehaviour
         yield return base.GetStuck();
     }
 
-    protected override void Die()
+    public override void Die()
     {
         // Destory every ChainElement
         foreach (GameObject ChainElement in ChainElements)

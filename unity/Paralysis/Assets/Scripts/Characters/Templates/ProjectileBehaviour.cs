@@ -23,17 +23,31 @@ public class ProjectileBehaviour : MonoBehaviour
     protected Rigidbody2D ProjectileRigid;                              // Rigidbody of the projectile
     protected Collider2D ProjectileCollider;                            // Collider of the projectile
     protected Vector3 startPos;                                         // Position where the projectile has spawned
+    protected int networkId;                                            // Network id of the object, not set unless online
+
+    private bool isDead = false;
+    public bool IsDead { get { return isDead; } }
 
     // Private properties
     Coroutine fallingRoutine = null;                                    // Falling Routine  
     Coroutine observeRoutine = null;                                    // Observe Routine
 
+    protected void Awake()
+    {   
+        // Save starting position
+        startPos = transform.position;
+        networkId = startPos.GetHashCode();
+
+        //add behaviour to the projectile manager
+        if(!PhotonNetwork.offlineMode)
+        {
+            NetworkProjectileManager.Instance.addProjectile(networkId, this);
+        }
+    }
+
     // Use this for initialization
     protected void Start()
     {
-        // Save starting position
-        startPos = transform.position;
-
         // Get Objects
         ProjectileRigid = GetComponent<Rigidbody2D>();
         ProjectileCollider = GetComponent<Collider2D>();
@@ -155,7 +169,27 @@ public class ProjectileBehaviour : MonoBehaviour
                         targetStats.StartSlow(SkillValues.effectDuration, SkillValues.effectValue);
                         break;
                 }
-                CreatorStats.DealDamage(targetStats, SkillValues.damage, false);
+
+                if(PhotonNetwork.offlineMode)
+                {
+                    CreatorStats.DealDamage(targetStats, SkillValues.damage, false);
+                }
+                else 
+                {
+                    // On the network only deal damage on collision with projectiles 
+                    // from the shooters perspective.
+                    if(creator.GetComponent<PhotonView>().isMine)
+                    {
+                        CreatorStats.DealDamage(targetStats, SkillValues.damage, false);
+                    }
+                    else
+                    {
+                        //Tell the projectile manager this objected died, this collision
+                        //might not happen everywhere
+                        NetworkProjectileManager.Instance.killProjectile(networkId);
+                    }
+                }
+ 
                 Die();
                 return;
             }
@@ -212,12 +246,13 @@ public class ProjectileBehaviour : MonoBehaviour
         }
     }
 
-    protected virtual void Die()
+    public virtual void Die()
     {
         //Plays explosion effect and destroys the bullet
         if (SkillValues.onHitEffect && explosionPrefab != null)
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
+        isDead = true;
         Destroy(gameObject);
     }
 
@@ -227,5 +262,13 @@ public class ProjectileBehaviour : MonoBehaviour
         Vector3 theScale = ObjectToFlip.transform.localScale;
         theScale.x *= -1;
         ObjectToFlip.transform.localScale = theScale;
+    }
+
+    protected virtual void OnDestroy()
+    {
+        if(!PhotonNetwork.offlineMode)
+        {
+            NetworkProjectileManager.Instance.removeProjectile(networkId, this);
+        }
     }
 }

@@ -289,6 +289,7 @@ public class CharacterStats : Photon.MonoBehaviour
     [PunRPC]
     public void TakeDamage(int amount, bool playAnimation, bool issueRPC = true)
     {
+        //If we are online and its not mine tell others to take damage
         if (!PhotonNetwork.offlineMode && !photonView.isMine && issueRPC)
         {
             photonView.RPC("TakeDamage", PhotonTargets.Others, amount, playAnimation, false);
