@@ -1,1 +1,3 @@
 Stamina is conflicting after abilities
+Are attacks and projectiles doing double damage?
+Make projectiles use shooter first networking paradigm
