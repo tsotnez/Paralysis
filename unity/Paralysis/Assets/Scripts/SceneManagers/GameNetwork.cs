@@ -29,6 +29,7 @@ public class GameNetwork : MonoBehaviour {
     public string PlayerName { get { return playerName; } }
     private int playerNetworkNumber = 1;
     public int PlayerNetworkNumber { get { return playerNetworkNumber; } }
+    public RoomInfo CurrentRoomInfo { get { return PhotonNetwork.room; } }
 
     public bool IsMasterClient { get { return PhotonNetwork.isMasterClient; } }
     private Dictionary<PhotonPlayer , int> playerDic;
@@ -196,6 +197,28 @@ public class GameNetwork : MonoBehaviour {
         }
     }
 
+    public bool createRandomPrivateRoom()
+    {
+        RoomInfo[] rooms = getCurrenRooms();
+        string potentialRoomName = "";
+        bool foundRoomName = false;
+
+        while(!foundRoomName)
+        {
+            potentialRoomName = "Room#" + Random.Range(1000, 9999);
+            foreach(RoomInfo roomInfo in rooms)
+            {
+                if(roomInfo.Name.Equals(potentialRoomName))
+                {
+                    continue;
+                }
+            }
+            foundRoomName = true;
+        }
+
+        return createRoom(potentialRoomName, maxPlayers, false, true);
+    }
+
     public bool joinRoom(string roomName)
     {
         if (PhotonNetwork.JoinRoom(roomName))
@@ -250,6 +273,11 @@ public class GameNetwork : MonoBehaviour {
     public bool IsConnected()
     {
         return PhotonNetwork.connected && !PhotonNetwork.offlineMode;
+    }
+
+    public void Disconnect()
+    {
+        PhotonNetwork.Disconnect();
     }
 
     #region Photon callbacks

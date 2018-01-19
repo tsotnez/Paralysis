@@ -14,19 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LocalChampionSelection.unity
     guid: ab64ab27a4ef575449d85d37227ce41f
-  - enabled: 0
-    path: Assets/Scenes/NetworkAPITest/NetworkAPITest_Start.unity
-    guid: 70182fac42a01d746aeeddbfcea077b3
-  - enabled: 0
-    path: Assets/Scenes/NetworkAPITest/NetworkAPITestLobby.unity
-    guid: 80735c4e206ab724b9cfa6a47c469fbc
-  - enabled: 0
-    path: Assets/Scenes/NetworkAPITest/NetworkAPITestRoom.unity
-    guid: cdd3b0fcec80eb944bf0386afe5a5e66
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Network test.unity
     guid: 58686bd5c4cd6e64ea39a3d1085c20b9
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/test.unity
     guid: 0c9f28be97001594e8efeab6d4c81226
   - enabled: 1
@@ -35,3 +26,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NetworkChoseQueueTarget.unity
     guid: 779c5a41ffd08b743bee72aede4c92c8
+  - enabled: 1
+    path: Assets/Scenes/InRoom.unity
+    guid: e53e29450247b034e9e5b92952db98cf
