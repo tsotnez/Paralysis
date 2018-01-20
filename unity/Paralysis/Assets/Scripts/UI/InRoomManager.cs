@@ -82,12 +82,14 @@ public class InRoomManager : MonoBehaviour {
         newPlayer.transform.Find("Name").GetComponent<Text>().text = player.NickName;
 
         CurrentPlayers++;
+        setPlayerCountText();
         playerDict.Add(player, newPlayer);
     }
 
     public void RemovePlayerFromList(PhotonPlayer player)
     {
         CurrentPlayers--;
+        setPlayerCountText();
         Destroy(playerDict[player]);
     }
 

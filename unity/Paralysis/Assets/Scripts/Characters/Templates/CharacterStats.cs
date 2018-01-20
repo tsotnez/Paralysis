@@ -85,7 +85,10 @@ public class CharacterStats : Photon.MonoBehaviour
     }
     void Start()
     {
-        InvokeRepeating("RegenerateStamina", 0f, 0.1f);
+        if(photonView.isMine)
+        {
+            InvokeRepeating("RegenerateStamina", 0f, 0.1f);
+        }
 
         if (PhotonNetwork.offlineMode)
             SetTeamColor();
@@ -222,7 +225,10 @@ public class CharacterStats : Photon.MonoBehaviour
     {
         if (HasSufficientStamina(amount))
         {
-            CurrentStamina -= amount;
+            if(PhotonNetwork.offlineMode || photonView.isMine)
+            {
+                CurrentStamina -= amount;
+            }
             return true;
         }
         return false;

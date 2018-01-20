@@ -36,7 +36,9 @@ public class ProjectileBehaviour : MonoBehaviour
     {   
         // Save starting position
         startPos = transform.position;
-        networkId = CRCCalculator.CRCFromVector(startPos);
+
+        //set a network id
+        networkId = (short)(CRCCalculator.CRCFromVector(startPos) ^ creator.gameObject.name.GetHashCode());
 
         //add behaviour to the projectile manager
         if(!PhotonNetwork.offlineMode)

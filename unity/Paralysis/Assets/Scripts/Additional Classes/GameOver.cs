@@ -7,8 +7,11 @@ public class GameOver : MonoBehaviour {
 
     public void Quit()
     {
-        //End game
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
         Application.Quit();
+        #endif
     }
 
     public void Restart()
