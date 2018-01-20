@@ -103,7 +103,13 @@ public class InRoomManager : MonoBehaviour {
 
     private void backPressed()
     {
-        Destroy(GameNetwork.Instance);
+        StartCoroutine(waitForGameNetworkDestroyed());
+    }
+
+    private IEnumerator waitForGameNetworkDestroyed ()
+    {
+        Destroy(GameNetwork.Instance.gameObject);
+        yield return new WaitWhile( ()=> GameNetwork.Instance == null);
         SceneManager.LoadScene(backScene);
     }
 
