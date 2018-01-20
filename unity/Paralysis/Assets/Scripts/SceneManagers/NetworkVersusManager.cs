@@ -9,6 +9,7 @@ public class NetworkVersusManager : GameplayManager
 {
     public Player assassin;
     public Player alchemist;
+    public Player infantry;
 
     public Text connectionStatusText;
     public GameObject hotbarPrefab;
@@ -31,9 +32,13 @@ public class NetworkVersusManager : GameplayManager
         {
             localPlayer = assassin;
         }
-        else
+        else if(playerNetworkNum == 2)
         {
             localPlayer = alchemist;
+        }
+        else
+        {
+            localPlayer = infantry;
         }
     }
 

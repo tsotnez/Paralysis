@@ -333,6 +333,14 @@ MonoBehaviour:
     inputDevice: 1
     trinket1: 0
     trinket2: 4
+  infantry:
+    ChampionPrefab: {fileID: 1128103333960868, guid: e6f7d777ee6c44d448705ae811eebec4,
+      type: 2}
+    playerNumber: 2
+    TeamNumber: 3
+    inputDevice: 1
+    trinket1: 0
+    trinket2: 4
   connectionStatusText: {fileID: 757792269}
   hotbarPrefab: {fileID: 1880548955337550, guid: 1af496c58dcb903408eaa6d024bfe250,
     type: 2}

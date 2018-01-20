@@ -162,6 +162,8 @@ GameObject:
   - component: {fileID: 212067300079279540}
   - component: {fileID: 114653548690876056}
   - component: {fileID: 82554870843006964}
+  - component: {fileID: 114056889232976006}
+  - component: {fileID: 114792206284045952}
   m_Layer: 11
   m_Name: graphics
   m_TagString: Untagged
@@ -432,7 +434,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -475,6 +477,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputDevice: 1
   playerNumber: 0
+--- !u!114 &114056889232976006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1805965262036434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 3
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 114891821575532372, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b, type: 2}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!114 &114156698826504730
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -707,12 +735,13 @@ MonoBehaviour:
   group: 0
   OwnerShipWasTransfered: 0
   prefixBackup: -1
-  synchronization: 0
+  synchronization: 1
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 114696959837777344, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b, type: 2}
+  - {fileID: 114091167701783140, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b, type: 2}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -839,6 +868,17 @@ MonoBehaviour:
   PercentageDamage: 1
   NextHitDealsStun: 0
   NextHitDealsBleed: 0
+--- !u!114 &114792206284045952
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1805965262036434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86ce530a311eab046871cc340ea8841b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114805861058067498
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -927,12 +967,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PositionModel:
-    SynchronizeEnabled: 0
+    SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
+    InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1
+    InterpolateLerpSpeed: 20
     InterpolateMoveTowardsAcceleration: 2
     InterpolateMoveTowardsDeceleration: 2
     InterpolateSpeedCurve:
@@ -976,7 +1016,7 @@ MonoBehaviour:
     InterpolateRotateTowardsSpeed: 180
     InterpolateLerpSpeed: 5
   m_ScaleModel:
-    SynchronizeEnabled: 0
+    SynchronizeEnabled: 1
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
