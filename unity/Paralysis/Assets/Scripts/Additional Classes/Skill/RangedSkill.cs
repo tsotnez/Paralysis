@@ -9,8 +9,8 @@ public class RangedSkill : Skill
     public Vector2 speed;
     public float castTime;
 
-    public int rangedSkillId = 0;
-    public static Dictionary<int, RangedSkill> rangedSkillDict = new Dictionary<int, RangedSkill>();
+    public short rangedSkillId = 0;
+    public static Dictionary<short, RangedSkill> rangedSkillDict = new Dictionary<short, RangedSkill>();
 
     public RangedSkill(ChampionAndTrinketDatabase.Keys skillName, bool skillOnHitEffect, Vector2 projectileSpeed, GameObject projectilePrefab, float skillDelay, int skillDamage, SkillEffect skillSpecialEffect, int skillSpecialEffectTime, float skillSpecialEffectValue, int skillStaminaCost, SkillTarget skillTargetType, float skillCooldown, float skillRange, ChampionAndTrinketDatabase.Champions skillChampion, bool skillNeedsToBeGrounded = true, float castTime = 0f) 
         : base(skillName, skillDelay, skillDamage, skillSpecialEffect, skillSpecialEffectTime, skillSpecialEffectValue, skillStaminaCost, skillTargetType, skillCooldown, skillRange, skillChampion, skillNeedsToBeGrounded)
@@ -21,14 +21,20 @@ public class RangedSkill : Skill
         this.castTime = castTime;
 
         //set an id of the ranged skill to be used for networking
-        rangedSkillId = projectilePrefab.name.GetHashCode();
-        rangedSkillId = (rangedSkillId * 397) ^ skillDamage.GetHashCode();
-        rangedSkillId = (rangedSkillId * 397) ^ (int)castTime * 100.GetHashCode();
-        rangedSkillId = (rangedSkillId * 397) ^ (int)speed.x.GetHashCode();
+        int rangedSkillHash = projectilePrefab.name.GetHashCode();
+        rangedSkillHash = rangedSkillHash ^ skillDamage.GetHashCode();
+        rangedSkillHash = rangedSkillHash ^ projectileSpeed.x.GetHashCode();
+        rangedSkillHash = rangedSkillHash ^ skillSpecialEffectTime.GetHashCode();
+
+        rangedSkillId = CRCCalculator.CRCFromInt(rangedSkillHash);
 
         if(!rangedSkillDict.ContainsKey(rangedSkillId))
         {
             rangedSkillDict.Add(rangedSkillId, this);
+        }
+        else
+        {
+            Debug.LogError("Duplicate ranged skill hash: " + skillName);
         }
     }
 

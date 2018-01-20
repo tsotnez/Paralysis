@@ -749,7 +749,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     }
 
     [PunRPC]
-    public void RPC_spawnRangedSkill(int rangedSkillId, short direction, Vector2 position)
+    public void RPC_spawnRangedSkill(short rangedSkillId, short direction, Vector2 position)
     {
         RangedSkill skillToPerform = RangedSkill.rangedSkillDict[rangedSkillId];
         StartCoroutine(rangedSkill(skillToPerform, direction, position));

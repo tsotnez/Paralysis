@@ -23,7 +23,7 @@ public class ProjectileBehaviour : MonoBehaviour
     protected Rigidbody2D ProjectileRigid;                              // Rigidbody of the projectile
     protected Collider2D ProjectileCollider;                            // Collider of the projectile
     protected Vector3 startPos;                                         // Position where the projectile has spawned
-    protected int networkId;                                            // Network id of the object, not set unless online
+    protected short networkId;                                            // Network id of the object, not set unless online
 
     private bool isDead = false;
     public bool IsDead { get { return isDead; } }
@@ -36,7 +36,7 @@ public class ProjectileBehaviour : MonoBehaviour
     {   
         // Save starting position
         startPos = transform.position;
-        networkId = startPos.GetHashCode();
+        networkId = CRCCalculator.CRCFromVector(startPos);
 
         //add behaviour to the projectile manager
         if(!PhotonNetwork.offlineMode)
@@ -180,12 +180,10 @@ public class ProjectileBehaviour : MonoBehaviour
                     // from the shooters perspective.
                     if(creator.GetComponent<PhotonView>().isMine)
                     {
-                        CreatorStats.DealDamage(targetStats, SkillValues.damage, false);
-                    }
-                    else
-                    {
+                        CreatorStats.DealDamage(targetStats, SkillValues.damage, false);                        
                         //Tell the projectile manager this objected died, this collision
-                        //might not happen everywhere
+                        //might not happen everywhere, for instance the play could be
+                        //hit by the projectile, on this screen, but not on another.
                         NetworkProjectileManager.Instance.killProjectile(networkId);
                     }
                 }

@@ -8,7 +8,7 @@ public class NetworkProjectileManager : MonoBehaviour {
     public static NetworkProjectileManager Instance { get { return instance; } }
 
     private PhotonView photonView;
-    private Dictionary<int, ProjectileBehaviour> projectileDict = new Dictionary<int, ProjectileBehaviour>();
+    private Dictionary<short, ProjectileBehaviour> projectileDict = new Dictionary<short, ProjectileBehaviour>();
 
     private void Awake()
     {
@@ -16,7 +16,7 @@ public class NetworkProjectileManager : MonoBehaviour {
         photonView = GetComponent<PhotonView>();
     }
 
-    public void addProjectile(int id, ProjectileBehaviour behaviour)
+    public void addProjectile(short id, ProjectileBehaviour behaviour)
     {
         if(!projectileDict.ContainsKey(id))
         {
@@ -24,7 +24,7 @@ public class NetworkProjectileManager : MonoBehaviour {
         }
     }
 
-    public void removeProjectile(int id, ProjectileBehaviour behaviour)
+    public void removeProjectile(short id, ProjectileBehaviour behaviour)
     {
         if(!projectileDict.ContainsKey(id))
         {
@@ -32,16 +32,16 @@ public class NetworkProjectileManager : MonoBehaviour {
         }
     }
 
-    public void killProjectile(int projectileId)
+    public void killProjectile(short projectileId)
     {
         if(!PhotonNetwork.offlineMode)
         {
-            photonView.RPC("RPC_KillProjectile", PhotonTargets.Others, projectileId);
+            photonView.RPC("RPC_KillProjectile", PhotonTargets.Others, (short)projectileId);
         }
     }
 
     [PunRPC]
-    private void RPC_KillProjectile(int id)
+    private void RPC_KillProjectile(short id)
     {
         if(projectileDict.ContainsKey(id))
         {

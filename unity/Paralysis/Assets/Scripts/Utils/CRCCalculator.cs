@@ -12,10 +12,22 @@ public class CRCCalculator  {
     private const ushort poly = 4129;
     private const ushort initialValue = 0xffff;
 
-    public static ushort CRCFromVector(Vector3 vector)
+    public static short CRCFromVector(Vector3 vector)
     {
-        //TODO
-        return 0;
+        byte[] xByteArray = BitConverter.GetBytes(vector.x);
+        byte[] yByteArray = BitConverter.GetBytes(vector.y);
+        byte[] zByteArray = BitConverter.GetBytes(vector.z);
+        byte[] desitationBytes = new byte[24];
+        xByteArray.CopyTo(desitationBytes, 0);
+        yByteArray.CopyTo(desitationBytes, 8);
+        zByteArray.CopyTo(desitationBytes, 16);
+        return Crc16Ccitt(desitationBytes);
+    }
+
+    public static short CRCFromInt(int val)
+    {
+        byte[] valByteArray = BitConverter.GetBytes(val);
+        return Crc16Ccitt(valByteArray);
     }
 
     /// <summary>
@@ -24,7 +36,7 @@ public class CRCCalculator  {
     /// </summary>
     /// <returns>The from string.</returns>
     /// <param name="input">Input.</param>
-    public static ushort CRCFromString(string input)
+    public static short CRCFromString(string input)
     {
         return Crc16Ccitt(HexToBytes(input));
     }
@@ -39,7 +51,7 @@ public class CRCCalculator  {
         return result;
     }
 
-    public static ushort Crc16Ccitt(byte[] bytes)
+    public static short Crc16Ccitt(byte[] bytes)
     {
         ushort[] table = new ushort[256];
 
@@ -63,7 +75,7 @@ public class CRCCalculator  {
         {
             crc = (ushort)((crc << 8) ^ table[((crc >> 8) ^ (0xff & bytes[i]))]);
         }
-        return crc;
+        return (short)crc;
     }  
     
 }

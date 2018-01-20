@@ -318,7 +318,7 @@ MonoBehaviour:
   championSpriteOverlayColor: {r: 0.7647059, g: 0.7432369, b: 0.6634948, a: 1}
   players: []
   assassin:
-    ChampionPrefab: {fileID: 1468821578159268, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b,
+    ChampionPrefab: {fileID: 1346435155503924, guid: 782001f3935837a48a557565b08b8c0c,
       type: 2}
     playerNumber: 0
     TeamNumber: 1
@@ -326,7 +326,7 @@ MonoBehaviour:
     trinket1: 0
     trinket2: 4
   alchemist:
-    ChampionPrefab: {fileID: 1346435155503924, guid: 782001f3935837a48a557565b08b8c0c,
+    ChampionPrefab: {fileID: 1468821578159268, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b,
       type: 2}
     playerNumber: 1
     TeamNumber: 2
