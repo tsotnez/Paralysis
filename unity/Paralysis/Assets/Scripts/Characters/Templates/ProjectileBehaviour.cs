@@ -181,11 +181,7 @@ public class ProjectileBehaviour : MonoBehaviour
                     if(creator.GetComponent<PhotonView>().isMine)
                     {
                         CreatorStats.DealDamage(targetStats, SkillValues.damage, false);                        
-                        //Tell the projectile manager this objected died, this collision
-                        //might not happen everywhere, for instance the play could be
-                        //hit by the projectile, on this screen, but not on another.
-                        NetworkProjectileManager.Instance.killProjectile(networkId);
-                    }
+                     }
                 }
  
                 Die();
@@ -251,6 +247,14 @@ public class ProjectileBehaviour : MonoBehaviour
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
         isDead = true;
+        if(!PhotonNetwork.offlineMode)
+        {
+            //Tell the projectile manager this objected died, this collision
+            //might not happen everywhere, for instance, the player could be
+            //hit by the projectile, on this screen, but not on another.
+            NetworkProjectileManager.Instance.killProjectile(networkId);
+        }
+
         Destroy(gameObject);
     }
 
