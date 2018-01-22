@@ -52,10 +52,10 @@ public class LocalMultiplayerManager : GameplayManager {
             //Player1
             GameObject instPlayer1 = Instantiate(team1[0].ChampionPrefab, spawnPlayer1.position, Quaternion.identity);
             instPlayer1.GetComponent<UserControl>().inputDevice = team1[0].inputDevice;
-            instPlayer1.layer = 11;
+            instPlayer1.layer = GameConstants.TEAM_1_LAYER;
 
             LayerMask whatToHitP1 = new LayerMask();
-            whatToHitP1 |= (1 << 12);
+            whatToHitP1 |= (1 << GameConstants.TEAM_2_LAYER);
 
             instPlayer1.GetComponent<ChampionClassController>().m_whatToHit = whatToHitP1;
             instPlayer1.GetComponent<UserControl>().playerNumber = team1[0].playerNumber;
@@ -72,11 +72,11 @@ public class LocalMultiplayerManager : GameplayManager {
 
             //Player 2
             GameObject instPlayer2 = Instantiate(team2[0].ChampionPrefab, spawnPlayer2.position, Quaternion.identity);
-            instPlayer2.layer = 12;
+            instPlayer2.layer = GameConstants.TEAM_2_LAYER;
 
             //Change player2 prefab to be an enemy to player 1
             LayerMask whatToHitP2 = new LayerMask();
-            whatToHitP2 |= (1 << 11);
+            whatToHitP2 |= (1 << GameConstants.TEAM_1_LAYER);
 
             instPlayer2.GetComponent<ChampionClassController>().m_whatToHit = whatToHitP2;
             instPlayer2.GetComponent<UserControl>().inputDevice = team2[0].inputDevice;

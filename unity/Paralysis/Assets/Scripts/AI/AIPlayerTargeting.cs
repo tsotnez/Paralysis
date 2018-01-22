@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AIPlayerTargeting : MonoBehaviour {
 
-    private LayerMask enemyLayerMask;
+    public LayerMask obstacleLayerMask;
+    private LayerMask canSeeLayerMask;
 
     private bool hasCoords = false;
     public bool HasCoords { get { return hasCoords; } }
@@ -20,7 +21,7 @@ public class AIPlayerTargeting : MonoBehaviour {
     private List<PlayerWeCantSee> playerInfos;
 
     private const float RECAL_RATE = 1f;
-    private const float RAY_LENGTH = 200;
+    private const float RAY_LENGTH = 50;
 
     private float minDistanceToNode;
     public float MinDistance { get { return minDistanceToNode; } }
@@ -36,11 +37,7 @@ public class AIPlayerTargeting : MonoBehaviour {
         }
         else 
         {
-            if(gameObject.layer == GameConstants.TEAM_1_LAYER)
-                enemyLayerMask = GameConstants.TEAM_2_LAYER;
-            else
-                enemyLayerMask = GameConstants.TEAM_1_LAYER;
-            
+            canSeeLayerMask = GetComponent<ChampionClassController>().m_whatToHit | obstacleLayerMask;
             minDistanceToNode = GridManager.NODE_RADIUS;
             enemyPlayers = new List<CharacterStats>();
         }
@@ -56,7 +53,7 @@ public class AIPlayerTargeting : MonoBehaviour {
         GameObject[] playerObjects = GameObject.FindGameObjectsWithTag(GameConstants.MAIN_PLAYER_TAG);
         foreach(GameObject playerObj in playerObjects)
         {            
-            if(playerObj != gameObject && playerObj.layer == enemyLayerMask)
+            if(playerObj != gameObject /*&& playerObj.layer == canSeeLayerMask*/)
             {
                 enemyPlayers.Add(playerObj.GetComponent<CharacterStats>());
             }
@@ -114,7 +111,8 @@ public class AIPlayerTargeting : MonoBehaviour {
             {
                 //check if we cans see the player
                 Vector3 direction = enemy.transform.position - transform.position;
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, RAY_LENGTH, enemyLayerMask);
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, RAY_LENGTH, canSeeLayerMask);
+
                 if (hit && hit.collider.tag == GameConstants.MAIN_PLAYER_TAG)
                 {
                     canSeePlayer = true;
@@ -205,22 +203,19 @@ public class AIPlayerTargeting : MonoBehaviour {
         public float distance;
     }
 
-    void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
-        if(!enabled)return;
-
-        Gizmos.color = Color.blue;
         if(closestPlayer != null)
         {
-            Debug.DrawLine(transform.position, closestPlayer.transform.position);
+            Debug.DrawLine(transform.position, closestPlayer.transform.position, Color.red);
         }
         else if(currentNodeList != null)
         {
+            Debug.DrawLine(transform.position, currentNodeList[0], Color.blue);
             for(int i = 1; i < currentNodeList.Length; i++)
             {
-                Debug.DrawLine(currentNodeList[i - 1], currentNodeList[i]);
+                Debug.DrawLine(currentNodeList[i - 1], currentNodeList[i], Color.blue);
             }
         }
     }
-
 }

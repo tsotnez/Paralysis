@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 114840472948579928}
   - component: {fileID: 114024657869036888}
   - component: {fileID: 114154670248769074}
+  - component: {fileID: 114669515337826658}
   - component: {fileID: 61093525736054152}
   - component: {fileID: 58555301198969780}
   - component: {fileID: 50638245482048800}
@@ -652,6 +653,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114669515337826658
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1346435155503924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cb2ad5b9515ef74c8a9518ebabf3a78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleLayerMask:
+    serializedVersion: 2
+    m_Bits: 1536
 --- !u!114 &114820509079542256
 MonoBehaviour:
   m_ObjectHideFlags: 1
