@@ -40,10 +40,10 @@ public class SinglePlayerManager : MonoBehaviour {
         //Player1
         GameObject instPlayer1 = Instantiate(player1.ChampionPrefab, spawnPlayer1.position, Quaternion.identity);
         instPlayer1.GetComponent<UserControl>().inputDevice = player1.inputDevice;
-        instPlayer1.layer = 11;
+        instPlayer1.layer = GameConstants.TEAM_1_LAYER;
 
         LayerMask whatToHitP1 = new LayerMask();
-        whatToHitP1 |= (1 << 12); //Add Team2 as target layer
+        whatToHitP1 |= (1 << GameConstants.TEAM_2_LAYER); //Add Team2 as target layer
 
         instPlayer1.GetComponent<ChampionClassController>().m_whatToHit = whatToHitP1;
         instPlayer1.GetComponent<UserControl>().playerNumber = player1.playerNumber;

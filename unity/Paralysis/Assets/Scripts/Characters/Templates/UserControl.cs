@@ -26,7 +26,7 @@ public abstract class UserControl : MonoBehaviour
 
     public enum InputDevice
     {
-        XboxController, KeyboardMouse, Ps4Controller
+        XboxController, KeyboardMouse, Ps4Controller, AI
     }
 
     public enum PlayerNumbers
@@ -63,6 +63,9 @@ public abstract class UserControl : MonoBehaviour
                 break;
             case InputDevice.Ps4Controller:
                 CheckInputForPs4Controller();
+                break;
+            case InputDevice.AI:
+                //TODO
                 break;
         }
 

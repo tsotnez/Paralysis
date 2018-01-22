@@ -37,22 +37,12 @@ public class CharacterNetwork : Photon.MonoBehaviour {
             int playerNetworkNum = GameNetwork.Instance.PlayerNetworkNumber;
             if(playerNetworkNum == 1 || playerNetworkNum == 3)
             {
-                photonView.RPC("SetTeam", PhotonTargets.All, 11, 12); //Join Team 1
+                photonView.RPC("SetTeam", PhotonTargets.All, GameConstants.TEAM_1_LAYER, GameConstants.TEAM_2_LAYER); //Join Team 1
             }
             else 
             {
-                photonView.RPC("SetTeam", PhotonTargets.All, 12, 11); //Join Team 2
+                photonView.RPC("SetTeam", PhotonTargets.All,  GameConstants.TEAM_2_LAYER, GameConstants.TEAM_1_LAYER); //Join Team 2
             }
-
-            /*
-            GameObject[] players = GameObject.FindGameObjectsWithTag("MainPlayer").Where(x => x != gameObject).ToArray();
-
-            //Join the team with lesser players
-            if (players.Where(x => x.layer == 11).Count() <= players.Where(x => x.layer == 12).Count())
-                photonView.RPC("SetTeam", PhotonTargets.All, 11, 12); //Join Team 1
-            else
-                photonView.GetComponent<PhotonView>().RPC("SetTeam", PhotonTargets.All, 12, 11);
-            */
         }
     }
 
@@ -110,7 +100,7 @@ public class CharacterNetwork : Photon.MonoBehaviour {
     [PunRPC]
     private void OnNewPlayerInstantiated()
     {
-        GameObject.Find("manager").GetComponent<GameplayManager>().players = GameObject.FindGameObjectsWithTag("MainPlayer").ToList();
+        GameObject.Find("manager").GetComponent<GameplayManager>().players = GameObject.FindGameObjectsWithTag(GameConstants.MAIN_PLAYER_TAG).ToList();
     }
     #endregion 
 }

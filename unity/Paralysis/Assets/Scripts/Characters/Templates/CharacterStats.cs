@@ -99,7 +99,7 @@ public class CharacterStats : Photon.MonoBehaviour
     public void SetTeamColor()
     {
         //Assign team Color
-        if (gameObject.layer == 11)
+        if (gameObject.layer == LayerMask.NameToLayer("Team1"))
             TeamColor.sprite = Team1Color;
         else
             TeamColor.sprite = Team2Color;
