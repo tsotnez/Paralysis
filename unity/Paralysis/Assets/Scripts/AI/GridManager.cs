@@ -39,10 +39,24 @@ public class GridManager : MonoBehaviour
         bool[,] tilesmap = new bool[gridSizeX, gridSizeY];
         grid = new Grid(gridSizeX, gridSizeY, tilesmap);
 
+        //Set walkable nodes
         foreach (Node n in grid.nodes)
         {
             n.worldPosition = getPointFromNode(n);
             n.walkable = !Physics2D.OverlapCircle(new Vector3(n.worldPosition.x, n.worldPosition.y, 0), NODE_RADIUS, unwalkableMask);
+        }
+
+        //Set grounded nodes
+        foreach(Node n in grid.nodes)
+        {
+            if(n.walkable)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(n.worldPosition, Vector2.down, NODE_DIAMETER + .1f, unwalkableMask);
+                if(hit)
+                {
+                    n.setGrounded(true);
+                }
+            }
         }
     }
 
@@ -84,11 +98,13 @@ public class GridManager : MonoBehaviour
 
         Color whiteC = new Color(1, 1, 1, .5f);
         Color redC = new Color(1, 0, 0, .5f);
+        Color greenC = new Color(0, 1, 0, .5f);
 
         InitializeGrid();
         foreach (Node n in grid.nodes)
         {
             Gizmos.color = (n.walkable) ? whiteC : redC;
+            if(n.grounded)Gizmos.color = greenC;
             Gizmos.DrawCube(n.worldPosition, Vector3.one * (size));
         }
     }

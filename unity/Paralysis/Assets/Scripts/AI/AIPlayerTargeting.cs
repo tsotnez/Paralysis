@@ -5,6 +5,7 @@ using UnityEngine;
 public class AIPlayerTargeting : MonoBehaviour {
 
     public LayerMask obstacleLayerMask;
+    public bool debug = true;
     private LayerMask canSeeLayerMask;
 
     private bool hasCoords = false;
@@ -19,6 +20,7 @@ public class AIPlayerTargeting : MonoBehaviour {
     private Vector3[] currentNodeList;
     private int currentNodeIndex = 0;
     private List<PlayerWeCantSee> playerInfos;
+    private bool canSeeAPlayer = false;
 
     private const float RECAL_RATE = 1f;
     private const float RAY_LENGTH = 50;
@@ -61,6 +63,26 @@ public class AIPlayerTargeting : MonoBehaviour {
             
     }
 
+    void Update()
+    {
+        if(debug)
+        {
+            if(closestPlayer != null)
+            {
+                Debug.DrawLine(transform.position, closestPlayer.transform.position, Color.red);
+            }
+            else if(currentNodeList != null)
+            {
+                print("Has node list...");
+                Debug.DrawLine(transform.position, currentNodeList[0], Color.blue);
+                for(int i = 1; i < currentNodeList.Length; i++)
+                {
+                    Debug.DrawLine(currentNodeList[i - 1], currentNodeList[i], Color.blue);
+                }
+            }
+        }
+    }
+
     void LateUpdate ()
     {   
         hasCoords = false;
@@ -72,7 +94,9 @@ public class AIPlayerTargeting : MonoBehaviour {
 
         if (enemyPlayers != null)
         {
-            if(findClosestPlayerWeCanSee())
+            canSeeAPlayer = findClosestPlayerWeCanSee();
+
+            if(canSeeAPlayer)
             {
                 hasCoords = true;
                 coords = closestPlayer.transform.position;
@@ -89,7 +113,7 @@ public class AIPlayerTargeting : MonoBehaviour {
     public void OnPathFound(Vector3[] waypoints, bool pathSuccessful)
     {
         requestingPath = false;
-        if (pathSuccessful)
+        if (pathSuccessful && !canSeeAPlayer)
         {
             currentNodeList = waypoints;
             currentNodeIndex = 0;
@@ -195,6 +219,9 @@ public class AIPlayerTargeting : MonoBehaviour {
         currentNodeList = null;
         currentNodeIndex = 0;
         closestPlayerPath = null;
+
+        //requestingPath = false;
+        //timeForNextRequest = 0;
     }
 
     private class PlayerWeCantSee
@@ -203,19 +230,4 @@ public class AIPlayerTargeting : MonoBehaviour {
         public float distance;
     }
 
-    private void OnDrawGizmos()
-    {
-        if(closestPlayer != null)
-        {
-            Debug.DrawLine(transform.position, closestPlayer.transform.position, Color.red);
-        }
-        else if(currentNodeList != null)
-        {
-            Debug.DrawLine(transform.position, currentNodeList[0], Color.blue);
-            for(int i = 1; i < currentNodeList.Length; i++)
-            {
-                Debug.DrawLine(currentNodeList[i - 1], currentNodeList[i], Color.blue);
-            }
-        }
-    }
 }

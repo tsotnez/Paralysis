@@ -8,6 +8,7 @@ public class PathFinding  : MonoBehaviour {
 
     private const int DIAG_COST = 13;
     private const int COST = 10;
+    private const int GROUNDED_DISCOUNT = 5;
     private Grid grid;
 
     void Start()
@@ -120,8 +121,19 @@ public class PathFinding  : MonoBehaviour {
         int dstX = Mathf.Abs(nodeA.gridX - nodeB.gridX);
         int dstY = Mathf.Abs(nodeA.gridY - nodeB.gridY);
 
+        int retVal = 0;
+
         if (dstX > dstY)
-            return DIAG_COST * dstY + COST * (dstX - dstY);
-        return DIAG_COST * dstX + COST * (dstY - dstX);
+        {
+            retVal = DIAG_COST * dstY + COST * (dstX - dstY);
+        }
+        else
+        {            
+            retVal = DIAG_COST * dstX + COST * (dstY - dstX);
+        }
+
+        if(nodeB.grounded)retVal = retVal - GROUNDED_DISCOUNT;
+
+        return retVal;
     }
 }
