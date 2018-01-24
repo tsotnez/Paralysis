@@ -1,0 +1,30 @@
+
+NAME		      TASK			DATE
+____________________________________________________________
+Tsot		___Skins (20)                 ___ 1/30
+Jan		___Skin Selection             ___ 
+Tsot		___2 NEW Healer classes       ___ 2/30
+Kyle + Jan	___AI Combat                  ___
+Sandro 		___Game Modes                 ___
+Kyle + Jan	___AI Game Modes              ___
+Tsot		___ASSETS Game modes          ___ 3/30
+Tsot		___ASSETS maps                ___ 4/30
+Kyle		___Level Design               ___
+Tsot + Jan	___VFX                        ___
+Tsot + Kyle	___SFX                        ___
+Tsot		___Logo/Animation             ___ 5/10
+Sandro		___Store Page                 ___
+Jan		___Coins (earned in-game)     ___
+
+++++		___Final Touchups             ___
+
+____________________________________________________________
+
+------------------------------------------------------------
+____________________________________________________________
+DETAILS                                        
+____________________________________________________________
+
+
+
+
