@@ -666,7 +666,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstacleLayerMask:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 17920
+  debug: 1
 --- !u!114 &114820509079542256
 MonoBehaviour:
   m_ObjectHideFlags: 1

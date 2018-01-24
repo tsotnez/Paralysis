@@ -8,11 +8,12 @@ public class GridManager : MonoBehaviour
 
     public bool showGridGrid = false;
     public LayerMask unwalkableMask;
+    public LayerMask throughMask;
 
     public int width = 50;
     public int height = 50;
     private Vector2 gridWorldSize;
-    public const float NODE_DIAMETER = .5f;
+    public const float NODE_DIAMETER = .33f;
     public const float NODE_RADIUS = NODE_DIAMETER / 2;
 
     private Grid grid;
@@ -25,8 +26,18 @@ public class GridManager : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
+        if(transform.position.x != 0 || transform.position.y != 0){
+            Debug.LogError("Grid Position MUST BE (0,0)");
+        }
         Instance = this;
         InitializeGrid();
+    }
+
+    void Update()
+    {
+        //Disable showing the grid, screws things up
+        showGridGrid = false;
+        enabled = false;
     }
 
     private void InitializeGrid()
@@ -51,8 +62,11 @@ public class GridManager : MonoBehaviour
         {
             if(n.walkable)
             {
-                RaycastHit2D hit = Physics2D.Raycast(n.worldPosition, Vector2.down, NODE_DIAMETER + .1f, unwalkableMask);
-                if(hit)
+                if(Physics2D.Raycast(n.worldPosition, Vector2.down, NODE_DIAMETER + .1f, unwalkableMask))
+                {
+                    n.setGrounded(true);
+                }
+                else if(Physics2D.Raycast(n.worldPosition, Vector2.down, NODE_DIAMETER + .1f, throughMask))
                 {
                     n.setGrounded(true);
                 }
@@ -94,7 +108,7 @@ public class GridManager : MonoBehaviour
         if (!showGridGrid) return;
 
         Gizmos.DrawWireCube(transform.position, new Vector3(gridSizeX * NODE_DIAMETER, gridSizeY * NODE_DIAMETER, 1));
-        float size = NODE_DIAMETER - .1f;
+        float size = NODE_DIAMETER - .05f;
 
         Color whiteC = new Color(1, 1, 1, .5f);
         Color redC = new Color(1, 0, 0, .5f);
@@ -107,5 +121,6 @@ public class GridManager : MonoBehaviour
             if(n.grounded)Gizmos.color = greenC;
             Gizmos.DrawCube(n.worldPosition, Vector3.one * (size));
         }
+            
     }
 }

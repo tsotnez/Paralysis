@@ -24,6 +24,11 @@ public class PathFinding  : MonoBehaviour {
         Node startNode = GridManager.Instance.getNodeFromPoint(request.pathStart);
         Node targetNode = GridManager.Instance.getNodeFromPoint(request.pathEnd);
 
+        if(!targetNode.walkable)
+        {
+            UnityEngine.Debug.LogError("Target node not walkable");
+        }
+
         List<Node> openSet = new List<Node>();
         HashSet<Node> closedSet = new HashSet<Node>();
         openSet.Add(startNode);

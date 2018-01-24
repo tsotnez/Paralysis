@@ -73,7 +73,6 @@ public class AIPlayerTargeting : MonoBehaviour {
             }
             else if(currentNodeList != null)
             {
-                print("Has node list...");
                 Debug.DrawLine(transform.position, currentNodeList[0], Color.blue);
                 for(int i = 1; i < currentNodeList.Length; i++)
                 {
@@ -83,7 +82,7 @@ public class AIPlayerTargeting : MonoBehaviour {
         }
     }
 
-    void LateUpdate ()
+    void FixedUpdate ()
     {   
         hasCoords = false;
         if (enemyPlayers == null || enemyPlayers.Count == 0)
@@ -113,10 +112,15 @@ public class AIPlayerTargeting : MonoBehaviour {
     public void OnPathFound(Vector3[] waypoints, bool pathSuccessful)
     {
         requestingPath = false;
+
         if (pathSuccessful && !canSeeAPlayer)
         {
             currentNodeList = waypoints;
             currentNodeIndex = 0;
+        }
+        else
+        {
+            print("Path request failed...");
         }
     }
 
@@ -134,7 +138,7 @@ public class AIPlayerTargeting : MonoBehaviour {
             if (!enemy.CharacterDied)
             {
                 //check if we cans see the player
-                Vector3 direction = enemy.transform.position - transform.position;
+                Vector2 direction = enemy.transform.position - transform.position;
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, RAY_LENGTH, canSeeLayerMask);
 
                 if (hit && hit.collider.tag == GameConstants.MAIN_PLAYER_TAG)
@@ -144,7 +148,7 @@ public class AIPlayerTargeting : MonoBehaviour {
                 }
 
                 //get the distance
-                float distance = Mathf.Abs(Vector3.Distance(enemy.transform.position, transform.position));
+                float distance = Mathf.Abs(Vector2.Distance(enemy.transform.position, transform.position));
 
                 if (canSeePlayer && distance < actDistance)
                 {
@@ -171,6 +175,7 @@ public class AIPlayerTargeting : MonoBehaviour {
             if (closestPlayerPath != null)
             {
                 PathRequestHandler.RequestPath(new PathRequest(transform.position, closestPlayerPath.transform.position, OnPathFound));
+                
                 requestingPath = true;
                 timeForNextRequest = Time.time + RECAL_RATE;
             }
@@ -219,9 +224,6 @@ public class AIPlayerTargeting : MonoBehaviour {
         currentNodeList = null;
         currentNodeIndex = 0;
         closestPlayerPath = null;
-
-        //requestingPath = false;
-        //timeForNextRequest = 0;
     }
 
     private class PlayerWeCantSee
