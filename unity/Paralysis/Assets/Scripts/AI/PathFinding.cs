@@ -24,9 +24,30 @@ public class PathFinding  : MonoBehaviour {
         Node startNode = GridManager.Instance.getNodeFromPoint(request.pathStart);
         Node targetNode = GridManager.Instance.getNodeFromPoint(request.pathEnd);
 
+        //if the target node is not walkable 
         if(!targetNode.walkable)
         {
-            UnityEngine.Debug.LogError("Target node not walkable");
+            bool foundNode = false;
+            if(targetNode.getNeighbors() == null)
+            {
+                targetNode.setNeighbors(grid.GetNeighbours(targetNode));
+            }
+
+            foreach(Node node in targetNode.getNeighbors())
+            {
+                if(node.walkable)
+                {
+                    foundNode = true;
+                    targetNode = node;
+                    break;
+                }
+            }
+
+            if(!foundNode)
+            {
+                UnityEngine.Debug.LogError("Unable to find suitable node for target.");
+                callback(new PathResult(null, false, request.callback));
+            }
         }
 
         List<Node> openSet = new List<Node>();
