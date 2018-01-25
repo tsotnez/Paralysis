@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114452805369236350}
   - component: {fileID: 114547367251112012}
   - component: {fileID: 114413518034576330}
+  - component: {fileID: 114575674096746524}
   m_Layer: 0
   m_Name: GameNetwork
   m_TagString: GameNetwork
@@ -96,3 +97,14 @@ MonoBehaviour:
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!114 &114575674096746524
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1077132422737216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86990007d0bc557439f0e558a8e1c121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

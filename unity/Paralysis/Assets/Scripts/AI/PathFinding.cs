@@ -33,8 +33,10 @@ public class PathFinding  : MonoBehaviour {
                 targetNode.setNeighbors(grid.GetNeighbours(targetNode));
             }
 
+            //Look for a new node in the targets neighbors
             foreach(Node node in targetNode.getNeighbors())
             {
+                //found a new suitable target node
                 if(node.walkable)
                 {
                     foundNode = true;
@@ -45,8 +47,9 @@ public class PathFinding  : MonoBehaviour {
 
             if(!foundNode)
             {
-                UnityEngine.Debug.LogError("Unable to find suitable node for target.");
+                UnityEngine.Debug.LogError("Unable to find suitable node for target path.");
                 callback(new PathResult(null, false, request.callback));
+                return;
             }
         }
 

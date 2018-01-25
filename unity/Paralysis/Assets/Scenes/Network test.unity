@@ -241,7 +241,6 @@ GameObject:
   - component: {fileID: 33478042}
   - component: {fileID: 33478043}
   - component: {fileID: 33478041}
-  - component: {fileID: 33478044}
   m_Layer: 0
   m_Name: manager
   m_TagString: Untagged
@@ -344,17 +343,6 @@ MonoBehaviour:
   connectionStatusText: {fileID: 757792269}
   hotbarPrefab: {fileID: 1880548955337550, guid: 1af496c58dcb903408eaa6d024bfe250,
     type: 2}
---- !u!114 &33478044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 33478040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86990007d0bc557439f0e558a8e1c121, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &77389989
 GameObject:
   m_ObjectHideFlags: 0
