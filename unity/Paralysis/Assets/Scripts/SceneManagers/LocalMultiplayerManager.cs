@@ -9,8 +9,7 @@ public class LocalMultiplayerManager : GameplayManager {
     public GameObject hotbarPrefab;
 
     //Spawn locations
-    public Transform spawnPlayer1;
-    public Transform spawnPlayer2;
+    private GameObject[] spawnPoints;
 
     protected override void buildUI()
     {
@@ -40,7 +39,23 @@ public class LocalMultiplayerManager : GameplayManager {
     }
 
     protected override void instantiatePlayers()
-    {
+    {        
+        spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
+        SpawnPoint player1Spawn = null;
+        SpawnPoint player2Spawn = null;
+        foreach(GameObject spawnObj in spawnPoints)
+        {
+            SpawnPoint spawnPoint = spawnObj.GetComponent<SpawnPoint>();
+            if(spawnPoint.playerNumber == 1)
+            {
+                player1Spawn = spawnPoint;
+            }
+            else
+            {
+                player2Spawn = spawnPoint;
+            }
+        }
+
         //Defaults for debugging
         if (team1 == null)
             team1 = new Player[] {defaultPlayer1};
@@ -50,7 +65,7 @@ public class LocalMultiplayerManager : GameplayManager {
         if (team1 != null && team2 != null)
         {
             //Player1
-            GameObject instPlayer1 = Instantiate(team1[0].ChampionPrefab, spawnPlayer1.position, Quaternion.identity);
+            GameObject instPlayer1 = Instantiate(team1[0].ChampionPrefab, player1Spawn.transform.position, Quaternion.identity);
             instPlayer1.GetComponent<UserControl>().inputDevice = team1[0].inputDevice;
             instPlayer1.layer = GameConstants.TEAM_1_LAYER;
 
@@ -58,6 +73,10 @@ public class LocalMultiplayerManager : GameplayManager {
             whatToHitP1 |= (1 << GameConstants.TEAM_2_LAYER);
 
             instPlayer1.GetComponent<ChampionClassController>().m_whatToHit = whatToHitP1;
+            if(player1Spawn.facingDir == SpawnPoint.SpawnFacing.left)
+            {
+                instPlayer1.GetComponent<ChampionClassController>().Flip();
+            }
             instPlayer1.GetComponent<UserControl>().playerNumber = team1[0].playerNumber;
 
             //Trinkets P1
@@ -71,7 +90,7 @@ public class LocalMultiplayerManager : GameplayManager {
             Camera.main.GetComponent<CameraBehaviour>().changeTarget(instPlayer1.transform);
 
             //Player 2
-            GameObject instPlayer2 = Instantiate(team2[0].ChampionPrefab, spawnPlayer2.position, Quaternion.identity);
+            GameObject instPlayer2 = Instantiate(team2[0].ChampionPrefab, player2Spawn.transform.position, Quaternion.identity);
             instPlayer2.layer = GameConstants.TEAM_2_LAYER;
 
             //Change player2 prefab to be an enemy to player 1
@@ -79,6 +98,11 @@ public class LocalMultiplayerManager : GameplayManager {
             whatToHitP2 |= (1 << GameConstants.TEAM_1_LAYER);
 
             instPlayer2.GetComponent<ChampionClassController>().m_whatToHit = whatToHitP2;
+            if(player2Spawn.facingDir == SpawnPoint.SpawnFacing.left)
+            {
+                instPlayer2.GetComponent<ChampionClassController>().Flip();
+            }
+
             instPlayer2.GetComponent<UserControl>().inputDevice = team2[0].inputDevice;
             instPlayer2.GetComponent<UserControl>().playerNumber = team2[0].playerNumber;
 

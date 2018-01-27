@@ -8,7 +8,7 @@ public class PathFinding  : MonoBehaviour {
 
     private const int DIAG_COST = 13;
     private const int COST = 10;
-    private const int GROUNDED_DISCOUNT = 5;
+    private const int GROUNDED_DISCOUNT = 7;
     private Grid grid;
 
     void Start()
@@ -124,8 +124,19 @@ public class PathFinding  : MonoBehaviour {
             currentNode = currentNode.parent;
         }
         Vector3[] waypoints = SimplifyPath(path);
+        //Vector3[] waypoints = GetPath(path);
         Array.Reverse(waypoints);
         return waypoints;
+    }
+
+    private Vector3[] GetPath(List<Node> path)
+    {
+        List<Vector3> waypoints = new List<Vector3>();
+        for (int i = 1; i < path.Count; i++)
+        {
+            waypoints.Add(path[i].worldPosition);
+        }
+        return waypoints.ToArray();
     }
 
     private Vector3[] SimplifyPath(List<Node> path)

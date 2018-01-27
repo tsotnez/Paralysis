@@ -21,6 +21,8 @@ public abstract class UserControl : MonoBehaviour
     protected bool inputTrinket2;
 
     protected PhotonView photonV;
+    protected AIUserControl aiControl;
+
 
     #region Enums
 
@@ -43,6 +45,7 @@ public abstract class UserControl : MonoBehaviour
         GoCharacter = GetComponent<ChampionClassController>();
         CharStats = GetComponent<CharacterStats>();
         photonV = GetComponent<PhotonView>();
+        aiControl = GetComponent<AIUserControl>();
 
         if(!PhotonNetwork.offlineMode && !photonV.isMine)
         {
@@ -65,7 +68,7 @@ public abstract class UserControl : MonoBehaviour
                 CheckInputForPs4Controller();
                 break;
             case InputDevice.AI:
-                //TODO
+                CheckAIInput();
                 break;
         }
 
@@ -346,5 +349,62 @@ public abstract class UserControl : MonoBehaviour
         lastVerticalValue = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
     }
 
+    #endregion
+
+    #region AI
+
+    protected virtual void CheckAIInput()
+    {
+        inputMove = aiControl.inputMove;
+
+        if (inputDashDirection == 0)
+        {
+            inputDashDirection = aiControl.inputDashDirection;
+        }
+
+        if (!inputAttack)
+        {
+            inputAttack = aiControl.inputAttack;
+        }
+
+        if (!inputSkill1)
+        {
+            inputSkill1 = aiControl.inputSkill1;
+        }
+
+        if (!inputSkill2)
+        {
+            inputSkill2 = aiControl.inputSkill2;
+        }
+
+        if (!inputSkill3)
+        {
+            inputSkill3 = aiControl.inputSkill3;
+        }
+
+        if (!inputSkill4)
+        {
+            inputSkill4 = aiControl.inputSkill4;
+        }
+
+        if (!inputTrinket1)
+        {
+            inputTrinket1 = aiControl.inputTrinket1;
+        }
+
+        if (!inputTrinket2)
+        {
+            inputTrinket2 = aiControl.inputTrinket2;
+        }
+
+        if (!inputJump)
+        {
+            inputJump = aiControl.inputJump;
+        }
+        if (!CharStats.stunned && !CharStats.knockedBack)
+            inputDown = aiControl.inputDown;
+        else inputDown = false;
+
+    }
     #endregion
 }

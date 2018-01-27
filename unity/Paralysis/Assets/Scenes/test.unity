@@ -1436,9 +1436,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 784897739}
+  - component: {fileID: 784897741}
+  - component: {fileID: 784897740}
   m_Layer: 0
   m_Name: spawnPlayer2
-  m_TagString: Untagged
+  m_TagString: SpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1456,6 +1458,32 @@ Transform:
   m_Father: {fileID: 1786765173}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &784897740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 784897738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8fa6193ad471fd4b9d1c0aeb8b6c03c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNumber: 2
+  facingDir: -1
+--- !u!114 &784897741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 784897738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c686c52fa59114ca289af2bd63bffc0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0, g: 1, b: 0, a: 1}
+  starSize: 0.25
 --- !u!1 &861829468
 GameObject:
   m_ObjectHideFlags: 0
@@ -1631,9 +1659,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 980744926}
+  - component: {fileID: 980744928}
+  - component: {fileID: 980744927}
   m_Layer: 0
   m_Name: spawnPlayer1
-  m_TagString: Untagged
+  m_TagString: SpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1651,6 +1681,32 @@ Transform:
   m_Father: {fileID: 1786765173}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &980744927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 980744925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8fa6193ad471fd4b9d1c0aeb8b6c03c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNumber: 1
+  facingDir: 1
+--- !u!114 &980744928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 980744925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c686c52fa59114ca289af2bd63bffc0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0, g: 1, b: 0, a: 1}
+  starSize: 0.25
 --- !u!1 &1119597104
 GameObject:
   m_ObjectHideFlags: 0
