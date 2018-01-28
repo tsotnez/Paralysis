@@ -40,7 +40,6 @@ public class AISectionManager : MonoBehaviour {
             }
         }
 
-        Debug.Log("Returning non targetable....");
         return nonTargetableSection;
     }
 }

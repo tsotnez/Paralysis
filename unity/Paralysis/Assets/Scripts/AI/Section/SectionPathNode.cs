@@ -8,9 +8,12 @@ public class SectionPathNode : MonoBehaviour {
     [Range(-1, 1)]
     public float jumpForce1X = 0;
     public bool isJumpNode2 = false;
+
     [Range(-1, 1)]
     public float jumpForce2X = 0;
     public bool isFallThroughNode = false;
+
+    public float doubleJumpWait = .5f;
 
     void OnDrawGizmos()
     {

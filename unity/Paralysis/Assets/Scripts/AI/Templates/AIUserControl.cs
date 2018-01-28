@@ -29,6 +29,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected AIGetClosetEnemy aiTargeting;
     protected ChampionAnimationController animCon;
+    protected CharacterStats charStats;
 
     protected GameObject targetPlayer; 
 
@@ -43,10 +44,14 @@ public abstract class AIUserControl : MonoBehaviour {
     protected SectionPath currentSectionPath;
     protected SectionPathNode currentNode;
     protected int currentNodeIndex = 0;
+    private const float MIN_DISTANCE_TO_NODE = .1f;
 
-    public enum AI_GOALS { MOVE_TO_PLAYER, MOVE_THROUGH_NODES, STAND_BY };
-    public AI_GOALS currentGoal = AI_GOALS.MOVE_TO_PLAYER;
-    public AI_GOALS previousGoal = AI_GOALS.STAND_BY;
+
+    public enum AI_GOALS { MOVE_TO_PLAYER, MOVE_THROUGH_NODES, JUMP1, JUMP2, STAND_BY };
+
+    protected AI_GOALS currentGoal = AI_GOALS.STAND_BY;
+    protected AI_GOALS previousGoal = AI_GOALS.STAND_BY;
+
         
     protected void Start()
     {
@@ -59,6 +64,7 @@ public abstract class AIUserControl : MonoBehaviour {
         {
             aiTargeting = GetComponent<AIGetClosetEnemy>();
             animCon = GetComponentInChildren<ChampionAnimationController>();
+            charStats = GetComponentInChildren<CharacterStats>();
 
             //set jump difference to the size of our box collider
             jumpDifference = GetComponent<BoxCollider2D>().size.y;
@@ -69,26 +75,34 @@ public abstract class AIUserControl : MonoBehaviour {
     protected void LateUpdate()
     {
         resetInputs();
-        setCurrentGoal();
+        setCurrentState();
 
         switch(currentGoal)
         {
         case AI_GOALS.MOVE_TO_PLAYER:
+            setCurrentGoal();
             moveTowardsTargetPlayer();
             break;
         case AI_GOALS.MOVE_THROUGH_NODES:
             moveThroughSectionPath();
             break;
+        case AI_GOALS.JUMP1:
+            jump1();
+            break;
+        case AI_GOALS.JUMP2:
+            jump2();
+            break;
         case AI_GOALS.STAND_BY:
+            setCurrentGoal();
             break;
         default:
             break;
         }
 
-        previousGoal = currentGoal;
+        print("Current goal: " + currentGoal);
     }
 
-    protected virtual void setCurrentGoal()
+    protected virtual void setCurrentState()
     {
         if(aiTargeting.TargetPlayer != null)
         {
@@ -106,24 +120,30 @@ public abstract class AIUserControl : MonoBehaviour {
             {
                 targetDirectionY = Mathf.Sign(targetPlayer.transform.position.y - transform.position.y);
             }
+        }
+    }
 
+    protected virtual void setCurrentGoal()
+    {
+        if(targetPlayer != null)
+        {
             //Set goals here
-            if(mySection == targetSection && !mySection.nonTargetable && !targetSection.nonTargetable)
+            if(mySection == targetSection && !mySection.nonTargetable)
             {
-                currentGoal = AI_GOALS.MOVE_TO_PLAYER;
+                changeGoal(AI_GOALS.MOVE_TO_PLAYER);
             }
             else if(!mySection.nonTargetable && !targetSection.nonTargetable)
             {
-                currentGoal = AI_GOALS.MOVE_THROUGH_NODES;
+                changeGoal(AI_GOALS.MOVE_THROUGH_NODES);
             }
             else
             {
-                currentGoal = AI_GOALS.STAND_BY;
+                changeGoal(AI_GOALS.STAND_BY);
             }
         }
         else
         {
-            currentGoal = AI_GOALS.STAND_BY;
+            changeGoal(AI_GOALS.STAND_BY);
         }
     }
 
@@ -131,41 +151,175 @@ public abstract class AIUserControl : MonoBehaviour {
     {
         if(targetPlayer != null)
         {
-            if(animCon.m_Grounded)
-            {
+            //if(animCon.m_Grounded)
+            //{
                 inputMove = Mathf.Sign(targetDirectionX);
-            }
+            //}
         }
     }
 
     protected virtual void moveThroughSectionPath()
     {
+        if(inSameSectionAsTarget())
+        {
+            changeGoal(AI_GOALS.MOVE_TO_PLAYER);
+            return;
+        }
+
         if(targetPlayer != null && previousGoal != AI_GOALS.MOVE_THROUGH_NODES)
         {
             currentSectionPath = mySection.getPathForTargetSection(targetSection);
             currentNodeIndex = 0;
             currentNode = currentSectionPath.Nodes[currentNodeIndex];
-        }
 
-        float distFromCurrentNode = Mathf.Abs(Vector2.Distance(currentNode.transform.position, transform.position));
-        if(distFromCurrentNode <= .1f)
+            //since we care about previous goal make sure to set it here
+            previousGoal = AI_GOALS.MOVE_THROUGH_NODES;
+        }           
+
+        //Get distance to our current node
+        float distFromCurrentNode = distanceFromNode(currentNode);
+        if(distFromCurrentNode <= MIN_DISTANCE_TO_NODE)
         {
-            if(currentNodeIndex + 1 < currentSectionPath.Nodes.Length)
+            //if we are close to our current node and its a jump node, JUMP
+            if(currentNode.isJumpNode1)
             {
-                currentNodeIndex++;
-                currentNode = currentSectionPath.Nodes[currentNodeIndex];
+                changeGoal(AI_GOALS.JUMP1);
+                return;
+            }
+            else if(currentNodeIndex + 1 < currentSectionPath.Nodes.Length)
+            {
+                incrementNodeIndex();
             }
             else
             {
                 //Hit the end of our nodes
-                currentGoal = AI_GOALS.STAND_BY;
+                changeGoal(AI_GOALS.STAND_BY);
                 return;
             }
         }
-
+            
         inputMove = Mathf.Sign(currentNode.transform.position.x - transform.position.x);
     }
-        
+
+    #region Jump
+
+    protected virtual void jump1()
+    {
+        if(inSameSectionAsTarget())
+        {
+            changeGoal(AI_GOALS.MOVE_TO_PLAYER);
+            return;
+        }
+
+        if(charStats.CurrentStamina < ChampionClassController.JUMP_STAMINA_REQ)
+        {
+            changeGoal(AI_GOALS.STAND_BY);
+            return;
+        }
+
+        if(animCon.m_Grounded)
+        {
+            if(previousGoal != AI_GOALS.JUMP1)
+            {
+                //if we are double jumping... start coroutine
+                if(currentNode.isJumpNode2)
+                {
+                    print("Hit jump: " + Time.time);
+                    StartCoroutine(doubleJump(currentNode.doubleJumpWait));
+                }
+                previousGoal = AI_GOALS.JUMP1;
+
+                inputJump = true;
+                inputMove = currentNode.jumpForce1X;
+            }
+            else if(!currentNode.isJumpNode2 && previousGoal == AI_GOALS.JUMP1)
+            {
+                //No double jump we are grounded checkout our distance to next node
+                float distFromNextNode = distanceFromNode(currentSectionPath.Nodes[currentNodeIndex + 1]);
+                if(distFromNextNode <= MIN_DISTANCE_TO_NODE)
+                {
+                    changeCurrentAndPreviousGoal(AI_GOALS.MOVE_THROUGH_NODES, AI_GOALS.MOVE_THROUGH_NODES);
+                    incrementNodeIndex();
+                    return;
+                }
+            }
+        }
+        else
+        {
+            //We are in the air, just apply direction
+            inputMove = currentNode.jumpForce1X;
+        }
+    }
+
+    protected IEnumerator doubleJump(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        if(currentGoal != AI_GOALS.JUMP2)
+        {
+            changeCurrentAndPreviousGoal(AI_GOALS.JUMP2, AI_GOALS.JUMP1);
+        }
+    }
+
+    protected virtual void jump2()
+    {
+        if(inSameSectionAsTarget())
+        {
+            changeGoal(AI_GOALS.MOVE_TO_PLAYER);
+            return;
+        }
+
+        if(animCon.m_Grounded)
+        {
+            float distFromNextNode = distanceFromNode(currentSectionPath.Nodes[currentNodeIndex + 1]);
+            if(distFromNextNode <= MIN_DISTANCE_TO_NODE)
+            {
+                changeCurrentAndPreviousGoal(AI_GOALS.MOVE_THROUGH_NODES, AI_GOALS.MOVE_THROUGH_NODES);
+                incrementNodeIndex();
+            }
+            //Second jump failed
+            else
+            {
+                changeGoal(AI_GOALS.STAND_BY);
+            }
+        }
+        else if(previousGoal == AI_GOALS.JUMP1)
+        {
+            inputJump = true;
+            inputMove = currentNode.jumpForce2X;
+        }
+    }
+
+    #endregion
+
+    #region Helper Methods
+    private bool inSameSectionAsTarget()
+    {
+        return targetPlayer != null && mySection == targetSection && !mySection.nonTargetable;
+    }
+
+    private void changeGoal(AI_GOALS newGoal)
+    {
+        this.previousGoal = currentGoal;
+        this.currentGoal = newGoal;
+    }
+
+    private void changeCurrentAndPreviousGoal(AI_GOALS currentGoal, AI_GOALS previousGoal)
+    {
+        this.currentGoal = currentGoal;
+        this.previousGoal = previousGoal;
+    }
+
+    private void incrementNodeIndex()
+    {
+        currentNodeIndex++;
+        print("Incrementing node index: " +  (currentNodeIndex) + "/" + (currentSectionPath.Nodes.Length));
+        currentNode = currentSectionPath.Nodes[currentNodeIndex];
+    }
+
+    private float distanceFromNode(SectionPathNode node)
+    {
+        return Mathf.Abs(Vector2.Distance(node.transform.position, transform.position));
+    }
 
     private void resetInputs()
     {
@@ -181,4 +335,6 @@ public abstract class AIUserControl : MonoBehaviour {
         inputTrinket1 = false;
         inputTrinket2 = false;
     }
+
+    #endregion
 }

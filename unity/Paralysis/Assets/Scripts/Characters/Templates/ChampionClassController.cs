@@ -6,6 +6,8 @@ using System.Linq;
 
 public abstract class ChampionClassController : Photon.MonoBehaviour
 {
+    public const int JUMP_STAMINA_REQ = 15;
+
     // Constraints
     protected const float GroundedRadius = .02f;                            // Radius of the overlap circle to determine if grounded
     protected const float MeeleRange = 1.5f;                                // Default range for meele attacks
@@ -288,7 +290,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         // If the player should jump...
         if (CanPerformAction(false) && jump && CanPerformAttack())
         {
-            if (animCon.m_Grounded && stats.LoseStamina(15))
+            if (animCon.m_Grounded && stats.LoseStamina(JUMP_STAMINA_REQ))
             {
                 // Add a vertical force to the player.
                 animCon.m_Grounded = false;

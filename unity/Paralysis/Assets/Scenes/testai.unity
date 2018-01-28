@@ -1101,11 +1101,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 131298c0185dba849a4bc2b2562645d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isJumpNode1: 0
+  isJumpNode1: 1
   jumpForce1X: 0
-  isJumpNode2: 0
-  jumpForce2X: 0
+  isJumpNode2: 1
+  jumpForce2X: 1
   isFallThroughNode: 0
+  doubleJumpWait: 0.5
 --- !u!1 &326529426
 GameObject:
   m_ObjectHideFlags: 0
@@ -1263,6 +1264,7 @@ MonoBehaviour:
   isJumpNode2: 0
   jumpForce2X: 0
   isFallThroughNode: 0
+  doubleJumpWait: 0.5
 --- !u!1 &564498664
 GameObject:
   m_ObjectHideFlags: 0
@@ -2145,6 +2147,7 @@ MonoBehaviour:
   isJumpNode2: 0
   jumpForce2X: 0
   isFallThroughNode: 0
+  doubleJumpWait: 0.5
 --- !u!1 &1119597104
 GameObject:
   m_ObjectHideFlags: 0
@@ -2499,6 +2502,7 @@ MonoBehaviour:
   isJumpNode2: 0
   jumpForce2X: 0
   isFallThroughNode: 0
+  doubleJumpWait: 0.5
 --- !u!1 &1227620825
 GameObject:
   m_ObjectHideFlags: 0
@@ -2848,6 +2852,7 @@ MonoBehaviour:
   isJumpNode2: 0
   jumpForce2X: 0
   isFallThroughNode: 0
+  doubleJumpWait: 0.5
 --- !u!1001 &1413330319
 Prefab:
   m_ObjectHideFlags: 0
@@ -2997,6 +3002,7 @@ MonoBehaviour:
   isJumpNode2: 0
   jumpForce2X: 0
   isFallThroughNode: 0
+  doubleJumpWait: 0.5
 --- !u!1 &1500119424
 GameObject:
   m_ObjectHideFlags: 0
@@ -3198,6 +3204,7 @@ MonoBehaviour:
   isJumpNode2: 0
   jumpForce2X: 0
   isFallThroughNode: 0
+  doubleJumpWait: 0.5
 --- !u!1 &1557429662
 GameObject:
   m_ObjectHideFlags: 0
@@ -3243,6 +3250,7 @@ MonoBehaviour:
   isJumpNode2: 0
   jumpForce2X: 0
   isFallThroughNode: 0
+  doubleJumpWait: 0.5
 --- !u!1 &1579993903
 GameObject:
   m_ObjectHideFlags: 0
@@ -3362,6 +3370,7 @@ MonoBehaviour:
   isJumpNode2: 0
   jumpForce2X: 0
   isFallThroughNode: 0
+  doubleJumpWait: 0.5
 --- !u!1 &1735613273
 GameObject:
   m_ObjectHideFlags: 0
@@ -3549,6 +3558,7 @@ MonoBehaviour:
   isJumpNode2: 0
   jumpForce2X: 0
   isFallThroughNode: 0
+  doubleJumpWait: 0.5
 --- !u!1 &1786765172
 GameObject:
   m_ObjectHideFlags: 0
