@@ -15,6 +15,14 @@ public class SectionPathNode : MonoBehaviour {
 
     public float doubleJumpWait = .5f;
 
+    public Section TargetSection { get { return targetSection; } }
+    private Section targetSection;
+
+    void Start()
+    {
+        targetSection = AISectionManager.Instance.getSectionForPosition(transform.position);
+    }
+
     void OnDrawGizmos()
     {
         GizmoStar.drawStar(transform.position, Color.yellow, .1f, .66f);

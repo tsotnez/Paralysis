@@ -284,9 +284,11 @@ public abstract class AIUserControl : MonoBehaviour {
         }
         else if(previousGoal == AI_GOALS.JUMP1)
         {
+            previousGoal = AI_GOALS.JUMP2;
             inputJump = true;
-            inputMove = currentNode.jumpForce2X;
         }
+
+        inputMove = currentNode.jumpForce2X;
     }
 
     #endregion
