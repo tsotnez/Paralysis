@@ -149,12 +149,9 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected virtual void moveTowardsTargetPlayer()
     {
-        if(targetPlayer != null)
+        if(targetPlayer != null  && distanceToTargetPlayer() > 2f)
         {
-            //if(animCon.m_Grounded)
-            //{
-                inputMove = Mathf.Sign(targetDirectionX);
-            //}
+            inputMove = Mathf.Sign(targetDirectionX);
         }
     }
 
@@ -197,8 +194,9 @@ public abstract class AIUserControl : MonoBehaviour {
                 return;
             }
         }
-            
+
         inputMove = Mathf.Sign(currentNode.transform.position.x - transform.position.x);
+        if(!animCon.m_Grounded) inputMove = inputMove/2;
     }
 
     #region Jump
@@ -224,7 +222,6 @@ public abstract class AIUserControl : MonoBehaviour {
                 //if we are double jumping... start coroutine
                 if(currentNode.isJumpNode2)
                 {
-                    print("Hit jump: " + Time.time);
                     StartCoroutine(doubleJump(currentNode.doubleJumpWait));
                 }
                 previousGoal = AI_GOALS.JUMP1;
@@ -314,7 +311,6 @@ public abstract class AIUserControl : MonoBehaviour {
     private void incrementNodeIndex()
     {
         currentNodeIndex++;
-        print("Incrementing node index: " +  (currentNodeIndex) + "/" + (currentSectionPath.Nodes.Length));
         currentNode = currentSectionPath.Nodes[currentNodeIndex];
     }
 
@@ -322,6 +318,17 @@ public abstract class AIUserControl : MonoBehaviour {
     {
         return Mathf.Abs(Vector2.Distance(node.transform.position, transform.position));
     }
+
+    private float distanceXFromNode(SectionPathNode node)
+    {
+        return Mathf.Abs(node.transform.position.x - transform.position.x);
+    }
+
+    private float distanceToTargetPlayer()
+    {
+        return Mathf.Abs(Vector2.Distance(targetPlayer.transform.position, transform.position));
+    }
+
 
     private void resetInputs()
     {

@@ -18,6 +18,9 @@ public class SectionPathNode : MonoBehaviour {
     public Section TargetSection { get { return targetSection; } }
     private Section targetSection;
 
+    [HideInInspector]
+    public bool showGizmos = false;
+
     void Start()
     {
         targetSection = AISectionManager.Instance.getSectionForPosition(transform.position);
@@ -25,7 +28,9 @@ public class SectionPathNode : MonoBehaviour {
 
     void OnDrawGizmos()
     {
-        GizmoStar.drawStar(transform.position, Color.yellow, .1f, .66f);
+        if(showGizmos){
+            GizmoStar.drawStar(transform.position, Color.yellow, .1f, .66f);
+        }
     }
 
 }

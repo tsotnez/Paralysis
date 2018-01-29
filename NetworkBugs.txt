@@ -1,3 +1,0 @@
-MultiplerGameManager should't require photonView
-
-

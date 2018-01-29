@@ -7,6 +7,8 @@ public class Section : MonoBehaviour {
     public float width = 10f;
     public float height = 10f;
     public Color gizmoColor = Color.cyan;
+    public bool showGizmos = false;
+    [HideInInspector]
     public bool nonTargetable = false;
 
     public SectionPath[] SectionPaths { get { return SectionPaths; } }
@@ -16,6 +18,7 @@ public class Section : MonoBehaviour {
     private float minY;
     private float maxX;
     private float minX;
+
 
     private void Awake()
     {
@@ -53,9 +56,19 @@ public class Section : MonoBehaviour {
 
     void OnDrawGizmos()
     {
-        Gizmos.color =  gizmoColor;
-        Gizmos.DrawWireCube(transform.position, new Vector3(width, height));
-        GizmoStar.drawStar(transform.position, gizmoColor, .15f);
+        for(int i = 0; i < transform.childCount; i++)
+        {            
+            SectionPath sectionPath = transform.GetChild(i).GetComponent<SectionPath>();
+            sectionPath.showGizmos = showGizmos;
+        }
+
+        if(showGizmos){
+
+            Gizmos.color =  gizmoColor;
+            Gizmos.DrawWireCube(transform.position, new Vector3(width, height));
+            GizmoStar.drawStar(transform.position, gizmoColor, .15f);
+        }
+
     }
 
 }

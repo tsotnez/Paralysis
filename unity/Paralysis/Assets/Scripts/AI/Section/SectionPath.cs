@@ -12,6 +12,9 @@ public class SectionPath : MonoBehaviour {
     public SectionPathNode[] Nodes { get { return nodes; } }
     private SectionPathNode[] nodes;
 
+    [HideInInspector]
+    public bool showGizmos = false;
+
     void Awake()
     {
         mySection = GetComponentInParent<Section>();
@@ -40,9 +43,13 @@ public class SectionPath : MonoBehaviour {
         if(nodes == null || nodes.Length <= 1) return;
 
         Gizmos.color = Color.green;
+        nodes[0].showGizmos = showGizmos;
         for(int i = 1; i < nodes.Length; i++)
         {
-            Gizmos.DrawLine(nodes[i-1].transform.position, nodes[i].transform.position);
+            nodes[i].showGizmos = showGizmos;
+            if(showGizmos){
+                Gizmos.DrawLine(nodes[i-1].transform.position, nodes[i].transform.position);
+            }
         }
     }
 }
