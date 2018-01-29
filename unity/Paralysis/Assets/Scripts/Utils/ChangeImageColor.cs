@@ -5,32 +5,42 @@ using UnityEngine.UI;
 
 public class ChangeImageColor : MonoBehaviour {
 
+    public MaskableGraphic target;
+
     public Color onHoverCol;
     public Color onClickCol;
 
     private Color defaultCol;
 
-    Image img;
-
     void Start()
     {
-        img = GetComponent<Image>();
-        defaultCol = img.color;
+        if(target == null)
+            target = GetComponent<Image>();
+
+        defaultCol = target.color;
     }
 
 	public void onEnter()
     {
-        img.color = onHoverCol;
+        target.color = onHoverCol;
     }
 
     public void onExit()
     {
-        img.color = defaultCol;
+        StopAllCoroutines();
+        target.color = defaultCol;
     }
 
     public void onClick()
     {
-        img.color = onClickCol;
+        StopAllCoroutines();
+        StartCoroutine(flashColor());
     }
 
+    private IEnumerator flashColor()
+    {
+        target.color = onClickCol;
+        yield return new WaitForSeconds(.05f);
+        target.color = onHoverCol;
+    }
 }

@@ -28,36 +28,36 @@ public class InRoomManager : MonoBehaviour {
 
     private void Start()
     {
-        backButton.onClick.AddListener(backPressed);
-        startGameButton.onClick.AddListener(startGame);
+        //backButton.onClick.AddListener(backPressed);
+        //startGameButton.onClick.AddListener(startGame);
 
-        RoomNameText.text = GameNetwork.Instance.CurrentRoomInfo.Name;
-        GameObject hostEntry = GameObject.FindGameObjectWithTag("PlayerRoomEntry");
-        Text hostEntryText = hostEntry.transform.Find("Name").GetComponent<Text>();
+        //RoomNameText.text = GameNetwork.Instance.CurrentRoomInfo.Name;
+        //GameObject hostEntry = GameObject.FindGameObjectWithTag("PlayerRoomEntry");
+        //Text hostEntryText = hostEntry.transform.Find("Name").GetComponent<Text>();
 
-        if(GameNetwork.Instance.IsMasterClient)
-        {
-            hostEntryText.text = GameNetwork.Instance.PlayerName;
-            startGameButton.interactable = true;
-        }
-        else
-        {
-            startGameButton.interactable = false;
+        //if(GameNetwork.Instance.IsMasterClient)
+        //{
+        //    hostEntryText.text = GameNetwork.Instance.PlayerName;
+        //    startGameButton.interactable = true;
+        //}
+        //else
+        //{
+        //    startGameButton.interactable = false;
 
-            PhotonPlayer[] playerList = GameNetwork.Instance.getPlayerList();
-            foreach(PhotonPlayer player in playerList)
-            {
-                if(player.IsMasterClient)
-                {
-                    hostEntryText.text = player.NickName;
-                    playerDict.Add(player, hostEntry);
-                }
-                else
-                {
-                    AddPlayerToList(player);
-                }
-            }
-        }
+        //    PhotonPlayer[] playerList = GameNetwork.Instance.getPlayerList();
+        //    foreach(PhotonPlayer player in playerList)
+        //    {
+        //        if(player.IsMasterClient)
+        //        {
+        //            hostEntryText.text = player.NickName;
+        //            playerDict.Add(player, hostEntry);
+        //        }
+        //        else
+        //        {
+        //            AddPlayerToList(player);
+        //        }
+        //    }
+        //}
     }
 
     public void ChangeCurrentPreviewImage(Image preview)
@@ -95,7 +95,7 @@ public class InRoomManager : MonoBehaviour {
 
     private void setPlayerCountText()
     {
-        PlayerCount.text = "Players:   " +  CurrentPlayers + " | " + MaxPlayers;
+        PlayerCount.text = "Players:" +  CurrentPlayers + "/" + MaxPlayers;
     }
 
     private void startGame()
