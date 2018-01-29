@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class LocalChampionSelectionManager : MonoBehaviour {
+public class LocalChampionSelectionManager : UIManager {
 
     public static Player[] team2;
     public static Player[] team1;
@@ -28,7 +28,8 @@ public class LocalChampionSelectionManager : MonoBehaviour {
     public GameObject[] platformsTeam2;
 
     // Use this for initialization
-    void Start () {
+    protected override void Start()
+    {
         PhotonNetwork.offlineMode = true;
 
         //Set default Values for debugging
@@ -148,7 +149,7 @@ public class LocalChampionSelectionManager : MonoBehaviour {
             direction = -1;
 
         newPreview.transform.localScale = new Vector3(200 * direction, 200, 1); //Scale up
-        newPreview.transform.position = new Vector3(newPreview.transform.position.x, newPreview.transform.position.y + 1.3f, newPreview.transform.position.z);
+        newPreview.transform.position = new Vector3(newPreview.transform.position.x, newPreview.transform.position.y + 1.4f, newPreview.transform.position.z);
         newPreview.transform.Find("graphics").GetComponent<ChampionAnimationController>().m_Grounded = true;
         newPreview.transform.Find("graphics").GetComponent<ChampionAnimationController>().trigBasicAttack1 = true;
         newPreview.SetActive(true);

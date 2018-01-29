@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class InRoomManager : MonoBehaviour {
+public class InRoomManager : UIManager {
 
     //Please notice: The PlayerListEntry objects have a ready image which is supposed to show whether the player has entered the ready state
     //Note 2: The Start-Button in the bottom center may be replaced by a ready button depending on whether the local player owns the room
@@ -26,38 +26,40 @@ public class InRoomManager : MonoBehaviour {
 
     private Dictionary<PhotonPlayer, GameObject> playerDict = new Dictionary<PhotonPlayer, GameObject>();
 
-    private void Start()
+    protected override void Start()
     {
-        //backButton.onClick.AddListener(backPressed);
-        //startGameButton.onClick.AddListener(startGame);
+        base.Start();
 
-        //RoomNameText.text = GameNetwork.Instance.CurrentRoomInfo.Name;
-        //GameObject hostEntry = GameObject.FindGameObjectWithTag("PlayerRoomEntry");
-        //Text hostEntryText = hostEntry.transform.Find("Name").GetComponent<Text>();
+        backButton.onClick.AddListener(backPressed);
+        startGameButton.onClick.AddListener(startGame);
 
-        //if(GameNetwork.Instance.IsMasterClient)
-        //{
-        //    hostEntryText.text = GameNetwork.Instance.PlayerName;
-        //    startGameButton.interactable = true;
-        //}
-        //else
-        //{
-        //    startGameButton.interactable = false;
+        RoomNameText.text = GameNetwork.Instance.CurrentRoomInfo.Name;
+        GameObject hostEntry = GameObject.FindGameObjectWithTag("PlayerRoomEntry");
+        Text hostEntryText = hostEntry.transform.Find("Name").GetComponent<Text>();
 
-        //    PhotonPlayer[] playerList = GameNetwork.Instance.getPlayerList();
-        //    foreach(PhotonPlayer player in playerList)
-        //    {
-        //        if(player.IsMasterClient)
-        //        {
-        //            hostEntryText.text = player.NickName;
-        //            playerDict.Add(player, hostEntry);
-        //        }
-        //        else
-        //        {
-        //            AddPlayerToList(player);
-        //        }
-        //    }
-        //}
+        if (GameNetwork.Instance.IsMasterClient)
+        {
+            hostEntryText.text = GameNetwork.Instance.PlayerName;
+            startGameButton.interactable = true;
+        }
+        else
+        {
+            startGameButton.interactable = false;
+
+            PhotonPlayer[] playerList = GameNetwork.Instance.getPlayerList();
+            foreach (PhotonPlayer player in playerList)
+            {
+                if (player.IsMasterClient)
+                {
+                    hostEntryText.text = player.NickName;
+                    playerDict.Add(player, hostEntry);
+                }
+                else
+                {
+                    AddPlayerToList(player);
+                }
+            }
+        }
     }
 
     public void ChangeCurrentPreviewImage(Image preview)

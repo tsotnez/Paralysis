@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.IO;
 
 
-public class SettingsManager : MonoBehaviour
+public class SettingsManager : UIManager
 {
 
     public Toggle fullscreenToggle;

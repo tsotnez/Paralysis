@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using System;
 
-public class TeamAllocationManager : MonoBehaviour {
+public class TeamAllocationManager : UIManager {
 
     public static int maxPlayers = 2;
     
@@ -17,7 +17,8 @@ public class TeamAllocationManager : MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start () {
+	protected override void Start () {
+        base.Start();
 
         connectedControllers = Input.GetJoystickNames();
 

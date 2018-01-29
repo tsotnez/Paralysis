@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class RoomTableManager : MonoBehaviour {
+public class RoomTableManager : UIManager {
 
     public GameObject RoomPrefab;
     public Transform Content;
@@ -16,8 +16,10 @@ public class RoomTableManager : MonoBehaviour {
 
     private bool lastDark = false;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         dialogueScript = DialogueWindow.GetComponent<CreateRoomDialogue>();
     }
 
