@@ -1,4 +1,0 @@
-MultiplerGameManager should't require photonView
-Somtimes AI gets caught in jump1 goal - have time limit on certain goals
-
-
