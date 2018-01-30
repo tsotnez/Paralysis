@@ -52,6 +52,10 @@ public abstract class AIUserControl : MonoBehaviour {
     protected AI_GOALS currentGoal = AI_GOALS.STAND_BY;
     protected AI_GOALS previousGoal = AI_GOALS.STAND_BY;
 
+    private float timeToUnstuck;
+    private const float MAX_STUCK_TIME = .5f;
+    private AI_GOALS stuckGoal = AI_GOALS.STAND_BY;
+
         
     protected void Start()
     {
@@ -275,13 +279,6 @@ public abstract class AIUserControl : MonoBehaviour {
             return;
         }
 
-        //Wait to be grounded before starting this goal
-        if(previousGoal != AI_GOALS.JUMP1 && !animCon.m_Grounded)
-        {
-            changeCurrentAndPreviousGoal(AI_GOALS.JUMP1, AI_GOALS.STAND_BY);
-            return;
-        }
-
         if(animCon.m_Grounded)
         {
             if(previousGoal != AI_GOALS.JUMP1)
@@ -308,8 +305,8 @@ public abstract class AIUserControl : MonoBehaviour {
                 }
                 else
                 {
-                    //TODO were stuck....... jump failed etc....
-                    print("stuck......");
+                    //Start stuck timer here, our jump can fail
+                    stuckTimer();
                 }
             }
         }
@@ -317,6 +314,7 @@ public abstract class AIUserControl : MonoBehaviour {
         {
             //We are in the air, just apply direction
             inputMove = currentNode.jumpForce1X;
+            resetStuck();
         }
     }
 
@@ -363,6 +361,31 @@ public abstract class AIUserControl : MonoBehaviour {
     #endregion
 
     #region Helper Methods
+    /// <summary>
+    /// Call this method in certain goals if you feel like they might not succeed etc.
+    /// </summary>
+    private void stuckTimer()
+    {
+        if(currentGoal == AI_GOALS.STAND_BY) return;
+
+        if(stuckGoal != currentGoal)
+        {
+            stuckGoal = currentGoal;
+            timeToUnstuck = Time.time + MAX_STUCK_TIME;
+        }
+
+        if(Time.time > timeToUnstuck)
+        {
+            stuckGoal = AI_GOALS.STAND_BY;
+            currentGoal = AI_GOALS.STAND_BY;
+        }
+    }
+
+    private void resetStuck()
+    {
+        timeToUnstuck = Time.time + MAX_STUCK_TIME;
+    }
+
     private bool inSameSectionAsTarget()
     {
         return targetPlayer != null && mySection == targetSection && !mySection.nonTargetable;
