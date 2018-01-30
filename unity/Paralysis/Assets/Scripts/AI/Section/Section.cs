@@ -36,6 +36,42 @@ public class Section : MonoBehaviour {
         minX = transform.position.x - (width/2);
     }
 
+    public SectionPath getOptimalPathForSection(Section targetSection, Vector2 currentPosition, Vector2 targetPosition)
+    {
+        List<SectionPath> paths = new List<SectionPath>();
+        foreach(SectionPath sectionP in sectionPaths)
+        {
+            if(sectionP.TargetSection == targetSection)
+            {
+                paths.Add(sectionP);
+            }
+        }
+
+        if(paths.Count == 0)
+        {
+            return null;
+        }
+        else if(paths.Count == 1)
+        {
+            return paths[0];
+        }
+        else
+        {
+            SectionPath retPath = null;
+            float actMinDist = float.MaxValue;
+            foreach(SectionPath path in paths)
+            {
+                float dist = Mathf.Abs(Vector2.Distance(path.FirstNode.transform.position, 
+                    currentPosition)) + Mathf.Abs(Vector2.Distance(path.LastNode.transform.position, targetPosition));
+                if(dist < actMinDist)
+                {
+                    retPath = path;
+                }
+            }
+            return retPath;
+        }
+    }
+
     public SectionPath getPathForTargetSection(Section targetSection)
     {
         foreach(SectionPath sectionP in sectionPaths)

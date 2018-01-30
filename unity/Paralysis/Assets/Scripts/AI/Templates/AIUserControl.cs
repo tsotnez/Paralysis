@@ -47,7 +47,7 @@ public abstract class AIUserControl : MonoBehaviour {
     private const float MIN_DISTANCE_TO_NODE = .1f;
 
 
-    public enum AI_GOALS { MOVE_TO_PLAYER, MOVE_THROUGH_NODES, JUMP1, JUMP2, STAND_BY };
+    public enum AI_GOALS { MOVE_TO_PLAYER, MOVE_THROUGH_NODES, JUMP1, JUMP2, FALL_THROUGH, STAND_BY };
 
     protected AI_GOALS currentGoal = AI_GOALS.STAND_BY;
     protected AI_GOALS previousGoal = AI_GOALS.STAND_BY;
@@ -74,6 +74,12 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected void LateUpdate()
     {
+        //If we get stunned just standby
+        if(animCon.statStunned)
+        {
+            changeCurrentAndPreviousGoal(AI_GOALS.STAND_BY, AI_GOALS.STAND_BY);
+        }
+
         resetInputs();
         setCurrentState();
 
@@ -91,6 +97,9 @@ public abstract class AIUserControl : MonoBehaviour {
             break;
         case AI_GOALS.JUMP2:
             jump2();
+            break;
+        case AI_GOALS.FALL_THROUGH:
+            fallThrough();
             break;
         case AI_GOALS.STAND_BY:
             setCurrentGoal();
@@ -165,7 +174,9 @@ public abstract class AIUserControl : MonoBehaviour {
 
         if(targetPlayer != null && previousGoal != AI_GOALS.MOVE_THROUGH_NODES)
         {
-            currentSectionPath = mySection.getPathForTargetSection(targetSection);
+            //currentSectionPath = mySection.getPathForTargetSection(targetSection);
+            currentSectionPath = mySection.getOptimalPathForSection(targetSection, transform.position, 
+                targetPlayer.transform.position);
             currentNodeIndex = 0;
             currentNode = currentSectionPath.Nodes[currentNodeIndex];
 
@@ -183,6 +194,10 @@ public abstract class AIUserControl : MonoBehaviour {
                 changeGoal(AI_GOALS.JUMP1);
                 return;
             }
+            else if(currentNode.isFallThroughNode)
+            {
+                changeGoal(AI_GOALS.FALL_THROUGH);
+            }
             else if(currentNodeIndex + 1 < currentSectionPath.Nodes.Length)
             {
                 incrementNodeIndex();
@@ -199,6 +214,51 @@ public abstract class AIUserControl : MonoBehaviour {
         if(!animCon.m_Grounded) inputMove = inputMove/2;
     }
 
+    #region FallThrough
+
+    protected virtual void fallThrough()
+    {
+        if(inSameSectionAsTarget())
+        {
+            changeGoal(AI_GOALS.MOVE_TO_PLAYER);
+            return;
+        }
+
+        //wait to be grounded to start this goal
+        if(previousGoal != AI_GOALS.FALL_THROUGH && !animCon.m_Grounded)
+        {
+            changeCurrentAndPreviousGoal(AI_GOALS.FALL_THROUGH, AI_GOALS.STAND_BY);
+            return;
+        }
+
+        if(animCon.m_Grounded && previousGoal != AI_GOALS.FALL_THROUGH)
+        {
+            StartCoroutine(inputDashForFall());
+        }
+
+        inputDown = true;
+    }
+
+    protected IEnumerator inputDashForFall()
+    {
+        inputDashDirection = 1;
+        yield return new WaitForSeconds(.2f);
+        inputDashDirection = 0;
+        StartCoroutine(fallThroughRoutine());
+    }
+
+    protected IEnumerator fallThroughRoutine()
+    {
+        yield return new WaitUntil(() => ( animCon.m_Grounded));
+        if(currentGoal == AI_GOALS.FALL_THROUGH)
+        {
+            incrementNodeIndex();
+            changeCurrentAndPreviousGoal(AI_GOALS.MOVE_THROUGH_NODES, AI_GOALS.MOVE_THROUGH_NODES);
+        }
+    }
+
+    #endregion
+
     #region Jump
 
     protected virtual void jump1()
@@ -212,6 +272,13 @@ public abstract class AIUserControl : MonoBehaviour {
         if(charStats.CurrentStamina < ChampionClassController.JUMP_STAMINA_REQ)
         {
             changeGoal(AI_GOALS.STAND_BY);
+            return;
+        }
+
+        //Wait to be grounded before starting this goal
+        if(previousGoal != AI_GOALS.JUMP1 && !animCon.m_Grounded)
+        {
+            changeCurrentAndPreviousGoal(AI_GOALS.JUMP1, AI_GOALS.STAND_BY);
             return;
         }
 
@@ -238,6 +305,11 @@ public abstract class AIUserControl : MonoBehaviour {
                     changeCurrentAndPreviousGoal(AI_GOALS.MOVE_THROUGH_NODES, AI_GOALS.MOVE_THROUGH_NODES);
                     incrementNodeIndex();
                     return;
+                }
+                else
+                {
+                    //TODO were stuck....... jump failed etc....
+                    print("stuck......");
                 }
             }
         }
@@ -311,7 +383,14 @@ public abstract class AIUserControl : MonoBehaviour {
     private void incrementNodeIndex()
     {
         currentNodeIndex++;
-        currentNode = currentSectionPath.Nodes[currentNodeIndex];
+        if(currentSectionPath.Nodes == null || currentSectionPath.Nodes.Length == currentNodeIndex)
+        {
+            Debug.LogError("Cannot increment nodes here...");
+        }
+        else
+        {
+            currentNode = currentSectionPath.Nodes[currentNodeIndex];
+        }
     }
 
     private float distanceFromNode(SectionPathNode node)
@@ -329,12 +408,15 @@ public abstract class AIUserControl : MonoBehaviour {
         return Mathf.Abs(Vector2.Distance(targetPlayer.transform.position, transform.position));
     }
 
-
     private void resetInputs()
     {
+        if(currentGoal != AI_GOALS.FALL_THROUGH)
+        {
+            inputDashDirection = 0;
+        }
+
         inputJump = false;
         inputAttack = false;
-        inputDashDirection = 0;
         inputDown = false;
         inputMove = 0;
         inputSkill1 = false;

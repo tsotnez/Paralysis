@@ -12,6 +12,9 @@ public class SectionPath : MonoBehaviour {
     public SectionPathNode[] Nodes { get { return nodes; } }
     private SectionPathNode[] nodes;
 
+    public SectionPathNode FirstNode { get { return nodes[0]; } }
+    public SectionPathNode LastNode { get { return nodes[nodes.Length - 1]; } }
+
     [HideInInspector]
     public bool showGizmos = false;
 
