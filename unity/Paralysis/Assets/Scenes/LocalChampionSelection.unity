@@ -529,6 +529,21 @@ Prefab:
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
       objectReference: {fileID: 194475899}
+    - target: {fileID: 114563492084717606, guid: 856b26a64d484414c909b077b26fa050,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: loadScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 114563492084717606, guid: 856b26a64d484414c909b077b26fa050,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114563492084717606, guid: 856b26a64d484414c909b077b26fa050,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: TeamAllocation
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 856b26a64d484414c909b077b26fa050, type: 2}
   m_IsPrefabParent: 0
