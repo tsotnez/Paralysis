@@ -66,6 +66,7 @@ public class Section : MonoBehaviour {
                 if(dist < actMinDist)
                 {
                     retPath = path;
+                    actMinDist = dist;
                 }
             }
             return retPath;
