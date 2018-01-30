@@ -2378,10 +2378,10 @@ RectTransform:
   m_Father: {fileID: 1924255348}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 109}
-  m_SizeDelta: {x: 160, y: -943.8}
+  m_AnchoredPosition: {x: 0, y: -377.17}
+  m_SizeDelta: {x: 160, y: 28.54}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &864058847
 MonoBehaviour:
@@ -3177,10 +3177,10 @@ RectTransform:
   m_Father: {fileID: 1924255348}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -26}
-  m_SizeDelta: {x: 160, y: -931}
+  m_AnchoredPosition: {x: 0, y: -508.79}
+  m_SizeDelta: {x: 160, y: 34.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1113364702
 MonoBehaviour:
@@ -3254,6 +3254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc01741abbf5c248a84c196d0aa1707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ControllingPlayerInputDevice: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -5740,10 +5741,10 @@ RectTransform:
   m_Father: {fileID: 1924255348}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -150.539}
-  m_SizeDelta: {x: 160, y: -940.1}
+  m_AnchoredPosition: {x: 0, y: -636.18}
+  m_SizeDelta: {x: 160, y: 31.19}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2056416374
 MonoBehaviour:

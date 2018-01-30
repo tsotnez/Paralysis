@@ -55,8 +55,10 @@ public class LocalChampionSelectionManager : UIManager {
         setUpEventSystems();
 	}
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         //Show Ready button only when everything is selected
         bool allSelected = true;
         //Check if every player has selected a champion and 2 different trinkets

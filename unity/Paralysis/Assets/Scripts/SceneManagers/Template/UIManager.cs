@@ -7,15 +7,39 @@ using UnityEngine.EventSystems;
 /// </summary>
 public abstract class UIManager : MonoBehaviour {
 
+    MyStandaloneInputModule module;
+
 	// Use this for initialization
 	protected virtual void Start () {
+
+        //Get input Module
+        module = FindObjectOfType<MyStandaloneInputModule>();
+
         //Switch to controller Controls if a controller is connected
         if (Array.Exists(Input.GetJoystickNames(), x => x == "Controller (XBOX 360 For Windows)"))
         {
-            MyStandaloneInputModule module = FindObjectOfType<MyStandaloneInputModule>();
-            module.verticalAxis = "Vertical_XboxPlayer1";
-            module.horizontalAxis = "Horizontal_XboxPlayer1";
-            module.submitButton = "Skill4_XboxPlayer1";
+            module.SetControllingPlayerInputDevice(UserControl.InputDevice.XboxController);
+        }
+        else
+        {
+            module.SetControllingPlayerInputDevice(UserControl.InputDevice.KeyboardMouse);
+        }
+    }
+
+    protected virtual void Update ()
+    {
+        //Switch input method depending on whether a controller is connected
+        if (Array.Exists(Input.GetJoystickNames(), x => x == "Controller (XBOX 360 For Windows)"))
+        {
+            if (module.ControllingPlayerInputDevice == UserControl.InputDevice.KeyboardMouse)
+            {
+                module.SetControllingPlayerInputDevice(UserControl.InputDevice.XboxController);
+            }
+        }
+        else if (module.ControllingPlayerInputDevice == UserControl.InputDevice.XboxController)
+        {
+            //Switch back to keyboard and mouse input 
+            module.SetControllingPlayerInputDevice(UserControl.InputDevice.KeyboardMouse);
         }
     }
 }

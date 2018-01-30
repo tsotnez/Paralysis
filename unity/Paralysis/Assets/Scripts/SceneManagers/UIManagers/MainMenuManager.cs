@@ -40,10 +40,6 @@ public class MainMenuManager : UIManager {
         enablePage(startPage);
         currentPage = startPage;
     }
-	
-	// Update is called once per frame
-	void Update () {
-	}
 
     /// <summary>
     /// Switch to a passed page, disabeling the current page
@@ -55,7 +51,10 @@ public class MainMenuManager : UIManager {
         enablePage(nextPage);
 
         currentPage = nextPage;
-        FindObjectOfType<EventSystem>().SetSelectedGameObject(currentPage.gameObject.GetComponentInChildren<Selectable>().gameObject);
+
+        //Only preselect a GO if using controller
+        if(EventSystem.current.gameObject.GetComponent<MyStandaloneInputModule>().ControllingPlayerInputDevice == UserControl.InputDevice.XboxController)
+            EventSystem.current.SetSelectedGameObject(currentPage.gameObject.GetComponentInChildren<Selectable>().gameObject);
     }
 
     private void disablePage(CanvasGroup toDisable)

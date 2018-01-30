@@ -96,7 +96,8 @@ public class TeamAllocationManager : UIManager {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
+        base.Update();
 
         //Reload scene if any controller are diconnected or connected
         string[] newConnected = Input.GetJoystickNames();

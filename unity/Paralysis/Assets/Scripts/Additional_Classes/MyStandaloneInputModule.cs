@@ -6,6 +6,8 @@ namespace UnityEngine.EventSystems
     [AddComponentMenu("Event/Standalone Input Module")]
     public class MyStandaloneInputModule : PointerInputModule
     {
+        public UserControl.InputDevice ControllingPlayerInputDevice = UserControl.InputDevice.KeyboardMouse;
+
         private float m_PrevActionTime;
         Vector2 m_LastMoveVector;
         int m_ConsecutiveMoveCount = 0;
@@ -163,6 +165,33 @@ namespace UnityEngine.EventSystems
             ClearSelection();
         }
 
+        /// <summary>
+        /// Sets the input device to the passed one. Also sets Axis accordingly
+        /// </summary>
+        public void SetControllingPlayerInputDevice(UserControl.InputDevice NewDevice)
+        {
+            //Set Input axis 
+            switch (NewDevice)
+            {
+                case UserControl.InputDevice.XboxController:
+                    verticalAxis = "Vertical_XboxPlayer1";
+                    horizontalAxis = "Horizontal_XboxPlayer1";
+                    submitButton = "Skill4_XboxPlayer1";
+                    Debug.Log("Switched to Controller Input");
+                    break;
+                case UserControl.InputDevice.KeyboardMouse:
+                    verticalAxis = "Horizontal";
+                    horizontalAxis = "Vertical";
+                    submitButton = "Submit";
+                    eventSystem.SetSelectedGameObject(null);
+                    eventSystem.firstSelectedGameObject = null;
+                    Debug.Log("Switched to Keyboard Input");
+                    break;
+            }
+
+            ControllingPlayerInputDevice = NewDevice;
+        }
+
         public override void Process()
         {
             bool usedEvent = SendUpdateEventToSelectedObject();
@@ -176,8 +205,11 @@ namespace UnityEngine.EventSystems
                     SendSubmitEventToSelectedObject();
             }
 
-            //Commented out to Disable Mouse Processing
-            ProcessMouseEvent();
+            //Only when input method is Mouse and keyboard
+            if (ControllingPlayerInputDevice == UserControl.InputDevice.KeyboardMouse)
+            {
+                ProcessMouseEvent();
+            }
         }
 
         /// <summary>
@@ -338,8 +370,7 @@ namespace UnityEngine.EventSystems
                 pointerEvent.pressPosition = pointerEvent.position;
                 pointerEvent.pointerPressRaycast = pointerEvent.pointerCurrentRaycast;
 
-                //COMMENTED OUT TO PREVENT DESELECTING WHEN CLICKING
-                //DeselectIfSelectionChanged(currentOverGo, pointerEvent); 
+                DeselectIfSelectionChanged(currentOverGo, pointerEvent);
 
                 // search for the control that will receive the press
                 // if we can't find a press handler set the press
