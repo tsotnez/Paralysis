@@ -4,8 +4,9 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using System;
 
-public class LocalChampionSelectionManager : UIManager {
+public class LocalChampionSelectionManager : ChampionSelectionManager {
 
     public static Player[] team2;
     public static Player[] team1;
@@ -14,12 +15,6 @@ public class LocalChampionSelectionManager : UIManager {
     /// All players
     /// </summary>
     private Player[] players;
-
-    //Containing 2 additional platforms for 4v4
-    public CanvasGroup additionalPlatforms;
-
-    //Ready Button
-    public GameObject readyButton;
 
     public GameObject[] eventSystems;
     public GameObject[] firstSelecteds;
@@ -45,9 +40,7 @@ public class LocalChampionSelectionManager : UIManager {
         //Show additionjal player Platforms if 2v2
         if(team1.Length == 2 && team2.Length == 2)
         {
-            additionalPlatforms.interactable = true;
-            additionalPlatforms.alpha = 1;
-            additionalPlatforms.blocksRaycasts = true;
+            additionalPlatforms2v2.SetActive(true);
         }
 
         //All players are the sum of both teams
@@ -56,9 +49,7 @@ public class LocalChampionSelectionManager : UIManager {
 	}
 
     protected override void Update()
-    {
-        base.Update();
-
+    {    
         //Show Ready button only when everything is selected
         bool allSelected = true;
         //Check if every player has selected a champion and 2 different trinkets
@@ -74,7 +65,7 @@ public class LocalChampionSelectionManager : UIManager {
     /// </summary>
     /// <param name="targetPlayer"></param>
     /// <param name="Champion"></param>
-    public void setChampion(UserControl.PlayerNumbers targetPlayer, GameObject Champion)
+    public override void setChampion(UserControl.PlayerNumbers targetPlayer, GameObject Champion)
     {
         Player target = players.First(x => x.playerNumber == targetPlayer); //Get player object out of array
         target.ChampionPrefab = Champion;
@@ -114,61 +105,17 @@ public class LocalChampionSelectionManager : UIManager {
         }
     }
 
-    /// <summary>
-    ///Remove existent Preview GameObject by destroying all children of a Platform
-    /// </summary>
-    /// <param name="parent"></param>
-    private void DestroyAllChildren(Transform parent)
-    {
-        var children = new List<GameObject>();
-        foreach (Transform child in parent) children.Add(child.gameObject);
-        children.ForEach(child => Destroy(child));
-    }
-
-
-    /// <summary>
-    /// Changes the Champions prefab to fit a preview by removing unnecessary stuff and setting new values
-    /// </summary>
-    /// <param name="Champion"></param>
-    /// <param name="parent"></param>
-    private void ShowPrefab(GameObject Champion, Transform parent, bool flip)
-    {
-        Champion.SetActive(false);
-        GameObject newPreview = Instantiate(Champion, parent, false);
-        Destroy(newPreview.GetComponent<ChampionClassController>());
-        Destroy(newPreview.GetComponent<Rigidbody2D>());
-        Destroy(newPreview.GetComponent<CharacterStats>());
-        Destroy(newPreview.GetComponent<UserControl>());
-        Destroy(newPreview.GetComponent<BoxCollider2D>());
-        Destroy(newPreview.GetComponent<CircleCollider2D>());
-        Destroy(newPreview.transform.Find("GroundCheck").gameObject);
-        Destroy(newPreview.transform.Find("Canvas").gameObject);
-        Destroy(newPreview.transform.Find("stunnedSymbol").gameObject);
-
-        //flip sprite if necessary
-        int direction = 1;
-        if (flip)
-            direction = -1;
-
-        newPreview.transform.localScale = new Vector3(200 * direction, 200, 1); //Scale up
-        newPreview.transform.position = new Vector3(newPreview.transform.position.x, newPreview.transform.position.y + 1.4f, newPreview.transform.position.z);
-        newPreview.transform.Find("graphics").GetComponent<ChampionAnimationController>().m_Grounded = true;
-        newPreview.transform.Find("graphics").GetComponent<ChampionAnimationController>().trigBasicAttack1 = true;
-        newPreview.SetActive(true);
-        Champion.SetActive(true);
-    }
-
-    public void setTrinket1(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName)
+    public override void setTrinket1(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName)
     {
         players.First(x => x.playerNumber == targetPlayer).trinket1 = trinketName;
     }
 
-    public void setTrinket2(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName)
+    public override void setTrinket2(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName)
     {
         players.First(x => x.playerNumber == targetPlayer).trinket2 = trinketName;
     }
 
-    public void setTrinket(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName, Trinket.Trinkets toOverwrite)
+    public override void setTrinket(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName, Trinket.Trinkets toOverwrite)
     {
         Player target = players.First(x => x.playerNumber == targetPlayer);
 
@@ -234,7 +181,7 @@ public class LocalChampionSelectionManager : UIManager {
         }
     }
 
-    public void startGame()
+    public override void startGame()
     {
         //Check if every player has selected a champion and 2 different trinkets
         foreach (Player player in players)

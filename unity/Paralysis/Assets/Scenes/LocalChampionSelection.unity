@@ -1242,8 +1242,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66027666ba89205469ded63bd987ffc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  additionalPlatforms: {fileID: 2034471803}
   readyButton: {fileID: 1973033169}
+  additionalPlatforms2v2: {fileID: 2034471801}
   eventSystems:
   - {fileID: 1657365222804658, guid: 42e5c8922cc877942bc6694903e69c2f, type: 2}
   - {fileID: 1657365222804658, guid: ccb470e9176bd4a4380c88691e0f40c1, type: 2}
@@ -6455,9 +6455,9 @@ RectTransform:
   m_Father: {fileID: 1779086429}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 365}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1988999944
@@ -6629,7 +6629,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2034471802
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6657,9 +6657,9 @@ CanvasGroup:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2034471801}
   m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 0
-  m_BlocksRaycasts: 0
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!224 &2049000295 stripped
 RectTransform:

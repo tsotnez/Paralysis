@@ -180,8 +180,8 @@ namespace UnityEngine.EventSystems
                     Debug.Log("Switched to Controller Input");
                     break;
                 case UserControl.InputDevice.KeyboardMouse:
-                    verticalAxis = "Horizontal";
-                    horizontalAxis = "Vertical";
+                    verticalAxis = "Vertical";
+                    horizontalAxis = "Horizontal";
                     submitButton = "Submit";
                     eventSystem.SetSelectedGameObject(null);
                     eventSystem.firstSelectedGameObject = null;

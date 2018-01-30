@@ -16,6 +16,8 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
     private Image portrait;
     private Text text;
 
+    private ChampionSelectionManager manager;
+
     private UserControl.PlayerNumbers TargetPlayerNumber; //For which player
 
     [SerializeField]
@@ -29,25 +31,33 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
         Trinket, Champion, Skin
     }
 
-    private void Start()
+    void Start()
     {
         img = GetComponent<Image>();
         portrait = transform.parent.Find("portrait").GetComponent<Image>();
         text = GetComponentInChildren<Text>();
-        switch (GetComponent<EventSystemGroup>().EventSystemID) //Set player number depending on eventsystemID
+
+        manager = FindObjectOfType<ChampionSelectionManager>();
+
+        EventSystemGroup group = GetComponent<EventSystemGroup>();
+
+        if (group != null)
         {
-            case 1:
-                TargetPlayerNumber = UserControl.PlayerNumbers.Player1;
-                break;
-            case 2:
-                TargetPlayerNumber = UserControl.PlayerNumbers.Player2;
-                break;
-            case 3:
-                TargetPlayerNumber = UserControl.PlayerNumbers.Player3;
-                break;
-            case 4:
-                TargetPlayerNumber = UserControl.PlayerNumbers.Player4;
-                break;
+            switch (group.EventSystemID) //Set player number depending on eventsystemID
+            {
+                case 1:
+                    TargetPlayerNumber = UserControl.PlayerNumbers.Player1;
+                    break;
+                case 2:
+                    TargetPlayerNumber = UserControl.PlayerNumbers.Player2;
+                    break;
+                case 3:
+                    TargetPlayerNumber = UserControl.PlayerNumbers.Player3;
+                    break;
+                case 4:
+                    TargetPlayerNumber = UserControl.PlayerNumbers.Player4;
+                    break;
+            }
         }
     }
 
@@ -197,7 +207,7 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
                 if (prevSelected != null)
                     prevSelected.loseFocus();
 
-                GameObject.FindObjectOfType<LocalChampionSelectionManager>().setChampion(TargetPlayerNumber, Champion);
+                manager.setChampion(TargetPlayerNumber, Champion);
             }
             else if (targetValue == PlayerTargetValue.Trinket) //There are two currently selected if the button sets trinket value
             {
@@ -207,18 +217,18 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
 
                 //If no other trinket is selected, set trinket1
                 if(prevSelected.Length == 0)
-                    GameObject.FindObjectOfType<LocalChampionSelectionManager>().setTrinket1(TargetPlayerNumber, trinket);
+                    manager.setTrinket1(TargetPlayerNumber, trinket);
                 //If there is another trinket selected already, set trinket2
                 else if (prevSelected.Length == 1)
                 {
-                    GameObject.FindObjectOfType<LocalChampionSelectionManager>().setTrinket2(TargetPlayerNumber, trinket);
+                    manager.setTrinket2(TargetPlayerNumber, trinket);
                     prevSelected[0].selectedPos = 2;
                 }
                 //when there are already 2 trinkets selected, let the one selected first lose focus and overwrite the trinket that button set the value for
                 else if (prevSelected.Length == 2) 
                 {
                     LocalCharacterSelectionSlotButton selectedFirst = prevSelected.First(x => x.selectedPos == 2);
-                    GameObject.FindObjectOfType<LocalChampionSelectionManager>().setTrinket(TargetPlayerNumber, trinket, selectedFirst.trinket);
+                    manager.setTrinket(TargetPlayerNumber, trinket, selectedFirst.trinket);
                     selectedFirst.loseFocus();
 
                     prevSelected.First(x => x.selectedPos == 1).selectedPos = 2;
