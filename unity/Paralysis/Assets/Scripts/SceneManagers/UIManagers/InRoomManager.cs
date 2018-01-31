@@ -14,7 +14,8 @@ public class InRoomManager : UIManager {
     public Image MapPreviewImage;
     public Text MapPreviewText;
     public GameObject PlayerListEntryPrefab;
-    public Transform PlayerList;
+    public Transform PlayerListTeam1;
+    public Transform PlayerListTeam2;
     public Text PlayerCount;
     public Text RoomNameText;
     public Button startGameButton;
@@ -29,37 +30,23 @@ public class InRoomManager : UIManager {
     protected override void Start()
     {
         base.Start();
+        GameNetwork.Instance.OnGameStateUpdate += OnGameStateUpdated;
 
         backButton.onClick.AddListener(backPressed);
         startGameButton.onClick.AddListener(startGame);
 
         RoomNameText.text = GameNetwork.Instance.CurrentRoomInfo.Name;
-        GameObject hostEntry = GameObject.FindGameObjectWithTag("PlayerRoomEntry");
-        Text hostEntryText = hostEntry.transform.Find("Name").GetComponent<Text>();
 
         if (GameNetwork.Instance.IsMasterClient)
         {
-            hostEntryText.text = GameNetwork.Instance.PlayerName;
             startGameButton.interactable = true;
         }
         else
         {
             startGameButton.interactable = false;
-
-            PhotonPlayer[] playerList = GameNetwork.Instance.getPlayerList();
-            foreach (PhotonPlayer player in playerList)
-            {
-                if (player.IsMasterClient)
-                {
-                    hostEntryText.text = player.NickName;
-                    playerDict.Add(player, hostEntry);
-                }
-                else
-                {
-                    AddPlayerToList(player);
-                }
-            }
         }
+
+        OnGameStateUpdated();
     }
 
     public void ChangeCurrentPreviewImage(Image preview)
@@ -78,13 +65,11 @@ public class InRoomManager : UIManager {
     }
 
     //Call this when a player Joins
-    public void AddPlayerToList(PhotonPlayer player)
+    public void AddPlayerToList(PhotonPlayer player, Transform playListTrans)
     {
-        GameObject newPlayer = Instantiate(PlayerListEntryPrefab, PlayerList);
+        GameObject newPlayer;
+        newPlayer = Instantiate(PlayerListEntryPrefab, playListTrans);
         newPlayer.transform.Find("Name").GetComponent<Text>().text = player.NickName;
-
-        CurrentPlayers++;
-        setPlayerCountText();
         playerDict.Add(player, newPlayer);
     }
 
@@ -93,6 +78,16 @@ public class InRoomManager : UIManager {
         CurrentPlayers--;
         setPlayerCountText();
         Destroy(playerDict[player]);
+    }
+
+    private void RemoveAll()
+    {
+        CurrentPlayers = 0;
+        foreach(KeyValuePair<PhotonPlayer, GameObject> entry in playerDict)
+        {
+            Destroy(playerDict[entry.Key]);
+        }
+        playerDict.Clear();
     }
 
     private void setPlayerCountText()
@@ -124,15 +119,46 @@ public class InRoomManager : UIManager {
         backPressed();
     }
 
-    private void OnPhotonPlayerConnected(PhotonPlayer player)
-    {
-        AddPlayerToList(player);
-    }
-
-    private void OnPhotonPlayerDisconnected(PhotonPlayer player)
-    {
-        RemovePlayerFromList(player);
-    }
-
     #endregion
+
+    private void OnGameStateUpdated()
+    {
+        print("Game state updated...");
+        RemoveAll();
+
+        List<int> teamOne = GameNetwork.Instance.TeamOneList;
+        List<int> teamTwo = GameNetwork.Instance.TeamTwoList;
+
+        PhotonPlayer[] players = GameNetwork.Instance.getPlayerList();
+
+        foreach(int i in teamOne)
+        {
+            foreach(PhotonPlayer player in players)
+            {
+                if(player.ID == i)
+                {
+                    AddPlayerToList(player, PlayerListTeam1);
+                }
+            }
+        }
+
+        foreach(int i in teamTwo)
+        {
+            foreach(PhotonPlayer player in players)
+            {
+                if(player.ID == i)
+                {
+                    AddPlayerToList(player, PlayerListTeam2);
+                }
+            }
+        }
+
+        CurrentPlayers = players.Length;
+        setPlayerCountText();
+    }
+
+    private void OnDestroy()
+    {
+        GameNetwork.Instance.OnGameStateUpdate -= OnGameStateUpdated;
+    }
 }

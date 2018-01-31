@@ -88,4 +88,7 @@ MonoBehaviour:
   - RPC_spawnRangedSkill
   - RPC_StartAnimation
   - RPC_KillProjectile
+  - RPC_PlayerJoined
+  - RPC_PlayerLeft
+  - RPC_UpdateGameInfo
   DisableAutoOpenWizard: 1

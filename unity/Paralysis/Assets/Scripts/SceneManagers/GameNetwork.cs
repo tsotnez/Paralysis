@@ -6,6 +6,8 @@ using System.Collections;
 
 public class GameNetwork : MonoBehaviour {
 
+    public const byte MAX_PLAYERS = 4;
+
     private static GameNetwork instance;
     public static GameNetwork Instance { get { return instance; } }
 
@@ -25,16 +27,31 @@ public class GameNetwork : MonoBehaviour {
 
     private int playersFinishedLoadingScene = 0;
     public int PlayersInGame { get { return PhotonNetwork.playerList.Length; } }
+
+    //Set some info about this current player
     private string playerName;
     public string PlayerName { get { return playerName; } }
     private int playerNetworkNumber = 1;
     public int PlayerNetworkNumber { get { return playerNetworkNumber; } }
+    private int teamNum = 1;
+    public int TeamNum { get { return teamNum; } }
+
     public RoomInfo CurrentRoomInfo { get { return PhotonNetwork.room; } }
-
     public bool IsMasterClient { get { return PhotonNetwork.isMasterClient; } }
-    private Dictionary<PhotonPlayer , int> playerDic;
 
-    public const byte MAX_PLAYERS = 4;
+    //photon player ID, player network number
+    private Dictionary<int , int> playerDic;
+    //List of photon IDs for team1
+    private List<int> teamOneList;
+    public List<int> TeamOneList { get { return teamOneList; } }
+    //List of photon IDs for team2
+    private List<int> teamTwoList;
+    public List<int> TeamTwoList { get { return teamTwoList; } }
+
+
+    //Delegates
+    public delegate void gameStateUpdate();
+    public event gameStateUpdate OnGameStateUpdate;
 
     // Use this for initialization
     private void Awake ()
@@ -280,6 +297,105 @@ public class GameNetwork : MonoBehaviour {
         PhotonNetwork.Disconnect();
     }
 
+    public void switchPlayerTeam(int photonP)
+    {
+        if(teamOneList.Contains(photonP))
+        {
+            removePlayerFromTeamLists(photonP);
+            addPlayerToTeam2(photonP);
+        }
+
+        if(teamTwoList.Contains(photonP))
+        {
+            removePlayerFromTeamLists(photonP);
+            addPlayerToTeam1(photonP);
+        }
+        photonV.RPC("RPC_UpdateGameInfo", PhotonTargets.All, playerDic, teamOneList.ToArray(), teamTwoList.ToArray());
+    }
+        
+    #region setplayerinfo
+
+    private void addPlayer(int photonId)
+    {
+        if(!IsMasterClient)return;
+
+        print("Adding player id: " + photonId + "player network num:" + PlayersInGame);
+
+        playerDic.Add(photonId, PlayersInGame);
+        if(balanceTeams() == 1)teamOneList.Add(photonId);
+        else teamTwoList.Add(photonId);
+    }
+
+    private void removePlayer(int photonId)
+    {
+        if(!IsMasterClient)return;
+
+        print("Removing player id:" + photonId);
+
+        int leavingPlayerNetNum = playerDic[photonId];
+        playerDic.Remove(leavingPlayerNetNum);
+        foreach(KeyValuePair<int, int> entry in playerDic)
+        {
+            //Decrement player network numbers
+            if(entry.Value > leavingPlayerNetNum)
+            {
+                playerDic[entry.Key] = playerDic[entry.Key] - 1;
+            }
+        }
+        removePlayerFromTeamLists(photonId);
+    }
+
+    private void addPlayerToTeam1(int photonP)
+    {
+        if(!teamOneList.Contains(photonP))teamOneList.Add(photonP);
+    }
+
+    private void addPlayerToTeam2(int photonP)
+    {
+       if(!teamTwoList.Contains(photonP))teamTwoList.Add(photonP);
+    }
+
+    private int balanceTeams()
+    {
+        if(teamOneList.Count <= teamTwoList.Count) return 1;
+        else return 2;
+    }        
+
+    public void removePlayerFromTeamLists(int photonId)
+    {
+        if(teamTwoList.Contains(photonId))teamTwoList.Remove(photonId);
+        if(teamOneList.Contains(photonId))teamOneList.Remove(photonId);
+    }
+
+    private void setMyTeam()
+    {
+        if(teamOneList.Contains(PhotonNetwork.player.ID)){
+            print("Setting my team num: " + 1);
+            teamNum = 1;
+        }
+        else if(teamTwoList.Contains(PhotonNetwork.player.ID)) {
+            print("Setting my team num: " + 2);
+            teamNum = 2;
+        }
+        else Debug.LogError("Couldn't find my team number:" + PhotonNetwork.player.ID);
+    }
+
+    private void setMyNetworkNumber()
+    {
+        foreach(KeyValuePair<int, int> entry in playerDic)
+        {
+            if(entry.Key == PhotonNetwork.player.ID)
+            {
+                playerNetworkNumber = entry.Value;
+                print("Set my network number to: " + playerNetworkNumber);
+                return;
+            }
+        }
+        Debug.LogError("Couldn't find my network number:" + PhotonNetwork.player.ID);
+    }
+
+    #endregion
+
     #region Photon callbacks
 
     //Photon Callback
@@ -304,16 +420,25 @@ public class GameNetwork : MonoBehaviour {
     }
 
     //Photon Callback
+    // Called for everyone
     private void OnJoinedRoom()
     {
-        playerNetworkNumber = PhotonNetwork.playerList.Length;
-        print("Joined room, my player network number: " + playerNetworkNumber);
+        //playerNetworkNumber = PhotonNetwork.playerList.Length;
+
+        playerDic = new Dictionary<int, int>();
+        teamOneList = new List<int>();
+        teamTwoList = new List<int>();
+
+        if(IsMasterClient)
+        {
+            addPlayer(PhotonNetwork.player.ID);
+        }
     }
 
     //Photon Callback
     private void OnCreatedRoom()
     {
-        playerDic = new Dictionary<PhotonPlayer, int>();
+        //Created room...
     }
 
     //Photon Callback
@@ -330,7 +455,11 @@ public class GameNetwork : MonoBehaviour {
         print("player connected: " + photonPlayer.NickName);
         if(PhotonNetwork.isMasterClient)
         {
-            playerDic.Add(photonPlayer, PlayersInGame);
+            addPlayer(photonPlayer.ID);
+            if(OnGameStateUpdate != null)
+                OnGameStateUpdate();
+
+            photonV.RPC("RPC_UpdateGameInfo", PhotonTargets.Others, playerDic, teamOneList.ToArray(), teamTwoList.ToArray());
         }
     }
 
@@ -338,11 +467,13 @@ public class GameNetwork : MonoBehaviour {
     private void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
     {
         print("player disconnected: " + otherPlayer.NickName);
-        if(PhotonNetwork.isMasterClient && playerDic != null && playerDic.ContainsKey(otherPlayer))
+        if(PhotonNetwork.isMasterClient)
         {
-            short playerLeftNum = (short)playerDic[otherPlayer];
-            print("Telling others player number: " + playerLeftNum + " left");
-            photonV.RPC("RPC_PlayerLeftUpdateNum", PhotonTargets.Others, (short)playerDic[otherPlayer]);
+            removePlayer(otherPlayer.ID);
+            if(OnGameStateUpdate != null)
+                OnGameStateUpdate();
+
+            photonV.RPC("RPC_UpdateGameInfo", PhotonTargets.Others, playerDic, teamOneList.ToArray(), teamTwoList.ToArray());
         }
     }
 
@@ -397,13 +528,37 @@ public class GameNetwork : MonoBehaviour {
     }
 
     [PunRPC]
-    public void RPC_PlayerLeftUpdateNum(short playerLeftNum)
+    public void RPC_UpdateGameInfo(Dictionary<int, int> newPlayerDict, int[] team1, int[] team2)
     {
-        //If the player that left had a number greater than you decrement
-        if(playerNetworkNumber > playerLeftNum)
+        /*
+        Debug.Log("Printing dictionary...");
+        foreach(KeyValuePair<int, int> entry in newPlayerDict)
         {
-            playerNetworkNumber--;
+            Debug.Log("Playerid: " + entry.Key + " num: " + entry.Value);
         }
+
+        Debug.Log("Printing team1...");
+        foreach(int team in team1)
+        {
+            Debug.Log("Team1: " + team);
+        }
+
+        Debug.Log("Printing team2...");
+        foreach(int team in team2)
+        {
+            Debug.Log("Team2: " + team);
+        }
+        */
+
+        playerDic = newPlayerDict;
+        teamOneList = new List<int>(team1);
+        teamTwoList = new List<int>(team2);
+
+        setMyTeam();
+        setMyNetworkNumber();
+
+        if(OnGameStateUpdate != null)
+            OnGameStateUpdate();
     }
 
     #endregion

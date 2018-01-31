@@ -30,6 +30,9 @@ public class StartMultiplayer : MonoBehaviour {
         backButton.onClick.AddListener(OnBackButtonClicked);
 
         regionDropDown.onValueChanged.AddListener(delegate {onRegionChanged(regionDropDown); });
+
+        GameNetwork.Instance.OnGameStateUpdate += OnGameStateUpdated;
+
     }
 
     public void onClickCreateRoom()
@@ -127,9 +130,19 @@ public class StartMultiplayer : MonoBehaviour {
         joiningRoom = false;
     }
 
+    //Photon callback
     private void OnJoinedRoom()
     {
-        SceneManager.LoadScene(sceneToLoadMulti);
+        if(GameNetwork.Instance.IsMasterClient){
+            SceneManager.LoadScene(sceneToLoadMulti);
+        }
+    }
+
+    private void OnGameStateUpdated()
+    {
+        if(!GameNetwork.Instance.IsMasterClient){
+            SceneManager.LoadScene(sceneToLoadMulti);
+        }
     }
 
     public void OnBackButtonClicked()
@@ -142,5 +155,10 @@ public class StartMultiplayer : MonoBehaviour {
         Destroy(GameNetwork.Instance.gameObject);
         yield return new WaitWhile( ()=> GameNetwork.Instance == null);
         SceneManager.LoadScene(sceneToLoadBack);
+    }
+
+    private void OnDestroy()
+    {
+        GameNetwork.Instance.OnGameStateUpdate -= OnGameStateUpdated;
     }
 }
