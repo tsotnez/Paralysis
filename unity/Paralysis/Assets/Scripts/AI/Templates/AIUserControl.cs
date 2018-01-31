@@ -41,7 +41,7 @@ public abstract class AIUserControl : MonoBehaviour {
     protected Section mySection;
     protected Section targetSection;
 
-    protected SectionPath currentSectionPath;
+    protected SectionPathNode[] currentNodes;
     protected SectionPathNode currentNode;
     protected int currentNodeIndex = 0;
     private const float MIN_DISTANCE_TO_NODE = .1f;
@@ -112,7 +112,7 @@ public abstract class AIUserControl : MonoBehaviour {
             break;
         }
 
-        print("Current goal: " + currentGoal);
+        //print("Current goal: " + currentGoal);
     }
 
     protected virtual void setCurrentState()
@@ -178,11 +178,10 @@ public abstract class AIUserControl : MonoBehaviour {
 
         if(targetPlayer != null && previousGoal != AI_GOALS.MOVE_THROUGH_NODES)
         {
-            //currentSectionPath = mySection.getPathForTargetSection(targetSection);
-            currentSectionPath = mySection.getOptimalPathForSection(targetSection, transform.position, 
-                targetPlayer.transform.position);
+            currentNodes = mySection.getOptimalPathForSection(targetSection, transform.position, 
+                targetPlayer.transform.position).Nodes;
             currentNodeIndex = 0;
-            currentNode = currentSectionPath.Nodes[currentNodeIndex];
+            currentNode = currentNodes[currentNodeIndex];
 
             //since we care about previous goal make sure to set it here
             previousGoal = AI_GOALS.MOVE_THROUGH_NODES;
@@ -202,7 +201,7 @@ public abstract class AIUserControl : MonoBehaviour {
             {
                 changeGoal(AI_GOALS.FALL_THROUGH);
             }
-            else if(currentNodeIndex + 1 < currentSectionPath.Nodes.Length)
+            else if(currentNodeIndex + 1 < currentNodes.Length)
             {
                 incrementNodeIndex();
             }
@@ -296,7 +295,7 @@ public abstract class AIUserControl : MonoBehaviour {
             else if(!currentNode.isJumpNode2 && previousGoal == AI_GOALS.JUMP1)
             {
                 //No double jump we are grounded checkout our distance to next node
-                float distFromNextNode = distanceFromNode(currentSectionPath.Nodes[currentNodeIndex + 1]);
+                float distFromNextNode = distanceFromNode(currentNodes[currentNodeIndex + 1]);
                 if(distFromNextNode <= MIN_DISTANCE_TO_NODE)
                 {
                     changeCurrentAndPreviousGoal(AI_GOALS.MOVE_THROUGH_NODES, AI_GOALS.MOVE_THROUGH_NODES);
@@ -337,7 +336,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
         if(animCon.m_Grounded)
         {
-            float distFromNextNode = distanceFromNode(currentSectionPath.Nodes[currentNodeIndex + 1]);
+            float distFromNextNode = distanceFromNode(currentNodes[currentNodeIndex + 1]);
             if(distFromNextNode <= MIN_DISTANCE_TO_NODE)
             {
                 changeCurrentAndPreviousGoal(AI_GOALS.MOVE_THROUGH_NODES, AI_GOALS.MOVE_THROUGH_NODES);
@@ -406,13 +405,13 @@ public abstract class AIUserControl : MonoBehaviour {
     private void incrementNodeIndex()
     {
         currentNodeIndex++;
-        if(currentSectionPath.Nodes == null || currentSectionPath.Nodes.Length == currentNodeIndex)
+        if(currentNodes == null || currentNodes.Length == currentNodeIndex)
         {
             Debug.LogError("Cannot increment nodes here...");
         }
         else
         {
-            currentNode = currentSectionPath.Nodes[currentNodeIndex];
+            currentNode = currentNodes[currentNodeIndex];
         }
     }
 
@@ -436,11 +435,11 @@ public abstract class AIUserControl : MonoBehaviour {
         if(currentGoal != AI_GOALS.FALL_THROUGH)
         {
             inputDashDirection = 0;
+            inputDown = false;
         }
 
         inputJump = false;
         inputAttack = false;
-        inputDown = false;
         inputMove = 0;
         inputSkill1 = false;
         inputSkill2 = false;
