@@ -41,6 +41,13 @@ public class MainMenuManager : UIManager {
         currentPage = startPage;
     }
 
+    protected override void gotoController()
+    {
+        module.SetControllingPlayerInputDevice(UserControl.InputDevice.XboxController);
+        int currentPageIndex = Array.IndexOf(MenuPages, currentPage);
+        es.SetSelectedGameObject(firstSelectedObjects[currentPageIndex]);
+    }
+
     /// <summary>
     /// Switch to a passed page, disabeling the current page
     /// </summary>
