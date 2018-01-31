@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 /// </summary>
 public abstract class UIManager : MonoBehaviour {
 
-    MyStandaloneInputModule module;
+    protected MyStandaloneInputModule module;
 
 	// Use this for initialization
 	protected virtual void Start () {
@@ -33,13 +33,24 @@ public abstract class UIManager : MonoBehaviour {
         {
             if (module.ControllingPlayerInputDevice == UserControl.InputDevice.KeyboardMouse)
             {
-                module.SetControllingPlayerInputDevice(UserControl.InputDevice.XboxController);
+                gotoController();
             }
         }
         else if (module.ControllingPlayerInputDevice == UserControl.InputDevice.XboxController)
         {
-            //Switch back to keyboard and mouse input 
-            module.SetControllingPlayerInputDevice(UserControl.InputDevice.KeyboardMouse);
+            //Switch back to keyboard and mouse input       
+            gotoKeyboard();
         }
+    }
+
+    protected virtual void gotoKeyboard()
+    {
+        module.SetControllingPlayerInputDevice(UserControl.InputDevice.KeyboardMouse);
+    }
+
+    protected virtual void gotoController()
+    {
+        module.SetControllingPlayerInputDevice(UserControl.InputDevice.XboxController);
+        EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
     }
 }

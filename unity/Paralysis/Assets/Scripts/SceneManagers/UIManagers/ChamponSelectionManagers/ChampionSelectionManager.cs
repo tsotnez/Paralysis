@@ -22,6 +22,8 @@ public abstract class ChampionSelectionManager : UIManager
     {
         Champion.SetActive(false);
         GameObject newPreview = Instantiate(Champion, parent, false);
+        GameObject graphics = newPreview.transform.Find("graphics").gameObject;
+
         Destroy(newPreview.GetComponent<ChampionClassController>());
         Destroy(newPreview.GetComponent<Rigidbody2D>());
         Destroy(newPreview.GetComponent<CharacterStats>());
@@ -31,6 +33,8 @@ public abstract class ChampionSelectionManager : UIManager
         Destroy(newPreview.transform.Find("GroundCheck").gameObject);
         Destroy(newPreview.transform.Find("Canvas").gameObject);
         Destroy(newPreview.transform.Find("stunnedSymbol").gameObject);
+        Destroy(graphics.GetComponent<GraphicsNetwork>());
+        Destroy(newPreview.GetComponent<NetworkCharacter>());
 
         //flip sprite if necessary
         int direction = 1;
@@ -39,8 +43,8 @@ public abstract class ChampionSelectionManager : UIManager
 
         newPreview.transform.localScale = new Vector3(200 * direction, 200, 1); //Scale up
         newPreview.transform.position = new Vector3(newPreview.transform.position.x, newPreview.transform.position.y + 1.4f, newPreview.transform.position.z);
-        newPreview.transform.Find("graphics").GetComponent<ChampionAnimationController>().m_Grounded = true;
-        newPreview.transform.Find("graphics").GetComponent<ChampionAnimationController>().trigBasicAttack1 = true;
+        graphics.GetComponent<ChampionAnimationController>().m_Grounded = true;
+        graphics.GetComponent<ChampionAnimationController>().trigBasicAttack1 = true;
         newPreview.SetActive(true);
         Champion.SetActive(true);
     }
@@ -49,11 +53,13 @@ public abstract class ChampionSelectionManager : UIManager
     /// Remove existent Preview GameObject by destroying all children of a Platform
     /// </summary>
     /// <param name="parent"></param>
-    protected void DestroyAllChildren(Transform parent)
+    protected void DestroyExistingPreview(Transform parent)
     {
-        var children = new List<GameObject>();
-        foreach (Transform child in parent) children.Add(child.gameObject);
-        children.ForEach(child => Destroy(child));
+        foreach (Transform child in parent)
+        {
+            if (child.gameObject.tag == "MainPlayer")
+                Destroy(child.gameObject);
+        }
     }
 
     /// <summary>

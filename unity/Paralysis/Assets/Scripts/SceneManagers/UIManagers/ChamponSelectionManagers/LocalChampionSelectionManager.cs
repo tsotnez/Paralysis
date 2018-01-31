@@ -88,19 +88,19 @@ public class LocalChampionSelectionManager : ChampionSelectionManager {
         {
             if (team1.First(x => x != target).playerNumber > target.playerNumber) //If target has the highest playerNumber in team, use second platform
             {
-                DestroyAllChildren(platformGroup[1].transform);
+                DestroyExistingPreview(platformGroup[1].transform);
                 ShowPrefab(Champion, platformGroup[1].transform, flip);
             }
             else
             {
                 //Use first platform
-                DestroyAllChildren(platformGroup[0].transform);
+                DestroyExistingPreview(platformGroup[0].transform);
                 ShowPrefab(Champion, platformGroup[0].transform, flip);
             }
         }
         else //Just use first platform
         {
-            DestroyAllChildren(platformGroup[0].transform);
+            DestroyExistingPreview(platformGroup[0].transform);
             ShowPrefab(Champion, platformGroup[0].transform, flip);
         }
     }

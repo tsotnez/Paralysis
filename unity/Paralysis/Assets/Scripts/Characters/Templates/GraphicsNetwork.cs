@@ -9,7 +9,7 @@ public class GraphicsNetwork : MonoBehaviour {
     SpriteRenderer ren;
 
     // Use this for initialization
-    void Awake () {
+    void Start () {
 
         if(!PhotonNetwork.offlineMode) 
         {

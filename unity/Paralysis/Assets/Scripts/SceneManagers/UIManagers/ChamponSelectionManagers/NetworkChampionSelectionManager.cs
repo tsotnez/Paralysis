@@ -12,7 +12,7 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
 
     public GameObject additionalPlatforms3v3;
 
-    Transform playerPlatform; //Position to instantiate the preview champion object to
+    public Transform playerPlatform; //Position to instantiate the preview champion object to. Only public for testing
 
     protected override void Start()
     {
@@ -46,6 +46,8 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     public override void setChampion(UserControl.PlayerNumbers targetPlayer, GameObject Champion)
     {
         localPlayer.ChampionPrefab = Champion;
+        DestroyExistingPreview(playerPlatform);
+        ShowPrefab(Champion, playerPlatform, false);
     }
 
     public override void setTrinket(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName, Trinket.Trinkets toOverwrite)

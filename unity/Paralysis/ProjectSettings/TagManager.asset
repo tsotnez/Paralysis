@@ -15,6 +15,7 @@ TagManager:
   - SpawnPoint
   - GameNetwork
   - PlayerRoomEntry
+  - Basic
   layers:
   - Default
   - TransparentFX
