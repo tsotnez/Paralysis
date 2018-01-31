@@ -202,7 +202,8 @@ public abstract class AnimationController : MonoBehaviour
     {
         if(!PhotonNetwork.offlineMode)
         {
-            photonView.RPC("RPC_StartAnimation", PhotonTargets.All, (short)animation, (short)AnimationType, (short)ForceAnimationPlayType);
+            //photonView.RPC("RPC_StartAnimation", PhotonTargets.All, (short)animation, (short)AnimationType, (short)ForceAnimationPlayType);
+            RPC_StartAnimation((short)animation, (short)AnimationType, (short)ForceAnimationPlayType);
         }
         else
         {

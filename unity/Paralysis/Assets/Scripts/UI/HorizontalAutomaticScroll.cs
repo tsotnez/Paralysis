@@ -10,7 +10,7 @@ public class HorizontalAutomaticScroll : MonoBehaviour {
     Mask mask;
     RectTransform maskRect;
     List<GameObject> content = new List<GameObject>();
-    public EventSystem es;
+    private EventSystem es;
     public float LerpSpeed = .5f;
     public Transform contentTrans;
     public Transform viewPort;
@@ -20,6 +20,7 @@ public class HorizontalAutomaticScroll : MonoBehaviour {
         mask = GetComponentInChildren<Mask>();
         maskRect = (RectTransform) mask.gameObject.transform;
         scrollRect = GetComponent<ScrollRect>();
+        es = EventSystem.current;
 
         //Find all content game objects and add them to list
         foreach (Transform child in contentTrans)

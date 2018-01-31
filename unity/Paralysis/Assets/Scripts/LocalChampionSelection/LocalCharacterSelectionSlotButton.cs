@@ -15,7 +15,7 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
     private Image img;
     private Image portrait;
     private Text text;
-
+    private GameObject skinPreview;
     private ChampionSelectionManager manager;
 
     private UserControl.PlayerNumbers TargetPlayerNumber; //For which player
@@ -33,6 +33,8 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
 
     void Start()
     {
+        if(targetValue == PlayerTargetValue.Champion)
+            skinPreview = GameObject.Find("SkinPreviews").transform.Find(Champion.GetComponent<ChampionClassController>().className.ToString()).gameObject;
         img = GetComponent<Image>();
         portrait = transform.parent.Find("portrait").GetComponent<Image>();
         text = GetComponentInChildren<Text>();
@@ -85,6 +87,9 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
         selectedPos = 0;
         if(!isSelectedByOtherPlayer() && targetValue == PlayerTargetValue.Champion)
             transform.parent.Find("portrait").GetComponent<LocalChampionSelectionPortrait>().switchTo(0);
+
+        if (!PhotonNetwork.offlineMode)
+            skinPreview.SetActive(false); //Hide skin preview
     }
 
     /// <summary>
@@ -100,7 +105,8 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
                 showTrinketPopUp();
                 break;
             case PlayerTargetValue.Champion:
-                showSkillPopUps();
+                if (PhotonNetwork.offlineMode)
+                    showSkillPopUps();
                 LocalChampionSelectionPortrait portrait = transform.parent.Find("portrait").gameObject.GetComponent<LocalChampionSelectionPortrait>();
                 portrait.switchTo(1);
                 break;
@@ -122,7 +128,8 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
                 transform.parent.parent.parent.Find("PopUpDesc").gameObject.SetActive(false);
                 break;
             case PlayerTargetValue.Champion:
-                transform.parent.parent.parent.Find("PopUps").gameObject.SetActive(false);
+                if (PhotonNetwork.offlineMode)
+                    transform.parent.parent.parent.Find("PopUps").gameObject.SetActive(false);
                 if (!isSelectedByOtherPlayer() && !currentlySelected) //Only transition to shadow image if no other player higlights this button
                     transform.parent.Find("portrait").GetComponent<LocalChampionSelectionPortrait>().switchTo(0);
                 break;
@@ -207,7 +214,23 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
                 if (prevSelected != null)
                     prevSelected.loseFocus();
 
-                manager.setChampion(TargetPlayerNumber, Champion);
+                if (!PhotonNetwork.offlineMode)
+                {
+                    skinPreview.SetActive(true); //Show skin selection
+
+                    //Find skinpreview with basic tag and preselect it
+                    foreach (Transform child in skinPreview.transform.Find("Viewport").Find("Content"))
+                    {
+                        if(child.gameObject.tag == "Basic")
+                        {
+                            child.gameObject.GetComponent<ChampionSkinPreview>().onSelect();
+                            child.gameObject.GetComponent<ChangeImageColor>().onClick();
+                            break;
+                        }
+                    }
+                }
+                else
+                    manager.setChampion(TargetPlayerNumber, Champion);
             }
             else if (targetValue == PlayerTargetValue.Trinket) //There are two currently selected if the button sets trinket value
             {
