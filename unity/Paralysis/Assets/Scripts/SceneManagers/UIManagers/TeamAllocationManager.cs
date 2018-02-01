@@ -137,5 +137,9 @@ public class TeamAllocationManager : UIManager {
                     break;
             }
         }
+        else
+        {
+            StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Please fill up each team."));
+        }
     }
 }

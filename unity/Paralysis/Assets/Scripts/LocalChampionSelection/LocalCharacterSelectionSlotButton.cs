@@ -17,6 +17,7 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
     private Text text;
     private GameObject skinPreview;
     private ChampionSelectionManager manager;
+    private GameObject OnClickAnimation; //GO to be instantiated when player choses a champion (--> epicness increased)
 
     private UserControl.PlayerNumbers TargetPlayerNumber; //For which player
 
@@ -33,7 +34,9 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
 
     void Start()
     {
-        if(targetValue == PlayerTargetValue.Champion)
+        OnClickAnimation = Resources.Load<GameObject>("Prefabs/UI/LocalChampionSelection/ClickAnimation");
+
+        if(targetValue == PlayerTargetValue.Champion && !PhotonNetwork.offlineMode)
             skinPreview = GameObject.Find("SkinPreviews").transform.Find(Champion.GetComponent<ChampionClassController>().className.ToString()).gameObject;
         img = GetComponent<Image>();
         portrait = transform.parent.Find("portrait").GetComponent<Image>();
@@ -208,6 +211,8 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
             //Lose focus on previously selected
             if (targetValue == PlayerTargetValue.Champion) //Theres only one currently selected if the button is supposed to set champion value
             {
+                StartCoroutine(handleOnclickAnimation()); //Show on click aniamtion for champion
+
                 LocalCharacterSelectionSlotButton prevSelected = GameObject.FindObjectsOfType<LocalCharacterSelectionSlotButton>().FirstOrDefault(x =>
                 x.TargetPlayerNumber == this.TargetPlayerNumber && x.targetValue == this.targetValue && x.currentlySelected);
 
@@ -263,6 +268,17 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
             currentlySelected = true;
             text.enabled = true;
         }
+    }
+
+    /// <summary>
+    /// Instantiates Object which plays the on click animation and destroys it after animation has finished
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator handleOnclickAnimation()
+    {
+        GameObject anim = Instantiate(OnClickAnimation, transform.parent, false);
+        yield return new WaitForSeconds(.333f);
+        Destroy(anim);
     }
 
 }

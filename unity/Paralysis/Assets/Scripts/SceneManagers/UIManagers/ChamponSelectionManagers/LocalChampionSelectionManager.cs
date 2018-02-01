@@ -11,6 +11,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager {
     public static Player[] team2;
     public static Player[] team1;
 
+    private bool everythingSelected = false;
     /// <summary>
     /// All players
     /// </summary>
@@ -22,11 +23,14 @@ public class LocalChampionSelectionManager : ChampionSelectionManager {
     public GameObject[] platformsTeam1;
     public GameObject[] platformsTeam2;
 
+    void Awake()
+    {
+        PhotonNetwork.offlineMode = true;
+    }
+
     // Use this for initialization
     protected override void Start()
     {
-        PhotonNetwork.offlineMode = true;
-
         //Set default Values for debugging
         if(team1 == null && team2 == null)
         {
@@ -50,14 +54,15 @@ public class LocalChampionSelectionManager : ChampionSelectionManager {
 
     protected override void Update()
     {    
-        //Show Ready button only when everything is selected
+        //Only allow to start if selections are complete
         bool allSelected = true;
         //Check if every player has selected a champion and 2 different trinkets
         foreach (Player player in players)
             if (player.ChampionPrefab == null || player.trinket1 == player.trinket2)
                 allSelected = false;
 
-        readyButton.SetActive(allSelected);
+        everythingSelected = allSelected;
+       
     }
 
     /// <summary>
@@ -184,13 +189,16 @@ public class LocalChampionSelectionManager : ChampionSelectionManager {
     public override void startGame()
     {
         //Check if every player has selected a champion and 2 different trinkets
-        foreach (Player player in players)
-            if (player.ChampionPrefab == null || player.trinket1 == player.trinket2)
-                return;
-        
-        LocalMultiplayerManager.team1 = team1;
-        LocalMultiplayerManager.team2 = team2;
+        if (everythingSelected)
+        {
+            LocalMultiplayerManager.team1 = team1;
+            LocalMultiplayerManager.team2 = team2;
 
-        SceneManager.LoadScene("scenes/test");
+            SceneManager.LoadScene("scenes/test");
+        }
+        else
+        {
+            StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Select a champion and two different trinkets."));
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using System.Collections;
 
 /// <summary>
 /// Parent class for all manager classes used for UI only scenes (e.g. Main menu)
@@ -9,9 +11,22 @@ public abstract class UIManager : MonoBehaviour {
 
     protected MyStandaloneInputModule module;
 
+    /// <summary>
+    /// Shows a messagebox to the player, fading in from the bottom
+    /// </summary>
+    public static IEnumerator showMessageBox(Canvas parent, string Message)
+    {
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/MessageBox");
+        prefab.transform.Find("Message").GetComponent<Text>().text = Message;
+
+        GameObject MB = Instantiate(prefab, parent.transform, false);
+        yield return new WaitForSeconds(3);
+        Destroy(MB);
+    }
+
 	// Use this for initialization
 	protected virtual void Start () {
-
+        
         //Get input Module
         module = FindObjectOfType<MyStandaloneInputModule>();
 
@@ -34,12 +49,14 @@ public abstract class UIManager : MonoBehaviour {
             if (module.ControllingPlayerInputDevice == UserControl.InputDevice.KeyboardMouse)
             {
                 gotoController();
+                StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Switched to Controller input."));
             }
         }
         else if (module.ControllingPlayerInputDevice == UserControl.InputDevice.XboxController)
         {
             //Switch back to keyboard and mouse input       
             gotoKeyboard();
+            StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Switched to Keyboard and Mouse input."));
         }
     }
 

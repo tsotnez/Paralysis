@@ -13,6 +13,7 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     public GameObject additionalPlatforms3v3;
 
     public Transform playerPlatform; //Position to instantiate the preview champion object to. Only public for testing
+    bool everythingSelected = false;
 
     protected override void Start()
     {
@@ -34,13 +35,11 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     {
         base.Update();
 
-        //Shoe ready button when champion and trinkets are selected
-        bool everythingSelected = true;
+        //Show ready button when champion and trinkets are selected
+        everythingSelected = true;
 
         if (localPlayer.ChampionPrefab == null || localPlayer.trinket1 == localPlayer.trinket2)
             everythingSelected = false;
-
-        readyButton.SetActive(everythingSelected);
     }
 
     public override void setChampion(UserControl.PlayerNumbers targetPlayer, GameObject Champion)
@@ -79,6 +78,13 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
 
     public void toggleReady()
     {
-        //Show/Hide ready sign for local player here. Called by ready button.
+        if(everythingSelected)
+        {
+            //Show/Hide ready sign for local player here. Called by ready button.
+        }
+        else
+        {
+            StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Select one champion and two different trinkets."));
+        }
     }
 }
