@@ -28,9 +28,12 @@ public abstract class GameplayManager : Photon.MonoBehaviour {
     //Color to apply to player images to fit the environemts lighting
     public Color championSpriteOverlayColor;
 
-    //[HideInInspector]
     //Array containign all player game objects
     public List<GameObject> players = new List<GameObject>();
+
+    private GameObject simpleGlobalMessage;
+    private GameObject playerInteractionGlobalMessage;
+    private Transform mainCanvas;
 
     public enum GameModes
     {
@@ -42,6 +45,10 @@ public abstract class GameplayManager : Photon.MonoBehaviour {
         PhotonNetwork.offlineMode = true;
         instantiatePlayers();
         buildUI();
+
+        simpleGlobalMessage = Resources.Load<GameObject>("Prefabs/UI/GlobalMessages/SimpleGlobalMessage");
+        playerInteractionGlobalMessage = Resources.Load<GameObject>("Prefabs/UI/GlobalMessages/PlayerInteractionGlobalMessage");
+        mainCanvas = GameObject.Find("MainCanvas").transform;
     }
 
     /// <summary>
@@ -89,8 +96,8 @@ public abstract class GameplayManager : Photon.MonoBehaviour {
     /// <param name="message"></param>
     protected virtual void ShowGlobalMessage(string message)
     {
-        //TODO: Display a message on top of the screen for each player to see
-        Debug.Log(message);
+        GameObject messageObject = Instantiate(simpleGlobalMessage, mainCanvas, false);
+        messageObject.GetComponent<Text>().text = message;
     }
 
     #region WinConditions
