@@ -29,3 +29,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/InRoom.unity
     guid: e53e29450247b034e9e5b92952db98cf
+  - enabled: 1
+    path: Assets/Scenes/NetworkChampionSelection.unity
+    guid: ddfb61d2fb8bf3841accac46acd6155b

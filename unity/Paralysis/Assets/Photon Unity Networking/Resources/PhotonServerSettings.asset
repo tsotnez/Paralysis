@@ -91,4 +91,5 @@ MonoBehaviour:
   - RPC_PlayerJoined
   - RPC_PlayerLeft
   - RPC_UpdateGameInfo
+  - RPC_SpawnPlayer
   DisableAutoOpenWizard: 1

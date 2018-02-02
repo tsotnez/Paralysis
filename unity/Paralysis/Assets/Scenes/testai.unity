@@ -388,7 +388,7 @@ MonoBehaviour:
   width: 11.57
   height: 6.98
   gizmoColor: {r: 0, g: 1, b: 1, a: 1}
-  showGizmos: 1
+  showGizmos: 0
   nonTargetable: 0
 --- !u!1 &73873163
 GameObject:
@@ -432,7 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &119987662
 GameObject:
   m_ObjectHideFlags: 0
@@ -1089,7 +1089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &256780268
 GameObject:
   m_ObjectHideFlags: 0
@@ -1179,7 +1179,7 @@ MonoBehaviour:
   jumpForce2X: 0
   isFallThroughNode: 0
   doubleJumpWait: 0.5
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &270174025
 GameObject:
   m_ObjectHideFlags: 0
@@ -1342,7 +1342,7 @@ MonoBehaviour:
   jumpForce2X: 0
   isFallThroughNode: 0
   doubleJumpWait: 0.5
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &300783754
 GameObject:
   m_ObjectHideFlags: 0
@@ -1432,7 +1432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &324327674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1682,7 +1682,7 @@ MonoBehaviour:
   jumpForce2X: 0
   isFallThroughNode: 0
   doubleJumpWait: 0.5
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &564498664
 GameObject:
   m_ObjectHideFlags: 0
@@ -1725,7 +1725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &581381368
 GameObject:
   m_ObjectHideFlags: 0
@@ -2370,7 +2370,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 861829468}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.905, y: -3.16, z: 0}
+  m_LocalPosition: {x: 6.905, y: -3.167, z: 0}
   m_LocalScale: {x: 7.681628, y: 3.130118, z: 1}
   m_Children: []
   m_Father: {fileID: 896233774}
@@ -2418,7 +2418,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0011787489, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
     pivot: {x: 0.5, y: 0.5}
@@ -2429,7 +2429,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.15696882, y: 0.16}
   m_EdgeRadius: 0
 --- !u!212 &861829473
 SpriteRenderer:
@@ -2521,7 +2521,7 @@ MonoBehaviour:
   jumpForce2X: 0
   isFallThroughNode: 0
   doubleJumpWait: 0.5
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &896233773
 GameObject:
   m_ObjectHideFlags: 0
@@ -2604,7 +2604,7 @@ MonoBehaviour:
   jumpForce2X: -1
   isFallThroughNode: 0
   doubleJumpWait: 0.5
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &921320002
 GameObject:
   m_ObjectHideFlags: 0
@@ -2651,7 +2651,7 @@ MonoBehaviour:
   jumpForce2X: 0
   isFallThroughNode: 0
   doubleJumpWait: 0.5
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &980744925
 GameObject:
   m_ObjectHideFlags: 0
@@ -2750,7 +2750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &1033121373
 GameObject:
   m_ObjectHideFlags: 0
@@ -2797,7 +2797,7 @@ MonoBehaviour:
   jumpForce2X: 0
   isFallThroughNode: 0
   doubleJumpWait: 0.5
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &1090893522
 GameObject:
   m_ObjectHideFlags: 0
@@ -2844,7 +2844,7 @@ MonoBehaviour:
   jumpForce2X: 1
   isFallThroughNode: 0
   doubleJumpWait: 0.5
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &1105991832
 GameObject:
   m_ObjectHideFlags: 0
@@ -2891,7 +2891,7 @@ MonoBehaviour:
   jumpForce2X: 0
   isFallThroughNode: 0
   doubleJumpWait: 0.5
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &1119597104
 GameObject:
   m_ObjectHideFlags: 0
@@ -3102,7 +3102,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1127367682}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.28, y: -1.5099998, z: 0}
+  m_LocalPosition: {x: -2.28, y: -1.534, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2006875993}
@@ -3125,7 +3125,7 @@ MonoBehaviour:
   jumpForce2X: 0
   isFallThroughNode: 1
   doubleJumpWait: 0.5
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &1183396943
 GameObject:
   m_ObjectHideFlags: 0
@@ -3469,7 +3469,7 @@ MonoBehaviour:
   jumpForce2X: 0
   isFallThroughNode: 1
   doubleJumpWait: 0.5
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &1296791923
 GameObject:
   m_ObjectHideFlags: 0
@@ -3583,7 +3583,7 @@ MonoBehaviour:
   jumpForce2X: 0
   isFallThroughNode: 0
   doubleJumpWait: 0.5
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &1366489865
 GameObject:
   m_ObjectHideFlags: 0
@@ -3833,7 +3833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1001 &1413330319
 Prefab:
   m_ObjectHideFlags: 0
@@ -3984,7 +3984,7 @@ MonoBehaviour:
   jumpForce2X: 0.502
   isFallThroughNode: 0
   doubleJumpWait: 0.5
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &1500119424
 GameObject:
   m_ObjectHideFlags: 0
@@ -4234,7 +4234,7 @@ MonoBehaviour:
   jumpForce2X: 0
   isFallThroughNode: 0
   doubleJumpWait: 0.5
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &1557429662
 GameObject:
   m_ObjectHideFlags: 0
@@ -4685,7 +4685,7 @@ MonoBehaviour:
   jumpForce2X: 0
   isFallThroughNode: 0
   doubleJumpWait: 0.5
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &1786765172
 GameObject:
   m_ObjectHideFlags: 0
@@ -4902,7 +4902,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.00046792626, y: -0.0012807883}
   m_SpriteTilingProperty:
     border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
     pivot: {x: 0.5, y: 0.5}
@@ -4913,7 +4913,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.15906414, y: 0.15743843}
   m_EdgeRadius: 0
 --- !u!212 &1855251509
 SpriteRenderer:
@@ -4969,7 +4969,7 @@ GameObject:
   - component: {fileID: 1856883209}
   - component: {fileID: 1856883210}
   m_Layer: 0
-  m_Name: SPTopLeft
+  m_Name: SPTopRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5001,7 +5001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &1874320555
 GameObject:
   m_ObjectHideFlags: 0
@@ -5143,7 +5143,7 @@ MonoBehaviour:
   width: 11.7
   height: 4.66
   gizmoColor: {r: 0, g: 1, b: 1, a: 1}
-  showGizmos: 0
+  showGizmos: 1
   nonTargetable: 0
 --- !u!1 &1883189223
 GameObject:
@@ -5191,7 +5191,7 @@ MonoBehaviour:
   jumpForce2X: 0
   isFallThroughNode: 0
   doubleJumpWait: 0.5
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &1906392463
 GameObject:
   m_ObjectHideFlags: 0
@@ -5679,7 +5679,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &2037492632
 GameObject:
   m_ObjectHideFlags: 0

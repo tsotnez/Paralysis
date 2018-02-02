@@ -20,7 +20,9 @@ public class InRoomManager : UIManager {
     public Text RoomNameText;
     public Button startGameButton;
     public Button backButton;
+    public Button switchTeamButton;
     public string backScene = "NetworkChoseQueueTarget";
+    public string nextScene = "NetworkChampionSelection";
 
     int CurrentPlayers = 1;
     int MaxPlayers = 4;
@@ -34,6 +36,7 @@ public class InRoomManager : UIManager {
 
         backButton.onClick.AddListener(backPressed);
         startGameButton.onClick.AddListener(startGame);
+        switchTeamButton.onClick.AddListener(switchTeamsPressed);
 
         RoomNameText.text = GameNetwork.Instance.CurrentRoomInfo.Name;
 
@@ -97,12 +100,19 @@ public class InRoomManager : UIManager {
 
     private void startGame()
     {
-        GameNetwork.Instance.StartGame();
+        //GameNetwork.Instance.StartGame();
+        SceneManager.LoadScene(nextScene);
     }
 
     private void backPressed()
     {
         StartCoroutine(waitForGameNetworkDestroyed());
+    }
+
+    private void switchTeamsPressed()
+    {
+        GameNetwork.Instance.switchPlayerTeam(PhotonNetwork.player.ID);
+        switchTeamButton.interactable = false;
     }
 
     private IEnumerator waitForGameNetworkDestroyed ()
@@ -124,6 +134,7 @@ public class InRoomManager : UIManager {
     private void OnGameStateUpdated()
     {
         print("Game state updated...");
+        switchTeamButton.interactable = true;
         RemoveAll();
 
         List<int> teamOne = GameNetwork.Instance.TeamOneList;

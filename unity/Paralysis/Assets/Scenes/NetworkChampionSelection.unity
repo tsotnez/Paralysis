@@ -3338,7 +3338,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &488601895
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6558,7 +6558,15 @@ MonoBehaviour:
   readyButton: {fileID: 125349918}
   additionalPlatforms2v2: {fileID: 1672469179}
   additionalPlatforms3v3: {fileID: 488601894}
-  playerPlatform: {fileID: 9123253}
+  teamOnePlatforms:
+  - {fileID: 9123253}
+  - {fileID: 1715314121}
+  - {fileID: 561290345}
+  teamTwoPlatforms:
+  - {fileID: 94325154}
+  - {fileID: 1555768668}
+  - {fileID: 402937612}
+  backButton: {fileID: 1356488784}
 --- !u!4 &1114773096
 Transform:
   m_ObjectHideFlags: 0
@@ -8285,7 +8293,6 @@ GameObject:
   - component: {fileID: 1356488786}
   - component: {fileID: 1356488785}
   - component: {fileID: 1356488784}
-  - component: {fileID: 1356488783}
   m_Layer: 5
   m_Name: Back
   m_TagString: Untagged
@@ -8312,19 +8319,6 @@ RectTransform:
   m_AnchoredPosition: {x: 714, y: 59}
   m_SizeDelta: {x: 181.24, y: 55.1}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1356488783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114536805826835018, guid: 8dfa33662f1f64e45b4cedc4b629eb6c,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1356488781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 776a23b9f4ff0504bb0723c9b6c30d7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nextPage: {fileID: 0}
 --- !u!114 &1356488784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8364,18 +8358,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1356488785}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1356488783}
-        m_MethodName: loadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: MainMenu
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1356488785
@@ -10807,7 +10790,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1672469180
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12183,7 +12166,7 @@ MonoBehaviour:
   currentlySelected: 0
   selectedPos: 0
   targetValue: 1
-  Champion: {fileID: 1346435155503924, guid: 5f5ac1a4f5bfeec4584f1818feb6fdc7, type: 2}
+  Champion: {fileID: 1346435155503924, guid: 782001f3935837a48a557565b08b8c0c, type: 2}
   trinket: 0
 --- !u!114 &1911400429
 MonoBehaviour:
@@ -13145,7 +13128,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 445864196}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999964
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13279,7 +13262,7 @@ MonoBehaviour:
   currentlySelected: 0
   selectedPos: 0
   targetValue: 1
-  Champion: {fileID: 1903508196159970, guid: 3c565997b1ca6e94caf0190f6b7b9801, type: 2}
+  Champion: {fileID: 1903508196159970, guid: 0639eac30390dec449afda643c7fa53c, type: 2}
   trinket: 0
 --- !u!114 &1966512743
 MonoBehaviour:
@@ -14384,7 +14367,7 @@ MonoBehaviour:
   currentlySelected: 0
   selectedPos: 0
   targetValue: 1
-  Champion: {fileID: 1654434425598688, guid: a88ac18cbd8da5b4ca19263602c669cd, type: 2}
+  Champion: {fileID: 1654434425598688, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
   trinket: 0
 --- !u!114 &2066669958
 MonoBehaviour:
@@ -14860,7 +14843,7 @@ MonoBehaviour:
   currentlySelected: 0
   selectedPos: 0
   targetValue: 1
-  Champion: {fileID: 1128103333960868, guid: 3dd357419861bfe40bbee211a7260d6d, type: 2}
+  Champion: {fileID: 1128103333960868, guid: e6f7d777ee6c44d448705ae811eebec4, type: 2}
   trinket: 0
 --- !u!114 &2140323618
 MonoBehaviour:

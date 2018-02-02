@@ -3,32 +3,105 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class NetworkChampionSelectionManager : ChampionSelectionManager {
 
     public static Player localPlayer = 
         new Player(UserControl.PlayerNumbers.Player1, UserControl.InputDevice.KeyboardMouse, 1); //Object that stores all date about local player, set externally
-    public static int playerCount = 6; //How many players are in the room? needed to show/hide additional Platforms. Set externally
+    private int playerCount; //How many players are in the room? needed to show/hide additional Platforms. Set externally
+    private int aiCount;
 
     public GameObject additionalPlatforms3v3;
 
-    public Transform playerPlatform; //Position to instantiate the preview champion object to. Only public for testing
+    public Transform[] teamOnePlatforms; //Position to instantiate the preview champion object to. Only public for testing
+    public Transform[] teamTwoPlatforms;
+
     bool everythingSelected = false;
+
+    public Button backButton;
 
     protected override void Start()
     {
         base.Start();
+        backButton.onClick.AddListener(OnBackButtonClicked);
 
-        //Show additional platforms if needed
-        if (playerCount > 4)
+        GameNetwork.Instance.OnGameStateUpdate += OnGameStateUpdated;
+
+
+        playerCount = GameNetwork.Instance.getPlayerList().Length;
+        if(playerCount < 6)
         {
-            additionalPlatforms3v3.SetActive(true);
-            additionalPlatforms2v2.SetActive(true);
+            additionalPlatforms3v3.SetActive(false);
         }
-        else if (playerCount > 2)
+        if(playerCount < 4)
         {
-            additionalPlatforms2v2.SetActive(true);
+            additionalPlatforms2v2.SetActive(false);
         }
+
+        OnGameStateUpdated();
+    }
+
+    private void AddPlayerToList(PhotonPlayer player, Transform playerTransform)
+    {
+        print("adding player to transform list...: " + player.NickName);
+        Text playerText = playerTransform.GetComponentInChildren<Text>();
+        playerText.text = player.NickName;
+    }
+
+    private void SetTransformToEmpty(Transform playerTransform)
+    {
+        playerTransform.gameObject.SetActive(false);
+    }
+
+    private void OnGameStateUpdated()
+    {
+        List<int> teamOne = GameNetwork.Instance.TeamOneList;
+        List<int> teamTwo = GameNetwork.Instance.TeamTwoList;
+
+        PhotonPlayer[] players = GameNetwork.Instance.getPlayerList();
+        Dictionary<int, int> playerDict = GameNetwork.Instance.PlayerDict;
+
+        for(int i = 0; i < 3; i++)
+        {
+            if(i < teamOne.Count)
+            {
+                bool found = false;
+                int playerId = teamOne[i];
+                foreach(PhotonPlayer player in players)
+                {
+                    if(playerId == player.ID)
+                    {
+                        AddPlayerToList(player, teamOnePlatforms[i]);
+                        found = true;
+                    }
+                }
+                if(!found)SetTransformToEmpty(teamOnePlatforms[i]);
+            }
+            else
+            {
+                SetTransformToEmpty(teamOnePlatforms[i]);
+            }
+
+            if(i < teamTwo.Count)
+            {
+                bool found = false;
+                int playerId = teamTwo[i];
+                foreach(PhotonPlayer player in players)
+                {
+                    if(playerId == player.ID)
+                    {
+                        AddPlayerToList(player, teamTwoPlatforms[i]);
+                        found = true;
+                    }
+                }
+                if(!found)SetTransformToEmpty(teamTwoPlatforms[i]);
+            }
+            else
+            {
+                SetTransformToEmpty(teamTwoPlatforms[i]);
+            }
+        }       
     }
 
     protected override void Update()
@@ -45,8 +118,9 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     public override void setChampion(UserControl.PlayerNumbers targetPlayer, GameObject Champion)
     {
         localPlayer.ChampionPrefab = Champion;
-        DestroyExistingPreview(playerPlatform);
-        ShowPrefab(Champion, playerPlatform, false);
+        //TODO
+        //DestroyExistingPreview(player1Platform);
+        //ShowPrefab(Champion, player1Platform, false);
     }
 
     public override void setTrinket(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName, Trinket.Trinkets toOverwrite)
@@ -86,5 +160,22 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
         {
             StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Select one champion and two different trinkets."));
         }
+    }
+
+    public void OnBackButtonClicked()
+    {
+        StartCoroutine(waitForGameNetworkDestroyed());
+    }
+
+    private IEnumerator waitForGameNetworkDestroyed ()
+    {
+        Destroy(GameNetwork.Instance.gameObject);
+        yield return new WaitWhile( ()=> GameNetwork.Instance == null);
+        SceneManager.LoadScene(GameConstants.MAIN_MENU_SCENE);
+    }
+
+    private void OnDestroy()
+    {
+        GameNetwork.Instance.OnGameStateUpdate -= OnGameStateUpdated;
     }
 }

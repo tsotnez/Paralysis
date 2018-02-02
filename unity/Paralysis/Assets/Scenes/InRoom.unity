@@ -1004,7 +1004,9 @@ MonoBehaviour:
   RoomNameText: {fileID: 1690982638}
   startGameButton: {fileID: 1468938521}
   backButton: {fileID: 1687068284}
+  switchTeamButton: {fileID: 1504612265}
   backScene: NetworkChoseQueueTarget
+  nextScene: NetworkChampionSelection
 --- !u!4 &432506514
 Transform:
   m_ObjectHideFlags: 0
@@ -1921,9 +1923,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f124b63b8c3a2a4b976f7026111f9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 642258301}
   onHoverCol: {r: 0.25735295, g: 0.04352292, b: 0.04352292, a: 0.528}
   onClickCol: {r: 0.83823526, g: 0.26503026, b: 0.26503026, a: 0.534}
+  keepColorOnClick: 0
 --- !u!114 &1504612265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2691,7 +2693,7 @@ Prefab:
     - target: {fileID: 224335929871334504, guid: db865cab6a472334796ddb2de12f3bb9,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5174758
       objectReference: {fileID: 0}
     - target: {fileID: 224335929871334504, guid: db865cab6a472334796ddb2de12f3bb9,
         type: 2}
@@ -2726,7 +2728,7 @@ Prefab:
     - target: {fileID: 224349025960451414, guid: db865cab6a472334796ddb2de12f3bb9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -100
+      value: -91.5
       objectReference: {fileID: 0}
     - target: {fileID: 224198153351803292, guid: db865cab6a472334796ddb2de12f3bb9,
         type: 2}
@@ -2746,7 +2748,7 @@ Prefab:
     - target: {fileID: 224198153351803292, guid: db865cab6a472334796ddb2de12f3bb9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -100
+      value: -91.5
       objectReference: {fileID: 0}
     - target: {fileID: 224001952979751604, guid: db865cab6a472334796ddb2de12f3bb9,
         type: 2}
@@ -2766,7 +2768,7 @@ Prefab:
     - target: {fileID: 224001952979751604, guid: db865cab6a472334796ddb2de12f3bb9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -100
+      value: -91.5
       objectReference: {fileID: 0}
     - target: {fileID: 224209369748636802, guid: db865cab6a472334796ddb2de12f3bb9,
         type: 2}
@@ -2786,17 +2788,57 @@ Prefab:
     - target: {fileID: 224209369748636802, guid: db865cab6a472334796ddb2de12f3bb9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -100
+      value: -91.5
       objectReference: {fileID: 0}
     - target: {fileID: 224606363201282924, guid: db865cab6a472334796ddb2de12f3bb9,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -532.77704
+      value: -532.99994
       objectReference: {fileID: 0}
     - target: {fileID: 224606363201282924, guid: db865cab6a472334796ddb2de12f3bb9,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1030
+      objectReference: {fileID: 0}
+    - target: {fileID: 224642976368465848, guid: db865cab6a472334796ddb2de12f3bb9,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224642976368465848, guid: db865cab6a472334796ddb2de12f3bb9,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224642976368465848, guid: db865cab6a472334796ddb2de12f3bb9,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 224642976368465848, guid: db865cab6a472334796ddb2de12f3bb9,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 224958556133382950, guid: db865cab6a472334796ddb2de12f3bb9,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224958556133382950, guid: db865cab6a472334796ddb2de12f3bb9,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 224416841397002036, guid: db865cab6a472334796ddb2de12f3bb9,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224416841397002036, guid: db865cab6a472334796ddb2de12f3bb9,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: -17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: db865cab6a472334796ddb2de12f3bb9, type: 2}
