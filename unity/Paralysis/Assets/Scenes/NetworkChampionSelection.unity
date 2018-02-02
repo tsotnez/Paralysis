@@ -6566,6 +6566,7 @@ MonoBehaviour:
   - {fileID: 94325154}
   - {fileID: 1555768668}
   - {fileID: 402937612}
+  myPlatform: {fileID: 0}
   backButton: {fileID: 1356488784}
 --- !u!4 &1114773096
 Transform:
@@ -12166,7 +12167,7 @@ MonoBehaviour:
   currentlySelected: 0
   selectedPos: 0
   targetValue: 1
-  Champion: {fileID: 1346435155503924, guid: 782001f3935837a48a557565b08b8c0c, type: 2}
+  Champion: {fileID: 1346435155503924, guid: 5f5ac1a4f5bfeec4584f1818feb6fdc7, type: 2}
   trinket: 0
 --- !u!114 &1911400429
 MonoBehaviour:
@@ -13128,7 +13129,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 445864196}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999964
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13262,7 +13263,7 @@ MonoBehaviour:
   currentlySelected: 0
   selectedPos: 0
   targetValue: 1
-  Champion: {fileID: 1903508196159970, guid: 0639eac30390dec449afda643c7fa53c, type: 2}
+  Champion: {fileID: 1903508196159970, guid: 3c565997b1ca6e94caf0190f6b7b9801, type: 2}
   trinket: 0
 --- !u!114 &1966512743
 MonoBehaviour:
@@ -14367,7 +14368,7 @@ MonoBehaviour:
   currentlySelected: 0
   selectedPos: 0
   targetValue: 1
-  Champion: {fileID: 1654434425598688, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
+  Champion: {fileID: 1654434425598688, guid: a88ac18cbd8da5b4ca19263602c669cd, type: 2}
   trinket: 0
 --- !u!114 &2066669958
 MonoBehaviour:
@@ -14843,7 +14844,7 @@ MonoBehaviour:
   currentlySelected: 0
   selectedPos: 0
   targetValue: 1
-  Champion: {fileID: 1128103333960868, guid: e6f7d777ee6c44d448705ae811eebec4, type: 2}
+  Champion: {fileID: 1128103333960868, guid: 3dd357419861bfe40bbee211a7260d6d, type: 2}
   trinket: 0
 --- !u!114 &2140323618
 MonoBehaviour:
