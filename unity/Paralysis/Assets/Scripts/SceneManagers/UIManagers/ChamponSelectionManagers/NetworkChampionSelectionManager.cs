@@ -16,6 +16,7 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
 
     public Transform[] teamOnePlatforms; //Position to instantiate the preview champion object to. Only public for testing
     public Transform[] teamTwoPlatforms;
+    public Transform myPlatform;
 
     bool everythingSelected = false;
 
@@ -44,7 +45,10 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
 
     private void AddPlayerToList(PhotonPlayer player, Transform playerTransform)
     {
-        print("adding player to transform list...: " + player.NickName);
+        if(player == PhotonNetwork.player)
+        {
+            myPlatform = playerTransform;
+        }
         Text playerText = playerTransform.GetComponentInChildren<Text>();
         playerText.text = player.NickName;
     }
@@ -118,9 +122,8 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     public override void setChampion(UserControl.PlayerNumbers targetPlayer, GameObject Champion)
     {
         localPlayer.ChampionPrefab = Champion;
-        //TODO
-        //DestroyExistingPreview(player1Platform);
-        //ShowPrefab(Champion, player1Platform, false);
+        DestroyExistingPreview(myPlatform);
+        ShowPrefab(Champion, myPlatform, false);
     }
 
     public override void setTrinket(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName, Trinket.Trinkets toOverwrite)
