@@ -7,7 +7,7 @@ public class GameNetworkChampSelect : MonoBehaviour {
     public static GameNetworkChampSelect Instance;
     private PhotonView photonV;
 
-    public delegate void otherPlayerSelectedChamp(int networkNum, int chamNump);
+    public delegate void otherPlayerSelectedChamp(int photonID, int chamNump);
     public event otherPlayerSelectedChamp OnPlayerSelectedChamp;
 
     private void Awake()
@@ -18,13 +18,13 @@ public class GameNetworkChampSelect : MonoBehaviour {
 
     public void selectedChamipon(int champion)
     {
-        photonV.RPC("RPC_SelectedChampion", PhotonTargets.Others, (short)GameNetwork.Instance.PlayerNetworkNumber, (short)champion);
+        photonV.RPC("RPC_SelectedChampion", PhotonTargets.Others, (short)PhotonNetwork.player.ID, (short)champion);
     }
 
     [PunRPC]
-    private void RPC_SelectedChampion(short playerNetworkNum, short sChamp)
+    private void RPC_SelectedChampion(short photonId, short sChamp)
     {
         if(OnPlayerSelectedChamp != null)
-            OnPlayerSelectedChamp((int)playerNetworkNum, (int)sChamp);
+            OnPlayerSelectedChamp((int)photonId, (int)sChamp);
     }
 }

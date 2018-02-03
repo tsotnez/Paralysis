@@ -23,9 +23,15 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     public Button backButton;
     public Button[] championButtons;
 
+    private ChampionHolder champHolder;
+    //PhotonID to transform
+    private Dictionary<int, Transform> transformDict = new Dictionary<int, Transform>();
+
     protected override void Start()
     {
         base.Start();
+        champHolder = GetComponent<ChampionHolder>();
+
         backButton.onClick.AddListener(OnBackButtonClicked);
 
         //ARCHER = 0, KNIGHT = 1, INFANTRY = 2, ALCHEMIST = 3, ASSASSIN = 4
@@ -54,6 +60,8 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
 
     private void AddPlayerToList(PhotonPlayer player, Transform playerTransform)
     {
+        transformDict[player.ID] = playerTransform;
+
         if(player == PhotonNetwork.player)
         {
             myPlatform = playerTransform;
@@ -128,16 +136,20 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
             everythingSelected = false;
     }
 
-    private void OnOtherPlayerSelectedChamp(int playerNetNum, int champ)
+    private void OnOtherPlayerSelectedChamp(int photonID, int champ)
     {
-        print("other player" + playerNetNum + " cham:" + champ);
+        GameObject goChamp = champHolder.getChampionForID(champ);
+        List<int> teamOne = GameNetwork.Instance.TeamOneList;
+        Transform platform = transformDict[photonID];
+        DestroyExistingPreview(platform);
+        ShowPrefab(goChamp, platform, (teamOne.Contains(photonID))? false : true );
     }
 
     public override void setChampion(UserControl.PlayerNumbers targetPlayer, GameObject Champion)
     {
         localPlayer.ChampionPrefab = Champion;
         DestroyExistingPreview(myPlatform);
-        ShowPrefab(Champion, myPlatform, false);
+        ShowPrefab(Champion, myPlatform, (GameNetwork.Instance.TeamNum == 1) ? false : true );
     }
 
     public override void setTrinket(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName, Trinket.Trinkets toOverwrite)

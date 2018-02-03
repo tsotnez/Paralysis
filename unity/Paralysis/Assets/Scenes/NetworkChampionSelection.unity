@@ -6537,6 +6537,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1114773096}
   - component: {fileID: 1114773095}
+  - component: {fileID: 1114773097}
   m_Layer: 0
   m_Name: manager
   m_TagString: Untagged
@@ -6588,6 +6589,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1114773097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1114773094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e800b8ee9b759149a6dd5ee4f82e0c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  champions:
+  - {fileID: 1654434425598688, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
+  - {fileID: 1903508196159970, guid: 0639eac30390dec449afda643c7fa53c, type: 2}
+  - {fileID: 1128103333960868, guid: e6f7d777ee6c44d448705ae811eebec4, type: 2}
+  - {fileID: 1346435155503924, guid: 782001f3935837a48a557565b08b8c0c, type: 2}
+  - {fileID: 1468821578159268, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b, type: 2}
 --- !u!1 &1125285152
 GameObject:
   m_ObjectHideFlags: 0

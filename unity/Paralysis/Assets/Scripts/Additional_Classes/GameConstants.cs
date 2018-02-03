@@ -12,7 +12,4 @@ public static class GameConstants {
 
     public static string MAIN_MENU_SCENE = "MainMenu";
     public static string MAIN_PLAYER_TAG = "MainPlayer";
-
-    public enum Champions { ARCHER = 0, KNIGHT = 1, INFANTRY = 2, ALCHEMIST = 3, ASSASSIN = 4 };
-
 }
