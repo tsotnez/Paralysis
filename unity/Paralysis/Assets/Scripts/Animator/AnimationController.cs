@@ -200,10 +200,9 @@ public abstract class AnimationController : MonoBehaviour
 
     public void StartAnimation(AnimatorStates animation, TypeOfAnimation AnimationType, AnimationPlayTypes ForceAnimationPlayType = AnimationPlayTypes.Nothing)
     {
-        if(!PhotonNetwork.offlineMode)
+        if(!PhotonNetwork.offlineMode && GameNetwork.Instance.InGame)
         {
             photonView.RPC("RPC_StartAnimation", PhotonTargets.All, (short)animation, (short)AnimationType, (short)ForceAnimationPlayType);
-            //RPC_StartAnimation((short)animation, (short)AnimationType, (short)ForceAnimationPlayType); //For testing if no internet connection available
         }
         else
         {

@@ -57,7 +57,7 @@ public abstract class ChampionSelectionManager : UIManager
     {
         foreach (Transform child in parent)
         {
-            if (child.gameObject.tag == "MainPlayer")
+            if (child.gameObject.tag == GameConstants.MAIN_PLAYER_TAG)
                 Destroy(child.gameObject);
         }
     }

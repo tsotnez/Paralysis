@@ -254,6 +254,7 @@ public class GameNetwork : MonoBehaviour {
         }
     }
 
+
     public void StartGame()
     {
         if(PhotonNetwork.isMasterClient)
@@ -549,6 +550,7 @@ public class GameNetwork : MonoBehaviour {
     public void RPC_SpawnPlayer()
     {
         //Tell the manager to spawn the player
+        inGame = true;
         manager.spawnPlayer();
     }
 

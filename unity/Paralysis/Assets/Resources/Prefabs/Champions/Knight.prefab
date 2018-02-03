@@ -156,6 +156,8 @@ GameObject:
   - component: {fileID: 212762230075115702}
   - component: {fileID: 114352005746325332}
   - component: {fileID: 82869083316547204}
+  - component: {fileID: 114159101602324080}
+  - component: {fileID: 114692152040923926}
   m_Layer: 11
   m_Name: graphics
   m_TagString: Untagged
@@ -432,7 +434,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -483,6 +485,32 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114159101602324080
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1694522185093378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 3
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 114692152040923926}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!114 &114352005746325332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -663,12 +691,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PositionModel:
-    SynchronizeEnabled: 0
+    SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
+    InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1
+    InterpolateLerpSpeed: 20
     InterpolateMoveTowardsAcceleration: 2
     InterpolateMoveTowardsDeceleration: 2
     InterpolateSpeedCurve:
@@ -712,7 +740,7 @@ MonoBehaviour:
     InterpolateRotateTowardsSpeed: 180
     InterpolateLerpSpeed: 5
   m_ScaleModel:
-    SynchronizeEnabled: 0
+    SynchronizeEnabled: 1
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
@@ -759,6 +787,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114692152040923926
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1694522185093378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86ce530a311eab046871cc340ea8841b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114692367745030466
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1001,12 +1040,13 @@ MonoBehaviour:
   group: 0
   OwnerShipWasTransfered: 0
   prefixBackup: -1
-  synchronization: 0
+  synchronization: 3
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 114546328103368206}
+  - {fileID: 114786480455905968}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1

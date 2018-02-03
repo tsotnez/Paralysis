@@ -947,7 +947,7 @@ Prefab:
         type: 2}
       propertyPath: skinPrefab
       value: 
-      objectReference: {fileID: 1128103333960868, guid: 3dd357419861bfe40bbee211a7260d6d,
+      objectReference: {fileID: 1128103333960868, guid: e6f7d777ee6c44d448705ae811eebec4,
         type: 2}
     - target: {fileID: 114685444797008030, guid: b85b03c5cba568640ba4df6ec7698031,
         type: 2}
@@ -3292,7 +3292,7 @@ Prefab:
         type: 2}
       propertyPath: skinPrefab
       value: 
-      objectReference: {fileID: 1903508196159970, guid: 3c565997b1ca6e94caf0190f6b7b9801,
+      objectReference: {fileID: 1903508196159970, guid: 0639eac30390dec449afda643c7fa53c,
         type: 2}
     - target: {fileID: 114685444797008030, guid: b85b03c5cba568640ba4df6ec7698031,
         type: 2}
@@ -4842,7 +4842,7 @@ Prefab:
     - target: {fileID: 224624669601511746, guid: 2779974bbdd29ca49a568cf92245a835,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0.00000017881393
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224624669601511746, guid: 2779974bbdd29ca49a568cf92245a835,
         type: 2}
@@ -6567,7 +6567,14 @@ MonoBehaviour:
   - {fileID: 1555768668}
   - {fileID: 402937612}
   myPlatform: {fileID: 0}
+  nextScene: Network test
   backButton: {fileID: 1356488784}
+  championButtons:
+  - {fileID: 2066669960}
+  - {fileID: 1966512741}
+  - {fileID: 2140323616}
+  - {fileID: 1911400429}
+  - {fileID: 81038157}
 --- !u!4 &1114773096
 Transform:
   m_ObjectHideFlags: 0
@@ -8026,7 +8033,7 @@ Prefab:
         type: 2}
       propertyPath: skinPrefab
       value: 
-      objectReference: {fileID: 1346435155503924, guid: 5f5ac1a4f5bfeec4584f1818feb6fdc7,
+      objectReference: {fileID: 1346435155503924, guid: 782001f3935837a48a557565b08b8c0c,
         type: 2}
     - target: {fileID: 114685444797008030, guid: b85b03c5cba568640ba4df6ec7698031,
         type: 2}
@@ -8523,7 +8530,7 @@ Prefab:
         type: 2}
       propertyPath: skinPrefab
       value: 
-      objectReference: {fileID: 1654434425598688, guid: a88ac18cbd8da5b4ca19263602c669cd,
+      objectReference: {fileID: 1654434425598688, guid: 1c93aba00e9725e409b2a5a0a2b0e223,
         type: 2}
     - target: {fileID: 114685444797008030, guid: b85b03c5cba568640ba4df6ec7698031,
         type: 2}
@@ -9915,7 +9922,7 @@ Prefab:
         type: 2}
       propertyPath: skinPrefab
       value: 
-      objectReference: {fileID: 1654434425598688, guid: a88ac18cbd8da5b4ca19263602c669cd,
+      objectReference: {fileID: 1468821578159268, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b,
         type: 2}
     - target: {fileID: 114685444797008030, guid: b85b03c5cba568640ba4df6ec7698031,
         type: 2}
@@ -12167,7 +12174,7 @@ MonoBehaviour:
   currentlySelected: 0
   selectedPos: 0
   targetValue: 1
-  Champion: {fileID: 1346435155503924, guid: 5f5ac1a4f5bfeec4584f1818feb6fdc7, type: 2}
+  Champion: {fileID: 1346435155503924, guid: 782001f3935837a48a557565b08b8c0c, type: 2}
   trinket: 0
 --- !u!114 &1911400429
 MonoBehaviour:
@@ -13263,7 +13270,7 @@ MonoBehaviour:
   currentlySelected: 0
   selectedPos: 0
   targetValue: 1
-  Champion: {fileID: 1903508196159970, guid: 3c565997b1ca6e94caf0190f6b7b9801, type: 2}
+  Champion: {fileID: 1903508196159970, guid: 0639eac30390dec449afda643c7fa53c, type: 2}
   trinket: 0
 --- !u!114 &1966512743
 MonoBehaviour:
@@ -14368,7 +14375,7 @@ MonoBehaviour:
   currentlySelected: 0
   selectedPos: 0
   targetValue: 1
-  Champion: {fileID: 1654434425598688, guid: a88ac18cbd8da5b4ca19263602c669cd, type: 2}
+  Champion: {fileID: 1654434425598688, guid: 1c93aba00e9725e409b2a5a0a2b0e223, type: 2}
   trinket: 0
 --- !u!114 &2066669958
 MonoBehaviour:
@@ -14844,7 +14851,7 @@ MonoBehaviour:
   currentlySelected: 0
   selectedPos: 0
   targetValue: 1
-  Champion: {fileID: 1128103333960868, guid: 3dd357419861bfe40bbee211a7260d6d, type: 2}
+  Champion: {fileID: 1128103333960868, guid: e6f7d777ee6c44d448705ae811eebec4, type: 2}
   trinket: 0
 --- !u!114 &2140323618
 MonoBehaviour:

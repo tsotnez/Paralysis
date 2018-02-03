@@ -92,4 +92,5 @@ MonoBehaviour:
   - RPC_PlayerLeft
   - RPC_UpdateGameInfo
   - RPC_SpawnPlayer
+  - RPC_SelectedChampion
   DisableAutoOpenWizard: 1

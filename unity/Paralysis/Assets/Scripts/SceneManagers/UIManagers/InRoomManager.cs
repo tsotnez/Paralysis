@@ -100,7 +100,7 @@ public class InRoomManager : UIManager {
 
     private void startGame()
     {
-        //GameNetwork.Instance.StartGame();
+        GameNetwork.Instance.lockCurrentRoom(true);
         SceneManager.LoadScene(nextScene);
     }
 

@@ -10,8 +10,7 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     public static Player localPlayer = 
         new Player(UserControl.PlayerNumbers.Player1, UserControl.InputDevice.KeyboardMouse, 1); //Object that stores all date about local player, set externally
     private int playerCount; //How many players are in the room? needed to show/hide additional Platforms. Set externally
-    private int aiCount;
-
+    
     public GameObject additionalPlatforms3v3;
 
     public Transform[] teamOnePlatforms; //Position to instantiate the preview champion object to. Only public for testing
@@ -20,15 +19,25 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
 
     bool everythingSelected = false;
 
+    public string nextScene = "Network test";
     public Button backButton;
+    public Button[] championButtons;
 
     protected override void Start()
     {
         base.Start();
         backButton.onClick.AddListener(OnBackButtonClicked);
 
-        GameNetwork.Instance.OnGameStateUpdate += OnGameStateUpdated;
+        //ARCHER = 0, KNIGHT = 1, INFANTRY = 2, ALCHEMIST = 3, ASSASSIN = 4
+        foreach(Button button in championButtons)
+        {
+            button.onClick.AddListener(delegate{
+                champButtonPressed(button);
+            });
+        }
 
+        GameNetwork.Instance.OnGameStateUpdate += OnGameStateUpdated;
+        GameNetworkChampSelect.Instance.OnPlayerSelectedChamp += OnOtherPlayerSelectedChamp;
 
         playerCount = GameNetwork.Instance.getPlayerList().Length;
         if(playerCount < 6)
@@ -119,6 +128,11 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
             everythingSelected = false;
     }
 
+    private void OnOtherPlayerSelectedChamp(int playerNetNum, int champ)
+    {
+        print("other player" + playerNetNum + " cham:" + champ);
+    }
+
     public override void setChampion(UserControl.PlayerNumbers targetPlayer, GameObject Champion)
     {
         localPlayer.ChampionPrefab = Champion;
@@ -150,6 +164,10 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     /// </summary>
     public override void startGame()
     {
+        if(GameNetwork.Instance.IsMasterClient)
+        {
+            GameNetwork.Instance.StartGame();
+        }
         //Pass Player info to next scenes here
     }
 
@@ -162,6 +180,19 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
         else
         {
             StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Select one champion and two different trinkets."));
+        }
+    }
+
+    public void champButtonPressed(Button button)
+    {
+        //ARCHER = 0, KNIGHT = 1, INFANTRY = 2, ALCHEMIST = 3, ASSASSIN = 4
+        for(int i = 0; i < championButtons.Length; i++)
+        {
+            Button champButton = championButtons[i];
+            if(champButton == button)
+            {
+                GameNetworkChampSelect.Instance.selectedChamipon(i);
+            }
         }
     }
 
@@ -180,5 +211,6 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     private void OnDestroy()
     {
         GameNetwork.Instance.OnGameStateUpdate -= OnGameStateUpdated;
+        GameNetworkChampSelect.Instance.OnPlayerSelectedChamp -= OnOtherPlayerSelectedChamp;
     }
 }
