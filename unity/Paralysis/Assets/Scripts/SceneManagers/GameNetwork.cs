@@ -49,6 +49,8 @@ public class GameNetwork : MonoBehaviour {
     //List of photon IDs for team2
     private List<int> teamTwoList;
     public List<int> TeamTwoList { get { return teamTwoList; } }
+    private bool updatingInfo = false;
+
 
     //Delegates
     public delegate void gameStateUpdate();
@@ -463,9 +465,13 @@ public class GameNetwork : MonoBehaviour {
         print("player connected: " + photonPlayer.NickName);
         if(PhotonNetwork.isMasterClient)
         {
+            updatingInfo = true;
             addPlayer(photonPlayer.ID);
+            updatingInfo = false;
+
             if(OnGameStateUpdate != null)
                 OnGameStateUpdate();
+
 
             photonV.RPC("RPC_UpdateGameInfo", PhotonTargets.Others, playerDic, teamOneList.ToArray(), teamTwoList.ToArray());
         }
@@ -477,7 +483,10 @@ public class GameNetwork : MonoBehaviour {
         print("player disconnected: " + otherPlayer.NickName);
         if(PhotonNetwork.isMasterClient)
         {
+            updatingInfo = true;
             removePlayer(otherPlayer.ID);
+            updatingInfo = false;
+
             if(OnGameStateUpdate != null)
                 OnGameStateUpdate();
 
@@ -546,26 +555,6 @@ public class GameNetwork : MonoBehaviour {
     [PunRPC]
     public void RPC_UpdateGameInfo(Dictionary<int, int> newPlayerDict, int[] team1, int[] team2)
     {
-        /*
-        Debug.Log("Printing dictionary...");
-        foreach(KeyValuePair<int, int> entry in newPlayerDict)
-        {
-            Debug.Log("Playerid: " + entry.Key + " num: " + entry.Value);
-        }
-
-        Debug.Log("Printing team1...");
-        foreach(int team in team1)
-        {
-            Debug.Log("Team1: " + team);
-        }
-
-        Debug.Log("Printing team2...");
-        foreach(int team in team2)
-        {
-            Debug.Log("Team2: " + team);
-        }
-        */
-
         playerDic = newPlayerDict;
         teamOneList = new List<int>(team1);
         teamTwoList = new List<int>(team2);
@@ -575,6 +564,11 @@ public class GameNetwork : MonoBehaviour {
 
         if(OnGameStateUpdate != null)
             OnGameStateUpdate();
+    }
+
+    private IEnumerator waitToUpdateGameInfo()
+    {
+        yield return new WaitUntil(()=> !updatingInfo);
     }
 
     #endregion

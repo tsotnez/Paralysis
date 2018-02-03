@@ -266,7 +266,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected virtual void jump1()
     {
-        if(inSameSectionAsTarget())
+        if(inSameSectionAsTarget() && animCon.m_Grounded)
         {
             changeGoal(AI_GOALS.MOVE_TO_PLAYER);
             return;
@@ -328,7 +328,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected virtual void jump2()
     {
-        if(inSameSectionAsTarget())
+        if(inSameSectionAsTarget() && animCon.m_Grounded)
         {
             changeGoal(AI_GOALS.MOVE_TO_PLAYER);
             return;
