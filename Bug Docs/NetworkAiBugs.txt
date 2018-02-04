@@ -1,4 +1,4 @@
-MultiplerGameManager should't require photonView
-Somtimes AI gets caught in jump1 goal - have time limit on certain goals
-
-
+-still need to do switching teams,
+-setting trinkets that were selected in champ select
+-setting team based off of gamenetwork team not player number
+-weird bugs when players hit back on different screens (room scene, champ select scene)
