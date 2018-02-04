@@ -7,10 +7,6 @@ using UnityEngine.EventSystems;
 
 public class NetworkVersusManager : GameplayManager
 {
-    public Player assassin;
-    public Player alchemist;
-    public Player infantry;
-
     public Text KillCount; //Text which displays how many kills where scored by the player
     public Text DeathCount; //Text which displays how times the player has died
 
@@ -29,20 +25,7 @@ public class NetworkVersusManager : GameplayManager
     {
         spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
         playerNetworkNum = GameNetwork.Instance.PlayerNetworkNumber;
-
-        // Set players champ based on number for now
-        if(playerNetworkNum == 1)
-        {
-            localPlayer = assassin;
-        }
-        else if(playerNetworkNum == 2)
-        {
-            localPlayer = alchemist;
-        }
-        else
-        {
-            localPlayer = infantry;
-        }
+        localPlayer = NetworkChampionSelectionManager.localPlayer;
     }
 
     protected override void instantiatePlayers()

@@ -49,8 +49,6 @@ public class GameNetwork : MonoBehaviour {
     //List of photon IDs for team2
     private List<int> teamTwoList;
     public List<int> TeamTwoList { get { return teamTwoList; } }
-    private bool updatingInfo = false;
-
 
     //Delegates
     public delegate void gameStateUpdate();
@@ -466,15 +464,8 @@ public class GameNetwork : MonoBehaviour {
         print("player connected: " + photonPlayer.NickName);
         if(PhotonNetwork.isMasterClient)
         {
-            updatingInfo = true;
             addPlayer(photonPlayer.ID);
-            updatingInfo = false;
-
-            if(OnGameStateUpdate != null)
-                OnGameStateUpdate();
-
-
-            photonV.RPC("RPC_UpdateGameInfo", PhotonTargets.Others, playerDic, teamOneList.ToArray(), teamTwoList.ToArray());
+            photonV.RPC("RPC_UpdateGameInfo", PhotonTargets.All, playerDic, teamOneList.ToArray(), teamTwoList.ToArray());
         }
     }
 
@@ -484,14 +475,8 @@ public class GameNetwork : MonoBehaviour {
         print("player disconnected: " + otherPlayer.NickName);
         if(PhotonNetwork.isMasterClient)
         {
-            updatingInfo = true;
             removePlayer(otherPlayer.ID);
-            updatingInfo = false;
-
-            if(OnGameStateUpdate != null)
-                OnGameStateUpdate();
-
-            photonV.RPC("RPC_UpdateGameInfo", PhotonTargets.Others, playerDic, teamOneList.ToArray(), teamTwoList.ToArray());
+            photonV.RPC("RPC_UpdateGameInfo", PhotonTargets.All, playerDic, teamOneList.ToArray(), teamTwoList.ToArray());
         }
     }
 
@@ -549,6 +534,12 @@ public class GameNetwork : MonoBehaviour {
     [PunRPC]
     public void RPC_SpawnPlayer()
     {
+        if(manager == null)
+        {
+            GameObject gOmanager = GameObject.Find("manager");
+            manager = gOmanager.GetComponent<NetworkVersusManager>();
+        }
+
         //Tell the manager to spawn the player
         inGame = true;
         manager.spawnPlayer();
@@ -557,20 +548,18 @@ public class GameNetwork : MonoBehaviour {
     [PunRPC]
     public void RPC_UpdateGameInfo(Dictionary<int, int> newPlayerDict, int[] team1, int[] team2)
     {
-        playerDic = newPlayerDict;
-        teamOneList = new List<int>(team1);
-        teamTwoList = new List<int>(team2);
+        if(!PhotonNetwork.isMasterClient)
+        {
+            playerDic = newPlayerDict;
+            teamOneList = new List<int>(team1);
+            teamTwoList = new List<int>(team2);
+        }
 
         setMyTeam();
         setMyNetworkNumber();
 
         if(OnGameStateUpdate != null)
             OnGameStateUpdate();
-    }
-
-    private IEnumerator waitToUpdateGameInfo()
-    {
-        yield return new WaitUntil(()=> !updatingInfo);
     }
 
     #endregion

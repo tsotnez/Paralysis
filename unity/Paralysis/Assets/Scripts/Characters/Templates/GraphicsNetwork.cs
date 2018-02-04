@@ -9,9 +9,9 @@ public class GraphicsNetwork : MonoBehaviour {
     SpriteRenderer ren;
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
 
-        if(!PhotonNetwork.offlineMode) 
+        if(!PhotonNetwork.offlineMode && GameNetwork.Instance.InGame) 
         {
             animCon = GetComponent<ChampionAnimationController>();
             ren = GetComponent<SpriteRenderer>();
@@ -30,6 +30,8 @@ public class GraphicsNetwork : MonoBehaviour {
     /// <param name="info"></param>
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+        if(!GameNetwork.Instance.InGame) return;
+
         if (stream.isWriting)
         {
             //This is our player, sending info

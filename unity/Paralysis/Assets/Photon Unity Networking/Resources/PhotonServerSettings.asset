@@ -93,4 +93,6 @@ MonoBehaviour:
   - RPC_UpdateGameInfo
   - RPC_SpawnPlayer
   - RPC_SelectedChampion
+  - RPC_PlayerReady
+  - RPC_AllReady
   DisableAutoOpenWizard: 1
