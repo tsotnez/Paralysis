@@ -6,7 +6,7 @@ namespace UnityEngine.EventSystems
     [AddComponentMenu("Event/Standalone Input Module")]
     public class MyStandaloneInputModule : PointerInputModule
     {
-        public UserControl.InputDevice ControllingPlayerInputDevice = UserControl.InputDevice.KeyboardMouse;
+        public static UserControl.InputDevice ControllingPlayerInputDevice = UserControl.InputDevice.KeyboardMouse;
 
         private float m_PrevActionTime;
         Vector2 m_LastMoveVector;

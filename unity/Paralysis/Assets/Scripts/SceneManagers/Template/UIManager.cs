@@ -46,13 +46,13 @@ public abstract class UIManager : MonoBehaviour {
         //Switch input method depending on whether a controller is connected
         if (Array.Exists(Input.GetJoystickNames(), x => x == "Controller (XBOX 360 For Windows)"))
         {
-            if (module.ControllingPlayerInputDevice == UserControl.InputDevice.KeyboardMouse)
+            if (MyStandaloneInputModule.ControllingPlayerInputDevice == UserControl.InputDevice.KeyboardMouse)
             {
                 gotoController();
                 StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Switched to Controller input."));
             }
         }
-        else if (module.ControllingPlayerInputDevice == UserControl.InputDevice.XboxController)
+        else if (MyStandaloneInputModule.ControllingPlayerInputDevice == UserControl.InputDevice.XboxController)
         {
             //Switch back to keyboard and mouse input       
             gotoKeyboard();

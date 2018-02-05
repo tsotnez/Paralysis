@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuButton : MonoBehaviour {
 
@@ -59,5 +62,59 @@ public class MainMenuButton : MonoBehaviour {
     public void loadScene(string toLoad)
     {
         SceneManager.LoadScene("Scenes/" + toLoad);
+    }
+
+
+    //Spinning into ModeSelection
+    public void switchToModeSelection()
+    {
+        StartCoroutine(setModeSelectionActive());
+    }
+
+    public void leaveModeSelection()
+    {
+        StartCoroutine(setModeSelectionInActive());
+    }
+
+    public void AAAAAA()
+    {
+        AdvancedSceneManager.LoadSceneWithLoadingScreen("MainMenu", "MultiplayerLoadingScreen");
+        //SceneManager.LoadScene("Scenes/test");
+    }
+
+    private IEnumerator setModeSelectionInActive()
+    {
+        GameObject target = transform.Find("ModeSelection").gameObject;
+        
+        GetComponent<EventTrigger>().enabled = true;
+        GetComponent<Animator>().SetTrigger("Spin");
+        GetComponent<Button>().interactable = true;
+
+        yield return new WaitForSeconds(.33f);
+        target.SetActive(false);
+        transform.Find("Symbol").gameObject.SetActive(true);
+
+        if (MyStandaloneInputModule.ControllingPlayerInputDevice == UserControl.InputDevice.XboxController)
+        {
+            EventSystem.current.SetSelectedGameObject(gameObject);
+        }
+    }
+
+    private IEnumerator setModeSelectionActive()
+    {
+        GameObject target = transform.Find("ModeSelection").gameObject;
+        MouseExit();
+        GetComponent<EventTrigger>().enabled = false;
+        GetComponent<Animator>().SetTrigger("Spin");
+        GetComponent<Button>().interactable = false;
+
+        yield return new WaitForSeconds(.33f);
+        transform.Find("Symbol").gameObject.SetActive(false);
+        target.SetActive(true);
+
+        if (MyStandaloneInputModule.ControllingPlayerInputDevice == UserControl.InputDevice.XboxController)
+        {
+            EventSystem.current.SetSelectedGameObject(target.transform.GetChild(0).gameObject);
+        }
     }
 }

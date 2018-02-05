@@ -32,3 +32,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NetworkChampionSelection.unity
     guid: ddfb61d2fb8bf3841accac46acd6155b
+  - enabled: 1
+    path: Assets/Scenes/NetworkHostPrivateGame.unity
+    guid: 5a3e166a394047449acfd0b9809a7f17
+  - enabled: 1
+    path: Assets/Scenes/MultiplayerLoadingScreen.unity
+    guid: 8dd6b52d9f9cb8043bdb5afea9e6ed9b

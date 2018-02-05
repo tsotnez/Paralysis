@@ -60,7 +60,7 @@ public class MainMenuManager : UIManager {
         currentPage = nextPage;
 
         //Only preselect a GO if using controller
-        if(EventSystem.current.gameObject.GetComponent<MyStandaloneInputModule>().ControllingPlayerInputDevice == UserControl.InputDevice.XboxController)
+        if(MyStandaloneInputModule.ControllingPlayerInputDevice == UserControl.InputDevice.XboxController)
             EventSystem.current.SetSelectedGameObject(currentPage.gameObject.GetComponentInChildren<Selectable>().gameObject);
     }
 
