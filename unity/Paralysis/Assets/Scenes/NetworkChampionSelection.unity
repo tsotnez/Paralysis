@@ -141,7 +141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc01741abbf5c248a84c196d0aa1707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ControllingPlayerInputDevice: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -177,6 +176,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &485633214 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114765387544859322, guid: 28853dc64afa15e4dbd9f689f51f072c,
+    type: 2}
+  m_PrefabInternal: {fileID: 849291004}
+  m_Script: {fileID: 575553740, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1001 &849291004
 Prefab:
   m_ObjectHideFlags: 0
@@ -292,12 +297,12 @@ Prefab:
     - target: {fileID: 224756179298126512, guid: 28853dc64afa15e4dbd9f689f51f072c,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 123.56436
+      value: 117.881805
       objectReference: {fileID: 0}
     - target: {fileID: 224756179298126512, guid: 28853dc64afa15e4dbd9f689f51f072c,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000042520463
+      value: 0.0000042915344
       objectReference: {fileID: 0}
     - target: {fileID: 1830469212669188, guid: 28853dc64afa15e4dbd9f689f51f072c, type: 2}
       propertyPath: m_Name
@@ -784,6 +789,25 @@ Prefab:
       propertyPath: m_SizeDelta.x
       value: -17
       objectReference: {fileID: 0}
+    - target: {fileID: 1407857568023128, guid: 28853dc64afa15e4dbd9f689f51f072c, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114759181422962192, guid: 28853dc64afa15e4dbd9f689f51f072c,
+        type: 2}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114237836274193840, guid: 28853dc64afa15e4dbd9f689f51f072c,
+        type: 2}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114237836274193840, guid: 28853dc64afa15e4dbd9f689f51f072c,
+        type: 2}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 485633214}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 28853dc64afa15e4dbd9f689f51f072c, type: 2}
   m_IsPrefabParent: 0

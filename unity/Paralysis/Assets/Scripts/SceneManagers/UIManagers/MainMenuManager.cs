@@ -12,7 +12,8 @@ public class MainMenuManager : UIManager {
 
     public CanvasGroup[] MenuPages;
     public GameObject[] firstSelectedObjects;
-    public EventSystem es;
+    public Image fadeOverlay;
+    public float fadeDuration = .25f;
 
     //Set from outside to change to a certain menu page immediatly after loading the scene
     public static int DefaultPageIndex = -1;
@@ -21,10 +22,13 @@ public class MainMenuManager : UIManager {
     protected override void Start () {
         base.Start();
 
+        fadeOverlay.canvasRenderer.SetAlpha(0);
+        fadeOverlay.gameObject.SetActive(true);
+
         if (DefaultPageIndex != -1)
         {
             startPage = MenuPages[DefaultPageIndex];
-            es.SetSelectedGameObject(firstSelectedObjects[DefaultPageIndex]);
+            EventSystem.current.SetSelectedGameObject(firstSelectedObjects[DefaultPageIndex]);
         }
 
         DefaultPageIndex = -1;
@@ -45,7 +49,7 @@ public class MainMenuManager : UIManager {
     {
         module.SetControllingPlayerInputDevice(UserControl.InputDevice.XboxController);
         int currentPageIndex = Array.IndexOf(MenuPages, currentPage);
-        es.SetSelectedGameObject(firstSelectedObjects[currentPageIndex]);
+        EventSystem.current.SetSelectedGameObject(firstSelectedObjects[currentPageIndex]);
     }
 
     /// <summary>
@@ -54,6 +58,10 @@ public class MainMenuManager : UIManager {
     /// <param name="nextPage"></param>
     public void switchToPage(CanvasGroup nextPage)
     {
+        //Fade in
+        fadeOverlay.canvasRenderer.SetAlpha(1); //Workaround for unity bug, its weird but it works
+        fadeOverlay.CrossFadeAlpha(1, fadeDuration, true);
+
         disablePage(currentPage);
         enablePage(nextPage);
 
@@ -62,6 +70,9 @@ public class MainMenuManager : UIManager {
         //Only preselect a GO if using controller
         if(MyStandaloneInputModule.ControllingPlayerInputDevice == UserControl.InputDevice.XboxController)
             EventSystem.current.SetSelectedGameObject(currentPage.gameObject.GetComponentInChildren<Selectable>().gameObject);
+
+        //Fade out
+        fadeOverlay.CrossFadeAlpha(0, fadeDuration, true);
     }
 
     private void disablePage(CanvasGroup toDisable)
