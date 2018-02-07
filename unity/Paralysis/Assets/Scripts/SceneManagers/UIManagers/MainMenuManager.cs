@@ -5,15 +5,14 @@ using UnityEngine.UI;
 
 public class MainMenuManager : UIManager {
 
-    public CanvasGroup mainCanvas;
     public CanvasGroup startPage;
-    private CanvasGroup currentPage; //Page which is shown currently
-    public CursorLockMode CursorLockMode { get; private set; }
+    protected CanvasGroup currentPage; //Page which is shown currently
 
     public CanvasGroup[] MenuPages;
     public GameObject[] firstSelectedObjects;
     public Image fadeOverlay;
-    public float fadeDuration = .25f;
+    [SerializeField]
+    private float fadeDuration = .25f;
 
     //Set from outside to change to a certain menu page immediatly after loading the scene
     public static int DefaultPageIndex = -1;
@@ -25,6 +24,11 @@ public class MainMenuManager : UIManager {
         fadeOverlay.canvasRenderer.SetAlpha(0);
         fadeOverlay.gameObject.SetActive(true);
 
+        Init();
+    }
+
+    protected void Init()
+    {
         if (DefaultPageIndex != -1)
         {
             startPage = MenuPages[DefaultPageIndex];
@@ -34,10 +38,8 @@ public class MainMenuManager : UIManager {
         DefaultPageIndex = -1;
 
         //Disable all pages and enable starting page
-        foreach (CanvasGroup item in FindObjectsOfType<CanvasGroup>())
+        foreach (CanvasGroup item in MenuPages)
         {
-            if (item == mainCanvas)
-                continue;
             disablePage(item);
         }
 
@@ -56,11 +58,15 @@ public class MainMenuManager : UIManager {
     /// Switch to a passed page, disabeling the current page
     /// </summary>
     /// <param name="nextPage"></param>
-    public void switchToPage(CanvasGroup nextPage)
+    public virtual void switchToPage(CanvasGroup nextPage)
     {
+        EventSystem.current.SetSelectedGameObject(null);
         //Fade in
-        fadeOverlay.canvasRenderer.SetAlpha(1); //Workaround for unity bug, its weird but it works
-        fadeOverlay.CrossFadeAlpha(1, fadeDuration, true);
+        if (fadeOverlay != null)
+        {
+            fadeOverlay.canvasRenderer.SetAlpha(1); //Workaround for unity bug, its weird but it works
+            fadeOverlay.CrossFadeAlpha(1, fadeDuration, true);
+        }
 
         disablePage(currentPage);
         enablePage(nextPage);
@@ -72,17 +78,18 @@ public class MainMenuManager : UIManager {
             EventSystem.current.SetSelectedGameObject(currentPage.gameObject.GetComponentInChildren<Selectable>().gameObject);
 
         //Fade out
-        fadeOverlay.CrossFadeAlpha(0, fadeDuration, true);
+        if(fadeOverlay != null)
+            fadeOverlay.CrossFadeAlpha(0, fadeDuration, true);
     }
 
-    private void disablePage(CanvasGroup toDisable)
+    protected void disablePage(CanvasGroup toDisable)
     {
         toDisable.alpha = 0;
         toDisable.blocksRaycasts = false;
         toDisable.interactable = false;
     }
 
-    private void enablePage(CanvasGroup toEnable)
+    protected virtual void enablePage(CanvasGroup toEnable)
     {
         toEnable.alpha = 1;
         toEnable.blocksRaycasts = true;

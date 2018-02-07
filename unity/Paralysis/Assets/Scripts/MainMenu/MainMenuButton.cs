@@ -6,13 +6,29 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenuButton : MonoBehaviour {
+public class MainMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler {
 
     public CanvasGroup nextPage;
+    GameObject hover = null;
+
+    void Start()
+    {
+        Transform t = transform.Find("Hover");
+        if(t != null)
+            hover = t.gameObject;
+    }
+
 
 	public void MouseEnter()
     {
-        transform.Find("Hover").gameObject.SetActive(true);
+        if(hover != null)
+            hover.SetActive(true);
+    }
+
+    public void MouseExit()
+    {
+        if(hover != null)
+            hover.SetActive(false);
     }
 
     public void activateAnimator()
@@ -25,15 +41,10 @@ public class MainMenuButton : MonoBehaviour {
         GetComponent<Animator>().SetBool("spin", false);
     }
 
-    public void MouseExit()
-    {
-        transform.Find("Hover").gameObject.SetActive(false);
-    }
-
     public void changePage()
     {
         if(nextPage != null)
-            FindObjectOfType<MainMenuManager>().switchToPage(nextPage);
+           GameObject.Find("manager").GetComponent<MainMenuManager>().switchToPage(nextPage);
     }
 
     public void local1v1()
@@ -117,4 +128,27 @@ public class MainMenuButton : MonoBehaviour {
             EventSystem.current.SetSelectedGameObject(target.transform.GetChild(0).gameObject);
         }
     }
+
+
+    #region Interface Implementations
+    public void OnSelect(BaseEventData eventData)
+    {
+        MouseEnter();
+    }
+
+    public void OnDeselect(BaseEventData eventData)
+    {
+        MouseExit();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        MouseEnter();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        MouseExit();
+    }
+    #endregion
 }

@@ -155,8 +155,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f124b63b8c3a2a4b976f7026111f9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Clicked: 0
+  target: {fileID: 0}
   onHoverCol: {r: 0.56078434, g: 0.16862746, b: 0, a: 0.522}
   onClickCol: {r: 0, g: 0.34509805, b: 0.41960788, a: 0.522}
+  keepColorOnClick: 1
 --- !u!114 &114802689693781660
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -276,40 +279,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114992450965326964}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114600759236071672}
-        m_MethodName: onClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: ChangeCurrentPreviewImage
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 114246988107393470}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: ChangeCurrentPreviewMapName
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 114334096926391406}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114992450965326964

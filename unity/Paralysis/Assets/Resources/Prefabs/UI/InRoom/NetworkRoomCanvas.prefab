@@ -2522,6 +2522,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f124b63b8c3a2a4b976f7026111f9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Clicked: 0
+  target: {fileID: 0}
   onHoverCol: {r: 0.56078434, g: 0.16862746, b: 0, a: 0.522}
   onClickCol: {r: 0, g: 0.34509805, b: 0.41960788, a: 0.522}
   keepColorOnClick: 0
@@ -3378,6 +3380,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f124b63b8c3a2a4b976f7026111f9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Clicked: 0
+  target: {fileID: 0}
   onHoverCol: {r: 0.56078434, g: 0.16862746, b: 0, a: 0.522}
   onClickCol: {r: 0, g: 0.34509805, b: 0.41960788, a: 0.522}
   keepColorOnClick: 0
@@ -3815,6 +3819,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f124b63b8c3a2a4b976f7026111f9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Clicked: 0
+  target: {fileID: 0}
   onHoverCol: {r: 0.56078434, g: 0.16862746, b: 0, a: 0.522}
   onClickCol: {r: 0, g: 0.34509805, b: 0.41960788, a: 0.522}
   keepColorOnClick: 0
@@ -4188,6 +4194,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f124b63b8c3a2a4b976f7026111f9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Clicked: 0
+  target: {fileID: 0}
   onHoverCol: {r: 0.25735295, g: 0.04352292, b: 0.04352292, a: 0.528}
   onClickCol: {r: 0.83823526, g: 0.26503026, b: 0.26503026, a: 0.534}
   keepColorOnClick: 0
@@ -5808,6 +5816,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f124b63b8c3a2a4b976f7026111f9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Clicked: 0
+  target: {fileID: 0}
   onHoverCol: {r: 0.56078434, g: 0.16862746, b: 0, a: 0.522}
   onClickCol: {r: 0, g: 0.34509805, b: 0.41960788, a: 0.522}
   keepColorOnClick: 0
