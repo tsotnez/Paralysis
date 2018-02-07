@@ -23,7 +23,7 @@ public class NetworkVersusManager : GameplayManager
     #region default
     protected override void Awake()
     {
-        spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
+        spawnPoints = GameObject.FindGameObjectsWithTag(GameConstants.SPAWN_POINT_TAG);
         playerNetworkNum = GameNetwork.Instance.PlayerNetworkNumber;
         localPlayer = NetworkChampionSelectionManager.localPlayer;
     }
@@ -53,7 +53,7 @@ public class NetworkVersusManager : GameplayManager
         foreach(GameObject spawnObj in spawnPoints)
         {
             spawnPoint = spawnObj.GetComponent<SpawnPoint>();
-            if(spawnPoint.playerNumber == playerNetworkNum)
+            if(spawnPoint.playerNumber == playerNetworkNum && spawnPoint.teamNumber == GameNetwork.Instance.TeamNum)
             {
                 break;
             }

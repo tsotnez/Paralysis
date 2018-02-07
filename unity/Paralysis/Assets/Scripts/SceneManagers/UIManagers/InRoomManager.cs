@@ -21,8 +21,6 @@ public class InRoomManager : UIManager {
     public Button startGameButton;
     public Button backButton;
     public Button switchTeamButton;
-    public string backScene = "NetworkChoseQueueTarget";
-    public string nextScene = "NetworkChampionSelection";
 
     int CurrentPlayers = 1;
     int MaxPlayers = 4;
@@ -35,7 +33,7 @@ public class InRoomManager : UIManager {
         GameNetwork.Instance.OnGameStateUpdate += OnGameStateUpdated;
 
         backButton.onClick.AddListener(backPressed);
-        startGameButton.onClick.AddListener(startGame);
+        startGameButton.onClick.AddListener(goToChampSelect);
         switchTeamButton.onClick.AddListener(switchTeamsPressed);
 
         RoomNameText.text = GameNetwork.Instance.CurrentRoomInfo.Name;
@@ -98,10 +96,10 @@ public class InRoomManager : UIManager {
         PlayerCount.text = "Players:" +  CurrentPlayers + "/" + MaxPlayers;
     }
 
-    private void startGame()
+    private void goToChampSelect()
     {
         GameNetwork.Instance.lockCurrentRoom(true);
-        SceneManager.LoadScene(nextScene);
+        SceneManager.LoadScene(GameConstants.NETWORK_CHAMP_SELECT);
     }
 
     private void backPressed()
@@ -119,7 +117,7 @@ public class InRoomManager : UIManager {
     {
         Destroy(GameNetwork.Instance.gameObject);
         yield return new WaitWhile( ()=> GameNetwork.Instance == null);
-        SceneManager.LoadScene(backScene);
+        SceneManager.LoadScene(GameConstants.MAIN_MENU_SCENE);
     }
 
     #region PhotonCallbacks

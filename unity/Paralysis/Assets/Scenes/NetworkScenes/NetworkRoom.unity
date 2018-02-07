@@ -1002,11 +1002,9 @@ MonoBehaviour:
   PlayerListTeam2: {fileID: 525631175}
   PlayerCount: {fileID: 393051523}
   RoomNameText: {fileID: 1690982638}
-  startGameButton: {fileID: 1468938521}
+  startGameButton: {fileID: 544978925}
   backButton: {fileID: 1687068284}
   switchTeamButton: {fileID: 1504612265}
-  backScene: NetworkChoseQueueTarget
-  nextScene: NetworkChampionSelection
 --- !u!4 &432506514
 Transform:
   m_ObjectHideFlags: 0
@@ -1402,9 +1400,25 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114373299227596198, guid: 2bc31025925437148b89f1d768f1f614,
+        type: 2}
+      propertyPath: m_FontData.m_Alignment
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 224012626945185236, guid: 2bc31025925437148b89f1d768f1f614,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2bc31025925437148b89f1d768f1f614, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &544978925 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114091754394608696, guid: 2bc31025925437148b89f1d768f1f614,
+    type: 2}
+  m_PrefabInternal: {fileID: 544978924}
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &629702877
 GameObject:
   m_ObjectHideFlags: 0
@@ -1718,7 +1732,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc01741abbf5c248a84c196d0aa1707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ControllingPlayerInputDevice: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -1857,12 +1870,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1018056916377232, guid: 2bc31025925437148b89f1d768f1f614,
     type: 2}
   m_PrefabInternal: {fileID: 544978924}
---- !u!114 &1468938521 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114874222162999374, guid: 2bc31025925437148b89f1d768f1f614,
-    type: 2}
-  m_PrefabInternal: {fileID: 544978924}
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!224 &1468938523 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224851138991874660, guid: 2bc31025925437148b89f1d768f1f614,
@@ -1940,9 +1947,9 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 1253445562}
-    m_SelectOnDown: {fileID: 1468938521}
+    m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 1687068284}
-    m_SelectOnRight: {fileID: 1468938521}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -2262,7 +2269,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 1504612265}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 1468938521}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -2284,18 +2291,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1086097369}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1086097368}
-        m_MethodName: loadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
-          m_FloatArgument: 0
-          m_StringArgument: NetworkChoseQueueTarget
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1001 &1690982637
@@ -2693,7 +2689,7 @@ Prefab:
     - target: {fileID: 224335929871334504, guid: db865cab6a472334796ddb2de12f3bb9,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0.5174758
+      value: 0.5174757
       objectReference: {fileID: 0}
     - target: {fileID: 224335929871334504, guid: db865cab6a472334796ddb2de12f3bb9,
         type: 2}

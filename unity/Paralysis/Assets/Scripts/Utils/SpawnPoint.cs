@@ -6,6 +6,8 @@ public class SpawnPoint : MonoBehaviour {
 
     [Range(1, 4)]
     public int playerNumber = 1;
+    [Range(1, 2)]
+    public int teamNumber = 1;
     public enum SpawnFacing { right = 1, left = -1 }
     public SpawnFacing facingDir = SpawnFacing.right;
 

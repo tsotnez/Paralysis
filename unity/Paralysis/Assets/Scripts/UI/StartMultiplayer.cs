@@ -7,8 +7,6 @@ using UnityEngine.Events;
 
 public class StartMultiplayer : MonoBehaviour {
 
-    public string sceneToLoadMulti = "NetworkAPITestLobby";
-    public string sceneToLoadBack = "MainMenu";
     public Button createOnlineRoomButton;
     public Button joinOnlineRoomButton;
     public Button backButton;
@@ -134,14 +132,14 @@ public class StartMultiplayer : MonoBehaviour {
     private void OnJoinedRoom()
     {
         if(GameNetwork.Instance.IsMasterClient){
-            SceneManager.LoadScene(sceneToLoadMulti);
+            SceneManager.LoadScene(GameConstants.NETWORK_ROOM_SCENE);
         }
     }
 
     private void OnGameStateUpdated()
     {
         if(!GameNetwork.Instance.IsMasterClient){
-            SceneManager.LoadScene(sceneToLoadMulti);
+            SceneManager.LoadScene(GameConstants.NETWORK_ROOM_SCENE);
         }
     }
 
@@ -154,7 +152,7 @@ public class StartMultiplayer : MonoBehaviour {
     {
         Destroy(GameNetwork.Instance.gameObject);
         yield return new WaitWhile( ()=> GameNetwork.Instance == null);
-        SceneManager.LoadScene(sceneToLoadBack);
+        SceneManager.LoadScene(GameConstants.MAIN_MENU_SCENE);
     }
 
     private void OnDestroy()

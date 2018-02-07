@@ -39,19 +39,19 @@ public class MainMenuButton : MonoBehaviour {
     public void local1v1()
     {
         TeamAllocationManager.maxPlayers = 2;
-        SceneManager.LoadScene("Scenes/TeamAllocation");
+        SceneManager.LoadScene("TeamAllocation");
     }
 
     public void local2v2()
     {
         TeamAllocationManager.maxPlayers = 4;
-        SceneManager.LoadScene("Scenes/TeamAllocation");
+        SceneManager.LoadScene("TeamAllocation");
     }
 
     public void loadMainMenuPageFromExternal(int index)
     {
         MainMenuManager.DefaultPageIndex = index;
-        SceneManager.LoadScene("Scenes/MainMenu");
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void quit()
@@ -61,7 +61,7 @@ public class MainMenuButton : MonoBehaviour {
 
     public void loadScene(string toLoad)
     {
-        SceneManager.LoadScene("Scenes/" + toLoad);
+        SceneManager.LoadScene(toLoad);
     }
 
 

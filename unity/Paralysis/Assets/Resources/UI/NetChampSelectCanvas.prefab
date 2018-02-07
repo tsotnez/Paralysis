@@ -456,7 +456,7 @@ GameObject:
   - component: {fileID: 222525925491904586}
   - component: {fileID: 114193034953262904}
   m_Layer: 5
-  m_Name: Ready (5)
+  m_Name: Ready
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -800,7 +800,7 @@ GameObject:
   - component: {fileID: 222141111494143918}
   - component: {fileID: 114843350082285756}
   m_Layer: 5
-  m_Name: Ready (3)
+  m_Name: Ready
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -906,7 +906,7 @@ GameObject:
   - component: {fileID: 222068418776294910}
   - component: {fileID: 114796675708246486}
   m_Layer: 5
-  m_Name: Ready (4)
+  m_Name: Ready
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1537,7 +1537,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1408514609246896
 GameObject:
   m_ObjectHideFlags: 1
@@ -2910,7 +2910,7 @@ GameObject:
   - component: {fileID: 222520761368778038}
   - component: {fileID: 114431013439921684}
   m_Layer: 5
-  m_Name: Ready (2)
+  m_Name: Ready
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3047,7 +3047,7 @@ GameObject:
   - component: {fileID: 222695016883104010}
   - component: {fileID: 114230389067987276}
   m_Layer: 5
-  m_Name: Ready (1)
+  m_Name: Ready
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5569,8 +5569,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 114027964667852956}
-    m_SelectOnDown: {fileID: 114993415336290602}
-    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 114765387544859322}
     m_SelectOnRight: {fileID: 114759181422962192}
   m_Transition: 1
   m_Colors:
@@ -11030,7 +11030,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 114027964667852956}
-    m_SelectOnDown: {fileID: 114993415336290602}
+    m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 114237836274193840}
     m_SelectOnRight: {fileID: 114338424937452134}
   m_Transition: 1
@@ -11882,8 +11882,6 @@ MonoBehaviour:
   - {fileID: 224468562683010392}
   - {fileID: 224816659504119630}
   - {fileID: 224080454430303614}
-  nextScene: Network test
-  backButton: {fileID: 114993415336290602}
   rdyButton: {fileID: 114943464860820766}
   championButtons:
   - {fileID: 114237836274193840}
@@ -17405,7 +17403,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -218.5, y: -0.0000076293945}
+  m_AnchoredPosition: {x: -218.5, y: 0.0000042915344}
   m_SizeDelta: {x: 431.8734, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &224763703445057744
@@ -17726,7 +17724,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -688.30005, y: 57.200195}
+  m_AnchoredPosition: {x: -860, y: 57.200195}
   m_SizeDelta: {x: 196.6, y: 58.94}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224872724885848400

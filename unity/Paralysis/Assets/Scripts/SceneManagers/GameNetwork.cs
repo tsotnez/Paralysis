@@ -16,7 +16,6 @@ public class GameNetwork : MonoBehaviour {
     public int sendRate = 70;
     public int sendRateSerialize = 50;
     public byte maxPlayers = 4;
-    public string levelToLoad = "Network Test";
     public string gameVersion = "0.0.1-Apla";
     public bool offlineMode = false;
 
@@ -259,7 +258,7 @@ public class GameNetwork : MonoBehaviour {
         {
             PhotonNetwork.room.IsOpen = false;
             PhotonNetwork.room.IsVisible = false;
-            PhotonNetwork.LoadLevel(levelToLoad);
+            PhotonNetwork.LoadLevel(GameConstants.NETWORK_TEST_SCENE);
             print("Start game clicked...");
         }
         else 

@@ -19,8 +19,6 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
 
     bool everythingSelected = false;
 
-    public string nextScene = "Network test";
-    public Button backButton;
     public Button rdyButton;
     public Button[] championButtons;
     public Text vs_text;
@@ -35,8 +33,6 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     {
         base.Start();
         champHolder = GetComponent<ChampionHolder>();
-
-        backButton.onClick.AddListener(OnBackButtonClicked);
 
         //ARCHER = 0, KNIGHT = 1, INFANTRY = 2, ALCHEMIST = 3, ASSASSIN = 4
         foreach(Button button in championButtons)
@@ -116,7 +112,6 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
 
     private void disableAllButtons()
     {
-        backButton.interactable = false;
         foreach(Button champB in championButtons)
         {
             champB.interactable = false;
@@ -234,12 +229,6 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
         StartCoroutine(startingGame());
     }
 
-    public void OnBackButtonClicked()
-    {
-        StartCoroutine(waitForGameNetworkDestroyed());
-    }
-
-
     private void OnGameStateUpdated()
     {
         List<int> teamOne = GameNetwork.Instance.TeamOneList;
@@ -292,13 +281,6 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     }
 
     #endregion
-
-    private IEnumerator waitForGameNetworkDestroyed ()
-    {
-        Destroy(GameNetwork.Instance.gameObject);
-        yield return new WaitWhile( ()=> GameNetwork.Instance == null);
-        SceneManager.LoadScene(GameConstants.MAIN_MENU_SCENE);
-    }
 
     private void OnDestroy()
     {
