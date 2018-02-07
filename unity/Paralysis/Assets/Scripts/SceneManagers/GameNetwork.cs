@@ -301,27 +301,38 @@ public class GameNetwork : MonoBehaviour {
 
     public void switchPlayerTeam(int photonP)
     {
-        bool changed = false;
-        if(teamOneList.Contains(photonP))
+        if(!PhotonNetwork.isMasterClient)
         {
-            changed = true;
-            removePlayerFromTeamLists(photonP);
-            addPlayerToTeam2(photonP);
+            photonV.RPC("RPC_SwitchTeam", PhotonTargets.MasterClient, photonP);
         }
-
-        if(teamTwoList.Contains(photonP))
+        else
         {
-            changed = true;
-            removePlayerFromTeamLists(photonP);
-            addPlayerToTeam1(photonP);
-        }
-
-        if(changed){
-            photonV.RPC("RPC_UpdateGameInfo", PhotonTargets.All, playerDic, teamOneList.ToArray(), teamTwoList.ToArray());
+            RPC_SwitchTeam(photonP);
         }
     }
         
     #region setplayerinfo
+
+    private bool switchTeam(int photonP)
+    {
+        if(!PhotonNetwork.isMasterClient)return false;
+
+        if(teamOneList.Contains(photonP))
+        {
+            removePlayerFromTeamLists(photonP);
+            addPlayerToTeam2(photonP);
+            return true;
+        }
+
+        if(teamTwoList.Contains(photonP))
+        {
+            removePlayerFromTeamLists(photonP);
+            addPlayerToTeam1(photonP);
+            return true;
+        }
+
+        return false;
+    }
 
     private void addPlayer(int photonId)
     {
@@ -559,6 +570,18 @@ public class GameNetwork : MonoBehaviour {
 
         if(OnGameStateUpdate != null)
             OnGameStateUpdate();
+    }
+
+    [PunRPC]
+    public void RPC_SwitchTeam(int photonId)
+    {
+        if(!PhotonNetwork.isMasterClient) return;
+
+        bool changed = switchTeam(photonId);
+        if(changed){
+            photonV.RPC("RPC_UpdateGameInfo", PhotonTargets.All, playerDic, teamOneList.ToArray(), teamTwoList.ToArray());
+        }
+            
     }
 
     #endregion

@@ -30,7 +30,6 @@ public class InRoomManager : UIManager {
     protected override void Start()
     {
         base.Start();
-        GameNetwork.Instance.OnGameStateUpdate += OnGameStateUpdated;
 
         backButton.onClick.AddListener(backPressed);
         startGameButton.onClick.AddListener(goToChampSelect);
@@ -48,6 +47,7 @@ public class InRoomManager : UIManager {
         }
 
         OnGameStateUpdated();
+        GameNetwork.Instance.OnGameStateUpdate += OnGameStateUpdated;
     }
 
     public void ChangeCurrentPreviewImage(Image preview)
@@ -110,7 +110,14 @@ public class InRoomManager : UIManager {
     private void switchTeamsPressed()
     {
         GameNetwork.Instance.switchPlayerTeam(PhotonNetwork.player.ID);
-        switchTeamButton.interactable = false;
+        switchTeamButton.gameObject.SetActive(false);
+        StartCoroutine(setSwitchTeamInteractable());
+    }
+
+    private IEnumerator setSwitchTeamInteractable()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        switchTeamButton.gameObject.SetActive(true);
     }
 
     private IEnumerator waitForGameNetworkDestroyed ()
@@ -132,7 +139,6 @@ public class InRoomManager : UIManager {
     private void OnGameStateUpdated()
     {
         print("Game state updated...");
-        switchTeamButton.interactable = true;
         RemoveAll();
 
         List<int> teamOne = GameNetwork.Instance.TeamOneList;

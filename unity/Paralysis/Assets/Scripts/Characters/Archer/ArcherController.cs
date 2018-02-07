@@ -20,7 +20,6 @@ public class ArcherController : ChampionClassController
     protected override void Start()
     {
         base.Start();
-        FacingRight = true;
         animCon = graphics.GetComponent<ArcherAnimationController>();
 
         //Instantiate skill variables

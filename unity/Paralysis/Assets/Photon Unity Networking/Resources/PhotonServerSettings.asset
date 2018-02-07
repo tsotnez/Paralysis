@@ -95,4 +95,5 @@ MonoBehaviour:
   - RPC_SelectedChampion
   - RPC_PlayerReady
   - RPC_AllReady
+  - RPC_SwitchTeam
   DisableAutoOpenWizard: 1

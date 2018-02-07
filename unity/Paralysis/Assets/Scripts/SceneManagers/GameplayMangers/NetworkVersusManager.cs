@@ -67,6 +67,7 @@ public class NetworkVersusManager : GameplayManager
         ChampionClassController con = instPlayer1.GetComponent<ChampionClassController>();
         if(spawnPoint.facingDir == SpawnPoint.SpawnFacing.left)
         {
+            //con.FacingRight = false;
             con.Flip();
         }
         con.m_whatToHit = whatToHitP1;
