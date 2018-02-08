@@ -30,35 +30,35 @@ public class VerticalAutomaticScroll : MonoBehaviour {
     void Update()
     {
 
-        //Find all content game objects and add them to list, TODO: PERFORMANCE WISE BAD
-        foreach (Transform child in contentTrans)
-        {
-            content.Add(child.gameObject);
-        }
+        ////Find all content game objects and add them to list, TODO: PERFORMANCE WISE BAD
+        //foreach (Transform child in contentTrans)
+        //{
+        //    content.Add(child.gameObject);
+        //}
 
-        GameObject selected = es.currentSelectedGameObject;
+        //GameObject selected = es.currentSelectedGameObject;
 
-        //Is the currently selected GO one of the content GOs?
-        if (content.Contains(selected))
-        {
-            float maxY = maskRect.rect.height * 0.5f;
-            float minY = -maxY;
+        ////Is the currently selected GO one of the content GOs?
+        //if (content.Contains(selected))
+        //{
+        //    float maxY = maskRect.rect.height * 0.5f;
+        //    float minY = -maxY;
 
-            //Holds the position of the Content GO relative to the viewport GO
-            Vector3 relativePosition = selected.transform.position - viewPort.position;
-            float selectedY = relativePosition.y * 100; //Mit hundert multiplizieren weil trabnsform.position in prozent
+        //    //Holds the position of the Content GO relative to the viewport GO
+        //    Vector3 relativePosition = selected.transform.position - viewPort.position;
+        //    float selectedY = relativePosition.y * 100; //Mit hundert multiplizieren weil trabnsform.position in prozent
 
-            //Check if selected GO is covered by mask
-            if (selectedY + selected.GetComponent<RectTransform>().rect.height > maxY)
-            {
-                //Nach rechts
-                scrollRect.verticalScrollbar.value = Mathf.Clamp(scrollRect.verticalScrollbar.value + LerpSpeed * Time.deltaTime, 0, 1);
-            }
-            else if (selectedY - selected.GetComponent<RectTransform>().rect.height < minY)
-            {
-                //Nach links
-                scrollRect.verticalScrollbar.value = Mathf.Clamp(scrollRect.verticalScrollbar.value - LerpSpeed * Time.deltaTime, 0, 1);
-            }
-        }
+        //    //Check if selected GO is covered by mask
+        //    if (selectedY + selected.GetComponent<RectTransform>().rect.height > maxY)
+        //    {
+        //        //Nach rechts
+        //        scrollRect.verticalScrollbar.value = Mathf.Clamp(scrollRect.verticalScrollbar.value + LerpSpeed * Time.deltaTime, 0, 1);
+        //    }
+        //    else if (selectedY - selected.GetComponent<RectTransform>().rect.height < minY)
+        //    {
+        //        //Nach links
+        //        scrollRect.verticalScrollbar.value = Mathf.Clamp(scrollRect.verticalScrollbar.value - LerpSpeed * Time.deltaTime, 0, 1);
+        //    }
+        //}
     }
 }
