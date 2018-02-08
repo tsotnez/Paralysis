@@ -97,7 +97,6 @@ public class MainMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler, I
     {
         GameObject target = transform.Find("ModeSelection").gameObject;
         
-        GetComponent<EventTrigger>().enabled = true;
         GetComponent<Animator>().SetTrigger("Spin");
         GetComponent<Button>().interactable = true;
 
@@ -115,7 +114,6 @@ public class MainMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler, I
     {
         GameObject target = transform.Find("ModeSelection").gameObject;
         MouseExit();
-        GetComponent<EventTrigger>().enabled = false;
         GetComponent<Animator>().SetTrigger("Spin");
         GetComponent<Button>().interactable = false;
 

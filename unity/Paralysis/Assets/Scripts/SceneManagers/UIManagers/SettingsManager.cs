@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.EventSystems;
@@ -25,6 +26,13 @@ public class SettingsManager : MainMenuManager {
     public Slider musicSlider;
 
 
+    [Header("Controls")]
+    public Color dark;
+    public Color bright;
+    public GameObject entryPrefab;
+    public Transform tableContent;
+    private bool lastEntryBright = true;
+
     // Use this for initialization
     protected override void Start ()
     {
@@ -32,12 +40,93 @@ public class SettingsManager : MainMenuManager {
 
         initGraphicsSettings();
         initAudioSettings();
+        initControls();
 
     }
 
     protected override void Update() {}
 
     #region initialization
+
+    public enum InputType
+    {
+        KeyOrMouseButton,
+        MouseMovement,
+        JoystickAxis,
+    };
+
+    private void initControls()
+    {
+        //Reading entries from Unity Input Manager and adding a new entry to the controls tabel for each one
+        var inputManager = AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/InputManager.asset")[0];
+        SerializedObject obj = new SerializedObject(inputManager);
+
+        SerializedProperty axisArray = obj.FindProperty("m_Axes");
+
+        if (axisArray.arraySize == 0)
+            Debug.Log("No Axes");
+
+        for (int i = 0; i < axisArray.arraySize; ++i)
+        {
+            var axis = axisArray.GetArrayElementAtIndex(i);
+
+            var name = axis.FindPropertyRelative("m_Name").stringValue;
+            var key = axis.FindPropertyRelative("positiveButton").stringValue;
+
+            //If currently used input device is keyboard and mouse, only show input for that device
+            if (MyStandaloneInputModule.ControllingPlayerInputDevice == UserControl.InputDevice.KeyboardMouse && false)
+            {
+                if (!name.Contains("Xbox") && name != "Vertical")
+                {
+                    addEntryToTable(name, key);
+
+                    //Add extra entry for moving left, because horizontal axis has both positive and negative input
+                    if (name == "Horizontal")
+                        addEntryToTable("Move Left", axis.FindPropertyRelative("negativeButton").stringValue);
+                }
+
+            }
+            else if(MyStandaloneInputModule.ControllingPlayerInputDevice == UserControl.InputDevice.XboxController || true)
+            {
+                if (name.Contains("XboxPlayer1") )
+                {
+                    if (key == "") // If the input uses a controller axis, name input axis as key
+                        key = axis.FindPropertyRelative("axis").enumNames[axis.FindPropertyRelative("axis").enumValueIndex];
+                    addEntryToTable(name.Replace("_XboxPlayer1", ""), key);
+                }
+            }
+
+        }
+
+    }
+
+    public void refreshInputTable()
+    {
+        foreach (Transform child in tableContent.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        initControls();
+    }
+
+    /// <summary>
+    /// Adds a new entry to the controls table with the passed name and key
+    /// </summary>
+    private void addEntryToTable(string name, string key)
+    {
+        if (lastEntryBright)
+           entryPrefab.GetComponent<Image>().color = dark;
+        else
+           entryPrefab.GetComponent<Image>().color = bright;
+
+        lastEntryBright = !lastEntryBright;
+
+        GameObject newEntry = Instantiate(entryPrefab, tableContent, false);
+        newEntry.transform.Find("Action").GetComponent<Text>().text = name;
+        newEntry.transform.Find("Key").GetComponent<Text>().text = key;
+    }
+
+
     private void initGraphicsSettings()
     {
         //Adding options to resolution dropdown

@@ -222,7 +222,7 @@ public abstract class UserControl : MonoBehaviour
             inputJump = Input.GetButtonDown("Jump");
         }
         if (!CharStats.stunned && !CharStats.knockedBack)
-            inputDown = Input.GetButton("Defensive");
+            inputDown = Input.GetButton("Block");
         else inputDown = false;
     }
 

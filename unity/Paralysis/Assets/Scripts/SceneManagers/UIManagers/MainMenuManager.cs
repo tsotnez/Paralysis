@@ -52,12 +52,18 @@ public class MainMenuManager : UIManager {
         module.SetControllingPlayerInputDevice(UserControl.InputDevice.XboxController);
         int currentPageIndex = Array.IndexOf(MenuPages, currentPage);
         EventSystem.current.SetSelectedGameObject(firstSelectedObjects[currentPageIndex]);
+        GameObject.FindObjectOfType<SettingsManager>().refreshInputTable();
+    }
+
+    protected override void gotoKeyboard()
+    {
+        base.gotoKeyboard();
+        GameObject.FindObjectOfType<SettingsManager>().refreshInputTable();
     }
 
     /// <summary>
     /// Switch to a passed page, disabeling the current page
     /// </summary>
-    /// <param name="nextPage"></param>
     public virtual void switchToPage(CanvasGroup nextPage)
     {
         EventSystem.current.SetSelectedGameObject(null);

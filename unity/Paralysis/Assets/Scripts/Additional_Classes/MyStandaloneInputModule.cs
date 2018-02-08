@@ -176,8 +176,7 @@ namespace UnityEngine.EventSystems
                 case UserControl.InputDevice.XboxController:
                     verticalAxis = "Vertical_XboxPlayer1";
                     horizontalAxis = "Horizontal_XboxPlayer1";
-                    submitButton = "Skill4_XboxPlayer1";
-                    Debug.Log("Switched to Controller Input");
+                    submitButton = "Submit_XboxPlayer1";
                     break;
                 case UserControl.InputDevice.KeyboardMouse:
                     verticalAxis = "Vertical";
@@ -185,7 +184,6 @@ namespace UnityEngine.EventSystems
                     submitButton = "Submit";
                     eventSystem.SetSelectedGameObject(null);
                     eventSystem.firstSelectedGameObject = null;
-                    Debug.Log("Switched to Keyboard Input");
                     break;
             }
 

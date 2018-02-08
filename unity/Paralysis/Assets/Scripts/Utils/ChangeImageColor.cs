@@ -92,7 +92,8 @@ public class ChangeImageColor : MonoBehaviour, ISelectHandler, IDeselectHandler,
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        onEnter();
+        if (!Input.GetMouseButton(0))
+            onEnter();
     }
 
     public void OnPointerExit(PointerEventData eventData)
