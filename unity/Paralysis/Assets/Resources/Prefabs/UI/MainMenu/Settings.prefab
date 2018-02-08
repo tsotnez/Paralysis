@@ -1639,10 +1639,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 224183389059355232}
   m_HandleRect: {fileID: 224229006817663446}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 20
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1930,13 +1930,7 @@ MonoBehaviour:
   m_SelectItemsOnPointerEnter: 1
   m_Value: 0
   m_Options:
-    m_Options:
-    - m_Text: Team Deathmatch
-      m_Image: {fileID: 0}
-    - m_Text: GameMode 2
-      m_Image: {fileID: 0}
-    - m_Text: GameMode 3
-      m_Image: {fileID: 0}
+    m_Options: []
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2104,7 +2098,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Team Deathmatch
+  m_Text: 
 --- !u!114 &114464738941697048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2342,10 +2336,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 224003925785543842}
   m_HandleRect: {fileID: 224125260910637270}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 20
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2652,6 +2646,10 @@ MonoBehaviour:
   - {fileID: 0}
   fadeOverlay: {fileID: 0}
   fadeDuration: 0.25
+  resolutionDropdown: {fileID: 114393371323692950}
+  fullscreenToggle: {fileID: 114550486969947400}
+  fullscreen: 1
+  mixer: {fileID: 24100000, guid: dc89d036d7ddd7f41907b048f25db5cf, type: 2}
   effectsSlider: {fileID: 114757015398118148}
   voicesSlider: {fileID: 114802226422697980}
   ambientSlider: {fileID: 114607250247906666}
@@ -2854,10 +2852,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 224497345273118916}
   m_HandleRect: {fileID: 224918926699862514}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 20
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2980,10 +2978,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 224572331461884074}
   m_HandleRect: {fileID: 224693647513221426}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 20
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
