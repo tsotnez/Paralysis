@@ -93,7 +93,7 @@ public class NetworkVersusManager : GameplayManager
         myPlayerInstance = instPlayer1;
         buildUI();
         //Wait before joining team, because scene needs time to synchronize
-        StartCoroutine(test());
+        StartCoroutine(WaitToJoinTeam());
     }
 
     private void Update()
@@ -101,7 +101,7 @@ public class NetworkVersusManager : GameplayManager
         connectionStatusText.text = "Ping: " + PhotonNetwork.GetPing() + " " + PhotonNetwork.connectionStateDetailed.ToString();
     }
 
-    IEnumerator test()
+    IEnumerator WaitToJoinTeam()
     {
         yield return new WaitForSeconds(.2f);
         myPlayerInstance.GetComponent<CharacterNetwork>().joinTeam();

@@ -53,9 +53,9 @@ public abstract class AIUserControl : MonoBehaviour {
     protected AI_GOALS previousGoal = AI_GOALS.STAND_BY;
 
     private float timeToUnstuck;
-    private const float MAX_STUCK_TIME = .5f;
+    private const float MAX_STUCK_TIME = 2f;
     private AI_GOALS stuckGoal = AI_GOALS.STAND_BY;
-
+    private float timeInCurrentGoal = 0f;
         
     protected void Start()
     {
@@ -78,6 +78,8 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected void LateUpdate()
     {
+        AI_GOALS goalBefore = currentGoal;
+
         //If we get stunned just standby
         if(animCon.statStunned)
         {
@@ -111,6 +113,9 @@ public abstract class AIUserControl : MonoBehaviour {
         default:
             break;
         }
+
+        if(goalBefore == currentGoal)timeInCurrentGoal += Time.deltaTime;
+        else timeInCurrentGoal = 0;
 
         //print("Current goal: " + currentGoal);
     }
@@ -272,7 +277,8 @@ public abstract class AIUserControl : MonoBehaviour {
             return;
         }
 
-        if(charStats.CurrentStamina < ChampionClassController.JUMP_STAMINA_REQ)
+        //Were grounded but dont have enough stamina
+        if(animCon.m_Grounded && charStats.CurrentStamina < ChampionClassController.JUMP_STAMINA_REQ)
         {
             changeGoal(AI_GOALS.STAND_BY);
             return;
@@ -302,10 +308,11 @@ public abstract class AIUserControl : MonoBehaviour {
                     incrementNodeIndex();
                     return;
                 }
-                else
+
+                if(timeInCurrentGoal > 2)
                 {
-                    //Start stuck timer here, our jump can fail
-                    stuckTimer();
+                    //We tried to jump 2 seconds ago and we are still grounded
+                    changeGoal(AI_GOALS.STAND_BY);
                 }
             }
         }
@@ -313,7 +320,6 @@ public abstract class AIUserControl : MonoBehaviour {
         {
             //We are in the air, just apply direction
             inputMove = currentNode.jumpForce1X;
-            resetStuck();
         }
     }
 

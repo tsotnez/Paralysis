@@ -50,19 +50,19 @@ public class MainMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler, I
     public void local1v1()
     {
         TeamAllocationManager.maxPlayers = 2;
-        SceneManager.LoadScene("TeamAllocation");
+        SceneManager.LoadScene(GameConstants.TEAM_ALLOCATION_SCENE);
     }
 
     public void local2v2()
     {
         TeamAllocationManager.maxPlayers = 4;
-        SceneManager.LoadScene("TeamAllocation");
+        SceneManager.LoadScene(GameConstants.TEAM_ALLOCATION_SCENE);
     }
 
     public void loadMainMenuPageFromExternal(int index)
     {
         MainMenuManager.DefaultPageIndex = index;
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene(GameConstants.MAIN_MENU_SCENE);
     }
 
     public void quit()
@@ -70,11 +70,15 @@ public class MainMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler, I
         Application.Quit();
     }
 
+    public void loadHostPrivateGame()
+    {
+        SceneManager.LoadScene(GameConstants.NETWORK_HOST_PRIVATE_ROOM);
+    }
+
     public void loadScene(string toLoad)
     {
         SceneManager.LoadScene(toLoad);
     }
-
 
     //Spinning into ModeSelection
     public void switchToModeSelection()

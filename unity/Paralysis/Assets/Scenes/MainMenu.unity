@@ -661,7 +661,7 @@ Prefab:
     - target: {fileID: 224484893435401812, guid: 62762df2b03e98240ad11115cde1574a,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: -705.5564
+      value: -1129.5083
       objectReference: {fileID: 0}
     - target: {fileID: 224078211769458498, guid: 62762df2b03e98240ad11115cde1574a,
         type: 2}
@@ -681,7 +681,7 @@ Prefab:
     - target: {fileID: 224484893435401812, guid: 62762df2b03e98240ad11115cde1574a,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.00006364286
+      value: 0.000061035156
       objectReference: {fileID: 0}
     - target: {fileID: 224497345273118916, guid: 62762df2b03e98240ad11115cde1574a,
         type: 2}
@@ -5155,14 +5155,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1631279880}
-        m_MethodName: loadScene
-        m_Mode: 5
+        m_MethodName: loadHostPrivateGame
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: NetworkHostPrivateGame
+          m_StringArgument: NetworkScenes/NetworkHostPrivateGame
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,

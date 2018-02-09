@@ -110,14 +110,14 @@ public class InRoomManager : UIManager {
     private void switchTeamsPressed()
     {
         GameNetwork.Instance.switchPlayerTeam(PhotonNetwork.player.ID);
-        switchTeamButton.gameObject.SetActive(false);
+        switchTeamButton.interactable = false;
         StartCoroutine(setSwitchTeamInteractable());
     }
 
     private IEnumerator setSwitchTeamInteractable()
     {
         yield return new WaitForSecondsRealtime(2f);
-        switchTeamButton.gameObject.SetActive(true);
+        switchTeamButton.interactable = true;
     }
 
     private IEnumerator waitForGameNetworkDestroyed ()

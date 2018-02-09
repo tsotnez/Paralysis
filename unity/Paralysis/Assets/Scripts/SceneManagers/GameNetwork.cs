@@ -40,14 +40,14 @@ public class GameNetwork : MonoBehaviour {
     public bool IsMasterClient { get { return PhotonNetwork.isMasterClient; } }
 
     //photon player ID, player network number
-    public Dictionary <int, int> PlayerDict { get { return playerDic; } }
+    public Dictionary <int, int> PlayerDict { get { return new Dictionary<int, int>(playerDic); } }
     private Dictionary<int , int> playerDic;
     //List of photon IDs for team1
     private List<int> teamOneList;
-    public List<int> TeamOneList { get { return teamOneList; } }
+    public List<int> TeamOneList { get { return new List<int>(teamOneList); } }
     //List of photon IDs for team2
     private List<int> teamTwoList;
-    public List<int> TeamTwoList { get { return teamTwoList; } }
+    public List<int> TeamTwoList { get { return new List<int>(teamTwoList); } }
 
     //Delegates
     public delegate void gameStateUpdate();

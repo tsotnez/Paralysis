@@ -34,15 +34,14 @@ public class CharacterNetwork : Photon.MonoBehaviour {
     {
         if (photonView.isMine)
         {
-            int playerNetworkNum = GameNetwork.Instance.PlayerNetworkNumber;
-            if(playerNetworkNum == 1 || playerNetworkNum == 3)
+            if(GameNetwork.Instance.TeamNum == 1)
             {
                 photonView.RPC("SetTeam", PhotonTargets.All, GameConstants.TEAM_1_LAYER, GameConstants.TEAM_2_LAYER); //Join Team 1
             }
             else 
             {
-                photonView.RPC("SetTeam", PhotonTargets.All,  GameConstants.TEAM_2_LAYER, GameConstants.TEAM_1_LAYER); //Join Team 2
-            }
+                photonView.RPC("SetTeam", PhotonTargets.All, GameConstants.TEAM_2_LAYER, GameConstants.TEAM_1_LAYER); //Join Team 2
+            }                
         }
     }
 
