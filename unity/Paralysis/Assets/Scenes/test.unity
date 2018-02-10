@@ -282,7 +282,7 @@ MonoBehaviour:
     trinket1: 0
     trinket2: 4
   defaultPlayer2:
-    ChampionPrefab: {fileID: 1346435155503924, guid: 5f5ac1a4f5bfeec4584f1818feb6fdc7,
+    ChampionPrefab: {fileID: 1346435155503924, guid: 782001f3935837a48a557565b08b8c0c,
       type: 2}
     playerNumber: 1
     TeamNumber: 2
@@ -1468,6 +1468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 2
+  teamNumber: 1
   facingDir: -1
 --- !u!114 &784897741
 MonoBehaviour:
@@ -1691,6 +1692,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 1
+  teamNumber: 1
   facingDir: 1
 --- !u!114 &980744928
 MonoBehaviour:

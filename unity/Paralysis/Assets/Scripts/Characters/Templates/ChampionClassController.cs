@@ -40,6 +40,13 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     [SerializeField]
     protected float m_jumpAttackForce = 10f;                                // Amount of force added when the player jump attack
 
+    //New
+    protected float m_initialJumpVelocity = 10f;
+    protected float m_jumpStartTime = 0f;
+    protected const float m_jumpMaxAccel = .4f;
+    protected const float m_maxJumpTime = 1f;
+    protected bool m_canDoubleJump = false;
+
     // Dash
     [SerializeField]
     protected float m_dashSpeed = 12f;                                      // Force applied when dashing
@@ -287,6 +294,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     public virtual void Jump(bool jump)
     {
+        /*
         // If the player should jump...
         if (CanPerformAction(false) && jump && CanPerformAttack())
         {
@@ -310,6 +318,68 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 // set variable to prevent third jump
                 doubleJumped = true;
             }
+        }
+        */
+
+        // If the player should jump...
+        if (CanPerformAction(false) && jump && CanPerformAttack())
+        {
+            if (animCon.m_Grounded && stats.LoseStamina(JUMP_STAMINA_REQ))
+            {
+                // Add a vertical force to the player.
+                animCon.m_Grounded = false;
+                animCon.trigJump = true;
+                m_canDoubleJump = false;
+
+                Vector2 currentVel = m_Rigidbody2D.velocity;
+                currentVel.y = m_initialJumpVelocity;
+                currentVel.x = 0;
+                m_Rigidbody2D.velocity = currentVel;
+                m_jumpStartTime = Time.time;
+            }
+            else if(!animCon.m_Grounded)
+            {
+                float timeSinceJump = Time.time - m_jumpStartTime;
+                float interpolator = 1 - timeSinceJump / m_maxJumpTime;
+                float acceleration = m_jumpMaxAccel * interpolator;
+
+                Vector2 currentVel = m_Rigidbody2D.velocity;
+                currentVel.y += acceleration;
+                m_Rigidbody2D.velocity = currentVel;
+            }          
+        }
+
+        //Handle double jump
+        if(CanPerformAction(false) && jump && !animCon.m_Grounded)
+        {
+            // We already let go of jump and hit it again
+            if(m_canDoubleJump && !doubleJumped)
+            {
+                animCon.trigJump = true;
+                doubleJumped = true;
+
+                Vector2 currentVel = m_Rigidbody2D.velocity;
+                currentVel.y = m_initialJumpVelocity/1.5f;
+                currentVel.x = 0;
+                m_Rigidbody2D.velocity = currentVel;
+                m_jumpStartTime = Time.time;
+            }
+            else if(jump && doubleJumped)
+            {
+                float timeSinceJump = Time.time - m_jumpStartTime;
+                float interpolator = 1 - timeSinceJump / (m_maxJumpTime/1.5f);
+                float acceleration = m_jumpMaxAccel/1.5f * interpolator;
+
+                Vector2 currentVel = m_Rigidbody2D.velocity;
+                currentVel.y += acceleration;
+                m_Rigidbody2D.velocity = currentVel;
+            }
+        }
+
+        //if we let go of jump in the air and we havent double jumped
+        if(CanPerformAction(false) && !jump && !animCon.m_Grounded && !doubleJumped)
+        {
+            m_canDoubleJump = true;
         }
     }
 

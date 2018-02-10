@@ -327,7 +327,7 @@ MonoBehaviour:
       type: 2}
     playerNumber: 0
     TeamNumber: 1
-    inputDevice: 1
+    inputDevice: 0
     trinket1: 0
     trinket2: 4
   defaultPlayer2:
