@@ -1391,6 +1391,30 @@ Prefab:
       propertyPath: m_Colors.m_PressedColor.b
       value: 0.17647058
       objectReference: {fileID: 0}
+    - target: {fileID: 114039922921208560, guid: 28853dc64afa15e4dbd9f689f51f072c,
+        type: 2}
+      propertyPath: Champion
+      value: 
+      objectReference: {fileID: 1654434425598688, guid: a88ac18cbd8da5b4ca19263602c669cd,
+        type: 2}
+    - target: {fileID: 114933685090839550, guid: 28853dc64afa15e4dbd9f689f51f072c,
+        type: 2}
+      propertyPath: Champion
+      value: 
+      objectReference: {fileID: 1903508196159970, guid: 3c565997b1ca6e94caf0190f6b7b9801,
+        type: 2}
+    - target: {fileID: 114790573683510572, guid: 28853dc64afa15e4dbd9f689f51f072c,
+        type: 2}
+      propertyPath: Champion
+      value: 
+      objectReference: {fileID: 1128103333960868, guid: 3dd357419861bfe40bbee211a7260d6d,
+        type: 2}
+    - target: {fileID: 114775449824959820, guid: 28853dc64afa15e4dbd9f689f51f072c,
+        type: 2}
+      propertyPath: Champion
+      value: 
+      objectReference: {fileID: 1346435155503924, guid: 5f5ac1a4f5bfeec4584f1818feb6fdc7,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 114612595169773906, guid: 28853dc64afa15e4dbd9f689f51f072c, type: 2}
     - {fileID: 114289400887187718, guid: 28853dc64afa15e4dbd9f689f51f072c, type: 2}
