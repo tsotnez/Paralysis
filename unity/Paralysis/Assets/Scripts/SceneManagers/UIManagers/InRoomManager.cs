@@ -48,9 +48,6 @@ public class InRoomManager : UIManager {
 
         OnGameStateUpdated();
         GameNetwork.Instance.OnGameStateUpdate += OnGameStateUpdated;
-
-        print("Started preloading next scene....");
-        StartCoroutine(StartLoadingChampSelect());
     }
 
     public void ChangeCurrentPreviewImage(Image preview)
@@ -103,8 +100,7 @@ public class InRoomManager : UIManager {
     {
         print("Loading next scene.....");
         GameNetwork.Instance.lockCurrentRoom(true);
-        StartCoroutine(ActivateChampSelect());
-        //PhotonNetwork.LoadLevel(GameConstants.NETWORK_CHAMP_SELECT);
+        PhotonNetwork.LoadLevel(GameConstants.NETWORK_CHAMP_SELECT);
     }
 
     private void backPressed()
@@ -181,24 +177,4 @@ public class InRoomManager : UIManager {
     {
         GameNetwork.Instance.OnGameStateUpdate -= OnGameStateUpdated;
     }
-
-    #region asyncload
-    private AsyncOperation async;
-    private IEnumerator StartLoadingChampSelect()
-    {
-        async = SceneManager.LoadSceneAsync(GameConstants.NETWORK_CHAMP_SELECT);
-        async.allowSceneActivation = false;
-        yield return async;
-    }
-
-    private IEnumerator ActivateChampSelect()
-    {
-        if(async == null)
-        {
-            yield return new WaitForEndOfFrame();
-        }
-        async.allowSceneActivation = true;
-    }
-    #endregion
-
 }
