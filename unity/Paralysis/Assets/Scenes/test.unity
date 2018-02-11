@@ -278,15 +278,15 @@ MonoBehaviour:
       type: 2}
     playerNumber: 0
     TeamNumber: 1
-    inputDevice: 0
+    inputDevice: 1
     trinket1: 0
     trinket2: 4
   defaultPlayer2:
-    ChampionPrefab: {fileID: 1346435155503924, guid: 782001f3935837a48a557565b08b8c0c,
+    ChampionPrefab: {fileID: 1346435155503924, guid: 5f5ac1a4f5bfeec4584f1818feb6fdc7,
       type: 2}
     playerNumber: 1
     TeamNumber: 2
-    inputDevice: 1
+    inputDevice: 0
     trinket1: 0
     trinket2: 4
   championSpriteOverlayColor: {r: 0.7647059, g: 0.7432369, b: 0.6634948, a: 1}

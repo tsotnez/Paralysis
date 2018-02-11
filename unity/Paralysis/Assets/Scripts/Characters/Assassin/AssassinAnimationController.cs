@@ -10,6 +10,7 @@ class AssassinAnimationController : ChampionAnimationController
 
     protected override bool AdditionalAnimationCondition()
     {
+        
         if (!m_Grounded && m_vSpeed > 0.001 && trigDoubleJump)
         {
             StartAnimation(AnimationController.AnimatorStates.DoubleJump);

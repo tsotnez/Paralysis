@@ -7,7 +7,7 @@ using UnityEditor;
 public class ChampionClassEditor : Editor {
 
     SerializedProperty WhatIsGround, WhatIsFallThrough, WhatToHit, MoveSpeed, MoveSpeedWhileAttacking, MoveSpeedWhileBlocking, JumpForce, JumpAttackRadius, JumpAttackForce,
-        DashSpeed, DashStaminaCost, CanDashForward, ComboExpire, ClassName, DoubleJumpDivisor, JumpAcceleration, MaxJumpTime;
+        DashSpeed, DashStaminaCost, CanDashForward, ComboExpire, ClassName, JumpAcceleration, MaxJumpTime;
 
     void OnEnable()
     {
@@ -22,7 +22,6 @@ public class ChampionClassEditor : Editor {
         JumpForce = serializedObject.FindProperty("m_initialJumpVelocity");
         JumpAcceleration = serializedObject.FindProperty("m_jumpMaxAccel");
         MaxJumpTime = serializedObject.FindProperty("m_maxJumpTime");
-        DoubleJumpDivisor = serializedObject.FindProperty("m_doubleJumpDivsor");
 
         JumpAttackRadius = serializedObject.FindProperty("m_jumpAttackRadius");
         JumpAttackForce = serializedObject.FindProperty("m_jumpAttackForce");
@@ -59,7 +58,6 @@ public class ChampionClassEditor : Editor {
         GUILayout.Label("Jump force");
         GUILayout.Label("Max Jump Accel");
         GUILayout.Label("Max Jump Time");
-        GUILayout.Label("DoubleJump Divisor");
         GUILayout.Label("JumpAttack Force");
         GUILayout.Label("JumpAttack Radius");
         GUILayout.EndHorizontal();
@@ -68,7 +66,6 @@ public class ChampionClassEditor : Editor {
         EditorGUILayout.PropertyField(JumpForce, new GUIContent(""), true);
         EditorGUILayout.PropertyField(JumpAcceleration, new GUIContent(""), true);
         EditorGUILayout.PropertyField(MaxJumpTime, new GUIContent(""), true);
-        EditorGUILayout.PropertyField(DoubleJumpDivisor, new GUIContent(""), true);
         EditorGUILayout.PropertyField(JumpAttackForce, new GUIContent(""), true);
         EditorGUILayout.PropertyField(JumpAttackRadius, new GUIContent(""), true);
         GUILayout.EndHorizontal();

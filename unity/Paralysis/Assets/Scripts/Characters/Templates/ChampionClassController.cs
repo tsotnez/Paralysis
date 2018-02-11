@@ -12,6 +12,9 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected const float GroundedRadius = .02f;                            // Radius of the overlap circle to determine if grounded
     protected const float MeeleRange = 1.5f;                                // Default range for meele attacks
     protected const float FallThroughDuration = .5f;                        // Duration of falling through a platform
+    protected const float AllowAnotherJumpAfterGround = .15f;
+    private const float DoubleJumpDivisor = 1.66f;                         // Double jump divsor
+
 
     #region Parameters for Inspector
 
@@ -37,8 +40,6 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected float m_jumpMaxAccel = .4f;                                   // Max jump accelleration
     [SerializeField]
     protected float m_maxJumpTime = 1f;                                     // Max time in air going up
-    [SerializeField]
-    protected float m_doubleJumpDivsor = 1.5f;                               // Double jump divsor
     [SerializeField]
     protected float m_jumpAttackRadius = 1.5f;                              // Radius of jump Attack damage
     [SerializeField]
@@ -167,7 +168,10 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected bool fallingThrough = false;                                  // True while we are falling through a platform
     private bool applyDashingForce = false;                                 // true while force for dashing shall be applieds
     private bool m_canDoubleJump = true;                                    // true if the player can double jump
+    private bool m_canJump = true;                                          // true when the player can start a new jump
     private float m_jumpStartTime = 0f;                                     // time of the player leaving the ground
+    private float m_allowAnotherJump = 0f;                                  // time to wait for allowing the player to jump
+
 
     //Coroutines
     protected Coroutine comboRoutine;
@@ -211,14 +215,16 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     {
         animCon.m_Grounded = false;
 
-        // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
-        // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, GroundedRadius, m_WhatIsGround);
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            if (colliders[i].gameObject != gameObject)
+        if(m_Rigidbody2D.velocity.y <= 0){
+            // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
+            // This can be done using layers instead but Sample Assets will not overwrite your project settings.
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, GroundedRadius, m_WhatIsGround);
+            for (int i = 0; i < colliders.Length; i++)
             {
-                animCon.m_Grounded = true;
+                if (colliders[i].gameObject != gameObject)
+                {
+                    animCon.m_Grounded = true;
+                }
             }
         }
 
@@ -294,15 +300,19 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     public virtual void Jump(bool jump)
     {
+        if(Time.time < m_allowAnotherJump)return;
+
         // If the player should jump...
         if (CanPerformAction(false) && jump && CanPerformAttack())
         {
-            if (animCon.m_Grounded && stats.LoseStamina(JUMP_STAMINA_REQ))
+            if (animCon.m_Grounded && m_canJump && stats.LoseStamina(JUMP_STAMINA_REQ))
             {
                 // Add a vertical force to the player.
                 animCon.m_Grounded = false;
                 animCon.trigJump = true;
                 m_canDoubleJump = false;
+                m_canJump = false;
+                StartCoroutine(jumpWaitForGrounded());
 
                 Vector2 currentVel = m_Rigidbody2D.velocity;
                 currentVel.y = m_initialJumpVelocity;
@@ -332,7 +342,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 doubleJumped = true;
 
                 Vector2 currentVel = m_Rigidbody2D.velocity;
-                currentVel.y = m_initialJumpVelocity/m_doubleJumpDivsor;
+                currentVel.y = m_initialJumpVelocity/DoubleJumpDivisor;
                 currentVel.x = 0;
                 m_Rigidbody2D.velocity = currentVel;
                 m_jumpStartTime = Time.time;
@@ -340,8 +350,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             else if(jump && doubleJumped)
             {
                 float timeSinceJump = Time.time - m_jumpStartTime;
-                float interpolator = 1 - timeSinceJump / (m_maxJumpTime/m_doubleJumpDivsor);
-                float acceleration = m_jumpMaxAccel/m_doubleJumpDivsor * interpolator;
+                float interpolator = 1 - timeSinceJump / (m_maxJumpTime/DoubleJumpDivisor);
+                float acceleration = m_jumpMaxAccel/DoubleJumpDivisor * interpolator;
 
                 Vector2 currentVel = m_Rigidbody2D.velocity;
                 currentVel.y += acceleration;
@@ -354,6 +364,16 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         {
             m_canDoubleJump = true;
         }
+    }
+
+    private IEnumerator jumpWaitForGrounded()
+    {
+        yield return new WaitUntil(()=> animCon.m_Grounded);
+        Vector2 currentVel = m_Rigidbody2D.velocity;
+        currentVel.y = 0;
+        m_Rigidbody2D.velocity = currentVel;
+        m_canJump = true;
+        m_allowAnotherJump = Time.time + AllowAnotherJumpAfterGround;
     }
 
     public virtual bool CheckFallThrough()

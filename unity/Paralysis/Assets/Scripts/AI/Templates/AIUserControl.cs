@@ -56,6 +56,8 @@ public abstract class AIUserControl : MonoBehaviour {
     private const float MAX_STUCK_TIME = 2f;
     private AI_GOALS stuckGoal = AI_GOALS.STAND_BY;
     private float timeInCurrentGoal = 0f;
+
+    private float jumpDuration = 0f;
         
     protected void Start()
     {
@@ -117,7 +119,8 @@ public abstract class AIUserControl : MonoBehaviour {
         if(goalBefore == currentGoal)timeInCurrentGoal += Time.deltaTime;
         else timeInCurrentGoal = 0;
 
-        //print("Current goal: " + currentGoal);
+        print("Current goal: " + currentGoal);
+        print("jump: " + inputJump);
     }
 
     protected virtual void setCurrentState()
@@ -291,8 +294,14 @@ public abstract class AIUserControl : MonoBehaviour {
                 //if we are double jumping... start coroutine
                 if(currentNode.isJumpNode2)
                 {
+                    jumpDuration = Time.time + currentNode.doubleJumpWait - .1f;
                     StartCoroutine(doubleJump(currentNode.doubleJumpWait));
                 }
+                else
+                {
+                    jumpDuration = Time.time + currentNode.jumpDuration1;
+                }
+
                 previousGoal = AI_GOALS.JUMP1;
 
                 inputJump = true;
@@ -318,6 +327,10 @@ public abstract class AIUserControl : MonoBehaviour {
         }
         else
         {
+            if(Time.time > jumpDuration)
+            {
+                inputJump = false;
+            }
             //We are in the air, just apply direction
             inputMove = currentNode.jumpForce1X;
         }
@@ -326,6 +339,12 @@ public abstract class AIUserControl : MonoBehaviour {
     protected IEnumerator doubleJump(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
+
+        if(inputJump){
+            yield return new WaitUntil(()=> !inputJump);
+            yield return new WaitForFixedUpdate();
+        }
+
         if(currentGoal != AI_GOALS.JUMP2)
         {
             changeCurrentAndPreviousGoal(AI_GOALS.JUMP2, AI_GOALS.JUMP1);
@@ -357,6 +376,11 @@ public abstract class AIUserControl : MonoBehaviour {
         else if(previousGoal == AI_GOALS.JUMP1)
         {
             previousGoal = AI_GOALS.JUMP2;
+            jumpDuration = Time.time + currentNode.jumpDuration2;
+        }
+
+        if(Time.time < jumpDuration)
+        {
             inputJump = true;
         }
 
@@ -444,7 +468,11 @@ public abstract class AIUserControl : MonoBehaviour {
             inputDown = false;
         }
 
-        inputJump = false;
+        if( currentGoal != AI_GOALS.JUMP1)
+        {
+            inputJump = false;
+        }
+
         inputAttack = false;
         inputMove = 0;
         inputSkill1 = false;

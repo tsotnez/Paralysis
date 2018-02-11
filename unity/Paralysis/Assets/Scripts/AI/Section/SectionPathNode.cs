@@ -7,23 +7,26 @@ public class SectionPathNode : MonoBehaviour {
     public bool isJumpNode1 = false;
     [Range(-1, 1)]
     public float jumpForce1X = 0;
+    public float jumpDuration1 = .5f;
     public bool isJumpNode2 = false;
 
     [Range(-1, 1)]
     public float jumpForce2X = 0;
-    public bool isFallThroughNode = false;
-
+    public float jumpDuration2 = .5f;
     public float doubleJumpWait = .5f;
 
-    public Section TargetSection { get { return targetSection; } }
-    private Section targetSection;
+
+    public bool isFallThroughNode = false;
+
+    //public Section TargetSection { get { return targetSection; } }
+    //private Section targetSection;
 
     [HideInInspector]
     public bool showGizmos = false;
 
     void Start()
     {
-        targetSection = AISectionManager.Instance.getSectionForPosition(transform.position);
+        //targetSection = AISectionManager.Instance.getSectionForPosition(transform.position);
     }
 
     void OnDrawGizmos()

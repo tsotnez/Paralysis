@@ -657,7 +657,7 @@ MonoBehaviour:
   m_initialJumpVelocity: 10
   m_jumpMaxAccel: 0.4
   m_maxJumpTime: 1
-  m_doubleJumpDivsor: 1.5
+  m_doubleJumpDivsor: 1.66
   m_jumpAttackRadius: 1
   m_jumpAttackForce: 10
   m_dashSpeed: 12

@@ -184,7 +184,7 @@ public abstract class ChampionAnimationController : AnimationController
                 StartAnimation(AnimatorStates.BlockMove);
             else if (!m_Grounded && m_vSpeed <= 0)
                 StartAnimation(AnimatorStates.Fall);
-            else if (!m_Grounded && m_vSpeed > 0 && trigJump)
+            else if (!m_Grounded && m_vSpeed >= 0 && trigJump)
             {
                 StartAnimation(AnimatorStates.Jump);
                 trigJump = false;
