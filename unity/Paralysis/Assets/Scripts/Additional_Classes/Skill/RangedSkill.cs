@@ -34,7 +34,8 @@ public class RangedSkill : Skill
         }
         else
         {
-            Debug.LogError("Duplicate ranged skill hash: " + skillName);
+            //This is fine as long as there are 2 of the same skills on 2 different characters.
+            Debug.Log("Duplicate ranged skill hash: " + skillName);
         }
     }
 

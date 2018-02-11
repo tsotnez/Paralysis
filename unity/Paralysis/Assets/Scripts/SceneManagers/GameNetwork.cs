@@ -525,7 +525,7 @@ public class GameNetwork : MonoBehaviour {
             manager = gOmanager.GetComponent<NetworkVersusManager>();
         }
 
-        print("Player finished loading sceen.");
+        print("Player finished loading scene.");
         playersFinishedLoadingScene++;
         if (playersFinishedLoadingScene == PhotonNetwork.playerList.Length)
         {

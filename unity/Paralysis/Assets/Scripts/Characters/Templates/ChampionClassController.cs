@@ -32,20 +32,18 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     // Jump & JumpAttack
     [SerializeField]
-    protected float m_JumpForce = 700f;                                     // Amount of force added when the player jumps.  
+    protected float m_initialJumpVelocity = 10f;                            // Initiail Y velocity when we start jumping
     [SerializeField]
-    protected float m_DoubleJumpForce = 600f;                               // Force added when doublejumping 
+    protected float m_jumpMaxAccel = .4f;                                   // Max jump accelleration
+    [SerializeField]
+    protected float m_maxJumpTime = 1f;                                     // Max time in air going up
+    [SerializeField]
+    protected float m_doubleJumpDivsor = 1.5f;                               // Double jump divsor
     [SerializeField]
     protected float m_jumpAttackRadius = 1.5f;                              // Radius of jump Attack damage
     [SerializeField]
     protected float m_jumpAttackForce = 10f;                                // Amount of force added when the player jump attack
 
-    //New
-    protected float m_initialJumpVelocity = 10f;
-    protected float m_jumpStartTime = 0f;
-    protected const float m_jumpMaxAccel = .4f;
-    protected const float m_maxJumpTime = 1f;
-    protected bool m_canDoubleJump = false;
 
     // Dash
     [SerializeField]
@@ -168,6 +166,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected bool jumpAttacking = false;                                   // True while the character is jump attacking
     protected bool fallingThrough = false;                                  // True while we are falling through a platform
     private bool applyDashingForce = false;                                 // true while force for dashing shall be applieds
+    private bool m_canDoubleJump = true;                                    // true if the player can double jump
+    private float m_jumpStartTime = 0f;                                     // time of the player leaving the ground
 
     //Coroutines
     protected Coroutine comboRoutine;
@@ -294,33 +294,6 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     public virtual void Jump(bool jump)
     {
-        /*
-        // If the player should jump...
-        if (CanPerformAction(false) && jump && CanPerformAttack())
-        {
-            if (animCon.m_Grounded && stats.LoseStamina(JUMP_STAMINA_REQ))
-            {
-                // Add a vertical force to the player.
-                animCon.m_Grounded = false;
-                animCon.trigJump = true;
-                m_Rigidbody2D.velocity = Vector2.zero;
-                m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
-            }
-            else if (!doubleJumped && !animCon.m_Grounded)
-            {
-                // Double Jump
-                m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
-                m_Rigidbody2D.AddForce(new Vector2(0f, m_DoubleJumpForce));
-
-                // set animation
-                animCon.trigJump = true;
-
-                // set variable to prevent third jump
-                doubleJumped = true;
-            }
-        }
-        */
-
         // If the player should jump...
         if (CanPerformAction(false) && jump && CanPerformAttack())
         {
@@ -359,7 +332,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 doubleJumped = true;
 
                 Vector2 currentVel = m_Rigidbody2D.velocity;
-                currentVel.y = m_initialJumpVelocity/1.5f;
+                currentVel.y = m_initialJumpVelocity/m_doubleJumpDivsor;
                 currentVel.x = 0;
                 m_Rigidbody2D.velocity = currentVel;
                 m_jumpStartTime = Time.time;
@@ -367,8 +340,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             else if(jump && doubleJumped)
             {
                 float timeSinceJump = Time.time - m_jumpStartTime;
-                float interpolator = 1 - timeSinceJump / (m_maxJumpTime/1.5f);
-                float acceleration = m_jumpMaxAccel/1.5f * interpolator;
+                float interpolator = 1 - timeSinceJump / (m_maxJumpTime/m_doubleJumpDivsor);
+                float acceleration = m_jumpMaxAccel/m_doubleJumpDivsor * interpolator;
 
                 Vector2 currentVel = m_Rigidbody2D.velocity;
                 currentVel.y += acceleration;

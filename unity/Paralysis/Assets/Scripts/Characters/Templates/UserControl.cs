@@ -285,8 +285,7 @@ public abstract class UserControl : MonoBehaviour
 
         if (!inputJump)
         {
-            //if (lastVerticalValue >= 0)
-                inputJump = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()) < 0;
+            inputJump = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()) < 0;
         }
         if (!CharStats.stunned && !CharStats.knockedBack)
             inputDown = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()) > 0;
@@ -340,8 +339,7 @@ public abstract class UserControl : MonoBehaviour
 
         if (!inputJump)
         {
-            //if (lastVerticalValue >= 0)
-                inputJump = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()) < 0;
+            inputJump = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()) < 0;
         }
         if (!CharStats.stunned && !CharStats.knockedBack)
             inputDown = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()) > 0;

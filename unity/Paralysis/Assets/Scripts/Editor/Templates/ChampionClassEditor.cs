@@ -7,7 +7,7 @@ using UnityEditor;
 public class ChampionClassEditor : Editor {
 
     SerializedProperty WhatIsGround, WhatIsFallThrough, WhatToHit, MoveSpeed, MoveSpeedWhileAttacking, MoveSpeedWhileBlocking, JumpForce, JumpAttackRadius, JumpAttackForce,
-        DashSpeed, DashStaminaCost, CanDashForward, ComboExpire, ClassName, DoubleJumpForce;
+        DashSpeed, DashStaminaCost, CanDashForward, ComboExpire, ClassName, DoubleJumpDivisor, JumpAcceleration, MaxJumpTime;
 
     void OnEnable()
     {
@@ -18,7 +18,12 @@ public class ChampionClassEditor : Editor {
         MoveSpeed =  serializedObject.FindProperty("m_MaxSpeed");
         MoveSpeedWhileAttacking = serializedObject.FindProperty("m_MoveSpeedWhileAttacking");
         MoveSpeedWhileBlocking = serializedObject.FindProperty("m_MoveSpeedWhileBlocking");
-        JumpForce = serializedObject.FindProperty("m_JumpForce");
+
+        JumpForce = serializedObject.FindProperty("m_initialJumpVelocity");
+        JumpAcceleration = serializedObject.FindProperty("m_jumpMaxAccel");
+        MaxJumpTime = serializedObject.FindProperty("m_maxJumpTime");
+        DoubleJumpDivisor = serializedObject.FindProperty("m_doubleJumpDivsor");
+
         JumpAttackRadius = serializedObject.FindProperty("m_jumpAttackRadius");
         JumpAttackForce = serializedObject.FindProperty("m_jumpAttackForce");
         DashSpeed = serializedObject.FindProperty("m_dashSpeed");
@@ -26,7 +31,7 @@ public class ChampionClassEditor : Editor {
         CanDashForward = serializedObject.FindProperty("CanDashForward");
         ComboExpire = serializedObject.FindProperty("ComboExpire");
         ClassName = serializedObject.FindProperty("className");
-        DoubleJumpForce = serializedObject.FindProperty("m_DoubleJumpForce");
+
     }
 
     public override void OnInspectorGUI()
@@ -52,16 +57,20 @@ public class ChampionClassEditor : Editor {
         GUILayout.Label("Jumping", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
         GUILayout.Label("Jump force");
+        GUILayout.Label("Max Jump Accel");
+        GUILayout.Label("Max Jump Time");
+        GUILayout.Label("DoubleJump Divisor");
         GUILayout.Label("JumpAttack Force");
         GUILayout.Label("JumpAttack Radius");
-        GUILayout.Label("DoubleJump Force");
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(JumpForce, new GUIContent(""), true);
+        EditorGUILayout.PropertyField(JumpAcceleration, new GUIContent(""), true);
+        EditorGUILayout.PropertyField(MaxJumpTime, new GUIContent(""), true);
+        EditorGUILayout.PropertyField(DoubleJumpDivisor, new GUIContent(""), true);
         EditorGUILayout.PropertyField(JumpAttackForce, new GUIContent(""), true);
         EditorGUILayout.PropertyField(JumpAttackRadius, new GUIContent(""), true);
-        EditorGUILayout.PropertyField(DoubleJumpForce, new GUIContent(""), true);
         GUILayout.EndHorizontal();
 
         GUILayout.Label("Dashing", EditorStyles.boldLabel);
