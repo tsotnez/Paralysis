@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.EventSystems;
+using System.Linq;
 using UnityEngine.UI;
 
 /// <summary>
@@ -57,46 +57,48 @@ public class SettingsManager : MainMenuManager {
 
     private void initControls()
     {
-        //Reading entries from Unity Input Manager and adding a new entry to the controls tabel for each one
-        var inputManager = AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/InputManager.asset")[0];
-        SerializedObject obj = new SerializedObject(inputManager);
+        //WAIT FOR BETTER INPUT SYSTEM
 
-        SerializedProperty axisArray = obj.FindProperty("m_Axes");
+        ////Reading entries from Unity Input Manager and adding a new entry to the controls tabel for each one
+        //var inputManager = AssetBundle.LoadFromFile("ProjectSettings/InputManager.asset");
+        //SerializedObject obj = new SerializedObject(inputManager);
 
-        if (axisArray.arraySize == 0)
-            Debug.Log("No Axes");
+        //SerializedProperty axisArray = obj.FindProperty("m_Axes");
 
-        for (int i = 0; i < axisArray.arraySize; ++i)
-        {
-            var axis = axisArray.GetArrayElementAtIndex(i);
+        //if (axisArray.arraySize == 0)
+        //    Debug.Log("No Axes");
 
-            var name = axis.FindPropertyRelative("m_Name").stringValue;
-            var key = axis.FindPropertyRelative("positiveButton").stringValue;
+        //for (int i = 0; i < axisArray.arraySize; ++i)
+        //{
+        //    var axis = axisArray.GetArrayElementAtIndex(i);
 
-            //If currently used input device is keyboard and mouse, only show input for that device
-            if (MyStandaloneInputModule.ControllingPlayerInputDevice == UserControl.InputDevice.KeyboardMouse && false)
-            {
-                if (!name.Contains("Xbox") && name != "Vertical")
-                {
-                    addEntryToTable(name, key);
+        //    var name = axis.FindPropertyRelative("m_Name").stringValue;
+        //    var key = axis.FindPropertyRelative("positiveButton").stringValue;
 
-                    //Add extra entry for moving left, because horizontal axis has both positive and negative input
-                    if (name == "Horizontal")
-                        addEntryToTable("Move Left", axis.FindPropertyRelative("negativeButton").stringValue);
-                }
+        //    //If currently used input device is keyboard and mouse, only show input for that device
+        //    if (MyStandaloneInputModule.ControllingPlayerInputDevice == UserControl.InputDevice.KeyboardMouse && false)
+        //    {
+        //        if (!name.Contains("Xbox") && name != "Vertical")
+        //        {
+        //            addEntryToTable(name, key);
 
-            }
-            else if(MyStandaloneInputModule.ControllingPlayerInputDevice == UserControl.InputDevice.XboxController || true)
-            {
-                if (name.Contains("XboxPlayer1") )
-                {
-                    if (key == "") // If the input uses a controller axis, name input axis as key
-                        key = axis.FindPropertyRelative("axis").enumNames[axis.FindPropertyRelative("axis").enumValueIndex];
-                    addEntryToTable(name.Replace("_XboxPlayer1", ""), key);
-                }
-            }
+        //            //Add extra entry for moving left, because horizontal axis has both positive and negative input
+        //            if (name == "Horizontal")
+        //                addEntryToTable("Move Left", axis.FindPropertyRelative("negativeButton").stringValue);
+        //        }
 
-        }
+        //    }
+        //    else if (MyStandaloneInputModule.ControllingPlayerInputDevice == UserControl.InputDevice.XboxController || true)
+        //    {
+        //        if (name.Contains("XboxPlayer1"))
+        //        {
+        //            if (key == "") // If the input uses a controller axis, name input axis as key
+        //                key = axis.FindPropertyRelative("axis").enumNames[axis.FindPropertyRelative("axis").enumValueIndex];
+        //            addEntryToTable(name.Replace("_XboxPlayer1", ""), key);
+        //        }
+        //    }
+
+        //}
 
     }
 
@@ -136,6 +138,7 @@ public class SettingsManager : MainMenuManager {
         {
             options.Add(item.width + " x " + item.height);
         }
+        options = options.Distinct().ToList(); //Delete duplicates
         resolutionDropdown.AddOptions(options);
 
         //Add listeners to graphics settings
