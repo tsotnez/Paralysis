@@ -91,9 +91,9 @@ public class MainMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler, I
         StartCoroutine(setModeSelectionInActive());
     }
 
-    public void AAAAAA()
+    public void LoadSceneWithVersusLoadingScreen(string Scene)
     {
-        AdvancedSceneManager.LoadSceneWithLoadingScreen("MainMenu", "MultiplayerLoadingScreen");
+        AdvancedSceneManager.LoadSceneWithLoadingScreen(Scene, "MultiplayerLoadingScreen");
         //SceneManager.LoadScene("Scenes/test");
     }
 
