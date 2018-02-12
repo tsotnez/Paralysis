@@ -3861,10 +3861,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   champions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1654434425598688, guid: a88ac18cbd8da5b4ca19263602c669cd, type: 2}
+  - {fileID: 1903508196159970, guid: 3c565997b1ca6e94caf0190f6b7b9801, type: 2}
+  - {fileID: 1128103333960868, guid: 3dd357419861bfe40bbee211a7260d6d, type: 2}
+  - {fileID: 1346435155503924, guid: 5f5ac1a4f5bfeec4584f1818feb6fdc7, type: 2}
   - {fileID: 1468821578159268, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b, type: 2}
 --- !u!114 &114046003726001988
 MonoBehaviour:
@@ -16910,7 +16910,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -218.5, y: 0.000025253743}
+  m_AnchoredPosition: {x: -218.5, y: 0.00007104874}
   m_SizeDelta: {x: 431.8734, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &224763703445057744
