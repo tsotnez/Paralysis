@@ -12,8 +12,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected const float GroundedRadius = .02f;                            // Radius of the overlap circle to determine if grounded
     protected const float MeeleRange = 1.5f;                                // Default range for meele attacks
     protected const float FallThroughDuration = .5f;                        // Duration of falling through a platform
-    protected const float AllowAnotherJumpAfterGround = .15f;
-    private const float DoubleJumpDivisor = 1.66f;                         // Double jump divsor
+    protected const float AllowAnotherJumpAfterGround = .25f;               // How long to wait to be able to jump again after grounded
+    private const float DoubleJumpDivisor = 1.66f;                          // Double jump divsor
 
 
     #region Parameters for Inspector
@@ -215,7 +215,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     {
         animCon.m_Grounded = false;
 
-        if(m_Rigidbody2D.velocity.y <= 0){
+        if(m_Rigidbody2D.velocity.y == 0){
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
             // This can be done using layers instead but Sample Assets will not overwrite your project settings.
             Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, GroundedRadius, m_WhatIsGround);
