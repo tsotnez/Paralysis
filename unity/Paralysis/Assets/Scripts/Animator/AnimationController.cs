@@ -8,8 +8,6 @@ using System.Linq;
 [RequireComponent(typeof(SpriteRenderer))]
 public abstract class AnimationController : MonoBehaviour
 {
-    #region Public parameters for Editor-Inspector
-
     //Logging
     public bool DebugLogging = false;                                       // En-/Disable Logging
 
@@ -17,34 +15,18 @@ public abstract class AnimationController : MonoBehaviour
     public string CharacterClass = "_master";                               // Foldername to the selected char
     public string CharacterSkin = "basic";                                  // Foldername to the selected skin
     public float GeneralSpeed = 1;                                          // General Speed for all animations
-    // Animation Properties
-    public AnimatorStates[] AnimationType = { 0 };                          // Type of Animation
-    public SpriteAtlas[] Atlasses;                                          // Array of all atlasses
-    public bool[] AnimationLoop = { false };                                // Shall animation be looped?
-    public float[] AnimationDuration;                                       // Duration of each animation
-
-    // Additional Animations
-    public SpriteAtlas[] StartAtlasses;                                     // Array of all atlasses for Start-Animation
-    public SpriteAtlas[] EndAtlasses;                                       // Array of all atlasses for End-Animation
-
-    #endregion
 
     // Public GET parameters
     public AnimatorStates CurrentAnimation { get; private set; }            // current playing animation 
     public AnimationState CurrentAnimationState { get; private set; }       // current playing animation state
 
-    //Private parameters
-    private Dictionary<AnimatorStates, SpriteAtlas> animationSprites;       // Saves all Sprites to the Animations
-    private Dictionary<AnimatorStates, SpriteAtlas> animationSpriteStart;   // Saves all Sprite-Start-Animations to the Animations
-    private Dictionary<AnimatorStates, SpriteAtlas> animationSpriteEnd;     // Saves all Sprite-End-Animations to the Animations
-    private Dictionary<AnimatorStates, float> animationDuration;            // Saves all Speed of the Animations
-    private Dictionary<AnimatorStates, bool> animationLoop;                 // Saves if animation should be looped
     private AudioSource audioSource;                                        // Reference to audio source for playing sounds
-
     private bool finishedInitialization = false;                            // True if finished loading all the sprites
     private SpriteRenderer spriteRenderer;                                  // Sprite Renderer
     private Coroutine AnimationRoutine;                                     // Animation Routine
     private PhotonView photonView;
+
+    private Dictionary<AnimatorStates, Animation> Animations;
 
     #region Enums
 
@@ -108,11 +90,7 @@ public abstract class AnimationController : MonoBehaviour
     void Start()
     {        
         // initiate dictionarys
-        animationSprites = new Dictionary<AnimatorStates, SpriteAtlas>();
-        animationSpriteEnd = new Dictionary<AnimatorStates, SpriteAtlas>();
-        animationSpriteStart = new Dictionary<AnimatorStates, SpriteAtlas>();
-        animationDuration = new Dictionary<AnimatorStates, float>();
-        animationLoop = new Dictionary<AnimatorStates, bool>();
+        Animations = new Dictionary<AnimatorStates, Animation>();
         audioSource = GetComponent<AudioSource>();
         photonView = GetComponent<PhotonView>();
 
@@ -124,31 +102,6 @@ public abstract class AnimationController : MonoBehaviour
 
     public void InitAnimations()
     {
-        // Save each ANIMATION and their attributes in the dictionarys
-        for (int i = 0; i < AnimationType.Length; i++)
-        {
-            animationSprites.Add(AnimationType[i], Atlasses[i]);
-            animationDuration.Add(AnimationType[i], AnimationDuration[i]);
-            animationLoop.Add(AnimationType[i], AnimationLoop[i]);
-
-            // Save each START-/END-ANIMATION
-            if (StartAtlasses[i] != null)
-            {
-                animationSpriteStart.Add(AnimationType[i], StartAtlasses[i]);
-            }
-            if (EndAtlasses[i] != null)
-            {
-                animationSpriteEnd.Add(AnimationType[i], EndAtlasses[i]);
-            }
-        }
-
-        // Save idle animation's ground position
-        Sprite[] temp = new Sprite[animationSprites[AnimatorStates.Idle].spriteCount];
-        animationSprites[AnimatorStates.Idle].GetSprites(temp);
-
-        // clear working area
-        foreach (Sprite sp in temp) Destroy(sp);
-
         // set finsihed and start first animation
         finishedInitialization = true;
         StartAnimation(AnimatorStates.Idle);
@@ -225,12 +178,18 @@ public abstract class AnimationController : MonoBehaviour
 
             // get sprite atlas
             SpriteAtlas atlas = null;
-            if (AnimationType == TypeOfAnimation.StartAnimation)
-                atlas = animationSpriteStart[animation];
-            else if (AnimationType == TypeOfAnimation.Animation)
-                atlas = animationSprites[animation];
-            else if (AnimationType == TypeOfAnimation.EndAnimation)
-                atlas = animationSpriteEnd[animation];
+            switch (AnimationType)
+            {
+                case TypeOfAnimation.Animation:
+                    atlas = Animations[animation].DefaultAnimAtlas;
+                    break;
+                case TypeOfAnimation.StartAnimation:
+                    atlas = Animations[animation].StartAnimAtlas;
+                    break;
+                case TypeOfAnimation.EndAnimation:
+                    atlas = Animations[animation].EndAnimAtlas;
+                    break;
+            }
 
             // Calculating AnimationPlayType
             AnimationPlayTypes AnimationPlayType;
