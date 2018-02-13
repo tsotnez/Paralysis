@@ -8,6 +8,7 @@ public class MainMenuManager : UIManager {
     public CanvasGroup startPage;
     protected CanvasGroup currentPage; //Page which is shown currently
 
+    public CanvasGroup settings;
     public CanvasGroup[] MenuPages;
     public GameObject[] firstSelectedObjects;
     public Image fadeOverlay;
@@ -51,14 +52,17 @@ public class MainMenuManager : UIManager {
     {
         module.SetControllingPlayerInputDevice(UserControl.InputDevice.XboxController);
         int currentPageIndex = Array.IndexOf(MenuPages, currentPage);
-        EventSystem.current.SetSelectedGameObject(firstSelectedObjects[currentPageIndex]);
-        GameObject.FindObjectOfType<SettingsManager>().refreshInputTable();
+
+        if (currentPage != settings)
+            EventSystem.current.SetSelectedGameObject(firstSelectedObjects[currentPageIndex]);
+        else
+            FindObjectOfType<SettingsManager>().setSelectedGoAccordingly();
+
     }
 
     protected override void gotoKeyboard()
     {
         base.gotoKeyboard();
-        GameObject.FindObjectOfType<SettingsManager>().refreshInputTable();
     }
 
     /// <summary>

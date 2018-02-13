@@ -33,11 +33,10 @@ public class VerticalAutomaticScroll : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-
         GameObject selected = es.currentSelectedGameObject;
 
         //Is the currently selected GO one of the content GOs?
-        if (content.Contains(selected))
+        if (content.Contains(selected) && selected != null)
         {
             float maxY = maskRect.rect.height;
             float minY = -maxY;

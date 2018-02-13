@@ -72,8 +72,16 @@ public class ChangeImageColor : MonoBehaviour, ISelectHandler, IDeselectHandler,
     {
         target.color = onClickCol;
         yield return new WaitForSeconds(.05f);
-        if(!keepColorOnClick)
-            target.color = onHoverCol;
+        if (!keepColorOnClick)
+        {
+            if (EventSystem.current.currentSelectedGameObject == gameObject)
+            {
+                target.color = onHoverCol;
+            }
+            else
+                target.color = defaultCol;
+        }
+
     }
 
 
