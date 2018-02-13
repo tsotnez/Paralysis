@@ -500,7 +500,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 yield return new WaitUntil(() => animCon.CurrentAnimation == RequiredAnimState);                                    // Wait till animation has started
 
                 // If an EndAnimation is present do some extra stuff
-                if (animCon.AnimationDictionaryHasAnimation(RequiredAnimState, AnimationController.TypeOfAnimation.EndAnimation))
+                //if (animCon.AnimationDictionaryHasAnimation(RequiredAnimState, AnimationController.TypeOfAnimation.EndAnimation))
+                if (true)
                 {
                     yield return new WaitUntil(() => animCon.CurrentAnimationState == AnimationController.AnimationState.Waiting);  // Wait till animation is in state waiting
                     yield return new WaitUntil(() => animCon.m_Grounded);                                                           // Wait till character is on ground

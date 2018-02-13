@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.U2D;
 
 [System.Serializable]
-class Animation : MonoBehaviour
+public class SectorAnimation : MonoBehaviour
 {
     // Animation Parameters
     public AnimationController.AnimatorStates AnimationType;
@@ -24,7 +19,7 @@ class Animation : MonoBehaviour
 
     // Cache for Atlasses
     SpriteAtlas startAnimAtlas = null;
-    SpriteAtlas defaultanimAtlas = null;
+    SpriteAtlas defaultAnimAtlas = null;
     SpriteAtlas endAnimAtlas = null;
 
     // FS Properties
@@ -34,12 +29,6 @@ class Animation : MonoBehaviour
     // Stuff
     AnimationController animCon;
     Coroutine destroyRoutine = null;
-
-    #region Enum
-
-    public enum AnimType { Start, Default, End }
-
-    #endregion
 
     #region default
 
@@ -79,7 +68,7 @@ class Animation : MonoBehaviour
     {
         get
         {
-            if (DefaultAnimAvaiable && startAnimAtlas == null)
+            if (DefaultAnimAvaiable && defaultAnimAtlas == null)
             {
                 LoadSpriteAtlas();
             }
@@ -87,7 +76,7 @@ class Animation : MonoBehaviour
             {
                 ResetDestroyAtlasses();
             }
-            return defaultanimAtlas;
+            return defaultAnimAtlas;
         }
     }
 
@@ -95,7 +84,7 @@ class Animation : MonoBehaviour
     {
         get
         {
-            if (EndAnimAvaiable && startAnimAtlas == null)
+            if (EndAnimAvaiable && endAnimAtlas == null)
             {
                 LoadSpriteAtlas();
             }
@@ -120,7 +109,7 @@ class Animation : MonoBehaviour
             {
                 startAnimAtlas = ((SpriteAtlas)Resources.Load(AtlasPath + "Start" + AtlasPathSuffix));
             }
-            defaultanimAtlas = ((SpriteAtlas)Resources.Load(AtlasPath + AtlasPathSuffix));
+            defaultAnimAtlas = ((SpriteAtlas)Resources.Load(AtlasPath + AtlasPathSuffix));
             if (EndAnimAvaiable)
             {
                 endAnimAtlas = ((SpriteAtlas)Resources.Load(AtlasPath + "End" + AtlasPathSuffix));
@@ -150,10 +139,13 @@ class Animation : MonoBehaviour
         yield return new WaitForSeconds(10f);
 
         // Kill References
-        Resources.UnloadUnusedAssets();
+        Resources.UnloadAsset(startAnimAtlas);
         startAnimAtlas = null;
-        defaultanimAtlas = null;
+        Resources.UnloadAsset(defaultAnimAtlas);
+        defaultAnimAtlas = null;
+        Resources.UnloadAsset(endAnimAtlas);
         endAnimAtlas = null;
+        Resources.UnloadUnusedAssets();
     }
 
     #endregion

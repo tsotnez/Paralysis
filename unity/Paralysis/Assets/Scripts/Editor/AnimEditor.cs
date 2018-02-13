@@ -6,7 +6,7 @@ using System;
 
 // Custom Editor using SerializedProperties.
 // Automatic handling of multi-object editing, undo, and prefab overrides.
-[CustomEditor(typeof(AnimationController), true)]
+[CustomEditor(typeof(AnimationController), false)]
 [CanEditMultipleObjects]
 public class AnimEditor : Editor
 {

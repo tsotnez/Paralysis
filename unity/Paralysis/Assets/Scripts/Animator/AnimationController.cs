@@ -26,8 +26,8 @@ public abstract class AnimationController : MonoBehaviour
     private Coroutine AnimationRoutine;                                     // Animation Routine
     private PhotonView photonView;
 
-    private Dictionary<AnimatorStates, Animation> Animations;
-
+    private Dictionary<AnimatorStates, SectorAnimation> Animations;
+    public SectorAnimation[] test;
     #region Enums
 
     // All existing animation types
@@ -90,7 +90,7 @@ public abstract class AnimationController : MonoBehaviour
     void Start()
     {        
         // initiate dictionarys
-        Animations = new Dictionary<AnimatorStates, Animation>();
+        Animations = new Dictionary<AnimatorStates, SectorAnimation>();
         audioSource = GetComponent<AudioSource>();
         photonView = GetComponent<PhotonView>();
 
@@ -109,38 +109,13 @@ public abstract class AnimationController : MonoBehaviour
 
     #endregion
 
-    #region Validation
-
-    public bool AnimationDictionaryHasAnimation(AnimatorStates Animation, TypeOfAnimation AnimationType)
-    {
-        if (AnimationType == TypeOfAnimation.Animation)
-        {
-            if (animationSprites.ContainsKey(Animation) && animationSprites[Animation] != null)
-                return true;
-        }
-        else if (AnimationType == TypeOfAnimation.StartAnimation)
-        {
-            if (animationSpriteStart.ContainsKey(Animation) && animationSpriteStart[Animation] != null)
-                return true;
-        }
-        else
-        {
-            if (animationSpriteEnd.ContainsKey(Animation) && animationSpriteEnd[Animation] != null)
-                return true;
-        }
-
-        return false;
-    }
-
-    #endregion
-
     #region Manage Animations
 
     public void StartAnimation(AnimatorStates animation)
     {
         if (finishedInitialization && CurrentAnimation != animation)
         {
-            if (AnimationDictionaryHasAnimation(animation, TypeOfAnimation.StartAnimation))
+            if (true)
             {
                 StartAnimation(animation, TypeOfAnimation.StartAnimation);
             }
@@ -170,7 +145,7 @@ public abstract class AnimationController : MonoBehaviour
         TypeOfAnimation AnimationType = (TypeOfAnimation)AnimationTypeN;
         AnimationPlayTypes ForceAnimationPlayType = (AnimationPlayTypes)ForceAnimationPlayTypeN;
 
-        if (AnimationDictionaryHasAnimation(animation, AnimationType))
+        if (true)
         {
             // set current animation
             CurrentAnimation = animation;
@@ -195,11 +170,11 @@ public abstract class AnimationController : MonoBehaviour
             AnimationPlayTypes AnimationPlayType;
             if (ForceAnimationPlayType == AnimationPlayTypes.Nothing)
             {
-                if (animationLoop[animation])
+                if (true)
                 {
                     AnimationPlayType = AnimationPlayTypes.Loop;
                 }
-                else if (AnimationType == TypeOfAnimation.Animation && AnimationDictionaryHasAnimation(animation, TypeOfAnimation.EndAnimation))
+                else if (AnimationType == TypeOfAnimation.Animation)
                 {   // if found a matching End-Animation to the choosen animation set the PlayType to HoldOnEnd
                     AnimationPlayType = AnimationPlayTypes.HoldOnEnd;
                 }
@@ -216,7 +191,7 @@ public abstract class AnimationController : MonoBehaviour
             // stop running coroutine
             if (AnimationRoutine != null) StopCoroutine(AnimationRoutine);
             // start next animation as coroutine
-            AnimationRoutine = StartCoroutine(PlayAnimation(animation, atlas, animationDuration[animation], AnimationType, AnimationPlayType));
+            AnimationRoutine = StartCoroutine(PlayAnimation(animation, atlas, 0, AnimationType, AnimationPlayType));
         }
         else
         {
@@ -323,13 +298,13 @@ public abstract class AnimationController : MonoBehaviour
         AudioClip clip = Resources.Load<AudioClip>("Audio/Characters/" + CharacterClass + "/" + animation.ToString());
         if (clip != null)
         {
-            if (audioSource.clip != clip || (audioSource.clip == clip && animationLoop[animation]))
+            if (audioSource.clip != clip || (audioSource.clip == clip && true))
             {
                 //New clip or loop
                 audioSource.clip = clip;
                 audioSource.Play();
             }
-            else if (audioSource.clip == clip && !animationLoop[animation])
+            else if (audioSource.clip == clip && !true)
             {
                 //Same clip again
                 audioSource.Stop();
