@@ -8,30 +8,36 @@ using System.Linq;
 [RequireComponent(typeof(SpriteRenderer))]
 public abstract class AnimationController : MonoBehaviour
 {
-    //Logging
-    public bool DebugLogging = false;                                       // En-/Disable Logging
+    // Inspector
+    public AnimationPlayTypes[] AnimPlayType = { AnimationPlayTypes.Single };   // Shall animation be looped?
+    public float[] StartAnimDuration = { 0.5f };                                // Duration of Start-Animation
+    public float[] DefaultAnimDuration = { 0.5f };                              // Duration of Default-Animation
+    public float[] EndAnimDuration = { 0.5f };                                  // Duration of End-Animation
+
+    // Logging
+    public bool DebugLogging = false;                                           // En-/Disable Logging
 
     // Default Properties
-    public string CharacterClass = "_master";                               // Foldername to the selected char
-    public string CharacterSkin = "basic";                                  // Foldername to the selected skin
-    public float GeneralSpeed = 1;                                          // General Speed for all animations
+    public string CharacterClass = "_master";                                   // Foldername to the selected char
+    public string CharacterSkin = "basic";                                      // Foldername to the selected skin
 
     // Public GET parameters
-    public AnimatorStates CurrentAnimation { get; private set; }            // current playing animation 
-    public AnimationState CurrentAnimationState { get; private set; }       // current playing animation state
+    public AnimationTypes CurrentAnimation { get; private set; }                // current playing animation 
+    public AnimationState CurrentAnimationState { get; private set; }           // current playing animation state
 
-    private AudioSource audioSource;                                        // Reference to audio source for playing sounds
-    private bool finishedInitialization = false;                            // True if finished loading all the sprites
-    private SpriteRenderer spriteRenderer;                                  // Sprite Renderer
-    private Coroutine AnimationRoutine;                                     // Animation Routine
-    private PhotonView photonView;
+    // Components
+    private AudioSource audioSource;                                            // Reference to audio source for playing sounds
+    private SpriteRenderer spriteRenderer;                                      // Sprite Renderer
+    private PhotonView photonView;                                              // Network
 
-    private Dictionary<AnimatorStates, SectorAnimation> Animations;
-    public SectorAnimation[] test;
+    // Animation 
+    private bool finishedInitialization = false;                                // True if finished loading all the sprites
+    private Dictionary<AnimationTypes, SectorAnimation> SectorAnimations;       // Dictionary of Animations
+
     #region Enums
 
     // All existing animation types
-    public enum AnimatorStates
+    public enum AnimationTypes
     {
         //Default
         Idle = 0,
@@ -68,9 +74,9 @@ public abstract class AnimationController : MonoBehaviour
         Die = 21
     }
 
-    public enum TypeOfAnimation
+    public enum AnimationKind
     {
-        Animation = 0, StartAnimation = 1, EndAnimation = 2
+        DefaultAnimation = 0, StartAnimation = 1, EndAnimation = 2
     }
 
     public enum AnimationPlayTypes
@@ -88,13 +94,13 @@ public abstract class AnimationController : MonoBehaviour
     #region Init
 
     void Start()
-    {        
+    {
         // initiate dictionarys
-        Animations = new Dictionary<AnimatorStates, SectorAnimation>();
-        audioSource = GetComponent<AudioSource>();
-        photonView = GetComponent<PhotonView>();
+        SectorAnimations = new Dictionary<AnimationTypes, SectorAnimation>();
 
         // initiate Components
+        audioSource = GetComponent<AudioSource>();
+        photonView = GetComponent<PhotonView>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         InitAnimations();
@@ -102,198 +108,131 @@ public abstract class AnimationController : MonoBehaviour
 
     public void InitAnimations()
     {
+        // Apply values from Inspector to Dictionary
+        for (int i = 0; i < AnimPlayType.Length; i++)
+        {
+            SectorAnimations.Add((AnimationTypes)i, new SectorAnimation(this, (AnimationTypes)i, AnimPlayType[i], StartAnimDuration[i], DefaultAnimDuration[i], EndAnimDuration[i]));
+        }
+
+        // Clear Arrays from Inspector
+        AnimPlayType = null;
+        StartAnimDuration = null;
+        DefaultAnimDuration = null;
+        EndAnimDuration = null;
+
         // set finsihed and start first animation
         finishedInitialization = true;
-        StartAnimation(AnimatorStates.Idle);
+        StartAnimation(AnimationTypes.Idle);
     }
 
     #endregion
 
     #region Manage Animations
 
-    public void StartAnimation(AnimatorStates animation)
+    public void StartAnimation(AnimationTypes Anim, AnimationKind AnimKind = AnimationKind.DefaultAnimation)
     {
-        if (finishedInitialization && CurrentAnimation != animation)
-        {
-            if (true)
-            {
-                StartAnimation(animation, TypeOfAnimation.StartAnimation);
-            }
-            else
-            {
-                StartAnimation(animation, TypeOfAnimation.Animation);
-            }
-        }
+        StopAllCoroutines();
+        StartCoroutine(HandleAnimation(SectorAnimations[Anim], AnimKind));
     }
 
-    public void StartAnimation(AnimatorStates animation, TypeOfAnimation AnimationType, AnimationPlayTypes ForceAnimationPlayType = AnimationPlayTypes.Nothing)
+    private IEnumerator HandleAnimation(SectorAnimation Anim, AnimationKind ForceAnimKind)
     {
-        if(!PhotonNetwork.offlineMode && GameNetwork.Instance.InGame)
-        {
-            photonView.RPC("RPC_StartAnimation", PhotonTargets.All, (short)animation, (short)AnimationType, (short)ForceAnimationPlayType);
-        }
-        else
-        {
-            RPC_StartAnimation((short)animation, (short)AnimationType, (short)ForceAnimationPlayType);
-        }
-    }
-
-    [PunRPC]
-    public void RPC_StartAnimation(short animationN, short AnimationTypeN, short ForceAnimationPlayTypeN)
-    {
-        AnimatorStates animation = (AnimatorStates)animationN;
-        TypeOfAnimation AnimationType = (TypeOfAnimation)AnimationTypeN;
-        AnimationPlayTypes ForceAnimationPlayType = (AnimationPlayTypes)ForceAnimationPlayTypeN;
-
-        if (true)
+        if (Anim.DefaultAnimAvaiable)
         {
             // set current animation
-            CurrentAnimation = animation;
+            CurrentAnimation = Anim.AnimType;
             CurrentAnimationState = AnimationState.Playing;
 
-            // get sprite atlas
-            SpriteAtlas atlas = null;
-            switch (AnimationType)
-            {
-                case TypeOfAnimation.Animation:
-                    atlas = Animations[animation].DefaultAnimAtlas;
-                    break;
-                case TypeOfAnimation.StartAnimation:
-                    atlas = Animations[animation].StartAnimAtlas;
-                    break;
-                case TypeOfAnimation.EndAnimation:
-                    atlas = Animations[animation].EndAnimAtlas;
-                    break;
-            }
+            // Handle audio matching to the animation
+            PlayAnimationAudio(Anim.AnimType);
 
-            // Calculating AnimationPlayType
-            AnimationPlayTypes AnimationPlayType;
-            if (ForceAnimationPlayType == AnimationPlayTypes.Nothing)
+            if (ForceAnimKind != AnimationKind.EndAnimation)
             {
-                if (true)
+                if (Anim.StartAnimAvaiable)
                 {
-                    AnimationPlayType = AnimationPlayTypes.Loop;
+                    yield return PlayAnimation(Anim.StartAnimAtlas, Anim.StartAnimDuration, Anim.AnimType.ToString() + "Start");
                 }
-                else if (AnimationType == TypeOfAnimation.Animation)
-                {   // if found a matching End-Animation to the choosen animation set the PlayType to HoldOnEnd
-                    AnimationPlayType = AnimationPlayTypes.HoldOnEnd;
+
+                SpriteAtlas atlas = Anim.DefaultAnimAtlas;
+                do
+                {
+                    yield return PlayAnimation(Anim.DefaultAnimAtlas, Anim.DefaultAnimDuration, Anim.AnimType.ToString());
+                }
+                while (Anim.AnimPlayType == AnimationPlayTypes.Loop);
+
+                if (Anim.EndAnimAvaiable)
+                {
+                    // wait till signal for end is recived
+                    CurrentAnimationState = AnimationState.Waiting;
+                    while (true)
+                    {
+                        yield return new WaitForSeconds(0.1f);
+                    }
                 }
                 else
                 {
-                    AnimationPlayType = AnimationPlayTypes.Single;
+                    // revert to idle
+                    StartAnimation(AnimationTypes.Idle);
                 }
             }
             else
             {
-                AnimationPlayType = ForceAnimationPlayType;
+                if (Anim.EndAnimAvaiable)
+                {
+                    yield return PlayAnimation(Anim.EndAnimAtlas, Anim.EndAnimDuration, Anim.AnimType.ToString() + "End");
+                }
             }
-
-            // stop running coroutine
-            if (AnimationRoutine != null) StopCoroutine(AnimationRoutine);
-            // start next animation as coroutine
-            AnimationRoutine = StartCoroutine(PlayAnimation(animation, atlas, 0, AnimationType, AnimationPlayType));
         }
         else
         {
             // If an animation is not found revert to idle to prevent displaying errors
-            Debug.Log("Could not start " + AnimationType.ToString() + " '" + animation.ToString() + "' because it is not present in Dictionary!" + "\n" + "Idle-Animation has been started instead.");
-            StartAnimation(AnimatorStates.Idle);
+            Debug.Log("Could not start '" + Anim.AnimType.ToString() + "' because it is not present in Resource Folder!" + "\n" + "Idle-Animation has been started instead.");
+            StartAnimation(AnimationTypes.Idle);
         }
     }
 
-    IEnumerator PlayAnimation(AnimatorStates animation, SpriteAtlas atlas, float delay, TypeOfAnimation AnimationType, AnimationPlayTypes AnimationPlayType)
+    IEnumerator PlayAnimation(SpriteAtlas atlas, float delay, string FileNamePrefix)
     {
         // Log Running Animation
         if (DebugLogging)
         {
-            Debug.Log("Character: " + CharacterClass + "| Animation: " + animation.ToString() + " with AnimationType: " + AnimationType.ToString() + " and AnimationPlayType: " + AnimationPlayType.ToString() + " is now running");
+            Debug.Log("Character: " + CharacterClass + "| Animation: " + FileNamePrefix + " is now running");
             Debug.Log("Delay: " + delay + " - SpriteCount: " + atlas.spriteCount + " --> Delay per Sprite: " + (delay / (float)atlas.spriteCount));
         }
-        bool debugTmp = false;
-
-
-        // Handle audio
-        PlayAnimationAudio(animation);
 
         // Calculate correct delay
         delay = (delay / (float)atlas.spriteCount);
 
-        // Add end to the filename if its an EndAnimation
-        string SpriteNameAddition = "";
-        if (AnimationType == TypeOfAnimation.StartAnimation)
-            SpriteNameAddition = "Start";
-        else if (AnimationType == TypeOfAnimation.EndAnimation)
-            SpriteNameAddition = "End";
+        // Unload assets with no references
+        Resources.UnloadUnusedAssets();
+        Sprite spr = null;
 
-        while (true)
+        // play each animation of the atlas
+        string SpriteFileName = "";
+        for (int i = 0; i < atlas.spriteCount; i++)
         {
+            // ToString parameter "D2" formats the integer with 2 chars (leading 0 if nessessary)
+            SpriteFileName = FileNamePrefix + "_" + i.ToString("D2");
+            spriteRenderer.sprite = atlas.GetSprite(SpriteFileName);
+
             if (DebugLogging)
             {
-                if (debugTmp)
-                {
-                    Debug.Log("Character: " + CharacterClass + "| Looping: " + animation.ToString());
-                }
-                else
-                {
-                    debugTmp = true;
-                }
-            }
-            // Unload assets with no references
-            Resources.UnloadUnusedAssets();
-            Sprite spr = null;
-
-            // play each animation of the atlas
-            for (int i = 0; i < atlas.spriteCount; i++)
-            {
-                // ToString parameter "D2" formats the integer with 2 chars (leading 0 if nessessary)
-                spriteRenderer.sprite = atlas.GetSprite(animation.ToString() + SpriteNameAddition + "_" + i.ToString("D2"));
-
-                if (DebugLogging)
-                {
-                    Debug.Log("Active Sprite: " + animation.ToString() + SpriteNameAddition + "_" + i.ToString("D2") + " at Time: " + DateTime.Now.TimeOfDay);
-                }
-
-                // Unload sprite
-                Destroy(spr);
-                spr = null;
-                spr = spriteRenderer.sprite;
-                yield return new WaitForSeconds(delay);
+                Debug.Log("Active Sprite: " + SpriteFileName + " at Time: " + DateTime.Now.TimeOfDay);
             }
 
-            // Unload
-            Resources.UnloadUnusedAssets();
+            // Unload sprite
+            Destroy(spr);
             spr = null;
-
-            if (AnimationType == TypeOfAnimation.StartAnimation)
-            {
-                StartAnimation(animation, TypeOfAnimation.Animation);
-                break;
-            }
-            else if (AnimationPlayType == AnimationPlayTypes.HoldOnEnd)
-            {
-                // wait till signal for end is recived
-                CurrentAnimationState = AnimationState.Waiting;
-                while (true)
-                {
-                    yield return new WaitForSeconds(0.1f);
-                }
-            }
-            else if (AnimationPlayType == AnimationPlayTypes.Loop)
-            {
-                // loop
-                CurrentAnimationState = AnimationState.Looping;
-                yield return null;
-            }
-            else
-            {
-                // revert to idle
-                StartAnimation(AnimatorStates.Idle);
-                break;
-            }
+            spr = spriteRenderer.sprite;
+            yield return new WaitForSeconds(delay);
         }
+
+        // Unload
+        Resources.UnloadUnusedAssets();
+        spr = null;
     }
 
-    private void PlayAnimationAudio(AnimatorStates animation)
+    private void PlayAnimationAudio(AnimationTypes animation)
     {
         AudioClip clip = Resources.Load<AudioClip>("Audio/Characters/" + CharacterClass + "/" + animation.ToString());
         if (clip != null)

@@ -142,7 +142,7 @@ public class AlchemistController : ChampionClassController
         m_Rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
 
         // Wait till animation has started and ended so the alchemist is disappeard
-        yield return new WaitUntil(() => animCon.CurrentAnimation == AnimationController.AnimatorStates.Skill2);
+        yield return new WaitUntil(() => animCon.CurrentAnimation == AnimationController.AnimationTypes.Skill2);
         yield return new WaitUntil(() => animCon.CurrentAnimationState == AnimationController.AnimationState.Waiting);
 
         // Build an layermask for finding Walls and Ground
@@ -219,7 +219,7 @@ public class AlchemistController : ChampionClassController
         // Let the alchemist appear at the new position
         ((AlchemistAnimationController)animCon).trigSkill2End = true;
         yield return new WaitForSeconds(skill2_var.delay);
-        yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimatorStates.Skill2);
+        yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimationTypes.Skill2);
 
         // Reapply old constraints to fall down regulary
         m_Rigidbody2D.constraints = oldConstraints;

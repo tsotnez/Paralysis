@@ -122,8 +122,8 @@ public class AssassinController : ChampionClassController
         animCon.trigSkill2 = true;
         stats.invincible = true;
 
-        yield return new WaitUntil(() => animCon.CurrentAnimation == AnimationController.AnimatorStates.Skill2);
-        yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimatorStates.Skill2); //Wait until intro animation is finished
+        yield return new WaitUntil(() => animCon.CurrentAnimation == AnimationController.AnimationTypes.Skill2);
+        yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimationTypes.Skill2); //Wait until intro animation is finished
 
         //Add walls and Ground to layermask so they are an obstacle for the raycast
         LayerMask temp = m_whatToHit;
@@ -180,7 +180,7 @@ public class AssassinController : ChampionClassController
             yield return new WaitForSeconds(delay_Skill3);
             stats.DealDamage(targetStats, damage_Skill3, false);
 
-            yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimatorStates.Skill3);
+            yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimationTypes.Skill3);
             stats.immovable = false;
         }
         stats.invincible = false;

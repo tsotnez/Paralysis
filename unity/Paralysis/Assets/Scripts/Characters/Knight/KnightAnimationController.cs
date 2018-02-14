@@ -8,15 +8,15 @@ public class KnightAnimationController : ChampionAnimationController
         return false;
     }
 
-    protected override bool AdditionalNotInterruptCondition(AnimatorStates activeAnimation)
+    protected override bool AdditionalNotInterruptCondition(AnimationTypes activeAnimation)
     {
         switch (CurrentAnimation)
         {
-            case AnimatorStates.Skill2:
+            case AnimationTypes.Skill2:
                 if (trigSkill2End)
                 {
                     trigSkill2End = false;
-                    StartAnimation(AnimatorStates.Skill2, TypeOfAnimation.EndAnimation);
+                    StartAnimation(AnimationTypes.Skill2, AnimationKind.EndAnimation);
                 }
                 return true;
         }

@@ -5,7 +5,7 @@ public class ArcherAnimationController : ChampionAnimationController
         return false;
     }
 
-    protected override bool AdditionalNotInterruptCondition(AnimatorStates activeAnimation)
+    protected override bool AdditionalNotInterruptCondition(AnimationTypes activeAnimation)
     {
         return false;
     }

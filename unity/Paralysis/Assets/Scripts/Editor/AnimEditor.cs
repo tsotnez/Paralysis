@@ -3,44 +3,32 @@ using UnityEngine;
 using System.Collections;
 using System.IO;
 using System;
+using UnityEngine.U2D;
 
 // Custom Editor using SerializedProperties.
 // Automatic handling of multi-object editing, undo, and prefab overrides.
-[CustomEditor(typeof(AnimationController), false)]
+[CustomEditor(typeof(AnimationController), true)]
 [CanEditMultipleObjects]
 public class AnimEditor : Editor
 {
     // Default Properties for Animator
-    SerializedProperty GeneralAnimationSpeed, CharacterClass, CharacterSkin, DebugLogging;
-    // Properties for Animation-Dictionarys
-    SerializedProperty Animations, Atlasses, Looping, CustomSpeeds;
-    // Properties for Additional Animations-Dictionarys
-    SerializedProperty StartAtlasses, EndAtlasses;
+    SerializedProperty CharacterClass, CharacterSkin, DebugLogging;
 
-    public string path;
-    float lastSpeed;
-    DirectoryInfo levelDirectoryPath;
+    // Properties for Animation
+    SerializedProperty AnimPlayType, StartAnimDuration, DefaultAnimDuration, EndAnimDuration;
 
     void OnEnable()
     {
         // Default Properties
         CharacterClass = serializedObject.FindProperty("CharacterClass");
         CharacterSkin = serializedObject.FindProperty("CharacterSkin");
-        GeneralAnimationSpeed = serializedObject.FindProperty("GeneralSpeed");
         DebugLogging = serializedObject.FindProperty("DebugLogging");
 
-        // Dictionary Properties for Animation
-        Animations = serializedObject.FindProperty("AnimationType");
-        Atlasses = serializedObject.FindProperty("Atlasses");
-        Looping = serializedObject.FindProperty("AnimationLoop");
-        CustomSpeeds = serializedObject.FindProperty("AnimationDuration");
-
-        // Dictionary Properties for Additional Animations
-        StartAtlasses = serializedObject.FindProperty("StartAtlasses");
-        EndAtlasses = serializedObject.FindProperty("EndAtlasses");
-
-        lastSpeed = GeneralAnimationSpeed.floatValue;
-        path = Application.dataPath + "/Animations/chars/" + CharacterClass.stringValue + "/" + CharacterSkin.stringValue + "/";
+        // Properties for Animation
+        AnimPlayType = serializedObject.FindProperty("AnimPlayType");
+        StartAnimDuration = serializedObject.FindProperty("StartAnimDuration");
+        DefaultAnimDuration = serializedObject.FindProperty("DefaultAnimDuration");
+        EndAnimDuration = serializedObject.FindProperty("EndAnimDuration");
     }
 
     public override void OnInspectorGUI()
@@ -48,82 +36,73 @@ public class AnimEditor : Editor
         serializedObject.Update();
         EditorGUILayout.PropertyField(CharacterClass, new GUIContent("Character class"), true);
         EditorGUILayout.PropertyField(CharacterSkin, new GUIContent("Character skin"), true);
-        EditorGUILayout.PropertyField(GeneralAnimationSpeed, new GUIContent("General animation speed"), true);
         EditorGUILayout.PropertyField(DebugLogging, new GUIContent("Debug Logging"), true);
 
-        // Dictionary Properties for Animation
-        Animations = serializedObject.FindProperty("AnimationType");
-        Atlasses = serializedObject.FindProperty("Atlasses");
-        Looping = serializedObject.FindProperty("AnimationLoop");
-        CustomSpeeds = serializedObject.FindProperty("AnimationDuration");
-
-        // Dictionary Properties for EndAnimation
-        StartAtlasses = serializedObject.FindProperty("StartAtlasses");
-        EndAtlasses = serializedObject.FindProperty("EndAtlasses");
-
-        // get all existing EnumTypes
-        Array animStates = Enum.GetValues(typeof(AnimationController.AnimatorStates));
-
-        // set arraysize to length of enum
-        Atlasses.arraySize = animStates.Length;
-        Looping.arraySize = animStates.Length;
-        Animations.arraySize = animStates.Length;
-        CustomSpeeds.arraySize = animStates.Length;
-        StartAtlasses.arraySize = animStates.Length;
-        EndAtlasses.arraySize = animStates.Length;
-
+        // Draw Header
         GUILayout.BeginHorizontal();
         GUILayout.Label("Animation", EditorStyles.boldLabel);
-        GUILayout.Label("Loop", EditorStyles.boldLabel);
-        GUILayout.Label("Speed", EditorStyles.boldLabel);
-        GUILayout.Label("Atlasses", EditorStyles.boldLabel);
-        GUILayout.Label("Start-Anim", EditorStyles.boldLabel);
-        GUILayout.Label("End-Anim", EditorStyles.boldLabel);
+        GUILayout.Label("Play Type", EditorStyles.boldLabel);
+        GUILayout.Label("Speed Start", EditorStyles.boldLabel);
+        GUILayout.Label("Speed Default", EditorStyles.boldLabel);
+        GUILayout.Label("Speed End", EditorStyles.boldLabel);
         GUILayout.EndHorizontal();
 
-        // loop through every enum state for Animation
-        int count = 0;
-        foreach (var animState in animStates)
-        {
-            bool Anim_DirectoryFound = Directory.Exists(path + animState.ToString());
-            bool StartAnim_DirectoryFound = Directory.Exists(path + animState.ToString() + "Start");
-            bool EndAnim_DirectoryFound = Directory.Exists(path + animState.ToString() + "End");
+        // get all existing EnumTypes and set arraysize to length of enum
+        Array animStates = Enum.GetValues(typeof(AnimationController.AnimationTypes));
+        AnimPlayType.arraySize = animStates.Length;
+        StartAnimDuration.arraySize = animStates.Length;
+        DefaultAnimDuration.arraySize = animStates.Length;
+        EndAnimDuration.arraySize = animStates.Length;
 
+        // Build path to Animations
+        string AtlasPath = "Animations\\" + CharacterClass.stringValue + "\\" + CharacterSkin.stringValue + "\\";
+        string AtlasPathSuffix = "Atlas.spriteatlas";
+        string AnimationTypeName = "";
+
+        // loop through every enum state for Animation
+        bool StartAnimAtlasFound, DefaultAnimAtlasFound, EndAnimAtlasFound;
+        for (int i = 0; i < animStates.Length; i++)
+        {
+            // Check for Atlasses
+            AnimationTypeName = ((AnimationController.AnimationTypes)i).ToString();
+            StartAnimAtlasFound = Resources.Load<SpriteAtlas>(AtlasPath + AnimationTypeName + "Start" + AtlasPathSuffix) != null;
+            DefaultAnimAtlasFound = Resources.Load<SpriteAtlas>(AtlasPath + AnimationTypeName + AtlasPathSuffix) != null;
+            EndAnimAtlasFound = Resources.Load<SpriteAtlas>(AtlasPath + AnimationTypeName + "End" + AtlasPathSuffix) != null;
+
+            // Start Horizontal Drawing
             GUILayout.BeginHorizontal();
-            if (!Anim_DirectoryFound)
+
+            // Disable Group if Atlas is not present in Resources
+            if (!DefaultAnimAtlasFound)
                 EditorGUI.BeginDisabledGroup(true);
 
-            EditorGUILayout.PropertyField(Looping.GetArrayElementAtIndex(count), new GUIContent(animState.ToString()), true);
-            EditorGUILayout.PropertyField(CustomSpeeds.GetArrayElementAtIndex(count), new GUIContent(""), true);
-            EditorGUILayout.PropertyField(Atlasses.GetArrayElementAtIndex(count), new GUIContent(""), true);
+            // Draw Label and AnimationPlayType
+            EditorGUILayout.PropertyField(AnimPlayType.GetArrayElementAtIndex(i), new GUIContent(AnimationTypeName), true);
 
-            if (!StartAnim_DirectoryFound) GUI.enabled = false;
-            EditorGUILayout.PropertyField(StartAtlasses.GetArrayElementAtIndex(count), new GUIContent(""), true);
-            if (!StartAnim_DirectoryFound) GUI.enabled = true;
+            // Draw Start Animation Duration
+            if (!StartAnimAtlasFound) GUI.enabled = false;
+            EditorGUILayout.PropertyField(StartAnimDuration.GetArrayElementAtIndex(i), new GUIContent(""), true);
+            if (!StartAnimAtlasFound) GUI.enabled = true;
 
-            if (!EndAnim_DirectoryFound) GUI.enabled = false;
-            EditorGUILayout.PropertyField(EndAtlasses.GetArrayElementAtIndex(count), new GUIContent(""), true);
-            if (!EndAnim_DirectoryFound) GUI.enabled = true;
+            // Draw Default Animation Duration
+            EditorGUILayout.PropertyField(DefaultAnimDuration.GetArrayElementAtIndex(i), new GUIContent(""), true);
 
-            if (!Anim_DirectoryFound)
+            // Draw End Animation Duration
+            if (!EndAnimAtlasFound) GUI.enabled = false;
+            EditorGUILayout.PropertyField(EndAnimDuration.GetArrayElementAtIndex(i), new GUIContent(""), true);
+            if (!EndAnimAtlasFound) GUI.enabled = true;
+
+            // End Disable Group if Atlas is not present in Resources
+            if (!DefaultAnimAtlasFound)
                 EditorGUI.EndDisabledGroup();
 
+            // End Horizontal Drawing
             GUILayout.Space(0);
             GUILayout.EndHorizontal();
-
-            try
-            {
-                Animations.GetArrayElementAtIndex(count).enumValueIndex = Convert.ToInt32((AnimationController.AnimatorStates)Enum.Parse(typeof(AnimationController.AnimatorStates), animState.ToString(), true));
-            }
-            catch (ArgumentException) { } // Ignore
-
-            if (lastSpeed != GeneralAnimationSpeed.floatValue)
-                CustomSpeeds.GetArrayElementAtIndex(count).floatValue = GeneralAnimationSpeed.floatValue;
-            count++;
         }
 
+        // Apply Changes
         serializedObject.ApplyModifiedProperties();
-        lastSpeed = GeneralAnimationSpeed.floatValue;
         serializedObject.Update();
     }
 }

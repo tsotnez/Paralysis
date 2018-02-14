@@ -43,7 +43,7 @@ public abstract class ChampionAnimationController : AnimationController
 
     protected virtual void Update()
     {
-        if (!statDead || CurrentAnimation != AnimatorStates.Die)
+        if (!statDead || CurrentAnimation != AnimationTypes.Die)
         {
             AnimationManager();
         }
@@ -59,22 +59,22 @@ public abstract class ChampionAnimationController : AnimationController
             if (trigBasicAttack1)
             {
                 trigBasicAttack1 = false;
-                StartAnimation(AnimatorStates.BasicAttack1);
+                StartAnimation(AnimationTypes.BasicAttack1);
                 return;
             }
-            StartAnimation(AnimatorStates.Idle);
+            StartAnimation(AnimationTypes.Idle);
         }
         else if (statDead)
         {
-            StartAnimation(AnimatorStates.Die, TypeOfAnimation.Animation, AnimationPlayTypes.HoldOnEnd);
+            StartAnimation(AnimationTypes.Die);
         }
         else if (trigKnockedBack)
         {
             trigKnockedBack = false;
-            StartAnimation(AnimatorStates.KnockedBack);
+            StartAnimation(AnimationTypes.KnockedBack);
         }
-        else if (statStunned && CurrentAnimation != AnimatorStates.KnockedBack)
-            StartAnimation(AnimatorStates.Stunned);
+        else if (statStunned && CurrentAnimation != AnimationTypes.KnockedBack)
+            StartAnimation(AnimationTypes.Stunned);
         else
         {
             // don't interrupt these animations (equivalent to HasExitTime)
@@ -82,40 +82,40 @@ public abstract class ChampionAnimationController : AnimationController
 
             switch (CurrentAnimation)
             {
-                case AnimatorStates.BasicAttack1:
-                case AnimatorStates.BasicAttack2:
-                case AnimatorStates.BasicAttack3:
-                case AnimatorStates.Skill1:
-                case AnimatorStates.Skill2:
-                case AnimatorStates.Skill3:
-                case AnimatorStates.Skill4:
+                case AnimationTypes.BasicAttack1:
+                case AnimationTypes.BasicAttack2:
+                case AnimationTypes.BasicAttack3:
+                case AnimationTypes.Skill1:
+                case AnimationTypes.Skill2:
+                case AnimationTypes.Skill3:
+                case AnimationTypes.Skill4:
                     return;
-                case AnimatorStates.KnockedBack:
+                case AnimationTypes.KnockedBack:
                     if (trigKnockedBackEnd)
                     {
                         trigKnockedBackEnd = false;
-                        StartAnimation(AnimatorStates.KnockedBack, TypeOfAnimation.EndAnimation);
+                        StartAnimation(AnimationTypes.KnockedBack, AnimationKind.EndAnimation);
                     }
                     return;
-                case AnimatorStates.JumpAttack:
+                case AnimationTypes.JumpAttack:
                     if (trigJumpAttackEnd)
                     {
                         trigJumpAttackEnd = false;
-                        StartAnimation(AnimatorStates.JumpAttack, TypeOfAnimation.EndAnimation);
+                        StartAnimation(AnimationTypes.JumpAttack, AnimationKind.EndAnimation);
                     }
                     return;
-                case AnimatorStates.Dash:
+                case AnimationTypes.Dash:
                     if (trigDashEnd)
                     {
                         trigDashEnd = false;
-                        StartAnimation(AnimatorStates.Dash, TypeOfAnimation.EndAnimation);
+                        StartAnimation(AnimationTypes.Dash, AnimationKind.EndAnimation);
                     }
                     return;
-                case AnimatorStates.DashFor:
+                case AnimationTypes.DashFor:
                     if (trigDashForwardEnd)
                     {
                         trigDashForwardEnd = false;
-                        StartAnimation(AnimatorStates.DashFor, TypeOfAnimation.EndAnimation);
+                        StartAnimation(AnimationTypes.DashFor, AnimationKind.EndAnimation);
                     }
                     return;
             }
@@ -126,76 +126,76 @@ public abstract class ChampionAnimationController : AnimationController
             if (trigDash)
             {
                 trigDash = false;
-                StartAnimation(AnimatorStates.Dash);
+                StartAnimation(AnimationTypes.Dash);
             }
             else if (trigDashForward)
             {
                 trigDashForward = false;
-                StartAnimation(AnimatorStates.DashFor);
+                StartAnimation(AnimationTypes.DashFor);
             }
             else if (trigHit)
             {
                 trigHit = false;
-                StartAnimation(AnimatorStates.Hit);
+                StartAnimation(AnimationTypes.Hit);
             }
             else if (trigJumpAttack)
             {
                 trigJumpAttack = false;
-                StartAnimation(AnimatorStates.JumpAttack);
+                StartAnimation(AnimationTypes.JumpAttack);
             }
             else if (trigBasicAttack1)
             {
                 trigBasicAttack1 = false;
-                StartAnimation(AnimatorStates.BasicAttack1);
+                StartAnimation(AnimationTypes.BasicAttack1);
             }
             else if (trigBasicAttack2)
             {
                 trigBasicAttack2 = false;
-                StartAnimation(AnimatorStates.BasicAttack2);
+                StartAnimation(AnimationTypes.BasicAttack2);
             }
             else if (trigBasicAttack3)
             {
                 trigBasicAttack3 = false;
-                StartAnimation(AnimatorStates.BasicAttack3);
+                StartAnimation(AnimationTypes.BasicAttack3);
             }
             else if (trigSkill1)
             {
                 trigSkill1 = false;
-                StartAnimation(AnimatorStates.Skill1);
+                StartAnimation(AnimationTypes.Skill1);
             }
             else if (trigSkill2)
             {
                 trigSkill2 = false;
-                StartAnimation(AnimatorStates.Skill2);
+                StartAnimation(AnimationTypes.Skill2);
             }
             else if (trigSkill3)
             {
                 trigSkill3 = false;
-                StartAnimation(AnimatorStates.Skill3);
+                StartAnimation(AnimationTypes.Skill3);
             }
             else if (trigSkill4)
             {
                 trigSkill4 = false;
-                StartAnimation(AnimatorStates.Skill4);
+                StartAnimation(AnimationTypes.Skill4);
             }
             else if (statBlock && m_Speed <= 0)
-                StartAnimation(AnimatorStates.Block);
+                StartAnimation(AnimationTypes.Block);
             else if (statBlock && m_Speed > 0.001)
-                StartAnimation(AnimatorStates.BlockMove);
+                StartAnimation(AnimationTypes.BlockMove);
             else if (!m_Grounded && m_vSpeed <= 0)
-                StartAnimation(AnimatorStates.Fall);
+                StartAnimation(AnimationTypes.Fall);
             else if (!m_Grounded && m_vSpeed >= 0 && trigJump)
             {
-                StartAnimation(AnimatorStates.Jump);
+                StartAnimation(AnimationTypes.Jump);
                 trigJump = false;
             }
             else if (m_Grounded && m_Speed > 0)
-                StartAnimation(AnimatorStates.Run);
+                StartAnimation(AnimationTypes.Run);
             else if (m_Grounded)
             {
                 if (RevertIdleActualFrames >= RevertIdleNeededFrames)
                 {
-                    StartAnimation(AnimatorStates.Idle);
+                    StartAnimation(AnimationTypes.Idle);
                     RevertIdleActualFrames = 0;
                 }
                 else
@@ -206,6 +206,6 @@ public abstract class ChampionAnimationController : AnimationController
         }
     }
 
-    protected abstract bool AdditionalNotInterruptCondition(AnimatorStates activeAnimation);
+    protected abstract bool AdditionalNotInterruptCondition(AnimationTypes activeAnimation);
     protected abstract bool AdditionalAnimationCondition();
 }

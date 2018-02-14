@@ -8,15 +8,15 @@ public class InfantryAnimationController : ChampionAnimationController
         return false;
     }
 
-    protected override bool AdditionalNotInterruptCondition(AnimatorStates activeAnimation)
+    protected override bool AdditionalNotInterruptCondition(AnimationTypes activeAnimation)
     {
         switch (CurrentAnimation)
         {
-            case AnimatorStates.Skill1:
+            case AnimationTypes.Skill1:
                 if (trigSkill1End)
                 {
                     trigSkill1End = false;
-                    StartAnimation(AnimatorStates.Skill1, TypeOfAnimation.EndAnimation);
+                    StartAnimation(AnimationTypes.Skill1, AnimationKind.EndAnimation);
                 }
                 return true;
         }

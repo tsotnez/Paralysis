@@ -124,9 +124,9 @@ public class ArcherController : ChampionClassController
         disengaging = true;
         stats.invincible = true;
 
-        yield return new WaitUntil(() => animCon.CurrentAnimation == AnimationController.AnimatorStates.Skill4);
+        yield return new WaitUntil(() => animCon.CurrentAnimation == AnimationController.AnimationTypes.Skill4);
         //Wait until skill Animation is over
-        yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimatorStates.Skill4);
+        yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimationTypes.Skill4);
         stats.invincible = false;
         disengaging = false;
         stats.immovable = false;

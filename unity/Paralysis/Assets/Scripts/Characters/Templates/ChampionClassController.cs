@@ -439,7 +439,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             StartCoroutine(DoMeleeSkill_Hit((MeleeSkill)jumpAttack_var));
 
             // Wait till animation is finished and end jump attack
-            yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimatorStates.JumpAttack);
+            yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimationTypes.JumpAttack);
             jumpAttacking = false;
             doubleJumped = false;
 
@@ -459,27 +459,27 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         {
             if (direction != 0 && stats.LoseStamina(m_dashStaminaCost))
             {
-                AnimationController.AnimatorStates RequiredAnimState;
+                AnimationController.AnimationTypes RequiredAnimState;
                 if (CanDashForward)
                 {
                     // set var for dash or dashForward
                     if (direction < 0 && !FacingRight || direction > 0 && FacingRight)
                     {
                         // set correct animation for validation
-                        RequiredAnimState = AnimationController.AnimatorStates.DashFor;
+                        RequiredAnimState = AnimationController.AnimationTypes.DashFor;
                         animCon.trigDashForward = true;
                     }
                     else
                     {
                         // set correct animation for validation
-                        RequiredAnimState = AnimationController.AnimatorStates.Dash;
+                        RequiredAnimState = AnimationController.AnimationTypes.Dash;
                         animCon.trigDash = true;
                     }
                 }
                 else
                 {
                     // set correct animation for validation
-                    RequiredAnimState = AnimationController.AnimatorStates.Dash;
+                    RequiredAnimState = AnimationController.AnimationTypes.Dash;
 
                     // flip if necessary
                     if (direction < 0 && !FacingRight || direction > 0 && FacingRight)
@@ -509,7 +509,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                     // Start EndAnimation
                     applyDashingForce = false;
 
-                    if (RequiredAnimState == AnimationController.AnimatorStates.DashFor) animCon.trigDashForwardEnd = true;
+                    if (RequiredAnimState == AnimationController.AnimationTypes.DashFor) animCon.trigDashForwardEnd = true;
                     else animCon.trigDashEnd = true;
                 }
                 else
@@ -919,14 +919,14 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     {
         switch (animCon.CurrentAnimation)
         {
-            case AnimationController.AnimatorStates.BasicAttack1:
-            case AnimationController.AnimatorStates.BasicAttack2:
-            case AnimationController.AnimatorStates.BasicAttack3:
-            case AnimationController.AnimatorStates.JumpAttack:
-            case AnimationController.AnimatorStates.Skill1:
-            case AnimationController.AnimatorStates.Skill2:
-            case AnimationController.AnimatorStates.Skill3:
-            case AnimationController.AnimatorStates.Skill4:
+            case AnimationController.AnimationTypes.BasicAttack1:
+            case AnimationController.AnimationTypes.BasicAttack2:
+            case AnimationController.AnimationTypes.BasicAttack3:
+            case AnimationController.AnimationTypes.JumpAttack:
+            case AnimationController.AnimationTypes.Skill1:
+            case AnimationController.AnimationTypes.Skill2:
+            case AnimationController.AnimationTypes.Skill3:
+            case AnimationController.AnimationTypes.Skill4:
                 return false;
         }
         if (casting)
@@ -944,11 +944,11 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         {
             switch (animCon.CurrentAnimation)
             {
-                case AnimationController.AnimatorStates.Jump:
-                case AnimationController.AnimatorStates.Dash:
-                case AnimationController.AnimatorStates.Hit:
-                case AnimationController.AnimatorStates.DoubleJump:
-                case AnimationController.AnimatorStates.DashFor:
+                case AnimationController.AnimationTypes.Jump:
+                case AnimationController.AnimationTypes.Dash:
+                case AnimationController.AnimationTypes.Hit:
+                case AnimationController.AnimationTypes.DoubleJump:
+                case AnimationController.AnimationTypes.DashFor:
                     return false;
             }
         }

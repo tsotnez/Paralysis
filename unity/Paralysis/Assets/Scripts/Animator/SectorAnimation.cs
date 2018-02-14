@@ -3,14 +3,14 @@ using UnityEngine;
 using UnityEngine.U2D;
 
 [System.Serializable]
-public class SectorAnimation : MonoBehaviour
+public class SectorAnimation
 {
     // Animation Parameters
-    public AnimationController.AnimatorStates AnimationType;
-    public bool Loop = false;               // Is Animation Looping
-    public int StartAnimDuration = 0;       // Duration of StartAnimation (Duration/SpriteCount)
-    public int DefaultAnimDuration = 0;     // Duration of Animation (Duration/SpriteCount)
-    public int EndAnimDuration = 0;         // Duration of EndAnimation (Duration/SpriteCount)
+    public AnimationController.AnimationTypes AnimType { get; private set; }        // Type of Animation
+    public AnimationController.AnimationPlayTypes AnimPlayType { get; private set; }// Is Animation Looping
+    public float StartAnimDuration { get; private set; }                              // Duration of StartAnimation (Duration/SpriteCount)
+    public float DefaultAnimDuration { get; private set; }                            // Duration of Animation (Duration/SpriteCount)
+    public float EndAnimDuration { get; private set; }                                // Duration of EndAnimation (Duration/SpriteCount)
 
     // Animation available
     public bool StartAnimAvaiable { get; private set; }
@@ -30,12 +30,21 @@ public class SectorAnimation : MonoBehaviour
     AnimationController animCon;
     Coroutine destroyRoutine = null;
 
-    #region default
+    #region Init
 
-    private void Start()
+    public SectorAnimation(AnimationController AnimConReference, AnimationController.AnimationTypes AnimType, AnimationController.AnimationPlayTypes AnimPlayType,
+        float StartAnimDuration, float DefaultAnimDuration, float EndAnimDuration)
     {
+        // Apply Parameters
+        this.animCon = AnimConReference;
+        this.AnimType = AnimType;
+        this.AnimPlayType = AnimPlayType;
+        this.StartAnimDuration = StartAnimDuration;
+        this.DefaultAnimDuration = DefaultAnimDuration;
+        this.EndAnimDuration = EndAnimDuration;
+
         // Build Path
-        AtlasPath = "Animations\\" + animCon.CharacterClass + "\\" + animCon.CharacterSkin + "\\" + this.AnimationType.ToString();
+        AtlasPath = "Animations\\" + AnimConReference.CharacterClass + "\\" + AnimConReference.CharacterSkin + "\\" + AnimType.ToString();
         AtlasPathSuffix = "Atlas.spriteatlas";
 
         // Check for Atlasses
@@ -56,10 +65,6 @@ public class SectorAnimation : MonoBehaviour
             {
                 LoadSpriteAtlas();
             }
-            else
-            {
-                ResetDestroyAtlasses();
-            }
             return startAnimAtlas;
         }
     }
@@ -72,10 +77,6 @@ public class SectorAnimation : MonoBehaviour
             {
                 LoadSpriteAtlas();
             }
-            else
-            {
-                ResetDestroyAtlasses();
-            }
             return defaultAnimAtlas;
         }
     }
@@ -87,10 +88,6 @@ public class SectorAnimation : MonoBehaviour
             if (EndAnimAvaiable && endAnimAtlas == null)
             {
                 LoadSpriteAtlas();
-            }
-            else
-            {
-                ResetDestroyAtlasses();
             }
             return endAnimAtlas;
         }
@@ -116,25 +113,25 @@ public class SectorAnimation : MonoBehaviour
             }
 
             // Start automatic destroy of Animations
-            destroyRoutine = StartCoroutine(DestroyAtlasses());
+            //destroyRoutine = StartCoroutine(DestroyAtlasses());
         }
     }
 
-    private void ResetDestroyAtlasses()
-    {
-        if (destroyRoutine != null)
-        {
-            StopCoroutine(destroyRoutine);
-            StartCoroutine(DestroyAtlasses());
-        }
-    }
+    //public void ResetDestroyAtlasses()
+    //{
+    //    if (destroyRoutine != null)
+    //    {
+    //        StopCoroutine(destroyRoutine);
+    //        StartCoroutine(DestroyAtlasses());
+    //    }
+    //}
 
-    private IEnumerator DestroyAtlasses()
+    public IEnumerator DestroyAtlasses()
     {
         // Wait till Animation has started
-        yield return new WaitUntil(() => animCon.CurrentAnimation == this.AnimationType);
+        yield return new WaitUntil(() => animCon.CurrentAnimation == this.AnimType);
         // Wait till Animation is not played anymore
-        yield return new WaitUntil(() => animCon.CurrentAnimation != this.AnimationType);
+        yield return new WaitUntil(() => animCon.CurrentAnimation != this.AnimType);
         // Wait till Animation is not played for a while
         yield return new WaitForSeconds(10f);
 
