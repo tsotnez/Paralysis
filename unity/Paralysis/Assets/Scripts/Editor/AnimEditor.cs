@@ -55,8 +55,8 @@ public class AnimEditor : Editor
         EndAnimDuration.arraySize = animStates.Length;
 
         // Build path to Animations
-        string AtlasPath = "Animations\\" + CharacterClass.stringValue + "\\" + CharacterSkin.stringValue + "\\";
-        string AtlasPathSuffix = "Atlas.spriteatlas";
+        string AtlasPath = "Animations/" + CharacterClass.stringValue + "/" + CharacterSkin.stringValue + "/";
+        string AtlasPathSuffix = "Atlas";
         string AnimationTypeName = "";
 
         // loop through every enum state for Animation
@@ -80,17 +80,17 @@ public class AnimEditor : Editor
             EditorGUILayout.PropertyField(AnimPlayType.GetArrayElementAtIndex(i), new GUIContent(AnimationTypeName), true);
 
             // Draw Start Animation Duration
-            if (!StartAnimAtlasFound) GUI.enabled = false;
+            if (!StartAnimAtlasFound && DefaultAnimAtlasFound) GUI.enabled = false;
             EditorGUILayout.PropertyField(StartAnimDuration.GetArrayElementAtIndex(i), new GUIContent(""), true);
-            if (!StartAnimAtlasFound) GUI.enabled = true;
+            if (!StartAnimAtlasFound && DefaultAnimAtlasFound) GUI.enabled = true;
 
             // Draw Default Animation Duration
             EditorGUILayout.PropertyField(DefaultAnimDuration.GetArrayElementAtIndex(i), new GUIContent(""), true);
 
             // Draw End Animation Duration
-            if (!EndAnimAtlasFound) GUI.enabled = false;
+            if (!EndAnimAtlasFound && DefaultAnimAtlasFound) GUI.enabled = false;
             EditorGUILayout.PropertyField(EndAnimDuration.GetArrayElementAtIndex(i), new GUIContent(""), true);
-            if (!EndAnimAtlasFound) GUI.enabled = true;
+            if (!EndAnimAtlasFound && DefaultAnimAtlasFound) GUI.enabled = true;
 
             // End Disable Group if Atlas is not present in Resources
             if (!DefaultAnimAtlasFound)

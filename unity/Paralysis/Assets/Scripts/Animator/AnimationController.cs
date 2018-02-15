@@ -10,9 +10,9 @@ public abstract class AnimationController : MonoBehaviour
 {
     // Inspector
     public AnimationPlayTypes[] AnimPlayType = { AnimationPlayTypes.Single };   // Shall animation be looped?
-    public float[] StartAnimDuration = { 0.5f };                                // Duration of Start-Animation
-    public float[] DefaultAnimDuration = { 0.5f };                              // Duration of Default-Animation
-    public float[] EndAnimDuration = { 0.5f };                                  // Duration of End-Animation
+    public float[] StartAnimDuration = { 0f };                                  // Duration of Start-Animation
+    public float[] DefaultAnimDuration = { 0f };                                // Duration of Default-Animation
+    public float[] EndAnimDuration = { 0f };                                    // Duration of End-Animation
 
     // Logging
     public bool DebugLogging = false;                                           // En-/Disable Logging
