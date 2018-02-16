@@ -45,12 +45,12 @@ public class SectorAnimation
 
         // Build Path
         AtlasPath = "Animations\\" + AnimConReference.CharacterClass + "\\" + AnimConReference.CharacterSkin + "\\" + AnimType.ToString();
-        AtlasPathSuffix = "Atlas.spriteatlas";
+        AtlasPathSuffix = "Atlas";
 
         // Check for Atlasses
-        StartAnimAvaiable = Resources.Load(AtlasPath + "Start" + AtlasPathSuffix) != null;
-        DefaultAnimAvaiable = Resources.Load(AtlasPath + AtlasPathSuffix) != null;
-        EndAnimAvaiable = Resources.Load(AtlasPath + "End" + AtlasPathSuffix) != null;
+        StartAnimAvaiable = Resources.Load<SpriteAtlas>(AtlasPath + "Start" + AtlasPathSuffix) != null;
+        DefaultAnimAvaiable = Resources.Load<SpriteAtlas>(AtlasPath + AtlasPathSuffix) != null;
+        EndAnimAvaiable = Resources.Load<SpriteAtlas>(AtlasPath + "End" + AtlasPathSuffix) != null;
     }
 
     #endregion
@@ -104,12 +104,12 @@ public class SectorAnimation
             // Load Sprite from Resources
             if (StartAnimAvaiable)
             {
-                startAnimAtlas = ((SpriteAtlas)Resources.Load(AtlasPath + "Start" + AtlasPathSuffix));
+                startAnimAtlas = Resources.Load<SpriteAtlas>(AtlasPath + "Start" + AtlasPathSuffix);
             }
-            defaultAnimAtlas = ((SpriteAtlas)Resources.Load(AtlasPath + AtlasPathSuffix));
+            defaultAnimAtlas = Resources.Load<SpriteAtlas>(AtlasPath + AtlasPathSuffix);
             if (EndAnimAvaiable)
             {
-                endAnimAtlas = ((SpriteAtlas)Resources.Load(AtlasPath + "End" + AtlasPathSuffix));
+                endAnimAtlas = Resources.Load<SpriteAtlas>(AtlasPath + "End" + AtlasPathSuffix);
             }
 
             // Start automatic destroy of Animations
