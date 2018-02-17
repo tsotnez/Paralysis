@@ -8,9 +8,9 @@ public class SectorAnimation
     // Animation Parameters
     public AnimationController.AnimationTypes AnimType { get; private set; }        // Type of Animation
     public AnimationController.AnimationPlayTypes AnimPlayType { get; private set; }// Is Animation Looping
-    public float StartAnimDuration { get; private set; }                              // Duration of StartAnimation (Duration/SpriteCount)
-    public float DefaultAnimDuration { get; private set; }                            // Duration of Animation (Duration/SpriteCount)
-    public float EndAnimDuration { get; private set; }                                // Duration of EndAnimation (Duration/SpriteCount)
+    public float StartAnimDuration { get; private set; }                            // Duration of StartAnimation (Duration/SpriteCount)
+    public float DefaultAnimDuration { get; private set; }                          // Duration of Animation (Duration/SpriteCount)
+    public float EndAnimDuration { get; private set; }                              // Duration of EndAnimation (Duration/SpriteCount)
 
     // Animation available
     public bool StartAnimAvaiable { get; private set; }
@@ -63,7 +63,7 @@ public class SectorAnimation
         {
             if (StartAnimAvaiable && startAnimAtlas == null)
             {
-                LoadSpriteAtlas();
+                LoadSpriteAtlasses();
             }
             return startAnimAtlas;
         }
@@ -75,7 +75,7 @@ public class SectorAnimation
         {
             if (DefaultAnimAvaiable && defaultAnimAtlas == null)
             {
-                LoadSpriteAtlas();
+                LoadSpriteAtlasses();
             }
             return defaultAnimAtlas;
         }
@@ -87,7 +87,7 @@ public class SectorAnimation
         {
             if (EndAnimAvaiable && endAnimAtlas == null)
             {
-                LoadSpriteAtlas();
+                LoadSpriteAtlasses();
             }
             return endAnimAtlas;
         }
@@ -95,9 +95,9 @@ public class SectorAnimation
 
     #endregion
 
-    #region Manage Atlas
+    #region Load/Destroy Atlas
 
-    private void LoadSpriteAtlas()
+    private void LoadSpriteAtlasses()
     {
         if (DefaultAnimAvaiable)
         {
@@ -111,37 +111,39 @@ public class SectorAnimation
             {
                 endAnimAtlas = Resources.Load<SpriteAtlas>(AtlasPath + "End" + AtlasPathSuffix);
             }
-
-            // Start automatic destroy of Animations
-            //destroyRoutine = StartCoroutine(DestroyAtlasses());
         }
     }
 
-    //public void ResetDestroyAtlasses()
-    //{
-    //    if (destroyRoutine != null)
-    //    {
-    //        StopCoroutine(destroyRoutine);
-    //        StartCoroutine(DestroyAtlasses());
-    //    }
-    //}
-
-    public IEnumerator DestroyAtlasses()
+    public IEnumerator DestroySpriteAtlasses()
     {
-        // Wait till Animation has started
-        yield return new WaitUntil(() => animCon.CurrentAnimation == this.AnimType);
         // Wait till Animation is not played anymore
         yield return new WaitUntil(() => animCon.CurrentAnimation != this.AnimType);
-        // Wait till Animation is not played for a while
-        yield return new WaitForSeconds(10f);
 
-        // Kill References
-        Resources.UnloadAsset(startAnimAtlas);
-        startAnimAtlas = null;
-        Resources.UnloadAsset(defaultAnimAtlas);
-        defaultAnimAtlas = null;
-        Resources.UnloadAsset(endAnimAtlas);
-        endAnimAtlas = null;
+        // Kill Start-Anim
+        if (startAnimAtlas != null)
+        {
+            Resources.UnloadAsset(startAnimAtlas);
+            Object.Destroy(startAnimAtlas);
+            startAnimAtlas = null;
+        }
+
+        // Kill Default-Anim
+        if (defaultAnimAtlas != null)
+        {
+            Resources.UnloadAsset(defaultAnimAtlas);
+            Object.Destroy(defaultAnimAtlas);
+            defaultAnimAtlas = null;
+        }
+
+        // Kill End-Anim
+        if (endAnimAtlas != null)
+        {
+            Resources.UnloadAsset(endAnimAtlas);
+            Object.Destroy(endAnimAtlas);
+            endAnimAtlas = null;
+        }
+
+        // Destroy all unused Objects
         Resources.UnloadUnusedAssets();
     }
 

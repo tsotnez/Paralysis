@@ -23,6 +23,7 @@ public abstract class AnimationController : MonoBehaviour
 
     // Public GET parameters
     public AnimationTypes CurrentAnimation { get; private set; }                // current playing animation 
+    public AnimationKind CurrentAnimationKind { get; private set; }             // current playing animation kind
     public AnimationState CurrentAnimationState { get; private set; }           // current playing animation state
 
     // Components
@@ -33,6 +34,7 @@ public abstract class AnimationController : MonoBehaviour
     // Animation 
     private bool finishedInitialization = false;                                // True if finished loading all the sprites
     private Dictionary<AnimationTypes, SectorAnimation> SectorAnimations;       // Dictionary of Animations
+    private Coroutine AnimationRoutine = null;                                  // Coroutine of HandleAnimation
 
     #region Enums
 
@@ -131,8 +133,15 @@ public abstract class AnimationController : MonoBehaviour
 
     public void StartAnimation(AnimationTypes Anim, AnimationKind AnimKind = AnimationKind.DefaultAnimation)
     {
-        StopAllCoroutines();
-        StartCoroutine(HandleAnimation(SectorAnimations[Anim], AnimKind));
+        if (CurrentAnimation != Anim || AnimKind != CurrentAnimationKind)
+        {
+            // Start CleanUp of actual Animation
+            StartCoroutine(SectorAnimations[CurrentAnimation].DestroySpriteAtlasses());
+
+            // Handle Animation
+            if (AnimationRoutine != null) StopCoroutine(AnimationRoutine);
+            AnimationRoutine = StartCoroutine(HandleAnimation(SectorAnimations[Anim], AnimKind));
+        }
     }
 
     private IEnumerator HandleAnimation(SectorAnimation Anim, AnimationKind ForceAnimKind)
@@ -150,7 +159,14 @@ public abstract class AnimationController : MonoBehaviour
             {
                 if (Anim.StartAnimAvaiable)
                 {
+                    CurrentAnimationKind = AnimationKind.StartAnimation;
                     yield return PlayAnimation(Anim.StartAnimAtlas, Anim.StartAnimDuration, Anim.AnimType.ToString() + "Start");
+                }
+
+                CurrentAnimationKind = AnimationKind.DefaultAnimation;
+                if (Anim.AnimPlayType == AnimationPlayTypes.Loop)
+                {
+                    CurrentAnimationState = AnimationState.Looping;
                 }
 
                 SpriteAtlas atlas = Anim.DefaultAnimAtlas;
@@ -179,6 +195,7 @@ public abstract class AnimationController : MonoBehaviour
             {
                 if (Anim.EndAnimAvaiable)
                 {
+                    CurrentAnimationKind = AnimationKind.EndAnimation;
                     yield return PlayAnimation(Anim.EndAnimAtlas, Anim.EndAnimDuration, Anim.AnimType.ToString() + "End");
                 }
             }
@@ -191,7 +208,7 @@ public abstract class AnimationController : MonoBehaviour
         }
     }
 
-    IEnumerator PlayAnimation(SpriteAtlas atlas, float delay, string FileNamePrefix)
+    private IEnumerator PlayAnimation(SpriteAtlas atlas, float delay, string FileNamePrefix)
     {
         // Log Running Animation
         if (DebugLogging)
@@ -239,13 +256,13 @@ public abstract class AnimationController : MonoBehaviour
         {
             if (audioSource.clip != clip || (audioSource.clip == clip && true))
             {
-                //New clip or loop
+                // New clip or loop
                 audioSource.clip = clip;
                 audioSource.Play();
             }
             else if (audioSource.clip == clip && !true)
             {
-                //Same clip again
+                // Same clip again
                 audioSource.Stop();
                 audioSource.Play();
             }
