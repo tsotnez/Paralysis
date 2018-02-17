@@ -176,7 +176,7 @@ public abstract class AnimationController : MonoBehaviour
                 }
                 while (Anim.AnimPlayType == AnimationPlayTypes.Loop);
 
-                if (Anim.EndAnimAvaiable)
+                if (Anim.EndAnimAvaiable || Anim.AnimPlayType == AnimationPlayTypes.HoldOnEnd)
                 {
                     // wait till signal for end is recived
                     CurrentAnimationState = AnimationState.Waiting;
@@ -198,6 +198,9 @@ public abstract class AnimationController : MonoBehaviour
                     CurrentAnimationKind = AnimationKind.EndAnimation;
                     yield return PlayAnimation(Anim.EndAnimAtlas, Anim.EndAnimDuration, Anim.AnimType.ToString() + "End");
                 }
+
+                // revert to idle
+                StartAnimation(AnimationTypes.Idle);
             }
         }
         else
