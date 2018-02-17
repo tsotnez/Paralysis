@@ -32,8 +32,8 @@ public abstract class AnimationController : MonoBehaviour
     private PhotonView photonView;                                              // Network
 
     // Animation 
-    private bool finishedInitialization = false;                                // True if finished loading all the sprites
     private Dictionary<AnimationTypes, SectorAnimation> SectorAnimations;       // Dictionary of Animations
+    private Dictionary<AnimationTypes, Coroutine> AtlasDestroyRoutines;         // Atlas destroy routines 
     private Coroutine AnimationRoutine = null;                                  // Coroutine of HandleAnimation
 
     #region Enums
@@ -99,6 +99,7 @@ public abstract class AnimationController : MonoBehaviour
     {
         // initiate dictionarys
         SectorAnimations = new Dictionary<AnimationTypes, SectorAnimation>();
+        AtlasDestroyRoutines = new Dictionary<AnimationTypes, Coroutine>();
 
         // initiate Components
         audioSource = GetComponent<AudioSource>();
@@ -114,6 +115,7 @@ public abstract class AnimationController : MonoBehaviour
         for (int i = 0; i < AnimPlayType.Length; i++)
         {
             SectorAnimations.Add((AnimationTypes)i, new SectorAnimation(this, (AnimationTypes)i, AnimPlayType[i], StartAnimDuration[i], DefaultAnimDuration[i], EndAnimDuration[i]));
+            AtlasDestroyRoutines.Add((AnimationTypes)i, null);
         }
 
         // Clear Arrays from Inspector
@@ -122,8 +124,8 @@ public abstract class AnimationController : MonoBehaviour
         DefaultAnimDuration = null;
         EndAnimDuration = null;
 
-        // set finsihed and start first animation
-        finishedInitialization = true;
+        // start first animation
+        CurrentAnimation = AnimationTypes.Die;
         StartAnimation(AnimationTypes.Idle);
     }
 
@@ -131,25 +133,35 @@ public abstract class AnimationController : MonoBehaviour
 
     #region Manage Animations
 
-    public void StartAnimation(AnimationTypes Anim, AnimationKind AnimKind = AnimationKind.DefaultAnimation)
+    public void StartAnimation(AnimationTypes Anim)
     {
-        if (CurrentAnimation != Anim || AnimKind != CurrentAnimationKind)
+        if (CurrentAnimation != Anim)
         {
-            // Start CleanUp of actual Animation
-            StartCoroutine(SectorAnimations[CurrentAnimation].DestroySpriteAtlasses());
+            // set current animation
+            CurrentAnimation = Anim;
+
+            // Start CleanUp of the coming Animation
+            ReSetDestroyAtlas(Anim);
 
             // Handle Animation
             if (AnimationRoutine != null) StopCoroutine(AnimationRoutine);
-            AnimationRoutine = StartCoroutine(HandleAnimation(SectorAnimations[Anim], AnimKind));
+            AnimationRoutine = StartCoroutine(HandleAnimation(SectorAnimations[Anim], AnimationKind.DefaultAnimation));
         }
+    }
+
+    public void StartEndAnimation(AnimationTypes Anim)
+    {
+        // NO clean here because its the same animation
+        // Handle Animation
+        if (AnimationRoutine != null) StopCoroutine(AnimationRoutine);
+        AnimationRoutine = StartCoroutine(HandleAnimation(SectorAnimations[Anim], AnimationKind.DefaultAnimation));
     }
 
     private IEnumerator HandleAnimation(SectorAnimation Anim, AnimationKind ForceAnimKind)
     {
         if (Anim.DefaultAnimAvaiable)
         {
-            // set current animation
-            CurrentAnimation = Anim.AnimType;
+            // set playing
             CurrentAnimationState = AnimationState.Playing;
 
             // Handle audio matching to the animation
@@ -157,18 +169,21 @@ public abstract class AnimationController : MonoBehaviour
 
             if (ForceAnimKind != AnimationKind.EndAnimation)
             {
+                // Play Start-Animation first
                 if (Anim.StartAnimAvaiable)
                 {
                     CurrentAnimationKind = AnimationKind.StartAnimation;
                     yield return PlayAnimation(Anim.StartAnimAtlas, Anim.StartAnimDuration, Anim.AnimType.ToString() + "Start");
                 }
 
+                // Set correct states
                 CurrentAnimationKind = AnimationKind.DefaultAnimation;
                 if (Anim.AnimPlayType == AnimationPlayTypes.Loop)
                 {
                     CurrentAnimationState = AnimationState.Looping;
                 }
 
+                // Start Default Animation
                 SpriteAtlas atlas = Anim.DefaultAnimAtlas;
                 do
                 {
@@ -193,13 +208,14 @@ public abstract class AnimationController : MonoBehaviour
             }
             else
             {
+                // Play End-Animation
                 if (Anim.EndAnimAvaiable)
                 {
                     CurrentAnimationKind = AnimationKind.EndAnimation;
                     yield return PlayAnimation(Anim.EndAnimAtlas, Anim.EndAnimDuration, Anim.AnimType.ToString() + "End");
                 }
 
-                // revert to idle
+                // revert to idle after finishing End-Animation
                 StartAnimation(AnimationTypes.Idle);
             }
         }
@@ -241,7 +257,7 @@ public abstract class AnimationController : MonoBehaviour
             }
 
             // Unload sprite
-            Destroy(spr);
+            DestroyImmediate(spr);
             spr = null;
             spr = spriteRenderer.sprite;
             yield return new WaitForSeconds(delay);
@@ -274,6 +290,31 @@ public abstract class AnimationController : MonoBehaviour
         }
         else
             audioSource.Stop();
+    }
+
+    #endregion
+
+    #region Atlas Destroy
+
+    private IEnumerator HandleDestroyAtlas(SectorAnimation AnimForDestroy)
+    {
+        // Wait till Animation has started
+        yield return new WaitUntil(() => CurrentAnimation == AnimForDestroy.AnimType);
+        // Wait till Animation is not played anymore
+        yield return new WaitUntil(() => CurrentAnimation != AnimForDestroy.AnimType);
+        // Wait till Animation is not in use anymore
+        yield return new WaitForSeconds(3f);
+
+        // Destroy Atlasses
+        AnimForDestroy.DestroySpriteAtlasses();
+    }
+
+    private void ReSetDestroyAtlas(AnimationTypes Anim)
+    {
+        // Stop Coroutine if running
+        if (AtlasDestroyRoutines[Anim] != null) StopCoroutine(AtlasDestroyRoutines[Anim]);
+        // Start destroy Coroutine
+        AtlasDestroyRoutines[Anim] = StartCoroutine(HandleDestroyAtlas(SectorAnimations[Anim]));
     }
 
     #endregion

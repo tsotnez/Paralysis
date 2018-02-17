@@ -26,9 +26,8 @@ public class SectorAnimation
     string AtlasPath;
     string AtlasPathSuffix;
 
-    // Stuff
-    AnimationController animCon;
-    Coroutine destroyRoutine = null;
+    // stuff
+    private bool DebugLogging = false;
 
     #region Init
 
@@ -36,12 +35,14 @@ public class SectorAnimation
         float StartAnimDuration, float DefaultAnimDuration, float EndAnimDuration)
     {
         // Apply Parameters
-        this.animCon = AnimConReference;
         this.AnimType = AnimType;
         this.AnimPlayType = AnimPlayType;
         this.StartAnimDuration = StartAnimDuration;
         this.DefaultAnimDuration = DefaultAnimDuration;
         this.EndAnimDuration = EndAnimDuration;
+
+        // Stuff
+        this.DebugLogging = AnimConReference.DebugLogging;
 
         // Build Path
         AtlasPath = "Animations\\" + AnimConReference.CharacterClass + "\\" + AnimConReference.CharacterSkin + "\\" + AnimType.ToString();
@@ -114,32 +115,32 @@ public class SectorAnimation
         }
     }
 
-    public IEnumerator DestroySpriteAtlasses()
+    public void DestroySpriteAtlasses()
     {
-        // Wait till Animation is not played anymore
-        yield return new WaitUntil(() => animCon.CurrentAnimation != this.AnimType);
-
         // Kill Start-Anim
         if (startAnimAtlas != null)
         {
+            if (DebugLogging) Debug.Log("Destruction of " + AnimType.ToString() + " - Start");
             Resources.UnloadAsset(startAnimAtlas);
-            Object.Destroy(startAnimAtlas);
+            //Object.DestroyImmediate(startAnimAtlas, true);
             startAnimAtlas = null;
         }
 
         // Kill Default-Anim
         if (defaultAnimAtlas != null)
         {
+            if (DebugLogging) Debug.Log("Destruction of " + AnimType.ToString() + " - Default");
             Resources.UnloadAsset(defaultAnimAtlas);
-            Object.Destroy(defaultAnimAtlas);
+            //Object.DestroyImmediate(defaultAnimAtlas, true);
             defaultAnimAtlas = null;
         }
 
         // Kill End-Anim
         if (endAnimAtlas != null)
         {
+            if (DebugLogging) Debug.Log("Destruction of " + AnimType.ToString() + " - End");
             Resources.UnloadAsset(endAnimAtlas);
-            Object.Destroy(endAnimAtlas);
+            //Object.DestroyImmediate(endAnimAtlas, true);
             endAnimAtlas = null;
         }
 

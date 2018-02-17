@@ -94,28 +94,28 @@ public abstract class ChampionAnimationController : AnimationController
                     if (trigKnockedBackEnd)
                     {
                         trigKnockedBackEnd = false;
-                        StartAnimation(AnimationTypes.KnockedBack, AnimationKind.EndAnimation);
+                        StartEndAnimation(AnimationTypes.KnockedBack);
                     }
                     return;
                 case AnimationTypes.JumpAttack:
                     if (trigJumpAttackEnd)
                     {
                         trigJumpAttackEnd = false;
-                        StartAnimation(AnimationTypes.JumpAttack, AnimationKind.EndAnimation);
+                        StartEndAnimation(AnimationTypes.JumpAttack);
                     }
                     return;
                 case AnimationTypes.Dash:
                     if (trigDashEnd)
                     {
                         trigDashEnd = false;
-                        StartAnimation(AnimationTypes.Dash, AnimationKind.EndAnimation);
+                        StartEndAnimation(AnimationTypes.Dash);
                     }
                     return;
                 case AnimationTypes.DashFor:
                     if (trigDashForwardEnd)
                     {
                         trigDashForwardEnd = false;
-                        StartAnimation(AnimationTypes.DashFor, AnimationKind.EndAnimation);
+                        StartEndAnimation(AnimationTypes.DashFor);
                     }
                     return;
             }

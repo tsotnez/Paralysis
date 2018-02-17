@@ -16,7 +16,7 @@
                 if (trigSkill2End)
                 {
                     trigSkill2End = false;
-                    StartAnimation(AnimationTypes.Skill2, AnimationKind.EndAnimation);
+                    StartEndAnimation(AnimationTypes.Skill2);
                 }
                 return true;
         }

@@ -16,7 +16,7 @@ public class InfantryAnimationController : ChampionAnimationController
                 if (trigSkill1End)
                 {
                     trigSkill1End = false;
-                    StartAnimation(AnimationTypes.Skill1, AnimationKind.EndAnimation);
+                    StartEndAnimation(AnimationTypes.Skill1);
                 }
                 return true;
         }
