@@ -118,6 +118,8 @@ public abstract class AIUserControl : MonoBehaviour {
 
         if(goalBefore == currentGoal)timeInCurrentGoal += Time.deltaTime;
         else timeInCurrentGoal = 0;
+
+        print("current goal: " + currentGoal);
     }
 
     protected virtual void setCurrentState()
@@ -337,15 +339,18 @@ public abstract class AIUserControl : MonoBehaviour {
     {
         yield return new WaitForSeconds(waitTime);
 
-        if(inputJump){
-            yield return new WaitUntil(()=> !inputJump);
-            yield return new WaitForFixedUpdate();
-        }
+
+        yield return new WaitUntil(()=> !inputJump);
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
 
         if(currentGoal != AI_GOALS.JUMP2)
         {
             changeCurrentAndPreviousGoal(AI_GOALS.JUMP2, AI_GOALS.JUMP1);
         }
+ 
+
+
     }
 
     protected virtual void jump2()

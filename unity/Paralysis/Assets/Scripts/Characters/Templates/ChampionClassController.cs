@@ -171,6 +171,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     private bool m_canJump = true;                                          // true when the player can start a new jump
     private float m_jumpStartTime = 0f;                                     // time of the player leaving the ground
     private float m_allowAnotherJump = 0f;                                  // time to wait for allowing the player to jump
+    private float m_timeInAir = 0f;
 
 
     //Coroutines
@@ -227,6 +228,9 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 }
             }
         }
+
+        if(animCon.m_Grounded) m_timeInAir = 0;
+        else m_timeInAir += Time.deltaTime;
 
         // Reset doubleJumped when touching ground
         if (animCon.m_Grounded) doubleJumped = false;
@@ -305,7 +309,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         // If the player should jump...
         if (CanPerformAction(false) && jump && CanPerformAttack())
         {
-            if (animCon.m_Grounded && m_canJump && stats.LoseStamina(JUMP_STAMINA_REQ))
+            if (( animCon.m_Grounded || m_timeInAir < .2f ) && m_canJump && stats.LoseStamina(JUMP_STAMINA_REQ))
             {
                 // Add a vertical force to the player.
                 animCon.m_Grounded = false;
