@@ -119,7 +119,7 @@ public abstract class AIUserControl : MonoBehaviour {
         if(goalBefore == currentGoal)timeInCurrentGoal += Time.deltaTime;
         else timeInCurrentGoal = 0;
 
-        print("current goal: " + currentGoal);
+        //print("current goal: " + currentGoal);
     }
 
     protected virtual void setCurrentState()

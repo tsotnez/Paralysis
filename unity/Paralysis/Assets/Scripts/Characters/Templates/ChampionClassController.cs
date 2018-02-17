@@ -13,7 +13,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected const float MeeleRange = 1.5f;                                // Default range for meele attacks
     protected const float FallThroughDuration = .5f;                        // Duration of falling through a platform
     protected const float AllowAnotherJumpAfterGround = .1f;                // How long to wait to be able to jump again after grounded
-    private const float DoubleJumpDivisor = 1.5f;                           // Double jump divsor
+    private const float DoubleJumpDivisor = 1.6f;                           // Double jump divsor
 
 
     #region Parameters for Inspector

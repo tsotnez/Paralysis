@@ -120,6 +120,10 @@ public class LocalMultiplayerManager : GameplayManager {
             instPlayer1.transform.Find("graphics").GetComponent<SpriteRenderer>().color = championSpriteOverlayColor;
             instPlayer2.transform.Find("graphics").GetComponent<SpriteRenderer>().color = championSpriteOverlayColor;
 
+            //Set sort order
+            instPlayer1.transform.Find("graphics").GetComponent<SpriteRenderer>().sortingOrder = -1;
+            instPlayer2.transform.Find("graphics").GetComponent<SpriteRenderer>().sortingOrder = -2;
+
             //Add Game Objects to array
             players.Add(instPlayer1);
             players.Add(instPlayer2);
