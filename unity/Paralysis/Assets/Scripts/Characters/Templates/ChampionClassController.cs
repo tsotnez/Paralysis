@@ -307,9 +307,9 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         if(Time.time < m_allowAnotherJump)return;
 
         // If the player should jump...
-        if (CanPerformAction(false) && jump && CanPerformAttack())
+        if (jump && CanPerformAction(false)  && CanPerformAttack())
         {
-            if (( animCon.m_Grounded || m_timeInAir < .2f ) && m_canJump && stats.LoseStamina(JUMP_STAMINA_REQ))
+            if ( m_canJump && ( animCon.m_Grounded || m_timeInAir < .2f ) && stats.LoseStamina(JUMP_STAMINA_REQ))
             {
                 // Add a vertical force to the player.
                 animCon.m_Grounded = false;
@@ -337,7 +337,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         }
 
         //Handle double jump
-        if(CanPerformAction(false) && jump && !animCon.m_Grounded)
+        if(jump && !animCon.m_Grounded && CanPerformAction(false))
         {
             // We already let go of jump and hit it again
             if(m_canDoubleJump && !doubleJumped)
@@ -364,7 +364,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         }
 
         //if we let go of jump in the air and we havent double jumped
-        if(CanPerformAction(false) && !jump && !animCon.m_Grounded && !doubleJumped)
+        if(!jump && !animCon.m_Grounded && !doubleJumped && CanPerformAction(false))
         {
             m_canDoubleJump = true;
         }
