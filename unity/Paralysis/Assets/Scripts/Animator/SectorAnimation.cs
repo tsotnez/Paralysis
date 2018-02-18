@@ -64,7 +64,7 @@ public class SectorAnimation
         {
             if (StartAnimAvaiable && startAnimAtlas == null)
             {
-                LoadSpriteAtlasses();
+                startAnimAtlas = Resources.Load<SpriteAtlas>(AtlasPath + "Start" + AtlasPathSuffix);
             }
             return startAnimAtlas;
         }
@@ -76,7 +76,7 @@ public class SectorAnimation
         {
             if (DefaultAnimAvaiable && defaultAnimAtlas == null)
             {
-                LoadSpriteAtlasses();
+                defaultAnimAtlas = Resources.Load<SpriteAtlas>(AtlasPath + AtlasPathSuffix);
             }
             return defaultAnimAtlas;
         }
@@ -88,7 +88,7 @@ public class SectorAnimation
         {
             if (EndAnimAvaiable && endAnimAtlas == null)
             {
-                LoadSpriteAtlasses();
+                endAnimAtlas = Resources.Load<SpriteAtlas>(AtlasPath + "End" + AtlasPathSuffix);
             }
             return endAnimAtlas;
         }
@@ -96,51 +96,31 @@ public class SectorAnimation
 
     #endregion
 
-    #region Load/Destroy Atlas
-
-    private void LoadSpriteAtlasses()
-    {
-        if (DefaultAnimAvaiable)
-        {
-            // Load Sprite from Resources
-            if (StartAnimAvaiable)
-            {
-                startAnimAtlas = Resources.Load<SpriteAtlas>(AtlasPath + "Start" + AtlasPathSuffix);
-            }
-            defaultAnimAtlas = Resources.Load<SpriteAtlas>(AtlasPath + AtlasPathSuffix);
-            if (EndAnimAvaiable)
-            {
-                endAnimAtlas = Resources.Load<SpriteAtlas>(AtlasPath + "End" + AtlasPathSuffix);
-            }
-        }
-    }
+    #region Destroy Atlas
 
     public void DestroySpriteAtlasses()
     {
         // Kill Start-Anim
         if (startAnimAtlas != null)
         {
-            if (DebugLogging) Debug.Log("Destruction of " + AnimType.ToString() + " - Start");
+            if (DebugLogging) Debug.LogWarning("Destruction of " + AnimType.ToString() + " - Start");
             Resources.UnloadAsset(startAnimAtlas);
-            //Object.DestroyImmediate(startAnimAtlas, true);
             startAnimAtlas = null;
         }
 
         // Kill Default-Anim
         if (defaultAnimAtlas != null)
         {
-            if (DebugLogging) Debug.Log("Destruction of " + AnimType.ToString() + " - Default");
+            if (DebugLogging) Debug.LogWarning("Destruction of " + AnimType.ToString() + " - Default");
             Resources.UnloadAsset(defaultAnimAtlas);
-            //Object.DestroyImmediate(defaultAnimAtlas, true);
             defaultAnimAtlas = null;
         }
 
         // Kill End-Anim
         if (endAnimAtlas != null)
         {
-            if (DebugLogging) Debug.Log("Destruction of " + AnimType.ToString() + " - End");
+            if (DebugLogging) Debug.LogWarning("Destruction of " + AnimType.ToString() + " - End");
             Resources.UnloadAsset(endAnimAtlas);
-            //Object.DestroyImmediate(endAnimAtlas, true);
             endAnimAtlas = null;
         }
 

@@ -34,7 +34,7 @@ public abstract class AnimationController : MonoBehaviour
     // Animation 
     private Dictionary<AnimationTypes, SectorAnimation> SectorAnimations;       // Dictionary of Animations
     private Dictionary<AnimationTypes, Coroutine> AtlasDestroyRoutines;         // Atlas destroy routines 
-    private Coroutine AnimationRoutine = null;                                  // Coroutine of HandleAnimation
+    private IEnumerator AnimationRoutine = null;                                // Coroutine of HandleAnimation
 
     #region Enums
 
@@ -131,7 +131,7 @@ public abstract class AnimationController : MonoBehaviour
 
     #endregion
 
-    #region Manage Animations
+    #region Public Calls
 
     public void StartAnimation(AnimationTypes Anim)
     {
@@ -144,8 +144,13 @@ public abstract class AnimationController : MonoBehaviour
             ReSetDestroyAtlas(Anim);
 
             // Handle Animation
-            if (AnimationRoutine != null) StopCoroutine(AnimationRoutine);
-            AnimationRoutine = StartCoroutine(HandleAnimation(SectorAnimations[Anim], AnimationKind.DefaultAnimation));
+            if (AnimationRoutine != null)
+            {
+                StopCoroutine(AnimationRoutine);
+                ((IDisposable)AnimationRoutine).Dispose();
+            }
+            AnimationRoutine = HandleAnimation(SectorAnimations[Anim], AnimationKind.DefaultAnimation);
+            StartCoroutine(AnimationRoutine);
         }
     }
 
@@ -153,120 +158,161 @@ public abstract class AnimationController : MonoBehaviour
     {
         // NO clean here because its the same animation
         // Handle Animation
-        if (AnimationRoutine != null) StopCoroutine(AnimationRoutine);
-        AnimationRoutine = StartCoroutine(HandleAnimation(SectorAnimations[Anim], AnimationKind.DefaultAnimation));
+        if (AnimationRoutine != null)
+        {
+            StopCoroutine(AnimationRoutine);
+            ((IDisposable)AnimationRoutine).Dispose();
+        }
+        AnimationRoutine = HandleAnimation(SectorAnimations[Anim], AnimationKind.EndAnimation);
+        StartCoroutine(AnimationRoutine);
     }
 
-    private IEnumerator HandleAnimation(SectorAnimation Anim, AnimationKind ForceAnimKind)
+    #endregion
+
+    #region Manage Animations
+
+    private IEnumerator HandleAnimation(SectorAnimation Anim, AnimationKind AnimKind)
     {
         if (Anim.DefaultAnimAvaiable)
         {
-            // set playing
-            CurrentAnimationState = AnimationState.Playing;
-
-            // Handle audio matching to the animation
-            PlayAnimationAudio(Anim.AnimType);
-
-            if (ForceAnimKind != AnimationKind.EndAnimation)
+            SpriteAtlas atlas = null;
+            try
             {
-                // Play Start-Animation first
-                if (Anim.StartAnimAvaiable)
-                {
-                    CurrentAnimationKind = AnimationKind.StartAnimation;
-                    yield return PlayAnimation(Anim.StartAnimAtlas, Anim.StartAnimDuration, Anim.AnimType.ToString() + "Start");
-                }
+                // set playing
+                CurrentAnimationState = AnimationState.Playing;
 
-                // Set correct states
-                CurrentAnimationKind = AnimationKind.DefaultAnimation;
-                if (Anim.AnimPlayType == AnimationPlayTypes.Loop)
-                {
-                    CurrentAnimationState = AnimationState.Looping;
-                }
+                // Handle audio matching to the animation
+                PlayAnimationAudio(Anim.AnimType);
 
-                // Start Default Animation
-                SpriteAtlas atlas = Anim.DefaultAnimAtlas;
-                do
+                if (AnimKind == AnimationKind.DefaultAnimation || AnimKind == AnimationKind.StartAnimation)
                 {
-                    yield return PlayAnimation(Anim.DefaultAnimAtlas, Anim.DefaultAnimDuration, Anim.AnimType.ToString());
-                }
-                while (Anim.AnimPlayType == AnimationPlayTypes.Loop);
-
-                if (Anim.EndAnimAvaiable || Anim.AnimPlayType == AnimationPlayTypes.HoldOnEnd)
-                {
-                    // wait till signal for end is recived
-                    CurrentAnimationState = AnimationState.Waiting;
-                    while (true)
+                    // Play Start-Animation first
+                    if (Anim.StartAnimAvaiable)
                     {
-                        yield return new WaitForSeconds(0.1f);
+                        CurrentAnimationKind = AnimationKind.StartAnimation;
+                        atlas = Anim.StartAnimAtlas;
+                        yield return PlayAnimation(atlas, Anim.StartAnimDuration, Anim.AnimType.ToString() + "Start");
+                        Resources.UnloadAsset(atlas);
+                        atlas = null;
+                    }
+
+                    // Set correct states
+                    CurrentAnimationKind = AnimationKind.DefaultAnimation;
+                    if (Anim.AnimPlayType == AnimationPlayTypes.Loop)
+                    {
+                        CurrentAnimationState = AnimationState.Looping;
+                    }
+
+                    // Start Default Animation
+                    atlas = Anim.DefaultAnimAtlas;
+                    do
+                    {
+                        yield return PlayAnimation(Anim.DefaultAnimAtlas, Anim.DefaultAnimDuration, Anim.AnimType.ToString());
+                    }
+                    while (Anim.AnimPlayType == AnimationPlayTypes.Loop);
+
+                    if (Anim.EndAnimAvaiable || Anim.AnimPlayType == AnimationPlayTypes.HoldOnEnd)
+                    {
+                        // wait till signal for end is recived
+                        CurrentAnimationState = AnimationState.Waiting;
+                        while (true)
+                        {
+                            yield return new WaitForSeconds(0.1f);
+                        }
+                    }
+                    else
+                    {
+                        // revert to idle
+                        StartAnimation(AnimationTypes.Idle);
                     }
                 }
                 else
                 {
-                    // revert to idle
+                    // Play End-Animation
+                    if (Anim.EndAnimAvaiable)
+                    {
+                        CurrentAnimationKind = AnimationKind.EndAnimation;
+                        atlas = Anim.EndAnimAtlas;
+                        yield return PlayAnimation(atlas, Anim.EndAnimDuration, Anim.AnimType.ToString() + "End");
+                        Resources.UnloadAsset(atlas);
+                        atlas = null;
+                    }
+
+                    // revert to idle after finishing End-Animation
                     StartAnimation(AnimationTypes.Idle);
                 }
             }
-            else
+            finally
             {
-                // Play End-Animation
-                if (Anim.EndAnimAvaiable)
+                if (atlas != null)
                 {
-                    CurrentAnimationKind = AnimationKind.EndAnimation;
-                    yield return PlayAnimation(Anim.EndAnimAtlas, Anim.EndAnimDuration, Anim.AnimType.ToString() + "End");
+                    if (DebugLogging) Debug.LogWarning("HandleAnimation: CleanUp of " + atlas.name);
+                    Resources.UnloadAsset(atlas);
+                    atlas = null;
+                    Resources.UnloadUnusedAssets();
                 }
-
-                // revert to idle after finishing End-Animation
-                StartAnimation(AnimationTypes.Idle);
             }
         }
         else
         {
             // If an animation is not found revert to idle to prevent displaying errors
-            Debug.Log("Could not start '" + Anim.AnimType.ToString() + "' because it is not present in Resource Folder!" + "\n" + "Idle-Animation has been started instead.");
+            Debug.LogWarning(string.Format("Could not start '{0}' as '{1}' because it is not present in Resource Folder!" + "\n" + "Idle-Animation has been started instead.", Anim.AnimType, AnimKind));
             StartAnimation(AnimationTypes.Idle);
         }
     }
 
     private IEnumerator PlayAnimation(SpriteAtlas atlas, float delay, string FileNamePrefix)
     {
-        // Log Running Animation
-        if (DebugLogging)
-        {
-            Debug.Log("Character: " + CharacterClass + "| Animation: " + FileNamePrefix + " is now running");
-            Debug.Log("Delay: " + delay + " - SpriteCount: " + atlas.spriteCount + " --> Delay per Sprite: " + (delay / (float)atlas.spriteCount));
-        }
-
-        // Calculate correct delay
-        delay = (delay / (float)atlas.spriteCount);
-
-        // Unload assets with no references
-        Resources.UnloadUnusedAssets();
         Sprite spr = null;
 
-        // play each animation of the atlas
-        string SpriteFileName = "";
-        for (int i = 0; i < atlas.spriteCount; i++)
+        try
         {
-            // ToString parameter "D2" formats the integer with 2 chars (leading 0 if nessessary)
-            SpriteFileName = FileNamePrefix + "_" + i.ToString("D2");
-            spriteRenderer.sprite = atlas.GetSprite(SpriteFileName);
-
+            // Log Running Animation
             if (DebugLogging)
             {
-                Debug.Log("Active Sprite: " + SpriteFileName + " at Time: " + DateTime.Now.TimeOfDay);
+                Debug.Log(string.Format("Character: {0}| Animation: {1} is now running", CharacterClass, FileNamePrefix));
+                Debug.Log(string.Format("Delay: {0} - SpriteCount: {1} --> Delay per Sprite: {2}", delay, atlas.spriteCount, (delay / (float)atlas.spriteCount)));
             }
 
-            // Unload sprite
-            DestroyImmediate(spr);
-            spr = null;
-            spr = spriteRenderer.sprite;
-            yield return new WaitForSeconds(delay);
-        }
+            // Calculate correct delay
+            delay = (delay / (float)atlas.spriteCount);
 
-        // Unload
-        Resources.UnloadUnusedAssets();
-        spr = null;
+            // Unload assets with no references
+            Resources.UnloadUnusedAssets();
+
+            // play each animation of the atlas
+            string SpriteFileName = "";
+            for (int i = 0; i < atlas.spriteCount; i++)
+            {
+                // ToString parameter "D2" formats the integer with 2 chars (leading 0 if nessessary)
+                SpriteFileName = FileNamePrefix + "_" + i.ToString("D2");
+                spriteRenderer.sprite = atlas.GetSprite(SpriteFileName);
+
+                if (DebugLogging)
+                {
+                    Debug.Log(string.Format("Active Sprite: {0} at Time: {1}", SpriteFileName, DateTime.Now.TimeOfDay));
+                }
+
+                // Unload sprite
+                Destroy(spr);
+                spr = null;
+                spr = spriteRenderer.sprite;
+                yield return new WaitForSeconds(delay);
+            }
+        }
+        finally
+        {
+            if (DebugLogging) Debug.LogWarning("PlayAnimation: CleanUp of " + atlas.name);
+            Resources.UnloadAsset(atlas);
+            spr = null;
+            atlas = null;
+            Resources.UnloadUnusedAssets();
+        }
     }
+
+    #endregion
+
+    #region Audio
 
     private void PlayAnimationAudio(AnimationTypes animation)
     {
