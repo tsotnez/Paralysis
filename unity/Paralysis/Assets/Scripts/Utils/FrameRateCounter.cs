@@ -5,19 +5,12 @@ public class FrameRateCounter : MonoBehaviour
 {
     float deltaTime = 0.0f;
 
-    void Start()
-    {
-        #if !UNITY_EDITOR
-        enbaled =  false;
-        #endif
-    }
-
+    #if UNITY_EDITOR
     void Update()
     {
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
     }
 
-    #if UNITY_EDITOR
     void OnGUI()
     {
         if (Time.timeScale != 0)

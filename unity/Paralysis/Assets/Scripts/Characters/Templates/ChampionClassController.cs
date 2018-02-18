@@ -13,7 +13,6 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected const float MeeleRange = 1.5f;                                // Default range for meele attacks
     protected const float FallThroughDuration = .5f;                        // Duration of falling through a platform
     protected const float AllowAnotherJumpAfterGround = .1f;                // How long to wait to be able to jump again after grounded
-    private const float DoubleJumpDivisor = 1.6f;                           // Double jump divsor
 
 
     #region Parameters for Inspector
@@ -35,11 +34,11 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     // Jump & JumpAttack
     [SerializeField]
-    protected float m_initialJumpVelocity = 10f;                            // Initiail Y velocity when we start jumping
+    protected float m_initialJumpVelocity = 110f;                            // Initiail Y velocity when we start jumping
     [SerializeField]
-    protected float m_jumpMaxAccel = .4f;                                   // Max jump accelleration
+    protected float m_maxJumpTime = .3f;                                     // Max time in air going up
     [SerializeField]
-    protected float m_maxJumpTime = 1f;                                     // Max time in air going up
+    protected float m_DoubleJumpDivisor = 1.05f;                           // Double jump divsor
     [SerializeField]
     protected float m_jumpAttackRadius = 1.5f;                              // Radius of jump Attack damage
     [SerializeField]
@@ -172,6 +171,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     private float m_jumpStartTime = 0f;                                     // time of the player leaving the ground
     private float m_allowAnotherJump = 0f;                                  // time to wait for allowing the player to jump
     private float m_timeInAir = 0f;
+    private bool m_jumpPressed = false;
 
 
     //Coroutines
@@ -304,63 +304,30 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     public virtual void Jump(bool jump)
     {
+        m_jumpPressed = CanPerformAction(false) && jump;
         if(Time.time < m_allowAnotherJump)return;
 
         // If the player should jump...
-        if (jump && CanPerformAction(false)  && CanPerformAttack())
+        if (m_jumpPressed && CanPerformAttack())
         {
-            if ( m_canJump && ( animCon.m_Grounded || m_timeInAir < .2f ) && stats.LoseStamina(JUMP_STAMINA_REQ))
+            if (m_canJump && ( animCon.m_Grounded || m_timeInAir < .2f ) && stats.LoseStamina(JUMP_STAMINA_REQ))
             {
-                // Add a vertical force to the player.
-                animCon.m_Grounded = false;
-                animCon.trigJump = true;
-                m_canDoubleJump = false;
                 m_canJump = false;
+                animCon.m_Grounded = false;
+                m_canDoubleJump = false;
+                animCon.trigJump = true;
                 StartCoroutine(jumpWaitForGrounded());
-
-                Vector2 currentVel = m_Rigidbody2D.velocity;
-                currentVel.y = m_initialJumpVelocity;
-                currentVel.x = 0;
-                m_Rigidbody2D.velocity = currentVel;
-                m_jumpStartTime = Time.time;
+                StartCoroutine(JumpRoutine(1));
             }
-            else if(!animCon.m_Grounded)
-            {
-                float timeSinceJump = Time.time - m_jumpStartTime;
-                float interpolator = 1 - timeSinceJump / m_maxJumpTime;
-                float acceleration = m_jumpMaxAccel * interpolator;
-
-                Vector2 currentVel = m_Rigidbody2D.velocity;
-                currentVel.y += acceleration;
-                m_Rigidbody2D.velocity = currentVel;
-            }          
+           
         }
 
         //Handle double jump
-        if(jump && !animCon.m_Grounded && CanPerformAction(false))
+        if(m_jumpPressed && !animCon.m_Grounded && CanPerformAction(false) && m_canDoubleJump && !doubleJumped)
         {
-            // We already let go of jump and hit it again
-            if(m_canDoubleJump && !doubleJumped)
-            {
-                animCon.trigJump = true;
-                doubleJumped = true;
-
-                Vector2 currentVel = m_Rigidbody2D.velocity;
-                currentVel.y = m_initialJumpVelocity/DoubleJumpDivisor;
-                currentVel.x = 0;
-                m_Rigidbody2D.velocity = currentVel;
-                m_jumpStartTime = Time.time;
-            }
-            else if(jump && doubleJumped)
-            {
-                float timeSinceJump = Time.time - m_jumpStartTime;
-                float interpolator = 1 - timeSinceJump / (m_maxJumpTime/DoubleJumpDivisor);
-                float acceleration = m_jumpMaxAccel/DoubleJumpDivisor * interpolator;
-
-                Vector2 currentVel = m_Rigidbody2D.velocity;
-                currentVel.y += acceleration;
-                m_Rigidbody2D.velocity = currentVel;
-            }
+            animCon.trigJump = true;
+            doubleJumped = true;
+            StartCoroutine(JumpRoutine(m_DoubleJumpDivisor));
         }
 
         //if we let go of jump in the air and we havent double jumped
@@ -370,8 +337,29 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         }
     }
 
+    private IEnumerator JumpRoutine(float divisor)
+    {
+        m_Rigidbody2D.velocity = Vector2.zero;
+        float timer = 0;
+        float maxJumpTime = m_maxJumpTime/divisor;
+        float intialJumpV = m_initialJumpVelocity/divisor;
+
+        while(m_jumpPressed && timer < maxJumpTime)
+        {
+            float proportionCompleted = timer / maxJumpTime;
+            Vector2 currentVel = m_Rigidbody2D.velocity;
+            currentVel.y = intialJumpV;
+            Vector2 thisFrameJumpV = Vector2.Lerp(currentVel, Vector2.zero, proportionCompleted);
+            m_Rigidbody2D.AddForce(thisFrameJumpV);
+            timer += Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
+
     private IEnumerator jumpWaitForGrounded()
     {
+        yield return new WaitForSeconds(0.1f);
         yield return new WaitUntil(()=> animCon.m_Grounded);
         Vector2 currentVel = m_Rigidbody2D.velocity;
         currentVel.y = 0;

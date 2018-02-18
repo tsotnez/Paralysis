@@ -290,7 +290,7 @@ MonoBehaviour:
       type: 2}
     playerNumber: 0
     TeamNumber: 1
-    inputDevice: 1
+    inputDevice: 0
     trinket1: 0
     trinket2: 4
   defaultPlayer2:
@@ -298,7 +298,7 @@ MonoBehaviour:
       type: 2}
     playerNumber: 1
     TeamNumber: 2
-    inputDevice: 0
+    inputDevice: 1
     trinket1: 0
     trinket2: 4
   championSpriteOverlayColor: {r: 0.7647059, g: 0.7432369, b: 0.6634948, a: 1}

@@ -7,7 +7,7 @@ using UnityEditor;
 public class ChampionClassEditor : Editor {
 
     SerializedProperty WhatIsGround, WhatIsFallThrough, WhatToHit, MoveSpeed, MoveSpeedWhileAttacking, MoveSpeedWhileBlocking, JumpForce, JumpAttackRadius, JumpAttackForce,
-        DashSpeed, DashStaminaCost, CanDashForward, ComboExpire, ClassName, JumpAcceleration, MaxJumpTime;
+        DashSpeed, DashStaminaCost, CanDashForward, ComboExpire, ClassName, MaxJumpTime, DJumpDivisor;
 
     void OnEnable()
     {
@@ -20,8 +20,8 @@ public class ChampionClassEditor : Editor {
         MoveSpeedWhileBlocking = serializedObject.FindProperty("m_MoveSpeedWhileBlocking");
 
         JumpForce = serializedObject.FindProperty("m_initialJumpVelocity");
-        JumpAcceleration = serializedObject.FindProperty("m_jumpMaxAccel");
         MaxJumpTime = serializedObject.FindProperty("m_maxJumpTime");
+        DJumpDivisor = serializedObject.FindProperty("m_DoubleJumpDivisor");
 
         JumpAttackRadius = serializedObject.FindProperty("m_jumpAttackRadius");
         JumpAttackForce = serializedObject.FindProperty("m_jumpAttackForce");
@@ -56,16 +56,16 @@ public class ChampionClassEditor : Editor {
         GUILayout.Label("Jumping", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
         GUILayout.Label("Jump force");
-        GUILayout.Label("Max Jump Accel");
         GUILayout.Label("Max Jump Time");
+        GUILayout.Label("D Jump Divisor");
         GUILayout.Label("JumpAttack Force");
         GUILayout.Label("JumpAttack Radius");
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(JumpForce, new GUIContent(""), true);
-        EditorGUILayout.PropertyField(JumpAcceleration, new GUIContent(""), true);
         EditorGUILayout.PropertyField(MaxJumpTime, new GUIContent(""), true);
+        EditorGUILayout.PropertyField(DJumpDivisor, new GUIContent(""), true);
         EditorGUILayout.PropertyField(JumpAttackForce, new GUIContent(""), true);
         EditorGUILayout.PropertyField(JumpAttackRadius, new GUIContent(""), true);
         GUILayout.EndHorizontal();
