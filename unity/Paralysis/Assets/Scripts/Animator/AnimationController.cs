@@ -106,6 +106,8 @@ public abstract class AnimationController : MonoBehaviour
         photonView = GetComponent<PhotonView>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
+        photonView = GetComponent<PhotonView>();
+
         InitAnimations();
     }
 
@@ -137,25 +139,58 @@ public abstract class AnimationController : MonoBehaviour
     {
         if (CurrentAnimation != Anim)
         {
-            // set current animation
-            CurrentAnimation = Anim;
-
-            // Start CleanUp of the coming Animation
-            ReSetDestroyAtlas(Anim);
-
-            // Handle Animation
-            if (AnimationRoutine != null)
+            if(!PhotonNetwork.offlineMode && GameNetwork.Instance.InGame)
             {
-                StopCoroutine(AnimationRoutine);
-                ((IDisposable)AnimationRoutine).Dispose();
+                photonView.RPC("RPC_StartAnimation", PhotonTargets.Others, (short)Anim);
+                RPC_StartAnimation((short) Anim);
             }
-            AnimationRoutine = HandleAnimation(SectorAnimations[Anim], AnimationKind.DefaultAnimation);
-            StartCoroutine(AnimationRoutine);
+            else
+            {
+                RPC_StartAnimation((short) Anim);
+            }
         }
+    }
+
+    [PunRPC]
+    public void RPC_StartAnimation(short animType)
+    {
+        AnimationTypes Anim = (AnimationTypes)animType;
+
+        // set current animation
+        CurrentAnimation = Anim;
+
+        // Start CleanUp of the coming Animation
+        ReSetDestroyAtlas(Anim);
+
+        // Handle Animation
+        if (AnimationRoutine != null)
+        {
+            StopCoroutine(AnimationRoutine);
+            ((IDisposable)AnimationRoutine).Dispose();
+        }
+        AnimationRoutine = HandleAnimation(SectorAnimations[Anim], AnimationKind.DefaultAnimation);
+        StartCoroutine(AnimationRoutine);
+
     }
 
     public void StartEndAnimation(AnimationTypes Anim)
     {
+        if(!PhotonNetwork.offlineMode && GameNetwork.Instance.InGame)
+        {
+            photonView.RPC("RPC_StartEndAnimation", PhotonTargets.Others, (short)Anim);
+            RPC_StartEndAnimation((short) Anim);
+        }
+        else
+        {
+            RPC_StartEndAnimation((short) Anim);
+        }
+    }
+
+    [PunRPC]
+    public void RPC_StartEndAnimation(short animType)
+    {
+        AnimationTypes Anim = (AnimationTypes)animType;
+
         // NO clean here because its the same animation
         // Handle Animation
         if (AnimationRoutine != null)

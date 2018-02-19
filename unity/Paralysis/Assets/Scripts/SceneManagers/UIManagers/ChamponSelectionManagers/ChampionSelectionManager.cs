@@ -36,6 +36,7 @@ public abstract class ChampionSelectionManager : UIManager
         Destroy(graphics.GetComponent<GraphicsNetwork>());
         Destroy(newPreview.GetComponent<NetworkCharacter>());
 
+
         //flip sprite if necessary
         int direction = 1;
         if (flip)
