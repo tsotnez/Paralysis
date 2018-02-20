@@ -654,12 +654,9 @@ MonoBehaviour:
   m_MoveSpeedWhileAttacking: 5
   m_MoveSpeedWhileBlocking: 0
   CanTurnAroundWhileBlocking: 1
-<<<<<<< HEAD
-  m_initialJumpVelocity: 10
-  m_jumpMaxAccel: 0.4
-  m_maxJumpTime: 1
-=======
->>>>>>> master
+  m_initialJumpVelocity: 105
+  m_maxJumpTime: 0.3
+  m_DoubleJumpDivisor: 1.05
   m_jumpAttackRadius: 1
   m_jumpAttackForce: 10
   m_dashSpeed: 12
