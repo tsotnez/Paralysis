@@ -34,7 +34,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     // Jump & JumpAttack
     [SerializeField]
-    protected float m_initialJumpVelocity = 110f;                            // Initiail Y velocity when we start jumping
+    protected float m_initialJumpVelocity = 100f;                            // Initiail Y velocity when we start jumping
     [SerializeField]
     protected float m_maxJumpTime = .3f;                                     // Max time in air going up
     [SerializeField]
