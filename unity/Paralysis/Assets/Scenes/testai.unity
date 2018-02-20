@@ -445,7 +445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &119987662
 GameObject:
   m_ObjectHideFlags: 0
@@ -955,7 +955,7 @@ MonoBehaviour:
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
   isFallThroughNode: 0
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &260866607
 GameObject:
   m_ObjectHideFlags: 0
@@ -1248,7 +1248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &324327674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1293,9 +1293,9 @@ MonoBehaviour:
   jumpForce1X: 0.01
   jumpDuration1: 0.5
   isJumpNode2: 1
-  jumpForce2X: 0.75
-  jumpDuration2: 0.3
-  doubleJumpWait: 0.3
+  jumpForce2X: 0.5
+  jumpDuration2: 0.1
+  doubleJumpWait: 0.5
   isFallThroughNode: 0
   showGizmos: 0
 --- !u!1 &326529426
@@ -1502,7 +1502,7 @@ MonoBehaviour:
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
   isFallThroughNode: 0
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &564498664
 GameObject:
   m_ObjectHideFlags: 0
@@ -1545,7 +1545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &581381368
 GameObject:
   m_ObjectHideFlags: 0
@@ -2433,13 +2433,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isJumpNode1: 1
   jumpForce1X: -1
-  jumpDuration1: 0.5
+  jumpDuration1: 0.2
   isJumpNode2: 1
   jumpForce2X: -1
   jumpDuration2: 0.2
-  doubleJumpWait: 0.5
+  doubleJumpWait: 0.3
   isFallThroughNode: 0
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &917570867
 GameObject:
   m_ObjectHideFlags: 0
@@ -2537,7 +2537,7 @@ MonoBehaviour:
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
   isFallThroughNode: 0
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &975536600
 GameObject:
   m_ObjectHideFlags: 0
@@ -3063,7 +3063,7 @@ MonoBehaviour:
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
   isFallThroughNode: 1
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &1183396943
 GameObject:
   m_ObjectHideFlags: 0
@@ -4046,7 +4046,7 @@ MonoBehaviour:
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
   isFallThroughNode: 0
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &1500119424
 GameObject:
   m_ObjectHideFlags: 0
@@ -4412,7 +4412,7 @@ MonoBehaviour:
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
   isFallThroughNode: 0
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &1557429662
 GameObject:
   m_ObjectHideFlags: 0
@@ -4873,7 +4873,7 @@ MonoBehaviour:
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
   isFallThroughNode: 0
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &1786765172
 GameObject:
   m_ObjectHideFlags: 0
@@ -5285,7 +5285,7 @@ MonoBehaviour:
   width: 11.7
   height: 4.66
   gizmoColor: {r: 0, g: 1, b: 1, a: 1}
-  showGizmos: 0
+  showGizmos: 1
   nonTargetable: 0
 --- !u!1 &1883189223
 GameObject:
@@ -5713,7 +5713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &2037492632
 GameObject:
   m_ObjectHideFlags: 0
