@@ -72,6 +72,7 @@ public class NetworkVersusManager : GameplayManager
         }
         con.m_whatToHit = whatToHitP1;
         instPlayer1.GetComponent<UserControl>().playerNumber = localPlayer.playerNumber;
+        instPlayer1.transform.Find("graphics").GetComponent<SpriteRenderer>().sortingOrder = -playerNetworkNum;
 
         //Trinkets P1
         instPlayer1.AddComponent(Trinket.trinketsForNames[localPlayer.trinket1]);

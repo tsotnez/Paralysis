@@ -177,11 +177,13 @@ namespace UnityEngine.EventSystems
                     verticalAxis = "Vertical_XboxPlayer1";
                     horizontalAxis = "Horizontal_XboxPlayer1";
                     submitButton = "Submit_XboxPlayer1";
+                    cancelButton = "Cancel_XboxPlayer1";
                     break;
                 case UserControl.InputDevice.KeyboardMouse:
                     verticalAxis = "Vertical";
                     horizontalAxis = "Horizontal";
                     submitButton = "Submit";
+                    cancelButton = "Cancel";
                     eventSystem.SetSelectedGameObject(null);
                     eventSystem.firstSelectedGameObject = null;
                     break;

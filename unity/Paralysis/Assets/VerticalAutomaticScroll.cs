@@ -23,42 +23,39 @@ public class VerticalAutomaticScroll : MonoBehaviour {
         scrollRect = GetComponent<ScrollRect>();
         es = EventSystem.current;
 
-
+        //Find all content game objects and add them to list, TODO: PERFORMANCE WISE BAD
+        foreach (Transform child in contentTrans)
+        {
+            content.Add(child.gameObject);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        GameObject selected = es.currentSelectedGameObject;
 
-        ////Find all content game objects and add them to list, TODO: PERFORMANCE WISE BAD
-        //foreach (Transform child in contentTrans)
-        //{
-        //    content.Add(child.gameObject);
-        //}
+        //Is the currently selected GO one of the content GOs?
+        if (content.Contains(selected) && selected != null)
+        {
+            float maxY = maskRect.rect.height;
+            float minY = -maxY;
 
-        //GameObject selected = es.currentSelectedGameObject;
+            //Holds the position of the Content GO relative to the viewport GO
+            Vector3 relativePosition = viewPort.transform.InverseTransformPoint(selected.transform.position);
+            float selectedY = relativePosition.y; //Mit hundert multiplizieren weil transform.position in prozent
 
-        ////Is the currently selected GO one of the content GOs?
-        //if (content.Contains(selected))
-        //{
-        //    float maxY = maskRect.rect.height * 0.5f;
-        //    float minY = -maxY;
-
-        //    //Holds the position of the Content GO relative to the viewport GO
-        //    Vector3 relativePosition = selected.transform.position - viewPort.position;
-        //    float selectedY = relativePosition.y * 100; //Mit hundert multiplizieren weil trabnsform.position in prozent
-
-        //    //Check if selected GO is covered by mask
-        //    if (selectedY + selected.GetComponent<RectTransform>().rect.height > maxY)
-        //    {
-        //        //Nach rechts
-        //        scrollRect.verticalScrollbar.value = Mathf.Clamp(scrollRect.verticalScrollbar.value + LerpSpeed * Time.deltaTime, 0, 1);
-        //    }
-        //    else if (selectedY - selected.GetComponent<RectTransform>().rect.height < minY)
-        //    {
-        //        //Nach links
-        //        scrollRect.verticalScrollbar.value = Mathf.Clamp(scrollRect.verticalScrollbar.value - LerpSpeed * Time.deltaTime, 0, 1);
-        //    }
-        //}
+            //Check if selected GO is covered by mask
+            if (selectedY + selected.GetComponent<RectTransform>().rect.height > 0) //+ selected.GetComponent<RectTransform>().rect.height > maxY)
+            {
+                //Go up
+                scrollRect.verticalScrollbar.value = Mathf.Clamp(scrollRect.verticalScrollbar.value + LerpSpeed * Time.deltaTime, 0, 1);
+            }
+            else if (selectedY - selected.GetComponent<RectTransform>().rect.height < minY)
+            {
+                //Go down
+                scrollRect.verticalScrollbar.value = Mathf.Clamp(scrollRect.verticalScrollbar.value - LerpSpeed * Time.deltaTime, 0, 1);
+            }
+        }
     }
 }

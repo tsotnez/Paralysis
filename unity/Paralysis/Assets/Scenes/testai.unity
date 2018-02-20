@@ -289,6 +289,7 @@ GameObject:
   m_Component:
   - component: {fileID: 33478042}
   - component: {fileID: 33478043}
+  - component: {fileID: 33478041}
   m_Layer: 0
   m_Name: manager
   m_TagString: Untagged
@@ -296,6 +297,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &33478041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 33478040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 157b74c5dabeff545b3f445992a65259, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &33478042
 Transform:
   m_ObjectHideFlags: 0
@@ -433,7 +445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &119987662
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,7 +683,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 237374781}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.44, y: 3.12, z: 0}
+  m_LocalPosition: {x: -2.51, y: 3.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 256780269}
@@ -690,13 +702,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isJumpNode1: 1
   jumpForce1X: -1
-  jumpDuration1: 0.5
+  jumpDuration1: 0.1
   isJumpNode2: 1
   jumpForce2X: -1
-  jumpDuration2: 0.5
-  doubleJumpWait: 0.8
+  jumpDuration2: 0.1
+  doubleJumpWait: 0.95
   isFallThroughNode: 0
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &244023197
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,7 +906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &258281184
 GameObject:
   m_ObjectHideFlags: 0
@@ -943,7 +955,7 @@ MonoBehaviour:
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
   isFallThroughNode: 0
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &260866607
 GameObject:
   m_ObjectHideFlags: 0
@@ -1168,7 +1180,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 300783754}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.42, y: 6.16, z: 0}
+  m_LocalPosition: {x: -2.2750006, y: 6.16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1943928721}
@@ -1236,7 +1248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &324327674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1281,9 +1293,9 @@ MonoBehaviour:
   jumpForce1X: 0.01
   jumpDuration1: 0.5
   isJumpNode2: 1
-  jumpForce2X: 0.75
-  jumpDuration2: 0.3
-  doubleJumpWait: 0.3
+  jumpForce2X: 0.5
+  jumpDuration2: 0.1
+  doubleJumpWait: 0.5
   isFallThroughNode: 0
   showGizmos: 0
 --- !u!1 &326529426
@@ -1441,7 +1453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &516880255
 GameObject:
   m_ObjectHideFlags: 0
@@ -1490,7 +1502,7 @@ MonoBehaviour:
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
   isFallThroughNode: 0
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &564498664
 GameObject:
   m_ObjectHideFlags: 0
@@ -1533,7 +1545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &581381368
 GameObject:
   m_ObjectHideFlags: 0
@@ -1852,7 +1864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &689324842
 GameObject:
   m_ObjectHideFlags: 0
@@ -2304,7 +2316,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 878538271}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.31, y: 1.64, z: 0}
+  m_LocalPosition: {x: -10.171, y: 1.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1392575206}
@@ -2402,7 +2414,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 910918827}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.47, y: 3, z: 0}
+  m_LocalPosition: {x: 2.291, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 73873164}
@@ -2421,13 +2433,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isJumpNode1: 1
   jumpForce1X: -1
-  jumpDuration1: 0.5
+  jumpDuration1: 0.2
   isJumpNode2: 1
   jumpForce2X: -1
   jumpDuration2: 0.2
-  doubleJumpWait: 0.5
+  doubleJumpWait: 0.3
   isFallThroughNode: 0
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &917570867
 GameObject:
   m_ObjectHideFlags: 0
@@ -2525,7 +2537,7 @@ MonoBehaviour:
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
   isFallThroughNode: 0
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &975536600
 GameObject:
   m_ObjectHideFlags: 0
@@ -2853,7 +2865,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1090893522}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.31, y: 1.64, z: 0}
+  m_LocalPosition: {x: -10.169, y: 1.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1856883209}
@@ -2872,11 +2884,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isJumpNode1: 1
   jumpForce1X: 1
-  jumpDuration1: 0.5
+  jumpDuration1: 0.4
   isJumpNode2: 1
   jumpForce2X: 1
-  jumpDuration2: 0.5
-  doubleJumpWait: 0.5
+  jumpDuration2: 0.2
+  doubleJumpWait: 0.8
   isFallThroughNode: 0
   showGizmos: 0
 --- !u!1 &1105991832
@@ -3051,7 +3063,7 @@ MonoBehaviour:
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
   isFallThroughNode: 1
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &1183396943
 GameObject:
   m_ObjectHideFlags: 0
@@ -3100,7 +3112,7 @@ MonoBehaviour:
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
   isFallThroughNode: 0
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &1208647026
 GameObject:
   m_ObjectHideFlags: 0
@@ -3246,7 +3258,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1221201310}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.54, y: 1.62, z: 0}
+  m_LocalPosition: {x: -10.395, y: 1.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 256780269}
@@ -3265,13 +3277,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isJumpNode1: 0
   jumpForce1X: 0
-  jumpDuration1: 0.5
+  jumpDuration1: 0.3
   isJumpNode2: 0
   jumpForce2X: 0
-  jumpDuration2: 0.5
+  jumpDuration2: 0.3
   doubleJumpWait: 0.5
   isFallThroughNode: 0
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &1227620825
 GameObject:
   m_ObjectHideFlags: 0
@@ -3604,7 +3616,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1362547104}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.31, y: 1.64, z: 0}
+  m_LocalPosition: {x: -10.171, y: 1.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1030311539}
@@ -3623,7 +3635,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isJumpNode1: 1
   jumpForce1X: 1
-  jumpDuration1: 0.3
+  jumpDuration1: 0.1
   isJumpNode2: 0
   jumpForce2X: 0
   jumpDuration2: 0.5
@@ -3653,7 +3665,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1366489865}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.37, y: -1.55, z: 0}
+  m_LocalPosition: {x: -1.93, y: -1.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 686570567}
@@ -3678,7 +3690,7 @@ MonoBehaviour:
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
   isFallThroughNode: 0
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &1374217537
 GameObject:
   m_ObjectHideFlags: 0
@@ -3725,7 +3737,7 @@ MonoBehaviour:
   width: 7.23
   height: 5.24
   gizmoColor: {r: 0, g: 1, b: 1, a: 1}
-  showGizmos: 1
+  showGizmos: 0
   nonTargetable: 0
 --- !u!1 &1381246760
 GameObject:
@@ -4034,7 +4046,7 @@ MonoBehaviour:
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
   isFallThroughNode: 0
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &1500119424
 GameObject:
   m_ObjectHideFlags: 0
@@ -4092,7 +4104,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1513843271}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.44, y: 3.13, z: 0}
+  m_LocalPosition: {x: -1.93, y: 3.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 686570567}
@@ -4116,8 +4128,8 @@ MonoBehaviour:
   jumpForce2X: 0
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
-  isFallThroughNode: 0
-  showGizmos: 1
+  isFallThroughNode: 1
+  showGizmos: 0
 --- !u!1 &1523114329
 GameObject:
   m_ObjectHideFlags: 0
@@ -4400,7 +4412,7 @@ MonoBehaviour:
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
   isFallThroughNode: 0
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &1557429662
 GameObject:
   m_ObjectHideFlags: 0
@@ -4547,7 +4559,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1589078013}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.37, y: -1.55, z: 0}
+  m_LocalPosition: {x: -5.6, y: -1.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 516549713}
@@ -4572,7 +4584,7 @@ MonoBehaviour:
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
   isFallThroughNode: 0
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &1615255283
 GameObject:
   m_ObjectHideFlags: 0
@@ -4621,7 +4633,7 @@ MonoBehaviour:
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
   isFallThroughNode: 0
-  showGizmos: 1
+  showGizmos: 0
 --- !u!1 &1707928014
 GameObject:
   m_ObjectHideFlags: 0
@@ -4861,7 +4873,7 @@ MonoBehaviour:
   jumpDuration2: 0.5
   doubleJumpWait: 0.5
   isFallThroughNode: 0
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &1786765172
 GameObject:
   m_ObjectHideFlags: 0
@@ -5273,7 +5285,7 @@ MonoBehaviour:
   width: 11.7
   height: 4.66
   gizmoColor: {r: 0, g: 1, b: 1, a: 1}
-  showGizmos: 0
+  showGizmos: 1
   nonTargetable: 0
 --- !u!1 &1883189223
 GameObject:
@@ -5701,7 +5713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c717aef714c9840b327bd164e8ec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 0
+  showGizmos: 1
 --- !u!1 &2037492632
 GameObject:
   m_ObjectHideFlags: 0

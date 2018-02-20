@@ -102,13 +102,12 @@ public class SettingsManager : MainMenuManager {
 
     }
 
-    public void refreshInputTable()
+    /// <summary>
+    /// Sets selected GO as first selected of current settings page
+    /// </summary>
+    public void setSelectedGoAccordingly()
     {
-        foreach (Transform child in tableContent.transform)
-        {
-            Destroy(child.gameObject);
-        }
-        initControls();
+        EventSystem.current.SetSelectedGameObject(firstSelectedObjects[Array.IndexOf(MenuPages, currentPage)]);
     }
 
     /// <summary>

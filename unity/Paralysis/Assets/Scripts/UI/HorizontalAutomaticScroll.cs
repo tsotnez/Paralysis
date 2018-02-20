@@ -34,7 +34,7 @@ public class HorizontalAutomaticScroll : MonoBehaviour {
         GameObject selected = es.currentSelectedGameObject;
 
         //Is the currently selected GO one of the content GOs?
-        if (content.Contains(selected))
+        if (content.Contains(selected) && selected != null)
         {
             float maxX = maskRect.rect.width * 0.5f;
             float minX = -maxX;

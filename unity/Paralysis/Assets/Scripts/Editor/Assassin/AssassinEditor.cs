@@ -10,7 +10,7 @@ public class AssassinEditor : ChampionClassEditor {
         base.OnInspectorGUI();
 
         GUILayout.Label("Assassin Specific", EditorStyles.boldLabel);
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("m_DoubleJumpForce"), new GUIContent("Double Jump Force"), true);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("m_DoubleJumpDivisor"), new GUIContent("Double Jump Divisor"), true);
         EditorGUILayout.PropertyField(serializedObject.FindProperty("bulletPrefab"), new GUIContent("Skill 4 Projectile"), true);
         EditorGUILayout.PropertyField(serializedObject.FindProperty("ambushAttack_damage"), new GUIContent("Ambush Attack Damage"), true);
         serializedObject.ApplyModifiedProperties();

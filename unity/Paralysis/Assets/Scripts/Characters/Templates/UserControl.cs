@@ -78,6 +78,7 @@ public abstract class UserControl : MonoBehaviour
             GoCharacter.ManageDefensive(inputDown);
         }
 
+        GoCharacter.Jump(inputJump);
     }
 
     protected void FixedUpdate()
@@ -132,7 +133,6 @@ public abstract class UserControl : MonoBehaviour
 
             if (!inputDown)
             {
-                GoCharacter.Jump(inputJump);
                 if (inputDashDirection != 0) GoCharacter.StartCoroutine(GoCharacter.Dash(inputDashDirection));
             }
             
