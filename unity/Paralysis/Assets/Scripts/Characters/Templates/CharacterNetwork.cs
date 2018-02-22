@@ -91,15 +91,5 @@ public class CharacterNetwork : Photon.MonoBehaviour
             stats = GetComponent<CharacterStats>();
         stats.SetTeamColor();
     }
-
-    /// <summary>
-    /// Refreshes the list of player instances when a new player gets instantiated
-    /// </summary>
-    [PunRPC]
-    private void OnNewPlayerInstantiated()
-    {
-        // Obsolute due changes in Gameplay Manager
-        //GameObject.Find("manager").GetComponent<GameplayManager>().players = GameObject.FindGameObjectsWithTag(GameConstants.MAIN_PLAYER_TAG).ToList();
-    }
     #endregion 
 }

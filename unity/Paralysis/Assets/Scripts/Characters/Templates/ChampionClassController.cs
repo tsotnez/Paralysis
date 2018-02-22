@@ -198,7 +198,6 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         // Refresh manager instance list of players
         if (!PhotonNetwork.offlineMode)
         {
-            photonView.RPC("OnNewPlayerInstantiated", PhotonTargets.All);
             //If the player is not mine set the rigidbody to not kinematic
             //and Disable updates on this object
             if(!photonView.isMine)
