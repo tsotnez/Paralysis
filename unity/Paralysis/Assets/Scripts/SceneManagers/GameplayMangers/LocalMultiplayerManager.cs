@@ -8,125 +8,144 @@ public class LocalMultiplayerManager : GameplayManager {
     //Hotbar prefab
     public GameObject hotbarPrefab;
 
-    //Spawn locations
-    private GameObject[] spawnPoints;
+    // stuff
+    private Transform HotbarTransform;
 
     protected override void buildUI()
     {
-        Transform parent = GameObject.Find("Hotbars").transform;
+        // Get Transform for Hotbar
+        HotbarTransform = GameObject.Find("Hotbars").transform;
 
-        GameObject hotbar = Instantiate(hotbarPrefab, parent, false);
-        hotbar.GetComponent<HotbarController>().setChampionName(team1[0].ChampionPrefab.name);
-        hotbar.GetComponent<HotbarController>().initAbilityImages(team1[0].ChampionPrefab.name);
-        hotbar.GetComponent<HotbarController>().initTrinketImages(players[0].GetComponents<Trinket>()[0].DisplayName, players[0].GetComponents<Trinket>()[1].DisplayName);
+        // Foreach Team
+        GameObject hotbar;
+        int totalPlayers = 0;
+        for (int i = 0; i < Teams.Count; i++)
+        {
+            // Foreach Player in Team
+            for (int j = 0; j < Teams[j].Length; j++)
+            {
+                // Add HotBar for Player of Team
+                hotbar = AssignPlayerToHotbar(Teams[i][j]);
+
+                // Move HotBar if nessessary
+                if (totalPlayers == 1)
+                {
+                    RectTransform t = hotbar.GetComponent<RectTransform>();
+                    t.anchorMax = new Vector2(1, 0.5f);
+                    t.anchorMin = new Vector2(1, 0.5f);
+                    t.anchoredPosition = new Vector2(-407f, 0);
+                }
+                totalPlayers++;
+            }
+        }
+    }
+
+    private GameObject AssignPlayerToHotbar(Player playerToAssign)
+    {
+        // Instantiate Hotbar in Scene
+        GameObject hotbar = Instantiate(hotbarPrefab, HotbarTransform, false);
+        HotbarController hotbarController = hotbar.GetComponent<HotbarController>();
+
+        // Apply Champion Name
+        hotbarController.setChampionName(playerToAssign.ChampionPrefab.name);
+        // Apply Ability Images
+        hotbarController.initAbilityImages(playerToAssign.ChampionPrefab.name);
+        // Apply Trinkets
+        GameObject GoPlayer = playerToAssign.InstantiatedPlayer;
+        hotbarController.initTrinketImages(GoPlayer.GetComponents<Trinket>()[0].DisplayName, GoPlayer.GetComponents<Trinket>()[1].DisplayName);
 
         //Assign hotbar to player
-        players[0].GetComponent<CharacterStats>().hotbar = hotbar.GetComponent<HotbarController>();
-        players[0].GetComponent<ChampionClassController>().hotbar = hotbar.GetComponent<HotbarController>();
+        GoPlayer.GetComponent<CharacterStats>().hotbar = hotbarController;
+        GoPlayer.GetComponent<ChampionClassController>().hotbar = hotbarController;
 
-        GameObject hotbar2 = Instantiate(hotbarPrefab, parent, false);
-
-        RectTransform t = hotbar2.GetComponent<RectTransform>();
-
-        t.anchorMax = new Vector2(1, 0.5f);
-        t.anchorMin = new Vector2(1, 0.5f);
-        t.anchoredPosition = new Vector2(-407f, 0);
-        hotbar2.GetComponent<HotbarController>().setChampionName(team2[0].ChampionPrefab.name);
-        hotbar2.GetComponent<HotbarController>().initAbilityImages(team2[0].ChampionPrefab.name);
-        hotbar2.GetComponent<HotbarController>().initTrinketImages(players[1].GetComponents<Trinket>()[0].DisplayName, players[1].GetComponents<Trinket>()[1].DisplayName);
-        players[1].GetComponent<CharacterStats>().hotbar = hotbar2.GetComponent<HotbarController>();
-        players[1].GetComponent<ChampionClassController>().hotbar = hotbar2.GetComponent<HotbarController>();
+        // Returns Hotbar
+        return hotbar;
     }
 
     protected override void instantiatePlayers()
-    {        
-        spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
-        SpawnPoint player1Spawn = null;
-        SpawnPoint player2Spawn = null;
-        foreach(GameObject spawnObj in spawnPoints)
+    {
+        // Get all SpawnPoints
+        GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
+
+        //Defaults for debugging
+        if (Teams == null)
         {
-            SpawnPoint spawnPoint = spawnObj.GetComponent<SpawnPoint>();
-            if(spawnPoint.playerNumber == 1)
+            Teams = new Dictionary<int, Player[]>();
+            Teams[0] = new Player[] { defaultPlayer1 };
+            Teams[1] = new Player[] { defaultPlayer2 };
+        }
+
+        // Foreach Team
+        Player player = null;
+        GameObject GoPlayer = null;
+        SpawnPoint SpawnPoint;
+        SpriteRenderer PlayerSpriteRenderer;
+        int totalPlayers = 0;
+        for (int i = 0; i < Teams.Count; i++)
+        {
+            LayerMask OwnLayer;
+            LayerMask EnemyLayer;
+            if (i == 0)
             {
-                player1Spawn = spawnPoint;
+                OwnLayer = GameConstants.TEAM_1_LAYER;
+                EnemyLayer = GameConstants.TEAM_2_LAYER;
             }
             else
             {
-                player2Spawn = spawnPoint;
+                OwnLayer = GameConstants.TEAM_2_LAYER;
+                EnemyLayer = GameConstants.TEAM_1_LAYER;
             }
-        }
 
-        //Defaults for debugging
-        if (team1 == null)
-            team1 = new Player[] {defaultPlayer1};
-        if (team2 == null)
-            team2 = new Player[] {defaultPlayer2};
-
-        if (team1 != null && team2 != null)
-        {
-            //Player1
-            GameObject instPlayer1 = Instantiate(team1[0].ChampionPrefab, player1Spawn.transform.position, Quaternion.identity);
-            instPlayer1.GetComponent<UserControl>().inputDevice = team1[0].inputDevice;
-            instPlayer1.layer = GameConstants.TEAM_1_LAYER;
-
-            LayerMask whatToHitP1 = new LayerMask();
-            whatToHitP1 |= (1 << GameConstants.TEAM_2_LAYER);
-
-            instPlayer1.GetComponent<ChampionClassController>().m_whatToHit = whatToHitP1;
-            if(player1Spawn.facingDir == SpawnPoint.SpawnFacing.left)
+            // Foreach Player in Team
+            for (int j = 0; j < Teams[j].Length; j++)
             {
-                instPlayer1.GetComponent<ChampionClassController>().Flip();
+                // Instantiate Player
+                player = Teams[i][j];
+                SpawnPoint = spawnPoints[totalPlayers].GetComponent<SpawnPoint>();
+                GoPlayer = Instantiate(player.ChampionPrefab, SpawnPoint.transform.position, Quaternion.identity);
+                GoPlayer.GetComponent<UserControl>().playerNumber = player.playerNumber;
+
+                // Handle InputDevice and Layer
+                GoPlayer.GetComponent<UserControl>().inputDevice = player.inputDevice;
+                GoPlayer.layer = OwnLayer;
+
+                // Handle WhatToHit
+                LayerMask whatToHit = new LayerMask();
+                whatToHit |= (1 << EnemyLayer);
+                GoPlayer.GetComponent<ChampionClassController>().m_whatToHit = whatToHit;
+
+                // Handle Facing Direction
+                if (SpawnPoint.facingDir == SpawnPoint.SpawnFacing.left)
+                {
+                    GoPlayer.GetComponent<ChampionClassController>().Flip();
+                }
+
+                // Handle Trinket
+                GoPlayer.AddComponent(Trinket.trinketsForNames[player.trinket1]);
+                GoPlayer.AddComponent(Trinket.trinketsForNames[player.trinket2]);
+                GoPlayer.GetComponent<ChampionClassController>().Trinket1 = GoPlayer.GetComponents<Trinket>()[0];
+                GoPlayer.GetComponent<ChampionClassController>().Trinket2 = GoPlayer.GetComponents<Trinket>()[1];
+                GoPlayer.GetComponent<ChampionClassController>().Trinket1.trinketNumber = 1;
+                GoPlayer.GetComponent<ChampionClassController>().Trinket2.trinketNumber = 2;
+
+                //Set overlay and sort order
+                PlayerSpriteRenderer = GoPlayer.transform.Find("graphics").GetComponent<SpriteRenderer>();
+                PlayerSpriteRenderer.color = championSpriteOverlayColor;
+                PlayerSpriteRenderer.sortingOrder = (++totalPlayers)*(-1); // Increase PlayerCount
+
+                // Save Instantiated Player to Team
+                player.InstantiatedPlayer = GoPlayer;
+
+                // Set Target of Camera
+                if (totalPlayers == 1)
+                {
+                    Camera.main.GetComponent<CameraBehaviour>().changeTarget(GoPlayer.transform);
+                }
+                else
+                {
+                    Camera.main.GetComponent<CameraBehaviour>().switchToMultiplayer(GoPlayer.transform);
+                }
             }
-            instPlayer1.GetComponent<UserControl>().playerNumber = team1[0].playerNumber;
-
-            //Trinkets P1
-            instPlayer1.AddComponent(Trinket.trinketsForNames[team1[0].trinket1]);
-            instPlayer1.AddComponent(Trinket.trinketsForNames[team1[0].trinket2]);
-            instPlayer1.GetComponent<ChampionClassController>().Trinket1 = instPlayer1.GetComponents<Trinket>()[0];
-            instPlayer1.GetComponent<ChampionClassController>().Trinket2 = instPlayer1.GetComponents<Trinket>()[1];
-            instPlayer1.GetComponent<ChampionClassController>().Trinket1.trinketNumber = 1;
-            instPlayer1.GetComponent<ChampionClassController>().Trinket2.trinketNumber = 2;
-
-            Camera.main.GetComponent<CameraBehaviour>().changeTarget(instPlayer1.transform);
-
-            //Player 2
-            GameObject instPlayer2 = Instantiate(team2[0].ChampionPrefab, player2Spawn.transform.position, Quaternion.identity);
-            instPlayer2.layer = GameConstants.TEAM_2_LAYER;
-
-            //Change player2 prefab to be an enemy to player 1
-            LayerMask whatToHitP2 = new LayerMask();
-            whatToHitP2 |= (1 << GameConstants.TEAM_1_LAYER);
-
-            instPlayer2.GetComponent<ChampionClassController>().m_whatToHit = whatToHitP2;
-            if(player2Spawn.facingDir == SpawnPoint.SpawnFacing.left)
-            {
-                instPlayer2.GetComponent<ChampionClassController>().Flip();
-            }
-
-            instPlayer2.GetComponent<UserControl>().inputDevice = team2[0].inputDevice;
-            instPlayer2.GetComponent<UserControl>().playerNumber = team2[0].playerNumber;
-
-            Camera.main.GetComponent<CameraBehaviour>().switchToMultiplayer(instPlayer2.GetComponent<Transform>());
-
-            //Trinkets P2
-            instPlayer2.AddComponent(Trinket.trinketsForNames[team2[0].trinket1]);
-            instPlayer2.AddComponent(Trinket.trinketsForNames[team2[0].trinket2]);
-            instPlayer2.GetComponent<ChampionClassController>().Trinket1 = instPlayer2.GetComponents<Trinket>()[0];
-            instPlayer2.GetComponent<ChampionClassController>().Trinket2 = instPlayer2.GetComponents<Trinket>()[1];
-            instPlayer2.GetComponent<ChampionClassController>().Trinket1.trinketNumber = 1;
-            instPlayer2.GetComponent<ChampionClassController>().Trinket2.trinketNumber = 2;
-
-            //Set overlay
-            instPlayer1.transform.Find("graphics").GetComponent<SpriteRenderer>().color = championSpriteOverlayColor;
-            instPlayer2.transform.Find("graphics").GetComponent<SpriteRenderer>().color = championSpriteOverlayColor;
-
-            //Set sort order
-            instPlayer1.transform.Find("graphics").GetComponent<SpriteRenderer>().sortingOrder = -1;
-            instPlayer2.transform.Find("graphics").GetComponent<SpriteRenderer>().sortingOrder = -2;
-
-            //Add Game Objects to array
-            players.Add(instPlayer1);
-            players.Add(instPlayer2);
         }
     }
 }

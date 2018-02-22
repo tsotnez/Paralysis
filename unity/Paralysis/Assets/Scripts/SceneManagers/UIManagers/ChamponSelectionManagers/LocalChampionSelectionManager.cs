@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System;
 
-public class LocalChampionSelectionManager : ChampionSelectionManager {
+public class LocalChampionSelectionManager : ChampionSelectionManager
+{
 
     public static Player[] team2;
     public static Player[] team1;
@@ -32,7 +33,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager {
     protected override void Start()
     {
         //Set default Values for debugging
-        if(team1 == null && team2 == null)
+        if (team1 == null && team2 == null)
         {
             team1 = new Player[1];
             team2 = new Player[1];
@@ -40,9 +41,9 @@ public class LocalChampionSelectionManager : ChampionSelectionManager {
             team1[0] = new Player(UserControl.PlayerNumbers.Player2, UserControl.InputDevice.KeyboardMouse, 1);
             team2[0] = new Player(UserControl.PlayerNumbers.Player1, UserControl.InputDevice.XboxController, 2);
         }
-        
+
         //Show additionjal player Platforms if 2v2
-        if(team1.Length == 2 && team2.Length == 2)
+        if (team1.Length == 2 && team2.Length == 2)
         {
             additionalPlatforms2v2.SetActive(true);
         }
@@ -50,10 +51,10 @@ public class LocalChampionSelectionManager : ChampionSelectionManager {
         //All players are the sum of both teams
         players = team1.Concat(team2).ToArray();
         setUpEventSystems();
-	}
+    }
 
     protected override void Update()
-    {    
+    {
         //Only allow to start if selections are complete
         bool allSelected = true;
         //Check if every player has selected a champion and 2 different trinkets
@@ -62,7 +63,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager {
                 allSelected = false;
 
         everythingSelected = allSelected;
-       
+
     }
 
     /// <summary>
@@ -78,7 +79,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager {
         GameObject[] platformGroup;
         bool flip;
 
-        if(target.TeamNumber == 1) 
+        if (target.TeamNumber == 1)
         {
             platformGroup = platformsTeam1;
             flip = false;
@@ -191,8 +192,9 @@ public class LocalChampionSelectionManager : ChampionSelectionManager {
         //Check if every player has selected a champion and 2 different trinkets
         if (everythingSelected)
         {
-            LocalMultiplayerManager.team1 = team1;
-            LocalMultiplayerManager.team2 = team2;
+            LocalMultiplayerManager.Teams = new Dictionary<int, Player[]>();
+            LocalMultiplayerManager.Teams.Add(0, team1);
+            LocalMultiplayerManager.Teams.Add(1, team2);
 
             SceneManager.LoadScene("scenes/test");
         }

@@ -4,9 +4,8 @@ using System.Linq;
 /// <summary>
 /// Synchronizes game mechanic values (excluding the transform)
 /// </summary>
-public class CharacterNetwork : Photon.MonoBehaviour {
-
-
+public class CharacterNetwork : Photon.MonoBehaviour
+{
     public string PlayerName = "Player";
     SpriteRenderer r;
     Transform graphicsTransform;
@@ -99,7 +98,8 @@ public class CharacterNetwork : Photon.MonoBehaviour {
     [PunRPC]
     private void OnNewPlayerInstantiated()
     {
-        GameObject.Find("manager").GetComponent<GameplayManager>().players = GameObject.FindGameObjectsWithTag(GameConstants.MAIN_PLAYER_TAG).ToList();
+        // Obsolute due changes in Gameplay Manager
+        //GameObject.Find("manager").GetComponent<GameplayManager>().players = GameObject.FindGameObjectsWithTag(GameConstants.MAIN_PLAYER_TAG).ToList();
     }
     #endregion 
 }

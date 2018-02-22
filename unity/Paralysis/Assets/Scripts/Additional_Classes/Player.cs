@@ -5,14 +5,18 @@ using UnityEngine;
 /// <summary>
 /// Class holding all information about a player
 /// </summary>
-
 [System.Serializable]
-public class Player {
-
+public class Player
+{
     /// <summary>
     /// Prefab of selected champion
     /// </summary>
     public GameObject ChampionPrefab;
+
+    /// <summary>
+    /// Instantiated Player Game Object
+    /// </summary>
+    public GameObject InstantiatedPlayer;
 
     public UserControl.PlayerNumbers playerNumber;
     public int TeamNumber;
