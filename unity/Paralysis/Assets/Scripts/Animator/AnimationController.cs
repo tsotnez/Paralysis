@@ -39,7 +39,7 @@ public abstract class AnimationController : MonoBehaviour
     #region Enums
 
     // All existing animation types
-    public enum AnimationTypes
+    public enum AnimationTypes : byte
     {
         //Default
         Idle = 0,
@@ -141,18 +141,18 @@ public abstract class AnimationController : MonoBehaviour
         {
             if(!PhotonNetwork.offlineMode && GameNetwork.Instance.InGame)
             {
-                photonView.RPC("RPC_StartAnimation", PhotonTargets.Others, (short)Anim);
-                RPC_StartAnimation((short) Anim);
+                photonView.RPC("RPC_StartAnimation", PhotonTargets.Others, (byte)Anim);
+                RPC_StartAnimation((byte)Anim);
             }
             else
             {
-                RPC_StartAnimation((short) Anim);
+                RPC_StartAnimation((byte)Anim);
             }
         }
     }
 
     [PunRPC]
-    public void RPC_StartAnimation(short animType)
+    public void RPC_StartAnimation(byte animType)
     {
         AnimationTypes Anim = (AnimationTypes)animType;
 
@@ -177,17 +177,17 @@ public abstract class AnimationController : MonoBehaviour
     {
         if(!PhotonNetwork.offlineMode && GameNetwork.Instance.InGame)
         {
-            photonView.RPC("RPC_StartEndAnimation", PhotonTargets.Others, (short)Anim);
-            RPC_StartEndAnimation((short) Anim);
+            photonView.RPC("RPC_StartEndAnimation", PhotonTargets.Others, (byte)Anim);
+            RPC_StartEndAnimation((byte)Anim);
         }
         else
         {
-            RPC_StartEndAnimation((short) Anim);
+            RPC_StartEndAnimation((byte)Anim);
         }
     }
 
     [PunRPC]
-    public void RPC_StartEndAnimation(short animType)
+    public void RPC_StartEndAnimation(byte animType)
     {
         AnimationTypes Anim = (AnimationTypes)animType;
 
