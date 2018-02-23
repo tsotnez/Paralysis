@@ -3,47 +3,65 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
 
-public class LocalMultiplayerManager : GameplayManager {
+public class LocalMultiplayerManager : GameplayManager
+{
+    public GameObject UICameraTop;
 
-    //Hotbar prefab
+    // Hotbar stuff
     public GameObject hotbarPrefab;
-
-    // stuff
-    private Transform HotbarTransform;
+    public Transform TopHotbarTransform;
+    public Transform BotHotbarTransform;
 
     protected override void buildUI()
     {
-        // Get Transform for Hotbar
-        HotbarTransform = GameObject.Find("Hotbars").transform;
-
         // Foreach Team
         GameObject hotbar;
         int totalPlayers = 0;
         for (int i = 0; i < Teams.Count; i++)
         {
             // Foreach Player in Team
-            for (int j = 0; j < Teams[j].Length; j++)
+            for (int j = 0; j < Teams[i].Length; j++)
             {
                 // Add HotBar for Player of Team
-                hotbar = AssignPlayerToHotbar(Teams[i][j]);
+                hotbar = AssignPlayerToHotbar(Teams[i][j], ++totalPlayers);
 
-                // Move HotBar if nessessary
-                if (totalPlayers == 1)
+                // Move HotBar to rigth if nessessary (for Player 2 & 4)
+                if (totalPlayers % 2 == 0)
                 {
                     RectTransform t = hotbar.GetComponent<RectTransform>();
                     t.anchorMax = new Vector2(1, 0.5f);
                     t.anchorMin = new Vector2(1, 0.5f);
                     t.anchoredPosition = new Vector2(-407f, 0);
                 }
-                totalPlayers++;
             }
+        }
+
+        // Enable Top Camera
+        if (totalPlayers > 2)
+        {
+            // Set Camera Active
+            UICameraTop.SetActive(true);
+            // Change Height of Camera Rect, thus there is enough space for top hotbar
+            Rect CameraRect = Camera.main.rect;
+            CameraRect.height = 0.84f;
+            Camera.main.rect = CameraRect;
         }
     }
 
-    private GameObject AssignPlayerToHotbar(Player playerToAssign)
+    private GameObject AssignPlayerToHotbar(Player playerToAssign, int playerCount)
     {
         // Instantiate Hotbar in Scene
-        GameObject hotbar = Instantiate(hotbarPrefab, HotbarTransform, false);
+        GameObject hotbar;
+        if (playerCount < 3)
+        {
+            // First 2 Players are on Bottom
+            hotbar = Instantiate(hotbarPrefab, BotHotbarTransform, false);
+        }
+        else
+        {
+            // Next Players are on Top
+            hotbar = Instantiate(hotbarPrefab, TopHotbarTransform, false);
+        }
         HotbarController hotbarController = hotbar.GetComponent<HotbarController>();
 
         // Apply Champion Name
@@ -64,9 +82,6 @@ public class LocalMultiplayerManager : GameplayManager {
 
     protected override void instantiatePlayers()
     {
-        // Get all SpawnPoints
-        GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
-
         //Defaults for debugging
         if (Teams == null)
         {
@@ -80,63 +95,53 @@ public class LocalMultiplayerManager : GameplayManager {
         GameObject GoPlayer = null;
         SpawnPoint SpawnPoint;
         SpriteRenderer PlayerSpriteRenderer;
+        ChampionClassController cccPlayer;
         int totalPlayers = 0;
         for (int i = 0; i < Teams.Count; i++)
         {
-            LayerMask OwnLayer;
-            LayerMask EnemyLayer;
-            if (i == 0)
-            {
-                OwnLayer = GameConstants.TEAM_1_LAYER;
-                EnemyLayer = GameConstants.TEAM_2_LAYER;
-            }
-            else
-            {
-                OwnLayer = GameConstants.TEAM_2_LAYER;
-                EnemyLayer = GameConstants.TEAM_1_LAYER;
-            }
+            int OwnLayer = GameConstants.TEAMLAYERS[i];
+            LayerMask whatToHit = SectorLayerMaskManager.CreateLayerMaskWith(GameConstants.TEAMLAYERS.Where(x => x != OwnLayer).ToArray());
 
+            SpawnPoint[] TeamSpawns = Spawns.Where(x => x.teamNumber == i+1).ToArray();
             // Foreach Player in Team
-            for (int j = 0; j < Teams[j].Length; j++)
+            for (int j = 0; j < Teams[i].Length; j++)
             {
                 // Instantiate Player
                 player = Teams[i][j];
-                SpawnPoint = spawnPoints[totalPlayers].GetComponent<SpawnPoint>();
+                SpawnPoint = TeamSpawns[j];
                 GoPlayer = Instantiate(player.ChampionPrefab, SpawnPoint.transform.position, Quaternion.identity);
                 GoPlayer.GetComponent<UserControl>().playerNumber = player.playerNumber;
 
-                // Handle InputDevice and Layer
+                // Handle InputDevice and Layer and WhatToHit
                 GoPlayer.GetComponent<UserControl>().inputDevice = player.inputDevice;
                 GoPlayer.layer = OwnLayer;
-
-                // Handle WhatToHit
-                LayerMask whatToHit = new LayerMask();
-                whatToHit |= (1 << EnemyLayer);
-                GoPlayer.GetComponent<ChampionClassController>().m_whatToHit = whatToHit;
+                cccPlayer = GoPlayer.GetComponent<ChampionClassController>();
+                cccPlayer.m_whatToHit = whatToHit;
 
                 // Handle Facing Direction
                 if (SpawnPoint.facingDir == SpawnPoint.SpawnFacing.left)
                 {
-                    GoPlayer.GetComponent<ChampionClassController>().Flip();
+                    cccPlayer.Flip();
                 }
 
                 // Handle Trinket
                 GoPlayer.AddComponent(Trinket.trinketsForNames[player.trinket1]);
                 GoPlayer.AddComponent(Trinket.trinketsForNames[player.trinket2]);
-                GoPlayer.GetComponent<ChampionClassController>().Trinket1 = GoPlayer.GetComponents<Trinket>()[0];
-                GoPlayer.GetComponent<ChampionClassController>().Trinket2 = GoPlayer.GetComponents<Trinket>()[1];
-                GoPlayer.GetComponent<ChampionClassController>().Trinket1.trinketNumber = 1;
-                GoPlayer.GetComponent<ChampionClassController>().Trinket2.trinketNumber = 2;
+                cccPlayer.Trinket1 = GoPlayer.GetComponents<Trinket>()[0];
+                cccPlayer.Trinket2 = GoPlayer.GetComponents<Trinket>()[1];
+                cccPlayer.Trinket1.trinketNumber = 1;
+                cccPlayer.Trinket2.trinketNumber = 2;
 
                 //Set overlay and sort order
                 PlayerSpriteRenderer = GoPlayer.transform.Find("graphics").GetComponent<SpriteRenderer>();
                 PlayerSpriteRenderer.color = championSpriteOverlayColor;
-                PlayerSpriteRenderer.sortingOrder = (++totalPlayers)*(-1); // Increase PlayerCount
+                PlayerSpriteRenderer.sortingOrder = (++totalPlayers) * (-1); // Increase PlayerCount
 
                 // Save Instantiated Player to Team
                 player.InstantiatedPlayer = GoPlayer;
 
                 // Set Target of Camera
+                // Camera.main.GetComponent<CameraBehaviour>().AddTargetToCamera(GoPlayer.transform);
                 if (totalPlayers == 1)
                 {
                     Camera.main.GetComponent<CameraBehaviour>().changeTarget(GoPlayer.transform);

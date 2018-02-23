@@ -9,23 +9,25 @@ using UnityEngine.UI;
 /// </summary>
 public abstract class GameplayManager : Photon.MonoBehaviour
 {
-
     /// <summary>
     /// Current GameMode, default is TeamDeathmatch
     /// </summary>
     public GameModes gameMode = GameModes.TeamDeathmatch;
 
-    //GameOver overlay
+    // GameOver overlay
     public Transform gameOverOverlay;
 
-    //Team Arrays containing Players
+    // Team Arrays containing Players
     public static Dictionary<int, Player[]> Teams;
 
-    //Redundant variables so they can be assigned in the inspector (static ones cant)
+    // SpawnPoints
+    public SpawnPoint[] Spawns; 
+
+    // Redundant variables so they can be assigned in the inspector (static ones cant)
     public Player defaultPlayer1 = null;
     public Player defaultPlayer2 = null;
 
-    //Color to apply to player images to fit the environemts lighting
+    // Color to apply to player images to fit the environemts lighting
     public Color championSpriteOverlayColor;
 
     private GameObject simpleGlobalMessage;

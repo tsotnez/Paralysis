@@ -116,6 +116,11 @@ public class CameraBehaviour : MonoBehaviour {
         CalculatePositioningValues();
     }
 
+    public void AddTargetToCamera(Transform newPlayer)
+    {
+        // Add ...
+    }
+
     public void switchToSingleplayer()
     {
         target2 = null;
