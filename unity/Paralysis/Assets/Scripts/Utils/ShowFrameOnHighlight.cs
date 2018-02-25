@@ -18,7 +18,14 @@ public class ShowFrameOnHighlight : MonoBehaviour, ISelectHandler, IDeselectHand
 
     private void onEnter()
     {
-        frame.SetActive(true);
+        try
+        {
+            frame.SetActive(true);
+        }
+        catch(UnassignedReferenceException ex)
+        {
+            Debug.Log(gameObject);
+        }
     }
 
     private void onExit()

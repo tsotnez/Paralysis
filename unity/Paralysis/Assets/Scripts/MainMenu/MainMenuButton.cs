@@ -61,7 +61,7 @@ public class MainMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler, I
 
     public void loadMainMenuPageFromExternal(int index)
     {
-        MainMenuManager.DefaultPageIndex = index;
+        MainMenuManager.MainMenuDefaultPageIndex = index;
         SceneManager.LoadScene(GameConstants.MAIN_MENU_SCENE);
     }
 

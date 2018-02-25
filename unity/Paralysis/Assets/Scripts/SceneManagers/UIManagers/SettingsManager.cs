@@ -11,7 +11,7 @@ using UnityEngine.UI;
 /// Manager for settings. Derives from MainMenu Manager to handle page switching. Also handles saving the settings
 /// into player prefs and applying settings in game.
 /// </summary>
-public class SettingsManager : MainMenuManager {
+public class SettingsManager : MenuPagesManager {
 
     [Header("Graphic Settings")]
     public Dropdown resolutionDropdown;
@@ -25,7 +25,6 @@ public class SettingsManager : MainMenuManager {
     public Slider ambientSlider;
     public Slider musicSlider;
 
-
     [Header("Controls")]
     public Color dark;
     public Color bright;
@@ -33,9 +32,12 @@ public class SettingsManager : MainMenuManager {
     public Transform tableContent;
     private bool lastEntryBright = true;
 
+    public static int SettingsDefaultPageIndex = -1;
+
     // Use this for initialization
     protected override void Start ()
     {
+        DefaultPageIndex = SettingsDefaultPageIndex;
         Init();
 
         initGraphicsSettings();

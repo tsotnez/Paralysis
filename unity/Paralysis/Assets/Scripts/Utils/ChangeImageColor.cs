@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class ChangeImageColor : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler, ISubmitHandler, IPointerDownHandler, IPointerClickHandler {
 
+    [HideInInspector]
     public bool Clicked = false;
 
     public Graphic target;
