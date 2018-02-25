@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Section : MonoBehaviour {
 
     public float width = 10f;
     public float height = 10f;
+    public InnerSection[] innerSections;
     public Color gizmoColor = Color.cyan;
     public bool showGizmos = false;
     [HideInInspector]
@@ -88,7 +90,24 @@ public class Section : MonoBehaviour {
 
     public bool contains(Vector2 position)
     {
-        return position.y <= maxY && position.y >= minY && position.x <= maxX && position.x >= minX;
+        if(position.y <= maxY && position.y >= minY && position.x <= maxX && position.x >= minX)
+        {
+            return true;
+        }
+            
+
+        if(innerSections != null && innerSections.Length > 0)
+        {
+            foreach(InnerSection innerSec in innerSections)
+            {
+                if(innerSec.contains(position))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     void OnDrawGizmos()
@@ -104,8 +123,44 @@ public class Section : MonoBehaviour {
             Gizmos.color =  gizmoColor;
             Gizmos.DrawWireCube(transform.position, new Vector3(width, height));
             GizmoStar.drawStar(transform.position, gizmoColor, .15f);
+
+            if(innerSections != null && innerSections.Length > 0){
+                foreach(InnerSection innerSec in innerSections)
+                {
+                    Gizmos.DrawWireCube(innerSec.middle, new Vector3(innerSec.width, innerSec.height));
+                }
+            }
         }
 
+    }
+
+    [Serializable]
+    public class InnerSection {
+        public Vector2 middle = Vector2.zero;
+        public float width = 5f;
+        public float height = 5;
+
+        [HideInInspector]
+        public float maxY;
+        [HideInInspector]
+        public float maxX;
+        [HideInInspector]
+        public float minY;
+        [HideInInspector]
+        public float minX;
+
+        public InnerSection()
+        {
+            maxY = middle.y + (middle.y/2);
+            minY = middle.y - (middle.y/2);
+            maxX = middle.x + (middle.x/2);
+            minX = middle.x - (middle.x/2);
+        }
+
+        public bool contains(Vector2 position)
+        {
+            return position.y <= maxY && position.y >= minY && position.x <= maxX && position.x >= minX;
+        }
     }
 
 }
