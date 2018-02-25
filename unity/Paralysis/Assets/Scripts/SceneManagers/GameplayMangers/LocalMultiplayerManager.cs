@@ -86,7 +86,7 @@ public class LocalMultiplayerManager : GameplayManager
         if (Teams == null)
         {
             Teams = new Dictionary<int, Player[]>();
-            Teams[0] = new Player[] { defaultPlayer1 };
+            Teams[0] = new Player[] { defaultPlayer1, defaultPlayer1 };
             Teams[1] = new Player[] { defaultPlayer2 };
         }
 
@@ -141,15 +141,7 @@ public class LocalMultiplayerManager : GameplayManager
                 player.InstantiatedPlayer = GoPlayer;
 
                 // Set Target of Camera
-                // Camera.main.GetComponent<CameraBehaviour>().AddTargetToCamera(GoPlayer.transform);
-                if (totalPlayers == 1)
-                {
-                    Camera.main.GetComponent<CameraBehaviour>().changeTarget(GoPlayer.transform);
-                }
-                else
-                {
-                    Camera.main.GetComponent<CameraBehaviour>().switchToMultiplayer(GoPlayer.transform);
-                }
+                Camera.main.GetComponent<CameraBehaviour>().AddTargetToCamera(GoPlayer.transform);
             }
         }
     }

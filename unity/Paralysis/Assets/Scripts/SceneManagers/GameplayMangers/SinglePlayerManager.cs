@@ -56,7 +56,7 @@ public class SinglePlayerManager : MonoBehaviour {
         instPlayer1.GetComponent<ChampionClassController>().Trinket1.trinketNumber = 1;
         instPlayer1.GetComponent<ChampionClassController>().Trinket2.trinketNumber = 2;
 
-        Camera.main.GetComponent<CameraBehaviour>().changeTarget(instPlayer1.transform);
+       // Camera.main.GetComponent<CameraBehaviour>().changeTarget(instPlayer1.transform);
 
         //Add Game Objects to array
         players.Add(instPlayer1);

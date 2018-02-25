@@ -1,27 +1,23 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraBehaviour : MonoBehaviour {
 
-    bool multiplayer = false;
+    public List<Transform> targets = new List<Transform>();
+    public Vector3 offset;
+    private Vector3 velocity;
+    public float smoothTime = 0.5f;
+
+    public float addSize = .1f;
+    public float minOrtoSize = 4f;
+    public float maxOrtoSize = 8f;
+
     public bool gameRunning = true;
 
+    [Header("Camera Shake")]
     public float magnitude = 0.05f;
     public float duration = 0.01f;
-
-    [SerializeField]
-    float offsetX = 0;
-    [SerializeField]
-    float offsetY = 0;
-    [SerializeField]
-    float lerpSpeed = 15f;
-    [SerializeField]
-    float minSizeY = 5f;
-    [SerializeField]
-    float zoomSpeed = 2f;
-
-    Transform target;
-    Transform target2;
 
     private Camera cam;
 
@@ -43,6 +39,7 @@ public class CameraBehaviour : MonoBehaviour {
 
     private Coroutine shakingRoutine;
 
+    private Bounds b = new Bounds();
 
     // Use this for initialization
     void Awake () {
@@ -54,82 +51,120 @@ public class CameraBehaviour : MonoBehaviour {
         topBorder = GameObject.FindGameObjectWithTag("TopBorder").transform;
         bottomBorder = GameObject.FindGameObjectWithTag("BottomBorder").transform;
 
-        CalculatePositioningValues();
+        //CalculatePositioningValues();
     }
 
 
     // Update is called once per frame
     void LateUpdate ()
     {
-        if (gameRunning && target != null)
-        {
-            if (multiplayer)
-                Multiplayer();
-            else
-                SinglePlayer();
-        }
+        if (targets.Count == 0)
+            return;
 
         CalculatePositioningValues();
+        Move();
+        Zoom();
     }
 
-    private void SinglePlayer()
+    private void Zoom()
     {
-        //clamp new position between min and max values and lerp to that position
-        Vector3 desiredPos = new Vector3(Mathf.Clamp(target.position.x + offsetX, minX, maxX), Mathf.Clamp(target.position.y + offsetY, minY, maxY), transform.position.z);
-        transform.position = Vector3.Lerp(transform.position, desiredPos, lerpSpeed * Time.deltaTime);
+        //float newZoom = Mathf.Lerp(maxZoom, minZoom, GetGreatesDistance()) / 2;
+        //cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, newZoom, Time.deltaTime);
+
+        float factor = (float)Screen.height / (float)Screen.width;
+        float newSize = (GetGreatesDistance() * factor) / 2 + addSize;
+
+        cam.orthographicSize = Mathf.Clamp(newSize, minOrtoSize, maxOrtoSize);
     }
 
-    private void Multiplayer()
+    private void Move()
     {
-        Vector3 middleBetweenPlayers = target.position + ((target2.position- target.position) / 2); //Middle is target's position plus half of the vector leading to target2's position
+        Vector3 centerPoint = GetCenterPoint();
 
-        SetCameraSize();
-        //Zoom correctly
-        //float desiredSize =  Mathf.Clamp(Vector3.Distance(target.position, target2.position) * 0.3f, minSize, maxSize);
-        //cam.orthographicSize = Mathf.Clamp(cam.orthographicSize + ((desiredSize -  cam.orthographicSize) * Time.deltaTime * zoomSpeed), minSize, maxSize);
+        Vector3 newPosition = centerPoint + offset;
 
-        //clamp new position between min and max values and lerp to that position
-        Vector3 desiredPos = new Vector3(Mathf.Clamp(middleBetweenPlayers.x + offsetX, minX, maxX), Mathf.Clamp(middleBetweenPlayers.y + offsetY, minY, maxY), transform.position.z);
-        transform.position = Vector3.Lerp(transform.position, desiredPos, lerpSpeed * Time.deltaTime);
+        transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, smoothTime);
     }
 
-    void SetCameraSize()
+    private float GetGreatesDistance()
     {
+        var bounds = new Bounds(targets[0].position, Vector3.zero);
 
-        //horizontal size is based on actual screen ratio
-        float minSizeX = minSizeY * Screen.width / Screen.height;
-        //multiplying by 0.5, because the ortographicSize is actually half the height
-        float width = Mathf.Abs(target.position.x - target2.position.x) * 0.5f;
-        float height = Mathf.Abs(target.position.y - target2.position.y) * 0.5f;
-        //computing the size
-        float camSizeX = Mathf.Max(width, minSizeX);
-        cam.orthographicSize += ((Mathf.Max(height, camSizeX * Screen.height / Screen.width, minSizeY)) - cam.orthographicSize) * Time.deltaTime * zoomSpeed;
+        foreach (Transform target in targets)
+            bounds.Encapsulate(target.position);
+
+        return bounds.size.x;
     }
 
-    public void switchToMultiplayer(Transform player2)
+    private Vector3 GetCenterPoint()
     {
-        target2 = player2;
-        multiplayer = true;
-        GetComponent<Camera>().orthographicSize = 6;
+        if (targets.Count == 1)
+            return targets[0].position;
+        var bounds = new Bounds(targets[0].position, Vector3.zero);
 
-        //Re calculate stuff
-        CalculatePositioningValues();
+        foreach (Transform target in targets)
+            bounds.Encapsulate(target.position);
+
+        return bounds.center;
     }
+
+    //private void SinglePlayer()
+    //{
+    //    //clamp new position between min and max values and lerp to that position
+    //    Vector3 desiredPos = new Vector3(Mathf.Clamp(target.position.x + offsetX, minX, maxX), Mathf.Clamp(target.position.y + offsetY, minY, maxY), transform.position.z);
+    //    transform.position = Vector3.Lerp(transform.position, desiredPos, lerpSpeed * Time.deltaTime);
+    //}
+
+    //private void Multiplayer()
+    //{
+    //    Vector3 middleBetweenPlayers = target.position + ((target2.position- target.position) / 2); //Middle is target's position plus half of the vector leading to target2's position
+
+    //    SetCameraSize();
+    //    //Zoom correctly
+    //    //float desiredSize =  Mathf.Clamp(Vector3.Distance(target.position, target2.position) * 0.3f, minSize, maxSize);
+    //    //cam.orthographicSize = Mathf.Clamp(cam.orthographicSize + ((desiredSize -  cam.orthographicSize) * Time.deltaTime * zoomSpeed), minSize, maxSize);
+
+    //    //clamp new position between min and max values and lerp to that position
+    //    Vector3 desiredPos = new Vector3(Mathf.Clamp(middleBetweenPlayers.x + offsetX, minX, maxX), Mathf.Clamp(middleBetweenPlayers.y + offsetY, minY, maxY), transform.position.z);
+    //    transform.position = Vector3.Lerp(transform.position, desiredPos, lerpSpeed * Time.deltaTime);
+    //}
+
+    //void SetCameraSize()
+    //{
+    //    //horizontal size is based on actual screen ratio
+    //    float minSizeX = minSizeY * Screen.width / Screen.height;
+    //    //multiplying by 0.5, because the ortographicSize is actually half the height
+    //    float width = Mathf.Abs(target.position.x - target2.position.x) * 0.5f;
+    //    float height = Mathf.Abs(target.position.y - target2.position.y) * 0.5f;
+    //    //computing the size
+    //    float camSizeX = Mathf.Max(width, minSizeX);
+    //    cam.orthographicSize += ((Mathf.Max(height, camSizeX * Screen.height / Screen.width, minSizeY)) - cam.orthographicSize) * Time.deltaTime * zoomSpeed;
+    //}
+
+    //public void switchToMultiplayer(Transform player2)
+    //{
+    //    target2 = player2;
+    //    multiplayer = true;
+    //    GetComponent<Camera>().orthographicSize = 6;
+
+    //    //Re calculate stuff
+    //    CalculatePositioningValues();
+    //}
 
     public void AddTargetToCamera(Transform newPlayer)
     {
-        // Add ...
+        targets.Add(newPlayer);
     }
 
-    public void switchToSingleplayer()
-    {
-        target2 = null;
-        multiplayer = false;
-        cam.orthographicSize = 2.96f;
+    //public void switchToSingleplayer()
+    //{
+    //    target2 = null;
+    //    multiplayer = false;
+    //    cam.orthographicSize = 2.96f;
 
-        //Re calculate stuff
-        CalculatePositioningValues();
-    }
+    //    //Re calculate stuff
+    //    CalculatePositioningValues();
+    //}
 
     private void CalculatePositioningValues()
     {
@@ -142,10 +177,10 @@ public class CameraBehaviour : MonoBehaviour {
         maxY = topBorder.position.y - 0.5f * height;
     }
 
-    public void changeTarget(Transform newTarget)
-    {
-        target = newTarget;
-    }
+    //public void changeTarget(Transform newTarget)
+    //{
+    //    target = newTarget;
+    //}
 
     IEnumerator Shake()
     {

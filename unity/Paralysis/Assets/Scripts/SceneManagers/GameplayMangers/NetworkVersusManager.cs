@@ -85,7 +85,7 @@ public class NetworkVersusManager : GameplayManager
         //Instaniate camera
         CameraBehaviour cam = Instantiate(Resources.Load<GameObject>("Main Camera Network"), new Vector3(0, 0, -0.5f), Quaternion.identity).GetComponent<CameraBehaviour>();
 
-        cam.changeTarget(instPlayer1.transform);
+        cam.AddTargetToCamera(instPlayer1.transform);
 
         //Disable default cam
         GameObject.Find("LobbyCam").SetActive(false);

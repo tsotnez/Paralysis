@@ -3853,7 +3853,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2101986825}
   - component: {fileID: 2101986824}
-  - component: {fileID: 2101986823}
   - component: {fileID: 2101986822}
   - component: {fileID: 2101986821}
   - component: {fileID: 2101986826}
@@ -3880,14 +3879,6 @@ Behaviour:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2101986820}
   m_Enabled: 1
---- !u!92 &2101986823
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 92353697116200308, guid: fb4da503da42c0c48809cac878c3cc5a,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2101986820}
-  m_Enabled: 1
 --- !u!20 &2101986824
 Camera:
   m_ObjectHideFlags: 0
@@ -3898,7 +3889,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.7607844, g: 0.7607844, b: 0.7607844, a: 0}
+  m_BackGroundColor: {r: 0.11764705, g: 0.116103984, b: 0.060553633, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -3909,7 +3900,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2.96
+  orthographic size: 6.55
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3950,14 +3941,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc493df6ca4c0e44884b3813e8c659e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targets: []
+  offset: {x: 0, y: 0, z: -4}
+  smoothTime: 0.2
+  addSize: 0.4
+  minOrtoSize: 4
+  maxOrtoSize: 8
   gameRunning: 1
   magnitude: 0.06
   duration: 0.2
-  offsetX: 0
-  offsetY: 0.1
-  lerpSpeed: 20
-  minSizeY: 5
-  zoomSpeed: 1.5
 --- !u!1 &2102363445
 GameObject:
   m_ObjectHideFlags: 0
