@@ -44,7 +44,7 @@ public abstract class AIUserControl : MonoBehaviour {
     protected SectionPathNode[] currentNodes;
     protected SectionPathNode currentNode;
     protected int currentNodeIndex = 0;
-    private const float MIN_DISTANCE_TO_NODE = .1f;
+    private const float MIN_DISTANCE_TO_NODE = .115f;
 
 
     public enum AI_GOALS { MOVE_TO_PLAYER, MOVE_THROUGH_NODES, JUMP1, JUMP2, FALL_THROUGH, STAND_BY };
