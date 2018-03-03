@@ -26,6 +26,10 @@ public class NetworkVersusManager : GameplayManager
         spawnPoints = GameObject.FindGameObjectsWithTag(GameConstants.SPAWN_POINT_TAG);
         playerNetworkNum = GameNetwork.Instance.PlayerNetworkNumber;
         localPlayer = NetworkChampionSelectionManager.localPlayer;
+
+        simpleGlobalMessage = Resources.Load<GameObject>("Prefabs/UI/GlobalMessages/SimpleGlobalMessage");
+        playerInteractionGlobalMessage = Resources.Load<GameObject>("Prefabs/UI/GlobalMessages/PlayerInteractionGlobalMessage");
+        mainCanvas = GameObject.Find("MainCanvas").transform;
     }
 
     protected override void instantiatePlayers()
@@ -86,10 +90,6 @@ public class NetworkVersusManager : GameplayManager
         //CameraBehaviour cam = Instantiate(Resources.Load<GameObject>("Main Camera Network"), new Vector3(0, 0, -0.5f), Quaternion.identity).GetComponent<CameraBehaviour>();
         CameraBehaviour cam = Camera.main.GetComponent<CameraBehaviour>();
         cam.AddTargetToCamera(instPlayer1.transform);
-
-        //Disable default cam
-//        GameObject.Find("LobbyCam").SetActive(false);
-//        GameObject.Find("MainCanvas").GetComponent<Canvas>().worldCamera = Camera.main;
 
         myPlayerInstance = instPlayer1;
         buildUI();
