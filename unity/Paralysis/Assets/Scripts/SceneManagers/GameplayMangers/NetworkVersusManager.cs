@@ -83,13 +83,13 @@ public class NetworkVersusManager : GameplayManager
         con.Trinket2.trinketNumber = 2;
 
         //Instaniate camera
-        CameraBehaviour cam = Instantiate(Resources.Load<GameObject>("Main Camera Network"), new Vector3(0, 0, -0.5f), Quaternion.identity).GetComponent<CameraBehaviour>();
-
+        //CameraBehaviour cam = Instantiate(Resources.Load<GameObject>("Main Camera Network"), new Vector3(0, 0, -0.5f), Quaternion.identity).GetComponent<CameraBehaviour>();
+        CameraBehaviour cam = Camera.main.GetComponent<CameraBehaviour>();
         cam.AddTargetToCamera(instPlayer1.transform);
 
         //Disable default cam
-        GameObject.Find("LobbyCam").SetActive(false);
-        GameObject.Find("MainCanvas").GetComponent<Canvas>().worldCamera = Camera.main;
+//        GameObject.Find("LobbyCam").SetActive(false);
+//        GameObject.Find("MainCanvas").GetComponent<Canvas>().worldCamera = Camera.main;
 
         myPlayerInstance = instPlayer1;
         buildUI();

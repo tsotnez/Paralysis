@@ -20,7 +20,7 @@ public class AISectionManager : MonoBehaviour {
             sections[i] = transform.GetChild(i).GetComponent<Section>();
         }
 
-        nonTargetableSection = new Section();
+        nonTargetableSection = GetComponent<Section>();
         nonTargetableSection.nonTargetable = true;
     }
 
