@@ -18,13 +18,12 @@ public class SectorAnimation
     public bool EndAnimAvaiable { get; private set; }
 
     // Cache for Atlasses
-    SpriteAtlas startAnimAtlas = null;
-    SpriteAtlas defaultAnimAtlas = null;
-    SpriteAtlas endAnimAtlas = null;
+    Sprite[] startAnimAtlas = null;
+    Sprite[] defaultAnimAtlas = null;
+    Sprite[] endAnimAtlas = null;
 
     // FS Properties
     string AtlasPath;
-    string AtlasPathSuffix;
 
     // stuff
     private bool DebugLogging = false;
@@ -46,49 +45,48 @@ public class SectorAnimation
 
         // Build Path
         AtlasPath = "Animations\\" + AnimConReference.CharacterClass + "\\" + AnimConReference.CharacterSkin + "\\" + AnimType.ToString();
-        AtlasPathSuffix = "Atlas";
 
         // Check for Atlasses
-        StartAnimAvaiable = Resources.Load<SpriteAtlas>(AtlasPath + "Start" + AtlasPathSuffix) != null;
-        DefaultAnimAvaiable = Resources.Load<SpriteAtlas>(AtlasPath + AtlasPathSuffix) != null;
-        EndAnimAvaiable = Resources.Load<SpriteAtlas>(AtlasPath + "End" + AtlasPathSuffix) != null;
+        StartAnimAvaiable = Resources.Load<SpriteAtlas>(AtlasPath + "Start") != null;
+        DefaultAnimAvaiable = Resources.Load<SpriteAtlas>(AtlasPath) != null;
+        EndAnimAvaiable = Resources.Load<SpriteAtlas>(AtlasPath + "End") != null;
     }
 
     #endregion
 
     #region GET Atlas
 
-    public SpriteAtlas StartAnimAtlas
+    public Sprite[] StartAnimAtlas
     {
         get
         {
             if (StartAnimAvaiable && startAnimAtlas == null)
             {
-                startAnimAtlas = Resources.Load<SpriteAtlas>(AtlasPath + "Start" + AtlasPathSuffix);
+                startAnimAtlas = Resources.LoadAll<Sprite>(AtlasPath + "Start");
             }
             return startAnimAtlas;
         }
     }
 
-    public SpriteAtlas DefaultAnimAtlas
+    public Sprite[] DefaultAnimAtlas
     {
         get
         {
             if (DefaultAnimAvaiable && defaultAnimAtlas == null)
             {
-                defaultAnimAtlas = Resources.Load<SpriteAtlas>(AtlasPath + AtlasPathSuffix);
+                defaultAnimAtlas = Resources.LoadAll<Sprite>(AtlasPath);
             }
             return defaultAnimAtlas;
         }
     }
 
-    public SpriteAtlas EndAnimAtlas
+    public Sprite[] EndAnimAtlas
     {
         get
         {
             if (EndAnimAvaiable && endAnimAtlas == null)
             {
-                endAnimAtlas = Resources.Load<SpriteAtlas>(AtlasPath + "End" + AtlasPathSuffix);
+                endAnimAtlas = Resources.LoadAll<Sprite>(AtlasPath + "End");
             }
             return endAnimAtlas;
         }
@@ -104,7 +102,10 @@ public class SectorAnimation
         if (startAnimAtlas != null)
         {
             if (DebugLogging) Debug.LogWarning("Destruction of " + AnimType.ToString() + " - Start");
-            Resources.UnloadAsset(startAnimAtlas);
+            foreach (Sprite sp in startAnimAtlas)
+            {
+                Resources.UnloadAsset(sp);
+            }
             startAnimAtlas = null;
         }
 
@@ -112,7 +113,10 @@ public class SectorAnimation
         if (defaultAnimAtlas != null)
         {
             if (DebugLogging) Debug.LogWarning("Destruction of " + AnimType.ToString() + " - Default");
-            Resources.UnloadAsset(defaultAnimAtlas);
+            foreach (Sprite sp in defaultAnimAtlas)
+            {
+                Resources.UnloadAsset(sp);
+            }
             defaultAnimAtlas = null;
         }
 
@@ -120,7 +124,10 @@ public class SectorAnimation
         if (endAnimAtlas != null)
         {
             if (DebugLogging) Debug.LogWarning("Destruction of " + AnimType.ToString() + " - End");
-            Resources.UnloadAsset(endAnimAtlas);
+            foreach (Sprite sp in endAnimAtlas)
+            {
+                Resources.UnloadAsset(sp);
+            }
             endAnimAtlas = null;
         }
 

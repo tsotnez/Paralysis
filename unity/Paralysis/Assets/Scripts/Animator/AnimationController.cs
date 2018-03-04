@@ -210,7 +210,7 @@ public abstract class AnimationController : MonoBehaviour
     {
         if (Anim.DefaultAnimAvaiable)
         {
-            SpriteAtlas atlas = null;
+            Sprite[] atlas = null;
             try
             {
                 // set playing
@@ -227,7 +227,10 @@ public abstract class AnimationController : MonoBehaviour
                         CurrentAnimationKind = AnimationKind.StartAnimation;
                         atlas = Anim.StartAnimAtlas;
                         yield return PlayAnimation(atlas, Anim.StartAnimDuration, Anim.AnimType.ToString() + "Start");
-                        Resources.UnloadAsset(atlas);
+                        foreach (Sprite sp in atlas)
+                        {
+                            Resources.UnloadAsset(sp);
+                        }
                         atlas = null;
                     }
 
@@ -269,8 +272,6 @@ public abstract class AnimationController : MonoBehaviour
                         CurrentAnimationKind = AnimationKind.EndAnimation;
                         atlas = Anim.EndAnimAtlas;
                         yield return PlayAnimation(atlas, Anim.EndAnimDuration, Anim.AnimType.ToString() + "End");
-                        Resources.UnloadAsset(atlas);
-                        atlas = null;
                     }
 
                     // revert to idle after finishing End-Animation
@@ -281,8 +282,11 @@ public abstract class AnimationController : MonoBehaviour
             {
                 if (atlas != null)
                 {
-                    if (DebugLogging) Debug.LogWarning("HandleAnimation: CleanUp of " + atlas.name);
-                    Resources.UnloadAsset(atlas);
+                    if (DebugLogging) Debug.LogWarning("HandleAnimation: CleanUp of " + atlas[0].name);
+                    foreach (Sprite sp in atlas)
+                    {
+                        Resources.UnloadAsset(sp);
+                    }
                     atlas = null;
                     Resources.UnloadUnusedAssets();
                 }
@@ -296,7 +300,7 @@ public abstract class AnimationController : MonoBehaviour
         }
     }
 
-    private IEnumerator PlayAnimation(SpriteAtlas atlas, float delay, string FileNamePrefix)
+    private IEnumerator PlayAnimation(Sprite[] atlas, float delay, string FileNamePrefix)
     {
         Sprite spr = null;
 
@@ -306,26 +310,23 @@ public abstract class AnimationController : MonoBehaviour
             if (DebugLogging)
             {
                 Debug.Log(string.Format("Character: {0}| Animation: {1} is now running", CharacterClass, FileNamePrefix));
-                Debug.Log(string.Format("Delay: {0} - SpriteCount: {1} --> Delay per Sprite: {2}", delay, atlas.spriteCount, (delay / (float)atlas.spriteCount)));
+                Debug.Log(string.Format("Delay: {0} - SpriteCount: {1} --> Delay per Sprite: {2}", delay, atlas.Length, (delay / (float)atlas.Length)));
             }
 
             // Calculate correct delay
-            delay = (delay / (float)atlas.spriteCount);
+            delay = (delay / (float)atlas.Length);
 
             // Unload assets with no references
             Resources.UnloadUnusedAssets();
 
             // play each animation of the atlas
-            string SpriteFileName = "";
-            for (int i = 0; i < atlas.spriteCount; i++)
+            for (int i = 0; i < atlas.Length; i++)
             {
-                // ToString parameter "D2" formats the integer with 2 chars (leading 0 if nessessary)
-                SpriteFileName = FileNamePrefix + "_" + i.ToString("D2");
-                spriteRenderer.sprite = atlas.GetSprite(SpriteFileName);
+                spriteRenderer.sprite = atlas[i];
 
                 if (DebugLogging)
                 {
-                    Debug.Log(string.Format("Active Sprite: {0} at Time: {1}", SpriteFileName, DateTime.Now.TimeOfDay));
+                    Debug.Log(string.Format("Active Sprite: {0} at Time: {1}", atlas[i].name, DateTime.Now.TimeOfDay));
                 }
 
                 // Unload sprite
@@ -337,8 +338,11 @@ public abstract class AnimationController : MonoBehaviour
         }
         finally
         {
-            if (DebugLogging) Debug.LogWarning("PlayAnimation: CleanUp of " + atlas.name);
-            Resources.UnloadAsset(atlas);
+            if (DebugLogging) Debug.LogWarning("PlayAnimation: CleanUp of " + atlas[0].name);
+            foreach (Sprite sp in atlas)
+            {
+                Resources.UnloadAsset(sp);
+            }
             spr = null;
             atlas = null;
             Resources.UnloadUnusedAssets();
