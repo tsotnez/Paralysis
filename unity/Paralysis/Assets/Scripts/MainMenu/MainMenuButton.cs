@@ -81,9 +81,9 @@ public class MainMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler, I
     }
 
     //Spinning into ModeSelection
-    public void switchToModeSelection()
+    public void switchToModeSelection(GameObject nextSelected)
     {
-        StartCoroutine(setModeSelectionActive());
+        StartCoroutine(setModeSelectionActive(nextSelected));
     }
 
     public void leaveModeSelection()
@@ -114,7 +114,7 @@ public class MainMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler, I
         }
     }
 
-    private IEnumerator setModeSelectionActive()
+    private IEnumerator setModeSelectionActive(GameObject nextSelected)
     {
         GameObject target = transform.Find("ModeSelection").gameObject;
         MouseExit();
@@ -127,7 +127,7 @@ public class MainMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler, I
 
         if (MyStandaloneInputModule.ControllingPlayerInputDevice == UserControl.InputDevice.XboxController)
         {
-            EventSystem.current.SetSelectedGameObject(target.transform.GetChild(0).gameObject);
+            EventSystem.current.SetSelectedGameObject(nextSelected);
         }
     }
 
