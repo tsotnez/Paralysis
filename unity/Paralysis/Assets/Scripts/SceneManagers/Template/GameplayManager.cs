@@ -30,9 +30,9 @@ public abstract class GameplayManager : Photon.MonoBehaviour
     // Color to apply to player images to fit the environemts lighting
     public Color championSpriteOverlayColor;
 
-    private GameObject simpleGlobalMessage;
-    private GameObject playerInteractionGlobalMessage;
-    private Transform mainCanvas;
+    protected GameObject simpleGlobalMessage;
+    protected GameObject playerInteractionGlobalMessage;
+    protected Transform mainCanvas;
 
     public enum GameModes
     {

@@ -112,10 +112,15 @@ public class Section : MonoBehaviour {
 
     void OnDrawGizmos()
     {
+        if(nonTargetable)return;
+
         for(int i = 0; i < transform.childCount; i++)
         {            
             SectionPath sectionPath = transform.GetChild(i).GetComponent<SectionPath>();
-            sectionPath.showGizmos = showGizmos;
+            if(sectionPath != null)
+            {
+                sectionPath.showGizmos = showGizmos;
+            }
         }
 
         if(showGizmos){

@@ -3,9 +3,8 @@ using System.Collections;
 
 public class FrameRateCounter : MonoBehaviour
 {
-    float deltaTime = 0.0f;
-
     #if UNITY_EDITOR
+    float deltaTime = 0.0f;
     void Update()
     {
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
@@ -19,7 +18,7 @@ public class FrameRateCounter : MonoBehaviour
             GUIStyle style = new GUIStyle();
             Rect rect = new Rect(0,5, w, 15);
             style.alignment = TextAnchor.LowerLeft;
-            style.fontSize = h * 2 / 100;
+            style.fontSize = h * 2 / 130;
             style.normal.textColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
             float msec = deltaTime * 1000.0f;
             float fps = 1.0f / deltaTime;
