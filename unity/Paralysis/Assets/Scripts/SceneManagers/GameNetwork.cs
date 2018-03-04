@@ -353,12 +353,12 @@ public class GameNetwork : MonoBehaviour {
 
         int leavingPlayerNetNum = playerDic[photonId];
         playerDic.Remove(leavingPlayerNetNum);
-        foreach(KeyValuePair<int, int> entry in playerDic)
+        foreach(int key in playerDic.Keys)
         {
             //Decrement player network numbers
-            if(entry.Value > leavingPlayerNetNum)
+            if(playerDic[key] > leavingPlayerNetNum)
             {
-                playerDic[entry.Key] = playerDic[entry.Key] - 1;
+                playerDic[key] = playerDic[key] - 1;
             }
         }
         removePlayerFromTeamLists(photonId);
