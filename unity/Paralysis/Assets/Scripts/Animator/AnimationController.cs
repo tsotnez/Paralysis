@@ -330,7 +330,8 @@ public abstract class AnimationController : MonoBehaviour
                 }
 
                 // Unload sprite
-                Destroy(spr);
+                Resources.UnloadAsset(spr);
+                //Destroy(spr);
                 spr = null;
                 spr = spriteRenderer.sprite;
                 yield return new WaitForSeconds(delay);

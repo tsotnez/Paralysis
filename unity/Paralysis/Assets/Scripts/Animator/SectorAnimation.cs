@@ -44,12 +44,12 @@ public class SectorAnimation
         this.DebugLogging = AnimConReference.DebugLogging;
 
         // Build Path
-        AtlasPath = "Animations\\" + AnimConReference.CharacterClass + "\\" + AnimConReference.CharacterSkin + "\\" + AnimType.ToString();
+        AtlasPath = "Animations/Champions/" + AnimConReference.CharacterClass + "/" + AnimConReference.CharacterSkin + "/" + AnimType.ToString();
 
-        // Check for Atlasses
-        StartAnimAvaiable = Resources.Load<SpriteAtlas>(AtlasPath + "Start") != null;
-        DefaultAnimAvaiable = Resources.Load<SpriteAtlas>(AtlasPath) != null;
-        EndAnimAvaiable = Resources.Load<SpriteAtlas>(AtlasPath + "End") != null;
+        // Check for Sprites
+        StartAnimAvaiable = Resources.LoadAll<Sprite>(AtlasPath + "Start").Length > 0;
+        DefaultAnimAvaiable = Resources.LoadAll<Sprite>(AtlasPath).Length > 0;
+        EndAnimAvaiable = Resources.LoadAll<Sprite>(AtlasPath + "End").Length > 0;
     }
 
     #endregion

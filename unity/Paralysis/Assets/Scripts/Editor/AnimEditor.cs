@@ -55,7 +55,7 @@ public class AnimEditor : Editor
         EndAnimDuration.arraySize = animStates.Length;
 
         // Build path to Animations
-        string AtlasPath = "Animations/" + CharacterClass.stringValue + "/" + CharacterSkin.stringValue + "/";
+        string AtlasPath = "Animations/Champions/" + CharacterClass.stringValue + "/" + CharacterSkin.stringValue + "/";
         string AnimationTypeName = "";
 
         // loop through every enum state for Animation
@@ -64,9 +64,9 @@ public class AnimEditor : Editor
         {
             // Check for Atlasses
             AnimationTypeName = ((AnimationController.AnimationTypes)i).ToString();
-            StartAnimAtlasFound = Resources.Load<Sprite>(AtlasPath + AnimationTypeName + "Start") != null;
-            DefaultAnimAtlasFound = Resources.Load<Sprite>(AtlasPath + AnimationTypeName) != null;
-            EndAnimAtlasFound = Resources.Load<Sprite>(AtlasPath + AnimationTypeName + "End") != null;
+            StartAnimAtlasFound = Resources.LoadAll<Sprite>(AtlasPath + AnimationTypeName + "Start").Length > 0;
+            DefaultAnimAtlasFound = Resources.LoadAll<Sprite>(AtlasPath + AnimationTypeName).Length > 0;
+            EndAnimAtlasFound = Resources.LoadAll<Sprite>(AtlasPath + AnimationTypeName + "End").Length > 0;
 
             // Start Horizontal Drawing
             GUILayout.BeginHorizontal();
