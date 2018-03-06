@@ -10,17 +10,24 @@ public class HorizontalAutomaticScroll : MonoBehaviour {
     Mask mask;
     RectTransform maskRect;
     List<GameObject> content = new List<GameObject>();
-    private EventSystem es;
+
+    [HideInInspector]
+    public EventSystem es;
     public float LerpSpeed = .5f;
     public Transform contentTrans;
     public Transform viewPort;
+    public EventSystem targetSystem;
 
 	// Use this for initialization
 	void Start () {
         mask = GetComponentInChildren<Mask>();
         maskRect = (RectTransform) mask.gameObject.transform;
         scrollRect = GetComponent<ScrollRect>();
-        es = EventSystem.current;
+
+        if (targetSystem = null)
+        {
+            es = EventSystem.current;
+        }
 
         //Find all content game objects and add them to list
         foreach (Transform child in contentTrans)
@@ -31,6 +38,12 @@ public class HorizontalAutomaticScroll : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (es == null)
+        {
+            Debug.LogError("Target Event System of Horizontal scroll script is null!");
+            return;
+        }
+
         GameObject selected = es.currentSelectedGameObject;
 
         //Is the currently selected GO one of the content GOs?

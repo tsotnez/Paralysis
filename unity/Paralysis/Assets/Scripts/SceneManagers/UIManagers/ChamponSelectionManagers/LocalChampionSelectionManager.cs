@@ -8,17 +8,23 @@ using System;
 
 public class LocalChampionSelectionManager : ChampionSelectionManager
 {
+    public Transform EventSystemsParent;
+
+    [Header("Pages")]
+    public GameObject ChampionSelect;
+    public GameObject MapSelect;
 
     public static Player[] team2;
     public static Player[] team1;
 
     private bool everythingSelected = false;
+    EventSystem[] eventSystemInstances = new EventSystem[4];
     /// <summary>
     /// All players
     /// </summary>
     private Player[] players;
 
-    public GameObject[] eventSystems;
+    public GameObject[] eventSystemPrefabs;
     public GameObject[] firstSelecteds;
 
     public GameObject[] platformsTeam1;
@@ -136,21 +142,28 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     /// </summary>
     private void setUpEventSystems()
     {
+
         foreach (Player player in players)
         {
             switch (player.playerNumber)
             {
                 case UserControl.PlayerNumbers.Player1:
-                    instantiateEventSystem(player, 1);
+                    eventSystemInstances[0] = instantiateEventSystem(player, 1).GetComponent<EventSystem>();
+
+                    //Set player1 EventsSystem as target ES for every HorizontalAutomaticScrollScript (just the one for map select really)
+                    foreach (HorizontalAutomaticScroll item in MapSelect.GetComponentsInChildren<HorizontalAutomaticScroll>())
+                    {
+                        item.es = eventSystemInstances[0];
+                    }
                     break;
                 case UserControl.PlayerNumbers.Player2:
-                    instantiateEventSystem(player, 2);
+                    eventSystemInstances[1] = instantiateEventSystem(player, 2).GetComponent<EventSystem>(); ;
                     break;
                 case UserControl.PlayerNumbers.Player3:
-                    instantiateEventSystem(player, 3);
+                    eventSystemInstances[2] = instantiateEventSystem(player, 3).GetComponent<EventSystem>(); ;
                     break;
                 case UserControl.PlayerNumbers.Player4:
-                    instantiateEventSystem(player, 4);
+                    eventSystemInstances[3] = instantiateEventSystem(player, 4).GetComponent<EventSystem>(); ;
                     break;
             }
         }
@@ -161,11 +174,11 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     /// </summary>
     /// <param name="player"></param>
     /// <param name="ID"></param>
-    private void instantiateEventSystem(Player player, int ID)
+    private GameObject instantiateEventSystem(Player player, int ID)
     {
-        Transform parent = GameObject.Find("EventSystems").transform;
+        Transform parent = EventSystemsParent;
 
-        GameObject newSystem = Instantiate(eventSystems[ID - 1], parent, false);
+        GameObject newSystem = Instantiate(eventSystemPrefabs[ID - 1], parent, false);
         MyStandaloneInputModule inputModule = newSystem.GetComponent<MyStandaloneInputModule>();
 
         //Set first selected by getting Array Value
@@ -183,7 +196,53 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
             //Set axis for xbox
             inputModule.horizontalAxis = "Horizontal_XboxPlayer" + ID.ToString();
             inputModule.verticalAxis = "Vertical_XboxPlayer" + ID.ToString();
-            inputModule.submitButton = "Skill4_XboxPlayer" + ID.ToString();
+            inputModule.submitButton = "Submit_XboxPlayer" + ID.ToString();
+        }
+        return newSystem;
+    }
+
+    public void GoToChampionSelection()
+    {
+        deselectAll();
+        MapSelect.SetActive(false);
+        ChampionSelect.SetActive(true);
+
+        //Select gameObjects
+        for (int i = 0; i < eventSystemInstances.Length; i++)
+        {
+            if(eventSystemInstances[i] != null)
+                eventSystemInstances[i].SetSelectedGameObject(firstSelecteds[i]);
+        }
+    }
+
+    public void GoToMapSelection()
+    {
+        if (everythingSelected)
+        {
+            deselectAll();
+
+            LocalMultiplayerManager.Teams = new Dictionary<int, Player[]>();
+            LocalMultiplayerManager.Teams.Add(0, team1);
+            LocalMultiplayerManager.Teams.Add(1, team2);
+
+            ChampionSelect.SetActive(false);
+            MapSelect.SetActive(true);
+
+            GameObject mapSlideshow = MapSelect.transform.Find("Maps").GetComponent<HorizontalAutomaticScroll>().contentTrans.GetChild(0).gameObject;
+           eventSystemInstances[0].SetSelectedGameObject(mapSlideshow);
+
+        }
+        else
+        {
+            StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Select a champion and two different trinkets for each player"));
+        }
+    }
+
+    private void deselectAll() {
+        foreach (EventSystem item in eventSystemInstances)
+        {
+            if(item != null)
+                item.SetSelectedGameObject(null);
         }
     }
 
@@ -192,15 +251,11 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         //Check if every player has selected a champion and 2 different trinkets
         if (everythingSelected)
         {
-            LocalMultiplayerManager.Teams = new Dictionary<int, Player[]>();
-            LocalMultiplayerManager.Teams.Add(0, team1);
-            LocalMultiplayerManager.Teams.Add(1, team2);
-
             SceneManager.LoadScene("scenes/test");
         }
         else
         {
-            StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Select a champion and two different trinkets."));
+            StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Select a champion and two different trinkets for each player"));
         }
     }
 }
