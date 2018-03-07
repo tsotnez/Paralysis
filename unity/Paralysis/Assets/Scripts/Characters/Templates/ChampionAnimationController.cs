@@ -29,6 +29,7 @@ public abstract class ChampionAnimationController : AnimationController
     public bool trigKnockedBack = false;
     public bool trigKnockedBackEnd = false;
     public bool trigJump = false;
+    public bool trigDoubleJump = false;
     public bool trigJumpAttack = false;
     public bool trigJumpAttackEnd = false;
     public bool trigDash = false;
@@ -188,6 +189,11 @@ public abstract class ChampionAnimationController : AnimationController
             {
                 StartAnimation(AnimationTypes.Jump);
                 trigJump = false;
+            }
+            else if (trigDoubleJump)
+            {
+                StartAnimation(AnimationTypes.Jump, true);
+                trigDoubleJump = false;
             }
             else if (m_Grounded && m_Speed > 0)
                 StartAnimation(AnimationTypes.Run);

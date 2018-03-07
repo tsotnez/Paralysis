@@ -324,7 +324,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         //Handle double jump
         if(m_jumpPressed && !animCon.m_Grounded && CanPerformAction(false) && m_canDoubleJump && !doubleJumped)
         {
-            animCon.trigJump = true;
+            animCon.trigDoubleJump = true;
             doubleJumped = true;
             StartCoroutine(JumpRoutine(m_DoubleJumpDivisor));
         }

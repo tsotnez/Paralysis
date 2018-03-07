@@ -135,9 +135,9 @@ public abstract class AnimationController : MonoBehaviour
 
     #region Public Calls
 
-    public void StartAnimation(AnimationTypes Anim)
+    public void StartAnimation(AnimationTypes Anim, bool forceRestart = false)
     {
-        if (CurrentAnimation != Anim)
+        if (CurrentAnimation != Anim || forceRestart)
         {
             if(!PhotonNetwork.offlineMode && GameNetwork.Instance.InGame)
             {
