@@ -246,12 +246,12 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         }
     }
 
-    public override void startGame()
+    public override void startGame(string mapName)
     {
         //Check if every player has selected a champion and 2 different trinkets
         if (everythingSelected)
         {
-            SceneManager.LoadScene("scenes/test");
+            AdvancedSceneManager.LoadSceneWithLoadingScreen(mapName, "MultiplayerLoadingScreen");
         }
         else
         {

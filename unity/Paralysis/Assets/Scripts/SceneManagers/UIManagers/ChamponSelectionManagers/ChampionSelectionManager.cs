@@ -66,8 +66,8 @@ public abstract class ChampionSelectionManager : UIManager
     /// <summary>
     /// Passes info to next manager and starts the actual game
     /// </summary>
-    public abstract void startGame();
-
+    public virtual void startGame(string mapName) { }
+    public virtual void startGame() { }
     /// <summary>
     /// Sets the champion for the player
     /// </summary>
