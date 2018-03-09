@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraBehaviour : MonoBehaviour {
 
+    public Bounds CameraBounds;
     public List<Transform> targets = new List<Transform>();
     public Vector3 offset;
     private Vector3 velocity;
@@ -38,19 +39,22 @@ public class CameraBehaviour : MonoBehaviour {
     private float width;                      
 
     private Coroutine shakingRoutine;
+    private Vector2 startingPosition;
 
     private Bounds b = new Bounds();
 
     // Use this for initialization
     void Awake () {
+        startingPosition = transform.position;
         cam = GetComponent<Camera>();
 
         //Get Border Objects
-        leftBorder = GameObject.FindGameObjectWithTag("LeftBorder").transform;
-        rightBorder = GameObject.FindGameObjectWithTag("RightBorder").transform;
-        topBorder = GameObject.FindGameObjectWithTag("TopBorder").transform;
-        bottomBorder = GameObject.FindGameObjectWithTag("BottomBorder").transform;
+        //leftBorder = GameObject.FindGameObjectWithTag("LeftBorder").transform;
+        //rightBorder = GameObject.FindGameObjectWithTag("RightBorder").transform;
+        //topBorder = GameObject.FindGameObjectWithTag("TopBorder").transform;
+        //bottomBorder = GameObject.FindGameObjectWithTag("BottomBorder").transform;
 
+        CalculateCameraBounds();
         //CalculatePositioningValues();
     }
 
@@ -61,7 +65,8 @@ public class CameraBehaviour : MonoBehaviour {
         if (targets.Count == 0)
             return;
 
-        CalculatePositioningValues();
+        //CalculatePositioningValues();
+        CalculateCameraBounds();
         Move();
         Zoom();
     }
@@ -82,6 +87,11 @@ public class CameraBehaviour : MonoBehaviour {
         Vector3 centerPoint = GetCenterPoint();
 
         Vector3 newPosition = centerPoint + offset;
+
+        if(newPosition.x > maxX)newPosition.x = maxX;
+        if(newPosition.x < minX)newPosition.x = minX;
+        if(newPosition.y > maxY)newPosition.y = maxY;
+        if(newPosition.y < minY)newPosition.y = minY;
 
         transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, smoothTime);
     }
@@ -166,16 +176,16 @@ public class CameraBehaviour : MonoBehaviour {
     //    CalculatePositioningValues();
     //}
 
-    private void CalculatePositioningValues()
-    {
-        //calculate screen size
-        height = cam.orthographicSize * 2f;
-        width = height * cam.aspect;
-        minX = leftBorder.position.x + 0.5f * width;
-        maxX = rightBorder.position.x - 0.5f * width;
-        minY = bottomBorder.position.y + 0.5f * height;
-        maxY = topBorder.position.y - 0.5f * height;
-    }
+    //private void CalculatePositioningValues()
+    //{
+    //    //calculate screen size
+    //    height = cam.orthographicSize * 2f;
+    //    width = height * cam.aspect;
+    //    minX = leftBorder.position.x + 0.5f * width;
+    //    maxX = rightBorder.position.x - 0.5f * width;
+    //    minY = bottomBorder.position.y + 0.5f * height;
+    //    maxY = topBorder.position.y - 0.5f * height;
+    //}
 
     //public void changeTarget(Transform newTarget)
     //{
@@ -210,5 +220,22 @@ public class CameraBehaviour : MonoBehaviour {
     {
         if (shakingRoutine != null) StopCoroutine(shakingRoutine);
         shakingRoutine = StartCoroutine(Shake());
+    }
+
+
+    private void CalculateCameraBounds()
+    {
+        float orthoSize = cam.orthographicSize - 0.2f;
+        maxY = startingPosition.y + (CameraBounds.size.y / 2f) - orthoSize;
+        minY = startingPosition.y - (CameraBounds.size.y / 2f) + orthoSize;
+        maxX = startingPosition.x + (CameraBounds.size.x / 2f) - orthoSize;
+        minX = startingPosition.x - (CameraBounds.size.x / 2f) + orthoSize;
+    }
+
+    
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(CameraBounds.center, CameraBounds.size);
     }
 }

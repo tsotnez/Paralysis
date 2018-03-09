@@ -86,7 +86,7 @@ public class LocalMultiplayerManager : GameplayManager
         if (Teams == null)
         {
             Teams = new Dictionary<int, Player[]>();
-            Teams[0] = new Player[] { defaultPlayer1, defaultPlayer1 };
+            Teams[0] = new Player[] { defaultPlayer1 };
             Teams[1] = new Player[] { defaultPlayer2 };
         }
 
