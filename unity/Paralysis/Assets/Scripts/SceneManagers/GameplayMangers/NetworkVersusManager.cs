@@ -23,6 +23,8 @@ public class NetworkVersusManager : GameplayManager
     #region default
     protected override void Awake()
     {
+        Instance = this;
+
         spawnPoints = GameObject.FindGameObjectsWithTag(GameConstants.SPAWN_POINT_TAG);
         playerNetworkNum = GameNetwork.Instance.PlayerNetworkNumber;
         localPlayer = NetworkChampionSelectionManager.localPlayer;

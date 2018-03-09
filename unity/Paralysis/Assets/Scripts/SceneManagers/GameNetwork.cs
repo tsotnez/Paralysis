@@ -42,12 +42,36 @@ public class GameNetwork : MonoBehaviour {
     //photon player ID, player network number
     public Dictionary <int, int> PlayerDict { get { return new Dictionary<int, int>(playerDic); } }
     private Dictionary<int , int> playerDic;
+
+    //photon player ID, to Team num 1,2,3,4...
+    public Dictionary <int, int> PlayerTeamDict { get { return new Dictionary<int, int>(playerTeamDic); } }
+    private Dictionary<int , int> playerTeamDic;
+
     //List of photon IDs for team1
-    private List<int> teamOneList;
-    public List<int> TeamOneList { get { return new List<int>(teamOneList); } }
+    public List<int> TeamOneList { 
+        get { 
+            List<int> teamOneList = new List<int>();
+            foreach(KeyValuePair<int, int> entry in playerTeamDic)
+            {
+                if(entry.Value == 1){
+                    teamOneList.Add(entry.Key);
+                }
+            }
+            return teamOneList;
+        } }
+
     //List of photon IDs for team2
-    private List<int> teamTwoList;
-    public List<int> TeamTwoList { get { return new List<int>(teamTwoList); } }
+    public List<int> TeamTwoList { 
+        get {
+            List<int> teamTwoList = new List<int>();
+            foreach(KeyValuePair<int, int> entry in playerTeamDic)
+            {
+                if(entry.Value == 2){
+                    teamTwoList.Add(entry.Key);
+                }
+            }
+            return teamTwoList;
+        } }
 
     //Delegates
     public delegate void gameStateUpdate();
@@ -317,17 +341,18 @@ public class GameNetwork : MonoBehaviour {
     {
         if(!PhotonNetwork.isMasterClient)return false;
 
-        if(teamOneList.Contains(photonP))
+        if(playerTeamDic.ContainsKey(photonP))
         {
-            removePlayerFromTeamLists(photonP);
-            addPlayerToTeam2(photonP);
-            return true;
-        }
+            int currentTeam = playerTeamDic[photonP];
+            if(currentTeam == 1)
+            {
+                playerTeamDic[photonP] = 2;
+            }
+            else
+            {
+                playerTeamDic[photonP] = 1;
+            }
 
-        if(teamTwoList.Contains(photonP))
-        {
-            removePlayerFromTeamLists(photonP);
-            addPlayerToTeam1(photonP);
             return true;
         }
 
@@ -341,8 +366,8 @@ public class GameNetwork : MonoBehaviour {
         print("Adding player id: " + photonId + "player network num:" + PlayersInGame);
 
         playerDic.Add(photonId, PlayersInGame);
-        if(balanceTeams() == 1)teamOneList.Add(photonId);
-        else teamTwoList.Add(photonId);
+        if(balanceTeams() == 1)playerTeamDic[photonId] = 1;
+        else playerTeamDic[photonId] = 2;
     }
 
     private void removePlayer(int photonId)
@@ -364,39 +389,45 @@ public class GameNetwork : MonoBehaviour {
         removePlayerFromTeamLists(photonId);
     }
 
-    private void addPlayerToTeam1(int photonP)
-    {
-        if(!teamOneList.Contains(photonP))teamOneList.Add(photonP);
-    }
-
-    private void addPlayerToTeam2(int photonP)
-    {
-       if(!teamTwoList.Contains(photonP))teamTwoList.Add(photonP);
-    }
-
     private int balanceTeams()
     {
-        if(teamOneList.Count <= teamTwoList.Count) return 1;
+        int teamOneCount = 0;
+        int teamTwoCount = 0;
+        foreach(KeyValuePair<int, int> entry in playerTeamDic)
+        {
+            switch(entry.Value)
+            {
+                case 1:
+                teamOneCount++;
+                    break;
+                case 2:
+                teamTwoCount++;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if(teamOneCount <= teamTwoCount)return 1;
         else return 2;
     }        
 
     public void removePlayerFromTeamLists(int photonId)
     {
-        if(teamTwoList.Contains(photonId))teamTwoList.Remove(photonId);
-        if(teamOneList.Contains(photonId))teamOneList.Remove(photonId);
+        //if(teamTwoList.Contains(photonId))teamTwoList.Remove(photonId);
+        //if(teamOneList.Contains(photonId))teamOneList.Remove(photonId);
+        if(playerTeamDic.ContainsKey(photonId))playerTeamDic.Remove(photonId);
     }
 
     private void setMyTeam()
     {
-        if(teamOneList.Contains(PhotonNetwork.player.ID)){
-            print("Setting my team num: " + 1);
-            teamNum = 1;
+        int id = PhotonNetwork.player.ID;
+        if(playerTeamDic.ContainsKey(id)){
+            teamNum = playerTeamDic[id];
         }
-        else if(teamTwoList.Contains(PhotonNetwork.player.ID)) {
-            print("Setting my team num: " + 2);
-            teamNum = 2;
+        else{
+            Debug.LogError("Couldn't find my team number:" + PhotonNetwork.player.ID);
         }
-        else Debug.LogError("Couldn't find my team number:" + PhotonNetwork.player.ID);
     }
 
     private void setMyNetworkNumber()
@@ -445,8 +476,7 @@ public class GameNetwork : MonoBehaviour {
         //playerNetworkNumber = PhotonNetwork.playerList.Length;
 
         playerDic = new Dictionary<int, int>();
-        teamOneList = new List<int>();
-        teamTwoList = new List<int>();
+        playerTeamDic = new Dictionary<int, int>();
 
         if(IsMasterClient)
         {
@@ -475,7 +505,7 @@ public class GameNetwork : MonoBehaviour {
         if(PhotonNetwork.isMasterClient)
         {
             addPlayer(photonPlayer.ID);
-            photonV.RPC("RPC_UpdateGameInfo", PhotonTargets.All, playerDic, teamOneList.ToArray(), teamTwoList.ToArray());
+            photonV.RPC("RPC_UpdateGameInfo", PhotonTargets.All, playerDic, playerTeamDic);
         }
     }
 
@@ -486,7 +516,7 @@ public class GameNetwork : MonoBehaviour {
         if(PhotonNetwork.isMasterClient)
         {
             removePlayer(otherPlayer.ID);
-            photonV.RPC("RPC_UpdateGameInfo", PhotonTargets.All, playerDic, teamOneList.ToArray(), teamTwoList.ToArray());
+            photonV.RPC("RPC_UpdateGameInfo", PhotonTargets.All, playerDic, playerTeamDic);
         }
     }
 
@@ -556,13 +586,12 @@ public class GameNetwork : MonoBehaviour {
     }
 
     [PunRPC]
-    public void RPC_UpdateGameInfo(Dictionary<int, int> newPlayerDict, int[] team1, int[] team2)
+    public void RPC_UpdateGameInfo(Dictionary<int, int> newPlayerDict, Dictionary<int, int> newPlayerTeamDict)
     {
         if(!PhotonNetwork.isMasterClient)
         {
             playerDic = newPlayerDict;
-            teamOneList = new List<int>(team1);
-            teamTwoList = new List<int>(team2);
+            playerTeamDic = newPlayerTeamDict;
         }
 
         setMyTeam();
@@ -579,7 +608,7 @@ public class GameNetwork : MonoBehaviour {
 
         bool changed = switchTeam(photonId);
         if(changed){
-            photonV.RPC("RPC_UpdateGameInfo", PhotonTargets.All, playerDic, teamOneList.ToArray(), teamTwoList.ToArray());
+            photonV.RPC("RPC_UpdateGameInfo", PhotonTargets.All, playerDic, playerTeamDic);
         }
             
     }

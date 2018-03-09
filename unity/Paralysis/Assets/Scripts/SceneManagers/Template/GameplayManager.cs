@@ -9,6 +9,8 @@ using UnityEngine.UI;
 /// </summary>
 public abstract class GameplayManager : Photon.MonoBehaviour
 {
+    public static GameplayManager Instance;
+
     /// <summary>
     /// Current GameMode, default is TeamDeathmatch
     /// </summary>
@@ -41,6 +43,8 @@ public abstract class GameplayManager : Photon.MonoBehaviour
 
     protected virtual void Awake()
     {
+        Instance = this;
+
         PhotonNetwork.offlineMode = true;
         instantiatePlayers();
         buildUI();
