@@ -26,6 +26,7 @@ public class CharacterNetwork : Photon.MonoBehaviour
             stats = GetComponent<CharacterStats>();
             shadowRenderer = transform.Find("GroundCheck").GetComponent<SpriteRenderer>();
             stunnedSymbol = transform.Find("stunnedSymbol").gameObject;
+            PlayerName = GameNetwork.Instance.PlayerName;
         }
     }
 
