@@ -24,17 +24,23 @@ public class GameNetworkChampSelect : MonoBehaviour {
 
     public void selectedChamipon(int champion)
     {
-        photonV.RPC("RPC_SelectedChampion", PhotonTargets.Others, (short)PhotonNetwork.player.ID, (short)champion);
+        photonV.RPC("RPC_SelectedChampion", PhotonTargets.All, (short)PhotonNetwork.player.ID, (short)champion);
     }
 
     public void readyUp(bool ready)
     {
-        photonV.RPC("RPC_PlayerReady", PhotonTargets.Others, (short)PhotonNetwork.player.ID, ready);
+        photonV.RPC("RPC_PlayerReady", PhotonTargets.All, (short)PhotonNetwork.player.ID, ready);
+    }
+
+    public void setTrinket(Trinket.Trinkets trinket, byte trinketNum)
+    {
+        photonV.RPC("RPC_SetTrinketForPlayer", PhotonTargets.All, (short)PhotonNetwork.player.ID, trinketNum, (byte)trinket);
     }        
 
     public void allReadySignal()
     {
-        if(GameNetwork.Instance.IsMasterClient){            
+        if(GameNetwork.Instance.IsMasterClient)
+        {
             photonV.RPC("RPC_AllReady", PhotonTargets.All);
         }
     }
@@ -43,7 +49,10 @@ public class GameNetworkChampSelect : MonoBehaviour {
     private void RPC_SelectedChampion(short photonId, short sChamp)
     {
         if(OnPlayerSelectedChamp != null)
+        {
+            GameNetwork.Instance.setPlayerChampForId((int)photonId, (int)sChamp);
             OnPlayerSelectedChamp((int)photonId, (int)sChamp);
+        }
     }
 
     [PunRPC]
@@ -58,5 +67,11 @@ public class GameNetworkChampSelect : MonoBehaviour {
     {
         if(OnAllReady != null)
             OnAllReady();
+    }
+
+    [PunRPC]
+    private void RPC_SetTrinketForPlayer(short photonId, byte trinketNum, byte trinket)
+    {
+        GameNetwork.Instance.setTrinketForId((int)photonId, (int)trinketNum, trinket);
     }
 }
