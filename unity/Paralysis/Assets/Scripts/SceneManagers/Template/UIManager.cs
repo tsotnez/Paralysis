@@ -43,6 +43,9 @@ public abstract class UIManager : MonoBehaviour {
 
     protected virtual void Update ()
     {
+        if (module == null)
+            return;
+
         //Switch input method depending on whether a controller is connected
         if (Array.Exists(Input.GetJoystickNames(), x => x == "Controller (XBOX 360 For Windows)"))
         {

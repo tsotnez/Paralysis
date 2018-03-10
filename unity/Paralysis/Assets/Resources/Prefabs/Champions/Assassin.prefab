@@ -769,6 +769,7 @@ MonoBehaviour:
   trigKnockedBack: 0
   trigKnockedBackEnd: 0
   trigJump: 0
+  trigDoubleJump: 0
   trigJumpAttack: 0
   trigJumpAttackEnd: 0
   trigDash: 0
@@ -776,7 +777,6 @@ MonoBehaviour:
   trigDashForward: 0
   trigDashForwardEnd: 0
   trigHit: 0
-  trigDoubleJump: 0
 --- !u!114 &114556049537363466
 MonoBehaviour:
   m_ObjectHideFlags: 1

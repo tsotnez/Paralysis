@@ -7,7 +7,7 @@ using System;
 
 public class TeamAllocationManager : UIManager {
 
-    public static int maxPlayers = 2;
+    private int maxPlayers = 4; //Is 4 because everything is optimized to handle 4 players
     
     public GameObject playerPrefab;
     public Sprite keyboard;
@@ -122,24 +122,15 @@ public class TeamAllocationManager : UIManager {
         TeamAllocationPlayer[] team1 = activePlayers.Where(x => x.teamNumber == -1).ToArray();
         TeamAllocationPlayer[] team2 = activePlayers.Where(x => x.teamNumber == 1).ToArray();
 
-        if (team1.Length == maxPlayers / 2 && team2.Length == maxPlayers / 2) //Only start if both teams are full
+        if (team1.Length > 0 || team2.Length > 0) //Only start if there is at least one player allocated
         {
-            //Load champion selection depending on max number of players
-            switch (maxPlayers)
-            {
-                case 2:
-                    LocalChampionSelectionManager.team1 = team1.Select(x => new Player(x.playerNumber, x.inputDevice, 1)).ToArray();
-                    LocalChampionSelectionManager.team2 = team2.Select(x => new Player(x.playerNumber, x.inputDevice, 2)).ToArray();
-                    SceneManager.LoadScene("Scenes/LocalChampionSelection");
-                    break;
-                case 4:
-                    SceneManager.LoadScene("Scenes/LocalChampionSelection");
-                    break;
-            }
+            LocalChampionSelectionManager.team1 = team1.Select(x => new Player(x.playerNumber, x.inputDevice, 1)).ToArray();
+            LocalChampionSelectionManager.team2 = team2.Select(x => new Player(x.playerNumber, x.inputDevice, 2)).ToArray();
+            SceneManager.LoadScene("Scenes/LocalChampionSelection");
         }
         else
         {
-            StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Please fill up each team."));
+            StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Allocate at least one player"));
         }
     }
 }

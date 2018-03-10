@@ -17,7 +17,6 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     public static Player[] team2;
     public static Player[] team1;
 
-    private bool everythingSelected = false;
     EventSystem[] eventSystemInstances = new EventSystem[4];
     /// <summary>
     /// All players
@@ -49,7 +48,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         }
 
         //Show additionjal player Platforms if 2v2
-        if (team1.Length == 2 && team2.Length == 2)
+        if (team1.Length == 2 || team2.Length == 2)
         {
             additionalPlatforms2v2.SetActive(true);
         }
@@ -57,19 +56,6 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         //All players are the sum of both teams
         players = team1.Concat(team2).ToArray();
         setUpEventSystems();
-    }
-
-    protected override void Update()
-    {
-        //Only allow to start if selections are complete
-        bool allSelected = true;
-        //Check if every player has selected a champion and 2 different trinkets
-        foreach (Player player in players)
-            if (player.ChampionPrefab == null || player.trinket1 == player.trinket2)
-                allSelected = false;
-
-        everythingSelected = allSelected;
-
     }
 
     /// <summary>
@@ -217,7 +203,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
 
     public void GoToMapSelection()
     {
-        if (everythingSelected)
+        if (everythingSelected())
         {
             deselectAll();
 
@@ -249,7 +235,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     public override void startGame(string mapName)
     {
         //Check if every player has selected a champion and 2 different trinkets
-        if (everythingSelected)
+        if (everythingSelected())
         {
             AdvancedSceneManager.LoadSceneWithLoadingScreen(mapName, "MultiplayerLoadingScreen");
         }
@@ -257,5 +243,17 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         {
             StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Select a champion and two different trinkets for each player"));
         }
+    }
+
+    private bool everythingSelected()
+    {
+        //Only allow to start if selections are complete
+        bool allSelected = true;
+        //Check if every player has selected a champion and 2 different trinkets
+        foreach (Player player in players)
+            if (player.ChampionPrefab == null || player.trinket1 == player.trinket2)
+                allSelected = false;
+
+        return allSelected;
     }
 }

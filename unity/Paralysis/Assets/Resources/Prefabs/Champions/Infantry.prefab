@@ -687,6 +687,7 @@ MonoBehaviour:
   trigKnockedBack: 0
   trigKnockedBackEnd: 0
   trigJump: 0
+  trigDoubleJump: 0
   trigJumpAttack: 0
   trigJumpAttackEnd: 0
   trigDash: 0

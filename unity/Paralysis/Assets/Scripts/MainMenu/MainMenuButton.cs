@@ -47,18 +47,6 @@ public class MainMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler, I
            GameObject.Find("manager").GetComponent<MainMenuManager>().switchToPage(nextPage);
     }
 
-    public void local1v1()
-    {
-        TeamAllocationManager.maxPlayers = 2;
-        SceneManager.LoadScene(GameConstants.TEAM_ALLOCATION_SCENE);
-    }
-
-    public void local2v2()
-    {
-        TeamAllocationManager.maxPlayers = 4;
-        SceneManager.LoadScene(GameConstants.TEAM_ALLOCATION_SCENE);
-    }
-
     public void loadMainMenuPageFromExternal(int index)
     {
         MainMenuManager.MainMenuDefaultPageIndex = index;
