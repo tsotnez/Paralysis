@@ -35,6 +35,7 @@ public abstract class GameplayManager : Photon.MonoBehaviour
     protected GameObject simpleGlobalMessage;
     protected GameObject playerInteractionGlobalMessage;
     protected Transform mainCanvas;
+    protected int controllersConnected;
 
     public enum GameModes
     {
@@ -52,6 +53,24 @@ public abstract class GameplayManager : Photon.MonoBehaviour
         simpleGlobalMessage = Resources.Load<GameObject>("Prefabs/UI/GlobalMessages/SimpleGlobalMessage");
         playerInteractionGlobalMessage = Resources.Load<GameObject>("Prefabs/UI/GlobalMessages/PlayerInteractionGlobalMessage");
         mainCanvas = GameObject.Find("MainCanvas").transform;
+
+        controllersConnected = Input.GetJoystickNames().Count(x => x == GameConstants.NAME_OF_XBOX360CONTROLLER_IN_ARRAY);
+    }
+
+    protected virtual void Update()
+    {
+        manageControllers();
+    }
+    protected void manageControllers()
+    {
+        //Checking for disconnecting/connecting controllers
+        int newCount = Input.GetJoystickNames().Count(x => x == GameConstants.NAME_OF_XBOX360CONTROLLER_IN_ARRAY);
+        if (newCount < controllersConnected)
+            StartCoroutine(UIManager.showMessageBox(GameObject.Find("MainCanvas").GetComponent<Canvas>(), "Lost connection to controller"));
+        else if (newCount > controllersConnected)
+            StartCoroutine(UIManager.showMessageBox(GameObject.Find("MainCanvas").GetComponent<Canvas>(), "Controller connected"));
+
+        controllersConnected = newCount;
     }
 
     /// <summary>

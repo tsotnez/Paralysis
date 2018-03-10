@@ -74,30 +74,29 @@ public class HotbarController : MonoBehaviour {
         return skillImage;
     }
 
-    //Sets trinket on Cooldown
-    public void setTrinketOnCooldown(int trinketNumber, int seconds)
+    public void trinketUsed(int trinketNumber)
     {
-        if(trinketNumber == 1)
-        {
-            StartCoroutine(countDown(trinket1Image, seconds));
-        }
+        Image target;
+
+        if (trinketNumber == 1)
+            target = trinket1Image;
         else
-        {
-            StartCoroutine(countDown(trinket2Image, seconds));
-        }
+            target = trinket2Image;
+
+        target.color = overlayWhenCooldown;
     }
 
-    //Greys out given trinket
-    public void greyOutTrinket(int trinketNumber)
+    public void trinketDurationOver(int trinketNumber, float cooldown)
     {
+        Image target;
+
         if (trinketNumber == 1)
-        {
-            trinket1Image.color = overlayWhenCooldown;
-        }
+            target = trinket1Image;
         else
-        {
-            trinket2Image.color = overlayWhenCooldown;
-        }
+            target = trinket2Image;
+
+        target.color = Color.white;
+        StartCoroutine(countDown(target, cooldown));
     }
     
     //Sets image on cooldown

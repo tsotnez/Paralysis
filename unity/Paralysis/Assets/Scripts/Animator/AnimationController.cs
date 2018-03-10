@@ -393,7 +393,7 @@ public abstract class AnimationController : MonoBehaviour
     private void ReSetDestroyAtlas(AnimationTypes Anim)
     {
         // Stop Coroutine if running
-        if (AtlasDestroyRoutines.ContainsKey(Anim))
+        if (AtlasDestroyRoutines.ContainsKey(Anim) && AtlasDestroyRoutines[Anim] != null)
         {
             StopCoroutine(AtlasDestroyRoutines[Anim]);
         }

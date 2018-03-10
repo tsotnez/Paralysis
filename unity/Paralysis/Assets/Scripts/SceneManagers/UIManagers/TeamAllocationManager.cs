@@ -26,7 +26,7 @@ public class TeamAllocationManager : UIManager {
         int playerNumber = 1;
 
         //Switch to controller Controls if a controller is connected
-        if (Array.Exists(Input.GetJoystickNames(), x => x == "Controller (XBOX 360 For Windows)"))
+        if (Array.Exists(Input.GetJoystickNames(), x => x == GameConstants.NAME_OF_XBOX360CONTROLLER_IN_ARRAY))
         {
             MyStandaloneInputModule eventSystem = FindObjectOfType<MyStandaloneInputModule>();
             eventSystem.verticalAxis = "Vertical_XboxPlayer1";

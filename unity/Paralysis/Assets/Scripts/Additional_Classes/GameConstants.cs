@@ -19,4 +19,6 @@ public static class GameConstants
     public static string MAIN_PLAYER_TAG = "MainPlayer";
     public static string SPAWN_POINT_TAG = "SpawnPoint";
 
+    public static string NAME_OF_XBOX360CONTROLLER_IN_ARRAY = "Controller (XBOX 360 For Windows)";
+
 }

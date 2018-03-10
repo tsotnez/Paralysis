@@ -105,8 +105,9 @@ public class NetworkVersusManager : GameplayManager
         StartCoroutine(WaitToJoinTeam());
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         connectionStatusText.text = "Ping: " + PhotonNetwork.GetPing() + " " + PhotonNetwork.connectionStateDetailed.ToString();
     }
 

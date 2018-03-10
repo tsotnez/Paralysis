@@ -59,10 +59,10 @@ public abstract class PassiveTrinket : Trinket
         CharacterStats stats = GetComponent<CharacterStats>();
 
         stats.StartTrinketEffects();
-        controller.hotbar.greyOutTrinket(trinketNumber); // grey out for time its active
+        controller.hotbar.trinketUsed(trinketNumber);
         yield return new WaitUntil(() => !TrinketRunning);
         stats.StopTrinketEffects();
-        controller.hotbar.setTrinketOnCooldown(trinketNumber, GeneralCooldown); // Set actual visual cooldown
+        controller.hotbar.trinketDurationOver(trinketNumber, GeneralCooldown);
         TrinketReady = false;
         yield return new WaitForSeconds(GeneralCooldown);
         TrinketReady = true;

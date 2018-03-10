@@ -98,4 +98,5 @@ MonoBehaviour:
   - RPC_SwitchTeam
   - RPC_StartEndAnimation
   - RPC_StartAnimationN
+  - RPC_SetTrinketForPlayer
   DisableAutoOpenWizard: 1

@@ -22,6 +22,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     /// All players
     /// </summary>
     private Player[] players;
+    private int controllersConnected = 0;
 
     public GameObject[] eventSystemPrefabs;
     public GameObject[] firstSelecteds;
@@ -37,6 +38,8 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     // Use this for initialization
     protected override void Start()
     {
+        controllersConnected = Input.GetJoystickNames().Count(x => x == GameConstants.NAME_OF_XBOX360CONTROLLER_IN_ARRAY);
+
         //Set default Values for debugging
         if (team1 == null && team2 == null)
         {
@@ -56,6 +59,18 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         //All players are the sum of both teams
         players = team1.Concat(team2).ToArray();
         setUpEventSystems();
+    }
+
+    protected override void Update()
+    {
+        //Checking for disconnecting/connecting controllers
+        int newCount = Input.GetJoystickNames().Count(x => x == GameConstants.NAME_OF_XBOX360CONTROLLER_IN_ARRAY);
+        if (newCount < controllersConnected)
+            StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Lost connection to controller"));
+        else if (newCount > controllersConnected)
+            StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Controller connected"));
+
+        controllersConnected = newCount;
     }
 
     /// <summary>
