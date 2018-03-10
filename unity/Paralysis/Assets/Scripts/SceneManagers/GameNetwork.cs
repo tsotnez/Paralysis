@@ -20,6 +20,7 @@ public class GameNetwork : MonoBehaviour {
     public bool offlineMode = false;
 
     private PhotonView photonV;
+    private ChampionHolder champHolder;
 
     private bool inGame = false;
     public bool InGame { get { return inGame; } }
@@ -47,31 +48,9 @@ public class GameNetwork : MonoBehaviour {
     public Dictionary <int, int> PlayerTeamDict { get { return new Dictionary<int, int>(playerTeamDic); } }
     private Dictionary<int , int> playerTeamDic;
 
-    //List of photon IDs for team1
-    public List<int> TeamOneList { 
-        get { 
-            List<int> teamOneList = new List<int>();
-            foreach(KeyValuePair<int, int> entry in playerTeamDic)
-            {
-                if(entry.Value == 1){
-                    teamOneList.Add(entry.Key);
-                }
-            }
-            return teamOneList;
-        } }
-
-    //List of photon IDs for team2
-    public List<int> TeamTwoList { 
-        get {
-            List<int> teamTwoList = new List<int>();
-            foreach(KeyValuePair<int, int> entry in playerTeamDic)
-            {
-                if(entry.Value == 2){
-                    teamTwoList.Add(entry.Key);
-                }
-            }
-            return teamTwoList;
-        } }
+    //Photon ID to Player Instance
+    public Dictionary<int, Player> Players { get { return new Dictionary<int, Player>(players); } }
+    private Dictionary<int, Player> players;
 
     //Delegates
     public delegate void gameStateUpdate();
@@ -79,6 +58,35 @@ public class GameNetwork : MonoBehaviour {
 
     public delegate void allPlayersInScene();
     public event allPlayersInScene OnAllPlayersInScene;
+
+    #region getters
+    public List<Player> TeamPlayerList(int Team)
+    {
+        List<Player> playerTeamList = new List<Player>();
+        foreach(Player player in players.Values)
+        {
+            if(player.TeamNumber == Team)
+            {
+                playerTeamList.Add(player);
+            }    
+        }
+        return playerTeamList;
+    }
+
+    //List of photon IDs for team1
+    public List<int> TeamIdList(int Team)
+    {
+        List<int> teamList = new List<int>();
+        foreach(KeyValuePair<int, int> entry in PlayerTeamDict)
+        {
+            if(entry.Value == Team){
+                teamList.Add(entry.Key);
+            }
+        }
+        return teamList;
+    }
+
+    #endregion
 
     // Use this for initialization
     private void Awake ()
@@ -90,12 +98,15 @@ public class GameNetwork : MonoBehaviour {
         }
 
         instance = this;
+
         photonV = GetComponent<PhotonView>();
 
         setPlayerName("Player#" + Random.Range(1000, 9999));
         PhotonNetwork.sendRate = sendRate;
         PhotonNetwork.sendRateOnSerialize = sendRateSerialize;
         SceneManager.sceneLoaded += OnSceneFinishedLoading;
+
+        champHolder = GetComponent<ChampionHolder>();
     }
 
     public void Connect(string region = "eu")
@@ -142,6 +153,7 @@ public class GameNetwork : MonoBehaviour {
     private void clearNewScene()
     {
         manager = null;
+        inGame = false;
 
         if (offlineMode)
         {
@@ -275,7 +287,6 @@ public class GameNetwork : MonoBehaviour {
         }
     }
 
-
     public void StartGame()
     {
         if(PhotonNetwork.isMasterClient)
@@ -355,7 +366,6 @@ public class GameNetwork : MonoBehaviour {
 
             return true;
         }
-
         return false;
     }
 
@@ -363,11 +373,18 @@ public class GameNetwork : MonoBehaviour {
     {
         if(!IsMasterClient)return;
 
-        print("Adding player id: " + photonId + "player network num:" + PlayersInGame);
+        int playerNum = PlayersInGame;
 
-        playerDic.Add(photonId, PlayersInGame);
+        print("Adding player id: " + photonId + "player network num:" + playerNum);
+
+        playerDic.Add(photonId, playerNum);
         if(balanceTeams() == 1)playerTeamDic[photonId] = 1;
         else playerTeamDic[photonId] = 2;
+
+        players.Add(photonId, new Player(
+            (UserControl.PlayerNumbers)playerNum,
+            UserControl.InputDevice.KeyboardMouse, 
+            playerTeamDic[photonId]));
     }
 
     private void removePlayer(int photonId)
@@ -386,7 +403,10 @@ public class GameNetwork : MonoBehaviour {
                 playerDic[key] = playerDic[key] - 1;
             }
         }
-        removePlayerFromTeamLists(photonId);
+
+        //Remove player from team dict
+        if(playerTeamDic.ContainsKey(photonId))playerTeamDic.Remove(photonId);
+        players.Remove(photonId);
     }
 
     private int balanceTeams()
@@ -412,20 +432,15 @@ public class GameNetwork : MonoBehaviour {
         else return 2;
     }        
 
-    public void removePlayerFromTeamLists(int photonId)
-    {
-        //if(teamTwoList.Contains(photonId))teamTwoList.Remove(photonId);
-        //if(teamOneList.Contains(photonId))teamOneList.Remove(photonId);
-        if(playerTeamDic.ContainsKey(photonId))playerTeamDic.Remove(photonId);
-    }
-
     private void setMyTeam()
     {
         int id = PhotonNetwork.player.ID;
-        if(playerTeamDic.ContainsKey(id)){
+        if(playerTeamDic.ContainsKey(id))
+        {
             teamNum = playerTeamDic[id];
         }
-        else{
+        else
+        {
             Debug.LogError("Couldn't find my team number:" + PhotonNetwork.player.ID);
         }
     }
@@ -442,6 +457,75 @@ public class GameNetwork : MonoBehaviour {
             }
         }
         Debug.LogError("Couldn't find my network number:" + PhotonNetwork.player.ID);
+    }
+
+    private void syncPlayers()
+    {
+        //Add all players that haven't been added
+        foreach(KeyValuePair<int, int> entry in playerDic)
+        {
+            int photonId = entry.Key;
+            if(!players.ContainsKey(photonId))
+            {
+                //Add player if they haven't been added...
+                players.Add(photonId, new Player(UserControl.PlayerNumbers.Player1, 
+                    UserControl.InputDevice.KeyboardMouse, playerTeamDic[photonId]));
+            }
+        }
+
+        //Delete all the players that no longer exist
+        List<int> photonIdsToDelete = new List<int>();
+        foreach(int photonId in players.Keys)
+        {
+            if(!playerDic.ContainsKey(photonId))photonIdsToDelete.Add(photonId);
+        }
+        foreach(int idToDel in photonIdsToDelete)
+        {
+            players.Remove(idToDel);
+        }
+
+        //Set team numbers
+        foreach(int pId in players.Keys)
+        {
+            Player player = players[pId];
+            if(playerTeamDic.ContainsKey(pId))player.TeamNumber = playerTeamDic[pId];
+            else Debug.LogError("Players Teams out of sync....");
+        }
+
+        //Set player numbers
+        foreach(int pId in players.Keys)
+        {
+            Player player = players[pId];
+            if(playerDic.ContainsKey(pId))player.playerNumber = (UserControl.PlayerNumbers)playerTeamDic[pId];
+            else Debug.LogError("Players Nums out of sync....");
+        }
+    }
+
+    public void setPlayerChampForId(int photonId, int champ)
+    {
+        if(players.ContainsKey(photonId))
+        {
+            GameObject goChamp = champHolder.getChampionForID(champ);
+            players[photonId].ChampionPrefab = goChamp;
+        }
+        else Debug.LogError("Unable to set champion prefab....");
+    }
+
+    public void setTrinketForId(int photonId, int trinketSlot, byte trinket)
+    {        
+        if(players.ContainsKey(photonId))
+        {
+            Player player = players[photonId];
+            if(trinketSlot == 1)
+            {
+                player.trinket1 = (Trinket.Trinkets)trinket;
+            }
+            else
+            {
+                player.trinket2 = (Trinket.Trinkets)trinket;
+            }
+        }
+        else Debug.LogError("Unable to set trinket for player...");
     }
 
     #endregion
@@ -473,10 +557,9 @@ public class GameNetwork : MonoBehaviour {
     // Called for everyone
     private void OnJoinedRoom()
     {
-        //playerNetworkNumber = PhotonNetwork.playerList.Length;
-
         playerDic = new Dictionary<int, int>();
         playerTeamDic = new Dictionary<int, int>();
+        players = new Dictionary<int, Player>();
 
         if(IsMasterClient)
         {
@@ -493,7 +576,9 @@ public class GameNetwork : MonoBehaviour {
     //Photon Callback
     private void OnMasterClientSwitched(PhotonPlayer newMasterClient)
     {
-        if(inGame){
+        if(inGame)
+        {
+            //TODO...
             quitGame();
         }
     }
@@ -596,6 +681,7 @@ public class GameNetwork : MonoBehaviour {
 
         setMyTeam();
         setMyNetworkNumber();
+        syncPlayers();
 
         if(OnGameStateUpdate != null)
             OnGameStateUpdate();
@@ -607,10 +693,10 @@ public class GameNetwork : MonoBehaviour {
         if(!PhotonNetwork.isMasterClient) return;
 
         bool changed = switchTeam(photonId);
-        if(changed){
+        if(changed)
+        {
             photonV.RPC("RPC_UpdateGameInfo", PhotonTargets.All, playerDic, playerTeamDic);
         }
-            
     }
 
     #endregion

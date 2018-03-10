@@ -82,6 +82,9 @@ public class CharacterNetwork : Photon.MonoBehaviour
     [PunRPC]
     void SetTeam(int team, int teamToHit)
     {
+
+        Player player;
+
         if(!photonView.isMine)
         {
             CameraBehaviour cam = Camera.main.GetComponent<CameraBehaviour>();

@@ -24,18 +24,18 @@ public abstract class Trinket : MonoBehaviour
         {Trinkets.UseTrinket_RemoveStatusEffect,            typeof(UseTrinket_RemoveStatusEffect)}
     };
 
-    public enum Trinkets
+    public enum Trinkets : byte
     {
-        UseTrinket_GetImmun,
-        UseTrinket_HealingOverTime,
-        UseTrinket_IncreaseDamage,
-        UseTrinket_IncreaseMovementSpeed,
-        UseTrinket_ReflectDamage,
-        UseTrinket_RemoveStatusEffect,
-        UseTrinkets_NextHitDealsbleeding,
-        PassiveTrinket_ChanceDealingMoreDamage,
-        PassiveTrinket_ChanceToStun,
-        PassiveTrinket_SpeedWhenHitted
+        UseTrinket_GetImmun = 0,
+        UseTrinket_HealingOverTime = 1,
+        UseTrinket_IncreaseDamage = 2,
+        UseTrinket_IncreaseMovementSpeed = 3,
+        UseTrinket_ReflectDamage = 4,
+        UseTrinket_RemoveStatusEffect = 5,
+        UseTrinkets_NextHitDealsbleeding = 6,
+        PassiveTrinket_ChanceDealingMoreDamage = 7,
+        PassiveTrinket_ChanceToStun = 8,
+        PassiveTrinket_SpeedWhenHitted = 9
     }
 
     public void resetValues()

@@ -32,7 +32,7 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     protected override void Start()
     {
         base.Start();
-        champHolder = GetComponent<ChampionHolder>();
+        champHolder = GameNetwork.Instance.GetComponent<ChampionHolder>();
 
         //ARCHER = 0, KNIGHT = 1, INFANTRY = 2, ALCHEMIST = 3, ASSASSIN = 4
         foreach(Button button in championButtons)
@@ -43,8 +43,8 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
         }
 
         GameNetwork.Instance.OnGameStateUpdate += OnGameStateUpdated;
-        GameNetworkChampSelect.Instance.OnPlayerSelectedChamp += OnOtherPlayerSelectedChamp;
-        GameNetworkChampSelect.Instance.OnPlayerReady += OnOtherPlayerReady;
+        GameNetworkChampSelect.Instance.OnPlayerSelectedChamp += OnPlayerSelectedChamp;
+        GameNetworkChampSelect.Instance.OnPlayerReady += OnPlayerReady;
         GameNetworkChampSelect.Instance.OnAllReady += OnAllReady;
 
 
@@ -83,11 +83,13 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     public override void setTrinket1(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName)
     {
         localPlayer.trinket1 = trinketName;
+        GameNetworkChampSelect.Instance.setTrinket(trinketName, 1);
     }
 
     public override void setTrinket2(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName)
     {
         localPlayer.trinket2 = trinketName;
+        GameNetworkChampSelect.Instance.setTrinket(trinketName, 2);
     }
 
     public override void setChampion(UserControl.PlayerNumbers targetPlayer, GameObject Champion)
@@ -208,17 +210,27 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     }
 
     #region callbacks
-    private void OnOtherPlayerSelectedChamp(int photonID, int champ)
+    private void OnPlayerSelectedChamp(int photonID, int champ)
     {
+        if(PhotonNetwork.player.ID == photonID)
+        {
+            return;
+        }
+
         GameObject goChamp = champHolder.getChampionForID(champ);
-        List<int> teamOne = GameNetwork.Instance.TeamOneList;
+        List<int> teamOne = GameNetwork.Instance.TeamIdList(1);
         Transform platform = transformDict[photonID];
         DestroyExistingPreview(platform);
         ShowPrefab(goChamp, platform, (teamOne.Contains(photonID))? false : true );
     }
 
-    private void OnOtherPlayerReady(int photonID, bool ready)
+    private void OnPlayerReady(int photonID, bool ready)
     {
+        if(PhotonNetwork.player.ID == photonID)
+        {
+            return;
+        }
+
         setReady(transformDict[photonID], ready);
         checkReadyAll();
     }
@@ -231,8 +243,8 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
 
     private void OnGameStateUpdated()
     {
-        List<int> teamOne = GameNetwork.Instance.TeamOneList;
-        List<int> teamTwo = GameNetwork.Instance.TeamTwoList;
+        List<int> teamOne = GameNetwork.Instance.TeamIdList(1);
+        List<int> teamTwo = GameNetwork.Instance.TeamIdList(2);
 
         PhotonPlayer[] players = GameNetwork.Instance.getPlayerList();
         Dictionary<int, int> playerDict = GameNetwork.Instance.PlayerDict;
@@ -285,8 +297,8 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     private void OnDestroy()
     {
         GameNetwork.Instance.OnGameStateUpdate -= OnGameStateUpdated;
-        GameNetworkChampSelect.Instance.OnPlayerSelectedChamp -= OnOtherPlayerSelectedChamp;
-        GameNetworkChampSelect.Instance.OnPlayerReady -= OnOtherPlayerReady;
+        GameNetworkChampSelect.Instance.OnPlayerSelectedChamp -= OnPlayerSelectedChamp;
+        GameNetworkChampSelect.Instance.OnPlayerReady -= OnPlayerReady;
         GameNetworkChampSelect.Instance.OnAllReady -= OnAllReady;
     }
 }

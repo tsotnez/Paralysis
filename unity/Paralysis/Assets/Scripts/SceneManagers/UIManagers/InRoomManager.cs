@@ -142,8 +142,8 @@ public class InRoomManager : UIManager {
         print("Game state updated...");
         RemoveAll();
 
-        List<int> teamOne = GameNetwork.Instance.TeamOneList;
-        List<int> teamTwo = GameNetwork.Instance.TeamTwoList;
+        List<int> teamOne = GameNetwork.Instance.TeamIdList(1);
+        List<int> teamTwo = GameNetwork.Instance.TeamIdList(2);
 
         PhotonPlayer[] players = GameNetwork.Instance.getPlayerList();
 

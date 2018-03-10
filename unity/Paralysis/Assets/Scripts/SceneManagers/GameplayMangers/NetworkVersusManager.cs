@@ -25,6 +25,12 @@ public class NetworkVersusManager : GameplayManager
     {
         Instance = this;
 
+        //Populate teams array
+        List<Player> teamOnePlayerList = GameNetwork.Instance.TeamPlayerList(1);
+        List<Player> teamTwoPlayerList = GameNetwork.Instance.TeamPlayerList(2);
+        Teams.Add(1, teamOnePlayerList.ToArray());
+        Teams.Add(2, teamOnePlayerList.ToArray());
+
         spawnPoints = GameObject.FindGameObjectsWithTag(GameConstants.SPAWN_POINT_TAG);
         playerNetworkNum = GameNetwork.Instance.PlayerNetworkNumber;
         localPlayer = NetworkChampionSelectionManager.localPlayer;

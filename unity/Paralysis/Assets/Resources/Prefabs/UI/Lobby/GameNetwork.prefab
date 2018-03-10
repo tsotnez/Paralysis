@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114413518034576330}
   - component: {fileID: 114575674096746524}
   - component: {fileID: 114483486369388678}
+  - component: {fileID: 114088167644424022}
   m_Layer: 0
   m_Name: GameNetwork
   m_TagString: GameNetwork
@@ -44,6 +45,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114088167644424022
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1077132422737216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e800b8ee9b759149a6dd5ee4f82e0c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  champions:
+  - {fileID: 1654434425598688, guid: a88ac18cbd8da5b4ca19263602c669cd, type: 2}
+  - {fileID: 1903508196159970, guid: 3c565997b1ca6e94caf0190f6b7b9801, type: 2}
+  - {fileID: 1128103333960868, guid: 3dd357419861bfe40bbee211a7260d6d, type: 2}
+  - {fileID: 1346435155503924, guid: 5f5ac1a4f5bfeec4584f1818feb6fdc7, type: 2}
+  - {fileID: 1468821578159268, guid: 4e0ab1a9f8c7d62429b395fc8c06d57b, type: 2}
 --- !u!114 &114413518034576330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -58,7 +76,6 @@ MonoBehaviour:
   sendRate: 70
   sendRateSerialize: 50
   maxPlayers: 4
-  levelToLoad: Network Test
   gameVersion: 0.0.1-Apla
   offlineMode: 0
 --- !u!114 &114452805369236350
