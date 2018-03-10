@@ -28,6 +28,8 @@ public class NetworkVersusManager : GameplayManager
         //Populate teams array
         List<Player> teamOnePlayerList = GameNetwork.Instance.TeamPlayerList(1);
         List<Player> teamTwoPlayerList = GameNetwork.Instance.TeamPlayerList(2);
+
+        Teams = new Dictionary<int, Player[]>();
         Teams.Add(1, teamOnePlayerList.ToArray());
         Teams.Add(2, teamOnePlayerList.ToArray());
 
