@@ -42,7 +42,7 @@ public class ThroughPlatform : MonoBehaviour {
     private IEnumerator addAndRemove(GameObject removeObj)
     {
         currentlyInside.Add(removeObj);
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1f);
         if(currentlyInside.Contains(removeObj))
         {
             changeCollisions(removeObj, true);

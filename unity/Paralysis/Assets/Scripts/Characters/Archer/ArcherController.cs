@@ -73,13 +73,27 @@ public class ArcherController : ChampionClassController
             //Puts down a trap
             hotbar.StartCoroutine(hotbar.flashBlack(skill2_var.type));
             animCon.trigSkill2 = true;
-            Invoke("PlaceTrap", delay_Skill2);
+            StartCoroutine(placeTrapCoroutine(delay_Skill2));
         }
     }
 
-    private void PlaceTrap()
+    private IEnumerator placeTrapCoroutine(float delay)
     {
-        GameObject trap = Instantiate(trapPrefab, m_GroundCheck.position, Quaternion.identity);
+        yield return new WaitForSeconds(delay);
+        if(PhotonNetwork.offlineMode)
+        {
+            RPC_PlaceTrap(m_GroundCheck.position);
+        }
+        else
+        {
+            photonView.RPC("RPC_PlaceTrap",PhotonTargets.All, m_GroundCheck.position);
+        }
+    }
+
+    [PunRPC]
+    public void RPC_PlaceTrap(Vector3 position)
+    {
+        GameObject trap = Instantiate(trapPrefab, position, Quaternion.identity);
         ArcherTrapBehaviour trapScript = trap.GetComponent<ArcherTrapBehaviour>();
         trapScript.creator = gameObject;
         trapScript.damage = damage_Skill2;
@@ -99,7 +113,16 @@ public class ArcherController : ChampionClassController
         if (CanPerformAction(true) && CanPerformAttack() && skill4_var.notOnCooldown && stats.LoseStamina(stamina_Skill4))
         {
             hotbar.StartCoroutine(hotbar.flashBlack(skill4_var.type));
-            PlaceTrap();
+
+            if(PhotonNetwork.offlineMode)
+            {
+                RPC_PlaceTrap(m_GroundCheck.position);
+            }
+            else
+            {
+                photonView.RPC("RPC_PlaceTrap",PhotonTargets.All, m_GroundCheck.position);
+            }
+
             //Jump back while being invincible
             if (disengageRoutine != null)
                 StopCoroutine(disengageRoutine);

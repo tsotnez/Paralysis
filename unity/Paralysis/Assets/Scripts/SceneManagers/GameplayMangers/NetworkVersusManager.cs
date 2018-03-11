@@ -30,8 +30,8 @@ public class NetworkVersusManager : GameplayManager
         List<Player> teamTwoPlayerList = GameNetwork.Instance.TeamPlayerList(2);
 
         Teams = new Dictionary<int, Player[]>();
+        Teams.Add(0, teamOnePlayerList.ToArray());
         Teams.Add(1, teamOnePlayerList.ToArray());
-        Teams.Add(2, teamOnePlayerList.ToArray());
 
         spawnPoints = GameObject.FindGameObjectsWithTag(GameConstants.SPAWN_POINT_TAG);
         playerNetworkNum = GameNetwork.Instance.PlayerNetworkNumber;
