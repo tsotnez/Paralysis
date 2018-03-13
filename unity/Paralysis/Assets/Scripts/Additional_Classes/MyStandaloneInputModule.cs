@@ -7,6 +7,7 @@ namespace UnityEngine.EventSystems
     public class MyStandaloneInputModule : PointerInputModule
     {
         public static UserControl.InputDevice ControllingPlayerInputDevice = UserControl.InputDevice.KeyboardMouse;
+        public bool processMouseEvents = true;
 
         private float m_PrevActionTime;
         Vector2 m_LastMoveVector;
@@ -206,9 +207,9 @@ namespace UnityEngine.EventSystems
             }
 
             //Only when input method is Mouse and keyboard
-            if (ControllingPlayerInputDevice == UserControl.InputDevice.KeyboardMouse)
+            if (ControllingPlayerInputDevice == UserControl.InputDevice.KeyboardMouse && processMouseEvents)
             {
-                ProcessMouseEvent();
+               ProcessMouseEvent();
             }
         }
 

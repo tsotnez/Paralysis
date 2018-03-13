@@ -143,7 +143,6 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     /// </summary>
     private void setUpEventSystems()
     {
-
         foreach (Player player in players)
         {
             switch (player.playerNumber)
@@ -199,6 +198,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
             inputModule.verticalAxis = "Vertical_XboxPlayer" + ID.ToString();
             inputModule.submitButton = "Submit_XboxPlayer" + ID.ToString();
         }
+        inputModule.processMouseEvents = false;
         return newSystem;
     }
 
