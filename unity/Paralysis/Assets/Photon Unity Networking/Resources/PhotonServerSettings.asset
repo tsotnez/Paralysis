@@ -99,4 +99,5 @@ MonoBehaviour:
   - RPC_StartEndAnimation
   - RPC_StartAnimationN
   - RPC_SetTrinketForPlayer
+  - RPC_PlaceTrap
   DisableAutoOpenWizard: 1

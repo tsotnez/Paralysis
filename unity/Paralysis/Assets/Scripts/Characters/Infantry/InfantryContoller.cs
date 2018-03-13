@@ -130,9 +130,9 @@ public class InfantryContoller : ChampionClassController
                 m_Rigidbody2D.AddForce(new Vector2(0, (68 * DistanceToTarget))); // Distance 5.8f --> AddForce 400f --> 68 * Distance
 
                 // Wait until force is applied
-                yield return new WaitUntil(() => !animCon.m_Grounded);
+                yield return new WaitUntil(() => !animCon.propGrounded);
                 // Wait while not on ground
-                yield return new WaitUntil(() => animCon.m_Grounded);
+                yield return new WaitUntil(() => animCon.propGrounded);
             }
 
             ((InfantryAnimationController)animCon).trigSkill1End = true;

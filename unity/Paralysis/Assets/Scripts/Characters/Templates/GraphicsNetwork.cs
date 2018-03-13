@@ -35,9 +35,9 @@ public class GraphicsNetwork : MonoBehaviour {
         if (stream.isWriting)
         {
             //This is our player, sending info
-            stream.SendNext(animCon.m_Grounded);
-            stream.SendNext(animCon.m_vSpeed);
-            stream.SendNext(animCon.m_Speed);
+            stream.SendNext(animCon.propGrounded);
+            stream.SendNext(animCon.propVSpeed);
+            stream.SendNext(animCon.propSpeed);
             stream.SendNext(animCon.statDead);
             stream.SendNext(animCon.statPreview);
             stream.SendNext(animCon.statStunned);
@@ -46,9 +46,9 @@ public class GraphicsNetwork : MonoBehaviour {
         else
         {
             //Someone elses Player, receive info and set values
-            animCon.m_Grounded = (bool)stream.ReceiveNext();
-            animCon.m_vSpeed = (float)stream.ReceiveNext();
-            animCon.m_Speed = (float)stream.ReceiveNext();
+            animCon.propGrounded = (bool)stream.ReceiveNext();
+            animCon.propVSpeed = (float)stream.ReceiveNext();
+            animCon.propSpeed = (float)stream.ReceiveNext();
             animCon.statDead = (bool)stream.ReceiveNext();
             animCon.statPreview = (bool)stream.ReceiveNext();
             animCon.statStunned = (bool)stream.ReceiveNext();

@@ -221,7 +221,7 @@ public abstract class AIUserControl : MonoBehaviour {
         }
 
         inputMove = Mathf.Sign(currentNode.transform.position.x - transform.position.x);
-        if(!animCon.m_Grounded) inputMove = inputMove/2;
+        if(!animCon.propGrounded) inputMove = inputMove/2;
     }
 
     #region FallThrough
@@ -235,13 +235,13 @@ public abstract class AIUserControl : MonoBehaviour {
         }
 
         //wait to be grounded to start this goal
-        if(previousGoal != AI_GOALS.FALL_THROUGH && !animCon.m_Grounded)
+        if(previousGoal != AI_GOALS.FALL_THROUGH && !animCon.propGrounded)
         {
             changeCurrentAndPreviousGoal(AI_GOALS.FALL_THROUGH, AI_GOALS.STAND_BY);
             return;
         }
 
-        if(animCon.m_Grounded && previousGoal != AI_GOALS.FALL_THROUGH)
+        if(animCon.propGrounded && previousGoal != AI_GOALS.FALL_THROUGH)
         {
             StartCoroutine(inputDashForFall());
         }
@@ -259,7 +259,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected IEnumerator fallThroughRoutine()
     {
-        yield return new WaitUntil(() => ( animCon.m_Grounded));
+        yield return new WaitUntil(() => ( animCon.propGrounded));
         if(currentGoal == AI_GOALS.FALL_THROUGH)
         {
             incrementNodeIndex();
@@ -273,20 +273,20 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected virtual void jump1()
     {
-        if(inSameSectionAsTarget() && animCon.m_Grounded)
+        if(inSameSectionAsTarget() && animCon.propGrounded)
         {
             changeGoal(AI_GOALS.MOVE_TO_PLAYER);
             return;
         }
 
         //Were grounded but dont have enough stamina
-        if(animCon.m_Grounded && charStats.CurrentStamina < ChampionClassController.JUMP_STAMINA_REQ)
+        if(animCon.propGrounded && charStats.CurrentStamina < GetComponent<ChampionClassController>().stamina_Jump)
         {
             changeGoal(AI_GOALS.STAND_BY);
             return;
         }
 
-        if(animCon.m_Grounded)
+        if(animCon.propGrounded)
         {
             if(previousGoal != AI_GOALS.JUMP1)
             {
@@ -355,13 +355,13 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected virtual void jump2()
     {
-        if(inSameSectionAsTarget() && animCon.m_Grounded)
+        if(inSameSectionAsTarget() && animCon.propGrounded)
         {
             changeGoal(AI_GOALS.MOVE_TO_PLAYER);
             return;
         }
 
-        if(animCon.m_Grounded)
+        if(animCon.propGrounded)
         {
             float distFromNextNode = distanceFromNode(currentNodes[currentNodeIndex + 1]);
             if(distFromNextNode <= MIN_DISTANCE_TO_NODE)

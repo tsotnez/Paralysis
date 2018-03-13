@@ -42,7 +42,7 @@ public class AssassinController : ChampionClassController
     {
         if (CanPerformAttack())
         {
-            if (animCon.m_Grounded && stats.invisible)
+            if (animCon.propGrounded && stats.invisible)
             {
                 // do ambush attack
                 DoMeleeSkill(ref animCon.trigSkill3, new MeleeSkill(0, delay_Skill3, ambushAttack_damage, Skill.SkillEffect.nothing, 3, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, 0, MeeleRange, ChampionAndTrinketDatabase.Champions.Alchemist));

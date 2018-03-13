@@ -50,7 +50,7 @@ public class ArcherController : ChampionClassController
     public override void BasicAttack()
     {
         // Shoot a basic arrow 
-        if (animCon.m_Grounded)
+        if (animCon.propGrounded)
             DoRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill)basicAttack1_var);
     }
 

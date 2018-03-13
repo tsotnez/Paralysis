@@ -168,7 +168,7 @@ public class CharacterStats : Photon.MonoBehaviour
             GameplayManager.Instance.playerDied(gameObject);
 
         // Prevent body from sliding when killed in air or with knockback
-        if (knockedBack || !animCon.m_Grounded)
+        if (knockedBack || !animCon.propGrounded)
         {
             StartCoroutine(Die_ManageFallingToGround());
         }
@@ -176,11 +176,11 @@ public class CharacterStats : Photon.MonoBehaviour
 
     private IEnumerator Die_ManageFallingToGround()
     {
-        if (animCon.m_Grounded)
+        if (animCon.propGrounded)
         {
-            yield return new WaitUntil(() => !animCon.m_Grounded);
+            yield return new WaitUntil(() => !animCon.propGrounded);
         }
-        yield return new WaitUntil(() => animCon.m_Grounded);
+        yield return new WaitUntil(() => animCon.propGrounded);
         rigid.velocity = Vector2.zero;
     }
 
@@ -487,8 +487,8 @@ public class CharacterStats : Photon.MonoBehaviour
         animCon.trigKnockedBack = true;
         //Adding force and setting status variable
         rigid.AddForce(new Vector2(knockBackForceX * direction, knockBackForceY), ForceMode2D.Impulse);
-        yield return new WaitUntil(() => !animCon.m_Grounded);
-        yield return new WaitUntil(() => animCon.m_Grounded);
+        yield return new WaitUntil(() => !animCon.propGrounded);
+        yield return new WaitUntil(() => animCon.propGrounded);
         animCon.trigKnockedBackEnd = true;
         knockedBack = false;
     }

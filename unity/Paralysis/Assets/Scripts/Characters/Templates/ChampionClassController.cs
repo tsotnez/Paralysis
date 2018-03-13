@@ -6,14 +6,11 @@ using System.Linq;
 
 public abstract class ChampionClassController : Photon.MonoBehaviour
 {
-    public const int JUMP_STAMINA_REQ = 15;
-
     // Constraints
     protected const float GroundedRadius = .02f;                            // Radius of the overlap circle to determine if grounded
     protected const float MeeleRange = 1.5f;                                // Default range for meele attacks
     protected const float FallThroughDuration = .5f;                        // Duration of falling through a platform
     protected const float AllowAnotherJumpAfterGround = .1f;                // How long to wait to be able to jump again after grounded
-
 
     #region Parameters for Inspector
 
@@ -30,20 +27,21 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     [SerializeField]
     protected float m_MoveSpeedWhileBlocking = 0f;                          // Max speed while blocking
     [SerializeField]
-    protected bool CanTurnAroundWhileBlocking = true;                       // Can turn around while blocking
+    protected bool m_CanTurnAroundWhileBlocking = true;                       // Can turn around while blocking
 
     // Jump & JumpAttack
     [SerializeField]
-    protected float m_initialJumpVelocity = 100f;                            // Initiail Y velocity when we start jumping
+    protected float m_initialJumpVelocity = 100f;                           // Initiail Y velocity when we start jumping
     [SerializeField]
-    protected float m_maxJumpTime = .3f;                                     // Max time in air going up
+    protected float m_maxJumpTime = .3f;                                    // Max time in air going up
     [SerializeField]
-    protected float m_DoubleJumpDivisor = 1.05f;                           // Double jump divsor
+    protected float m_JumpDivisor = 1f;                                     // Jump divsor
+    [SerializeField]
+    protected float m_DoubleJumpDivisor = 1.05f;                            // Double jump divsor
     [SerializeField]
     protected float m_jumpAttackRadius = 1.5f;                              // Radius of jump Attack damage
     [SerializeField]
     protected float m_jumpAttackForce = 10f;                                // Amount of force added when the player jump attack
-
 
     // Dash
     [SerializeField]
@@ -51,7 +49,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     [SerializeField]
     protected int m_dashStaminaCost = 10;                                   // Stamina Costs of Skill Dash
     [SerializeField]
-    protected bool CanDashForward = false;                                  // Indicates whether the character can dash forward or have to turn around before dashing
+    protected bool m_CanDashForward = false;                                  // Indicates whether the character can dash forward or have to turn around before dashing
 
     // Combo
     [SerializeField]
@@ -84,6 +82,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected int stamina_BasicAttack2 = 5;
     [SerializeField]
     protected int stamina_BasicAttack3 = 5;
+    [SerializeField]
+    public int stamina_Jump = 15;
     [SerializeField]
     protected int stamina_JumpAttack = 5;
     [SerializeField]
@@ -134,6 +134,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     #endregion
 
     // Objects
+    [HideInInspector]
+    public HotbarController hotbar;
     public ChampionAndTrinketDatabase.Champions className;
     protected Transform m_GroundCheck;                                      // A position marking where to check if the player is grounded.
     protected Transform ProjectilePosition;                                 // A position marking where a projectile shall be spawned.
@@ -142,8 +144,6 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected CharacterStats stats;                                         // Reference to stats
     protected Transform graphics;                                           // Reference to the graphics child
     protected ChampionAnimationController animCon;                          // Reference to the Animation Contoller
-    [HideInInspector]
-    public HotbarController hotbar;
 
     // Skills & Trinkets
     protected Skill basicAttack1_var;
@@ -200,7 +200,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         {
             //If the player is not mine set the rigidbody to not kinematic
             //and Disable updates on this object
-            if(!photonView.isMine)
+            if (!photonView.isMine)
             {
                 enabled = false;
                 m_Rigidbody2D.isKinematic = true;
@@ -213,9 +213,10 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        animCon.m_Grounded = false;
+        animCon.propGrounded = false;
 
-        if(m_Rigidbody2D.velocity.y == 0){
+        if (m_Rigidbody2D.velocity.y == 0)
+        {
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
             // This can be done using layers instead but Sample Assets will not overwrite your project settings.
             Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, GroundedRadius, m_WhatIsGround);
@@ -223,26 +224,26 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             {
                 if (colliders[i].gameObject != gameObject)
                 {
-                    animCon.m_Grounded = true;
+                    animCon.propGrounded = true;
                 }
             }
         }
 
-        if(animCon.m_Grounded) m_timeInAir = 0;
+        if (animCon.propGrounded) m_timeInAir = 0;
         else m_timeInAir += Time.deltaTime;
 
         // Reset doubleJumped when touching ground
-        if (animCon.m_Grounded) doubleJumped = false;
+        if (animCon.propGrounded) doubleJumped = false;
 
         // Disable shadow if mid air
         if (shadowRenderer != null)
-            shadowRenderer.enabled = animCon.m_Grounded;
+            shadowRenderer.enabled = animCon.propGrounded;
 
         // Determines the vertical speed
-        animCon.m_vSpeed = m_Rigidbody2D.velocity.y;
+        animCon.propVSpeed = m_Rigidbody2D.velocity.y;
 
         // Move the character if dashing
-        if (applyDashingForce && animCon.m_Grounded)
+        if (applyDashingForce && animCon.propGrounded)
         {
             m_Rigidbody2D.velocity = new Vector2(m_dashSpeed, m_Rigidbody2D.velocity.y);
         }
@@ -276,10 +277,10 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             maxSpeed *= stats.PercentageMovement;
 
             // Prevent player from turning around while blocking
-            if (!CanTurnAroundWhileBlocking && maxSpeed == 0) return;
+            if (!m_CanTurnAroundWhileBlocking && maxSpeed == 0) return;
 
             // The Speed animator parameter is set to the absolute value of the horizontal input.
-            animCon.m_Speed = Mathf.Abs(move * maxSpeed);
+            animCon.propSpeed = Mathf.Abs(move * maxSpeed);
 
             // If the input is moving the player right and the player is facing left...
             if (move > 0 && !FacingRight)
@@ -304,25 +305,24 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     public virtual void Jump(bool jump)
     {
         m_jumpPressed = CanPerformAction(false) && jump;
-        if(Time.time < m_allowAnotherJump)return;
+        if (Time.time < m_allowAnotherJump) return;
 
         // If the player should jump...
         if (m_jumpPressed && CanPerformAttack())
         {
-            if (m_canJump && ( animCon.m_Grounded || m_timeInAir < .2f ) && stats.LoseStamina(JUMP_STAMINA_REQ))
+            if (m_canJump && (animCon.propGrounded || m_timeInAir < .2f) && stats.LoseStamina(stamina_Jump))
             {
                 m_canJump = false;
-                animCon.m_Grounded = false;
+                animCon.propGrounded = false;
                 m_canDoubleJump = false;
                 animCon.trigJump = true;
                 StartCoroutine(jumpWaitForGrounded());
-                StartCoroutine(JumpRoutine(1));
+                StartCoroutine(JumpRoutine(m_JumpDivisor));
             }
-           
         }
 
         //Handle double jump
-        if(m_jumpPressed && !animCon.m_Grounded && CanPerformAction(false) && m_canDoubleJump && !doubleJumped)
+        if (m_jumpPressed && !animCon.propGrounded && CanPerformAction(false) && m_canDoubleJump && !doubleJumped)
         {
             animCon.trigDoubleJump = true;
             doubleJumped = true;
@@ -330,7 +330,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         }
 
         //if we let go of jump in the air and we havent double jumped
-        if(!jump && !animCon.m_Grounded && !doubleJumped && CanPerformAction(false))
+        if (!jump && !animCon.propGrounded && !doubleJumped && CanPerformAction(false))
         {
             m_canDoubleJump = true;
         }
@@ -340,10 +340,10 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     {
         m_Rigidbody2D.velocity = Vector2.zero;
         float timer = 0;
-        float maxJumpTime = m_maxJumpTime/divisor;
-        float intialJumpV = m_initialJumpVelocity/divisor;
+        float maxJumpTime = m_maxJumpTime / divisor;
+        float intialJumpV = m_initialJumpVelocity / divisor;
 
-        while(m_jumpPressed && timer < maxJumpTime)
+        while (m_jumpPressed && timer < maxJumpTime)
         {
             float proportionCompleted = timer / maxJumpTime;
             Vector2 currentVel = m_Rigidbody2D.velocity;
@@ -355,11 +355,10 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         }
     }
 
-
     private IEnumerator jumpWaitForGrounded()
     {
         yield return new WaitForSeconds(0.1f);
-        yield return new WaitUntil(()=> animCon.m_Grounded);
+        yield return new WaitUntil(() => animCon.propGrounded);
         Vector2 currentVel = m_Rigidbody2D.velocity;
         currentVel.y = 0;
         m_Rigidbody2D.velocity = currentVel;
@@ -368,17 +367,17 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     }
 
     public virtual bool CheckFallThrough()
-    {        
+    {
         //If we are currently not falling through check
         if (!fallingThrough)
         {
-            RaycastHit2D hit = Physics2D.Raycast (m_GroundCheck.position, transform.up * -1,
+            RaycastHit2D hit = Physics2D.Raycast(m_GroundCheck.position, transform.up * -1,
                                   1f, m_fallThroughMask);
 
             //If the raycast hit and we are grounded make the player fall through
-            if ((hit && animCon.m_Grounded)) 
+            if ((hit && animCon.propGrounded))
             {
-                StartCoroutine (fallThrough(hit.collider.gameObject));
+                StartCoroutine(fallThrough(hit.collider.gameObject));
                 return true;
             }
         }
@@ -390,7 +389,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         //Get all the colliders and set them to ignore the falling through obj
         fallingThrough = true;
         Collider2D[] colliders = GetComponents<Collider2D>();
-        foreach(Collider2D collider in colliders)
+        foreach (Collider2D collider in colliders)
         {
             Physics2D.IgnoreCollision(collider, fallThroughObj.GetComponent<Collider2D>(), fallingThrough);
         }
@@ -398,7 +397,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
         //Then set them back
         fallingThrough = false;
-        foreach(Collider2D collider in colliders)
+        foreach (Collider2D collider in colliders)
         {
             Physics2D.IgnoreCollision(collider, fallThroughObj.GetComponent<Collider2D>(), fallingThrough);
         }
@@ -421,7 +420,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
             // Add downwards force
             m_Rigidbody2D.velocity = new Vector2(4 * direction, -m_jumpAttackForce);
-            yield return new WaitUntil(() => animCon.m_Grounded);                       // Jump attacking as long as not grounded
+            yield return new WaitUntil(() => animCon.propGrounded);                       // Jump attacking as long as not grounded
             m_Rigidbody2D.velocity = Vector2.zero;                                      // Set velocity to zero to prevent character from moving after landing on ground
             Camera.main.GetComponent<CameraBehaviour>().startShake();                   // Shake the camera
 
@@ -451,7 +450,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             if (direction != 0 && stats.LoseStamina(m_dashStaminaCost))
             {
                 AnimationController.AnimationTypes RequiredAnimState;
-                if (CanDashForward)
+                if (m_CanDashForward)
                 {
                     // set var for dash or dashForward
                     if (direction < 0 && !FacingRight || direction > 0 && FacingRight)
@@ -495,7 +494,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 if (true)
                 {
                     yield return new WaitUntil(() => animCon.CurrentAnimationState == AnimationController.AnimationState.Waiting);  // Wait till animation is in state waiting
-                    yield return new WaitUntil(() => animCon.m_Grounded);                                                           // Wait till character is on ground
+                    yield return new WaitUntil(() => animCon.propGrounded);                                                           // Wait till character is on ground
 
                     // Start EndAnimation
                     applyDashingForce = false;
@@ -523,7 +522,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     public void ManageDefensive(bool pDefensive)
     {
-        if (pDefensive && animCon.m_Grounded && CanPerformAttack())
+        if (pDefensive && animCon.propGrounded && CanPerformAttack())
         {
             // Start being defensive only if not defensive already and grounded  
             if (!blocking)
@@ -579,7 +578,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     /// <param name="trigBA3">Animation Trigger Boolean for Basic Attack 3</param>
     protected void DoComboBasicAttack(ref bool trigBA1, ref bool trigBA2, ref bool trigBA3)
     {
-        if (CanPerformAction(false) && CanPerformAttack() && animCon.m_Grounded)
+        if (CanPerformAction(false) && CanPerformAttack() && animCon.propGrounded)
         {
             // Check if enough stamina for attack
             if ((stats.HasSufficientStamina(basicAttack1_var.staminaCost) && attackCount == 0) || // Basic Attack 1
@@ -795,13 +794,13 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
         Vector2 position = ProjectilePosition.position;
 
-        if(PhotonNetwork.offlineMode)
+        if (PhotonNetwork.offlineMode)
         {
             StartCoroutine(rangedSkill(skillToPerform, direction, position));
         }
         else
         {
-            photonView.RPC("RPC_spawnRangedSkill", PhotonTargets.All, skillToPerform.rangedSkillId, (short) direction, position);
+            photonView.RPC("RPC_spawnRangedSkill", PhotonTargets.All, skillToPerform.rangedSkillId, (short)direction, position);
         }
     }
 
@@ -830,7 +829,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
         goProjectile = Instantiate(goProjectile, position,
             new Quaternion(goProjectile.transform.rotation.x, goProjectile.transform.rotation.y,
-                goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));    
+                goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));
 
         /*
         goProjectile = Instantiate(goProjectile, ProjectilePosition.position,
@@ -855,7 +854,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             casting = false;
         }
 
-        if(PhotonNetwork.offlineMode || photonView.isMine)
+        if (PhotonNetwork.offlineMode || photonView.isMine)
         {
             StartCoroutine(SetSkillOnCooldown(skillToPerform));
         }
@@ -890,7 +889,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     /// <returns></returns>
     public bool CanPerformAction(bool GroundCheck)
     {
-        if (GroundCheck && !animCon.m_Grounded)
+        if (GroundCheck && !animCon.propGrounded)
             return false;
         else if (stats.knockedBack)
             return false;

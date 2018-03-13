@@ -8,9 +8,9 @@ public abstract class ChampionAnimationController : AnimationController
     public bool setByRPC = false;
 
     // Vars
-    public bool m_Grounded;                                              // Whether or not the player is grounded.
-    public float m_vSpeed;                                               // Vertical speed
-    public float m_Speed;                                                // Horizontal speed
+    public bool propGrounded;                                              // Whether or not the player is grounded.
+    public float propVSpeed;                                               // Vertical speed
+    public float propSpeed;                                                // Horizontal speed
 
     // Stats
     public bool statDead = false;
@@ -179,13 +179,13 @@ public abstract class ChampionAnimationController : AnimationController
                 trigSkill4 = false;
                 StartAnimation(AnimationTypes.Skill4);
             }
-            else if (statBlock && m_Speed <= 0)
+            else if (statBlock && propSpeed <= 0)
                 StartAnimation(AnimationTypes.Block);
-            else if (statBlock && m_Speed > 0.001)
+            else if (statBlock && propSpeed > 0.001)
                 StartAnimation(AnimationTypes.BlockMove);
-            else if (!m_Grounded && m_vSpeed <= 0)
+            else if (!propGrounded && propVSpeed <= 0)
                 StartAnimation(AnimationTypes.Fall);
-            else if (!m_Grounded && m_vSpeed >= 0 && trigJump)
+            else if (!propGrounded && propVSpeed >= 0 && trigJump)
             {
                 StartAnimation(AnimationTypes.Jump);
                 trigJump = false;
@@ -195,9 +195,9 @@ public abstract class ChampionAnimationController : AnimationController
                 StartAnimation(AnimationTypes.Jump, true);
                 trigDoubleJump = false;
             }
-            else if (m_Grounded && m_Speed > 0)
+            else if (propGrounded && propSpeed > 0)
                 StartAnimation(AnimationTypes.Run);
-            else if (m_Grounded)
+            else if (propGrounded)
             {
                 if (RevertIdleActualFrames >= RevertIdleNeededFrames)
                 {

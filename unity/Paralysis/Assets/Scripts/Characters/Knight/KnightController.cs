@@ -119,9 +119,9 @@ public class KnightController : ChampionClassController
         m_Rigidbody2D.AddForce(new Vector2(0, 400));
 
         // Wait until force is applied
-        yield return new WaitUntil(() => !animCon.m_Grounded);
+        yield return new WaitUntil(() => !animCon.propGrounded);
         // Wait while not on ground
-        yield return new WaitUntil(() => animCon.m_Grounded);
+        yield return new WaitUntil(() => animCon.propGrounded);
         Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
         skill2_leap = false;
         stats.immovable = false;

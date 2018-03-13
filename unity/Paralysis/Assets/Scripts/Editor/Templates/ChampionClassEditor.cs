@@ -7,7 +7,7 @@ using UnityEditor;
 public class ChampionClassEditor : Editor {
 
     SerializedProperty WhatIsGround, WhatIsFallThrough, WhatToHit, MoveSpeed, MoveSpeedWhileAttacking, MoveSpeedWhileBlocking, JumpForce, JumpAttackRadius, JumpAttackForce,
-        DashSpeed, DashStaminaCost, CanDashForward, ComboExpire, ClassName, MaxJumpTime, DJumpDivisor;
+        DashSpeed, DashStaminaCost, CanDashForward, ComboExpire, ClassName, MaxJumpTime, JumpDivisor, DJumpDivisor;
 
     void OnEnable()
     {
@@ -21,16 +21,16 @@ public class ChampionClassEditor : Editor {
 
         JumpForce = serializedObject.FindProperty("m_initialJumpVelocity");
         MaxJumpTime = serializedObject.FindProperty("m_maxJumpTime");
+        JumpDivisor = serializedObject.FindProperty("m_JumpDivisor");
         DJumpDivisor = serializedObject.FindProperty("m_DoubleJumpDivisor");
 
         JumpAttackRadius = serializedObject.FindProperty("m_jumpAttackRadius");
         JumpAttackForce = serializedObject.FindProperty("m_jumpAttackForce");
         DashSpeed = serializedObject.FindProperty("m_dashSpeed");
         DashStaminaCost = serializedObject.FindProperty("m_dashStaminaCost");
-        CanDashForward = serializedObject.FindProperty("CanDashForward");
+        CanDashForward = serializedObject.FindProperty("m_CanDashForward");
         ComboExpire = serializedObject.FindProperty("ComboExpire");
         ClassName = serializedObject.FindProperty("className");
-
     }
 
     public override void OnInspectorGUI()
@@ -55,17 +55,28 @@ public class ChampionClassEditor : Editor {
 
         GUILayout.Label("Jumping", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Jump force");
-        GUILayout.Label("Max Jump Time");
+        GUILayout.Label("Force");
+        GUILayout.Label("Max Time");
+        GUILayout.Label("Stamina");
+        GUILayout.Label("Divisor");
         GUILayout.Label("D Jump Divisor");
-        GUILayout.Label("JumpAttack Force");
-        GUILayout.Label("JumpAttack Radius");
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(JumpForce, new GUIContent(""), true);
         EditorGUILayout.PropertyField(MaxJumpTime, new GUIContent(""), true);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("stamina_Jump"), new GUIContent(""), true);
+        EditorGUILayout.PropertyField(JumpDivisor, new GUIContent(""), true);
         EditorGUILayout.PropertyField(DJumpDivisor, new GUIContent(""), true);
+        GUILayout.EndHorizontal();
+
+        GUILayout.Label("Jump Attack", EditorStyles.boldLabel);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Force");
+        GUILayout.Label("Radius");
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(JumpAttackForce, new GUIContent(""), true);
         EditorGUILayout.PropertyField(JumpAttackRadius, new GUIContent(""), true);
         GUILayout.EndHorizontal();

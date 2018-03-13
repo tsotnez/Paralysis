@@ -37,7 +37,7 @@ public class AlchemistController : ChampionClassController
     /// </summary>
     public override void BasicAttack()
     {
-        if (animCon.m_Grounded) // Basic Attack
+        if (animCon.propGrounded) // Basic Attack
             DoRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill)basicAttack1_var);
     }
 
@@ -76,7 +76,7 @@ public class AlchemistController : ChampionClassController
                 direction = TeleportDirection.down;
             }
             // If jumping, teleports on top platform.
-            else if (!animCon.m_Grounded && animCon.m_Speed == 0)
+            else if (!animCon.propGrounded && animCon.propSpeed == 0)
             {
                 direction = TeleportDirection.up;
             }

@@ -44,7 +44,7 @@ public abstract class ChampionSelectionManager : UIManager
 
         newPreview.transform.localScale = new Vector3(200 * direction, 200, 1); //Scale up
         newPreview.transform.position = new Vector3(newPreview.transform.position.x, newPreview.transform.position.y + 1.4f, newPreview.transform.position.z);
-        graphics.GetComponent<ChampionAnimationController>().m_Grounded = true;
+        graphics.GetComponent<ChampionAnimationController>().propGrounded = true;
         graphics.GetComponent<ChampionAnimationController>().trigBasicAttack1 = true;
         newPreview.SetActive(true);
         Champion.SetActive(true);
