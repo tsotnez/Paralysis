@@ -66,7 +66,8 @@ public class ChangeImageColor : MonoBehaviour, ISelectHandler, IDeselectHandler,
             }
         }
 
-        StartCoroutine(flashColor());
+        if(gameObject.activeSelf)
+            StartCoroutine(flashColor());
     }
 
     private IEnumerator flashColor()
