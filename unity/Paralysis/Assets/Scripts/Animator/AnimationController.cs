@@ -95,7 +95,17 @@ public abstract class AnimationController : MonoBehaviour
 
     #region Init
 
-    void Start()
+    private void OnEnable()
+    {
+        if (SectorAnimations == null || AtlasDestroyRoutines == null)
+        {
+            Init();
+            InitAnimations();
+        }
+        StartWorking();
+    }
+
+    private void Init()
     {
         // initiate dictionarys
         SectorAnimations = new Dictionary<AnimationTypes, SectorAnimation>();
@@ -105,13 +115,10 @@ public abstract class AnimationController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         photonView = GetComponent<PhotonView>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
         photonView = GetComponent<PhotonView>();
-
-        InitAnimations();
     }
 
-    public void InitAnimations()
+    private void InitAnimations()
     {
         // Apply values from Inspector to Dictionary
         for (int i = 0; i < AnimPlayType.Length; i++)
@@ -125,7 +132,10 @@ public abstract class AnimationController : MonoBehaviour
         StartAnimDuration = null;
         DefaultAnimDuration = null;
         EndAnimDuration = null;
+    }
 
+    private void StartWorking()
+    {
         // start first animation
         CurrentAnimation = AnimationTypes.Die;
         StartAnimation(AnimationTypes.Idle);
@@ -374,7 +384,7 @@ public abstract class AnimationController : MonoBehaviour
     }
 
     #endregion
-
+    
     #region Atlas Destroy
 
     private IEnumerator HandleDestroyAtlas(SectorAnimation AnimForDestroy)
