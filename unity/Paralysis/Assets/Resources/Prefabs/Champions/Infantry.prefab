@@ -670,9 +670,9 @@ MonoBehaviour:
   CharacterClass: Infantry
   CharacterSkin: basic
   setByRPC: 0
-  m_Grounded: 0
-  m_vSpeed: 0
-  m_Speed: 0
+  propGrounded: 0
+  propVSpeed: 0
+  propSpeed: 0
   statDead: 0
   statPreview: 0
   statStunned: 0
@@ -878,15 +878,16 @@ MonoBehaviour:
   m_MaxSpeed: 6
   m_MoveSpeedWhileAttacking: 0.5
   m_MoveSpeedWhileBlocking: 3
-  CanTurnAroundWhileBlocking: 1
+  m_CanTurnAroundWhileBlocking: 1
   m_initialJumpVelocity: 105
   m_maxJumpTime: 0.3
+  m_JumpDivisor: 1
   m_DoubleJumpDivisor: 1.05
   m_jumpAttackRadius: 1.5
   m_jumpAttackForce: 10
   m_dashSpeed: 12
   m_dashStaminaCost: 10
-  CanDashForward: 0
+  m_CanDashForward: 0
   ComboExpire: 1
   delay_BasicAttack1: 0
   delay_BasicAttack2: 0
@@ -899,6 +900,7 @@ MonoBehaviour:
   stamina_BasicAttack1: 5
   stamina_BasicAttack2: 5
   stamina_BasicAttack3: 5
+  stamina_Jump: 15
   stamina_JumpAttack: 5
   stamina_Skill1: 10
   stamina_Skill2: 15
@@ -920,8 +922,8 @@ MonoBehaviour:
   cooldown_Skill2: 20
   cooldown_Skill3: 25
   cooldown_Skill4: 20
-  className: 3
   hotbar: {fileID: 0}
+  className: 3
   Trinket1: {fileID: 0}
   Trinket2: {fileID: 0}
   FacingRight: 1

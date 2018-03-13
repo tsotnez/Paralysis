@@ -92,7 +92,7 @@ MonoBehaviour:
   creator: {fileID: 0}
   whatToHit:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 2066432
   explosionPrefab: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 2}
   direction: 1
 --- !u!212 &212923381416240380
