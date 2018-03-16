@@ -174,7 +174,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         }
     }
 
-    protected Skill getSkillByType(Skill.SkillType Type)
+    public Skill getSkillByType(Skill.SkillType Type)
     {
         // Check for skill in MeleeSkills
         foreach (MeleeSkill skill in MeleeSkills)
@@ -439,20 +439,14 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 yield return new WaitUntil(() => animCon.CurrentAnimation == RequiredAnimState);                                    // Wait till animation has started
 
                 // If an EndAnimation is present do some extra stuff
-                //if (animCon.AnimationDictionaryHasAnimation(RequiredAnimState, AnimationController.TypeOfAnimation.EndAnimation))
-                if (true)
-                {
-                    yield return new WaitUntil(() => animCon.CurrentAnimationState == AnimationController.AnimationState.Waiting);  // Wait till animation is in state waiting
-                    yield return new WaitUntil(() => animCon.propGrounded);                                                           // Wait till character is on ground
+                yield return new WaitUntil(() => animCon.CurrentAnimationState == AnimationController.AnimationState.Waiting);  // Wait till animation is in state waiting
+                yield return new WaitUntil(() => animCon.propGrounded);                                                         // Wait till character is on ground
 
-                    // Start EndAnimation
-                    applyDashingForce = false;
+                // Start EndAnimation
+                applyDashingForce = false;
 
-                    if (RequiredAnimState == AnimationController.AnimationTypes.DashFor) animCon.trigDashForwardEnd = true;
-                    else animCon.trigDashEnd = true;
-                }
-                else
-                    Debug.LogAssertion("DashEnd-Animation not found. Only Dash-Animation has been played!");
+                if (RequiredAnimState == AnimationController.AnimationTypes.DashFor) animCon.trigDashForwardEnd = true;
+                else animCon.trigDashEnd = true;
 
                 yield return new WaitUntil(() => animCon.CurrentAnimation != RequiredAnimState);                                    // Wait till next animation is present
                 stats.invincible = false;

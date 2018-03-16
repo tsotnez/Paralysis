@@ -5,8 +5,6 @@ using UnityEngine;
 public class KnightController : ChampionClassController
 {
     [SerializeField]
-    private GameObject Skill4_Spear;
-    [SerializeField]
     private float skill2_leap_speed = 10f;
 
     private bool skill2_leap = false;
@@ -18,16 +16,6 @@ public class KnightController : ChampionClassController
     {
         base.Start();
         animCon = graphics.GetComponent<KnightAnimationController>();
-
-        //Instantiate skill variables
-        //basicAttack1_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.BasicAttack1, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, MeeleRange, ChampionAndTrinketDatabase.Champions.Alchemist);
-        //basicAttack2_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.BasicAttack2, delay_BasicAttack2, damage_BasicAttack2, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack2, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack2, MeeleRange, ChampionAndTrinketDatabase.Champions.Alchemist);
-        //basicAttack3_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.BasicAttack3, delay_BasicAttack3, damage_BasicAttack3, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack3, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack3, MeeleRange, ChampionAndTrinketDatabase.Champions.Alchemist);
-
-        //skill1_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.Skill1, delay_Skill1, damage_Skill1, Skill.SkillEffect.stun, 3, 0, stamina_Skill1, Skill.SkillTarget.MultiTarget, cooldown_Skill1, MeeleRange, ChampionAndTrinketDatabase.Champions.Alchemist);
-        //skill2_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.Skill2, delay_Skill2, damage_Skill2, Skill.SkillEffect.stun, 3, 0, stamina_Skill2, Skill.SkillTarget.MultiTarget, cooldown_Skill2, MeeleRange, ChampionAndTrinketDatabase.Champions.Alchemist);
-        //skill3_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.Skill3, delay_Skill3, damage_Skill3, Skill.SkillEffect.knockback, 0, 0, stamina_Skill3, Skill.SkillTarget.SingleTarget, cooldown_Skill3, MeeleRange, ChampionAndTrinketDatabase.Champions.Alchemist);
-        //skill4_var = new RangedSkill(ChampionAndTrinketDatabase.Keys.Skill4, false, new Vector2(7, 0), Skill4_Spear, delay_Skill4, damage_Skill4, Skill.SkillEffect.nothing, 0, 0, stamina_Skill4, Skill.SkillTarget.SingleTarget, cooldown_Skill4, 5f, ChampionAndTrinketDatabase.Champions.Alchemist);
     }
 
     protected override void FixedUpdate()

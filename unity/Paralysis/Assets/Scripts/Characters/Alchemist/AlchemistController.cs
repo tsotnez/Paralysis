@@ -11,13 +11,6 @@ public class AlchemistController : ChampionClassController
     {
         base.Start();
         animCon = graphics.GetComponent<AlchemistAnimationController>();
-
-        //Instantiate skill variables
-        //basicAttack1_var = new RangedSkill(ChampionAndTrinketDatabase.Keys.BasicAttack1, true, new Vector2(9, 0), GoBasicAttack, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, 7f, ChampionAndTrinketDatabase.Champions.Alchemist);
-        //skill1_var = new RangedSkill(ChampionAndTrinketDatabase.Keys.Skill1, true, new Vector2(9, 0), GoSkill1_Frostbolt, delay_Skill1, damage_Skill1, Skill.SkillEffect.slow, 3, 0.5f, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, 7f, ChampionAndTrinketDatabase.Champions.Alchemist, true, CastTime_Skill1);
-        //skill2_var = new Skill(ChampionAndTrinketDatabase.Keys.Skill2, delay_Skill2, damage_Skill2, Skill.SkillEffect.nothing, 0, 0, stamina_Skill2, Skill.SkillTarget.SingleTarget, cooldown_Skill2, 12f, ChampionAndTrinketDatabase.Champions.Alchemist, false);
-        //skill3_var = new RangedSkill(ChampionAndTrinketDatabase.Keys.Skill3, true, new Vector2(9, 0), GoSkill3_Stun, delay_Skill3, damage_Skill3, Skill.SkillEffect.stun, 3, 0, stamina_Skill3, Skill.SkillTarget.SingleTarget, cooldown_Skill3, 7f, ChampionAndTrinketDatabase.Champions.Alchemist, true, CastTime_Skill3);
-        //skill4_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.Skill4, delay_Skill4, damage_Skill4, Skill.SkillEffect.knockback, 0, 0, stamina_Skill4, Skill.SkillTarget.MultiTarget, cooldown_Skill4, 3f, ChampionAndTrinketDatabase.Champions.Alchemist);
     }
 
     #endregion

@@ -16,15 +16,6 @@ public class ArcherController : ChampionClassController
     {
         base.Start();
         animCon = graphics.GetComponent<ArcherAnimationController>();
-
-        //Instantiate skill variables
-        //basicAttack1_var = new RangedSkill(ChampionAndTrinketDatabase.Keys.BasicAttack1, false, new Vector2(9, 0), standartArrowPrefab, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, 6, ChampionAndTrinketDatabase.Champions.Alchemist);
-        //jumpAttack_var = new RangedSkill(0, false, new Vector2(4, -9), jumpAttackArrowPrefab, 0.2f, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, 0, 100, ChampionAndTrinketDatabase.Champions.Alchemist, false);
-
-        //skill1_var = new RangedSkill(ChampionAndTrinketDatabase.Keys.Skill1, false, new Vector2(9, 0), greatArrowPrefab, delay_Skill1, damage_Skill1, Skill.SkillEffect.knockback, 0, 0, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, 7, ChampionAndTrinketDatabase.Champions.Alchemist);
-        //skill2_var = new Skill(ChampionAndTrinketDatabase.Keys.Skill2, ChampionAndTrinketDatabase.Champions.Alchemist, cooldown_Skill2);
-        //skill3_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.Skill3, delay_Skill3, damage_Skill3, Skill.SkillEffect.stun, 3, 0, stamina_Skill3, Skill.SkillTarget.MultiTarget, cooldown_Skill3, 3, ChampionAndTrinketDatabase.Champions.Alchemist);
-        //skill4_var = new Skill(ChampionAndTrinketDatabase.Keys.Skill4, ChampionAndTrinketDatabase.Champions.Alchemist, cooldown_Skill4);
     }
 
     protected override void FixedUpdate()
@@ -77,13 +68,13 @@ public class ArcherController : ChampionClassController
     private IEnumerator placeTrapCoroutine(float delay)
     {
         yield return new WaitForSeconds(delay);
-        if(PhotonNetwork.offlineMode)
+        if (PhotonNetwork.offlineMode)
         {
             RPC_PlaceTrap(m_GroundCheck.position);
         }
         else
         {
-            photonView.RPC("RPC_PlaceTrap",PhotonTargets.All, m_GroundCheck.position);
+            photonView.RPC("RPC_PlaceTrap", PhotonTargets.All, m_GroundCheck.position);
         }
     }
 
@@ -112,13 +103,13 @@ public class ArcherController : ChampionClassController
         {
             hotbar.StartCoroutine(hotbar.flashBlack(skill4.type));
 
-            if(PhotonNetwork.offlineMode)
+            if (PhotonNetwork.offlineMode)
             {
                 RPC_PlaceTrap(m_GroundCheck.position);
             }
             else
             {
-                photonView.RPC("RPC_PlaceTrap",PhotonTargets.All, m_GroundCheck.position);
+                photonView.RPC("RPC_PlaceTrap", PhotonTargets.All, m_GroundCheck.position);
             }
 
             //Jump back while being invincible
