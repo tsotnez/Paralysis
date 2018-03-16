@@ -928,6 +928,7 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0.4
     notOnCooldown: 1
+    skillDescription: 
   - type: 1
     skillName: Basic Attack
     effect: 0
@@ -941,6 +942,7 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0.4
     notOnCooldown: 1
+    skillDescription: 
   - type: 2
     skillName: Basic Attack
     effect: 0
@@ -954,6 +956,7 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0.45
     notOnCooldown: 1
+    skillDescription: 
   - type: 3
     skillName: Jump Attack
     effect: 0
@@ -967,6 +970,7 @@ MonoBehaviour:
     needsToBeGrounded: 0
     delay: 0
     notOnCooldown: 1
+    skillDescription: 
   - type: 4
     skillName: Earthquake
     effect: 1
@@ -980,6 +984,8 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0.2
     notOnCooldown: 1
+    skillDescription: "The knight smashes his shield into the ground, \nstunning any
+      enemy in a short radius."
   - type: 5
     skillName: Engage!
     effect: 1
@@ -993,6 +999,8 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0.2
     notOnCooldown: 1
+    skillDescription: "The knight leaps at a fixed altitude of the map, \nonce he
+      lands he stuns any enemies in a short radius."
   - type: 6
     skillName: Shield Bash
     effect: 2
@@ -1006,6 +1014,8 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0.2
     notOnCooldown: 1
+    skillDescription: "The knight takes a few swift steps to deliver a strike \nwith
+      his shield, any enemy struck by it will be put in \na knockback animation."
   RangeSkills:
   - type: 7
     skillName: Battering Ram
@@ -1020,6 +1030,8 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0.2
     notOnCooldown: 1
+    skillDescription: "The knight throws a spear at a fixed distance and \na fixed
+      altitude, any enemy struck by it will \nreceive damage."
     onHitEffect: 0
     prefab: {fileID: 1686816382022230, guid: 60be7605c6f8ae34c9df248ad63aff85, type: 2}
     speed: {x: 7, y: 0}
@@ -1027,6 +1039,8 @@ MonoBehaviour:
     rangedSkillId: 0
   hotbar: {fileID: 0}
   className: 2
+  characterFullName: Knight, the Fortress
+  characterLore: 
   Trinket1: {fileID: 0}
   Trinket2: {fileID: 0}
   FacingRight: 1

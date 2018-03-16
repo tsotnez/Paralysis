@@ -26,7 +26,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     [SerializeField]
     protected float m_MoveSpeedWhileBlocking = 0f;                          // Max speed while blocking
     [SerializeField]
-    protected bool m_CanTurnAroundWhileBlocking = true;                       // Can turn around while blocking
+    protected bool m_CanTurnAroundWhileBlocking = true;                     // Can turn around while blocking
 
     // Jump & JumpAttack
     [SerializeField]
@@ -48,7 +48,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     [SerializeField]
     protected int m_dashStaminaCost = 10;                                   // Stamina Costs of Skill Dash
     [SerializeField]
-    protected bool m_CanDashForward = false;                                  // Indicates whether the character can dash forward or have to turn around before dashing
+    protected bool m_CanDashForward = false;                                // Indicates whether the character can dash forward or have to turn around before dashing
 
     // Combo
     [SerializeField]
@@ -68,6 +68,9 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     [HideInInspector]
     public HotbarController hotbar;
     public ChampionAndTrinketDatabase.Champions className;
+    public string characterFullName;
+    [Multiline(6)]
+    public string characterLore;
     protected Transform m_GroundCheck;                                      // A position marking where to check if the player is grounded.
     protected Transform ProjectilePosition;                                 // A position marking where a projectile shall be spawned.
     protected SpriteRenderer shadowRenderer;
@@ -95,7 +98,6 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     private float m_allowAnotherJump = 0f;                                  // time to wait for allowing the player to jump
     private float m_timeInAir = 0f;
     private bool m_jumpPressed = false;
-
 
     //Coroutines
     protected Coroutine comboRoutine;

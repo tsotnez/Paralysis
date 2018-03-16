@@ -903,6 +903,7 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0
     notOnCooldown: 1
+    skillDescription: 
   - type: 1
     skillName: Basic Attack
     effect: 0
@@ -916,6 +917,7 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0
     notOnCooldown: 1
+    skillDescription: 
   - type: 2
     skillName: Basic Attack
     effect: 0
@@ -929,6 +931,7 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0
     notOnCooldown: 1
+    skillDescription: 
   - type: 3
     skillName: Jump Attack
     effect: 0
@@ -942,6 +945,7 @@ MonoBehaviour:
     needsToBeGrounded: 0
     delay: 0
     notOnCooldown: 1
+    skillDescription: 
   - type: 5
     skillName: Ground Break
     effect: 1
@@ -955,6 +959,8 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0
     notOnCooldown: 1
+    skillDescription: "The Infantry strikes the ground with his sword \nproducing
+      a force that can stun any enemys \ndirectly in front of him."
   - type: 6
     skillName: Storm of Blades
     effect: 0
@@ -968,6 +974,8 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0
     notOnCooldown: 1
+    skillDescription: "Infantry swings his sword in all directions. \nAny enemy directly
+      in front or behind the Infantry \nwill take extensive damage."
   - type: 7
     skillName: Tornado
     effect: 2
@@ -981,6 +989,8 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0
     notOnCooldown: 1
+    skillDescription: "Infantry swings his sword upwards, along with \nany enemy directly
+      in front of him. This causes \na knockback to the enemy."
   RangeSkills:
   - type: 4
     skillName: Grappling Hook
@@ -995,6 +1005,10 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0
     notOnCooldown: 1
+    skillDescription: "Infantry launches a hook to a flexibly fixed distance \nand
+      altitude the hook latches on to the first enemy it \ncomes in contact with.
+      The Infantry then repels to \nthat target and kicks, causing a knockback effect
+      to \nthe enemy"
     onHitEffect: 0
     prefab: {fileID: 1159624417898122, guid: 6ce9800d51c562645971c77d62e59cee, type: 2}
     speed: {x: 10, y: 0}
@@ -1002,14 +1016,14 @@ MonoBehaviour:
     rangedSkillId: 0
   hotbar: {fileID: 0}
   className: 3
+  characterFullName: Infantry, Killer for Coin
+  characterLore: 
   Trinket1: {fileID: 0}
   Trinket2: {fileID: 0}
   FacingRight: 1
   dashing: 0
   blocking: 0
   doubleJumped: 0
-  Skill1_Hook: {fileID: 1159624417898122, guid: 6ce9800d51c562645971c77d62e59cee,
-    type: 2}
   Skill1_Chain: {fileID: 1536203789617246, guid: 607fa3d9cb73add4ba26355c9a88aca1,
     type: 2}
 --- !u!114 &114836486446283206

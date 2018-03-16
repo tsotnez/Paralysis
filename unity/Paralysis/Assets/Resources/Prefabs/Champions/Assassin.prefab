@@ -593,6 +593,7 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0.15
     notOnCooldown: 1
+    skillDescription: 
   - type: 1
     skillName: Basic Attack
     effect: 0
@@ -606,6 +607,7 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0.15
     notOnCooldown: 1
+    skillDescription: 
   - type: 2
     skillName: Basic Attack
     effect: 3
@@ -619,6 +621,7 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0.2
     notOnCooldown: 1
+    skillDescription: 
   - type: 3
     skillName: Jump Attack
     effect: 0
@@ -632,6 +635,7 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0
     notOnCooldown: 1
+    skillDescription: 
   - type: 4
     skillName: Paralysing Poison
     effect: 0
@@ -645,6 +649,8 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0
     notOnCooldown: 1
+    skillDescription: "Assassins blades are infused with a strong poison, \nstunning
+      the enemy he hits."
   - type: 5
     skillName: Vanish
     effect: 0
@@ -658,6 +664,7 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0.4
     notOnCooldown: 1
+    skillDescription: "Become invisible and next basic attack \ndeals increased damage."
   - type: 6
     skillName: Shadowstep
     effect: 0
@@ -671,6 +678,8 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0
     notOnCooldown: 1
+    skillDescription: "A quick teleport to the nearest target on same \nheight allows
+      Assassin to surprise his victim \nand stun it."
   RangeSkills:
   - type: 7
     skillName: Longfang
@@ -685,6 +694,8 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0.25
     notOnCooldown: 1
+    skillDescription: "Assassin shoots his pistol dealing massive damage \nand knocking
+      back the poor victim."
     onHitEffect: 1
     prefab: {fileID: 1999998842244028, guid: 1382e079f46c9e848b29efd69252a8b5, type: 2}
     speed: {x: 7, y: 0}
@@ -692,6 +703,11 @@ MonoBehaviour:
     rangedSkillId: 0
   hotbar: {fileID: 0}
   className: 0
+  characterFullName: Assassin, the Shadowwalker
+  characterLore: "This unknown warrior wandered through the \nwastelands for a long
+    time after the world faced \nits doom. \rHe learned to survive on his own \nand
+    salvaged \rstrong tech on his journeys which allow \r\nhim to perform a variety
+    of skills."
   Trinket1: {fileID: 0}
   Trinket2: {fileID: 0}
   FacingRight: 1

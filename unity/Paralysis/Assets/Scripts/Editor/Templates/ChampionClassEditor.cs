@@ -40,6 +40,8 @@ public class ChampionClassEditor : Editor {
         EditorGUILayout.PropertyField(WhatIsGround, new GUIContent("What Is ground"), true);
         EditorGUILayout.PropertyField(WhatIsFallThrough, new GUIContent("Can Fall Through"), true);
         EditorGUILayout.PropertyField(ClassName, new GUIContent("Class Name"), true);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("characterFullName"), new GUIContent("Character Full Name"), true);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("characterLore"), new GUIContent("Character Lore"), true);
 
         GUILayout.Label("Speeds", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();

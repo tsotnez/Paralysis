@@ -721,6 +721,13 @@ MonoBehaviour:
     needsToBeGrounded: 0
     delay: 0
     notOnCooldown: 1
+    skillDescription: 'Alchemist teleports in the direction that he is moving or dashing.
+
+      If standing still, teleports in the direction he is facing.
+
+      If jumping, teleports on top platform.
+
+      If ducking, teleports on lower platform.'
   - type: 7
     skillName: Molecular Reconstruction
     effect: 2
@@ -734,6 +741,8 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0
     notOnCooldown: 1
+    skillDescription: "Alchemist uses his alchemy to explode and \nreconstruct himself.
+      As he explodes, any enemy \nwithin the radius will receive a knockback."
   RangeSkills:
   - type: 0
     skillName: Basic Attack
@@ -748,6 +757,7 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0
     notOnCooldown: 1
+    skillDescription: 
     onHitEffect: 0
     prefab: {fileID: 1470268350350890, guid: 1443ea3c3580ee5499a90819360b8a65, type: 2}
     speed: {x: 9, y: 0}
@@ -766,6 +776,8 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0
     notOnCooldown: 1
+    skillDescription: "Alchemist casts a frost bolt at a fixed distance \nand altitute.
+      The first enemy hit by this effect will \nhave a 50% decreased movement speed."
     onHitEffect: 0
     prefab: {fileID: 1806743027263652, guid: 6190419a7df12f6438f7959faca00ad6, type: 2}
     speed: {x: 9, y: 0}
@@ -784,6 +796,8 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0
     notOnCooldown: 1
+    skillDescription: "Alchemist casts a spell at a fixed distance and \naltitude.
+      The first enemy stuck by this will be stunned."
     onHitEffect: 0
     prefab: {fileID: 1559905968728678, guid: 7ffecbe061e52564a83b2c7955abcc0d, type: 2}
     speed: {x: 9, y: 0}
@@ -791,6 +805,8 @@ MonoBehaviour:
     rangedSkillId: 0
   hotbar: {fileID: 0}
   className: 4
+  characterFullName: Alchemist, the Solitair
+  characterLore: 
   Trinket1: {fileID: 0}
   Trinket2: {fileID: 0}
   FacingRight: 1

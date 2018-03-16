@@ -35,8 +35,9 @@ public class Skill
     public float range = GameConstants.MeeleAttackRange;
     public bool needsToBeGrounded = true;
     public float delay = 0;
-
     public bool notOnCooldown = true;
+    [UnityEngine.Multiline(4)]
+    public string skillDescription = "";
 
 
     public Skill(SkillType skillType, float skillDelay, int skillDamage, Skill.SkillEffect skillSpecialEffect, int skillSpecialEffectTime, float skillSpecialEffectValue, int skillStaminaCost, SkillTarget skillTargetType,

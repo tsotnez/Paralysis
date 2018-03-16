@@ -678,6 +678,8 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0.4
     notOnCooldown: 1
+    skillDescription: "Archer hits the ground with her feet, \nstunning any enemy
+      in a short radius."
   - type: 7
     skillName: Falcons Speed
     effect: 0
@@ -691,6 +693,8 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0
     notOnCooldown: 1
+    skillDescription: "Archer jumps back to gain distance. \nArcher gains invisibility
+      in that period."
   RangeSkills:
   - type: 0
     skillName: Basic Attack
@@ -705,6 +709,7 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0.3
     notOnCooldown: 1
+    skillDescription: 
     onHitEffect: 0
     prefab: {fileID: 1365143412859840, guid: 7de1c85d9954b954a93e03f5597f6e80, type: 2}
     speed: {x: 9, y: 0}
@@ -723,13 +728,14 @@ MonoBehaviour:
     needsToBeGrounded: 0
     delay: 0
     notOnCooldown: 1
+    skillDescription: 
     onHitEffect: 0
     prefab: {fileID: 1365143412859840, guid: b78f2406196d67d4e8e70af69e1138c6, type: 2}
     speed: {x: 4, y: -9}
     castTime: 0
     rangedSkillId: 0
   - type: 4
-    skillName: Falcons Speed
+    skillName: Eagles Talon
     effect: 2
     effectDuration: 0
     effectValue: 0
@@ -741,6 +747,8 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0.4
     notOnCooldown: 1
+    skillDescription: "Archer charges her bow further, creating a \nstrong force that
+      will cause knockback to \nany first enemy it comes in contact with."
     onHitEffect: 0
     prefab: {fileID: 1102937920621408, guid: 6211ccf37bad0dc47a9a26203c60efca, type: 2}
     speed: {x: 9, y: 0}
@@ -759,6 +767,8 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0.4
     notOnCooldown: 1
+    skillDescription: "Archer puts down a trap. Anyone that walks on it \nwill receive
+      explosive damage and stuns the enemy."
     onHitEffect: 0
     prefab: {fileID: 1602197186405658, guid: c8572649fafeeee43b625d0a9d12466c, type: 2}
     speed: {x: 0, y: 0}
@@ -766,6 +776,8 @@ MonoBehaviour:
     rangedSkillId: 0
   hotbar: {fileID: 0}
   className: 1
+  characterFullName: Archer, the Huntress
+  characterLore: 
   Trinket1: {fileID: 0}
   Trinket2: {fileID: 0}
   FacingRight: 1
