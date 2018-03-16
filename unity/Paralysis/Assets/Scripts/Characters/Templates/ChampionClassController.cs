@@ -8,7 +8,6 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 {
     // Constraints
     protected const float GroundedRadius = .02f;                            // Radius of the overlap circle to determine if grounded
-    protected const float MeeleRange = 1.5f;                                // Default range for meele attacks
     protected const float FallThroughDuration = .5f;                        // Duration of falling through a platform
     protected const float AllowAnotherJumpAfterGround = .1f;                // How long to wait to be able to jump again after grounded
 
@@ -35,6 +34,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     [SerializeField]
     protected float m_maxJumpTime = .3f;                                    // Max time in air going up
     [SerializeField]
+    public int stamina_Jump = 15;
+    [SerializeField]
     protected float m_JumpDivisor = 1f;                                     // Jump divsor
     [SerializeField]
     protected float m_DoubleJumpDivisor = 1.05f;                            // Double jump divsor
@@ -57,79 +58,11 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected int attackCount = 0;                                          // The ComboState 0 means the character has not attacked yet
     protected bool inCombo = false;                                         // When true, the next comboStage can be reached
 
-    // Skill Delay
+    // Skills
     [SerializeField]
-    protected float delay_BasicAttack1 = 0;
+    protected MeleeSkill[] MeleeSkills;
     [SerializeField]
-    protected float delay_BasicAttack2 = 0;
-    [SerializeField]
-    protected float delay_BasicAttack3 = 0;
-    [SerializeField]
-    protected float delay_JumpAttack = 0;
-    [SerializeField]
-    protected float delay_Skill1 = 0;
-    [SerializeField]
-    protected float delay_Skill2 = 0;
-    [SerializeField]
-    protected float delay_Skill3 = 0;
-    [SerializeField]
-    protected float delay_Skill4 = 0;
-
-    // Skills Stamina Costs
-    [SerializeField]
-    protected int stamina_BasicAttack1 = 5;
-    [SerializeField]
-    protected int stamina_BasicAttack2 = 5;
-    [SerializeField]
-    protected int stamina_BasicAttack3 = 5;
-    [SerializeField]
-    public int stamina_Jump = 15;
-    [SerializeField]
-    protected int stamina_JumpAttack = 5;
-    [SerializeField]
-    protected int stamina_Skill1 = 0;
-    [SerializeField]
-    protected int stamina_Skill2 = 0;
-    [SerializeField]
-    protected int stamina_Skill3 = 0;
-    [SerializeField]
-    protected int stamina_Skill4 = 0;
-
-    // Skill Damage
-    [SerializeField]
-    protected int damage_BasicAttack1 = 0;
-    [SerializeField]
-    protected int damage_BasicAttack2 = 0;
-    [SerializeField]
-    protected int damage_BasicAttack3 = 0;
-    [SerializeField]
-    protected int damage_JumpAttack = 5;
-    [SerializeField]
-    protected int damage_Skill1 = 0;
-    [SerializeField]
-    protected int damage_Skill2 = 0;
-    [SerializeField]
-    protected int damage_Skill3 = 0;
-    [SerializeField]
-    protected int damage_Skill4 = 0;
-
-    // Skill Cooldown
-    [SerializeField]
-    protected int cooldown_BasicAttack1 = 0;
-    [SerializeField]
-    protected int cooldown_BasicAttack2 = 0;
-    [SerializeField]
-    protected int cooldown_BasicAttack3 = 0;
-    [SerializeField]
-    protected int cooldown_JumpAttack = 0;
-    [SerializeField]
-    protected int cooldown_Skill1 = 0;
-    [SerializeField]
-    protected int cooldown_Skill2 = 0;
-    [SerializeField]
-    protected int cooldown_Skill3 = 0;
-    [SerializeField]
-    protected int cooldown_Skill4 = 0;
+    protected RangedSkill[] RangeSkills;
 
     #endregion
 
@@ -208,7 +141,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         }
 
         // Set default JumpAttack
-        jumpAttack_var = new MeleeSkill(0, 0, damage_JumpAttack, Skill.SkillEffect.nothing, 0, 0, 10, Skill.SkillTarget.MultiTarget, 0, m_jumpAttackRadius, ChampionAndTrinketDatabase.Champions.Alchemist);
+        //jumpAttack_var = new MeleeSkill(0, 0, damage_JumpAttack, Skill.SkillEffect.nothing, 0, 0, 10, Skill.SkillTarget.MultiTarget, 0, m_jumpAttackRadius, ChampionAndTrinketDatabase.Champions.Alchemist);
     }
 
     protected virtual void FixedUpdate()
@@ -406,7 +339,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     public virtual IEnumerator JumpAttack()
     {
         // Check if enough stamina is left
-        if (CanPerformAttack() && stats.LoseStamina(stamina_JumpAttack))
+        if (CanPerformAttack() && stats.LoseStamina(jumpAttack_var.staminaCost))
         {
             // Set status variable
             jumpAttacking = true;

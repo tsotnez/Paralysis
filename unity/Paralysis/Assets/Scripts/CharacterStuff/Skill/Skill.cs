@@ -1,6 +1,7 @@
 ﻿/// <summary>
 /// Describes a skill
 /// </summary>
+[System.Serializable]
 public class Skill
 {
     public enum SkillEffect
@@ -18,26 +19,24 @@ public class Skill
     }
 
     public ChampionAndTrinketDatabase.Keys type;
-    public ChampionAndTrinketDatabase.Champions champion;
-    public string name;
-    public SkillEffect effect;
-    public int effectDuration;
-    public float effectValue;
-    public int damage;
-    public int staminaCost;
-    public float cooldown;
-    public SkillTarget targetType;
-    public float range;
-    public bool needsToBeGrounded;
-    public float delay;
+    public string skillName = "NotSet";
+    public SkillEffect effect = SkillEffect.nothing;
+    public int effectDuration = 0;
+    public float effectValue = 0;
+    public int damage = 0;
+    public int staminaCost = 0;
+    public float cooldown = 0;
+    public SkillTarget targetType = SkillTarget.SingleTarget;
+    public float range = GameConstants.MeeleRange;
+    public bool needsToBeGrounded = true;
+    public float delay = 0;
 
     public bool notOnCooldown = true;
 
 
     public Skill(ChampionAndTrinketDatabase.Keys skillType, float skillDelay, int skillDamage, Skill.SkillEffect skillSpecialEffect, int skillSpecialEffectTime, float skillSpecialEffectValue, int skillStaminaCost, SkillTarget skillTargetType,
-        float skillCooldown, float skillRange, ChampionAndTrinketDatabase.Champions skillChamp, bool skillNeedsToBeGrounded = true)
+        float skillCooldown, float skillRange, string name, bool skillNeedsToBeGrounded = true)
     {
-        champion = skillChamp;
         type = skillType;
         delay = skillDelay;
         damage = skillDamage;
@@ -49,12 +48,12 @@ public class Skill
         needsToBeGrounded = skillNeedsToBeGrounded;
         range = skillRange;
         targetType = skillTargetType;
-        name = ChampionAndTrinketDatabase.database[champion][type];
+        skillName = name;
     }
 
-    public Skill(ChampionAndTrinketDatabase.Keys skillType, ChampionAndTrinketDatabase.Champions skillChampion, float skillCooldown)
+    public Skill(ChampionAndTrinketDatabase.Keys skillType, string name, float skillCooldown)
     {
-        champion = skillChampion;
+        skillName = name;
         cooldown = skillCooldown;
         type = skillType;
     }

@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System;
 
+[System.Serializable]
 public class RangedSkill : Skill
 {
-    public bool onHitEffect;
+    public bool onHitEffect = false;
     public GameObject prefab;
-    public Vector2 speed;
-    public float castTime;
+    public Vector2 speed = new Vector2(9,0);
+    public float castTime = 0;
 
     public short rangedSkillId = 0;
     public static Dictionary<short, RangedSkill> rangedSkillDict = new Dictionary<short, RangedSkill>();
 
-    public RangedSkill(ChampionAndTrinketDatabase.Keys skillName, bool skillOnHitEffect, Vector2 projectileSpeed, GameObject projectilePrefab, float skillDelay, int skillDamage, SkillEffect skillSpecialEffect, int skillSpecialEffectTime, float skillSpecialEffectValue, int skillStaminaCost, SkillTarget skillTargetType, float skillCooldown, float skillRange, ChampionAndTrinketDatabase.Champions skillChampion, bool skillNeedsToBeGrounded = true, float castTime = 0f) 
-        : base(skillName, skillDelay, skillDamage, skillSpecialEffect, skillSpecialEffectTime, skillSpecialEffectValue, skillStaminaCost, skillTargetType, skillCooldown, skillRange, skillChampion, skillNeedsToBeGrounded)
+    public RangedSkill(ChampionAndTrinketDatabase.Keys skillName, bool skillOnHitEffect, Vector2 projectileSpeed, GameObject projectilePrefab, float skillDelay, int skillDamage, SkillEffect skillSpecialEffect, int skillSpecialEffectTime, float skillSpecialEffectValue, int skillStaminaCost, SkillTarget skillTargetType, float skillCooldown, float skillRange, string name, bool skillNeedsToBeGrounded = true, float castTime = 0f) 
+        : base(skillName, skillDelay, skillDamage, skillSpecialEffect, skillSpecialEffectTime, skillSpecialEffectValue, skillStaminaCost, skillTargetType, skillCooldown, skillRange, name, skillNeedsToBeGrounded)
     {
         onHitEffect = skillOnHitEffect;
         prefab = projectilePrefab;

@@ -906,6 +906,7 @@ MonoBehaviour:
   m_CanTurnAroundWhileBlocking: 1
   m_initialJumpVelocity: 105
   m_maxJumpTime: 0.3
+  stamina_Jump: 15
   m_JumpDivisor: 1
   m_DoubleJumpDivisor: 1.05
   m_jumpAttackRadius: 1.7
@@ -914,39 +915,7 @@ MonoBehaviour:
   m_dashStaminaCost: 10
   m_CanDashForward: 0
   ComboExpire: 1
-  delay_BasicAttack1: 0
-  delay_BasicAttack2: 0
-  delay_BasicAttack3: 0
-  delay_JumpAttack: 0
-  delay_Skill1: 0
-  delay_Skill2: 0
-  delay_Skill3: 0
-  delay_Skill4: 0.2
-  stamina_BasicAttack1: 5
-  stamina_BasicAttack2: 5
-  stamina_BasicAttack3: 7
-  stamina_Jump: 15
-  stamina_JumpAttack: 5
-  stamina_Skill1: 20
-  stamina_Skill2: 15
-  stamina_Skill3: 30
-  stamina_Skill4: 20
-  damage_BasicAttack1: 5
-  damage_BasicAttack2: 5
-  damage_BasicAttack3: 10
-  damage_JumpAttack: 5
-  damage_Skill1: 5
-  damage_Skill2: 5
-  damage_Skill3: 10
-  damage_Skill4: 15
-  cooldown_BasicAttack1: 0
-  cooldown_BasicAttack2: 0
-  cooldown_BasicAttack3: 0
-  cooldown_JumpAttack: 0
-  cooldown_Skill1: 15
-  cooldown_Skill2: 20
-  cooldown_Skill3: 20
-  cooldown_Skill4: 25
+  CharacterSkills: []
   hotbar: {fileID: 0}
   className: 2
   Trinket1: {fileID: 0}

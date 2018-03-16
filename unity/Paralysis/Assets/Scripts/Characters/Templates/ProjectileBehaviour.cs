@@ -109,7 +109,7 @@ public class ProjectileBehaviour : MonoBehaviour
         
         //Show castBAr
         GameObject castBar = GameObject.FindGameObjectWithTag("CastBar");
-        castBar.GetComponent<CastBarBehaviour>().startCast(SkillValues.castTime, SkillValues.name);
+        castBar.GetComponent<CastBarBehaviour>().startCast(SkillValues.castTime, SkillValues.skillName);
 
         // Wait till cast ends
         yield return new WaitForSeconds(SkillValues.castTime);

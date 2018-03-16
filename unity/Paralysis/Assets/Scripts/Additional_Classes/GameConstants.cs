@@ -7,6 +7,10 @@ using UnityEngine;
 /// </summary>
 public static class GameConstants
 {
+    // Default range for attacks
+    public const float MeeleRange = 1.5f;
+    public const float RangedRange = 7f;
+
     public static int[] TEAMLAYERS = { 11, 12, 15, 16, 17, 18, 19, 20 };
 
     public static string MAIN_MENU_SCENE = "MainMenu";
