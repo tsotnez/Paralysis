@@ -702,14 +702,13 @@ MonoBehaviour:
   stamina_Jump: 15
   m_JumpDivisor: 1
   m_DoubleJumpDivisor: 1.05
-  m_jumpAttackRadius: 1.1
   m_jumpAttackForce: 10
   m_dashSpeed: 12
   m_dashStaminaCost: 10
   m_CanDashForward: 0
   ComboExpire: 1
   MeleeSkills:
-  - type: 1
+  - type: 5
     skillName: Teleport
     effect: 0
     effectDuration: 0
@@ -722,7 +721,7 @@ MonoBehaviour:
     needsToBeGrounded: 0
     delay: 0
     notOnCooldown: 1
-  - type: 3
+  - type: 7
     skillName: Molecular Reconstruction
     effect: 2
     effectDuration: 0
@@ -736,7 +735,7 @@ MonoBehaviour:
     delay: 0
     notOnCooldown: 1
   RangeSkills:
-  - type: 11
+  - type: 0
     skillName: Basic Attack
     effect: 0
     effectDuration: 0
@@ -754,7 +753,7 @@ MonoBehaviour:
     speed: {x: 9, y: 0}
     castTime: 0
     rangedSkillId: 0
-  - type: 0
+  - type: 4
     skillName: Frostbolt
     effect: 4
     effectDuration: 3
@@ -772,7 +771,7 @@ MonoBehaviour:
     speed: {x: 9, y: 0}
     castTime: 0.5
     rangedSkillId: 0
-  - type: 2
+  - type: 6
     skillName: Melted Stone
     effect: 1
     effectDuration: 3
@@ -798,14 +797,6 @@ MonoBehaviour:
   dashing: 0
   blocking: 0
   doubleJumped: 0
-  GoBasicAttack: {fileID: 1470268350350890, guid: 1443ea3c3580ee5499a90819360b8a65,
-    type: 2}
-  GoSkill1_Frostbolt: {fileID: 1806743027263652, guid: 6190419a7df12f6438f7959faca00ad6,
-    type: 2}
-  GoSkill3_Stun: {fileID: 1559905968728678, guid: 7ffecbe061e52564a83b2c7955abcc0d,
-    type: 2}
-  CastTime_Skill1: 0.5
-  CastTime_Skill3: 0.5
 --- !u!114 &114863279025727096
 MonoBehaviour:
   m_ObjectHideFlags: 1

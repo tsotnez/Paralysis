@@ -18,7 +18,12 @@ public class Skill
         SingleTarget, MultiTarget, InFront
     }
 
-    public ChampionAndTrinketDatabase.Keys type;
+    public enum SkillType
+    {
+        BasicAttack1, BasicAttack2, BasicAttack3, JumpAttack, Skill1, Skill2, Skill3, Skill4
+    }
+
+    public SkillType type;
     public string skillName = "NotSet";
     public SkillEffect effect = SkillEffect.nothing;
     public int effectDuration = 0;
@@ -27,14 +32,14 @@ public class Skill
     public int staminaCost = 0;
     public float cooldown = 0;
     public SkillTarget targetType = SkillTarget.SingleTarget;
-    public float range = GameConstants.MeeleRange;
+    public float range = GameConstants.MeeleAttackRange;
     public bool needsToBeGrounded = true;
     public float delay = 0;
 
     public bool notOnCooldown = true;
 
 
-    public Skill(ChampionAndTrinketDatabase.Keys skillType, float skillDelay, int skillDamage, Skill.SkillEffect skillSpecialEffect, int skillSpecialEffectTime, float skillSpecialEffectValue, int skillStaminaCost, SkillTarget skillTargetType,
+    public Skill(SkillType skillType, float skillDelay, int skillDamage, Skill.SkillEffect skillSpecialEffect, int skillSpecialEffectTime, float skillSpecialEffectValue, int skillStaminaCost, SkillTarget skillTargetType,
         float skillCooldown, float skillRange, string name, bool skillNeedsToBeGrounded = true)
     {
         type = skillType;
@@ -51,7 +56,7 @@ public class Skill
         skillName = name;
     }
 
-    public Skill(ChampionAndTrinketDatabase.Keys skillType, string name, float skillCooldown)
+    public Skill(SkillType skillType, string name, float skillCooldown)
     {
         skillName = name;
         cooldown = skillCooldown;

@@ -12,18 +12,12 @@ public class AlchemistController : ChampionClassController
         base.Start();
         animCon = graphics.GetComponent<AlchemistAnimationController>();
 
+        //Instantiate skill variables
         //basicAttack1_var = new RangedSkill(ChampionAndTrinketDatabase.Keys.BasicAttack1, true, new Vector2(9, 0), GoBasicAttack, delay_BasicAttack1, damage_BasicAttack1, Skill.SkillEffect.nothing, 0, 0, stamina_BasicAttack1, Skill.SkillTarget.SingleTarget, cooldown_BasicAttack1, 7f, ChampionAndTrinketDatabase.Champions.Alchemist);
         //skill1_var = new RangedSkill(ChampionAndTrinketDatabase.Keys.Skill1, true, new Vector2(9, 0), GoSkill1_Frostbolt, delay_Skill1, damage_Skill1, Skill.SkillEffect.slow, 3, 0.5f, stamina_Skill1, Skill.SkillTarget.SingleTarget, cooldown_Skill1, 7f, ChampionAndTrinketDatabase.Champions.Alchemist, true, CastTime_Skill1);
         //skill2_var = new Skill(ChampionAndTrinketDatabase.Keys.Skill2, delay_Skill2, damage_Skill2, Skill.SkillEffect.nothing, 0, 0, stamina_Skill2, Skill.SkillTarget.SingleTarget, cooldown_Skill2, 12f, ChampionAndTrinketDatabase.Champions.Alchemist, false);
         //skill3_var = new RangedSkill(ChampionAndTrinketDatabase.Keys.Skill3, true, new Vector2(9, 0), GoSkill3_Stun, delay_Skill3, damage_Skill3, Skill.SkillEffect.stun, 3, 0, stamina_Skill3, Skill.SkillTarget.SingleTarget, cooldown_Skill3, 7f, ChampionAndTrinketDatabase.Champions.Alchemist, true, CastTime_Skill3);
         //skill4_var = new MeleeSkill(ChampionAndTrinketDatabase.Keys.Skill4, delay_Skill4, damage_Skill4, Skill.SkillEffect.knockback, 0, 0, stamina_Skill4, Skill.SkillTarget.MultiTarget, cooldown_Skill4, 3f, ChampionAndTrinketDatabase.Champions.Alchemist);
-
-        //Instantiate skill variables
-        basicAttack1_var = RangeSkills[0];
-        skill1_var = RangeSkills[1];
-        skill2_var = MeleeSkills[0];
-        skill3_var = RangeSkills[2];
-        skill4_var = MeleeSkills[1];
     }
 
     #endregion
@@ -36,7 +30,7 @@ public class AlchemistController : ChampionClassController
     public override void BasicAttack()
     {
         if (animCon.propGrounded) // Basic Attack
-            DoRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill)basicAttack1_var);
+            DoRangeSkill(ref animCon.trigBasicAttack1, Skill.SkillType.BasicAttack1);
     }
 
     /// <summary>
@@ -50,7 +44,7 @@ public class AlchemistController : ChampionClassController
     /// </summary>
     public override void Skill1()
     {
-        DoRangeSkill(ref animCon.trigSkill1, (RangedSkill)skill1_var);
+        DoRangeSkill(ref animCon.trigSkill1, Skill.SkillType.Skill1);
     }
 
     /// <summary>
@@ -64,7 +58,7 @@ public class AlchemistController : ChampionClassController
     /// </summary>
     public override void Skill2()
     {
-        if (CanPerformAction(false) && CanPerformAttack() && skill2_var.notOnCooldown && stats.LoseStamina(skill2_var.staminaCost))
+        if (CanPerformAction(false) && CanPerformAttack() && getSkillByType(Skill.SkillType.Skill2).notOnCooldown && stats.LoseStamina(getSkillByType(Skill.SkillType.Skill2).staminaCost))
         {
             // Get the direction first --> save the effects on skill enter
             TeleportDirection direction = TeleportDirection.forward;
@@ -99,7 +93,7 @@ public class AlchemistController : ChampionClassController
     /// </summary>
     public override void Skill3()
     {
-        DoRangeSkill(ref animCon.trigSkill3, (RangedSkill)skill3_var);
+        DoRangeSkill(ref animCon.trigSkill3, Skill.SkillType.Skill3);
     }
 
     /// <summary>
@@ -113,7 +107,7 @@ public class AlchemistController : ChampionClassController
     /// </summary>
     public override void Skill4()
     {
-        DoMeleeSkill(ref animCon.trigSkill4, (MeleeSkill)skill4_var);
+        DoMeleeSkill(ref animCon.trigSkill4, Skill.SkillType.Skill4);
     }
 
     #endregion
@@ -127,6 +121,7 @@ public class AlchemistController : ChampionClassController
 
     private IEnumerator DoSkill2(TeleportDirection direction)
     {
+        MeleeSkill skill2 = (MeleeSkill)getSkillByType(Skill.SkillType.Skill2);
         // trigger animation for getting invisible
         animCon.trigSkill2 = true;
 
@@ -153,9 +148,9 @@ public class AlchemistController : ChampionClassController
             // Check if an wall is to near for a ful range teleport
             RaycastHit2D hit;
             if (FacingRight)
-                hit = Physics2D.Raycast(transform.position, Vector2.right, skill2_var.range, layWallGround);
+                hit = Physics2D.Raycast(transform.position, Vector2.right, skill2.range, layWallGround);
             else
-                hit = Physics2D.Raycast(transform.position, Vector2.left, skill2_var.range, layWallGround);
+                hit = Physics2D.Raycast(transform.position, Vector2.left, skill2.range, layWallGround);
 
             if (hit)
             {
@@ -170,9 +165,9 @@ public class AlchemistController : ChampionClassController
             {
                 // If no wall is in the way, simply teleport
                 if (FacingRight)
-                    newPos.x += skill2_var.range;
+                    newPos.x += skill2.range;
                 else
-                    newPos.x -= skill2_var.range;
+                    newPos.x -= skill2.range;
             }
         }
         else if (direction == TeleportDirection.up)
@@ -216,7 +211,7 @@ public class AlchemistController : ChampionClassController
 
         // Let the alchemist appear at the new position
         ((AlchemistAnimationController)animCon).trigSkill2End = true;
-        yield return new WaitForSeconds(skill2_var.delay);
+        yield return new WaitForSeconds(skill2.delay);
         yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimationTypes.Skill2);
 
         // Reapply old constraints to fall down regulary
@@ -227,7 +222,7 @@ public class AlchemistController : ChampionClassController
         stats.invincible = false;
 
         // Start cooldown of the skillw2
-        StartCoroutine(SetSkillOnCooldown(skill2_var));
+        StartCoroutine(SetSkillOnCooldown(skill2));
     }
 
     #endregion

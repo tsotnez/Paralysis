@@ -556,8 +556,8 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 0.1
-  - 0
+  - 0.3
+  - 0.3
   - 0
   - 0
   - 0
@@ -909,13 +909,122 @@ MonoBehaviour:
   stamina_Jump: 15
   m_JumpDivisor: 1
   m_DoubleJumpDivisor: 1.05
-  m_jumpAttackRadius: 1.7
   m_jumpAttackForce: 10
   m_dashSpeed: 12
   m_dashStaminaCost: 10
   m_CanDashForward: 0
   ComboExpire: 1
-  CharacterSkills: []
+  MeleeSkills:
+  - type: 0
+    skillName: Basic Attack
+    effect: 0
+    effectDuration: 0
+    effectValue: 0
+    damage: 5
+    staminaCost: 5
+    cooldown: 0
+    targetType: 0
+    range: 1.5
+    needsToBeGrounded: 1
+    delay: 0.4
+    notOnCooldown: 1
+  - type: 1
+    skillName: Basic Attack
+    effect: 0
+    effectDuration: 0
+    effectValue: 0
+    damage: 5
+    staminaCost: 5
+    cooldown: 0
+    targetType: 0
+    range: 1.5
+    needsToBeGrounded: 1
+    delay: 0.4
+    notOnCooldown: 1
+  - type: 2
+    skillName: Basic Attack
+    effect: 0
+    effectDuration: 0
+    effectValue: 0
+    damage: 7
+    staminaCost: 10
+    cooldown: 0
+    targetType: 0
+    range: 1.5
+    needsToBeGrounded: 1
+    delay: 0.45
+    notOnCooldown: 1
+  - type: 3
+    skillName: Jump Attack
+    effect: 0
+    effectDuration: 0
+    effectValue: 0
+    damage: 5
+    staminaCost: 5
+    cooldown: 0
+    targetType: 1
+    range: 1.5
+    needsToBeGrounded: 0
+    delay: 0
+    notOnCooldown: 1
+  - type: 4
+    skillName: Earthquake
+    effect: 1
+    effectDuration: 3
+    effectValue: 0
+    damage: 5
+    staminaCost: 20
+    cooldown: 15
+    targetType: 1
+    range: 1.5
+    needsToBeGrounded: 1
+    delay: 0.2
+    notOnCooldown: 1
+  - type: 5
+    skillName: Engage!
+    effect: 1
+    effectDuration: 3
+    effectValue: 0
+    damage: 5
+    staminaCost: 15
+    cooldown: 20
+    targetType: 1
+    range: 1.5
+    needsToBeGrounded: 1
+    delay: 0.2
+    notOnCooldown: 1
+  - type: 6
+    skillName: Shield Bash
+    effect: 2
+    effectDuration: 0
+    effectValue: 0
+    damage: 10
+    staminaCost: 30
+    cooldown: 20
+    targetType: 0
+    range: 1.5
+    needsToBeGrounded: 1
+    delay: 0.2
+    notOnCooldown: 1
+  RangeSkills:
+  - type: 7
+    skillName: Battering Ram
+    effect: 0
+    effectDuration: 0
+    effectValue: 0
+    damage: 15
+    staminaCost: 20
+    cooldown: 25
+    targetType: 0
+    range: 5
+    needsToBeGrounded: 1
+    delay: 0.2
+    notOnCooldown: 1
+    onHitEffect: 0
+    prefab: {fileID: 1686816382022230, guid: 60be7605c6f8ae34c9df248ad63aff85, type: 2}
+    speed: {x: 7, y: 0}
+    castTime: 0
+    rangedSkillId: 0
   hotbar: {fileID: 0}
   className: 2
   Trinket1: {fileID: 0}

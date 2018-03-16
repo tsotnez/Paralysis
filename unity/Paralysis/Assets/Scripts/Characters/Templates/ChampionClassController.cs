@@ -40,8 +40,6 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     [SerializeField]
     protected float m_DoubleJumpDivisor = 1.05f;                            // Double jump divsor
     [SerializeField]
-    protected float m_jumpAttackRadius = 1.5f;                              // Radius of jump Attack damage
-    [SerializeField]
     protected float m_jumpAttackForce = 10f;                                // Amount of force added when the player jump attack
 
     // Dash
@@ -79,14 +77,6 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     protected ChampionAnimationController animCon;                          // Reference to the Animation Contoller
 
     // Skills & Trinkets
-    protected Skill basicAttack1_var;
-    protected Skill basicAttack2_var;
-    protected Skill basicAttack3_var;
-    protected Skill jumpAttack_var;
-    protected Skill skill1_var;
-    protected Skill skill2_var;
-    protected Skill skill3_var;
-    protected Skill skill4_var;
     public Trinket Trinket1;
     public Trinket Trinket2;
 
@@ -180,6 +170,29 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         {
             m_Rigidbody2D.velocity = new Vector2(m_dashSpeed, m_Rigidbody2D.velocity.y);
         }
+    }
+
+    protected Skill getSkillByType(Skill.SkillType Type)
+    {
+        // Check for skill in MeleeSkills
+        foreach (MeleeSkill skill in MeleeSkills)
+        {
+            if (skill.type == Type)
+            {
+                return skill;
+            }
+        }
+        // Check for skill in RangeSkills
+        foreach (RangedSkill skill in RangeSkills)
+        {
+            if (skill.type == Type)
+            {
+                return skill;
+            }
+        }
+
+        // Return null if nothing is found
+        return null;
     }
 
     #endregion
@@ -338,13 +351,14 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     public virtual IEnumerator JumpAttack()
     {
+        MeleeSkill skillJumpAttack = (MeleeSkill)getSkillByType(Skill.SkillType.JumpAttack);
         // Check if enough stamina is left
-        if (CanPerformAttack() && stats.LoseStamina(jumpAttack_var.staminaCost))
+        if (CanPerformAttack() && stats.LoseStamina(skillJumpAttack.staminaCost))
         {
             // Set status variable
             jumpAttacking = true;
             animCon.trigJumpAttack = true;
-            yield return new WaitForSeconds(jumpAttack_var.delay);
+            yield return new WaitForSeconds(skillJumpAttack.delay);
 
             // Calculate direction
             int direction;
@@ -359,7 +373,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
             // Deal damage to all enemies
             animCon.trigJumpAttackEnd = true;
-            StartCoroutine(DoMeleeSkill_Hit((MeleeSkill)jumpAttack_var));
+            StartCoroutine(DoMeleeSkill_Hit((MeleeSkill)skillJumpAttack));
 
             // Wait till animation is finished and end jump attack
             yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimationTypes.JumpAttack);
@@ -505,7 +519,6 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     /// <summary>
     /// Do a default ComboAttack
     /// </summary>
-    /// <param name="shouldAttack">bool</param>
     /// <param name="trigBA1">Animation Trigger Boolean for Basic Attack 1</param>
     /// <param name="trigBA2">Animation Trigger Boolean for Basic Attack 2</param>
     /// <param name="trigBA3">Animation Trigger Boolean for Basic Attack 3</param>
@@ -514,9 +527,9 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         if (CanPerformAction(false) && CanPerformAttack() && animCon.propGrounded)
         {
             // Check if enough stamina for attack
-            if ((stats.HasSufficientStamina(basicAttack1_var.staminaCost) && attackCount == 0) || // Basic Attack 1
-                (stats.HasSufficientStamina(basicAttack2_var.staminaCost) && attackCount == 1) || // Basic Attack 2
-                (stats.HasSufficientStamina(basicAttack3_var.staminaCost) && attackCount == 2))   // Combo Attack
+            if ((stats.HasSufficientStamina(getSkillByType(Skill.SkillType.BasicAttack1).staminaCost) && attackCount == 0) || // Basic Attack 1
+                (stats.HasSufficientStamina(getSkillByType(Skill.SkillType.BasicAttack2).staminaCost) && attackCount == 1) || // Basic Attack 2
+                (stats.HasSufficientStamina(getSkillByType(Skill.SkillType.BasicAttack3).staminaCost) && attackCount == 2))   // Combo Attack
             {
                 // Already in combo?
                 if (!inCombo)
@@ -526,7 +539,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                     attackCount = 0;
                 }
 
-                // AttackCount increase per attack
+                // AttackCount: increase per attack
                 attackCount++;
 
                 // Playing the correct animation depending on the attackCount and setting attacking status
@@ -534,17 +547,17 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 {
                     case 1:
                         // do meele attack
-                        DoMeleeSkill(ref trigBA1, (MeleeSkill)basicAttack1_var);
+                        DoMeleeSkill(ref trigBA1, Skill.SkillType.BasicAttack1);
                         // Reset timer of combo
                         ResetComboTime();
                         break;
                     case 2:
                         // do meele attack
-                        DoMeleeSkill(ref trigBA2, (MeleeSkill)basicAttack2_var);
+                        DoMeleeSkill(ref trigBA2, Skill.SkillType.BasicAttack2);
                         break;
                     case 3:
                         // do meele attack
-                        DoMeleeSkill(ref trigBA3, (MeleeSkill)basicAttack3_var);
+                        DoMeleeSkill(ref trigBA3, Skill.SkillType.BasicAttack3);
                         // Reset Combo after combo-hit
                         AbortCombo();
                         break;
@@ -598,8 +611,14 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     /// <param name="animationVar">Animation Trigger</param>
     /// <param name="skillToPerform">MeleeSkill that shall be performed</param>
     /// <param name="NoValidation"></param>
-    protected void DoMeleeSkill(ref bool animationVar, MeleeSkill skillToPerform, bool NoValidation = false)
+    protected void DoMeleeSkill(ref bool animationVar, Skill.SkillType SkillType, bool NoValidation = false)
     {
+        MeleeSkill skillToPerform = (MeleeSkill)getSkillByType(SkillType);
+        if (skillToPerform == null)
+        {
+            throw new NullReferenceException("Skill that shall be performed is null");
+        }
+
         //Validate that character is not attacking and standing on ground
         if (NoValidation || CanPerformAction(skillToPerform.needsToBeGrounded) && CanPerformAttack())
         {
@@ -701,8 +720,14 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     #region Ranged Skill
 
-    protected void DoRangeSkill(ref bool animationVar, RangedSkill skillToPerform)
+    protected void DoRangeSkill(ref bool animationVar, Skill.SkillType SkillType)
     {
+        RangedSkill skillToPerform = (RangedSkill)getSkillByType(SkillType);
+        if (skillToPerform == null)
+        {
+            throw new NullReferenceException("Skill that shall be performed is null");
+        }
+
         //Validate that character is not attacking and standing on ground
         if (CanPerformAction(skillToPerform.needsToBeGrounded) && CanPerformAttack()
             && skillToPerform.notOnCooldown && stats.LoseStamina(skillToPerform.staminaCost))
@@ -887,14 +912,15 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     /// </summary>
     public void ResetValues()
     {
-        basicAttack1_var.notOnCooldown = true;
-        basicAttack2_var.notOnCooldown = true;
-        basicAttack3_var.notOnCooldown = true;
-        skill1_var.notOnCooldown = true;
-        skill2_var.notOnCooldown = true;
-        skill3_var.notOnCooldown = true;
-        skill4_var.notOnCooldown = true;
-
+        foreach (MeleeSkill skill in MeleeSkills)
+        {
+            skill.notOnCooldown = true;
+        }
+        // Check for skill in RangeSkills
+        foreach (RangedSkill skill in RangeSkills)
+        {
+            skill.notOnCooldown = true;
+        }
         Trinket1.resetValues();
         Trinket2.resetValues();
 

@@ -10,10 +10,6 @@ public class ArcherEditor : ChampionClassEditor {
         base.OnInspectorGUI();
 
         GUILayout.Label("Archer Specific", EditorStyles.boldLabel);
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("standartArrowPrefab"), new GUIContent("Standart Arrow"), true);
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("jumpAttackArrowPrefab"), new GUIContent("Jump Attack Arrow"), true);
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("greatArrowPrefab"), new GUIContent("Great Arrow"), true);
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("trapPrefab"), new GUIContent("Trap"), true);
         serializedObject.ApplyModifiedProperties();
     }
 }

@@ -74,12 +74,10 @@ public class ChampionClassEditor : Editor {
         GUILayout.Label("Jump Attack", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
         GUILayout.Label("Force");
-        GUILayout.Label("Radius");
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(JumpAttackForce, new GUIContent(""), true);
-        EditorGUILayout.PropertyField(JumpAttackRadius, new GUIContent(""), true);
         GUILayout.EndHorizontal();
 
         GUILayout.Label("Dashing", EditorStyles.boldLabel);

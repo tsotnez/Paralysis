@@ -30,12 +30,6 @@ public class KnightController : ChampionClassController
         //skill4_var = new RangedSkill(ChampionAndTrinketDatabase.Keys.Skill4, false, new Vector2(7, 0), Skill4_Spear, delay_Skill4, damage_Skill4, Skill.SkillEffect.nothing, 0, 0, stamina_Skill4, Skill.SkillTarget.SingleTarget, cooldown_Skill4, 5f, ChampionAndTrinketDatabase.Champions.Alchemist);
     }
 
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-    }
-
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -75,9 +69,8 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void Skill1()
     {
-        DoMeleeSkill(ref animCon.trigSkill1, (MeleeSkill)skill1_var);
+        DoMeleeSkill(ref animCon.trigSkill1, Skill.SkillType.Skill1);
     }
-
 
     /// <summary>
     /// Leap (Stun)
@@ -92,9 +85,10 @@ public class KnightController : ChampionClassController
     public override void Skill2()
     {
         // Validate if skill can be performed
-        if (CanPerformAction(true) && CanPerformAttack() && skill2_var.notOnCooldown && stats.HasSufficientStamina(skill2_var.staminaCost))
+        MeleeSkill skill2 = (MeleeSkill)getSkillByType(Skill.SkillType.Skill2);
+        if (CanPerformAction(true) && CanPerformAttack() && skill2.notOnCooldown && stats.HasSufficientStamina(skill2.staminaCost))
         {
-            hotbar.StartCoroutine(hotbar.flashBlack(skill2_var.type));
+            hotbar.StartCoroutine(hotbar.flashBlack(skill2.type));
             // set animation
             animCon.trigSkill2 = true;
 
@@ -126,7 +120,7 @@ public class KnightController : ChampionClassController
         skill2_leap = false;
         stats.immovable = false;
 
-        DoMeleeSkill(ref ((KnightAnimationController)animCon).trigSkill2End, (MeleeSkill)skill2_var, true);
+        DoMeleeSkill(ref ((KnightAnimationController)animCon).trigSkill2End, Skill.SkillType.Skill2, true);
     }
 
     /// <summary>
@@ -141,7 +135,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void Skill3()
     {
-        DoMeleeSkill(ref animCon.trigSkill3, (MeleeSkill)skill3_var);
+        DoMeleeSkill(ref animCon.trigSkill3, Skill.SkillType.Skill3);
     }
 
     /// <summary>
@@ -155,7 +149,7 @@ public class KnightController : ChampionClassController
     /// </summary>
     public override void Skill4()
     {
-        DoRangeSkill(ref animCon.trigSkill4, (RangedSkill)skill4_var);
+        DoRangeSkill(ref animCon.trigSkill4, Skill.SkillType.Skill4);
     }
 
     #endregion

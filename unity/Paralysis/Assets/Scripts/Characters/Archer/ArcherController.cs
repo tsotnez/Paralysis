@@ -5,11 +5,6 @@ using UnityEngine;
 
 public class ArcherController : ChampionClassController
 {
-    public GameObject standartArrowPrefab;
-    public GameObject jumpAttackArrowPrefab;
-    public GameObject greatArrowPrefab;
-    public GameObject trapPrefab;
-
     private bool disengaging = false; //True while performing the disengage skill
     private Coroutine disengageRoutine = null;
     private float disengageSpeed = 15;
@@ -36,7 +31,7 @@ public class ArcherController : ChampionClassController
     {
         base.FixedUpdate();
 
-        //Move while disengaging
+        // Move while disengaging
         if (disengaging)
         {
             m_Rigidbody2D.velocity = new Vector2(disengageSpeed, m_Rigidbody2D.velocity.y);
@@ -51,29 +46,31 @@ public class ArcherController : ChampionClassController
     {
         // Shoot a basic arrow 
         if (animCon.propGrounded)
-            DoRangeSkill(ref animCon.trigBasicAttack1, (RangedSkill)basicAttack1_var);
+            DoRangeSkill(ref animCon.trigBasicAttack1, Skill.SkillType.BasicAttack1);
     }
 
     public override IEnumerator JumpAttack()
     {
-        DoRangeSkill(ref animCon.trigJumpAttack, (RangedSkill)jumpAttack_var);
+        DoRangeSkill(ref animCon.trigJumpAttack, Skill.SkillType.JumpAttack);
         yield return new WaitForSeconds(0.1f);
     }
 
     public override void Skill1()
     {
         //Shoot a stronger arrow, causing knockback
-        DoRangeSkill(ref animCon.trigSkill1, (RangedSkill)skill1_var);
+        DoRangeSkill(ref animCon.trigSkill1, Skill.SkillType.Skill1);
     }
 
     public override void Skill2()
     {
-        if (CanPerformAction(true) && CanPerformAttack() && skill2_var.notOnCooldown && stats.LoseStamina(skill2_var.staminaCost))
+        RangedSkill skill2 = (RangedSkill)getSkillByType(Skill.SkillType.Skill2);
+        if (CanPerformAction(true) && CanPerformAttack() && skill2.notOnCooldown && stats.LoseStamina(skill2.staminaCost))
         {
             //Puts down a trap
-            hotbar.StartCoroutine(hotbar.flashBlack(skill2_var.type));
+            hotbar.StartCoroutine(hotbar.flashBlack(skill2.type));
             animCon.trigSkill2 = true;
-            StartCoroutine(placeTrapCoroutine(skill2_var.delay));
+            StartCoroutine(placeTrapCoroutine(skill2.delay));
+            StartCoroutine(SetSkillOnCooldown(skill2));
         }
     }
 
@@ -93,26 +90,27 @@ public class ArcherController : ChampionClassController
     [PunRPC]
     public void RPC_PlaceTrap(Vector3 position)
     {
-        GameObject trap = Instantiate(trapPrefab, position, Quaternion.identity);
+        RangedSkill skill2 = (RangedSkill)getSkillByType(Skill.SkillType.Skill2);
+        GameObject trap = Instantiate((skill2).prefab, position, Quaternion.identity);
         ArcherTrapBehaviour trapScript = trap.GetComponent<ArcherTrapBehaviour>();
         trapScript.creator = gameObject;
-        trapScript.damage = skill2_var.damage;
+        trapScript.damage = skill2.damage;
         trapScript.whatToHit = m_whatToHit;
         trapScript.ready = true;
-        StartCoroutine(SetSkillOnCooldown(skill2_var));
     }
 
     public override void Skill3()
     {
         //Stomp the ground, stunning everyone in a given radius
-        DoMeleeSkill(ref animCon.trigSkill3, (MeleeSkill)skill3_var);
+        DoMeleeSkill(ref animCon.trigSkill3, Skill.SkillType.Skill3);
     }
 
     public override void Skill4()
     {
-        if (CanPerformAction(true) && CanPerformAttack() && skill4_var.notOnCooldown && stats.LoseStamina(skill4_var.staminaCost))
+        RangedSkill skill4 = (RangedSkill)getSkillByType(Skill.SkillType.Skill4);
+        if (CanPerformAction(true) && CanPerformAttack() && skill4.notOnCooldown && stats.LoseStamina(skill4.staminaCost))
         {
-            hotbar.StartCoroutine(hotbar.flashBlack(skill4_var.type));
+            hotbar.StartCoroutine(hotbar.flashBlack(skill4.type));
 
             if(PhotonNetwork.offlineMode)
             {
@@ -153,7 +151,7 @@ public class ArcherController : ChampionClassController
         stats.invincible = false;
         disengaging = false;
         stats.immovable = false;
-        StartCoroutine(SetSkillOnCooldown(skill4_var));
+        StartCoroutine(SetSkillOnCooldown(getSkillByType(Skill.SkillType.Skill4)));
     }
 
     #endregion

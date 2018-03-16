@@ -41,33 +41,33 @@ public class HotbarController : MonoBehaviour {
         trinket2Image.sprite = Resources.Load<Sprite>("Sprites/AbilityImages/Trinkets/" + trinket2);
     }
 
-    public void setOnCooldown(ChampionAndTrinketDatabase.Keys skill, float seconds)
+    public void setOnCooldown(Skill.SkillType skill, float seconds)
     {
         Image skillImage = getImageForSkill(skill);
         StartCoroutine(countDown(skillImage, seconds)); //Start coroutine
     }
 
-    private Image getImageForSkill(ChampionAndTrinketDatabase.Keys skill)
+    private Image getImageForSkill(Skill.SkillType skill)
     {
         Image skillImage = null;
         switch (skill) //Get image 
         {
-            case ChampionAndTrinketDatabase.Keys.Skill1:
+            case Skill.SkillType.Skill1:
                 skillImage = spell1Image;
                 break;
-            case ChampionAndTrinketDatabase.Keys.Skill2:
+            case Skill.SkillType.Skill2:
                 skillImage = spell2Image;
                 break;
-            case ChampionAndTrinketDatabase.Keys.Skill3:
+            case Skill.SkillType.Skill3:
                 skillImage = spell3Image;
                 break;
-            case ChampionAndTrinketDatabase.Keys.Skill4:
+            case Skill.SkillType.Skill4:
                 skillImage = spell4Image;
                 break;
-            case ChampionAndTrinketDatabase.Keys.BasicAttack1:
-            case ChampionAndTrinketDatabase.Keys.BasicAttack2:
-            case ChampionAndTrinketDatabase.Keys.BasicAttack3:
-            case ChampionAndTrinketDatabase.Keys.JumpAttack:
+            case Skill.SkillType.BasicAttack1:
+            case Skill.SkillType.BasicAttack2:
+            case Skill.SkillType.BasicAttack3:
+            case Skill.SkillType.JumpAttack:
                 skillImage = basicAttackImage;
                 break;
         }
@@ -123,7 +123,7 @@ public class HotbarController : MonoBehaviour {
     }
 
     //The image flashes black for a short time, highlighting that the skill/trinket was used
-    public IEnumerator flashBlack(ChampionAndTrinketDatabase.Keys skill)
+    public IEnumerator flashBlack(Skill.SkillType skill)
     {
         Image spell = getImageForSkill(skill);
         if (spell != null)

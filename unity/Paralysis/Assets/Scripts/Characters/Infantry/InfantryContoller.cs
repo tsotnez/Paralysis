@@ -5,8 +5,6 @@ using UnityEngine;
 public class InfantryContoller : ChampionClassController
 {
     [SerializeField]
-    private GameObject Skill1_Hook;
-    [SerializeField]
     private GameObject Skill1_Chain;
 
     private bool skill1_hook = false;
@@ -71,15 +69,17 @@ public class InfantryContoller : ChampionClassController
     public override void Skill1()
     {
         // Validate if skill can be performed
-        if (CanPerformAction(true) && CanPerformAttack() && skill1_var.notOnCooldown && stats.LoseStamina(skill1_var.staminaCost))
+        RangedSkill skill1 = (RangedSkill)getSkillByType(Skill.SkillType.Skill1);
+        if (CanPerformAction(true) && CanPerformAttack() && skill1.notOnCooldown && stats.LoseStamina(skill1.staminaCost))
         {
-            hotbar.StartCoroutine(hotbar.flashBlack(skill1_var.type));
+            hotbar.StartCoroutine(hotbar.flashBlack(skill1.type));
             StartCoroutine(DoSkill1_Hook());
         }
     }
 
     private IEnumerator DoSkill1_Hook()
     {
+        RangedSkill skill1 = (RangedSkill)getSkillByType(Skill.SkillType.Skill1);
         stats.immovable = true;
 
         // calculate direction
@@ -88,14 +88,14 @@ public class InfantryContoller : ChampionClassController
         else direction = -1;
 
         // generate GameObject
-        GameObject goProjectile = Skill1_Hook;
+        GameObject goProjectile = skill1.prefab; // hook
         InfantryHookBehaviour projectile = goProjectile.GetComponent<InfantryHookBehaviour>();
 
         // assign variables to projectile Script
         projectile.direction = direction;
         projectile.creator = this.gameObject;
         projectile.whatToHit = m_whatToHit;
-        projectile.SkillValues = (RangedSkill)skill1_var;
+        projectile.SkillValues = skill1;
         projectile.ChainPrefab = Skill1_Chain;
 
         goProjectile = Instantiate(goProjectile, transform.position + new Vector3(1f * direction, 0.3f), new Quaternion(goProjectile.transform.rotation.x,
@@ -139,12 +139,12 @@ public class InfantryContoller : ChampionClassController
             Camera.main.GetComponent<CameraBehaviour>().startShake(); //Shake the camera
 
             // Do melee hit after landing and remove stuneffect
-            stats.DealDamage(target, skill1_var.damage, true);
+            stats.DealDamage(target, skill1.damage, true);
             target.StopStunned();
         }
 
         // start cooldown and let the method end
-        StartCoroutine(SetSkillOnCooldown(skill1_var));
+        StartCoroutine(SetSkillOnCooldown(skill1));
         skill1_hook = false;
         stats.immovable = false;
     }
@@ -160,7 +160,7 @@ public class InfantryContoller : ChampionClassController
     /// </summary>
     public override void Skill2()
     {
-        DoMeleeSkill(ref animCon.trigSkill2, (MeleeSkill)skill2_var);
+        DoMeleeSkill(ref animCon.trigSkill2, Skill.SkillType.Skill2);
     }
 
     /// <summary>
@@ -174,7 +174,7 @@ public class InfantryContoller : ChampionClassController
     /// </summary>
     public override void Skill3()
     {
-        DoMeleeSkill(ref animCon.trigSkill3, (MeleeSkill)skill3_var);
+        DoMeleeSkill(ref animCon.trigSkill3, Skill.SkillType.Skill3);
     }
 
     /// <summary>
@@ -188,7 +188,7 @@ public class InfantryContoller : ChampionClassController
     /// </summary>
     public override void Skill4()
     {
-        DoMeleeSkill(ref animCon.trigSkill4, (MeleeSkill)skill4_var);
+        DoMeleeSkill(ref animCon.trigSkill4, Skill.SkillType.Skill4);
     }
 
     #endregion

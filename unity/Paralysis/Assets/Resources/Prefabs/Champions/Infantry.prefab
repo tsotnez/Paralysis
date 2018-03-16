@@ -881,47 +881,125 @@ MonoBehaviour:
   m_CanTurnAroundWhileBlocking: 1
   m_initialJumpVelocity: 105
   m_maxJumpTime: 0.3
+  stamina_Jump: 15
   m_JumpDivisor: 1
   m_DoubleJumpDivisor: 1.05
-  m_jumpAttackRadius: 1.5
   m_jumpAttackForce: 10
   m_dashSpeed: 12
   m_dashStaminaCost: 10
   m_CanDashForward: 0
   ComboExpire: 1
-  delay_BasicAttack1: 0
-  delay_BasicAttack2: 0
-  delay_BasicAttack3: 0
-  delay_JumpAttack: 0
-  delay_Skill1: 0
-  delay_Skill2: 0
-  delay_Skill3: 0
-  delay_Skill4: 0
-  stamina_BasicAttack1: 5
-  stamina_BasicAttack2: 5
-  stamina_BasicAttack3: 5
-  stamina_Jump: 15
-  stamina_JumpAttack: 5
-  stamina_Skill1: 10
-  stamina_Skill2: 15
-  stamina_Skill3: 20
-  stamina_Skill4: 15
-  damage_BasicAttack1: 5
-  damage_BasicAttack2: 7
-  damage_BasicAttack3: 7
-  damage_JumpAttack: 5
-  damage_Skill1: 5
-  damage_Skill2: 5
-  damage_Skill3: 15
-  damage_Skill4: 10
-  cooldown_BasicAttack1: 0
-  cooldown_BasicAttack2: 0
-  cooldown_BasicAttack3: 0
-  cooldown_JumpAttack: 0
-  cooldown_Skill1: 15
-  cooldown_Skill2: 20
-  cooldown_Skill3: 25
-  cooldown_Skill4: 20
+  MeleeSkills:
+  - type: 0
+    skillName: Basic Attack
+    effect: 0
+    effectDuration: 0
+    effectValue: 0
+    damage: 5
+    staminaCost: 5
+    cooldown: 0
+    targetType: 0
+    range: 1.5
+    needsToBeGrounded: 1
+    delay: 0
+    notOnCooldown: 1
+  - type: 1
+    skillName: Basic Attack
+    effect: 0
+    effectDuration: 0
+    effectValue: 0
+    damage: 7
+    staminaCost: 5
+    cooldown: 0
+    targetType: 0
+    range: 1.5
+    needsToBeGrounded: 1
+    delay: 0
+    notOnCooldown: 1
+  - type: 2
+    skillName: Basic Attack
+    effect: 0
+    effectDuration: 0
+    effectValue: 0
+    damage: 7
+    staminaCost: 5
+    cooldown: 0
+    targetType: 0
+    range: 1.5
+    needsToBeGrounded: 1
+    delay: 0
+    notOnCooldown: 1
+  - type: 3
+    skillName: Jump Attack
+    effect: 0
+    effectDuration: 0
+    effectValue: 0
+    damage: 5
+    staminaCost: 5
+    cooldown: 0
+    targetType: 1
+    range: 1.5
+    needsToBeGrounded: 0
+    delay: 0
+    notOnCooldown: 1
+  - type: 5
+    skillName: Ground Break
+    effect: 1
+    effectDuration: 3
+    effectValue: 0
+    damage: 5
+    staminaCost: 15
+    cooldown: 20
+    targetType: 2
+    range: 1.5
+    needsToBeGrounded: 1
+    delay: 0
+    notOnCooldown: 1
+  - type: 6
+    skillName: Storm of Blades
+    effect: 0
+    effectDuration: 0
+    effectValue: 0
+    damage: 15
+    staminaCost: 20
+    cooldown: 25
+    targetType: 1
+    range: 1.5
+    needsToBeGrounded: 1
+    delay: 0
+    notOnCooldown: 1
+  - type: 7
+    skillName: Tornado
+    effect: 2
+    effectDuration: 0
+    effectValue: 0
+    damage: 10
+    staminaCost: 15
+    cooldown: 20
+    targetType: 2
+    range: 1.5
+    needsToBeGrounded: 1
+    delay: 0
+    notOnCooldown: 1
+  RangeSkills:
+  - type: 4
+    skillName: Grappling Hook
+    effect: 1
+    effectDuration: 3
+    effectValue: 0
+    damage: 5
+    staminaCost: 10
+    cooldown: 15
+    targetType: 0
+    range: 10
+    needsToBeGrounded: 1
+    delay: 0
+    notOnCooldown: 1
+    onHitEffect: 0
+    prefab: {fileID: 1159624417898122, guid: 6ce9800d51c562645971c77d62e59cee, type: 2}
+    speed: {x: 10, y: 0}
+    castTime: 0
+    rangedSkillId: 0
   hotbar: {fileID: 0}
   className: 3
   Trinket1: {fileID: 0}

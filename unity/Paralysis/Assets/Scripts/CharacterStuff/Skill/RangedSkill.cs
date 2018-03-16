@@ -13,7 +13,7 @@ public class RangedSkill : Skill
     public short rangedSkillId = 0;
     public static Dictionary<short, RangedSkill> rangedSkillDict = new Dictionary<short, RangedSkill>();
 
-    public RangedSkill(ChampionAndTrinketDatabase.Keys skillName, bool skillOnHitEffect, Vector2 projectileSpeed, GameObject projectilePrefab, float skillDelay, int skillDamage, SkillEffect skillSpecialEffect, int skillSpecialEffectTime, float skillSpecialEffectValue, int skillStaminaCost, SkillTarget skillTargetType, float skillCooldown, float skillRange, string name, bool skillNeedsToBeGrounded = true, float castTime = 0f) 
+    public RangedSkill(Skill.SkillType skillName, bool skillOnHitEffect, Vector2 projectileSpeed, GameObject projectilePrefab, float skillDelay, int skillDamage, SkillEffect skillSpecialEffect, int skillSpecialEffectTime, float skillSpecialEffectValue, int skillStaminaCost, SkillTarget skillTargetType, float skillCooldown, float skillRange, string name, bool skillNeedsToBeGrounded = true, float castTime = 0f) 
         : base(skillName, skillDelay, skillDamage, skillSpecialEffect, skillSpecialEffectTime, skillSpecialEffectValue, skillStaminaCost, skillTargetType, skillCooldown, skillRange, name, skillNeedsToBeGrounded)
     {
         onHitEffect = skillOnHitEffect;

@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class AssassinController : ChampionClassController
 {
-    [Header("Assassin Specific")]
-    [SerializeField]
-    private GameObject bulletPrefab;
     [SerializeField]
     private int ambushAttack_damage = 13;
 
@@ -45,7 +42,7 @@ public class AssassinController : ChampionClassController
             if (animCon.propGrounded && stats.invisible)
             {
                 // do ambush attack
-                DoMeleeSkill(ref animCon.trigSkill3, new MeleeSkill(0, skill3_var.delay, ambushAttack_damage, Skill.SkillEffect.nothing, 3, 0, basicAttack1_var.staminaCost, Skill.SkillTarget.SingleTarget, 0, GameConstants.MeeleRange, "ÄNDERN!"));
+                DoMeleeSkill(ref animCon.trigSkill3, Skill.SkillType.Skill3);
                 // reset Combo
                 AbortCombo();
                 // end invisibility
@@ -64,7 +61,7 @@ public class AssassinController : ChampionClassController
     public override void Skill1()
     {
         if (stats.invisible) stats.StopInvisible();
-        DoMeleeSkill(ref animCon.trigSkill1, (MeleeSkill)skill1_var);
+        DoMeleeSkill(ref animCon.trigSkill1, Skill.SkillType.Skill1);
     }
 
     /// <summary>
@@ -72,11 +69,12 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void Skill2()
     {
-        if (CanPerformAction(true) && CanPerformAttack() && skill2_var.notOnCooldown && stats.LoseStamina(skill2_var.staminaCost))
+        MeleeSkill skill2 = (MeleeSkill)getSkillByType(Skill.SkillType.Skill2);
+        if (CanPerformAction(true) && CanPerformAttack() && skill2.notOnCooldown && stats.LoseStamina(skill2.staminaCost))
         {
-            hotbar.StartCoroutine(hotbar.flashBlack(skill2_var.type));
+            hotbar.StartCoroutine(hotbar.flashBlack(skill2.type));
             if (stats.invisible) stats.StopInvisible();
-            StartCoroutine(SetSkillOnCooldown(skill2_var));
+            StartCoroutine(SetSkillOnCooldown(skill2));
             animCon.trigSkill2 = true;
             StartCoroutine(Skill2Routine());
         }
@@ -87,7 +85,7 @@ public class AssassinController : ChampionClassController
     /// </summary>
     IEnumerator Skill2Routine()
     {
-        yield return new WaitForSeconds(skill2_var.delay);
+        yield return new WaitForSeconds(getSkillByType(Skill.SkillType.Skill2).delay);
         stats.StartInvisible(5);
     }
 
@@ -96,9 +94,10 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void Skill3()
     {
-        if (CanPerformAction(true) && CanPerformAttack() && skill3_var.notOnCooldown && stats.LoseStamina(skill3_var.staminaCost))
+        MeleeSkill skill3 = (MeleeSkill)getSkillByType(Skill.SkillType.Skill3);
+        if (CanPerformAction(true) && CanPerformAttack() && skill3.notOnCooldown && stats.LoseStamina(skill3.staminaCost))
         {
-            hotbar.StartCoroutine(hotbar.flashBlack(skill3_var.type));
+            hotbar.StartCoroutine(hotbar.flashBlack(skill3.type));
             if (stats.invisible) stats.StopInvisible();
             StartCoroutine(ShadowStepHit());
         }
@@ -110,7 +109,7 @@ public class AssassinController : ChampionClassController
     public override void Skill4()
     {
         if (stats.invisible) stats.StopInvisible();
-        DoRangeSkill(ref animCon.trigSkill4, (RangedSkill)skill4_var);
+        DoRangeSkill(ref animCon.trigSkill4, Skill.SkillType.Skill4);
     }
 
     #endregion
@@ -119,6 +118,7 @@ public class AssassinController : ChampionClassController
 
     private IEnumerator ShadowStepHit()
     {
+        MeleeSkill skill3 = (MeleeSkill)getSkillByType(Skill.SkillType.Skill3);
         animCon.trigSkill2 = true;
         stats.invincible = true;
 
@@ -177,14 +177,14 @@ public class AssassinController : ChampionClassController
             }
             m_Rigidbody2D.velocity = Vector2.zero;
             animCon.trigSkill3 = true;
-            yield return new WaitForSeconds(skill3_var.delay);
-            stats.DealDamage(targetStats, skill3_var.damage, false);
+            yield return new WaitForSeconds(skill3.delay);
+            stats.DealDamage(targetStats, skill3.damage, false);
 
             yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimationTypes.Skill3);
             stats.immovable = false;
         }
         stats.invincible = false;
-        StartCoroutine(SetSkillOnCooldown(skill3_var));
+        StartCoroutine(SetSkillOnCooldown(skill3));
     }
 
     #endregion
