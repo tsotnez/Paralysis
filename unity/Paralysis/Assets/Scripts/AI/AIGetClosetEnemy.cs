@@ -50,6 +50,12 @@ public class AIGetClosetEnemy : MonoBehaviour {
             return;
         }
 
+		if (enemyPlayers.Count == 1) 
+		{
+			targetPlayer = enemyPlayers [0];
+			return; 
+		}
+
         float actDistance = float.MaxValue;
         targetPlayer = null;
         foreach (CharacterStats enemyPlayer in enemyPlayers)

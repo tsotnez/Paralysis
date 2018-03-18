@@ -29,12 +29,23 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected AIGetClosetEnemy aiTargeting;
     protected ChampionAnimationController animCon;
+    protected ChampionClassController champClassCon;
     protected CharacterStats charStats;
+    protected GameObject targetPlayer;
 
-    protected GameObject targetPlayer; 
+    protected virtual float getLongRangeAttackDistance(){
+        return 1.5f;
+    }
+    protected virtual float getMediumDistanceAttackDistance(){
+        return 5f;
+    }
+    protected virtual float getCloseRangeAttackDistance(){
+        return 7f;
+    }
 
     protected float targetDirectionX = 0;
     protected float targetDirectionY = 0;           //can be 1 (above), 0 (same), or -1(below)
+    protected float facingDirection = 1;
     protected float yDiff = 0;
     protected float jumpDifference;
 
@@ -47,7 +58,12 @@ public abstract class AIUserControl : MonoBehaviour {
     private const float MIN_DISTANCE_TO_NODE = .115f;
 
 
-    public enum AI_GOALS { MOVE_TO_PLAYER, MOVE_THROUGH_NODES, JUMP1, JUMP2, FALL_THROUGH, STAND_BY };
+    public enum AI_GOALS { MOVE_TO_PLAYER, MOVE_THROUGH_NODES, JUMP1, JUMP2, FALL_THROUGH, STAND_BY, RETREAT, WAIT };
+    public float waitTime;
+
+    public enum DISTANCE_RET { MOVE_CLOSER, WAIT, CHANGE_GOAL }
+    protected AI_GOALS distRetNewGoal;
+    protected float distWaitTime = 0f;
 
     protected AI_GOALS currentGoal = AI_GOALS.STAND_BY;
     protected AI_GOALS previousGoal = AI_GOALS.STAND_BY;
@@ -71,6 +87,7 @@ public abstract class AIUserControl : MonoBehaviour {
             aiTargeting = GetComponent<AIGetClosetEnemy>();
             animCon = GetComponentInChildren<ChampionAnimationController>();
             charStats = GetComponentInChildren<CharacterStats>();
+            champClassCon = GetComponent<ChampionClassController>();
 
             //set jump difference to the size of our box collider
             jumpDifference = GetComponent<BoxCollider2D>().size.y;
@@ -91,8 +108,14 @@ public abstract class AIUserControl : MonoBehaviour {
         resetInputs();
         setCurrentState();
 
-        switch(currentGoal)
+        switch (currentGoal)
         {
+        case AI_GOALS.WAIT:
+            if (Time.time > waitTime)setCurrentGoal();
+            break;
+        case AI_GOALS.RETREAT:
+            //TODO
+            break;
         case AI_GOALS.MOVE_TO_PLAYER:
             setCurrentGoal();
             moveTowardsTargetPlayer();
@@ -141,6 +164,9 @@ public abstract class AIUserControl : MonoBehaviour {
                 targetDirectionY = Mathf.Sign(targetPlayer.transform.position.y - transform.position.y);
             }
         }
+
+        if (champClassCon.FacingRight) facingDirection = 1;
+        else facingDirection = -1;
     }
 
     protected virtual void setCurrentGoal()
@@ -164,14 +190,6 @@ public abstract class AIUserControl : MonoBehaviour {
         else
         {
             changeGoal(AI_GOALS.STAND_BY);
-        }
-    }
-
-    protected virtual void moveTowardsTargetPlayer()
-    {
-        if(targetPlayer != null  && distanceToTargetPlayer() > 2f)
-        {
-            inputMove = Mathf.Sign(targetDirectionX);
         }
     }
 
@@ -223,6 +241,72 @@ public abstract class AIUserControl : MonoBehaviour {
         inputMove = Mathf.Sign(currentNode.transform.position.x - transform.position.x);
         if(!animCon.propGrounded) inputMove = inputMove/2;
     }
+
+    #region Attack
+
+    protected virtual void moveTowardsTargetPlayer()
+    {
+        if (targetPlayer != null)
+        {
+            DISTANCE_RET distRetValue = DISTANCE_RET.MOVE_CLOSER;
+            float distance = distanceToTargetPlayer();
+
+            //Are we facing towards the target
+            Vector2 targetPos = targetPlayer.transform.position;
+            bool facingTarget = false;
+            if ((facingDirection == 1 && targetPos.x > transform.position.x) ||
+                (facingDirection == -1 && targetPos.x < transform.position.x))
+            {
+                facingTarget = true;
+            }
+            if (distance <= getCloseRangeAttackDistance())
+            {
+                distRetValue = closeRangeAttack(facingTarget, distance, yDiff);
+            } else if (distance <= getMediumDistanceAttackDistance())
+            {
+                distRetValue = mediumRangeAttack(facingTarget, distance, yDiff);
+            } else if (distance <= getLongRangeAttackDistance())
+            {
+                distRetValue = longRangeAttack(facingTarget, distance, yDiff);
+            }
+
+            switch (distRetValue)
+            {
+            case DISTANCE_RET.CHANGE_GOAL:
+                //TODO
+                break;
+            case DISTANCE_RET.WAIT:
+                setGoalWait(distWaitTime);
+                break;
+            case DISTANCE_RET.MOVE_CLOSER:
+                //Move closert ot he target
+                if (distance >= getCloseRangeAttackDistance())
+                {
+                    inputMove = Mathf.Sign(targetDirectionX);
+                }
+                break;
+            default:
+                break;
+            }
+
+        }
+    }
+
+    protected virtual DISTANCE_RET closeRangeAttack(bool facingTarget, float distance, float yDiff)
+    {
+        return DISTANCE_RET.MOVE_CLOSER;
+    }
+
+    protected virtual DISTANCE_RET mediumRangeAttack(bool facingTarget, float distance,float yDiff)
+    {
+        return DISTANCE_RET.MOVE_CLOSER;
+    }
+
+    protected virtual DISTANCE_RET longRangeAttack(bool facingTarget, float distance, float yDiff)
+    {
+        return DISTANCE_RET.MOVE_CLOSER;
+    }
+    #endregion
 
     #region FallThrough
 
@@ -280,7 +364,7 @@ public abstract class AIUserControl : MonoBehaviour {
         }
 
         //Were grounded but dont have enough stamina
-        if(animCon.propGrounded && charStats.CurrentStamina < GetComponent<ChampionClassController>().stamina_Jump)
+        if(animCon.propGrounded && charStats.CurrentStamina < champClassCon.stamina_Jump)
         {
             changeGoal(AI_GOALS.STAND_BY);
             return;
@@ -460,6 +544,12 @@ public abstract class AIUserControl : MonoBehaviour {
     private float distanceToTargetPlayer()
     {
         return Mathf.Abs(Vector2.Distance(targetPlayer.transform.position, transform.position));
+    }
+
+    private void setGoalWait(float timeToWait)
+    {
+        waitTime = Time.time + timeToWait;
+        changeGoal(AI_GOALS.WAIT);
     }
 
     private void resetInputs()
