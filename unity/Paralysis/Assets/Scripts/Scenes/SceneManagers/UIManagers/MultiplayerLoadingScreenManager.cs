@@ -6,18 +6,18 @@ using UnityEngine.UI;
 public class MultiplayerLoadingScreenManager : MonoBehaviour {
 
     //List holding the champions on each team. Fill these externally
-    public static List<ChampionAndTrinketDatabase.Champions> Team1 = new List<ChampionAndTrinketDatabase.Champions>();
-    public static List<ChampionAndTrinketDatabase.Champions> Team2 = new List<ChampionAndTrinketDatabase.Champions>();
+    public static List<ChampionDatabase.Champions> Team1 = new List<ChampionDatabase.Champions>();
+    public static List<ChampionDatabase.Champions> Team2 = new List<ChampionDatabase.Champions>();
 
 
     //Spawnpoints for the champion images
     public Transform[] spawnPointsT1;
     public Transform[] spawnPointsT2;
     public GameObject[] prefabs;
-    public ChampionAndTrinketDatabase.Champions[] championNames;
+    public ChampionDatabase.Champions[] championNames;
 
     //Dictianory holding the prefab to load for every chmapion
-    private Dictionary<ChampionAndTrinketDatabase.Champions, GameObject> PrefabsForChampions = new Dictionary<ChampionAndTrinketDatabase.Champions, GameObject>();
+    private Dictionary<ChampionDatabase.Champions, GameObject> PrefabsForChampions = new Dictionary<ChampionDatabase.Champions, GameObject>();
 
     // Use this for initialization
     void Start () {
@@ -25,15 +25,15 @@ public class MultiplayerLoadingScreenManager : MonoBehaviour {
         //For testing, fill teams automatically if empty
         if(Team1.Count == 0)
         {
-            Team1.Add(ChampionAndTrinketDatabase.Champions.Alchemist);
-            Team1.Add(ChampionAndTrinketDatabase.Champions.Archer);
-            Team1.Add(ChampionAndTrinketDatabase.Champions.Assassin);
+            Team1.Add(ChampionDatabase.Champions.Alchemist);
+            Team1.Add(ChampionDatabase.Champions.Archer);
+            Team1.Add(ChampionDatabase.Champions.Assassin);
         }
         if (Team2.Count == 0)
         {
-            Team2.Add(ChampionAndTrinketDatabase.Champions.Infantry);
-            Team2.Add(ChampionAndTrinketDatabase.Champions.Assassin);
-            Team2.Add(ChampionAndTrinketDatabase.Champions.Knight);
+            Team2.Add(ChampionDatabase.Champions.Infantry);
+            Team2.Add(ChampionDatabase.Champions.Assassin);
+            Team2.Add(ChampionDatabase.Champions.Knight);
         }
         /////////////////////////////////////////////////////////
 

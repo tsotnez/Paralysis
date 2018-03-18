@@ -54,7 +54,7 @@ public class ArcherController : ChampionClassController
 
     public override void Skill2()
     {
-        RangedSkill skill2 = (RangedSkill)getSkillByType(Skill.SkillType.Skill2);
+        RangedSkill skill2 = GetRangeSkillByType(Skill.SkillType.Skill2);
         if (CanPerformAction(true) && CanPerformAttack() && skill2.notOnCooldown && stats.LoseStamina(skill2.staminaCost))
         {
             //Puts down a trap
@@ -81,7 +81,7 @@ public class ArcherController : ChampionClassController
     [PunRPC]
     public void RPC_PlaceTrap(Vector3 position)
     {
-        RangedSkill skill2 = (RangedSkill)getSkillByType(Skill.SkillType.Skill2);
+        RangedSkill skill2 = GetRangeSkillByType(Skill.SkillType.Skill2);
         GameObject trap = Instantiate((skill2).prefab, position, Quaternion.identity);
         ArcherTrapBehaviour trapScript = trap.GetComponent<ArcherTrapBehaviour>();
         trapScript.creator = gameObject;
@@ -98,7 +98,7 @@ public class ArcherController : ChampionClassController
 
     public override void Skill4()
     {
-        RangedSkill skill4 = (RangedSkill)getSkillByType(Skill.SkillType.Skill4);
+        RangedSkill skill4 = GetRangeSkillByType(Skill.SkillType.Skill4);
         if (CanPerformAction(true) && CanPerformAttack() && skill4.notOnCooldown && stats.LoseStamina(skill4.staminaCost))
         {
             hotbar.StartCoroutine(hotbar.flashBlack(skill4.type));
@@ -142,7 +142,7 @@ public class ArcherController : ChampionClassController
         stats.invincible = false;
         disengaging = false;
         stats.immovable = false;
-        StartCoroutine(SetSkillOnCooldown(getSkillByType(Skill.SkillType.Skill4)));
+        StartCoroutine(SetSkillOnCooldown(GetRangeSkillByType(Skill.SkillType.Skill4)));
     }
 
     #endregion

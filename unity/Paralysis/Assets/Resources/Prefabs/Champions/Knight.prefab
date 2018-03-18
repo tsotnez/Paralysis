@@ -301,7 +301,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1688533011142218}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.7, y: 0.66, z: 0}
+  m_LocalPosition: {x: 0.7, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4662659095535300}
@@ -891,6 +891,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f5eddb718fbdf048add760e9a001bbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  className: 2
+  characterFullName: Knight, the Fortress
+  characterLore: 
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 17920
@@ -926,7 +929,7 @@ MonoBehaviour:
     targetType: 0
     range: 1.5
     needsToBeGrounded: 1
-    delay: 0.4
+    delay: 0.2
     notOnCooldown: 1
     skillDescription: 
   - type: 1
@@ -940,7 +943,7 @@ MonoBehaviour:
     targetType: 0
     range: 1.5
     needsToBeGrounded: 1
-    delay: 0.4
+    delay: 0.2
     notOnCooldown: 1
     skillDescription: 
   - type: 2
@@ -954,7 +957,7 @@ MonoBehaviour:
     targetType: 0
     range: 1.5
     needsToBeGrounded: 1
-    delay: 0.45
+    delay: 0.2
     notOnCooldown: 1
     skillDescription: 
   - type: 3
@@ -1012,7 +1015,7 @@ MonoBehaviour:
     targetType: 0
     range: 1.5
     needsToBeGrounded: 1
-    delay: 0.2
+    delay: 0.1
     notOnCooldown: 1
     skillDescription: "The knight takes a few swift steps to deliver a strike \nwith
       his shield, any enemy struck by it will be put in \na knockback animation."
@@ -1038,17 +1041,12 @@ MonoBehaviour:
     castTime: 0
     rangedSkillId: 0
   hotbar: {fileID: 0}
-  className: 2
-  characterFullName: Knight, the Fortress
-  characterLore: 
   Trinket1: {fileID: 0}
   Trinket2: {fileID: 0}
   FacingRight: 1
   dashing: 0
   blocking: 0
   doubleJumped: 0
-  Skill4_Spear: {fileID: 1686816382022230, guid: 60be7605c6f8ae34c9df248ad63aff85,
-    type: 2}
   skill2_leap_speed: 10
 --- !u!114 &114884245615266836
 MonoBehaviour:

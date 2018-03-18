@@ -51,7 +51,8 @@ public class AlchemistController : ChampionClassController
     /// </summary>
     public override void Skill2()
     {
-        if (CanPerformAction(false) && CanPerformAttack() && getSkillByType(Skill.SkillType.Skill2).notOnCooldown && stats.LoseStamina(getSkillByType(Skill.SkillType.Skill2).staminaCost))
+        MeleeSkill skill2 = GetMeleeSkillByType(Skill.SkillType.Skill2);
+        if (CanPerformAction(false) && CanPerformAttack() && skill2.notOnCooldown && stats.LoseStamina(skill2.staminaCost))
         {
             // Get the direction first --> save the effects on skill enter
             TeleportDirection direction = TeleportDirection.forward;
@@ -114,7 +115,7 @@ public class AlchemistController : ChampionClassController
 
     private IEnumerator DoSkill2(TeleportDirection direction)
     {
-        MeleeSkill skill2 = (MeleeSkill)getSkillByType(Skill.SkillType.Skill2);
+        MeleeSkill skill2 = GetMeleeSkillByType(Skill.SkillType.Skill2);
         // trigger animation for getting invisible
         animCon.trigSkill2 = true;
 

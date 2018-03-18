@@ -13,6 +13,12 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     #region Parameters for Inspector
 
+    // Character identification
+    public ChampionDatabase.Champions className;                            // Character Name
+    public string characterFullName;                                        // Character Name with title
+    [Multiline(6)]
+    public string characterLore;                                            // Character description
+
     // Layers
     public LayerMask m_WhatIsGround;                                        // A mask determining what is ground to the character
     public LayerMask m_whatToHit;                                           // What to hit when checking for hits while attacking
@@ -30,11 +36,11 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     // Jump & JumpAttack
     [SerializeField]
-    protected float m_initialJumpVelocity = 100f;                           // Initiail Y velocity when we start jumping
+    protected float m_initialJumpVelocity = 100f;                           // Initial Y velocity when we start jumping
     [SerializeField]
     protected float m_maxJumpTime = .3f;                                    // Max time in air going up
     [SerializeField]
-    public int stamina_Jump = 15;
+    public int stamina_Jump = 15;                                           // Stamina costs for a Jump
     [SerializeField]
     protected float m_JumpDivisor = 1f;                                     // Jump divsor
     [SerializeField]
@@ -58,30 +64,26 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     // Skills
     [SerializeField]
-    protected MeleeSkill[] MeleeSkills;
+    protected MeleeSkill[] MeleeSkills;                                     // Contains all melee skills
     [SerializeField]
-    protected RangedSkill[] RangeSkills;
+    protected RangedSkill[] RangeSkills;                                    // Contains all range skills
+
+    // Trinkets
+    public Trinket Trinket1;
+    public Trinket Trinket2;
 
     #endregion
 
     // Objects
     [HideInInspector]
     public HotbarController hotbar;
-    public ChampionAndTrinketDatabase.Champions className;
-    public string characterFullName;
-    [Multiline(6)]
-    public string characterLore;
     protected Transform m_GroundCheck;                                      // A position marking where to check if the player is grounded.
     protected Transform ProjectilePosition;                                 // A position marking where a projectile shall be spawned.
-    protected SpriteRenderer shadowRenderer;
-    protected Rigidbody2D m_Rigidbody2D;                                    // Reference to the players rigidbody
-    protected CharacterStats stats;                                         // Reference to stats
-    protected Transform graphics;                                           // Reference to the graphics child
-    protected ChampionAnimationController animCon;                          // Reference to the Animation Contoller
-
-    // Skills & Trinkets
-    public Trinket Trinket1;
-    public Trinket Trinket2;
+    protected SpriteRenderer shadowRenderer;                                // Reference to the shadow of the character (ground).
+    protected Rigidbody2D m_Rigidbody2D;                                    // Reference to the players rigidbody.
+    protected CharacterStats stats;                                         // Reference to stats.
+    protected Transform graphics;                                           // Reference to the graphics child.
+    protected ChampionAnimationController animCon;                          // Reference to the Animation Contoller.
 
     // Stats
     public bool FacingRight = true;                                         // For determining which way the player is currently facing.
@@ -99,7 +101,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     private float m_timeInAir = 0f;
     private bool m_jumpPressed = false;
 
-    //Coroutines
+    // Coroutines
     protected Coroutine comboRoutine;
 
     #region default methods
@@ -131,9 +133,6 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 m_Rigidbody2D.isKinematic = true;
             }
         }
-
-        // Set default JumpAttack
-        //jumpAttack_var = new MeleeSkill(0, 0, damage_JumpAttack, Skill.SkillEffect.nothing, 0, 0, 10, Skill.SkillTarget.MultiTarget, 0, m_jumpAttackRadius, ChampionAndTrinketDatabase.Champions.Alchemist);
     }
 
     protected virtual void FixedUpdate()
@@ -172,29 +171,6 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         {
             m_Rigidbody2D.velocity = new Vector2(m_dashSpeed, m_Rigidbody2D.velocity.y);
         }
-    }
-
-    public Skill getSkillByType(Skill.SkillType Type)
-    {
-        // Check for skill in MeleeSkills
-        foreach (MeleeSkill skill in MeleeSkills)
-        {
-            if (skill.type == Type)
-            {
-                return skill;
-            }
-        }
-        // Check for skill in RangeSkills
-        foreach (RangedSkill skill in RangeSkills)
-        {
-            if (skill.type == Type)
-            {
-                return skill;
-            }
-        }
-
-        // Return null if nothing is found
-        return null;
     }
 
     #endregion
@@ -353,7 +329,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     public virtual IEnumerator JumpAttack()
     {
-        MeleeSkill skillJumpAttack = (MeleeSkill)getSkillByType(Skill.SkillType.JumpAttack);
+        MeleeSkill skillJumpAttack = GetMeleeSkillByType(Skill.SkillType.JumpAttack);
         // Check if enough stamina is left
         if (CanPerformAttack() && stats.LoseStamina(skillJumpAttack.staminaCost))
         {
@@ -375,7 +351,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
             // Deal damage to all enemies
             animCon.trigJumpAttackEnd = true;
-            StartCoroutine(DoMeleeSkill_Hit((MeleeSkill)skillJumpAttack));
+            StartCoroutine(DoMeleeSkill_Hit(skillJumpAttack));
 
             // Wait till animation is finished and end jump attack
             yield return new WaitUntil(() => animCon.CurrentAnimation != AnimationController.AnimationTypes.JumpAttack);
@@ -439,8 +415,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 yield return new WaitUntil(() => animCon.CurrentAnimation == RequiredAnimState);                                    // Wait till animation has started
 
                 // If an EndAnimation is present do some extra stuff
-                yield return new WaitUntil(() => animCon.CurrentAnimationState == AnimationController.AnimationState.Waiting);  // Wait till animation is in state waiting
-                yield return new WaitUntil(() => animCon.propGrounded);                                                         // Wait till character is on ground
+                yield return new WaitUntil(() => animCon.CurrentAnimationState == AnimationController.AnimationState.Waiting);      // Wait till animation is in state waiting
+                yield return new WaitUntil(() => animCon.propGrounded);                                                             // Wait till character is on ground
 
                 // Start EndAnimation
                 applyDashingForce = false;
@@ -523,9 +499,9 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         if (CanPerformAction(false) && CanPerformAttack() && animCon.propGrounded)
         {
             // Check if enough stamina for attack
-            if ((stats.HasSufficientStamina(getSkillByType(Skill.SkillType.BasicAttack1).staminaCost) && attackCount == 0) || // Basic Attack 1
-                (stats.HasSufficientStamina(getSkillByType(Skill.SkillType.BasicAttack2).staminaCost) && attackCount == 1) || // Basic Attack 2
-                (stats.HasSufficientStamina(getSkillByType(Skill.SkillType.BasicAttack3).staminaCost) && attackCount == 2))   // Combo Attack
+            if ((stats.HasSufficientStamina(GetMeleeSkillByType(Skill.SkillType.BasicAttack1).staminaCost) && attackCount == 0) || // Basic Attack 1
+                (stats.HasSufficientStamina(GetMeleeSkillByType(Skill.SkillType.BasicAttack2).staminaCost) && attackCount == 1) || // Basic Attack 2
+                (stats.HasSufficientStamina(GetMeleeSkillByType(Skill.SkillType.BasicAttack3).staminaCost) && attackCount == 2))   // Combo Attack
             {
                 // Already in combo?
                 if (!inCombo)
@@ -609,10 +585,10 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     /// <param name="NoValidation"></param>
     protected void DoMeleeSkill(ref bool animationVar, Skill.SkillType SkillType, bool NoValidation = false)
     {
-        MeleeSkill skillToPerform = (MeleeSkill)getSkillByType(SkillType);
+        MeleeSkill skillToPerform = GetMeleeSkillByType(SkillType);
         if (skillToPerform == null)
         {
-            throw new NullReferenceException("Skill that shall be performed is null");
+            throw new NullReferenceException("Skill that shall be performed can not be null");
         }
 
         //Validate that character is not attacking and standing on ground
@@ -718,10 +694,10 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
     protected void DoRangeSkill(ref bool animationVar, Skill.SkillType SkillType)
     {
-        RangedSkill skillToPerform = (RangedSkill)getSkillByType(SkillType);
+        RangedSkill skillToPerform = GetRangeSkillByType(SkillType);
         if (skillToPerform == null)
         {
-            throw new NullReferenceException("Skill that shall be performed is null");
+            throw new NullReferenceException("Skill that shall be performed can not be null");
         }
 
         //Validate that character is not attacking and standing on ground
@@ -830,6 +806,56 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             yield return new WaitForSeconds(skillToPerform.cooldown);
             skillToPerform.notOnCooldown = true;
         }
+    }
+
+    #endregion
+
+    #region Skill stuff
+
+    public Skill GetSkillByType(Skill.SkillType Type)
+    {
+        Skill returnValue = null;
+
+        // Check for skill in MeleeSkills
+        returnValue = GetMeleeSkillByType(Type);
+        if (returnValue != null)
+            return returnValue;
+
+        // Check for skill in RangeSkills
+        returnValue = GetRangeSkillByType(Type);
+
+        // Return null or what is found
+        return returnValue;
+    }
+
+    public MeleeSkill GetMeleeSkillByType(Skill.SkillType Type)
+    {
+        // Check for skill in MeleeSkills
+        foreach (MeleeSkill skill in MeleeSkills)
+        {
+            if (skill.type == Type)
+            {
+                return skill;
+            }
+        }
+
+        // Return null if nothing is found
+        return null;
+    }
+
+    public RangedSkill GetRangeSkillByType(Skill.SkillType Type)
+    {
+        // Check for skill in RangeSkills
+        foreach (RangedSkill skill in RangeSkills)
+        {
+            if (skill.type == Type)
+            {
+                return skill;
+            }
+        }
+
+        // Return null if nothing is found
+        return null;
     }
 
     #endregion

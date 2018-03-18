@@ -41,3 +41,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MultiplayerLoadingScreen.unity
     guid: 8dd6b52d9f9cb8043bdb5afea9e6ed9b
+  - enabled: 1
+    path: Assets/Scenes/ViewChampions.unity
+    guid: 989b6912a17da4d4fb0fd1703d24e86b

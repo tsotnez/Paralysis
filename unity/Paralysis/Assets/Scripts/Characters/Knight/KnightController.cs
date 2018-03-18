@@ -73,7 +73,7 @@ public class KnightController : ChampionClassController
     public override void Skill2()
     {
         // Validate if skill can be performed
-        MeleeSkill skill2 = (MeleeSkill)getSkillByType(Skill.SkillType.Skill2);
+        MeleeSkill skill2 = GetMeleeSkillByType(Skill.SkillType.Skill2);
         if (CanPerformAction(true) && CanPerformAttack() && skill2.notOnCooldown && stats.HasSufficientStamina(skill2.staminaCost))
         {
             hotbar.StartCoroutine(hotbar.flashBlack(skill2.type));

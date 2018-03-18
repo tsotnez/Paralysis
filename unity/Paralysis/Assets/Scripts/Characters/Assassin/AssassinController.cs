@@ -56,7 +56,7 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void Skill2()
     {
-        MeleeSkill skill2 = (MeleeSkill)getSkillByType(Skill.SkillType.Skill2);
+        MeleeSkill skill2 = GetMeleeSkillByType(Skill.SkillType.Skill2);
         if (CanPerformAction(true) && CanPerformAttack() && skill2.notOnCooldown && stats.LoseStamina(skill2.staminaCost))
         {
             hotbar.StartCoroutine(hotbar.flashBlack(skill2.type));
@@ -72,7 +72,7 @@ public class AssassinController : ChampionClassController
     /// </summary>
     IEnumerator Skill2Routine()
     {
-        yield return new WaitForSeconds(getSkillByType(Skill.SkillType.Skill2).delay);
+        yield return new WaitForSeconds(GetMeleeSkillByType(Skill.SkillType.Skill2).delay);
         stats.StartInvisible(5);
     }
 
@@ -81,7 +81,7 @@ public class AssassinController : ChampionClassController
     /// </summary>
     public override void Skill3()
     {
-        MeleeSkill skill3 = (MeleeSkill)getSkillByType(Skill.SkillType.Skill3);
+        MeleeSkill skill3 = GetMeleeSkillByType(Skill.SkillType.Skill3);
         if (CanPerformAction(true) && CanPerformAttack() && skill3.notOnCooldown && stats.LoseStamina(skill3.staminaCost))
         {
             hotbar.StartCoroutine(hotbar.flashBlack(skill3.type));
@@ -105,7 +105,7 @@ public class AssassinController : ChampionClassController
 
     private IEnumerator ShadowStepHit()
     {
-        MeleeSkill skill3 = (MeleeSkill)getSkillByType(Skill.SkillType.Skill3);
+        MeleeSkill skill3 = GetMeleeSkillByType(Skill.SkillType.Skill3);
         animCon.trigSkill2 = true;
         stats.invincible = true;
 

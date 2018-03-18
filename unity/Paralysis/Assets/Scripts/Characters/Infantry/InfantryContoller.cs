@@ -59,7 +59,7 @@ public class InfantryContoller : ChampionClassController
     public override void Skill1()
     {
         // Validate if skill can be performed
-        RangedSkill skill1 = (RangedSkill)getSkillByType(Skill.SkillType.Skill1);
+        RangedSkill skill1 = GetRangeSkillByType(Skill.SkillType.Skill1);
         if (CanPerformAction(true) && CanPerformAttack() && skill1.notOnCooldown && stats.LoseStamina(skill1.staminaCost))
         {
             hotbar.StartCoroutine(hotbar.flashBlack(skill1.type));
@@ -69,7 +69,7 @@ public class InfantryContoller : ChampionClassController
 
     private IEnumerator DoSkill1_Hook()
     {
-        RangedSkill skill1 = (RangedSkill)getSkillByType(Skill.SkillType.Skill1);
+        RangedSkill skill1 = GetRangeSkillByType(Skill.SkillType.Skill1);
         stats.immovable = true;
 
         // calculate direction

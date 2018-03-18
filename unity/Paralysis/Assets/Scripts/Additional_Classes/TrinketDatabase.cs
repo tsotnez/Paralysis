@@ -2,17 +2,10 @@
 using System;
 
 /// <summary>
-/// Holds information about each Hero and his skills in dictionaries named after the hero it contains information about.
+/// Holds information about the trinkets their descriptions.
 /// </summary>
-public static class ChampionAndTrinketDatabase
+public static class TrinketDatabase
 {
-    public enum Champions
-    {
-        Assassin, Archer, Knight, Infantry, Alchemist
-    }
-
-    #region TrinketDescriptions
-
     public static Dictionary<Trinket.Trinkets, string> TrinketDescriptions = new Dictionary<Trinket.Trinkets, string>()
     {
         {Trinket.Trinkets.PassiveTrinket_ChanceDealingMoreDamage, "Upon inflicting damage on a foe, you will have a chance to increase the damage dealt."},
@@ -27,10 +20,6 @@ public static class ChampionAndTrinketDatabase
         {Trinket.Trinkets.UseTrinket_RemoveStatusEffect, "On use, removes all status effects applied to your character."},
     };
 
-    #endregion
-
-    #region TrinketNames
-
     public static Dictionary<Trinket.Trinkets, string> TrinketNames = new Dictionary<Trinket.Trinkets, string>()
     {
         {Trinket.Trinkets.PassiveTrinket_ChanceDealingMoreDamage, "Bronze Dagger"},
@@ -44,7 +33,4 @@ public static class ChampionAndTrinketDatabase
         {Trinket.Trinkets.UseTrinket_ReflectDamage, "Strange Mirror"},
         {Trinket.Trinkets.UseTrinket_RemoveStatusEffect, "Ghost Chain"},
     };
-
-    #endregion
-
 }

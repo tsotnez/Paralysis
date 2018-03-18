@@ -22,7 +22,7 @@ public class ShowFrameOnHighlight : MonoBehaviour, ISelectHandler, IDeselectHand
         {
             frame.SetActive(true);
         }
-        catch(UnassignedReferenceException ex)
+        catch(UnassignedReferenceException)
         {
             Debug.Log(gameObject);
         }

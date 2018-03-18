@@ -10,8 +10,7 @@ public class KnightEditor : ChampionClassEditor
     {
         base.OnInspectorGUI();
 
-        GUILayout.Label("Knight Specific", EditorStyles.boldLabel);
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("Skill4_Spear"), new GUIContent("Skill 4 Projectile"), true);
-        serializedObject.ApplyModifiedProperties();
+        //GUILayout.Label("Knight Specific", EditorStyles.boldLabel);
+        //serializedObject.ApplyModifiedProperties();
     }
 }

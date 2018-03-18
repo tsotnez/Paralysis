@@ -32,7 +32,7 @@ public class Skill
     public int staminaCost = 0;
     public float cooldown = 0;
     public SkillTarget targetType = SkillTarget.SingleTarget;
-    public float range = GameConstants.MeeleAttackRange;
+    public float range = GameConstants.MEELEATTACKRANGE;
     public bool needsToBeGrounded = true;
     public float delay = 0;
     public bool notOnCooldown = true;

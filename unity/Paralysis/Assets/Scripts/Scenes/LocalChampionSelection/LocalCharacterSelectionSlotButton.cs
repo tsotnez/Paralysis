@@ -145,8 +145,8 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
     {
         Transform popup = transform.parent.parent.parent.Find("PopUpDesc");
 
-        popup.Find("TrinketName").gameObject.GetComponent<Text>().text = ChampionAndTrinketDatabase.TrinketNames[trinket];
-        popup.Find("Desc").gameObject.GetComponent<Text>().text = ChampionAndTrinketDatabase.TrinketDescriptions[trinket];
+        popup.Find("TrinketName").gameObject.GetComponent<Text>().text = TrinketDatabase.TrinketNames[trinket];
+        popup.Find("Desc").gameObject.GetComponent<Text>().text = TrinketDatabase.TrinketDescriptions[trinket];
 
         popup.gameObject.SetActive(true);
     }
@@ -176,23 +176,23 @@ public class LocalCharacterSelectionSlotButton : MonoBehaviour {
             {
                 case 1:
                     preview.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/AbilityImages/" + Champion.GetComponent<ChampionClassController>().className + "/Skill1");
-                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = Champion.GetComponent<ChampionClassController>().getSkillByType(Skill.SkillType.Skill1).skillName;
-                    preview.Find("Desc").gameObject.GetComponent<Text>().text = Champion.GetComponent<ChampionClassController>().getSkillByType(Skill.SkillType.Skill1).skillDescription;
+                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = Champion.GetComponent<ChampionClassController>().GetSkillByType(Skill.SkillType.Skill1).skillName;
+                    preview.Find("Desc").gameObject.GetComponent<Text>().text = Champion.GetComponent<ChampionClassController>().GetSkillByType(Skill.SkillType.Skill1).skillDescription;
                     break;
                 case 2:
                     preview.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/AbilityImages/" + Champion.GetComponent<ChampionClassController>().className + "/Skill2");
-                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = Champion.GetComponent<ChampionClassController>().getSkillByType(Skill.SkillType.Skill2).skillName;
-                    preview.Find("Desc").gameObject.GetComponent<Text>().text = Champion.GetComponent<ChampionClassController>().getSkillByType(Skill.SkillType.Skill2).skillDescription;
+                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = Champion.GetComponent<ChampionClassController>().GetSkillByType(Skill.SkillType.Skill2).skillName;
+                    preview.Find("Desc").gameObject.GetComponent<Text>().text = Champion.GetComponent<ChampionClassController>().GetSkillByType(Skill.SkillType.Skill2).skillDescription;
                     break;
                 case 3:
                     preview.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/AbilityImages/" + Champion.GetComponent<ChampionClassController>().className + "/Skill3");
-                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = Champion.GetComponent<ChampionClassController>().getSkillByType(Skill.SkillType.Skill3).skillName;
-                    preview.Find("Desc").gameObject.GetComponent<Text>().text = Champion.GetComponent<ChampionClassController>().getSkillByType(Skill.SkillType.Skill3).skillDescription;
+                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = Champion.GetComponent<ChampionClassController>().GetSkillByType(Skill.SkillType.Skill3).skillName;
+                    preview.Find("Desc").gameObject.GetComponent<Text>().text = Champion.GetComponent<ChampionClassController>().GetSkillByType(Skill.SkillType.Skill3).skillDescription;
                     break;
                 case 4:
                     preview.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/AbilityImages/" + Champion.GetComponent<ChampionClassController>().className + "/Skill4");
-                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = Champion.GetComponent<ChampionClassController>().getSkillByType(Skill.SkillType.Skill4).skillName;
-                    preview.Find("Desc").gameObject.GetComponent<Text>().text = Champion.GetComponent<ChampionClassController>().getSkillByType(Skill.SkillType.Skill4).skillDescription;
+                    preview.Find("SkillName").gameObject.GetComponent<Text>().text = Champion.GetComponent<ChampionClassController>().GetSkillByType(Skill.SkillType.Skill4).skillName;
+                    preview.Find("Desc").gameObject.GetComponent<Text>().text = Champion.GetComponent<ChampionClassController>().GetSkillByType(Skill.SkillType.Skill4).skillDescription;
                     break;
             }
             counter++;
