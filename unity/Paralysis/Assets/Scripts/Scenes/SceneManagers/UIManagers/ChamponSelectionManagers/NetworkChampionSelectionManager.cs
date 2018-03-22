@@ -55,7 +55,7 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
         }
         if(playerCount < 4)
         {
-            additionalPlatforms2v2.SetActive(false);
+            //additionalPlatforms2v2.SetActive(false);
         }
 
         OnGameStateUpdated();

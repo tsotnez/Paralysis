@@ -866,6 +866,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 267d6e355c50eda45be08e1aa2b9830a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  className: 3
+  characterFullName: Infantry, Killer for Coin
+  characterLore: 
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 17920
@@ -1014,12 +1017,9 @@ MonoBehaviour:
     speed: {x: 10, y: 0}
     castTime: 0
     rangedSkillId: 0
-  hotbar: {fileID: 0}
-  className: 3
-  characterFullName: Infantry, Killer for Coin
-  characterLore: 
   Trinket1: {fileID: 0}
   Trinket2: {fileID: 0}
+  hotbar: {fileID: 0}
   FacingRight: 1
   dashing: 0
   blocking: 0

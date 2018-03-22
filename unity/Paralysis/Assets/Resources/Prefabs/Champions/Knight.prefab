@@ -1040,9 +1040,9 @@ MonoBehaviour:
     speed: {x: 7, y: 0}
     castTime: 0
     rangedSkillId: 0
-  hotbar: {fileID: 0}
   Trinket1: {fileID: 0}
   Trinket2: {fileID: 0}
+  hotbar: {fileID: 0}
   FacingRight: 1
   dashing: 0
   blocking: 0

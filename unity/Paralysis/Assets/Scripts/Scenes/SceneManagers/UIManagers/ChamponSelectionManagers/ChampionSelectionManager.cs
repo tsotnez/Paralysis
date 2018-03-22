@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,11 +8,17 @@ using UnityEngine;
 /// </summary>
 public abstract class ChampionSelectionManager : UIManager
 {
+    public Dictionary<ChampionDatabase.Champions, GameObject> ChampionPrefabs = new Dictionary<ChampionDatabase.Champions, GameObject>();
 
-    //Ready Button
-    public GameObject readyButton;
+    protected virtual void Awake()
+    {
+        GameObject[] prefabs = Resources.LoadAll<GameObject>("Prefabs/Champions");
 
-    public GameObject additionalPlatforms2v2;
+        foreach (GameObject prefab in prefabs)
+        {
+            ChampionPrefabs.Add((ChampionDatabase.Champions)Enum.Parse(typeof(ChampionDatabase.Champions), prefab.name, true), prefab);
+        }
+    }
 
     /// <summary>
     /// Changes the Champions prefab to fit a preview by removing unnecessary stuff and setting new values
@@ -71,17 +78,17 @@ public abstract class ChampionSelectionManager : UIManager
     /// <summary>
     /// Sets the champion for the player
     /// </summary>
-    public abstract void setChampion(UserControl.PlayerNumbers targetPlayer, GameObject Champion);
+    public virtual void setChampion(UserControl.PlayerNumbers targetPlayer, GameObject Champion) { }
     /// <summary>
     /// Sets trinket 1
     /// </summary>
-    public abstract void setTrinket1(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName);
+    public virtual void setTrinket1(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName) { }
     /// <summary>
     /// Sets trinket 2
     /// </summary>
-    public abstract void setTrinket2(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName);
+    public virtual void setTrinket2(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName) { }
     /// <summary>
     /// Overwrites a passed trinket with a new one
     /// </summary>
-    public abstract void setTrinket(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName, Trinket.Trinkets toOverwrite);
+    public virtual void setTrinket(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName, Trinket.Trinkets toOverwrite) { }
 }

@@ -12,6 +12,8 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
 
     [Header("Pages")]
     public GameObject ChampionSelect;
+    public GameObject TrinketSelect;
+    public GameObject SkinSelect;
     public GameObject MapSelect;
 
     public static Player[] team2;
@@ -27,11 +29,13 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     public GameObject[] eventSystemPrefabs;
     public GameObject[] firstSelecteds;
 
-    public GameObject[] platformsTeam1;
-    public GameObject[] platformsTeam2;
+    public GameObject[] Areas;
+    [HideInInspector]
+    public GameObject[] popUps;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         PhotonNetwork.offlineMode = true;
     }
 
@@ -39,6 +43,8 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     protected override void Start()
     {
         controllersConnected = Input.GetJoystickNames().Count(x => x == GameConstants.NAME_OF_XBOX360CONTROLLER_IN_ARRAY);
+
+        popUps = Areas.Select(x => x.transform.Find("PopUp").gameObject).ToArray();
 
         //Set default Values for debugging
         if (team1 == null && team2 == null)
@@ -51,10 +57,10 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         }
 
         //Show additionjal player Platforms if 2v2
-        if (team1.Length == 2 || team2.Length == 2)
-        {
-            additionalPlatforms2v2.SetActive(true);
-        }
+        //if (team1.Length == 2 || team2.Length == 2)
+        //{
+        //    additionalPlatforms2v2.SetActive(true);
+        //}
 
         //All players are the sum of both teams
         players = team1.Concat(team2).ToArray();
@@ -83,39 +89,18 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         Player target = players.First(x => x.playerNumber == targetPlayer); //Get player object out of array
         target.ChampionPrefab = Champion;
 
-        GameObject[] platformGroup;
+        
         bool flip;
 
-        if (target.TeamNumber == 1)
-        {
-            platformGroup = platformsTeam1;
-            flip = false;
-        }
-        else //If player is in team 2, use platforms of team 2 and flip the sprite
-        {
-            platformGroup = platformsTeam2;
+        if ((int)targetPlayer % 2 == 0)
             flip = true;
-        }
+        else
+            flip = false;
 
-        if (team1.Length == 2 && team2.Length == 2)//if 2v2
-        {
-            if (team1.First(x => x != target).playerNumber > target.playerNumber) //If target has the highest playerNumber in team, use second platform
-            {
-                DestroyExistingPreview(platformGroup[1].transform);
-                ShowPrefab(Champion, platformGroup[1].transform, flip);
-            }
-            else
-            {
-                //Use first platform
-                DestroyExistingPreview(platformGroup[0].transform);
-                ShowPrefab(Champion, platformGroup[0].transform, flip);
-            }
-        }
-        else //Just use first platform
-        {
-            DestroyExistingPreview(platformGroup[0].transform);
-            ShowPrefab(Champion, platformGroup[0].transform, flip);
-        }
+        Transform platform = Areas[(int)targetPlayer - 1].transform.Find("Platform");
+
+        DestroyExistingPreview(platform);
+        ShowPrefab(Champion, platform, flip);
     }
 
     public override void setTrinket1(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName)

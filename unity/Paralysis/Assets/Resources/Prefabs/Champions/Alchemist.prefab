@@ -684,6 +684,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b64760eb0e2c7f4faa712f50c38a6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  className: 4
+  characterFullName: Alchemist, the Solitair
+  characterLore: 
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 17920
@@ -803,12 +806,9 @@ MonoBehaviour:
     speed: {x: 9, y: 0}
     castTime: 0.5
     rangedSkillId: 0
-  hotbar: {fileID: 0}
-  className: 4
-  characterFullName: Alchemist, the Solitair
-  characterLore: 
   Trinket1: {fileID: 0}
   Trinket2: {fileID: 0}
+  hotbar: {fileID: 0}
   FacingRight: 1
   dashing: 0
   blocking: 0

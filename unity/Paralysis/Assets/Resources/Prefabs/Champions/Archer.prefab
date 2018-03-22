@@ -641,6 +641,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e6004ce6e5398c4285786f110855b64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  className: 1
+  characterFullName: Archer, the Huntress
+  characterLore: 
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 17920
@@ -774,12 +777,9 @@ MonoBehaviour:
     speed: {x: 0, y: 0}
     castTime: 0
     rangedSkillId: 0
-  hotbar: {fileID: 0}
-  className: 1
-  characterFullName: Archer, the Huntress
-  characterLore: 
   Trinket1: {fileID: 0}
   Trinket2: {fileID: 0}
+  hotbar: {fileID: 0}
   FacingRight: 1
   dashing: 0
   blocking: 0

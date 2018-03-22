@@ -10,6 +10,7 @@ using System.Collections;
 public abstract class UIManager : MonoBehaviour {
 
     protected MyStandaloneInputModule module;
+    public GameObject firstSelected;
 
     /// <summary>
     /// Shows a messagebox to the player, fading in from the bottom
@@ -71,6 +72,7 @@ public abstract class UIManager : MonoBehaviour {
     protected virtual void gotoController()
     {
         module.SetControllingPlayerInputDevice(UserControl.InputDevice.XboxController);
-        EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
+
+        EventSystem.current.SetSelectedGameObject(firstSelected);
     }
 }
