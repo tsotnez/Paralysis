@@ -32,6 +32,9 @@ public abstract class AIUserControl : MonoBehaviour {
     protected ChampionClassController champClassCon;
     protected CharacterStats charStats;
     protected GameObject targetPlayer;
+    protected CharacterStats targetStats;
+    protected int currentHealth;
+    protected int previousHealth;
 
     protected virtual float getLongRangeAttackDistance(){
         return 1.5f;
@@ -61,9 +64,10 @@ public abstract class AIUserControl : MonoBehaviour {
     public enum AI_GOALS { MOVE_TO_PLAYER, MOVE_THROUGH_NODES, JUMP1, JUMP2, FALL_THROUGH, STAND_BY, RETREAT, WAIT };
     public float waitTime;
 
-    public enum DISTANCE_RET { MOVE_CLOSER, WAIT, CHANGE_GOAL }
+    public enum TRIGGER_GOALS { MOVE_CLOSER, WAIT_FOR_ATTACK, CHANGE_GOAL, CONTINUE }
+
     protected AI_GOALS distRetNewGoal;
-    protected float distWaitTime = 0f;
+    protected float triggerWait = 0f;
 
     protected AI_GOALS currentGoal = AI_GOALS.STAND_BY;
     protected AI_GOALS previousGoal = AI_GOALS.STAND_BY;
@@ -98,6 +102,7 @@ public abstract class AIUserControl : MonoBehaviour {
     protected void LateUpdate()
     {
         AI_GOALS goalBefore = currentGoal;
+        previousHealth = currentHealth;
 
         //If we get stunned just standby
         if(animCon.statStunned)
@@ -150,6 +155,7 @@ public abstract class AIUserControl : MonoBehaviour {
         if(aiTargeting.TargetPlayer != null)
         {
             targetPlayer = aiTargeting.TargetPlayer;
+            targetStats = targetPlayer.GetComponent<CharacterStats>();
             mySection = AISectionManager.Instance.getSectionForPosition(transform.position);
             targetSection = AISectionManager.Instance.getSectionForPosition(targetPlayer.transform.position);
             targetDirectionX = Mathf.Sign(targetPlayer.transform.position.x - transform.position.x); 
@@ -171,8 +177,27 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected virtual void setCurrentGoal()
     {
-        if(targetPlayer != null)
+        currentHealth = charStats.CurrentHealth;
+
+        if (targetPlayer != null)
         {
+            //We took damage
+            if (currentHealth < previousHealth)
+            {
+                int maxHealth = charStats.maxHealth;
+                int healthPercent = (int)(((float)currentHealth / (float)maxHealth) * 100);
+                int prevHealthPercent = (int)(((float)previousHealth / (float)maxHealth) * 100);
+
+                //Triggered after losing 10% health
+                for (int i = 90; i > 0; i = i-10)
+                {
+                    if (healthPercent <= i && prevHealthPercent > i)
+                    {
+                        healthDecreasedTenPercent(currentHealth, previousHealth, targetStats.CurrentHealth);
+                    }
+                }
+            }
+
             //Set goals here
             if(mySection == targetSection && !mySection.nonTargetable)
             {
@@ -242,43 +267,46 @@ public abstract class AIUserControl : MonoBehaviour {
         if(!animCon.propGrounded) inputMove = inputMove/2;
     }
 
-    #region Attack
+
 
     protected virtual void moveTowardsTargetPlayer()
     {
         if (targetPlayer != null)
         {
-            DISTANCE_RET distRetValue = DISTANCE_RET.MOVE_CLOSER;
+            TRIGGER_GOALS distRetValue = TRIGGER_GOALS.MOVE_CLOSER;
             float distance = distanceToTargetPlayer();
 
-            //Are we facing towards the target
-            Vector2 targetPos = targetPlayer.transform.position;
-            bool facingTarget = false;
-            if ((facingDirection == 1 && targetPos.x > transform.position.x) ||
+            if (animCon.propGrounded)
+            {
+                //Are we facing towards the target
+                Vector2 targetPos = targetPlayer.transform.position;
+                bool facingTarget = false;
+                if ((facingDirection == 1 && targetPos.x > transform.position.x) ||
                 (facingDirection == -1 && targetPos.x < transform.position.x))
-            {
-                facingTarget = true;
-            }
-            if (distance <= getCloseRangeAttackDistance())
-            {
-                distRetValue = closeRangeAttack(facingTarget, distance, yDiff);
-            } else if (distance <= getMediumDistanceAttackDistance())
-            {
-                distRetValue = mediumRangeAttack(facingTarget, distance, yDiff);
-            } else if (distance <= getLongRangeAttackDistance())
-            {
-                distRetValue = longRangeAttack(facingTarget, distance, yDiff);
+                {
+                    facingTarget = true;
+                }
+                if (distance <= getCloseRangeAttackDistance())
+                {
+                    distRetValue = closeRangeAttack(facingTarget, distance, yDiff, charStats, targetStats);
+                } else if (distance <= getMediumDistanceAttackDistance())
+                {
+                    distRetValue = mediumRangeAttack(facingTarget, distance, yDiff, charStats, targetStats);
+                } else if (distance <= getLongRangeAttackDistance())
+                {
+                    distRetValue = longRangeAttack(facingTarget, distance, yDiff, charStats, targetStats);
+                }
             }
 
             switch (distRetValue)
             {
-            case DISTANCE_RET.CHANGE_GOAL:
+            case TRIGGER_GOALS.CHANGE_GOAL:
                 //TODO
                 break;
-            case DISTANCE_RET.WAIT:
-                setGoalWait(distWaitTime);
+            case TRIGGER_GOALS.WAIT_FOR_ATTACK:
+                setGoalWait(triggerWait);
                 break;
-            case DISTANCE_RET.MOVE_CLOSER:
+            case TRIGGER_GOALS.MOVE_CLOSER:
                 //Move closert ot he target
                 if (distance >= getCloseRangeAttackDistance())
                 {
@@ -292,20 +320,30 @@ public abstract class AIUserControl : MonoBehaviour {
         }
     }
 
-    protected virtual DISTANCE_RET closeRangeAttack(bool facingTarget, float distance, float yDiff)
+
+    #region Attack
+
+    protected virtual TRIGGER_GOALS closeRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
     {
-        return DISTANCE_RET.MOVE_CLOSER;
+        return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
-    protected virtual DISTANCE_RET mediumRangeAttack(bool facingTarget, float distance,float yDiff)
+    protected virtual TRIGGER_GOALS mediumRangeAttack(bool facingTarget, float distance,float yDiff, CharacterStats myStats, CharacterStats targetStats)
     {
-        return DISTANCE_RET.MOVE_CLOSER;
+        return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
-    protected virtual DISTANCE_RET longRangeAttack(bool facingTarget, float distance, float yDiff)
+    protected virtual TRIGGER_GOALS longRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
     {
-        return DISTANCE_RET.MOVE_CLOSER;
+        return TRIGGER_GOALS.MOVE_CLOSER;
     }
+    #endregion
+
+    #region HealthChanged
+    public virtual TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth){
+        return TRIGGER_GOALS.CONTINUE;
+    }
+
     #endregion
 
     #region FallThrough

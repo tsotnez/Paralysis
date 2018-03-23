@@ -19,7 +19,7 @@ public class AIAssassinControl : AIUserControl {
         return 8f;
     }
 
-    protected override DISTANCE_RET closeRangeAttack(bool facingTarget, float distance, float yDiff)
+    protected override TRIGGER_GOALS closeRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
     {
         if (champClassCon.CanPerformAttack())
         {
@@ -27,15 +27,15 @@ public class AIAssassinControl : AIUserControl {
             if (skill.notOnCooldown && skill.staminaCost <= charStats.CurrentStamina)
             {
                 inputAttack = true;
-                distWaitTime = .5f;
-                return DISTANCE_RET.WAIT;
+                triggerWait = .5f;
+                return TRIGGER_GOALS.WAIT_FOR_ATTACK;
             }
         }
 
-        return DISTANCE_RET.MOVE_CLOSER;
+        return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
-    protected override DISTANCE_RET mediumRangeAttack(bool facingTarget, float distance, float yDiff)
+    protected override TRIGGER_GOALS mediumRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
     {
         if (champClassCon.CanPerformAttack())
         {
@@ -45,16 +45,16 @@ public class AIAssassinControl : AIUserControl {
                 if (skill.notOnCooldown && skill.staminaCost <= charStats.CurrentStamina)
                 {
                     inputSkill3 = true;
-                    distWaitTime = 1f;
-                    return DISTANCE_RET.WAIT;
+                    triggerWait = 1f;
+                    return TRIGGER_GOALS.WAIT_FOR_ATTACK;
                 }
             }
         }
 
-        return DISTANCE_RET.MOVE_CLOSER;
+        return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
-    protected override DISTANCE_RET longRangeAttack(bool facingTarget, float distance, float yDiff)
+    protected override TRIGGER_GOALS longRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
     {
         if (champClassCon.CanPerformAttack())
         {
@@ -64,12 +64,17 @@ public class AIAssassinControl : AIUserControl {
                 if (skill.notOnCooldown && skill.staminaCost <= charStats.CurrentStamina)
                 {
                     inputSkill4 = true;
-                    distWaitTime = .5f;
-                    return DISTANCE_RET.WAIT;
+                    triggerWait = .5f;
+                    return TRIGGER_GOALS.WAIT_FOR_ATTACK;
                 }
             }
         }
 
-        return DISTANCE_RET.MOVE_CLOSER;
+        return TRIGGER_GOALS.MOVE_CLOSER;
+    }
+
+    public override TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth){
+        //DO nothing
+        return TRIGGER_GOALS.CONTINUE;
     }
 }

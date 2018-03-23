@@ -87,7 +87,6 @@ public class ThroughPlatform : MonoBehaviour {
             {
                 Gizmos.color = Color.green;
             }
-            BoxCollider2D bCollider = GetComponent<BoxCollider2D>();
             Gizmos.DrawWireCube(collider.bounds.center, new Vector3(collider.bounds.size.x, collider.bounds.size.y));
         }
     }
