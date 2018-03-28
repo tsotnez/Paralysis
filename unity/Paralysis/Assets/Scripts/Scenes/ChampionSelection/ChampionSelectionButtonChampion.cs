@@ -10,7 +10,9 @@ using UnityEngine.UI;
 public class ChampionSelectionButtonChampion : ChampionSelectionButton {
 
     protected Transform popup;
-    protected Transform skills;
+
+    [HideInInspector]
+    public Transform skills;
 
     protected GameObject OnClickAnimation; //GO to be instantiated when player choses a champion (--> epicness increased)
 
@@ -70,7 +72,7 @@ public class ChampionSelectionButtonChampion : ChampionSelectionButton {
             if (ChampionPrefab != null)
                 controller = ChampionPrefab.GetComponent<ChampionClassController>();
             else
-                Debug.Log(Champion);
+                Debug.LogError(Champion);
 
             switch (counter)
             {

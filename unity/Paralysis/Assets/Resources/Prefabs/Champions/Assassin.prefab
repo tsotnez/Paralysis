@@ -556,6 +556,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a955a31a6a337664b86ca5a46753d7c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  className: 0
+  characterFullName: Assassin, the Shadowwalker
+  characterLore: "This unknown warrior wandered through the \nwastelands for a long
+    time after the world faced \nits doom. \rHe learned to survive on his own \nand
+    salvaged \rstrong tech on his journeys which allow \r\nhim to perform a variety
+    of skills."
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 4294952648
@@ -701,15 +707,9 @@ MonoBehaviour:
     speed: {x: 7, y: 0}
     castTime: 0
     rangedSkillId: 0
-  hotbar: {fileID: 0}
-  className: 0
-  characterFullName: Assassin, the Shadowwalker
-  characterLore: "This unknown warrior wandered through the \nwastelands for a long
-    time after the world faced \nits doom. \rHe learned to survive on his own \nand
-    salvaged \rstrong tech on his journeys which allow \r\nhim to perform a variety
-    of skills."
   Trinket1: {fileID: 0}
   Trinket2: {fileID: 0}
+  hotbar: {fileID: 0}
   FacingRight: 1
   dashing: 0
   blocking: 0
@@ -892,6 +892,7 @@ MonoBehaviour:
   inputSkill4: 0
   inputTrinket1: 0
   inputTrinket2: 0
+  waitTime: 0
 --- !u!114 &114625500605877628
 MonoBehaviour:
   m_ObjectHideFlags: 1

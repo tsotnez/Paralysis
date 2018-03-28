@@ -25,7 +25,7 @@ public abstract class ChampionSelectionManager : UIManager
     /// </summary>
     /// <param name="Champion"></param>
     /// <param name="parent"></param>
-    protected void ShowPrefab(GameObject Champion, Transform parent, bool flip)
+    protected void ShowPrefab(GameObject Champion, Transform parent, bool flip, bool playAnimation = true)
     {
         Champion.SetActive(false);
         GameObject newPreview = Instantiate(Champion, parent, false);
@@ -52,7 +52,8 @@ public abstract class ChampionSelectionManager : UIManager
         newPreview.transform.localScale = new Vector3(200 * direction, 200, 1); //Scale up
         newPreview.transform.position = new Vector3(newPreview.transform.position.x, newPreview.transform.position.y + 1.4f, newPreview.transform.position.z);
         graphics.GetComponent<ChampionAnimationController>().propGrounded = true;
-        graphics.GetComponent<ChampionAnimationController>().trigBasicAttack1 = true;
+        if(playAnimation)
+            graphics.GetComponent<ChampionAnimationController>().trigBasicAttack1 = true;
         newPreview.SetActive(true);
         Champion.SetActive(true);
     }

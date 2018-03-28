@@ -30,8 +30,23 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     public GameObject[] firstSelecteds;
 
     public GameObject[] Areas;
-    [HideInInspector]
+
+    /// <summary>
+    /// Contains PopUp Tranforms
+    /// </summary>
     public GameObject[] popUps;
+
+    /// <summary>
+    /// Contains whether skill pop ups should be shown for certain player
+    /// </summary>
+    [HideInInspector]
+    public Dictionary<UserControl.PlayerNumbers, bool> showSkillPopUpsForPlayer = new Dictionary<UserControl.PlayerNumbers, bool>()
+    {
+        {UserControl.PlayerNumbers.Player1, false},
+        {UserControl.PlayerNumbers.Player2, false},
+        {UserControl.PlayerNumbers.Player3, false},
+        {UserControl.PlayerNumbers.Player4, false},
+    };
 
     protected override void Awake()
     {
@@ -44,8 +59,6 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     {
         controllersConnected = Input.GetJoystickNames().Count(x => x == GameConstants.NAME_OF_XBOX360CONTROLLER_IN_ARRAY);
 
-        popUps = Areas.Select(x => x.transform.Find("PopUp").gameObject).ToArray();
-
         //Set default Values for debugging
         if (team1 == null && team2 == null)
         {
@@ -56,14 +69,33 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
             team2[0] = new Player(UserControl.PlayerNumbers.Player1, UserControl.InputDevice.XboxController, 2);
         }
 
-        //Show additionjal player Platforms if 2v2
-        //if (team1.Length == 2 || team2.Length == 2)
-        //{
-        //    additionalPlatforms2v2.SetActive(true);
-        //}
-
         //All players are the sum of both teams
         players = team1.Concat(team2).ToArray();
+
+        //Show Team signs
+        foreach (Player item in players)
+        {
+            Areas[(int)item.playerNumber - 1].transform.Find("team" + item.TeamNumber + "Symbol").gameObject.SetActive(true);
+        }
+
+        //Hide all unused areas
+        for (int i = players.Length; i < Areas.Length; i++)
+        {
+            Areas[i].SetActive(false);
+        }
+
+        //Move skill popups down when there are only 2 players
+        if (players.Length <= 2)
+        {
+            LocalChampionSelectionButtonChampion[] temp = GameObject.FindObjectsOfType<LocalChampionSelectionButtonChampion>().Where(x => x.TargetPlayerNumber == UserControl.PlayerNumbers.Player1).ToArray();
+            foreach (LocalChampionSelectionButtonChampion item in temp)
+                item.skills = popUps[2].transform;
+
+            temp = GameObject.FindObjectsOfType<LocalChampionSelectionButtonChampion>().Where(x => x.TargetPlayerNumber == UserControl.PlayerNumbers.Player2).ToArray();
+            foreach (LocalChampionSelectionButtonChampion item in temp)
+                item.skills = popUps[3].transform;
+        }
+
         setUpEventSystems();
     }
 
@@ -77,6 +109,46 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
             StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Controller connected"));
 
         controllersConnected = newCount;
+
+        //Check if players show/hide skill popups
+        if(Input.GetButtonDown("ShowSkillPopUp"))
+        {
+            Player target = players.FirstOrDefault(x => x.inputDevice == UserControl.InputDevice.KeyboardMouse);
+            if (target != null)
+                showSkillPopUpsForPlayer[target.playerNumber] = !showSkillPopUpsForPlayer[target.playerNumber]; //Keyboard input can be any player number...
+            togglePopUpOnPlayerNumber(target.playerNumber);
+        }
+        if (Input.GetButtonDown("ShowSkillPopUp_XboxPlayer1"))
+        {
+            showSkillPopUpsForPlayer[UserControl.PlayerNumbers.Player1] = !showSkillPopUpsForPlayer[UserControl.PlayerNumbers.Player1];
+            togglePopUpOnPlayerNumber(UserControl.PlayerNumbers.Player1);
+        }
+        if (Input.GetButtonDown("ShowSkillPopUp_XboxPlayer2"))
+        {
+            togglePopUpOnPlayerNumber(UserControl.PlayerNumbers.Player2);
+            showSkillPopUpsForPlayer[UserControl.PlayerNumbers.Player2] = !showSkillPopUpsForPlayer[UserControl.PlayerNumbers.Player2];
+        }
+        if (Input.GetButtonDown("ShowSkillPopUp_XboxPlayer3"))
+        {
+            togglePopUpOnPlayerNumber(UserControl.PlayerNumbers.Player3);
+            showSkillPopUpsForPlayer[UserControl.PlayerNumbers.Player3] = !showSkillPopUpsForPlayer[UserControl.PlayerNumbers.Player3];
+        }
+        if (Input.GetButtonDown("ShowSkillPopUp_XboxPlayer4"))
+        {
+            togglePopUpOnPlayerNumber(UserControl.PlayerNumbers.Player4);
+            showSkillPopUpsForPlayer[UserControl.PlayerNumbers.Player4] = !showSkillPopUpsForPlayer[UserControl.PlayerNumbers.Player4];
+        }
+    }
+
+    /// <summary>
+    /// Gets the currently highlighted button and toggles its popUps
+    /// </summary>
+    /// <param name=""></param>
+    private void togglePopUpOnPlayerNumber(UserControl.PlayerNumbers targetNumber)
+    {
+        LocalChampionSelectionButtonChampion currentlyHighlighted = GameObject.FindObjectsOfType<LocalChampionSelectionButtonChampion>().FirstOrDefault(x => x.TargetPlayerNumber == targetNumber && x.highlighted);
+        if (currentlyHighlighted != null)
+            currentlyHighlighted.toggleSkillPopUp();
     }
 
     /// <summary>
@@ -89,7 +161,22 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         Player target = players.First(x => x.playerNumber == targetPlayer); //Get player object out of array
         target.ChampionPrefab = Champion;
 
-        
+        if (Champion == null)
+            Areas[(int)targetPlayer - 1].transform.Find("Ready").gameObject.SetActive(false);
+        else
+        {
+            Areas[(int)targetPlayer - 1].transform.Find("Ready").gameObject.SetActive(true);
+            showChampion(targetPlayer, Champion, true);
+        }
+    }
+
+    /// <summary>
+    /// Showeing preview of champion
+    /// </summary>
+    /// <param name="targetPlayer"></param>
+    /// <param name="Champion"></param>
+    public void showChampion(UserControl.PlayerNumbers targetPlayer, GameObject Champion, bool playAnim)
+    {
         bool flip;
 
         if ((int)targetPlayer % 2 == 0)
@@ -100,7 +187,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         Transform platform = Areas[(int)targetPlayer - 1].transform.Find("Platform");
 
         DestroyExistingPreview(platform);
-        ShowPrefab(Champion, platform, flip);
+        ShowPrefab(Champion, platform, flip, playAnim);
     }
 
     public override void setTrinket1(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName)

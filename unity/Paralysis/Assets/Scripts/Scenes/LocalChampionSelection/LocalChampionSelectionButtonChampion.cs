@@ -9,37 +9,19 @@ public class LocalChampionSelectionButtonChampion : ChampionSelectionButtonChamp
 
     public UserControl.PlayerNumbers TargetPlayerNumber; //For which player
     private LocalChampionSelectionManager manager;
+    public bool highlighted = false; //True while button is being hovered over
 
     protected override void Start()
     {
         base.Start();
 
         manager = FindObjectOfType<LocalChampionSelectionManager>();
-        EventSystemGroup group = GetComponent<EventSystemGroup>();
+        
+        if(skills == null)
+            skills = manager.popUps[(int)TargetPlayerNumber - 1].transform;
 
-        if (group != null)
-        {
-            switch (group.EventSystemID) //Set player number depending on eventsystemID
-            {
-                case 1:
-                    TargetPlayerNumber = UserControl.PlayerNumbers.Player1;
-                    skills = manager.popUps[0].transform;
-                    break;
-                case 2:
-                    skills = manager.popUps[1].transform;
-                    TargetPlayerNumber = UserControl.PlayerNumbers.Player2;
-                    break;
-                case 3:
-                    skills = manager.popUps[2].transform;
-                    TargetPlayerNumber = UserControl.PlayerNumbers.Player3;
-                    break;
-                case 4:
-                    skills = manager.popUps[3].transform;
-                    TargetPlayerNumber = UserControl.PlayerNumbers.Player4;
-                    break;
-            }
-        }
         popup = skills;
+
         ChampionPrefab = manager.ChampionPrefabs[Champion];
     }
 
@@ -60,6 +42,8 @@ public class LocalChampionSelectionButtonChampion : ChampionSelectionButtonChamp
     public override void Selecting()
     {
         base.Selecting();
+        manager.showChampion(TargetPlayerNumber, ChampionPrefab, false);
+        highlighted = true;
         showSkillPopUps();
     }
 
@@ -89,9 +73,31 @@ public class LocalChampionSelectionButtonChampion : ChampionSelectionButtonChamp
 
     public override void Deselecting()
     {
-        if(!isSelectedByOtherPlayer()) //Only transition to shadow if no toher player is selecting this button
+        currentlySelected = false;
+
+        if (!isSelectedByOtherPlayer()) //Only transition to shadow if no other player is selecting this button
             base.Deselecting();
 
+        manager.setChampion(TargetPlayerNumber, null); //Resetting selected champion when transferring to different button
+        text.enabled = false;
+        highlighted = false;
         popup.gameObject.SetActive(false);
+    }
+
+    protected override void showSkillPopUps()
+    {
+        if(manager.showSkillPopUpsForPlayer[TargetPlayerNumber])
+            base.showSkillPopUps();
+    }
+
+    //toggles skill pop ups status. Called by scene manager
+    public void toggleSkillPopUp()
+    {
+        if (popup.gameObject.activeSelf)
+            popup.gameObject.SetActive(false);
+        else
+        {
+            showSkillPopUps();
+        }
     }
 }
