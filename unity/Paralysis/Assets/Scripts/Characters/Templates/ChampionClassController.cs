@@ -478,7 +478,6 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     /// Manages the attacking and Combos
     /// </summary>
     public abstract void BasicAttack();
-
     public abstract void Skill1();
     public abstract void Skill2();
     public abstract void Skill3();
