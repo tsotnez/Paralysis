@@ -42,7 +42,7 @@ public class NetworkVersusManager : GameplayManager
         mainCanvas = GameObject.Find("MainCanvas").transform;
     }
 
-    protected override void instantiatePlayers()
+    protected override void InstantiatePlayers()
     {
 
     }
@@ -102,7 +102,7 @@ public class NetworkVersusManager : GameplayManager
         cam.AddTargetToCamera(instPlayer1.transform);
 
         myPlayerInstance = instPlayer1;
-        buildUI();
+        BuildUI();
         //Wait before joining team, because scene needs time to synchronize
         StartCoroutine(WaitToJoinTeam());
     }
@@ -119,7 +119,7 @@ public class NetworkVersusManager : GameplayManager
         myPlayerInstance.GetComponent<CharacterNetwork>().joinTeam();
     }
 
-    protected override void buildUI()
+    protected override void BuildUI()
     {
         Transform parent = GameObject.Find("Hotbars").transform;
 
@@ -155,9 +155,9 @@ public class NetworkVersusManager : GameplayManager
     /// Resets erverything to restart the game
     /// </summary>
     [PunRPC]
-    public override void restart()
+    public override void Restart()
     {
-        base.restart();
+        base.Restart();
 
         myPlayerInstance.GetComponent<UserControl>().enabled = true;
         myPlayerInstance.transform.position = Vector3.zero;

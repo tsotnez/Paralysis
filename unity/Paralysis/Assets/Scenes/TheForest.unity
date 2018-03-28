@@ -343,7 +343,7 @@ MonoBehaviour:
     ChampionPrefab: {fileID: 1346435155503924, guid: 5f5ac1a4f5bfeec4584f1818feb6fdc7,
       type: 2}
     InstantiatedPlayer: {fileID: 0}
-    playerNumber: 2
+    playerNumber: 1
     TeamNumber: 1
     inputDevice: 0
     trinket1: 0

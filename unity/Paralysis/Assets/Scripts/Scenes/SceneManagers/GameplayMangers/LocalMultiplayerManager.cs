@@ -12,7 +12,7 @@ public class LocalMultiplayerManager : GameplayManager
     public Transform TopHotbarTransform;
     public Transform BotHotbarTransform;
 
-    protected override void buildUI()
+    protected override void BuildUI()
     {
         // Foreach Team
         GameObject hotbar;
@@ -80,7 +80,7 @@ public class LocalMultiplayerManager : GameplayManager
         return hotbar;
     }
 
-    protected override void instantiatePlayers()
+    protected override void InstantiatePlayers()
     {
         //Defaults for debugging
         if (Teams == null)

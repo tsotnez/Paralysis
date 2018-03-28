@@ -7,66 +7,66 @@ using System.Linq;
 public abstract class ChampionClassController : Photon.MonoBehaviour
 {
     // Constraints
-    protected const float GroundedRadius = .02f;                            // Radius of the overlap circle to determine if grounded
-    protected const float FallThroughDuration = .5f;                        // Duration of falling through a platform
-    protected const float AllowAnotherJumpAfterGround = .1f;                // How long to wait to be able to jump again after grounded
+    protected const float GroundedRadius = .02f;                // Radius of the overlap circle to determine if grounded
+    protected const float FallThroughDuration = .5f;            // Duration of falling through a platform
+    protected const float AllowAnotherJumpAfterGround = .1f;    // How long to wait to be able to jump again after grounded
 
     #region Parameters for Inspector
 
     // Character identification
-    public ChampionDatabase.Champions className;                            // Character Name
-    public string characterFullName;                                        // Character Name with title
+    public ChampionDatabase.Champions className;                // Character Name
+    public string characterFullName;                            // Character Name with title
     [Multiline(6)]
-    public string characterLore;                                            // Character description
+    public string characterLore;                                // Character description
 
     // Layers
-    public LayerMask m_WhatIsGround;                                        // A mask determining what is ground to the character
-    public LayerMask m_whatToHit;                                           // What to hit when checking for hits while attacking
-    public LayerMask m_fallThroughMask;                                     // A layermask to determine if a player can fall through something
+    public LayerMask m_WhatIsGround;                            // A mask determining what is ground to the character
+    public LayerMask m_whatToHit;                               // What to hit when checking for hits while attacking
+    public LayerMask m_fallThroughMask;                         // A layermask to determine if a player can fall through something
 
     // Movement
     [SerializeField]
-    protected float m_MaxSpeed = 6f;                                        // The fastest the player can travel in the x axis.
+    protected float m_MaxSpeed = 6f;                            // The fastest the player can travel in the x axis.
     [SerializeField]
-    protected float m_MoveSpeedWhileAttacking = 0.5f;                       // Max speed while attacking
+    protected float m_MoveSpeedWhileAttacking = 0.5f;           // Max speed while attacking
     [SerializeField]
-    protected float m_MoveSpeedWhileBlocking = 0f;                          // Max speed while blocking
+    protected float m_MoveSpeedWhileBlocking = 0f;              // Max speed while blocking
     [SerializeField]
-    protected bool m_CanTurnAroundWhileBlocking = true;                     // Can turn around while blocking
+    protected bool m_CanTurnAroundWhileBlocking = true;         // Can turn around while blocking
 
     // Jump & JumpAttack
     [SerializeField]
-    protected float m_initialJumpVelocity = 100f;                           // Initial Y velocity when we start jumping
+    protected float m_initialJumpVelocity = 100f;               // Initial Y velocity when we start jumping
     [SerializeField]
-    protected float m_maxJumpTime = .3f;                                    // Max time in air going up
+    protected float m_maxJumpTime = .3f;                        // Max time in air going up
     [SerializeField]
-    public int stamina_Jump = 15;                                           // Stamina costs for a Jump
+    public int stamina_Jump = 15;                               // Stamina costs for a Jump
     [SerializeField]
-    protected float m_JumpDivisor = 1f;                                     // Jump divsor
+    protected float m_JumpDivisor = 1f;                         // Jump divsor
     [SerializeField]
-    protected float m_DoubleJumpDivisor = 1.05f;                            // Double jump divsor
+    protected float m_DoubleJumpDivisor = 1.05f;                // Double jump divsor
     [SerializeField]
-    protected float m_jumpAttackForce = 10f;                                // Amount of force added when the player jump attack
+    protected float m_jumpAttackForce = 10f;                    // Amount of force added when the player jump attack
 
     // Dash
     [SerializeField]
-    protected float m_dashSpeed = 12f;                                      // Force applied when dashing
+    protected float m_dashSpeed = 12f;                          // Force applied when dashing
     [SerializeField]
-    protected int m_dashStaminaCost = 10;                                   // Stamina Costs of Skill Dash
+    protected int m_dashStaminaCost = 10;                       // Stamina Costs of Skill Dash
     [SerializeField]
-    protected bool m_CanDashForward = false;                                // Indicates whether the character can dash forward or have to turn around before dashing
+    protected bool m_CanDashForward = false;                    // Indicates whether the character can dash forward or have to turn around before dashing
 
     // Combo
     [SerializeField]
-    protected float ComboExpire = 1;                                        // How long the next combostage is reachable (seconds)
-    protected int attackCount = 0;                                          // The ComboState 0 means the character has not attacked yet
-    protected bool inCombo = false;                                         // When true, the next comboStage can be reached
+    protected float ComboExpire = 1;                            // How long the next combostage is reachable (seconds)
+    protected int attackCount = 0;                              // The ComboState 0 means the character has not attacked yet
+    protected bool inCombo = false;                             // When true, the next comboStage can be reached
 
     // Skills
     [SerializeField]
-    protected MeleeSkill[] MeleeSkills;                                     // Contains all melee skills
+    protected MeleeSkill[] MeleeSkills;                         // Contains all melee skills
     [SerializeField]
-    protected RangedSkill[] RangeSkills;                                    // Contains all range skills
+    protected RangedSkill[] RangeSkills;                        // Contains all range skills
 
     // Trinkets
     public Trinket Trinket1;
@@ -77,27 +77,27 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     // Objects
     [HideInInspector]
     public HotbarController hotbar;
-    protected Transform m_GroundCheck;                                      // A position marking where to check if the player is grounded.
-    protected Transform ProjectilePosition;                                 // A position marking where a projectile shall be spawned.
-    protected SpriteRenderer shadowRenderer;                                // Reference to the shadow of the character (ground).
-    protected Rigidbody2D m_Rigidbody2D;                                    // Reference to the players rigidbody.
-    protected CharacterStats stats;                                         // Reference to stats.
-    protected Transform graphics;                                           // Reference to the graphics child.
-    protected ChampionAnimationController animCon;                          // Reference to the Animation Contoller.
+    protected Transform m_GroundCheck;                          // A position marking where to check if the player is grounded.
+    protected Transform ProjectilePosition;                     // A position marking where a projectile shall be spawned.
+    protected SpriteRenderer shadowRenderer;                    // Reference to the shadow of the character (ground).
+    protected Rigidbody2D m_Rigidbody2D;                        // Reference to the players rigidbody.
+    protected CharacterStats stats;                             // Reference to stats.
+    protected Transform graphics;                               // Reference to the graphics child.
+    protected ChampionAnimationController animCon;              // Reference to the Animation Contoller.
 
     // Stats
-    public bool FacingRight = true;                                         // For determining which way the player is currently facing.
-    public bool dashing = false;                                            // true while dashing
-    public bool blocking = false;                                           // Is the character blocking?
-    public bool doubleJumped = false;                                       // Has the character double jumped already?
-    protected bool casting = false;                                         // Is the character casting (RangeAttack)?
-    protected bool jumpAttacking = false;                                   // True while the character is jump attacking
-    protected bool fallingThrough = false;                                  // True while we are falling through a platform
-    private bool applyDashingForce = false;                                 // true while force for dashing shall be applieds
-    private bool m_canDoubleJump = true;                                    // true if the player can double jump
-    private bool m_canJump = true;                                          // true when the player can start a new jump
-    private float m_jumpStartTime = 0f;                                     // time of the player leaving the ground
-    private float m_allowAnotherJump = 0f;                                  // time to wait for allowing the player to jump
+    public bool FacingRight = true;                             // For determining which way the player is currently facing.
+    public bool dashing = false;                                // true while dashing
+    public bool blocking = false;                               // Is the character blocking?
+    public bool doubleJumped = false;                           // Has the character double jumped already?
+    protected bool casting = false;                             // Is the character casting (RangeAttack)?
+    protected bool jumpAttacking = false;                       // True while the character is jump attacking
+    protected bool fallingThrough = false;                      // True while we are falling through a platform
+    private bool applyDashingForce = false;                     // true while force for dashing shall be applieds
+    private bool m_canDoubleJump = true;                        // true if the player can double jump
+    private bool m_canJump = true;                              // true when the player can start a new jump
+    private float m_jumpStartTime = 0f;                         // time of the player leaving the ground
+    private float m_allowAnotherJump = 0f;                      // time to wait for allowing the player to jump
     private float m_timeInAir = 0f;
     private bool m_jumpPressed = false;
 
@@ -240,7 +240,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 animCon.propGrounded = false;
                 m_canDoubleJump = false;
                 animCon.trigJump = true;
-                StartCoroutine(jumpWaitForGrounded());
+                StartCoroutine(JumpWaitForGrounded());
                 StartCoroutine(JumpRoutine(m_JumpDivisor));
             }
         }
@@ -279,7 +279,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         }
     }
 
-    private IEnumerator jumpWaitForGrounded()
+    private IEnumerator JumpWaitForGrounded()
     {
         yield return new WaitForSeconds(0.1f);
         yield return new WaitUntil(() => animCon.propGrounded);
@@ -301,14 +301,14 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             //If the raycast hit and we are grounded make the player fall through
             if ((hit && animCon.propGrounded))
             {
-                StartCoroutine(fallThrough(hit.collider.gameObject));
+                StartCoroutine(FallThrough(hit.collider.gameObject));
                 return true;
             }
         }
         return false;
     }
 
-    protected virtual IEnumerator fallThrough(GameObject fallThroughObj)
+    protected virtual IEnumerator FallThrough(GameObject fallThroughObj)
     {
         //Get all the colliders and set them to ignore the falling through obj
         fallingThrough = true;
@@ -412,11 +412,11 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
                 // Player is invincible for a period of time while dashing
                 stats.invincible = true;
-                yield return new WaitUntil(() => animCon.CurrentAnimation == RequiredAnimState);                                    // Wait till animation has started
+                yield return new WaitUntil(() => animCon.CurrentAnimation == RequiredAnimState);                                // Wait till animation has started
 
                 // If an EndAnimation is present do some extra stuff
-                yield return new WaitUntil(() => animCon.CurrentAnimationState == AnimationController.AnimationState.Waiting);      // Wait till animation is in state waiting
-                yield return new WaitUntil(() => animCon.propGrounded);                                                             // Wait till character is on ground
+                yield return new WaitUntil(() => animCon.CurrentAnimationState == AnimationController.AnimationState.Waiting);  // Wait till animation is in state waiting
+                yield return new WaitUntil(() => animCon.propGrounded);                                                         // Wait till character is on ground
 
                 // Start EndAnimation
                 applyDashingForce = false;
@@ -424,7 +424,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 if (RequiredAnimState == AnimationController.AnimationTypes.DashFor) animCon.trigDashForwardEnd = true;
                 else animCon.trigDashEnd = true;
 
-                yield return new WaitUntil(() => animCon.CurrentAnimation != RequiredAnimState);                                    // Wait till next animation is present
+                yield return new WaitUntil(() => animCon.CurrentAnimation != RequiredAnimState);                                // Wait till next animation is present
                 stats.invincible = false;
 
                 // Set end of dash
@@ -725,22 +725,22 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
         if (PhotonNetwork.offlineMode)
         {
-            StartCoroutine(rangedSkill(skillToPerform, direction, position));
+            StartCoroutine(RangedSkill(skillToPerform, direction, position));
         }
         else
         {
-            photonView.RPC("RPC_spawnRangedSkill", PhotonTargets.All, skillToPerform.rangedSkillId, (short)direction, position);
+            photonView.RPC("RPC_SpawnRangedSkill", PhotonTargets.All, skillToPerform.rangedSkillId, (short)direction, position);
         }
     }
 
     [PunRPC]
-    public void RPC_spawnRangedSkill(short rangedSkillId, short direction, Vector2 position)
+    public void RPC_SpawnRangedSkill(short rangedSkillId, short direction, Vector2 position)
     {
-        RangedSkill skillToPerform = RangedSkill.rangedSkillDict[rangedSkillId];
-        StartCoroutine(rangedSkill(skillToPerform, direction, position));
+        RangedSkill skillToPerform = global::RangedSkill.rangedSkillDict[rangedSkillId];
+        StartCoroutine(RangedSkill(skillToPerform, direction, position));
     }
 
-    public IEnumerator rangedSkill(RangedSkill skillToPerform, int direction, Vector2 position)
+    public IEnumerator RangedSkill(RangedSkill skillToPerform, int direction, Vector2 position)
     {
         GameObject goProjectile;
         goProjectile = skillToPerform.prefab;

@@ -60,12 +60,12 @@ public class ArcherController : ChampionClassController
             //Puts down a trap
             hotbar.StartCoroutine(hotbar.flashBlack(skill2.type));
             animCon.trigSkill2 = true;
-            StartCoroutine(placeTrapCoroutine(skill2.delay));
+            StartCoroutine(PlaceTrapCoroutine(skill2.delay));
             StartCoroutine(SetSkillOnCooldown(skill2));
         }
     }
 
-    private IEnumerator placeTrapCoroutine(float delay)
+    private IEnumerator PlaceTrapCoroutine(float delay)
     {
         yield return new WaitForSeconds(delay);
         if (PhotonNetwork.offlineMode)

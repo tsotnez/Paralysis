@@ -47,8 +47,8 @@ public abstract class GameplayManager : Photon.MonoBehaviour
         Instance = this;
 
         PhotonNetwork.offlineMode = true;
-        instantiatePlayers();
-        buildUI();
+        InstantiatePlayers();
+        BuildUI();
 
         simpleGlobalMessage = Resources.Load<GameObject>("Prefabs/UI/GlobalMessages/SimpleGlobalMessage");
         playerInteractionGlobalMessage = Resources.Load<GameObject>("Prefabs/UI/GlobalMessages/PlayerInteractionGlobalMessage");
@@ -59,11 +59,11 @@ public abstract class GameplayManager : Photon.MonoBehaviour
 
     protected virtual void Update()
     {
-        manageControllers();
+        ManageControllers();
     }
-    protected void manageControllers()
+    protected void ManageControllers()
     {
-        //Checking for disconnecting/connecting controllers
+        // Checking for disconnecting/connecting controllers
         int newCount = Input.GetJoystickNames().Count(x => x == GameConstants.NAME_OF_XBOX360CONTROLLER_IN_ARRAY);
         if (newCount < controllersConnected)
             StartCoroutine(UIManager.showMessageBox(GameObject.Find("MainCanvas").GetComponent<Canvas>(), "Lost connection to controller"));
@@ -77,19 +77,20 @@ public abstract class GameplayManager : Photon.MonoBehaviour
     /// Called when a player dies to check whether the game is over
     /// </summary>
     /// <param name="deadPlayer"></param>
-    public virtual void playerDied(GameObject deadPlayer)
+    public virtual void PlayerDied(GameObject deadPlayer)
     {
         ShowGlobalMessage(deadPlayer.GetComponent<CharacterNetwork>().PlayerName + " has died!");
 
         switch (gameMode)
         {
             case GameModes.TeamDeathmatch:
-                teamDeatchMatch();
+                TeamDeatchMatch();
                 break;
         }
     }
-    protected abstract void instantiatePlayers();
-    protected abstract void buildUI();
+    protected abstract void InstantiatePlayers();
+    protected abstract void BuildUI();
+
     /// <summary>
     /// Shows the game over overlay and stops camera movement
     /// </summary>
@@ -100,7 +101,11 @@ public abstract class GameplayManager : Photon.MonoBehaviour
         for (int i = 0; i < Teams.Count; i++)
         {
             // Disable user input so players cant control their chamnpions when game is over
-            Teams[i].Select(x => x.InstantiatedPlayer.GetComponent<UserControl>().enabled = false).ToList();
+            for (int j = 0; j < Teams[i].Length; j++)
+            {
+                Teams[i][j].InstantiatedPlayer.GetComponent<UserControl>().enabled = false;
+                Teams[i][j].InstantiatedPlayer.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            }
         }
 
         gameOverOverlay.Find("Title").GetComponent<Text>().text = winner + " won the game";
@@ -111,7 +116,7 @@ public abstract class GameplayManager : Photon.MonoBehaviour
     /// <summary>
     /// Called, when the restart button in the game over menu is clicked
     /// </summary>
-    public virtual void restart()
+    public virtual void Restart()
     {
 
     }
@@ -126,11 +131,12 @@ public abstract class GameplayManager : Photon.MonoBehaviour
         messageObject.GetComponent<Text>().text = message;
     }
 
-    #region WinConditions
+    #region Win Conditions
+
     /// <summary>
     /// ends the game if all players of one team are dead
     /// </summary>
-    protected virtual void teamDeatchMatch()
+    protected virtual void TeamDeatchMatch()
     {
         // Loop through every Team
         for (int i = 0; i < Teams.Count; i++)
@@ -143,5 +149,6 @@ public abstract class GameplayManager : Photon.MonoBehaviour
             }
         }
     }
+
     #endregion
 }

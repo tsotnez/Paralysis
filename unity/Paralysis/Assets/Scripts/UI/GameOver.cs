@@ -21,7 +21,7 @@ public class GameOver : MonoBehaviour {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         else
         {
-            GameObject.Find("manager").GetComponent<GameplayManager>().restart();
+            GameObject.Find("manager").GetComponent<GameplayManager>().Restart();
         }
     }
 

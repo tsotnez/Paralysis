@@ -165,7 +165,7 @@ public class CharacterStats : Photon.MonoBehaviour
         CharacterDied = true;
         animCon.statDead = true;
         if (PhotonNetwork.offlineMode || photonView.isMine)
-            GameplayManager.Instance.playerDied(gameObject);
+            GameplayManager.Instance.PlayerDied(gameObject);
 
         // Prevent body from sliding when killed in air or with knockback
         if (knockedBack || !animCon.propGrounded)

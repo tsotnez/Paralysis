@@ -100,4 +100,6 @@ MonoBehaviour:
   - RPC_StartAnimationN
   - RPC_SetTrinketForPlayer
   - RPC_PlaceTrap
+  - Restart
+  - RPC_SpawnRangedSkill
   DisableAutoOpenWizard: 1
