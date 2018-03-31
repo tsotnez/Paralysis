@@ -50,7 +50,6 @@ public class LocalChampionSelectionButtonChampion : ChampionSelectionButtonChamp
     public override void onClick()
     {
         base.onClick();
-
         manager.setChampion(TargetPlayerNumber, ChampionPrefab);
         currentlySelected = true;
         text.enabled = true;

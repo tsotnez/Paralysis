@@ -80,16 +80,4 @@ public abstract class ChampionSelectionManager : UIManager
     /// Sets the champion for the player
     /// </summary>
     public virtual void setChampion(UserControl.PlayerNumbers targetPlayer, GameObject Champion) { }
-    /// <summary>
-    /// Sets trinket 1
-    /// </summary>
-    public virtual void setTrinket1(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName) { }
-    /// <summary>
-    /// Sets trinket 2
-    /// </summary>
-    public virtual void setTrinket2(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName) { }
-    /// <summary>
-    /// Overwrites a passed trinket with a new one
-    /// </summary>
-    public virtual void setTrinket(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName, Trinket.Trinkets toOverwrite) { }
 }

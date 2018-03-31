@@ -2,76 +2,53 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class LocalChampionSelectionButtonTrinket : ChampionSelectionButtonTrinket {
 
     protected LocalChampionSelectionManager manager;
     public UserControl.PlayerNumbers TargetPlayerNumber; //For which player
+    private Sprite picture;
 
     protected override void Start()
     {
         base.Start();
+    }
 
+    private void Awake()
+    {
         manager = FindObjectOfType<LocalChampionSelectionManager>();
-        EventSystemGroup group = GetComponent<EventSystemGroup>();
-
-        if (group != null)
-        {
-            switch (group.EventSystemID) //Set player number depending on eventsystemID
-            {
-                case 1:
-                    TargetPlayerNumber = UserControl.PlayerNumbers.Player1;
-                    break;
-                case 2:
-                    TargetPlayerNumber = UserControl.PlayerNumbers.Player2;
-                    break;
-                case 3:
-                    TargetPlayerNumber = UserControl.PlayerNumbers.Player3;
-                    break;
-                case 4:
-                    TargetPlayerNumber = UserControl.PlayerNumbers.Player4;
-                    break;
-            }
-        }
+        picture = transform.parent.Find("portrait").gameObject.GetComponent<Image>().sprite;
     }
 
     public override void onClick()
     {
         base.onClick();
 
-        //Get all currently selected trinket Buttons
-        LocalChampionSelectionButtonTrinket[] prevSelected = GameObject.FindObjectsOfType<LocalChampionSelectionButtonTrinket>().Where(x =>
-        x.TargetPlayerNumber == this.TargetPlayerNumber && x.currentlySelected).ToArray();
-
-        //If no other trinket is selected, set trinket1
-        if (prevSelected.Length == 0)
-            manager.setTrinket1(TargetPlayerNumber, trinket);
-        //If there is another trinket selected already, set trinket2
-        else if (prevSelected.Length == 1)
+        if(!currentlySelected && manager.canSetForPlayer(TargetPlayerNumber)) //Trinket is not yet selected by this player -> Select
         {
-            manager.setTrinket2(TargetPlayerNumber, trinket);
-            prevSelected[0].selectedPos = 2;
+            manager.setTrinket(TargetPlayerNumber, trinket, picture);
+            currentlySelected = true;
+            text.enabled = true;
         }
-        //when there are already 2 trinkets selected, let the one selected first lose focus and overwrite the trinket that button set the value for
-        else if (prevSelected.Length == 2)
+        else if(currentlySelected) //Trinket is selected already -> remove trinket
         {
-            LocalChampionSelectionButtonTrinket selectedFirst = prevSelected.First(x => x.selectedPos == 2);
-            manager.setTrinket(TargetPlayerNumber, trinket, selectedFirst.trinket);
-            selectedFirst.loseFocus();
-
-            prevSelected.First(x => x.selectedPos == 1).selectedPos = 2;
+            manager.removeTrinket(TargetPlayerNumber, trinket);
+            currentlySelected = false;
+            text.enabled = false;
         }
+    }
 
-        selectedPos = 1;
-
-        currentlySelected = true;
-        text.enabled = true;
+    public override void Selecting()
+    {
+        base.Selecting();
+        if(manager.canSetForPlayer(TargetPlayerNumber))
+            manager.showTrinket(TargetPlayerNumber, trinket, picture);
     }
 
     public override void loseFocus()
     {
         base.loseFocus();
-        selectedPos = 0;
     }
 }

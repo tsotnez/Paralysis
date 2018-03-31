@@ -72,7 +72,7 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
             everythingSelected = false;
     }
         
-    public override void setTrinket(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName, Trinket.Trinkets toOverwrite)
+    public void setTrinket(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName, Trinket.Trinkets toOverwrite)
     {
         if (localPlayer.trinket1 == toOverwrite)
             localPlayer.trinket1 = trinketName;
@@ -80,13 +80,13 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
             localPlayer.trinket2 = trinketName;
     }
 
-    public override void setTrinket1(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName)
+    public void setTrinket1(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName)
     {
         localPlayer.trinket1 = trinketName;
         GameNetworkChampSelect.Instance.setTrinket(trinketName, 1);
     }
 
-    public override void setTrinket2(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName)
+    public void setTrinket2(UserControl.PlayerNumbers targetPlayer, Trinket.Trinkets trinketName)
     {
         localPlayer.trinket2 = trinketName;
         GameNetworkChampSelect.Instance.setTrinket(trinketName, 2);

@@ -1008,10 +1008,8 @@ MonoBehaviour:
     needsToBeGrounded: 1
     delay: 0
     notOnCooldown: 1
-    skillDescription: "Infantry launches a hook to a flexibly fixed distance \nand
-      altitude the hook latches on to the first enemy it \ncomes in contact with.
-      The Infantry then repels to \nthat target and kicks, causing a knockback effect
-      to \nthe enemy"
+    skillDescription: "Firex a hook. Any enemy hit will be \nstunned and leaped to,
+      \nknocking back the enemy afterwards."
     onHitEffect: 0
     prefab: {fileID: 1159624417898122, guid: 6ce9800d51c562645971c77d62e59cee, type: 2}
     speed: {x: 10, y: 0}

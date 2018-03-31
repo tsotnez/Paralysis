@@ -35,7 +35,8 @@ public abstract class Trinket : MonoBehaviour
         UseTrinkets_NextHitDealsbleeding = 6,
         PassiveTrinket_ChanceDealingMoreDamage = 7,
         PassiveTrinket_ChanceToStun = 8,
-        PassiveTrinket_SpeedWhenHitted = 9
+        PassiveTrinket_SpeedWhenHitted = 9,
+        None = 10
     }
 
     public void resetValues()
