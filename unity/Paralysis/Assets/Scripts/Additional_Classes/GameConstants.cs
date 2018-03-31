@@ -13,6 +13,7 @@ public static class GameConstants
 
     // Layers
     public static int[] TEAMLAYERS = { 11, 12, 15, 16, 17, 18, 19, 20 };
+    public static int WALL_LAYER = 10;
 
     // Scenes
     public static string MAIN_MENU_SCENE = "MainMenu";
@@ -25,6 +26,7 @@ public static class GameConstants
     // Tags
     public static string MAIN_PLAYER_TAG = "MainPlayer";
     public static string SPAWN_POINT_TAG = "SpawnPoint";
+
 
     // Controller
     public static string NAME_OF_XBOX360CONTROLLER_IN_ARRAY = "Controller (XBOX 360 For Windows)";

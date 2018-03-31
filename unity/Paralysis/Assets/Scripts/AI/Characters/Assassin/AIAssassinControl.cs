@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AIAssassinControl : AIUserControl {
 
+    private float timeShotGun = 0f;
+
     protected override float getCloseRangeAttackDistance()
     {
         return 1.5f;
@@ -41,8 +43,9 @@ public class AIAssassinControl : AIUserControl {
         {
             if (Mathf.Abs(yDiff) < .5f)
             {
+                //Invisiable dash
                 MeleeSkill skill = champClassCon.GetMeleeSkillByType(Skill.SkillType.Skill3);
-                if (skill.notOnCooldown && skill.staminaCost <= charStats.CurrentStamina)
+                if (skill.notOnCooldown && skill.staminaCost <= charStats.CurrentStamina && Time.time + 5 > timeShotGun)
                 {
                     inputSkill3 = true;
                     triggerWait = 1f;
@@ -60,11 +63,13 @@ public class AIAssassinControl : AIUserControl {
         {
             if (Mathf.Abs(yDiff) < 1.5f)
             {
+                //Shoot
                 RangedSkill skill = champClassCon.GetRangeSkillByType(Skill.SkillType.Skill4);
                 if (skill.notOnCooldown && skill.staminaCost <= charStats.CurrentStamina)
                 {
                     inputSkill4 = true;
                     triggerWait = .5f;
+                    timeShotGun = Time.time;
                     return TRIGGER_GOALS.WAIT_FOR_ATTACK;
                 }
             }
@@ -73,7 +78,7 @@ public class AIAssassinControl : AIUserControl {
         return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
-    public override TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth){
+    public override TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth, RaycastHit2D rightWallRay, RaycastHit2D leftWallRay){
         //DO nothing
         return TRIGGER_GOALS.CONTINUE;
     }
