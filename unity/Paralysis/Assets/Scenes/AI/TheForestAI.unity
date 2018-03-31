@@ -4113,7 +4113,7 @@ Prefab:
     - target: {fileID: 61582296287179694, guid: 4f2adf1551e1e8b4f83d7d9180dccda6,
         type: 2}
       propertyPath: m_Size.x
-      value: 0.21276101
+      value: 0.2245
       objectReference: {fileID: 0}
     - target: {fileID: 61343648093038188, guid: 4f2adf1551e1e8b4f83d7d9180dccda6,
         type: 2}
