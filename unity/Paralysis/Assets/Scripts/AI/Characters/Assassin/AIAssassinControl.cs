@@ -6,6 +6,11 @@ public class AIAssassinControl : AIUserControl {
 
     private float timeShotGun = 0f;
 
+    protected virtual int getLowStamiaTrigger()
+    {
+        return 10;
+    }
+
     protected override float getCloseRangeAttackDistance()
     {
         return 1.5f;
@@ -25,30 +30,14 @@ public class AIAssassinControl : AIUserControl {
     {
         if (champClassCon.CanPerformAttack())
         {
-            MeleeSkill skill = champClassCon.GetMeleeSkillByType(Skill.SkillType.BasicAttack1);
-            if (skill.notOnCooldown && skill.staminaCost <= charStats.CurrentStamina)
+            if (facingTarget)
             {
-                inputAttack = true;
-                triggerWait = .5f;
-                return TRIGGER_GOALS.WAIT_FOR_ATTACK;
-            }
-        }
-
-        return TRIGGER_GOALS.MOVE_CLOSER;
-    }
-
-    protected override TRIGGER_GOALS mediumRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
-    {
-        if (champClassCon.CanPerformAttack())
-        {
-            if (Mathf.Abs(yDiff) < .5f)
-            {
-                //Invisiable dash
-                MeleeSkill skill = champClassCon.GetMeleeSkillByType(Skill.SkillType.Skill3);
-                if (skill.notOnCooldown && skill.staminaCost <= charStats.CurrentStamina && Time.time + 5 > timeShotGun)
+                //Basic attack one
+                MeleeSkill basicAttack = champClassCon.GetMeleeSkillByType(Skill.SkillType.BasicAttack1);
+                if (basicAttack.notOnCooldown && basicAttack.staminaCost <= charStats.CurrentStamina)
                 {
-                    inputSkill3 = true;
-                    triggerWait = 1f;
+                    inputAttack = true;
+                    triggerWait = basicAttack.delay;
                     return TRIGGER_GOALS.WAIT_FOR_ATTACK;
                 }
             }
@@ -57,18 +46,49 @@ public class AIAssassinControl : AIUserControl {
         return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
+    protected override TRIGGER_GOALS mediumRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
+    {
+        if (champClassCon.CanPerformAttack() && facingTarget)
+        {
+            if (Mathf.Abs(yDiff) < .1f)
+            {
+                //Invisiable dash
+                MeleeSkill shadowStep = champClassCon.GetMeleeSkillByType(Skill.SkillType.Skill3);
+                if (shadowStep.notOnCooldown && shadowStep.staminaCost <= charStats.CurrentStamina && Time.time + 3 > timeShotGun)
+                {
+                    inputSkill3 = true;
+                    triggerWait = shadowStep.delay;
+                    return TRIGGER_GOALS.WAIT_FOR_ATTACK;
+                }
+            }
+
+            //Poison blades
+            /*
+                MeleeSkill poisonBlades = champClassCon.GetMeleeSkillByType(Skill.SkillType.Skill1);
+                if (poisonBlades.notOnCooldown && poisonBlades.staminaCost <= charStats.CurrentStamina)
+                {
+                    inputSkill1 = true;
+                    triggerWait = poisonBlades.delay;
+                    return TRIGGER_GOALS.WAIT_FOR_ATTACK;
+                }
+                */
+        }
+
+        return TRIGGER_GOALS.MOVE_CLOSER;
+    }
+
     protected override TRIGGER_GOALS longRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
     {
-        if (champClassCon.CanPerformAttack())
+        if (champClassCon.CanPerformAttack() && facingTarget)
         {
             if (Mathf.Abs(yDiff) < 1.5f)
             {
-                //Shoot
-                RangedSkill skill = champClassCon.GetRangeSkillByType(Skill.SkillType.Skill4);
-                if (skill.notOnCooldown && skill.staminaCost <= charStats.CurrentStamina)
+                //Shoot GUN
+                RangedSkill gunSkill = champClassCon.GetRangeSkillByType(Skill.SkillType.Skill4);
+                if (gunSkill.notOnCooldown && gunSkill.staminaCost <= charStats.CurrentStamina)
                 {
                     inputSkill4 = true;
-                    triggerWait = .5f;
+                    triggerWait = gunSkill.delay;
                     timeShotGun = Time.time;
                     return TRIGGER_GOALS.WAIT_FOR_ATTACK;
                 }
@@ -82,4 +102,26 @@ public class AIAssassinControl : AIUserControl {
         //DO nothing
         return TRIGGER_GOALS.CONTINUE;
     }
+
+
+    protected override TRIGGER_GOALS lockedOnToTarget(CharacterStats myStats, CharacterStats targetStats)
+    {
+        //Check vanish if we locked on...
+        MeleeSkill vanish = champClassCon.GetMeleeSkillByType(Skill.SkillType.Skill2);
+        if (vanish.notOnCooldown && vanish.staminaCost <= charStats.CurrentStamina)
+        {
+            inputSkill2 = true;
+            triggerWait = vanish.delay;
+            return TRIGGER_GOALS.WAIT_FOR_ATTACK;
+        }
+
+        return TRIGGER_GOALS.CONTINUE;
+    }
+
+    public override TRIGGER_GOALS lowStamina(int currentStamina, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats){
+        //newTriggerGoal = AI_GOALS.RETREAT;
+
+        return TRIGGER_GOALS.CONTINUE;
+    }
+
 }

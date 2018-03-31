@@ -36,6 +36,12 @@ public abstract class AIUserControl : MonoBehaviour {
     protected int currentHealth;
     protected int previousHealth;
     protected int currentStamina;
+    protected int previousStamina;
+
+    protected virtual int getLowStamiaTrigger()
+    {
+        return 10;
+    }
 
     protected virtual float getLongRangeAttackDistance(){
         return 1.5f;
@@ -72,6 +78,8 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected AI_GOALS currentGoal = AI_GOALS.STAND_BY;
     protected AI_GOALS previousGoal = AI_GOALS.STAND_BY;
+    protected AI_GOALS newTriggerGoal = AI_GOALS.STAND_BY;
+
     private AI_GOALS stuckGoal = AI_GOALS.STAND_BY;
 
     private float timeToUnstuck;
@@ -100,6 +108,7 @@ public abstract class AIUserControl : MonoBehaviour {
     {
         AI_GOALS goalBefore = currentGoal;
         previousHealth = currentHealth;
+        previousStamina = currentStamina;
 
         //If we get stunned just standby
         if(animCon.statStunned)
@@ -157,7 +166,8 @@ public abstract class AIUserControl : MonoBehaviour {
         switch (triggerGoal)
         {
         case TRIGGER_GOALS.CHANGE_GOAL:
-            //TODO
+            changeGoal(newTriggerGoal);
+            continueAfter = false;
             break;
         case TRIGGER_GOALS.WAIT_FOR_ATTACK:
             setGoalWait(triggerWait);
@@ -168,6 +178,7 @@ public abstract class AIUserControl : MonoBehaviour {
             moveTowardsTarget();
             continueAfter = false;
             break;
+        case TRIGGER_GOALS.CONTINUE:
         default:
             continueAfter = true;
             break;
@@ -246,6 +257,15 @@ public abstract class AIUserControl : MonoBehaviour {
                 }
             }
 
+            if (currentStamina < previousStamina && currentStamina < getLowStamiaTrigger())
+            {
+                TRIGGER_GOALS triggerGoal = lowStamina(currentStamina, targetDistance, yDiff, charStats, targetStats);
+                if(!handleTriggerAndContinue(triggerGoal))
+                {
+                    return;
+                }
+            }
+
             //Set goals here
             if(mySection == targetSection && !mySection.nonTargetable)
             {
@@ -287,6 +307,13 @@ public abstract class AIUserControl : MonoBehaviour {
 
             //since we care about previous goal make sure to set it here
             previousGoal = AI_GOALS.MOVE_THROUGH_NODES;
+
+            TRIGGER_GOALS triggerGoal = lockedOnToTarget(charStats, targetStats);
+            if (!handleTriggerAndContinue(triggerGoal))
+            {
+                return;
+            }
+
         }           
 
         //Get distance to our current node
@@ -364,6 +391,10 @@ public abstract class AIUserControl : MonoBehaviour {
     #endregion
 
     #region Attack
+    protected virtual TRIGGER_GOALS lockedOnToTarget(CharacterStats myStats, CharacterStats targetStats)
+    {
+        return TRIGGER_GOALS.CONTINUE;
+    }
 
     protected virtual TRIGGER_GOALS closeRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
     {
@@ -386,8 +417,11 @@ public abstract class AIUserControl : MonoBehaviour {
         return TRIGGER_GOALS.CONTINUE;
     }
 
+    public virtual TRIGGER_GOALS lowStamina(int currentStamina, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats){
+        return TRIGGER_GOALS.CONTINUE;
+    }
+
     //TODO right after stunned, get number of players around me and distances
-    //TODO Stanima gets low
 
     #endregion
 
