@@ -24,6 +24,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     [Header("ChampionSelection")]
     public GameObject[] ChampionSelectionFirstSelecteds;
     public Text CountDownChampions;
+    public int countDownChampionsSeconds = 4;
     private IEnumerator ChampionsCountdownRoutine = null;
     /// <summary>
     /// Contains PopUp Tranforms
@@ -36,6 +37,11 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     public GameObject[] TrinketSelectionAreas;
     public Text CountDownTrinkets;
     private Coroutine TrinketsCountdownRoutine = null;
+
+    [Header("Map Selection")]
+    public GameObject[] MapSelectionFirstSelecteds;
+    public Text CountDownMaps;
+    private Coroutine MapsCountdownRoutine = null;
 
     /// <summary>
     /// All players
@@ -200,31 +206,6 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     }
 
     /// <summary>
-    /// Animated countdown
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator countDownChampions()
-    {
-        CountDownChampions.gameObject.SetActive(true);
-        Animator anim = CountDownChampions.gameObject.GetComponent<Animator>();
-
-        anim.SetTrigger("animate");
-        CountDownChampions.text = "4";
-        yield return new WaitForSeconds(1);
-        CountDownChampions.text = "3";
-        anim.SetTrigger("animate");
-        yield return new WaitForSeconds(1);
-        CountDownChampions.text = "2";
-        anim.SetTrigger("animate");
-        yield return new WaitForSeconds(1);
-        CountDownChampions.text = "1";
-        anim.SetTrigger("animate");
-        yield return new WaitForSeconds(1);
-
-        GoToTrinketSelection();
-    }
-
-    /// <summary>
     /// Showeing preview of champion
     /// </summary>
     /// <param name="targetPlayer"></param>
@@ -310,6 +291,12 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         }
         else
             Debug.LogError("Trying to remove unselected trinket " + trinket + " from player " + targetPlayer);
+
+        if (TrinketsCountdownRoutine != null)
+        {
+            StopCoroutine(TrinketsCountdownRoutine);
+            CountDownTrinkets.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -354,6 +341,55 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         }
         else
             Debug.LogError("Trying to add trinket to player" + targetPlayer + " but he has 2 trinkets already");
+
+        if(AllTrinketsSelected())
+        {
+            TrinketsCountdownRoutine = StartCoroutine(countDownTrinkets());
+        }
+    }
+
+    /// <summary>
+    /// Animated countdown
+    /// </summary>
+    private IEnumerator countDownChampions()
+    {
+        CountDownChampions.gameObject.SetActive(true);
+        Animator anim = CountDownChampions.gameObject.GetComponent<Animator>();
+
+        int counter = countDownChampionsSeconds;
+
+        while (counter >= 0)
+        {
+            anim.SetTrigger("animate");
+            CountDownChampions.text = counter.ToString();
+            counter--;
+            yield return new WaitForSeconds(1);
+        }
+
+        CountDownChampions.gameObject.SetActive(false);
+        GoToTrinketSelection();
+    }
+
+    /// <summary>
+    /// Animated countdown from trinket selection to map select
+    /// </summary>
+    private IEnumerator countDownTrinkets()
+    {
+        CountDownTrinkets.gameObject.SetActive(true);
+        Animator anim = CountDownTrinkets.gameObject.GetComponent<Animator>();
+
+        int counter = countDownChampionsSeconds;
+
+        while (counter >= 0)
+        {
+            anim.SetTrigger("animate");
+            CountDownTrinkets.text = counter.ToString();
+            counter--;
+            yield return new WaitForSeconds(1);
+        }
+
+        CountDownTrinkets.gameObject.SetActive(false);
+        GoToMapSelection();
     }
 
     /// <summary>
@@ -433,16 +469,6 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         return newSystem;
     }
 
-    public void GoToChampionSelection()
-    {
-        deselectAll();
-        MapSelect.SetActive(false);
-        ChampionSelect.SetActive(true);
-
-        //Select gameObjects
-        setSelectedGameObjectsForPage(ChampionSelectionFirstSelecteds);
-    }
-
     /// <summary>
     /// Sets EventSystems to select GO according to passed array
     /// </summary>
@@ -451,38 +477,105 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         for (int i = 0; i < eventSystemInstances.Length; i++)
         {
             if (eventSystemInstances[i] != null)
-                eventSystemInstances[i].SetSelectedGameObject(sourceArray[i]);
+            {
+                if (sourceArray.Length - 1 >= i)
+                    eventSystemInstances[i].SetSelectedGameObject(sourceArray[i]);
+                else
+                    eventSystemInstances[i].SetSelectedGameObject(null);
+            }
         }
+    }
+
+    public void GoToChampionSelection()
+    {
+        deselectAll();
+        MapSelect.SetActive(false);
+        TrinketSelect.SetActive(false);
+        ChampionSelect.SetActive(true);
+
+        killCooldowns();
+
+        popUps[0].transform.parent.gameObject.SetActive(true);
+
+
+        if (AllChampionsSelected())
+        {
+            //Re select selected champions if existent
+            foreach (Player player in players)
+            {
+                ChampionDatabase.Champions champ = ChampionPrefabs.First(x => x.Value == player.ChampionPrefab).Key; //Get enum value for champi9on prefab
+
+                GameObject toSelect = GameObject.FindObjectsOfType<LocalChampionSelectionButtonChampion>().First(x => //Find button which holds thast enum value and according player number
+                x.TargetPlayerNumber == player.playerNumber &&
+                x.Champion == champ)
+                .gameObject;
+
+                eventSystemInstances[(int)player.playerNumber - 1].SetSelectedGameObject(toSelect); //Set event system to select that button
+            }
+        }
+        else //just set first selecteds
+            setSelectedGameObjectsForPage(ChampionSelectionFirstSelecteds);
+    }
+
+    /// <summary>
+    /// Stops all countdown coroutines and hides according GOs
+    /// </summary>
+    private void killCooldowns()
+    {
+        if (TrinketsCountdownRoutine != null)
+            StopCoroutine(TrinketsCountdownRoutine);
+        if (ChampionsCountdownRoutine != null)
+            StopCoroutine(ChampionsCountdownRoutine);
+        if (MapsCountdownRoutine != null)
+            StopCoroutine(MapsCountdownRoutine);
+
+        CountDownChampions.gameObject.SetActive(false);
+        CountDownChampions.gameObject.SetActive(false);
+        CountDownMaps.gameObject.SetActive(false);
     }
 
     public void GoToMapSelection()
     {
-        //if (everythingSelected())
-        //{
-        //    deselectAll();
+        deselectAll();
+        killCooldowns();
+        LocalMultiplayerManager.Teams = new Dictionary<int, Player[]>();
+        LocalMultiplayerManager.Teams.Add(0, team1);
+        LocalMultiplayerManager.Teams.Add(1, team2);
 
-        //    LocalMultiplayerManager.Teams = new Dictionary<int, Player[]>();
-        //    LocalMultiplayerManager.Teams.Add(0, team1);
-        //    LocalMultiplayerManager.Teams.Add(1, team2);
+        ChampionSelect.SetActive(false);
+        TrinketSelect.SetActive(false);
+        MapSelect.SetActive(true);
 
-        //    ChampionSelect.SetActive(false);
-        //    MapSelect.SetActive(true);
-
-        //    GameObject mapSlideshow = MapSelect.transform.Find("Maps").GetComponent<HorizontalAutomaticScroll>().contentTrans.GetChild(0).gameObject;
-        //   eventSystemInstances[0].SetSelectedGameObject(mapSlideshow);
-
-        //}
-        //else
-        //{
-        //    StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Select a champion and two different trinkets for each player"));
-        //}
+        setSelectedGameObjectsForPage(MapSelectionFirstSelecteds);
     }
 
     public void GoToTrinketSelection()
     {
+        deselectAll();
+        killCooldowns();
         ChampionSelect.SetActive(false);
         TrinketSelect.SetActive(true);
-        setSelectedGameObjectsForPage(TrinketSelectionFirstSelecteds);
+        MapSelect.SetActive(false);
+        popUps[0].transform.parent.gameObject.SetActive(false);
+
+        //Re select selected trinkets if existant
+        if(AllTrinketsSelected())
+        {
+            foreach (Player player in players)
+            {
+                Trinket.Trinkets trinket1 = player.trinket1;
+                Trinket.Trinkets trinket2 = player.trinket2;
+
+                //Get buttons for player holding the two trinkets
+                LocalChampionSelectionButtonTrinket buttonT1 = GameObject.FindObjectsOfType<LocalChampionSelectionButtonTrinket>().First(x => x.TargetPlayerNumber == player.playerNumber && x.trinket == trinket1);
+                LocalChampionSelectionButtonTrinket buttonT2 = GameObject.FindObjectsOfType<LocalChampionSelectionButtonTrinket>().First(x => x.TargetPlayerNumber == player.playerNumber && x.trinket == trinket2);
+
+                buttonT1.Selecting();
+                eventSystemInstances[(int)player.playerNumber - 1].SetSelectedGameObject(buttonT2.gameObject);
+            }
+        }
+        else
+            setSelectedGameObjectsForPage(TrinketSelectionFirstSelecteds);
     }
 
     private void deselectAll() {
@@ -495,15 +588,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
 
     public override void startGame(string mapName)
     {
-        //Check if every player has selected a champion and 2 different trinkets
-        //if (everythingSelected())
-        //{
-        //    AdvancedSceneManager.LoadSceneWithLoadingScreen(mapName, "MultiplayerLoadingScreen");
-        //}
-        //else
-        //{
-        //    StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Select a champion and two different trinkets for each player"));
-        //}
+        AdvancedSceneManager.LoadSceneWithLoadingScreen(mapName, "MultiplayerLoadingScreen");
     }
 
     private bool AllChampionsSelected()
@@ -513,6 +598,18 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         //Check if every player has selected a champion and 2 different trinkets
         foreach (Player player in players)
             if (player.ChampionPrefab == null)
+                allSelected = false;
+
+        return allSelected;
+    }
+
+    private bool AllTrinketsSelected()
+    {
+        //Only allow to start if selections are complete
+        bool allSelected = true;
+        //Check if every player has selected a champion and 2 different trinkets
+        foreach (Player player in players)
+            if (player.trinket1 == Trinket.Trinkets.None || player.trinket2 == Trinket.Trinkets.None)
                 allSelected = false;
 
         return allSelected;
