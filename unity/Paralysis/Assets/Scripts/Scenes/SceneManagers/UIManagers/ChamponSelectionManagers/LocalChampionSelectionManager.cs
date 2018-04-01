@@ -65,6 +65,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     protected override void Awake()
     {
         base.Awake();
+        Cursor.visible = false;
         PhotonNetwork.offlineMode = true;
     }
 

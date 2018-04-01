@@ -35,10 +35,12 @@ public abstract class UIManager : MonoBehaviour {
         if (Array.Exists(Input.GetJoystickNames(), x => x == "Controller (XBOX 360 For Windows)"))
         {
             module.SetControllingPlayerInputDevice(UserControl.InputDevice.XboxController);
+            Cursor.visible = false;
         }
         else
         {
             module.SetControllingPlayerInputDevice(UserControl.InputDevice.KeyboardMouse);
+            Cursor.visible = true;
         }
     }
 
@@ -67,6 +69,7 @@ public abstract class UIManager : MonoBehaviour {
     protected virtual void gotoKeyboard()
     {
         module.SetControllingPlayerInputDevice(UserControl.InputDevice.KeyboardMouse);
+        Cursor.visible = true;
     }
 
     protected virtual void gotoController()
@@ -74,5 +77,6 @@ public abstract class UIManager : MonoBehaviour {
         module.SetControllingPlayerInputDevice(UserControl.InputDevice.XboxController);
 
         EventSystem.current.SetSelectedGameObject(firstSelected);
+        Cursor.visible = false;
     }
 }
