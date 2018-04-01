@@ -50,6 +50,7 @@ public abstract class MenuPagesManager : UIManager {
 
     protected override void gotoController()
     {
+        Cursor.visible = false;
         module.SetControllingPlayerInputDevice(UserControl.InputDevice.XboxController);
         int currentPageIndex = Array.IndexOf(MenuPages, currentPage);
 

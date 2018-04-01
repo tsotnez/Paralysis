@@ -19,7 +19,7 @@ public class TeamAllocationManager : UIManager {
 	// Use this for initialization
 	protected override void Start () {
         base.Start();
-
+    
         connectedControllers = Input.GetJoystickNames();
 
         float yOffset = 0;
@@ -33,7 +33,6 @@ public class TeamAllocationManager : UIManager {
             eventSystem.horizontalAxis = "Horizontal_XboxPlayer1";
             eventSystem.submitButton = "Skill4_XboxPlayer1";
         }
-
         //Adding players for every controller connected
         foreach (string controller in connectedControllers.ToList())
         {
