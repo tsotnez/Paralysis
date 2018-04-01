@@ -6,9 +6,10 @@ public class AIAssassinControl : AIUserControl {
 
     private float timeShotGun = 0f;
 
-    protected virtual int getLowStamiaTrigger()
+    protected override int getLowStamiaTrigger()
     {
-        return 10;
+        //Just enough stamina to do a jump
+        return champClassCon.stamina_Jump + 5;
     }
 
     protected override float getCloseRangeAttackDistance()
@@ -54,6 +55,7 @@ public class AIAssassinControl : AIUserControl {
             {
                 //Invisiable dash
                 MeleeSkill shadowStep = champClassCon.GetMeleeSkillByType(Skill.SkillType.Skill3);
+
                 if (shadowStep.notOnCooldown && shadowStep.staminaCost <= charStats.CurrentStamina && Time.time + 3 > timeShotGun)
                 {
                     inputSkill3 = true;
@@ -81,7 +83,7 @@ public class AIAssassinControl : AIUserControl {
     {
         if (champClassCon.CanPerformAttack() && facingTarget)
         {
-            if (Mathf.Abs(yDiff) < 1.5f)
+            if (Mathf.Abs(yDiff) < .5f)
             {
                 //Shoot GUN
                 RangedSkill gunSkill = champClassCon.GetRangeSkillByType(Skill.SkillType.Skill4);
@@ -99,6 +101,11 @@ public class AIAssassinControl : AIUserControl {
     }
 
     public override TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth, RaycastHit2D rightWallRay, RaycastHit2D leftWallRay){
+
+        if (newHealth < 20 && newHealth < targetHealth)
+        {
+            //TODO retreat?
+        }
         //DO nothing
         return TRIGGER_GOALS.CONTINUE;
     }
@@ -119,9 +126,17 @@ public class AIAssassinControl : AIUserControl {
     }
 
     public override TRIGGER_GOALS lowStamina(int currentStamina, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats){
-        //newTriggerGoal = AI_GOALS.RETREAT;
 
-        return TRIGGER_GOALS.CONTINUE;
+        if (myStats.CurrentHealth < targetStats.CurrentHealth)
+        {
+            retreatDuration = 9999;
+            retreatUntilStamina = 50;
+            return TRIGGER_GOALS.RETREAT;
+        }
+        else
+        {
+            return TRIGGER_GOALS.CONTINUE;
+        }
     }
 
 }

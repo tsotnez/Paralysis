@@ -13,6 +13,9 @@ public class Section : MonoBehaviour {
     [HideInInspector]
     public bool nonTargetable = false;
 
+    //TODO
+    public Vector2 retreatPoint = Vector2.zero;
+
     public SectionPath[] SectionPaths { get { return SectionPaths; } }
     private SectionPath[] sectionPaths;
 
@@ -40,6 +43,12 @@ public class Section : MonoBehaviour {
 
     public SectionPath getOptimalPathForSection(Section targetSection, Vector2 currentPosition, Vector2 targetPosition)
     {
+        if (targetSection == this)
+        {
+            Debug.LogError("No path to current section...: ");
+            return null;
+        }
+
         List<SectionPath> paths = new List<SectionPath>();
         foreach(SectionPath sectionP in sectionPaths)
         {
@@ -51,6 +60,7 @@ public class Section : MonoBehaviour {
 
         if(paths.Count == 0)
         {
+            Debug.LogError("No paths for section: " + this.name);
             return null;
         }
         else if(paths.Count == 1)
@@ -108,6 +118,11 @@ public class Section : MonoBehaviour {
         }
 
         return false;
+    }
+
+    public Vector2 getRetreatPosition()
+    {
+        return transform.position;
     }
 
     void OnDrawGizmos()
