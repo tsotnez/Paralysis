@@ -45,6 +45,7 @@ public abstract class GameplayManager : Photon.MonoBehaviour
     protected virtual void Awake()
     {
         Instance = this;
+        Cursor.visible = false;
 
         PhotonNetwork.offlineMode = true;
         InstantiatePlayers();

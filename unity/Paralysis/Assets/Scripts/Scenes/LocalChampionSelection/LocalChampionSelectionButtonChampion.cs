@@ -9,6 +9,8 @@ public class LocalChampionSelectionButtonChampion : ChampionSelectionButtonChamp
 
     public UserControl.PlayerNumbers TargetPlayerNumber; //For which player
     private LocalChampionSelectionManager manager;
+
+    [HideInInspector]
     public bool highlighted = false; //True while button is being hovered over
 
     protected override void Start()
@@ -53,31 +55,17 @@ public class LocalChampionSelectionButtonChampion : ChampionSelectionButtonChamp
         manager.setChampion(TargetPlayerNumber, ChampionPrefab);
         currentlySelected = true;
         text.enabled = true;
-
-        LocalChampionSelectionButtonChampion prevSelected = GameObject.FindObjectsOfType<LocalChampionSelectionButtonChampion>().FirstOrDefault(x =>
-        x.TargetPlayerNumber == this.TargetPlayerNumber && x.currentlySelected && x != this);
-
-        if (prevSelected != null)
-            prevSelected.loseFocus();
-    }
-
-    public override void loseFocus()
-    {
-        currentlySelected = false;
-        text.enabled = false;
-
-        if (!isSelectedByOtherPlayer())
-            portrait.switchTo(0);
     }
 
     public override void Deselecting()
     {
-        currentlySelected = false;
-
         if (!isSelectedByOtherPlayer()) //Only transition to shadow if no other player is selecting this button
             base.Deselecting();
 
-        manager.setChampion(TargetPlayerNumber, null); //Resetting selected champion when transferring to different button
+        if(!currentlySelected)
+            manager.setChampion(TargetPlayerNumber, null); //Resetting selected champion when transferring to different button
+
+        currentlySelected = false;
         text.enabled = false;
         highlighted = false;
         popup.gameObject.SetActive(false);

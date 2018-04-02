@@ -539,9 +539,13 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     {
         deselectAll();
         killCooldowns();
+
+        Player[] newTeam1 = players.Where(x => x.TeamNumber == 1).ToArray();
+        Player[] newTeam2 = players.Where(x => x.TeamNumber == 2).ToArray();
+
         LocalMultiplayerManager.Teams = new Dictionary<int, Player[]>();
-        LocalMultiplayerManager.Teams.Add(0, team1);
-        LocalMultiplayerManager.Teams.Add(1, team2);
+        LocalMultiplayerManager.Teams.Add(0, newTeam1);
+        LocalMultiplayerManager.Teams.Add(1, newTeam2);
 
         ChampionSelect.SetActive(false);
         TrinketSelect.SetActive(false);
