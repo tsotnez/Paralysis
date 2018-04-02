@@ -56,7 +56,6 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected Section mySection;
     protected Section targetSection;
-    protected Section retreatSection;
 
     protected SectionPathNode[] currentNodes;
     protected SectionPathNode currentNode;
@@ -127,15 +126,11 @@ public abstract class AIUserControl : MonoBehaviour {
             break;
         case AI_GOALS.MOVE_TO_LOCATION:
             setCurrentGoal();
-
             if (!isRetreating)moveTowardsTarget(targetPosition);
-            else moveTowardsTarget(retreatSection.getRetreatPosition());
+            else moveTowardsTarget(targetSection.getRetreatPosition());
             break;
         case AI_GOALS.MOVE_THROUGH_NODES:
-            
-            if (!isRetreating)moveThroughSectionPath(targetSection, targetPosition);
-            else moveThroughSectionPath(retreatSection, targetPosition);
-
+            moveThroughSectionPath(targetSection, targetPosition);
             break;
         case AI_GOALS.JUMP1:
             jump1();
@@ -159,6 +154,14 @@ public abstract class AIUserControl : MonoBehaviour {
 
         if(goalBefore == currentGoal)timeInCurrentGoal += Time.deltaTime;
         else timeInCurrentGoal = 0;
+
+        //TODO remove, this is for testing...
+        if (Input.GetKey(KeyCode.L))
+        {
+            retreatDuration = 9999;
+            retreatUntilStamina = 90;
+            isRetreating = true;
+        }
 
         //print("current goal: " + currentGoal);
     }
@@ -219,7 +222,7 @@ public abstract class AIUserControl : MonoBehaviour {
             }
             else
             {
-                retreatSection = AISectionManager.Instance.getRetreatSection(transform.position, targetPosition);
+                targetSection = AISectionManager.Instance.getRetreatSection(transform.position, targetPosition);
             }
 
             facingTarget = false;
@@ -240,25 +243,22 @@ public abstract class AIUserControl : MonoBehaviour {
         currentStamina = charStats.CurrentStamina;
     }
 
+    #endregion
+
+    #region SetGoals
     protected virtual void setCurrentGoal()
     {
         if (targetPlayer != null)
         {
+            if (!checkHealthTriggerContinue())
+            {
+                return;
+            }
+
             // Retreat
             if (isRetreating)
             {
-                if (mySection != retreatSection)
-                {
-                    changeGoal(AI_GOALS.MOVE_THROUGH_NODES);
-                }
-                else if (mySection == retreatSection && !mySection.nonTargetable)
-                {
-                    changeGoal(AI_GOALS.MOVE_TO_LOCATION);
-                }
-                else
-                {
-                    changeGoal(AI_GOALS.STAND_BY);
-                }
+                setRetreatingGoals();
             }
             // if we aren't retreating move to and attack player
             else
@@ -272,32 +272,24 @@ public abstract class AIUserControl : MonoBehaviour {
         }
     }
 
+    protected virtual void setRetreatingGoals()
+    {
+        if (mySection != targetSection)
+        {
+            changeGoal(AI_GOALS.MOVE_THROUGH_NODES);
+        }
+        else if (mySection == targetSection && !mySection.nonTargetable)
+        {
+            changeGoal(AI_GOALS.MOVE_TO_LOCATION);
+        }
+        else
+        {
+            changeGoal(AI_GOALS.STAND_BY);
+        }
+    }
+
     protected virtual void setAttackingGoals()
     {
-        //Look at health on damage
-        if (currentHealth < previousHealth)
-        {
-            int maxHealth = charStats.maxHealth;
-            int healthPercent = (int)(((float)currentHealth / (float)maxHealth) * 100);
-            int prevHealthPercent = (int)(((float)previousHealth / (float)maxHealth) * 100);
-
-            //Triggered after losing 10% health
-            for (int i = 90; i > 0; i = i-10)
-            {
-                if (healthPercent <= i && prevHealthPercent > i)
-                {
-                    RaycastHit2D rightWallRay = Physics2D.Raycast(transform.position, transform.right, 999f, GameConstants.WALL_LAYER);
-                    RaycastHit2D leftWallRay = Physics2D.Raycast(transform.position, transform.right * -1, 999f, GameConstants.WALL_LAYER);
-                    TRIGGER_GOALS triggerGoal = healthDecreasedTenPercent(currentHealth, previousHealth, targetStats.CurrentHealth, rightWallRay, leftWallRay);
-
-                    if(!handleTriggerAndContinue(triggerGoal))
-                    {
-                        return;
-                    }
-                }
-            }
-        }
-
         //Look to see if we have low stamina
         if (/*currentStamina < previousStamina &&*/ currentStamina < getLowStamiaTrigger())
         {
@@ -342,6 +334,7 @@ public abstract class AIUserControl : MonoBehaviour {
             return;
         }
 
+        //This is only called the first timet his goal happens
         if(targetPlayer != null && previousGoal != AI_GOALS.MOVE_THROUGH_NODES)
         {
             currentNodes = mySection.getOptimalPathForSection(moveToSection, transform.position, moveToPosition).Nodes;
@@ -397,7 +390,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected virtual void moveTowardsTarget(Vector2 position)
     {
-        //If we are retreating and we should stop
+        //If we are retreating
         if (isRetreating)
         {
             if (checkStopRetreating())
@@ -409,6 +402,7 @@ public abstract class AIUserControl : MonoBehaviour {
                 moveTowardsPosition(position);
             }
         }
+        //We have a target, should we attack or move to target?
         else if (targetPlayer != null)
         {
             TRIGGER_GOALS distRetValue = TRIGGER_GOALS.MOVE_CLOSER;
@@ -474,7 +468,38 @@ public abstract class AIUserControl : MonoBehaviour {
     #endregion
 
     #region StatsChanged
-    public virtual TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth, RaycastHit2D rightWallRay, RaycastHit2D leftWallRay){
+
+    private bool checkHealthTriggerContinue()
+    {
+        //Look at health on damage
+        if (currentHealth < previousHealth)
+        {
+            int maxHealth = charStats.maxHealth;
+            int healthPercent = (int)(((float)currentHealth / (float)maxHealth) * 100);
+            int prevHealthPercent = (int)(((float)previousHealth / (float)maxHealth) * 100);
+
+            //Triggered after losing 10% health
+            for (int i = 90; i > 0; i = i-10)
+            {
+                if (healthPercent <= i && prevHealthPercent > i)
+                {
+                    RaycastHit2D rightWallRay = Physics2D.Raycast(transform.position, transform.right, 999f, GameConstants.WALL_LAYER);
+                    RaycastHit2D leftWallRay = Physics2D.Raycast(transform.position, transform.right * -1, 999f, GameConstants.WALL_LAYER);
+                    TRIGGER_GOALS triggerGoal = healthDecreasedTenPercent(currentHealth, previousHealth, targetStats.CurrentHealth, rightWallRay, leftWallRay, isRetreating);
+
+                    if(!handleTriggerAndContinue(triggerGoal))
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+
+    }
+
+    public virtual TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth, RaycastHit2D rightWallRay, RaycastHit2D leftWallRay, bool retreating){
         return TRIGGER_GOALS.CONTINUE;
     }
 
@@ -503,12 +528,11 @@ public abstract class AIUserControl : MonoBehaviour {
             return;
         }
 
+        inputDown = true;
         if(isGrounded && previousGoal != AI_GOALS.FALL_THROUGH)
         {
             StartCoroutine(inputDashForFall());
         }
-
-        inputDown = true;
     }
 
     protected IEnumerator inputDashForFall()
@@ -683,14 +707,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
     private bool inSameSectionAsTargetSection()
     {
-        if (!isRetreating)
-        {
-            return targetPlayer != null && mySection == targetSection && !mySection.nonTargetable;
-        } 
-        else
-        {
-            return targetPlayer != null && mySection == retreatSection && !mySection.nonTargetable;
-        }
+        return targetPlayer != null && mySection == targetSection && !mySection.nonTargetable;
     }
 
     private void changeGoal(AI_GOALS newGoal)
