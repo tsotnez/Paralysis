@@ -8,7 +8,9 @@ public class AIGetClosetEnemy : MonoBehaviour {
             if(targetPlayer != null)return targetPlayer.gameObject; 
             else return null;
     }}
-    
+
+    public float updateRate = 1.0f;
+
     private CharacterStats targetPlayer;
     private List<CharacterStats> enemyPlayers;
 
@@ -21,6 +23,7 @@ public class AIGetClosetEnemy : MonoBehaviour {
         else 
         {
             enemyPlayers = new List<CharacterStats>();
+            InvokeRepeating("UpdateInfo", 0, updateRate);
         }
     }
 
@@ -42,7 +45,7 @@ public class AIGetClosetEnemy : MonoBehaviour {
     }
 
 
-    private void FixedUpdate()
+    private void UpdateInfo()
     {
         if (enemyPlayers == null || enemyPlayers.Count == 0)
         {
@@ -50,11 +53,11 @@ public class AIGetClosetEnemy : MonoBehaviour {
             return;
         }
 
-		if (enemyPlayers.Count == 1) 
-		{
-			targetPlayer = enemyPlayers [0];
-			return; 
-		}
+        if (enemyPlayers.Count == 1) 
+        {
+            targetPlayer = enemyPlayers [0];
+            return; 
+        }
 
         float actDistance = float.MaxValue;
         targetPlayer = null;
@@ -66,7 +69,5 @@ public class AIGetClosetEnemy : MonoBehaviour {
                 targetPlayer = enemyPlayer;
             }
         }
-
     }
-
 }
