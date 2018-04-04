@@ -18,8 +18,6 @@ class InfantryHookBehaviour : ProjectileBehaviour
     float LengthOfChainElement = 0;
     float LengthOfHook = 0;
 
-    bool setValuesForFalling = false;
-
     protected new void Start()
     {
         base.Start();
@@ -48,12 +46,13 @@ class InfantryHookBehaviour : ProjectileBehaviour
             else
             {
                 hitted = -1;
+                Die();
             }
-            StartCoroutine(GetStuck());
+            StartCoroutine(GetStuck(1.5f));
         }
     }
 
-    protected new IEnumerator GetStuck()
+    protected new IEnumerator GetStuck(float seconds)
     {
         // Stop moving of all chain elements
         Rigidbody2D rigChainElement = null;
@@ -63,7 +62,7 @@ class InfantryHookBehaviour : ProjectileBehaviour
             rigChainElement.velocity = new Vector2(0, 0); //Stop moving
             rigChainElement.gravityScale = 1;
         }
-        yield return base.GetStuck();
+        yield return base.GetStuck(seconds);
     }
 
     public override void Die()
@@ -86,11 +85,9 @@ class InfantryHookBehaviour : ProjectileBehaviour
         {
             ChainBehaviour();
         }
-        else if (Falling && !setValuesForFalling)
+        else if (Falling)
         {
-            ProjectileRigid.freezeRotation = false;
-            ProjectileRigid.constraints = RigidbodyConstraints2D.None;
-            setValuesForFalling = false;
+            Die();
         }
     }
 

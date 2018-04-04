@@ -721,26 +721,24 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         if (FacingRight) direction = 1;
         else direction = -1;
 
-        Vector2 position = ProjectilePosition.position;
-
         if (PhotonNetwork.offlineMode)
         {
-            StartCoroutine(RangedSkill(skillToPerform, direction, position));
+            StartCoroutine(RangedSkill(skillToPerform, direction));
         }
         else
         {
-            photonView.RPC("RPC_SpawnRangedSkill", PhotonTargets.All, skillToPerform.rangedSkillId, (short)direction, position);
+            photonView.RPC("RPC_SpawnRangedSkill", PhotonTargets.All, skillToPerform.rangedSkillId, (short)direction);
         }
     }
 
     [PunRPC]
-    public void RPC_SpawnRangedSkill(short rangedSkillId, short direction, Vector2 position)
+    public void RPC_SpawnRangedSkill(short rangedSkillId, short direction)
     {
         RangedSkill skillToPerform = global::RangedSkill.rangedSkillDict[rangedSkillId];
-        StartCoroutine(RangedSkill(skillToPerform, direction, position));
+        StartCoroutine(RangedSkill(skillToPerform, direction));
     }
 
-    public IEnumerator RangedSkill(RangedSkill skillToPerform, int direction, Vector2 position)
+    public IEnumerator RangedSkill(RangedSkill skillToPerform, int direction)
     {
         GameObject goProjectile;
         goProjectile = skillToPerform.prefab;
@@ -756,7 +754,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         else
             goProjectile.GetComponent<SpriteRenderer>().flipX = false;
 
-        goProjectile = Instantiate(goProjectile, position,
+        goProjectile = Instantiate(goProjectile, ProjectilePosition.position,
             new Quaternion(goProjectile.transform.rotation.x, goProjectile.transform.rotation.y,
                 goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));
 

@@ -9,6 +9,7 @@ public class ProjectileBehaviour : MonoBehaviour
     public bool Stuck { get; protected set; }                           // True if projectile has successfully collided with an object
     public bool Falling { get; protected set; }                         // True if projectile has reched maxRange already  
     public bool Interrupted { get; protected set; }                     // True if creator got stunned or knockedback while casting
+    public bool IsDead { get; protected set; }
 
     // Public properties
     [HideInInspector]
@@ -24,9 +25,6 @@ public class ProjectileBehaviour : MonoBehaviour
     protected Collider2D ProjectileCollider;                            // Collider of the projectile
     protected Vector3 startPos;                                         // Position where the projectile has spawned
     protected short networkId;                                            // Network id of the object, not set unless online
-
-    private bool isDead = false;
-    public bool IsDead { get { return isDead; } }
 
     // Private properties
     Coroutine fallingRoutine = null;                                    // Falling Routine  
@@ -192,11 +190,11 @@ public class ProjectileBehaviour : MonoBehaviour
             if (SkillValues.onHitEffect)
                 Die();
             else
-                StartCoroutine(GetStuck());
+                StartCoroutine(GetStuck(5f));
         }
     }
 
-    protected IEnumerator GetStuck()
+    protected IEnumerator GetStuck(float seconds)
     {
         // Stop moving and destroy after 5 seconds 
         Stuck = true;
@@ -205,7 +203,7 @@ public class ProjectileBehaviour : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;     // Disable collider
         ProjectileRigid.velocity = new Vector2(0, 0);   // Stop moving
         ProjectileRigid.freezeRotation = true;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(seconds);
         Die();
     }
 
@@ -248,7 +246,7 @@ public class ProjectileBehaviour : MonoBehaviour
         if (SkillValues.onHitEffect && explosionPrefab != null)
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
-        isDead = true;
+        IsDead = true;
         if(!PhotonNetwork.offlineMode)
         {
             //Tell the projectile manager this objected died, this collision

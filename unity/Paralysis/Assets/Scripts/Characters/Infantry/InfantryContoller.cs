@@ -88,12 +88,18 @@ public class InfantryContoller : ChampionClassController
         projectile.SkillValues = skill1;
         projectile.ChainPrefab = Skill1_Chain;
 
-        goProjectile = Instantiate(goProjectile, transform.position + new Vector3(1f * direction, 0.3f), new Quaternion(goProjectile.transform.rotation.x,
-            goProjectile.transform.rotation.y, goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));
+        if (direction == -1)
+            goProjectile.GetComponent<SpriteRenderer>().flipX = true;
+        else
+            goProjectile.GetComponent<SpriteRenderer>().flipX = false;
+
+        goProjectile = Instantiate(goProjectile, ProjectilePosition.position,
+            new Quaternion(goProjectile.transform.rotation.x, goProjectile.transform.rotation.y,
+                goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));
 
         projectile = goProjectile.GetComponent<InfantryHookBehaviour>();
 
-        yield return new WaitUntil(() => projectile.hitted != 0);
+        yield return new WaitUntil(() => projectile.hitted != 0 || projectile.IsDead);
 
         if (projectile.hitted == 1)
         {
