@@ -20,10 +20,10 @@ public abstract class GameplayManager : Photon.MonoBehaviour
     public Transform gameOverOverlay;
 
     // Team Arrays containing Players
-    public static Dictionary<int, Player[]> Teams;
+    public static List<Team> Teams;
 
     // SpawnPoints
-    public SpawnPoint[] Spawns; 
+    public SpawnPoint[] Spawns;
 
     // Redundant variables so they can be assigned in the inspector (static ones cant)
     public Player defaultPlayer1 = null;
@@ -89,6 +89,7 @@ public abstract class GameplayManager : Photon.MonoBehaviour
                 break;
         }
     }
+
     protected abstract void InstantiatePlayers();
     protected abstract void BuildUI();
 
@@ -96,20 +97,21 @@ public abstract class GameplayManager : Photon.MonoBehaviour
     /// Shows the game over overlay and stops camera movement
     /// </summary>
     /// <param name="winner"></param>
-    protected virtual void GameOver(string winner)
+    protected virtual void GameOver(string GameEndText)
     {
         // Loop through every Team
-        for (int i = 0; i < Teams.Count; i++)
+        foreach (Team actTeam in Teams)
         {
-            // Disable user input so players cant control their chamnpions when game is over
-            for (int j = 0; j < Teams[i].Length; j++)
+            // Foreach Player in Team
+            foreach (Player actPlayer in actTeam.TeamPlayers)
             {
-                Teams[i][j].InstantiatedPlayer.GetComponent<UserControl>().enabled = false;
-                Teams[i][j].InstantiatedPlayer.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                // Disable user input so players cant control their chamnpions when game is over
+                actPlayer.InstantiatedPlayer.GetComponent<UserControl>().enabled = false;
+                actPlayer.InstantiatedPlayer.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             }
         }
 
-        gameOverOverlay.Find("Title").GetComponent<Text>().text = winner + " won the game";
+        gameOverOverlay.Find("Title").GetComponent<Text>().text = GameEndText;
         gameOverOverlay.gameObject.SetActive(true);
         Camera.main.GetComponent<CameraBehaviour>().gameRunning = false;
     }
@@ -139,15 +141,26 @@ public abstract class GameplayManager : Photon.MonoBehaviour
     /// </summary>
     protected virtual void TeamDeatchMatch()
     {
+        List<int> TeamsAlive = new List<int>();
+
         // Loop through every Team
-        for (int i = 0; i < Teams.Count; i++)
+        foreach (Team actTeam in Teams)
         {
             //Check if all player on team 1 are dead
-            if (Teams[i].All(x => x.InstantiatedPlayer.GetComponent<CharacterStats>().CharacterDied == true))
+            if (actTeam.TeamPlayers.All(x => x.InstantiatedPlayer.GetComponent<CharacterStats>().CharacterDied == false))
             {
-                GameOver("Team " + (i + 1));
-                return;
+                TeamsAlive.Add(actTeam.TeamNumber);
             }
+        }
+
+        switch (TeamsAlive.Count)
+        {
+            case 0:
+                GameOver("Draw");
+                break;
+            case 1:
+                GameOver("Team " + TeamsAlive[0] + " won the game");
+                break;
         }
     }
 

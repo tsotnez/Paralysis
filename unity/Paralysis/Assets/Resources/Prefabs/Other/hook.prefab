@@ -92,9 +92,30 @@ MonoBehaviour:
   creator: {fileID: 0}
   whatToHit:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 2066432
   explosionPrefab: {fileID: 0}
-  direction: -1
+  direction: 1
+  SkillValues:
+    type: 4
+    skillName: Grappling Hook
+    effect: 1
+    effectDuration: 3
+    effectValue: 0
+    damage: 5
+    staminaCost: 10
+    cooldown: 15
+    targetType: 0
+    range: 10
+    needsToBeGrounded: 1
+    delay: 0
+    notOnCooldown: 0
+    skillDescription: "Firex a hook. Any enemy hit will be \nstunned and leaped to,
+      \nknocking back the enemy afterwards."
+    onHitEffect: 0
+    prefab: {fileID: 1159624417898122}
+    speed: {x: 10, y: 0}
+    castTime: 0
+    rangedSkillId: 0
   ChainPrefab: {fileID: 1536203789617246, guid: 607fa3d9cb73add4ba26355c9a88aca1,
     type: 2}
   targetStats: {fileID: 0}

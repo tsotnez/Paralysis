@@ -784,7 +784,7 @@ MonoBehaviour:
     onHitEffect: 0
     prefab: {fileID: 1806743027263652, guid: 6190419a7df12f6438f7959faca00ad6, type: 2}
     speed: {x: 9, y: 0}
-    castTime: 0.5
+    castTime: 0.2
     rangedSkillId: 0
   - type: 6
     skillName: Melted Stone
@@ -804,7 +804,7 @@ MonoBehaviour:
     onHitEffect: 0
     prefab: {fileID: 1559905968728678, guid: 7ffecbe061e52564a83b2c7955abcc0d, type: 2}
     speed: {x: 9, y: 0}
-    castTime: 0.5
+    castTime: 0.2
     rangedSkillId: 0
   Trinket1: {fileID: 0}
   Trinket2: {fileID: 0}

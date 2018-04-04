@@ -349,7 +349,7 @@ MonoBehaviour:
     trinket1: 0
     trinket2: 4
   defaultPlayer2:
-    ChampionPrefab: {fileID: 1903508196159970, guid: 3c565997b1ca6e94caf0190f6b7b9801,
+    ChampionPrefab: {fileID: 1346435155503924, guid: 5f5ac1a4f5bfeec4584f1818feb6fdc7,
       type: 2}
     InstantiatedPlayer: {fileID: 0}
     playerNumber: 1
@@ -833,6 +833,7 @@ MonoBehaviour:
   gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   showGizmos: 0
   nonTargetable: 0
+  retreatPoint: {x: 0, y: 0}
 --- !u!1 &244023197
 GameObject:
   m_ObjectHideFlags: 0
@@ -2600,6 +2601,7 @@ MonoBehaviour:
   gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   showGizmos: 0
   nonTargetable: 0
+  retreatPoint: {x: 0, y: 0}
 --- !u!1 &893191850
 GameObject:
   m_ObjectHideFlags: 0
@@ -2787,6 +2789,7 @@ MonoBehaviour:
   gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   showGizmos: 0
   nonTargetable: 0
+  retreatPoint: {x: 0, y: 0}
 --- !u!1 &980744925
 GameObject:
   m_ObjectHideFlags: 0
@@ -3852,6 +3855,7 @@ MonoBehaviour:
   gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   showGizmos: 0
   nonTargetable: 0
+  retreatPoint: {x: 0, y: 0}
 --- !u!1 &1282303196
 GameObject:
   m_ObjectHideFlags: 0
@@ -6834,6 +6838,7 @@ MonoBehaviour:
   gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   showGizmos: 0
   nonTargetable: 0
+  retreatPoint: {x: 0, y: 0}
 --- !u!114 &1990618145
 MonoBehaviour:
   m_ObjectHideFlags: 0

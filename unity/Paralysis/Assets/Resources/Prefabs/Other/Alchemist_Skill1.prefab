@@ -127,6 +127,7 @@ MonoBehaviour:
     needsToBeGrounded: 0
     delay: 0
     notOnCooldown: 0
+    skillDescription: 
     onHitEffect: 0
     prefab: {fileID: 0}
     speed: {x: 0, y: 0}

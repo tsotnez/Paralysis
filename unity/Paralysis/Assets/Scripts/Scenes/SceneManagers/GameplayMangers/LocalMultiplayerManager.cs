@@ -17,13 +17,13 @@ public class LocalMultiplayerManager : GameplayManager
         // Foreach Team
         GameObject hotbar;
         int totalPlayers = 0;
-        for (int i = 0; i < Teams.Count; i++)
+        foreach (Team actTeam in Teams)
         {
             // Foreach Player in Team
-            for (int j = 0; j < Teams[i].Length; j++)
+            foreach (Player actPlayer in actTeam.TeamPlayers)
             {
                 // Add HotBar for Player of Team
-                hotbar = AssignPlayerToHotbar(Teams[i][j], ++totalPlayers);
+                hotbar = AssignPlayerToHotbar(actPlayer, ++totalPlayers);
 
                 // Move HotBar to rigth if nessessary (for Player 2 & 4)
                 if (totalPlayers % 2 == 0)
@@ -85,35 +85,36 @@ public class LocalMultiplayerManager : GameplayManager
         //Defaults for debugging
         if (Teams == null)
         {
-            Teams = new Dictionary<int, Player[]>();
-            Teams[0] = new Player[] { defaultPlayer1 };
-            Teams[1] = new Player[] { defaultPlayer2 };
+            Teams = new List<Team>();
+            Teams.Add(new Team(1, defaultPlayer1));
+            Teams.Add(new Team(2, defaultPlayer2));
         }
 
         // Foreach Team
-        Player player = null;
         GameObject GoPlayer = null;
         SpawnPoint SpawnPoint;
         SpriteRenderer PlayerSpriteRenderer;
         ChampionClassController cccPlayer;
         int totalPlayers = 0;
-        for (int i = 0; i < Teams.Count; i++)
+        int teamCount = 0;
+        int playerCount = 0;
+        foreach (Team actTeam in Teams)
         {
-            int OwnLayer = GameConstants.TEAMLAYERS[i];
+            int OwnLayer = GameConstants.TEAMLAYERS[teamCount];
             LayerMask whatToHit = SectorLayerMaskManager.CreateLayerMaskWith(GameConstants.TEAMLAYERS.Where(x => x != OwnLayer).ToArray());
 
-            SpawnPoint[] TeamSpawns = Spawns.Where(x => x.teamNumber == i+1).ToArray();
+            playerCount = 0;
+            SpawnPoint[] TeamSpawns = Spawns.Where(x => x.teamNumber == teamCount + 1).ToArray();
             // Foreach Player in Team
-            for (int j = 0; j < Teams[i].Length; j++)
+            foreach (Player actPlayer in actTeam.TeamPlayers)
             {
                 // Instantiate Player
-                player = Teams[i][j];
-                SpawnPoint = TeamSpawns[j];
-                GoPlayer = Instantiate(player.ChampionPrefab, SpawnPoint.transform.position, Quaternion.identity);
-                GoPlayer.GetComponent<UserControl>().playerNumber = player.playerNumber;
+                SpawnPoint = TeamSpawns[playerCount];
+                GoPlayer = Instantiate(actPlayer.ChampionPrefab, SpawnPoint.transform.position, Quaternion.identity);
+                GoPlayer.GetComponent<UserControl>().playerNumber = actPlayer.playerNumber;
 
                 // Handle InputDevice and Layer and WhatToHit
-                GoPlayer.GetComponent<UserControl>().inputDevice = player.inputDevice;
+                GoPlayer.GetComponent<UserControl>().inputDevice = actPlayer.inputDevice;
                 GoPlayer.layer = OwnLayer;
                 cccPlayer = GoPlayer.GetComponent<ChampionClassController>();
                 cccPlayer.m_whatToHit = whatToHit;
@@ -125,8 +126,8 @@ public class LocalMultiplayerManager : GameplayManager
                 }
 
                 // Handle Trinket
-                GoPlayer.AddComponent(Trinket.trinketsForNames[player.trinket1]);
-                GoPlayer.AddComponent(Trinket.trinketsForNames[player.trinket2]);
+                GoPlayer.AddComponent(Trinket.trinketsForNames[actPlayer.trinket1]);
+                GoPlayer.AddComponent(Trinket.trinketsForNames[actPlayer.trinket2]);
                 cccPlayer.Trinket1 = GoPlayer.GetComponents<Trinket>()[0];
                 cccPlayer.Trinket2 = GoPlayer.GetComponents<Trinket>()[1];
                 cccPlayer.Trinket1.trinketNumber = 1;
@@ -138,11 +139,14 @@ public class LocalMultiplayerManager : GameplayManager
                 PlayerSpriteRenderer.sortingOrder = (++totalPlayers) * (-1); // Increase PlayerCount
 
                 // Save Instantiated Player to Team
-                player.InstantiatedPlayer = GoPlayer;
+                actPlayer.InstantiatedPlayer = GoPlayer;
 
                 // Set Target of Camera
                 Camera.main.GetComponent<CameraBehaviour>().AddTargetToCamera(GoPlayer.transform);
+                playerCount++;
             }
+
+            teamCount++;
         }
     }
 }
