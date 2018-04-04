@@ -85,9 +85,11 @@ public class LocalMultiplayerManager : GameplayManager
         //Defaults for debugging
         if (Teams == null)
         {
-            Teams = new List<Team>();
-            Teams.Add(new Team(1, defaultPlayer1));
-            Teams.Add(new Team(2, defaultPlayer2));
+            Teams = new List<Team>
+            {
+                new Team(1, defaultPlayer1),
+                new Team(2, defaultPlayer2)
+            };
         }
 
         // Foreach Team

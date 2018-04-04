@@ -26,9 +26,11 @@ public class NetworkVersusManager : GameplayManager
         Instance = this;
 
         // Populate teams
-        Teams = new List<Team>();
-        Teams.Add(new Team(1, GameNetwork.Instance.TeamPlayerList(1)));
-        Teams.Add(new Team(2, GameNetwork.Instance.TeamPlayerList(2)));
+        Teams = new List<Team>
+        {
+            new Team(1, GameNetwork.Instance.TeamPlayerList(1)),
+            new Team(2, GameNetwork.Instance.TeamPlayerList(2))
+        };
 
         spawnPoints = GameObject.FindGameObjectsWithTag(GameConstants.SPAWN_POINT_TAG);
         playerNetworkNum = GameNetwork.Instance.PlayerNetworkNumber;

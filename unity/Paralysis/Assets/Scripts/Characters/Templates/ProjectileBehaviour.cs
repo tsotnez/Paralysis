@@ -31,7 +31,7 @@ public class ProjectileBehaviour : MonoBehaviour
     Coroutine observeRoutine = null;                                    // Observe Routine
 
     protected void Awake()
-    {   
+    {
         // Save starting position
         startPos = transform.position;
 
@@ -39,7 +39,7 @@ public class ProjectileBehaviour : MonoBehaviour
         networkId = (short)(CRCCalculator.CRCFromVector(startPos) ^ creator.gameObject.name.GetHashCode());
 
         //add behaviour to the projectile manager
-        if(!PhotonNetwork.offlineMode)
+        if (!PhotonNetwork.offlineMode)
         {
             NetworkProjectileManager.Instance.addProjectile(networkId, this);
         }
@@ -104,7 +104,7 @@ public class ProjectileBehaviour : MonoBehaviour
     {
         // Begin cast
         CastFinished = false;
-        
+
         //Show castBAr
         GameObject castBar = GameObject.FindGameObjectWithTag("CastBar");
         castBar.GetComponent<CastBarBehaviour>().startCast(SkillValues.castTime, SkillValues.skillName);
@@ -170,20 +170,20 @@ public class ProjectileBehaviour : MonoBehaviour
                         break;
                 }
 
-                if(PhotonNetwork.offlineMode)
+                if (PhotonNetwork.offlineMode)
                 {
                     CreatorStats.DealDamage(targetStats, SkillValues.damage, false);
                 }
-                else 
+                else
                 {
                     // On the network only deal damage on collision with projectiles 
                     // from the shooters perspective.
-                    if(creator.GetComponent<PhotonView>().isMine)
+                    if (creator.GetComponent<PhotonView>().isMine)
                     {
-                        CreatorStats.DealDamage(targetStats, SkillValues.damage, false);                        
-                     }
+                        CreatorStats.DealDamage(targetStats, SkillValues.damage, false);
+                    }
                 }
- 
+
                 Die();
                 return;
             }
@@ -247,7 +247,7 @@ public class ProjectileBehaviour : MonoBehaviour
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
         IsDead = true;
-        if(!PhotonNetwork.offlineMode)
+        if (!PhotonNetwork.offlineMode)
         {
             //Tell the projectile manager this objected died, this collision
             //might not happen everywhere, for instance, the player could be
@@ -268,7 +268,7 @@ public class ProjectileBehaviour : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        if(!PhotonNetwork.offlineMode)
+        if (!PhotonNetwork.offlineMode)
         {
             NetworkProjectileManager.Instance.removeProjectile(networkId, this);
         }

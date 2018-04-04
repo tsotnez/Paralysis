@@ -349,7 +349,7 @@ MonoBehaviour:
     trinket1: 0
     trinket2: 4
   defaultPlayer2:
-    ChampionPrefab: {fileID: 1346435155503924, guid: 5f5ac1a4f5bfeec4584f1818feb6fdc7,
+    ChampionPrefab: {fileID: 1128103333960868, guid: 3dd357419861bfe40bbee211a7260d6d,
       type: 2}
     InstantiatedPlayer: {fileID: 0}
     playerNumber: 1

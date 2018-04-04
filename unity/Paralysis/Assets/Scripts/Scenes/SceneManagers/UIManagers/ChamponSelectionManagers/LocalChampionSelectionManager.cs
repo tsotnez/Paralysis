@@ -540,9 +540,11 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         deselectAll();
         killCooldowns();
 
-        LocalMultiplayerManager.Teams = new List<Team>();
-        LocalMultiplayerManager.Teams.Add(new Team(1, players.Where(x => x.TeamNumber == 1).ToList<Player>()));
-        LocalMultiplayerManager.Teams.Add(new Team(2, players.Where(x => x.TeamNumber == 2).ToList<Player>()));
+        LocalMultiplayerManager.Teams = new List<Team>
+        {
+            new Team(1, players.Where(x => x.TeamNumber == 1).ToList<Player>()),
+            new Team(2, players.Where(x => x.TeamNumber == 2).ToList<Player>())
+        };
 
         ChampionSelect.SetActive(false);
         TrinketSelect.SetActive(false);

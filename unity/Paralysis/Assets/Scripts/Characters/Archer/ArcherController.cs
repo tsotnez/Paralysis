@@ -48,7 +48,7 @@ public class ArcherController : ChampionClassController
 
     public override void Skill1()
     {
-        //Shoot a stronger arrow, causing knockback
+        // Shoot a stronger arrow, causing knockback
         DoRangeSkill(ref animCon.trigSkill1, Skill.SkillType.Skill1);
     }
 

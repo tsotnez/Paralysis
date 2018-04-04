@@ -52,7 +52,7 @@ public abstract class UserControl : MonoBehaviour
         photonV = GetComponent<PhotonView>();
         aiControl = GetComponent<AIUserControl>();
 
-        if(!PhotonNetwork.offlineMode && !photonV.isMine)
+        if (!PhotonNetwork.offlineMode && !photonV.isMine)
         {
             enabled = false;
         }
@@ -78,7 +78,7 @@ public abstract class UserControl : MonoBehaviour
         }
 
         //If the player isn't falling through, then check blocking
-        if(!CheckFallThrough())
+        if (!CheckFallThrough())
         {
             GoCharacter.ManageDefensive(inputDown);
         }
@@ -140,7 +140,6 @@ public abstract class UserControl : MonoBehaviour
             {
                 if (inputDashDirection != 0) GoCharacter.StartCoroutine(GoCharacter.Dash(inputDashDirection));
             }
-            
         }
     }
 
