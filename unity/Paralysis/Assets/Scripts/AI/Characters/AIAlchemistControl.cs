@@ -28,29 +28,29 @@ public class AIAlchemistControl : AIUserControl {
     }
 
     protected override float getMinDistanceToNode() {
-        return .3f;
+        return .35f;
     }
 
     #region OverrideEvents
 
-    protected override TRIGGER_GOALS closeRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
+    protected override TRIGGER_GOALS closeRangeAttack(float distance)
     {
         float absDistance = Mathf.Abs(distance);
         if (champClassCon.CanPerformAttack())
         {
-            if (absDistance <= 3 && checkCloseAOE(yDiff))
+            if (absDistance <= 3 && checkCloseAOE())
             {
                 return TRIGGER_GOALS.WAIT_FOR_INPUT;
             }
-            else if (facingTarget && absDistance < 5 && checkMeltedStone(yDiff))
+            else if (facingTarget && absDistance <= 5 && checkMeltedStone())
             {
                 return TRIGGER_GOALS.WAIT_FOR_INPUT;
             }
-            else if (facingTarget && absDistance <= 7 && checkFrostBolt(yDiff))
+            else if (facingTarget && absDistance <= 7 && checkFrostBolt())
             {
                 return TRIGGER_GOALS.WAIT_FOR_INPUT;
             }
-            else if (facingTarget && absDistance <= 7 && checkBasicAttack(yDiff))
+            else if (facingTarget && absDistance <= 7 && checkBasicAttack())
             {
                 return TRIGGER_GOALS.WAIT_FOR_INPUT;
             }
@@ -59,17 +59,17 @@ public class AIAlchemistControl : AIUserControl {
         return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
-    protected override TRIGGER_GOALS mediumRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
+    protected override TRIGGER_GOALS mediumRangeAttack(float distance)
     {
-        return closeRangeAttack(facingTarget, distance, yDiff, myStats, targetStats);
+        return closeRangeAttack(distance);
     }
 
-    protected override TRIGGER_GOALS longRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
+    protected override TRIGGER_GOALS longRangeAttack(float distance)
     {
-        return closeRangeAttack(facingTarget, distance, yDiff, myStats, targetStats);
+        return closeRangeAttack(distance);
     }
 
-    public override TRIGGER_GOALS healthDecreasedTenPercent(bool facingTarget, int oldHealth, int newHealth, int targetHealth, RaycastHit2D rightWallRay, RaycastHit2D leftWallRay, bool retreating)
+    public override TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth, RaycastHit2D rightWallRay, RaycastHit2D leftWallRay, bool retreating)
     {
         if (checkTeleport(rightWallRay, leftWallRay))
         {
@@ -78,14 +78,14 @@ public class AIAlchemistControl : AIUserControl {
         return TRIGGER_GOALS.CONTINUE;
     }
 
-    protected override TRIGGER_GOALS lockedOnToTarget(CharacterStats myStats, CharacterStats targetStats)
+    protected override TRIGGER_GOALS lockedOnToTarget()
     {
         return TRIGGER_GOALS.CONTINUE;
     }
 
-    public override TRIGGER_GOALS lowStamina(int currentStamina, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats){
+    public override TRIGGER_GOALS lowStamina(int currentStamina, float distance){
 
-        if (myStats.CurrentHealth < targetStats.CurrentHealth)
+        if (charStats.CurrentHealth < targetStats.CurrentHealth)
         {
             retreatDuration = 9999;
             retreatUntilStamina = 50;
@@ -101,7 +101,7 @@ public class AIAlchemistControl : AIUserControl {
 
     #region CheckAndPerformSkills
 
-    private bool checkCloseAOE(float yDiff)
+    private bool checkCloseAOE()
     {
         if (Mathf.Abs(yDiff) <= 2.5)
         {
@@ -132,7 +132,7 @@ public class AIAlchemistControl : AIUserControl {
         return false;
     }
 
-    private bool checkBasicAttack(float yDiff)
+    private bool checkBasicAttack()
     {
         if (Mathf.Abs(yDiff) < .5f)
         {
@@ -148,7 +148,7 @@ public class AIAlchemistControl : AIUserControl {
         return false;
     }
 
-    private bool checkFrostBolt(float yDiff)
+    private bool checkFrostBolt()
     {
         if (Mathf.Abs(yDiff) < .5f)
         {
@@ -164,16 +164,16 @@ public class AIAlchemistControl : AIUserControl {
         return false;
     }
 
-    private bool checkMeltedStone(float yDiff)
+    private bool checkMeltedStone()
     {
         if (Mathf.Abs(yDiff) < .5f)
         {
             //Basic attack one
-            RangedSkill basicAttack = champClassCon.GetRangeSkillByType(Skill.SkillType.Skill1);
-            if (basicAttack.notOnCooldown && basicAttack.staminaCost <= charStats.CurrentStamina)
+            RangedSkill meltedStone = champClassCon.GetRangeSkillByType(Skill.SkillType.Skill3);
+            if (meltedStone.notOnCooldown && meltedStone.staminaCost <= charStats.CurrentStamina)
             {
-                inputSkill1 = true;
-                triggerWait = basicAttack.delay;
+                inputSkill3 = true;
+                triggerWait = meltedStone.delay;
                 return true;
             }
         }

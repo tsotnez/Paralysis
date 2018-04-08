@@ -33,7 +33,7 @@ public class AIAssassinControl : AIUserControl {
 
     #region OverrideEvents
 
-    protected override TRIGGER_GOALS closeRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
+    protected override TRIGGER_GOALS closeRangeAttack(float distance)
     {
         if (champClassCon.CanPerformAttack() && facingTarget)
         {
@@ -45,7 +45,7 @@ public class AIAssassinControl : AIUserControl {
         return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
-    protected override TRIGGER_GOALS mediumRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
+    protected override TRIGGER_GOALS mediumRangeAttack(float distance)
     {
         if (champClassCon.CanPerformAttack() && facingTarget)
         {
@@ -57,7 +57,7 @@ public class AIAssassinControl : AIUserControl {
         return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
-    protected override TRIGGER_GOALS longRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
+    protected override TRIGGER_GOALS longRangeAttack(float distance)
     {
         if (champClassCon.CanPerformAttack() && facingTarget)
         {
@@ -69,7 +69,7 @@ public class AIAssassinControl : AIUserControl {
         return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
-    public override TRIGGER_GOALS healthDecreasedTenPercent(bool facingTarget, int oldHealth, int newHealth, int targetHealth, RaycastHit2D rightWallRay, RaycastHit2D leftWallRay, bool retreating)
+    public override TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth, RaycastHit2D rightWallRay, RaycastHit2D leftWallRay, bool retreating)
     {
         if (newHealth < 20 && newHealth < targetHealth)
         {
@@ -80,7 +80,7 @@ public class AIAssassinControl : AIUserControl {
     }
 
 
-    protected override TRIGGER_GOALS lockedOnToTarget(CharacterStats myStats, CharacterStats targetStats)
+    protected override TRIGGER_GOALS lockedOnToTarget()
     {
         //Check vanish if we locked on...
         MeleeSkill vanish = champClassCon.GetMeleeSkillByType(Skill.SkillType.Skill2);
@@ -94,9 +94,9 @@ public class AIAssassinControl : AIUserControl {
         return TRIGGER_GOALS.CONTINUE;
     }
 
-    public override TRIGGER_GOALS lowStamina(int currentStamina, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats){
+    public override TRIGGER_GOALS lowStamina(int currentStamina, float distance){
 
-        if (myStats.CurrentHealth < targetStats.CurrentHealth)
+        if (charStats.CurrentHealth < targetStats.CurrentHealth)
         {
             retreatDuration = 9999;
             retreatUntilStamina = 50;

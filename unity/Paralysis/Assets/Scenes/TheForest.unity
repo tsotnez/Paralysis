@@ -339,7 +339,7 @@ MonoBehaviour:
     InstantiatedPlayer: {fileID: 0}
     playerNumber: 1
     TeamNumber: 1
-    inputDevice: 1
+    inputDevice: 3
     trinket1: 0
     trinket2: 4
   defaultPlayer2:
@@ -348,7 +348,7 @@ MonoBehaviour:
     InstantiatedPlayer: {fileID: 0}
     playerNumber: 1
     TeamNumber: 2
-    inputDevice: 0
+    inputDevice: 1
     trinket1: 0
     trinket2: 4
   championSpriteOverlayColor: {r: 0.7647059, g: 0.7432369, b: 0.6634948, a: 1}
@@ -3957,22 +3957,22 @@ Prefab:
     - target: {fileID: 61582296287179694, guid: 4f2adf1551e1e8b4f83d7d9180dccda6,
         type: 2}
       propertyPath: m_Offset.x
-      value: 0.02638051
+      value: 0.06413595
       objectReference: {fileID: 0}
     - target: {fileID: 61582296287179694, guid: 4f2adf1551e1e8b4f83d7d9180dccda6,
         type: 2}
       propertyPath: m_Size.x
-      value: 0.0001
+      value: 0.1422581
       objectReference: {fileID: 0}
     - target: {fileID: 61343648093038188, guid: 4f2adf1551e1e8b4f83d7d9180dccda6,
         type: 2}
       propertyPath: m_Offset.x
-      value: 0.024789803
+      value: 0.06506959
       objectReference: {fileID: 0}
     - target: {fileID: 61343648093038188, guid: 4f2adf1551e1e8b4f83d7d9180dccda6,
         type: 2}
       propertyPath: m_Size.x
-      value: 0.22177003
+      value: 0.14121045
       objectReference: {fileID: 0}
     - target: {fileID: 61343648093038188, guid: 4f2adf1551e1e8b4f83d7d9180dccda6,
         type: 2}
@@ -3983,6 +3983,16 @@ Prefab:
         type: 2}
       propertyPath: m_Size.y
       value: 0.26054072
+      objectReference: {fileID: 0}
+    - target: {fileID: 61343648093038188, guid: 4f2adf1551e1e8b4f83d7d9180dccda6,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 61582296287179694, guid: 4f2adf1551e1e8b4f83d7d9180dccda6,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4f2adf1551e1e8b4f83d7d9180dccda6, type: 2}

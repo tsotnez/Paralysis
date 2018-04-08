@@ -43,7 +43,7 @@ public class Section : MonoBehaviour {
 
     public SectionPath getOptimalPathForSection(Section targetSection, Vector2 currentPosition, Vector2 targetPosition)
     {
-        if (targetSection == this)
+        if (targetSection == this || targetSection == null)
         {
             Debug.LogError("No path to current section...: ");
             return null;
@@ -60,7 +60,7 @@ public class Section : MonoBehaviour {
 
         if(paths.Count == 0)
         {
-            Debug.LogError("No paths for section: " + this.name);
+            Debug.LogError("No paths for section: " + targetSection.name);
             return null;
         }
         else if(paths.Count == 1)

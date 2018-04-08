@@ -297,7 +297,7 @@ public abstract class AIUserControl : MonoBehaviour {
         //Look to see if we have low stamina
         if (/*currentStamina < previousStamina &&*/ currentStamina < getLowStamiaTrigger())
         {
-            TRIGGER_GOALS triggerGoal = lowStamina(currentStamina, targetDistance, yDiff, charStats, targetStats);
+            TRIGGER_GOALS triggerGoal = lowStamina(currentStamina, targetDistance);
             if(!handleTriggerAndContinue(triggerGoal))
             {
                 return;
@@ -341,7 +341,15 @@ public abstract class AIUserControl : MonoBehaviour {
         //This is only called the first timet his goal happens
         if(targetPlayer != null && previousGoal != AI_GOALS.MOVE_THROUGH_NODES)
         {
-            currentNodes = mySection.getOptimalPathForSection(moveToSection, myTransform.position, moveToPosition).Nodes;
+            SectionPath path = mySection.getOptimalPathForSection(moveToSection, myTransform.position, moveToPosition);
+            if (path.Nodes == null)
+            {
+                Debug.Log("path had no nodes...");
+                changeGoal(AI_GOALS.STAND_BY);
+                return;
+            }
+            currentNodes = path.Nodes;
+
             currentNodeIndex = 0;
             currentNode = currentNodes[currentNodeIndex];
 
@@ -350,7 +358,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
             if (!isRetreating)
             {
-                TRIGGER_GOALS triggerGoal = lockedOnToTarget(charStats, targetStats);
+                TRIGGER_GOALS triggerGoal = lockedOnToTarget();
                 if (!handleTriggerAndContinue(triggerGoal))
                 {
                     return;
@@ -415,13 +423,13 @@ public abstract class AIUserControl : MonoBehaviour {
             {
                 if (targetDistance <= getCloseRangeAttackDistance())
                 {
-                    distRetValue = closeRangeAttack(facingTarget, targetDistance, yDiff, charStats, targetStats);
+                    distRetValue = closeRangeAttack(targetDistance);
                 } else if (targetDistance <= getMediumDistanceAttackDistance())
                 {
-                    distRetValue = mediumRangeAttack(facingTarget, targetDistance, yDiff, charStats, targetStats);
+                    distRetValue = mediumRangeAttack(targetDistance);
                 } else if (targetDistance <= getLongRangeAttackDistance())
                 {
-                    distRetValue = longRangeAttack(facingTarget, targetDistance, yDiff, charStats, targetStats);
+                    distRetValue = longRangeAttack(targetDistance);
                 }
             }
 
@@ -450,22 +458,22 @@ public abstract class AIUserControl : MonoBehaviour {
     #endregion
 
     #region Attack
-    protected virtual TRIGGER_GOALS lockedOnToTarget(CharacterStats myStats, CharacterStats targetStats)
+    protected virtual TRIGGER_GOALS lockedOnToTarget()
     {
         return TRIGGER_GOALS.CONTINUE;
     }
 
-    protected virtual TRIGGER_GOALS closeRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
+    protected virtual TRIGGER_GOALS closeRangeAttack(float distance)
     {
         return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
-    protected virtual TRIGGER_GOALS mediumRangeAttack(bool facingTarget, float distance,float yDiff, CharacterStats myStats, CharacterStats targetStats)
+    protected virtual TRIGGER_GOALS mediumRangeAttack(float distance)
     {
         return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
-    protected virtual TRIGGER_GOALS longRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
+    protected virtual TRIGGER_GOALS longRangeAttack(float distance)
     {
         return TRIGGER_GOALS.MOVE_CLOSER;
     }
@@ -489,7 +497,7 @@ public abstract class AIUserControl : MonoBehaviour {
                 {
                     RaycastHit2D rightWallRay = Physics2D.Raycast(transform.position, transform.right, 999f, GameConstants.WALL_LAYER);
                     RaycastHit2D leftWallRay = Physics2D.Raycast(transform.position, transform.right * -1, 999f, GameConstants.WALL_LAYER);
-                    TRIGGER_GOALS triggerGoal = healthDecreasedTenPercent(facingTarget, currentHealth, previousHealth, targetStats.CurrentHealth, rightWallRay, leftWallRay, isRetreating);
+                    TRIGGER_GOALS triggerGoal = healthDecreasedTenPercent(currentHealth, previousHealth, targetStats.CurrentHealth, rightWallRay, leftWallRay, isRetreating);
 
                     if(!handleTriggerAndContinue(triggerGoal))
                     {
@@ -503,11 +511,11 @@ public abstract class AIUserControl : MonoBehaviour {
 
     }
 
-    public virtual TRIGGER_GOALS healthDecreasedTenPercent(bool facingTarget, int oldHealth, int newHealth, int targetHealth, RaycastHit2D rightWallRay, RaycastHit2D leftWallRay, bool retreating){
+    public virtual TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth, RaycastHit2D rightWallRay, RaycastHit2D leftWallRay, bool retreating){
         return TRIGGER_GOALS.CONTINUE;
     }
 
-    public virtual TRIGGER_GOALS lowStamina(int currentStamina, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats){
+    public virtual TRIGGER_GOALS lowStamina(int currentStamina, float distance){
         return TRIGGER_GOALS.CONTINUE;
     }
 
