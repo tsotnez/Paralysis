@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AIAssassinControl : AIUserControl {
 
-    private bool canDash = true;
+    private bool canShadowStep = true;
 
     protected override int getLowStamiaTrigger()
     {
@@ -33,9 +33,9 @@ public class AIAssassinControl : AIUserControl {
 
     #region OverrideEvents
 
-    protected override TRIGGER_GOALS closeRangeAttack(float distance)
+    protected override TRIGGER_GOALS closeRangeAttack()
     {
-        if (champClassCon.CanPerformAttack() && facingTarget)
+        if (canPerformAttack(true) && facingTarget)
         {
             if (checkShadowStep(yDiff) || basicMelee())
             {
@@ -45,9 +45,9 @@ public class AIAssassinControl : AIUserControl {
         return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
-    protected override TRIGGER_GOALS mediumRangeAttack(float distance)
+    protected override TRIGGER_GOALS mediumRangeAttack()
     {
-        if (champClassCon.CanPerformAttack() && facingTarget)
+        if (canPerformAttack(true) && facingTarget)
         {
             if (checkShadowStep(yDiff) || checkShoot(yDiff))
             {
@@ -57,9 +57,9 @@ public class AIAssassinControl : AIUserControl {
         return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
-    protected override TRIGGER_GOALS longRangeAttack(float distance)
+    protected override TRIGGER_GOALS longRangeAttack()
     {
-        if (champClassCon.CanPerformAttack() && facingTarget)
+        if (canPerformAttack(true) && facingTarget)
         {
             if (checkShoot(yDiff) || checkShadowStep(yDiff))
             {
@@ -94,7 +94,7 @@ public class AIAssassinControl : AIUserControl {
         return TRIGGER_GOALS.CONTINUE;
     }
 
-    public override TRIGGER_GOALS lowStamina(int currentStamina, float distance){
+    public override TRIGGER_GOALS lowStamina(int currentStamina){
 
         if (charStats.CurrentHealth < targetStats.CurrentHealth)
         {
@@ -118,7 +118,7 @@ public class AIAssassinControl : AIUserControl {
         {
             //Invisiable dash
             MeleeSkill shadowStep = champClassCon.GetMeleeSkillByType(Skill.SkillType.Skill3);
-            if (shadowStep.notOnCooldown && shadowStep.staminaCost <= charStats.CurrentStamina && canDash)
+            if (shadowStep.notOnCooldown && shadowStep.staminaCost <= charStats.CurrentStamina && canShadowStep)
             {
                 inputSkill3 = true;
                 triggerWait = shadowStep.delay;
@@ -140,7 +140,7 @@ public class AIAssassinControl : AIUserControl {
                 triggerWait = gunSkill.delay;
 
                 //Don't dash right after shooting
-                canDash = false;
+                canShadowStep = false;
                 Invoke("setCanDash", 3f);
                 return true;
             }
@@ -165,6 +165,6 @@ public class AIAssassinControl : AIUserControl {
 
     private void setCanDash()
     {
-        canDash = true;
+        canShadowStep = true;
     }
 }

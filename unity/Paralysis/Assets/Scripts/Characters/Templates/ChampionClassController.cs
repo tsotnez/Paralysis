@@ -52,9 +52,9 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     [SerializeField]
     protected float m_dashSpeed = 12f;                          // Force applied when dashing
     [SerializeField]
-    protected int m_dashStaminaCost = 10;                       // Stamina Costs of Skill Dash
+    public int m_dashStaminaCost = 10;                          // Stamina Costs of Skill Dash
     [SerializeField]
-    protected bool m_CanDashForward = false;                    // Indicates whether the character can dash forward or have to turn around before dashing
+    public bool m_CanDashForward = false;                       // Indicates whether the character can dash forward or have to turn around before dashing
 
     // Combo
     [SerializeField]

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AIAlchemistControl : AIUserControl {
-
-    private bool canDash = true;
+    
+    private float timeSinceLastDodge = 0f;
+    private const float DODGE_CD = 6;
+    private const float DODGE_DURATION = 2f;
 
     protected override int getLowStamiaTrigger()
     {
@@ -33,24 +35,32 @@ public class AIAlchemistControl : AIUserControl {
 
     #region OverrideEvents
 
-    protected override TRIGGER_GOALS closeRangeAttack(float distance)
+    protected override TRIGGER_GOALS closeRangeAttack()
     {
-        float absDistance = Mathf.Abs(distance);
-        if (champClassCon.CanPerformAttack())
+        if (canPerformAttack(true))
         {
-            if (absDistance <= 3 && checkCloseAOE())
+            if (targetDistance <= 3 && checkCloseAOE())
             {
                 return TRIGGER_GOALS.WAIT_FOR_INPUT;
             }
-            else if (facingTarget && absDistance <= 5 && checkMeltedStone())
+            else if (targetDistance <= 3 && checkTeleport(true, true))
             {
                 return TRIGGER_GOALS.WAIT_FOR_INPUT;
             }
-            else if (facingTarget && absDistance <= 7 && checkFrostBolt())
+            else if (targetDistance <= 3 && Time.time - timeSinceLastDodge > DODGE_CD && checkDodge(true, true, DODGE_DURATION))
+            {
+                timeSinceLastDodge = Time.time;
+                return TRIGGER_GOALS.WAIT_FOR_INPUT;
+            }
+            else if (facingTarget && targetDistance <= 5 && checkMeltedStone())
             {
                 return TRIGGER_GOALS.WAIT_FOR_INPUT;
             }
-            else if (facingTarget && absDistance <= 7 && checkBasicAttack())
+            else if (facingTarget && targetDistance <= 7 && checkFrostBolt())
+            {
+                return TRIGGER_GOALS.WAIT_FOR_INPUT;
+            }
+            else if (facingTarget && targetDistance <= 7 && checkBasicAttack())
             {
                 return TRIGGER_GOALS.WAIT_FOR_INPUT;
             }
@@ -59,22 +69,57 @@ public class AIAlchemistControl : AIUserControl {
         return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
-    protected override TRIGGER_GOALS mediumRangeAttack(float distance)
+    protected override TRIGGER_GOALS mediumRangeAttack()
     {
-        return closeRangeAttack(distance);
+        return closeRangeAttack();
     }
 
-    protected override TRIGGER_GOALS longRangeAttack(float distance)
+    protected override TRIGGER_GOALS longRangeAttack()
     {
-        return closeRangeAttack(distance);
+        return closeRangeAttack();
     }
 
     public override TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth, RaycastHit2D rightWallRay, RaycastHit2D leftWallRay, bool retreating)
     {
-        if (checkTeleport(rightWallRay, leftWallRay))
+        float rightWall = rightWallRay.distance;
+        float leftWall = leftWallRay.distance;
+
+        if (rightWall > 8) rightWall = 8;
+        if (leftWall > 8) leftWall = 8;
+
+        bool targetOnRight = false;
+        bool goLeft = false;
+        bool goRight = false;
+
+        //target on right, not left
+        if ((facingTarget && facingDirection == 1) || (!facingTarget && facingDirection == -1))
+        {
+            targetOnRight = true;
+        }
+
+        if (leftWall < rightWall && targetOnRight) goLeft = true;
+        else if (rightWall > leftWall && !targetOnRight) goRight = true;
+        else
+        {
+            goRight = !targetOnRight;
+            goLeft = targetOnRight;
+        }
+
+        if (checkTeleport(goRight, goLeft))
         {
             return TRIGGER_GOALS.WAIT_FOR_INPUT;
         }
+        else if (checkDodge(goRight, goLeft, DODGE_DURATION))
+        {
+            return TRIGGER_GOALS.WAIT_FOR_INPUT;
+        }
+        else
+        {
+            retreatDuration = 5;
+            retreatUntilStamina = 99999;
+            return TRIGGER_GOALS.RETREAT;
+        }
+
         return TRIGGER_GOALS.CONTINUE;
     }
 
@@ -83,18 +128,18 @@ public class AIAlchemistControl : AIUserControl {
         return TRIGGER_GOALS.CONTINUE;
     }
 
-    public override TRIGGER_GOALS lowStamina(int currentStamina, float distance){
-
-        if (charStats.CurrentHealth < targetStats.CurrentHealth)
-        {
+    public override TRIGGER_GOALS lowStamina(int currentStamina)
+    {
+        //if (charStats.CurrentHealth < targetStats.CurrentHealth)
+        //{
             retreatDuration = 9999;
             retreatUntilStamina = 50;
             return TRIGGER_GOALS.RETREAT;
-        }
-        else
-        {
-            return TRIGGER_GOALS.CONTINUE;
-        }
+        //}
+        //else
+        //{
+        //    return TRIGGER_GOALS.CONTINUE;
+        //}
     }
 
     #endregion
@@ -107,7 +152,7 @@ public class AIAlchemistControl : AIUserControl {
         {
             //Invisiable dash
             MeleeSkill closeRangeAOE = champClassCon.GetMeleeSkillByType(Skill.SkillType.Skill4);
-            if (closeRangeAOE.notOnCooldown && closeRangeAOE.staminaCost <= charStats.CurrentStamina && canDash)
+            if (closeRangeAOE.notOnCooldown && closeRangeAOE.staminaCost <= charStats.CurrentStamina)
             {
                 inputSkill4 = true;
                 triggerWait = closeRangeAOE.delay;
@@ -117,18 +162,24 @@ public class AIAlchemistControl : AIUserControl {
         return false;
     }
 
-    private bool checkTeleport(RaycastHit2D rightWallRay, RaycastHit2D leftWallRay)
+    private bool checkTeleport(bool goRight, bool goLeft)
     {
-        //if ()
+        MeleeSkill teleport = champClassCon.GetMeleeSkillByType(Skill.SkillType.Skill2);
+        if (teleport.notOnCooldown && teleport.staminaCost <= charStats.CurrentStamina)
         {
-            MeleeSkill teleport = champClassCon.GetMeleeSkillByType(Skill.SkillType.Skill2);
-            if (teleport.notOnCooldown && teleport.staminaCost <= charStats.CurrentStamina)
+            inputSkill2 = true;
+            if (goRight)
             {
-                inputSkill2 = true;
-                triggerWait = teleport.delay;
-                return true;
+                inputMove = 1;
             }
+            else
+            {
+                inputMove = -1;
+            }
+            triggerWait = teleport.delay;
+            return true;
         }
+
         return false;
     }
 

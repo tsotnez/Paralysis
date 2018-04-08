@@ -278,7 +278,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected virtual void setRetreatingGoals()
     {
-        if (mySection != targetSection)
+        if (mySection != targetSection && !mySection.nonTargetable)
         {
             changeGoal(AI_GOALS.MOVE_THROUGH_NODES);
         }
@@ -297,7 +297,7 @@ public abstract class AIUserControl : MonoBehaviour {
         //Look to see if we have low stamina
         if (/*currentStamina < previousStamina &&*/ currentStamina < getLowStamiaTrigger())
         {
-            TRIGGER_GOALS triggerGoal = lowStamina(currentStamina, targetDistance);
+            TRIGGER_GOALS triggerGoal = lowStamina(currentStamina);
             if(!handleTriggerAndContinue(triggerGoal))
             {
                 return;
@@ -342,7 +342,7 @@ public abstract class AIUserControl : MonoBehaviour {
         if(targetPlayer != null && previousGoal != AI_GOALS.MOVE_THROUGH_NODES)
         {
             SectionPath path = mySection.getOptimalPathForSection(moveToSection, myTransform.position, moveToPosition);
-            if (path.Nodes == null)
+            if (path == null || path.Nodes == null)
             {
                 Debug.Log("path had no nodes...");
                 changeGoal(AI_GOALS.STAND_BY);
@@ -423,13 +423,13 @@ public abstract class AIUserControl : MonoBehaviour {
             {
                 if (targetDistance <= getCloseRangeAttackDistance())
                 {
-                    distRetValue = closeRangeAttack(targetDistance);
+                    distRetValue = closeRangeAttack();
                 } else if (targetDistance <= getMediumDistanceAttackDistance())
                 {
-                    distRetValue = mediumRangeAttack(targetDistance);
+                    distRetValue = mediumRangeAttack();
                 } else if (targetDistance <= getLongRangeAttackDistance())
                 {
-                    distRetValue = longRangeAttack(targetDistance);
+                    distRetValue = longRangeAttack();
                 }
             }
 
@@ -463,17 +463,17 @@ public abstract class AIUserControl : MonoBehaviour {
         return TRIGGER_GOALS.CONTINUE;
     }
 
-    protected virtual TRIGGER_GOALS closeRangeAttack(float distance)
+    protected virtual TRIGGER_GOALS closeRangeAttack()
     {
         return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
-    protected virtual TRIGGER_GOALS mediumRangeAttack(float distance)
+    protected virtual TRIGGER_GOALS mediumRangeAttack()
     {
         return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
-    protected virtual TRIGGER_GOALS longRangeAttack(float distance)
+    protected virtual TRIGGER_GOALS longRangeAttack()
     {
         return TRIGGER_GOALS.MOVE_CLOSER;
     }
@@ -515,7 +515,7 @@ public abstract class AIUserControl : MonoBehaviour {
         return TRIGGER_GOALS.CONTINUE;
     }
 
-    public virtual TRIGGER_GOALS lowStamina(int currentStamina, float distance){
+    public virtual TRIGGER_GOALS lowStamina(int currentStamina){
         return TRIGGER_GOALS.CONTINUE;
     }
 
@@ -712,6 +712,11 @@ public abstract class AIUserControl : MonoBehaviour {
         return currentStamina >= retreatUntilStamina || Time.time > initialRetreatTime + retreatDuration;
     }
 
+    protected bool canPerformAttack(bool grounded)
+    {
+        return champClassCon.CanPerformAction(grounded) && champClassCon.CanPerformAttack();
+    }
+
     private void resetStuck()
     {
         timeToUnstuck = Time.time + MAX_STUCK_TIME;
@@ -766,6 +771,37 @@ public abstract class AIUserControl : MonoBehaviour {
     {
         waitTime = Time.time + timeToWait;
         changeGoal(AI_GOALS.WAIT);
+    }
+
+    protected bool checkDodge(bool goRight, bool goLeft, float waitTime)
+    {
+        if (canPerformAttack(true) && currentStamina >= champClassCon.m_dashStaminaCost)
+        {
+            if (goRight && goLeft)
+            {
+                if (Random.Range(1, 100) >= 50)
+                {
+                    inputDashDirection = 1;
+                } 
+                else
+                {
+                    inputDashDirection = -1;
+                }
+            }
+            else if (goRight)
+            {
+                inputDashDirection = 1;
+            }
+            else
+            {
+                inputDashDirection = -1;
+            }
+
+            triggerWait = waitTime;
+            return true;
+        }
+
+        return false;
     }
 
     private void resetInputs()
