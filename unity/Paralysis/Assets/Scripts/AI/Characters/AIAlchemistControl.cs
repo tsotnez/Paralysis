@@ -56,7 +56,7 @@ public class AIAlchemistControl : AIUserControl {
             }
         }
 
-        return TRIGGER_GOALS.CONTINUE;
+        return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
     protected override TRIGGER_GOALS mediumRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
