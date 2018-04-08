@@ -34,6 +34,7 @@ public abstract class AIUserControl : MonoBehaviour {
     protected GameObject targetPlayer;
     protected CharacterStats targetStats;
     protected Transform myTransform;
+    protected Transform targetTransform;
     protected Vector2 targetPosition;
 
     protected int currentHealth;
@@ -208,10 +209,11 @@ public abstract class AIUserControl : MonoBehaviour {
             {
                 targetPlayer = aiTargeting.TargetPlayer;
                 targetStats = targetPlayer.GetComponent<CharacterStats>();
+                targetTransform = targetPlayer.transform.Find(GameConstants.EFFECT_OVERLAY).transform;
             }
 
             mySection = AISectionManager.Instance.getSectionForPosition(myTransform.position);
-            targetPosition = targetPlayer.transform.Find(GameConstants.EFFECT_OVERLAY).transform.position;
+            targetPosition = targetTransform.position;
 
             targetDirectionX = Mathf.Sign(targetPosition.x - myTransform.position.x); 
             targetDistance = distanceToTargetPlayer();
