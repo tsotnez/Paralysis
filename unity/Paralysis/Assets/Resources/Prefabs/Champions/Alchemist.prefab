@@ -89,6 +89,8 @@ GameObject:
   - component: {fileID: 114840472948579928}
   - component: {fileID: 114024657869036888}
   - component: {fileID: 114154670248769074}
+  - component: {fileID: 114586212610169314}
+  - component: {fileID: 114371038197679438}
   - component: {fileID: 61093525736054152}
   - component: {fileID: 58555301198969780}
   - component: {fileID: 50638245482048800}
@@ -565,6 +567,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
+--- !u!114 &114371038197679438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1346435155503924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8b01d0c008b3241858ddf0fc7a9e65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputJump: 0
+  inputAttack: 0
+  inputDashDirection: 0
+  inputDown: 0
+  inputMove: 0
+  inputSkill1: 0
+  inputSkill2: 0
+  inputSkill3: 0
+  inputSkill4: 0
+  inputTrinket1: 0
+  inputTrinket2: 0
 --- !u!114 &114409794192682354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -652,6 +676,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114586212610169314
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1346435155503924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f344711e9b9503459d89adac9bdb9a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateRate: 1
 --- !u!114 &114820509079542256
 MonoBehaviour:
   m_ObjectHideFlags: 1

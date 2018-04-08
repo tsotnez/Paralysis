@@ -268,7 +268,7 @@ public class ProjectileBehaviour : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        if (!PhotonNetwork.offlineMode)
+        if (!PhotonNetwork.offlineMode && NetworkProjectileManager.Instance != null)
         {
             NetworkProjectileManager.Instance.removeProjectile(networkId, this);
         }

@@ -30,4 +30,7 @@ public static class GameConstants
 
     // Controller
     public static string NAME_OF_XBOX360CONTROLLER_IN_ARRAY = "Controller (XBOX 360 For Windows)";
+
+    // Transform Names
+    public static string EFFECT_OVERLAY = "effectOverlay";
 }

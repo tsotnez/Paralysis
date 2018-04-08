@@ -27,15 +27,19 @@ public class AIAssassinControl : AIUserControl {
         return 7f;
     }
 
+    protected override float getMinDistanceToNode() {
+        return .115f;
+    }
+
     #region OverrideEvents
 
     protected override TRIGGER_GOALS closeRangeAttack(bool facingTarget, float distance, float yDiff, CharacterStats myStats, CharacterStats targetStats)
     {
-        if (champClassCon.CanPerformAttack())
+        if (champClassCon.CanPerformAttack() && facingTarget)
         {
-            if (checkShadowStep(yDiff) || basicMelee(facingTarget))
+            if (checkShadowStep(yDiff) || basicMelee())
             {
-                return TRIGGER_GOALS.WAIT_FOR_ATTACK;
+                return TRIGGER_GOALS.WAIT_FOR_INPUT;
             }
         }
         return TRIGGER_GOALS.MOVE_CLOSER;
@@ -47,7 +51,7 @@ public class AIAssassinControl : AIUserControl {
         {
             if (checkShadowStep(yDiff) || checkShoot(yDiff))
             {
-                return TRIGGER_GOALS.WAIT_FOR_ATTACK;
+                return TRIGGER_GOALS.WAIT_FOR_INPUT;
             }
         }
         return TRIGGER_GOALS.MOVE_CLOSER;
@@ -59,13 +63,13 @@ public class AIAssassinControl : AIUserControl {
         {
             if (checkShoot(yDiff) || checkShadowStep(yDiff))
             {
-                return TRIGGER_GOALS.WAIT_FOR_ATTACK;
+                return TRIGGER_GOALS.WAIT_FOR_INPUT;
             }
         }
         return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
-    public override TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth, RaycastHit2D rightWallRay, RaycastHit2D leftWallRay, bool retreating)
+    public override TRIGGER_GOALS healthDecreasedTenPercent(bool facingTarget, int oldHealth, int newHealth, int targetHealth, RaycastHit2D rightWallRay, RaycastHit2D leftWallRay, bool retreating)
     {
         if (newHealth < 20 && newHealth < targetHealth)
         {
@@ -84,7 +88,7 @@ public class AIAssassinControl : AIUserControl {
         {
             inputSkill2 = true;
             triggerWait = vanish.delay;
-            return TRIGGER_GOALS.WAIT_FOR_ATTACK;
+            return TRIGGER_GOALS.WAIT_FOR_INPUT;
         }
 
         return TRIGGER_GOALS.CONTINUE;
@@ -145,18 +149,15 @@ public class AIAssassinControl : AIUserControl {
     }
 
 
-    private bool basicMelee(bool facingTarget)
+    private bool basicMelee()
     {
-        if (facingTarget)
+        //Basic attack one
+        MeleeSkill basicAttack = champClassCon.GetMeleeSkillByType(Skill.SkillType.BasicAttack1);
+        if (basicAttack.notOnCooldown && basicAttack.staminaCost <= charStats.CurrentStamina)
         {
-            //Basic attack one
-            MeleeSkill basicAttack = champClassCon.GetMeleeSkillByType(Skill.SkillType.BasicAttack1);
-            if (basicAttack.notOnCooldown && basicAttack.staminaCost <= charStats.CurrentStamina)
-            {
-                inputAttack = true;
-                triggerWait = basicAttack.delay;
-                return true;
-            }
+            inputAttack = true;
+            triggerWait = basicAttack.delay;
+            return true;
         }
         return false;
     }

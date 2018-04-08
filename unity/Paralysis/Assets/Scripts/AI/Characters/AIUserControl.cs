@@ -33,14 +33,13 @@ public abstract class AIUserControl : MonoBehaviour {
     protected CharacterStats charStats;
     protected GameObject targetPlayer;
     protected CharacterStats targetStats;
+    protected Transform myTransform;
     protected Vector2 targetPosition;
 
     protected int currentHealth;
     protected int previousHealth;
     protected int currentStamina;
     protected int previousStamina;
-
-
 
     protected float targetDirectionX = 0;
     protected float targetDistance = 0f;
@@ -60,12 +59,11 @@ public abstract class AIUserControl : MonoBehaviour {
     protected SectionPathNode[] currentNodes;
     protected SectionPathNode currentNode;
     protected int currentNodeIndex = 0;
-    private const float MIN_DISTANCE_TO_NODE = .115f;
 
     public enum AI_GOALS { MOVE_TO_LOCATION, MOVE_THROUGH_NODES, JUMP1, JUMP2, FALL_THROUGH, STAND_BY, WAIT };
-    public float waitTime;
+    protected float waitTime;
 
-    public enum TRIGGER_GOALS { MOVE_CLOSER, WAIT_FOR_ATTACK, RETREAT, CONTINUE }
+    public enum TRIGGER_GOALS { MOVE_CLOSER, WAIT_FOR_INPUT, RETREAT, CONTINUE }
 
     protected AI_GOALS distRetNewGoal;
     protected float triggerWait = 0f;
@@ -83,6 +81,7 @@ public abstract class AIUserControl : MonoBehaviour {
     private float jumpDuration = 0f;
     private float initialJumpTime = 0f;
 
+    protected virtual float getMinDistanceToNode() {return .115f;}
     protected virtual int getLowStamiaTrigger(){return 10;}
     protected virtual float getLongRangeAttackDistance(){return 1.5f;}
     protected virtual float getMediumDistanceAttackDistance(){return 5f;}
@@ -100,6 +99,8 @@ public abstract class AIUserControl : MonoBehaviour {
             animCon = GetComponentInChildren<ChampionAnimationController>();
             charStats = GetComponentInChildren<CharacterStats>();
             champClassCon = GetComponent<ChampionClassController>();
+
+            myTransform = transform.Find(GameConstants.EFFECT_OVERLAY).transform;
         }
     }
 
@@ -176,7 +177,7 @@ public abstract class AIUserControl : MonoBehaviour {
             continueAfter = false;
             isRetreating = true;
             break;
-        case TRIGGER_GOALS.WAIT_FOR_ATTACK:
+        case TRIGGER_GOALS.WAIT_FOR_INPUT:
             setGoalWait(triggerWait);
             continueAfter = false;
             break;
@@ -209,12 +210,13 @@ public abstract class AIUserControl : MonoBehaviour {
                 targetStats = targetPlayer.GetComponent<CharacterStats>();
             }
 
-            mySection = AISectionManager.Instance.getSectionForPosition(transform.position);
-            targetPosition = targetPlayer.transform.position;
-            targetDirectionX = Mathf.Sign(targetPosition.x - transform.position.x); 
+            mySection = AISectionManager.Instance.getSectionForPosition(myTransform.position);
+            targetPosition = targetPlayer.transform.Find(GameConstants.EFFECT_OVERLAY).transform.position;
+
+            targetDirectionX = Mathf.Sign(targetPosition.x - myTransform.position.x); 
             targetDistance = distanceToTargetPlayer();
 
-            yDiff = targetPosition.y - transform.position.y;
+            yDiff = targetPosition.y - myTransform.position.y;
 
             if (!isRetreating)
             {
@@ -222,11 +224,11 @@ public abstract class AIUserControl : MonoBehaviour {
             }
             else
             {
-                targetSection = AISectionManager.Instance.getRetreatSection(transform.position, targetPosition);
+                targetSection = AISectionManager.Instance.getRetreatSection(myTransform.position, targetPosition);
             }
 
             facingTarget = false;
-            if ((facingDirection == 1 && targetPosition.x > transform.position.x) || (facingDirection == -1 && targetPosition.x < transform.position.x))
+            if ((facingDirection == 1 && targetPosition.x > myTransform.position.x) || (facingDirection == -1 && targetPosition.x < myTransform.position.x))
             {
                 facingTarget = true;
             }
@@ -337,7 +339,7 @@ public abstract class AIUserControl : MonoBehaviour {
         //This is only called the first timet his goal happens
         if(targetPlayer != null && previousGoal != AI_GOALS.MOVE_THROUGH_NODES)
         {
-            currentNodes = mySection.getOptimalPathForSection(moveToSection, transform.position, moveToPosition).Nodes;
+            currentNodes = mySection.getOptimalPathForSection(moveToSection, myTransform.position, moveToPosition).Nodes;
             currentNodeIndex = 0;
             currentNode = currentNodes[currentNodeIndex];
 
@@ -360,7 +362,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
         //Get distance to our current node
         float distFromCurrentNode = distanceFromNode(currentNode);
-        if(distFromCurrentNode <= MIN_DISTANCE_TO_NODE)
+        if(distFromCurrentNode <= getMinDistanceToNode())
         {
             //if we are close to our current node and its a jump node, JUMP
             if(currentNode.isJumpNode1)
@@ -384,7 +386,7 @@ public abstract class AIUserControl : MonoBehaviour {
             }
         }
 
-        inputMove = Mathf.Sign(currentNode.transform.position.x - transform.position.x);
+        inputMove = Mathf.Sign(currentNode.transform.position.x - myTransform.position.x);
         if(!isGrounded) inputMove = inputMove/2;
     }
 
@@ -427,10 +429,10 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected virtual void moveTowardsPosition(Vector2 position)
     {
-        float xDiff = position.x - transform.position.x;
+        float xDiff = position.x - myTransform.position.x;
         if (xDiff > .5f)
         {
-            inputMove = Mathf.Sign(position.x - transform.position.x);
+            inputMove = Mathf.Sign(position.x - myTransform.position.x);
         }
     }
 
@@ -485,7 +487,7 @@ public abstract class AIUserControl : MonoBehaviour {
                 {
                     RaycastHit2D rightWallRay = Physics2D.Raycast(transform.position, transform.right, 999f, GameConstants.WALL_LAYER);
                     RaycastHit2D leftWallRay = Physics2D.Raycast(transform.position, transform.right * -1, 999f, GameConstants.WALL_LAYER);
-                    TRIGGER_GOALS triggerGoal = healthDecreasedTenPercent(currentHealth, previousHealth, targetStats.CurrentHealth, rightWallRay, leftWallRay, isRetreating);
+                    TRIGGER_GOALS triggerGoal = healthDecreasedTenPercent(facingTarget, currentHealth, previousHealth, targetStats.CurrentHealth, rightWallRay, leftWallRay, isRetreating);
 
                     if(!handleTriggerAndContinue(triggerGoal))
                     {
@@ -499,7 +501,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
     }
 
-    public virtual TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth, RaycastHit2D rightWallRay, RaycastHit2D leftWallRay, bool retreating){
+    public virtual TRIGGER_GOALS healthDecreasedTenPercent(bool facingTarget, int oldHealth, int newHealth, int targetHealth, RaycastHit2D rightWallRay, RaycastHit2D leftWallRay, bool retreating){
         return TRIGGER_GOALS.CONTINUE;
     }
 
@@ -597,7 +599,7 @@ public abstract class AIUserControl : MonoBehaviour {
             {
                 //No double jump we are grounded checkout our distance to next node
                 float distFromNextNode = distanceFromNode(currentNodes[currentNodeIndex + 1]);
-                if(distFromNextNode <= MIN_DISTANCE_TO_NODE)
+                if(distFromNextNode <= getMinDistanceToNode())
                 {
                     changeCurrentAndPreviousGoal(AI_GOALS.MOVE_THROUGH_NODES, AI_GOALS.MOVE_THROUGH_NODES);
                     incrementNodeIndex();
@@ -647,7 +649,7 @@ public abstract class AIUserControl : MonoBehaviour {
         if(isGrounded)
         {
             float distFromNextNode = distanceFromNode(currentNodes[currentNodeIndex + 1]);
-            if(distFromNextNode <= MIN_DISTANCE_TO_NODE)
+            if(distFromNextNode <= getMinDistanceToNode())
             {
                 changeCurrentAndPreviousGoal(AI_GOALS.MOVE_THROUGH_NODES, AI_GOALS.MOVE_THROUGH_NODES);
                 incrementNodeIndex();
@@ -737,17 +739,17 @@ public abstract class AIUserControl : MonoBehaviour {
 
     private float distanceFromNode(SectionPathNode node)
     {
-        return Mathf.Abs(Vector2.Distance(node.transform.position, transform.position));
+        return Mathf.Abs(Vector2.Distance(node.transform.position, myTransform.position));
     }
 
     private float distanceXFromNode(SectionPathNode node)
     {
-        return Mathf.Abs(node.transform.position.x - transform.position.x);
+        return Mathf.Abs(node.transform.position.x - myTransform.position.x);
     }
 
     private float distanceToTargetPlayer()
     {
-        return Mathf.Abs(Vector2.Distance(targetPosition, transform.position));
+        return Mathf.Abs(Vector2.Distance(targetPosition, myTransform.position));
     }
 
     private void setGoalWait(float timeToWait)
