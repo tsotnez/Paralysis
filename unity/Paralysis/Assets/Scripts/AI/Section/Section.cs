@@ -14,7 +14,7 @@ public class Section : MonoBehaviour {
     public bool nonTargetable = false;
 
     //TODO
-    public Vector2 retreatPoint = Vector2.zero;
+    public Vector2[] retreatPoints;
 
     public SectionPath[] SectionPaths { get { return SectionPaths; } }
     private SectionPath[] sectionPaths;
@@ -127,10 +127,44 @@ public class Section : MonoBehaviour {
         return false;
     }
 
-    //TODO....
-    public Vector2 getRetreatPosition()
+    public Vector2 getBestRetreatPoint(Vector2 currentPos, Vector2 enemyPosition)
     {
-        return transform.position;
+        if (retreatPoints == null || retreatPoints.Length == 0)
+        {
+            return transform.position;
+        }
+        else if (retreatPoints.Length == 1)
+        {
+            return retreatPoints[0];
+        }
+        else
+        {
+            Vector2 returnPoint = Vector2.zero;
+            float maxDistance = -float.MaxValue;
+            foreach(Vector2 retreatPoint in retreatPoints)
+            {
+                float actDistance = Mathf.Abs(Vector2.Distance(retreatPoint, enemyPosition));
+                if (actDistance > maxDistance)
+                {
+                    maxDistance = actDistance;
+                    returnPoint = retreatPoint;
+                }
+            }
+
+            return returnPoint;
+        }
+    }
+
+    public Vector2[] getRetreatPoints()
+    {
+        if (retreatPoints == null || retreatPoints.Length == 0)
+        {
+            return new Vector2[] {transform.position};
+        }
+        else
+        {
+            return retreatPoints;
+        }
     }
 
     void OnDrawGizmos()
@@ -151,6 +185,11 @@ public class Section : MonoBehaviour {
             Gizmos.color =  gizmoColor;
             Gizmos.DrawWireCube(transform.position, new Vector3(width, height));
             GizmoStar.drawStar(transform.position, gizmoColor, .15f);
+
+            foreach (Vector2 retreatPoint in retreatPoints)
+            {
+                GizmoStar.drawStar(retreatPoint, gizmoColor, .1f, .66f);
+            }
 
             if(innerSections != null && innerSections.Length > 0){
                 foreach(InnerSection innerSec in innerSections)

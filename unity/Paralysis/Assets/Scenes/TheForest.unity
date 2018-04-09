@@ -339,7 +339,7 @@ MonoBehaviour:
     InstantiatedPlayer: {fileID: 0}
     playerNumber: 1
     TeamNumber: 1
-    inputDevice: 0
+    inputDevice: 3
     trinket1: 0
     trinket2: 4
   defaultPlayer2:
@@ -735,7 +735,8 @@ MonoBehaviour:
   gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   showGizmos: 0
   nonTargetable: 0
-  retreatPoint: {x: 0, y: 0}
+  retreatPoints:
+  - {x: 13.06, y: 2.38}
 --- !u!1 &196505141
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,7 +887,8 @@ MonoBehaviour:
   gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   showGizmos: 0
   nonTargetable: 0
-  retreatPoint: {x: 0, y: 0}
+  retreatPoints:
+  - {x: 13.07, y: -2.25}
 --- !u!1 &244023197
 GameObject:
   m_ObjectHideFlags: 0
@@ -3107,7 +3109,8 @@ MonoBehaviour:
   gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   showGizmos: 0
   nonTargetable: 0
-  retreatPoint: {x: 0, y: 0}
+  retreatPoints:
+  - {x: -10.84, y: 0.87}
 --- !u!1 &1060463220
 GameObject:
   m_ObjectHideFlags: 0
@@ -4280,7 +4283,7 @@ MonoBehaviour:
   gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   showGizmos: 0
   nonTargetable: 0
-  retreatPoint: {x: 0, y: 0}
+  retreatPoints: []
 --- !u!114 &1352933940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4940,7 +4943,9 @@ MonoBehaviour:
   gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   showGizmos: 0
   nonTargetable: 0
-  retreatPoint: {x: 0, y: 0}
+  retreatPoints:
+  - {x: 13.18, y: -6.06}
+  - {x: -10.97, y: -6.12}
 --- !u!1 &1474918976
 GameObject:
   m_ObjectHideFlags: 0

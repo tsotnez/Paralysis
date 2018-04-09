@@ -184,7 +184,7 @@ public class AIAlchemistControl : AIUserControl {
             MeleeSkill teleport = champClassCon.GetMeleeSkillByType(Skill.SkillType.Skill2);
             if (teleport.notOnCooldown && teleport.staminaCost <= charStats.CurrentStamina)
             {
-                DODGE_DIR dodge = getDodgeDirection(8);
+                DODGE_DIR dodge = getDodgeDirection(15);
 
                 inputSkill2 = true;
                 if (dodge.goRight)
@@ -200,7 +200,7 @@ public class AIAlchemistControl : AIUserControl {
             } 
             else if (Time.time - timeSinceLastDodge > DODGE_CD && currentStamina >= champClassCon.m_dashStaminaCost)
             {
-                DODGE_DIR dodge = getDodgeDirection(8);
+                DODGE_DIR dodge = getDodgeDirection(15);
                 inputDash(dodge.goRight, dodge.goRight);
                 timeSinceLastDodge = Time.time;
                 triggerWait = DODGE_DURATION;

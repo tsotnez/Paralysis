@@ -30,24 +30,27 @@ public class AISectionManager : MonoBehaviour {
         return null;
     }
 
-    public Section getRetreatSection(Vector2 currentPosition, Vector2 targetPosition)
+    public Section getRetreatSection(Vector2 currentPosition, Vector2 enemyPosition)
     {
-        float maxDistance = -9999999;
+        float maxDistance = -float.MaxValue;
         Section retSection = null;
         foreach(Section section in sections)
         {
             if (!section.nonTargetable)
             {
-                float actDistance = Mathf.Abs(Vector2.Distance(section.getRetreatPosition(), targetPosition));
-
-                //Give bonus for sections lower, so we don't need to jump
-                float yDifference = (currentPosition.y - section.transform.position.y) * 2f;
-                actDistance += yDifference;
-
-                if (actDistance > maxDistance)
+                foreach (Vector2 retreatPoint in section.getRetreatPoints())
                 {
-                    maxDistance = actDistance;
-                    retSection = section;
+                    float actDistance = Mathf.Abs(Vector2.Distance(retreatPoint, enemyPosition));
+
+                    //Give penalty for sections higher, so we don't need to jump
+                    float yDifference = (currentPosition.y - retreatPoint.y);
+                    actDistance += yDifference;
+
+                    if (actDistance > maxDistance)
+                    {
+                        maxDistance = actDistance;
+                        retSection = section;
+                    }
                 }
             }
         }

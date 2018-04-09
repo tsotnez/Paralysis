@@ -134,7 +134,7 @@ public abstract class AIUserControl : MonoBehaviour {
             }
             else
             {
-                moveTowardsTarget(targetSection.getRetreatPosition());
+                moveTowardsTarget(targetSection.getBestRetreatPoint(myTransform.position, targetPosition));
             }
             break;
         case AI_GOALS.MOVE_THROUGH_NODES:
@@ -468,7 +468,7 @@ public abstract class AIUserControl : MonoBehaviour {
     protected virtual void moveTowardsTargetPlayer()
     {
         //Move closert to the target, or if we are close enough but not facing the target...
-        if (targetDistance >= getCloseRangeAttackDistance() || !facingTarget )
+        if (targetDistance >= getCloseRangeAttackDistance() || ( !facingTarget && Mathf.Abs(yDiff) < 1f) )
         {
             inputMove = Mathf.Sign(targetDirectionX);
         }
