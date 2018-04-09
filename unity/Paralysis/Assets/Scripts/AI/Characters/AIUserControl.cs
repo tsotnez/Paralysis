@@ -128,8 +128,14 @@ public abstract class AIUserControl : MonoBehaviour {
             break;
         case AI_GOALS.MOVE_TO_LOCATION:
             setCurrentGoal();
-            if (!isRetreating)moveTowardsTarget(targetPosition);
-            else moveTowardsTarget(targetSection.getRetreatPosition());
+            if (!isRetreating)
+            {
+                moveTowardsTarget(targetPosition);
+            }
+            else
+            {
+                moveTowardsTarget(targetSection.getRetreatPosition());
+            }
             break;
         case AI_GOALS.MOVE_THROUGH_NODES:
             moveThroughSectionPath(targetSection, targetPosition);
@@ -269,6 +275,7 @@ public abstract class AIUserControl : MonoBehaviour {
             {
                 setAttackingGoals();
             }
+
         }
         else
         {
@@ -278,6 +285,12 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected virtual void setRetreatingGoals()
     {
+        if (mySection == null || targetSection == null)
+        {
+            changeGoal(AI_GOALS.STAND_BY);
+            return;
+        }
+
         if (mySection != targetSection && !mySection.nonTargetable)
         {
             changeGoal(AI_GOALS.MOVE_THROUGH_NODES);
@@ -302,6 +315,12 @@ public abstract class AIUserControl : MonoBehaviour {
             {
                 return;
             }
+        }
+
+        if (mySection == null || targetSection == null)
+        {
+            changeGoal(AI_GOALS.STAND_BY);
+            return;
         }
 
         //Set attacking goals here
@@ -344,7 +363,7 @@ public abstract class AIUserControl : MonoBehaviour {
             SectionPath path = mySection.getOptimalPathForSection(moveToSection, myTransform.position, moveToPosition);
             if (path == null || path.Nodes == null)
             {
-                Debug.Log("path had no nodes...");
+                Debug.LogError("path was null no nodes...");
                 changeGoal(AI_GOALS.STAND_BY);
                 return;
             }
@@ -497,7 +516,7 @@ public abstract class AIUserControl : MonoBehaviour {
                 {
                     RaycastHit2D rightWallRay = Physics2D.Raycast(transform.position, transform.right, 999f, GameConstants.WALL_LAYER);
                     RaycastHit2D leftWallRay = Physics2D.Raycast(transform.position, transform.right * -1, 999f, GameConstants.WALL_LAYER);
-                    TRIGGER_GOALS triggerGoal = healthDecreasedTenPercent(currentHealth, previousHealth, targetStats.CurrentHealth, rightWallRay, leftWallRay, isRetreating);
+                    TRIGGER_GOALS triggerGoal = healthDecreasedTenPercent(currentHealth, previousHealth, targetStats.CurrentHealth, isRetreating);
 
                     if(!handleTriggerAndContinue(triggerGoal))
                     {
@@ -511,7 +530,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
     }
 
-    public virtual TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth, RaycastHit2D rightWallRay, RaycastHit2D leftWallRay, bool retreating){
+    public virtual TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth, bool retreating){
         return TRIGGER_GOALS.CONTINUE;
     }
 
@@ -773,37 +792,6 @@ public abstract class AIUserControl : MonoBehaviour {
         changeGoal(AI_GOALS.WAIT);
     }
 
-    protected bool checkDodge(bool goRight, bool goLeft, float waitTime)
-    {
-        if (canPerformAttack(true) && currentStamina >= champClassCon.m_dashStaminaCost)
-        {
-            if (goRight && goLeft)
-            {
-                if (Random.Range(1, 100) >= 50)
-                {
-                    inputDashDirection = 1;
-                } 
-                else
-                {
-                    inputDashDirection = -1;
-                }
-            }
-            else if (goRight)
-            {
-                inputDashDirection = 1;
-            }
-            else
-            {
-                inputDashDirection = -1;
-            }
-
-            triggerWait = waitTime;
-            return true;
-        }
-
-        return false;
-    }
-
     private void resetInputs()
     {
         if(currentGoal != AI_GOALS.FALL_THROUGH)
@@ -827,5 +815,101 @@ public abstract class AIUserControl : MonoBehaviour {
         inputTrinket2 = false;
     }
 
+    public RaycastHit2D[] getRightLeftWallRays()
+    {
+        RaycastHit2D[] rayCasts = new RaycastHit2D[2];
+        rayCasts[0] = Physics2D.Raycast(myTransform.position, transform.right, 999f, GameConstants.WALL_LAYER);
+        rayCasts[1] = Physics2D.Raycast(myTransform.position, transform.right * -1, 999f, GameConstants.WALL_LAYER);
+        return rayCasts;
+    }
+
+    public RaycastHit2D[] getTopBottomWallRays()
+    {
+        RaycastHit2D[] rayCasts = new RaycastHit2D[2];
+        rayCasts[0] = Physics2D.Raycast(myTransform.position, transform.up, 999f, GameConstants.WALL_LAYER);
+        rayCasts[1] = Physics2D.Raycast(myTransform.position, transform.up * -1, 999f, GameConstants.WALL_LAYER);
+        return rayCasts;
+    }
+
+    public DODGE_DIR getDodgeDirection(float maxWallDistance)
+    {
+        RaycastHit2D[] rayCasts = getRightLeftWallRays();
+
+        float rightWall = rayCasts [0].distance;
+        float leftWall = rayCasts[1].distance;
+
+        if (rightWall > maxWallDistance) rightWall = maxWallDistance;
+        if (leftWall > maxWallDistance) leftWall = maxWallDistance;
+
+        bool targetOnRight = false;
+        bool goLeft = false;
+        bool goRight = false;
+
+        //target on right, not left
+        if ((facingTarget && facingDirection == 1) || (!facingTarget && facingDirection == -1))
+        {
+            targetOnRight = true;
+        }
+
+        if (leftWall < rightWall && targetOnRight) goLeft = true;
+        else if (rightWall > leftWall && !targetOnRight) goRight = true;
+        else if (rightWall == leftWall)
+        {
+            if (targetOnRight)
+            {
+                goLeft = true;
+            } 
+            else
+            {
+                goRight = true;
+            }
+        }
+        else
+        {
+            goRight = !targetOnRight;
+            goLeft = targetOnRight;
+        }
+
+        DODGE_DIR dodgeDir;
+        dodgeDir.goRight = goRight;
+        dodgeDir.goLeft = goLeft;
+
+        return dodgeDir;
+    }
+
+    protected void inputDash(bool goRight, bool goLeft)
+    {
+        if (goRight && goLeft)
+        {
+            if (Random.Range(1, 100) >= 50)
+            {
+                inputDashDirection = 1;
+            } 
+            else
+            {
+                inputDashDirection = -1;
+            }
+        }
+        else if (goRight)
+        {
+            inputDashDirection = 1;
+        }
+        else
+        {
+            inputDashDirection = -1;
+        }
+    }
+
+
+    public struct DODGE_DIR {
+        public bool goRight;
+        public bool goLeft;
+
+        //TODO, alchemist?
+        //public bool goUp;
+        //public bool goDown;
+    }
+
     #endregion
+
 }

@@ -6,7 +6,7 @@ public class AIAlchemistControl : AIUserControl {
     
     private float timeSinceLastDodge = 0f;
     private const float DODGE_CD = 6;
-    private const float DODGE_DURATION = 2f;
+    private const float DODGE_DURATION = 1.5f;
 
     protected override int getLowStamiaTrigger()
     {
@@ -43,13 +43,8 @@ public class AIAlchemistControl : AIUserControl {
             {
                 return TRIGGER_GOALS.WAIT_FOR_INPUT;
             }
-            else if (targetDistance <= 3 && checkTeleport(true, true))
+            else if (checkDodgeOrTeleport())
             {
-                return TRIGGER_GOALS.WAIT_FOR_INPUT;
-            }
-            else if (targetDistance <= 3 && Time.time - timeSinceLastDodge > DODGE_CD && checkDodge(true, true, DODGE_DURATION))
-            {
-                timeSinceLastDodge = Time.time;
                 return TRIGGER_GOALS.WAIT_FOR_INPUT;
             }
             else if (facingTarget && targetDistance <= 5 && checkMeltedStone())
@@ -79,37 +74,9 @@ public class AIAlchemistControl : AIUserControl {
         return closeRangeAttack();
     }
 
-    public override TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth, RaycastHit2D rightWallRay, RaycastHit2D leftWallRay, bool retreating)
+    public override TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth, bool retreating)
     {
-        float rightWall = rightWallRay.distance;
-        float leftWall = leftWallRay.distance;
-
-        if (rightWall > 8) rightWall = 8;
-        if (leftWall > 8) leftWall = 8;
-
-        bool targetOnRight = false;
-        bool goLeft = false;
-        bool goRight = false;
-
-        //target on right, not left
-        if ((facingTarget && facingDirection == 1) || (!facingTarget && facingDirection == -1))
-        {
-            targetOnRight = true;
-        }
-
-        if (leftWall < rightWall && targetOnRight) goLeft = true;
-        else if (rightWall > leftWall && !targetOnRight) goRight = true;
-        else
-        {
-            goRight = !targetOnRight;
-            goLeft = targetOnRight;
-        }
-
-        if (checkTeleport(goRight, goLeft))
-        {
-            return TRIGGER_GOALS.WAIT_FOR_INPUT;
-        }
-        else if (checkDodge(goRight, goLeft, DODGE_DURATION))
+        if (checkDodgeOrTeleport())
         {
             return TRIGGER_GOALS.WAIT_FOR_INPUT;
         }
@@ -130,16 +97,16 @@ public class AIAlchemistControl : AIUserControl {
 
     public override TRIGGER_GOALS lowStamina(int currentStamina)
     {
-        //if (charStats.CurrentHealth < targetStats.CurrentHealth)
-        //{
+        if (charStats.CurrentHealth + 20 < targetStats.CurrentHealth)
+        {
             retreatDuration = 9999;
             retreatUntilStamina = 50;
             return TRIGGER_GOALS.RETREAT;
-        //}
-        //else
-        //{
-        //    return TRIGGER_GOALS.CONTINUE;
-        //}
+        }
+        else
+        {
+            return TRIGGER_GOALS.CONTINUE;
+        }
     }
 
     #endregion
@@ -159,27 +126,6 @@ public class AIAlchemistControl : AIUserControl {
                 return true;
             }
         }
-        return false;
-    }
-
-    private bool checkTeleport(bool goRight, bool goLeft)
-    {
-        MeleeSkill teleport = champClassCon.GetMeleeSkillByType(Skill.SkillType.Skill2);
-        if (teleport.notOnCooldown && teleport.staminaCost <= charStats.CurrentStamina)
-        {
-            inputSkill2 = true;
-            if (goRight)
-            {
-                inputMove = 1;
-            }
-            else
-            {
-                inputMove = -1;
-            }
-            triggerWait = teleport.delay;
-            return true;
-        }
-
         return false;
     }
 
@@ -228,6 +174,44 @@ public class AIAlchemistControl : AIUserControl {
                 return true;
             }
         }
+        return false;
+    }
+
+    public bool checkDodgeOrTeleport()
+    {
+        if (canPerformAttack(true) && targetDistance <= 3)
+        {
+            MeleeSkill teleport = champClassCon.GetMeleeSkillByType(Skill.SkillType.Skill2);
+            if (teleport.notOnCooldown && teleport.staminaCost <= charStats.CurrentStamina)
+            {
+                DODGE_DIR dodge = getDodgeDirection(8);
+
+                inputSkill2 = true;
+                if (dodge.goRight)
+                {
+                    inputMove = 1;
+                } else
+                {
+                    inputMove = -1;
+                }
+                triggerWait = teleport.delay;
+
+                return true;
+            } 
+            else if (Time.time - timeSinceLastDodge > DODGE_CD && currentStamina >= champClassCon.m_dashStaminaCost)
+            {
+                DODGE_DIR dodge = getDodgeDirection(8);
+                inputDash(dodge.goRight, dodge.goRight);
+                timeSinceLastDodge = Time.time;
+                triggerWait = DODGE_DURATION;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         return false;
     }
 

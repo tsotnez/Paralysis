@@ -69,7 +69,7 @@ public class AIAssassinControl : AIUserControl {
         return TRIGGER_GOALS.MOVE_CLOSER;
     }
 
-    public override TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth, RaycastHit2D rightWallRay, RaycastHit2D leftWallRay, bool retreating)
+    public override TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth, bool retreating)
     {
         if (newHealth < 20 && newHealth < targetHealth)
         {

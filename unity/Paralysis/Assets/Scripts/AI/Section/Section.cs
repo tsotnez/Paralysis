@@ -45,7 +45,14 @@ public class Section : MonoBehaviour {
     {
         if (targetSection == this || targetSection == null)
         {
-            Debug.LogError("No path to current section...: ");
+            if (targetSection != null)
+            {
+                Debug.LogError("No path to current section targetSection: " + targetSection.name);
+            }
+            else
+            {
+                Debug.LogError("Target section was null." + targetSection.name);
+            }
             return null;
         }
 
@@ -120,6 +127,7 @@ public class Section : MonoBehaviour {
         return false;
     }
 
+    //TODO....
     public Vector2 getRetreatPosition()
     {
         return transform.position;

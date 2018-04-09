@@ -32,13 +32,13 @@ public class AISectionManager : MonoBehaviour {
 
     public Section getRetreatSection(Vector2 currentPosition, Vector2 targetPosition)
     {
-        float maxDistance = 0;
+        float maxDistance = -9999999;
         Section retSection = null;
         foreach(Section section in sections)
         {
             if (!section.nonTargetable)
             {
-                float actDistance = Mathf.Abs(Vector2.Distance(section.transform.position, targetPosition));
+                float actDistance = Mathf.Abs(Vector2.Distance(section.getRetreatPosition(), targetPosition));
 
                 //Give bonus for sections lower, so we don't need to jump
                 float yDifference = (currentPosition.y - section.transform.position.y) * 2f;
@@ -52,6 +52,10 @@ public class AISectionManager : MonoBehaviour {
             }
         }
 
+        if (retSection == null)
+        {
+            Debug.LogError("couldn't find a retreat section...");
+        }
         return retSection;
     }
 
