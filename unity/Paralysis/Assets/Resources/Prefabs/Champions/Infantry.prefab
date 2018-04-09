@@ -38,6 +38,8 @@ GameObject:
   - component: {fileID: 114805861058067498}
   - component: {fileID: 114772719500942180}
   - component: {fileID: 114004703040851194}
+  - component: {fileID: 114442142715304206}
+  - component: {fileID: 114654220326397278}
   - component: {fileID: 61457638288269390}
   - component: {fileID: 58048693424516738}
   - component: {fileID: 50862572353182392}
@@ -585,6 +587,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114442142715304206
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1128103333960868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f344711e9b9503459d89adac9bdb9a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateRate: 1
 --- !u!114 &114653548690876056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -696,6 +710,28 @@ MonoBehaviour:
   trigDashForwardEnd: 0
   trigHit: 0
   trigSkill1End: 0
+--- !u!114 &114654220326397278
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1128103333960868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deaffb47fd6752f428304cd105e79230, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputJump: 0
+  inputAttack: 0
+  inputDashDirection: 0
+  inputDown: 0
+  inputMove: 0
+  inputSkill1: 0
+  inputSkill2: 0
+  inputSkill3: 0
+  inputSkill4: 0
+  inputTrinket1: 0
+  inputTrinket2: 0
 --- !u!114 &114675377048277192
 MonoBehaviour:
   m_ObjectHideFlags: 1

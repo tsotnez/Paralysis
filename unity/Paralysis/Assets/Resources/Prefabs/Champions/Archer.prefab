@@ -175,6 +175,8 @@ GameObject:
   - component: {fileID: 114231252518877400}
   - component: {fileID: 114748880970770568}
   - component: {fileID: 114011890627075438}
+  - component: {fileID: 114030058184188020}
+  - component: {fileID: 114930271672649152}
   - component: {fileID: 61156633718313208}
   - component: {fileID: 58608550699904714}
   - component: {fileID: 50883490448698580}
@@ -477,6 +479,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputDevice: 1
   playerNumber: 0
+--- !u!114 &114030058184188020
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1654434425598688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f344711e9b9503459d89adac9bdb9a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateRate: 1
 --- !u!114 &114059905593703026
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1106,6 +1120,28 @@ MonoBehaviour:
   PercentageDamage: 1
   NextHitDealsStun: 0
   NextHitDealsBleed: 0
+--- !u!114 &114930271672649152
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1654434425598688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfb3dc08583caf4f9fad5bda0856c57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputJump: 0
+  inputAttack: 0
+  inputDashDirection: 0
+  inputDown: 0
+  inputMove: 0
+  inputSkill1: 0
+  inputSkill2: 0
+  inputSkill3: 0
+  inputSkill4: 0
+  inputTrinket1: 0
+  inputTrinket2: 0
 --- !u!212 &212063224207479512
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -514,10 +514,7 @@ public abstract class AIUserControl : MonoBehaviour {
             {
                 if (healthPercent <= i && prevHealthPercent > i)
                 {
-                    RaycastHit2D rightWallRay = Physics2D.Raycast(transform.position, transform.right, 999f, GameConstants.WALL_LAYER);
-                    RaycastHit2D leftWallRay = Physics2D.Raycast(transform.position, transform.right * -1, 999f, GameConstants.WALL_LAYER);
                     TRIGGER_GOALS triggerGoal = healthDecreasedTenPercent(currentHealth, previousHealth, targetStats.CurrentHealth, isRetreating);
-
                     if(!handleTriggerAndContinue(triggerGoal))
                     {
                         return false;

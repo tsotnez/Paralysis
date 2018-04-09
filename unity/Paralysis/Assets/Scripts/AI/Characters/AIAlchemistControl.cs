@@ -76,18 +76,18 @@ public class AIAlchemistControl : AIUserControl {
 
     public override TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth, bool retreating)
     {
+        //TODO....
         if (checkDodgeOrTeleport())
         {
             return TRIGGER_GOALS.WAIT_FOR_INPUT;
         }
         else
         {
-            retreatDuration = 5;
+            retreatDuration = 3;
             retreatUntilStamina = 99999;
             return TRIGGER_GOALS.RETREAT;
         }
-
-        return TRIGGER_GOALS.CONTINUE;
+        //return TRIGGER_GOALS.CONTINUE;
     }
 
     protected override TRIGGER_GOALS lockedOnToTarget()
