@@ -23,12 +23,14 @@ public abstract class UserControl : MonoBehaviour
     protected PhotonView photonV;
     protected AIUserControl aiControl;
 
+    public Vector2 XYAxis { get; protected set; }
+
 
     #region Enums
 
     public enum InputDevice
     {
-        XboxController, KeyboardMouse, Ps4Controller, AI
+        XboxController, KeyboardMouse, AI
     }
 
     public enum PlayerNumbers : byte
@@ -68,9 +70,6 @@ public abstract class UserControl : MonoBehaviour
                 break;
             case InputDevice.KeyboardMouse:
                 CheckInputForKeyboardAndMouse();
-                break;
-            case InputDevice.Ps4Controller:
-                CheckInputForPs4Controller();
                 break;
             case InputDevice.AI:
                 CheckAIInput();
@@ -229,6 +228,10 @@ public abstract class UserControl : MonoBehaviour
         if (!CharStats.stunned && !CharStats.knockedBack)
             inputDown = Input.GetButton("Block");
         else inputDown = false;
+
+        if (Input.GetButton("Jump")) XYAxis = new Vector2(inputMove, 1);
+        else if (Input.GetButton("Block")) XYAxis = new Vector2(inputMove, -1);
+        else XYAxis = new Vector2(inputMove, 0);
     }
 
     #endregion
@@ -296,60 +299,8 @@ public abstract class UserControl : MonoBehaviour
         else inputDown = false;
 
         lastVerticalValue = Input.GetAxis("RightStickVertical_Xbox" + playerNumber.ToString()); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
-    }
 
-    #endregion
-
-    #region PS4
-
-    protected virtual void CheckInputForPs4Controller()
-    {
-        //Set move to 0, 1 or -1 so character will move full speed or 0
-        inputMove = Input.GetAxis("Horizontal_Ps4" + playerNumber.ToString());
-        if (inputMove > 0) inputMove = 1;
-        else if (inputMove < 0) inputMove = -1;
-        else inputMove = 0;
-
-        if (inputDashDirection == 0)
-        {
-            if (Input.GetButtonDown("DashLeft_Ps4" + playerNumber.ToString())) inputDashDirection = -1;
-            else if (Input.GetButtonDown("DashRight_Ps4" + playerNumber.ToString())) inputDashDirection = 1;
-        }
-
-        if (!inputAttack)
-        {
-            inputAttack = Input.GetAxis("BasicAttack_Ps4" + playerNumber.ToString()) < 0;
-        }
-
-        if (!inputSkill1)
-        {
-            inputSkill1 = Input.GetButtonDown("Skill1_Ps4" + playerNumber.ToString());
-        }
-
-        if (!inputSkill2)
-        {
-            inputSkill2 = Input.GetButtonDown("Skill2_Ps4" + playerNumber.ToString());
-        }
-
-        if (!inputSkill3)
-        {
-            inputSkill3 = Input.GetButtonDown("Skill3_Ps4" + playerNumber.ToString());
-        }
-
-        if (!inputSkill4)
-        {
-            inputSkill4 = Input.GetButtonDown("Skill4_Ps4" + playerNumber.ToString());
-        }
-
-        if (!inputJump)
-        {
-            inputJump = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()) < 0;
-        }
-        if (!CharStats.stunned && !CharStats.knockedBack)
-            inputDown = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()) > 0;
-        else inputDown = false;
-
-        lastVerticalValue = Input.GetAxis("RightStickVertical_Ps4" + playerNumber.ToString()); // Save last horizontal input to prevent player from spamming jumps. He needs to move the stick back in his standart position to be able to jump again
+        XYAxis = new Vector2(inputMove, lastVerticalValue);
     }
 
     #endregion

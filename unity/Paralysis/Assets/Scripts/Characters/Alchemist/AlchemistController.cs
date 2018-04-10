@@ -55,14 +55,15 @@ public class AlchemistController : ChampionClassController
         if (CanPerformAction(false) && CanPerformAttack() && skill2.notOnCooldown && stats.LoseStamina(skill2.staminaCost))
         {
             // Get the direction first --> save the effects on skill enter
+            UserControl uc = GetComponent<UserControl>();
             TeleportDirection direction = TeleportDirection.forward;
             // If ducking, teleports on lower platform.
-            if (animCon.statBlock)
+            if (uc.XYAxis.y < 0)
             {
                 direction = TeleportDirection.down;
             }
             // If jumping, teleports on top platform.
-            else if (!animCon.propGrounded && animCon.propSpeed == 0)
+            else if (uc.XYAxis.y > 0 && uc.XYAxis.x == 0)
             {
                 direction = TeleportDirection.up;
             }
