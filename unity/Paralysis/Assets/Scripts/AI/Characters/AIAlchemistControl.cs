@@ -16,17 +16,17 @@ public class AIAlchemistControl : AIUserControl {
 
     protected override float getCloseRangeAttackDistance()
     {
-        return 7;
+        return 6;
     }
 
     protected override float getMediumDistanceAttackDistance()
     {
-        return 7f;
+        return 6f;
     }
 
     protected override float getLongRangeAttackDistance()
     {
-        return 7f;
+        return 6f;
     }
 
     protected override float getMinDistanceToNode() {
@@ -76,16 +76,29 @@ public class AIAlchemistControl : AIUserControl {
 
     public override TRIGGER_GOALS healthDecreasedTenPercent(int oldHealth, int newHealth, int targetHealth, bool retreating)
     {
-        //TODO....
-        if (checkDodgeOrTeleport())
+        if (isRetreating)
         {
-            return TRIGGER_GOALS.WAIT_FOR_INPUT;
+            if (targetDistance <= 3 && checkCloseAOE())
+            {
+                return TRIGGER_GOALS.WAIT_FOR_INPUT;
+            }
+            else
+            {
+                return TRIGGER_GOALS.CONTINUE;
+            }
         }
         else
         {
-            retreatDuration = 3;
-            retreatUntilStamina = 99999;
-            return TRIGGER_GOALS.RETREAT;
+            //TODO....
+            if (targetDistance < 3 && checkDodgeOrTeleport())
+            {
+                return TRIGGER_GOALS.WAIT_FOR_INPUT;
+            } else
+            {
+                retreatDuration = 5;
+                retreatUntilStamina = 99999;
+                return TRIGGER_GOALS.RETREAT;
+            }
         }
         //return TRIGGER_GOALS.CONTINUE;
     }
@@ -97,7 +110,7 @@ public class AIAlchemistControl : AIUserControl {
 
     public override TRIGGER_GOALS lowStamina(int currentStamina)
     {
-        if (charStats.CurrentHealth + 20 < targetStats.CurrentHealth)
+        if (charStats.CurrentHealth < targetStats.CurrentHealth)
         {
             retreatDuration = 9999;
             retreatUntilStamina = 50;

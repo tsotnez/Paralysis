@@ -848,8 +848,14 @@ public abstract class AIUserControl : MonoBehaviour {
             targetOnRight = true;
         }
 
-        if (leftWall < rightWall && targetOnRight) goLeft = true;
-        else if (rightWall > leftWall && !targetOnRight) goRight = true;
+        if (leftWall > rightWall && targetOnRight)
+            goLeft = true;
+        else if (rightWall > leftWall && !targetOnRight)
+            goRight = true;
+        else if (leftWall > rightWall && targetDistance <= 2)
+            goLeft = true;
+        else if (rightWall > leftWall && targetDistance <= 2)
+            goRight = true;
         else if (rightWall == leftWall)
         {
             if (targetOnRight)
