@@ -135,11 +135,12 @@ public class AlchemistController : ChampionClassController
         // Build an layermask for finding Walls and Ground
         LayerMask layWallGround = (1 << LayerMask.NameToLayer("Walls"));
         layWallGround |= (1 << LayerMask.NameToLayer("Ground"));
+        layWallGround |= (1 << LayerMask.NameToLayer("Through"));
 
         Vector2 newPos = transform.position;
         if (direction == TeleportDirection.forward)
         {
-            // Check if an wall is to near for a ful range teleport
+            // Check if an wall is too near for a ful range teleport
             RaycastHit2D hit;
             if (FacingRight)
                 hit = Physics2D.Raycast(transform.position, Vector2.right, skill2.range, layWallGround);
