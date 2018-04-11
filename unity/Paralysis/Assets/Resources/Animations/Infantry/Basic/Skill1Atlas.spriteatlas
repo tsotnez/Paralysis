@@ -33,45 +33,11 @@ SpriteAtlas:
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: befb8a45cc8e21746a2c22034e4d40c2, type: 3}
-  - {fileID: 21300000, guid: 1eff6eb9e44fd924095f572ae83df2bd, type: 3}
-  - {fileID: 21300000, guid: 5e96af262e190f441ac9d0f045cbfed0, type: 3}
   - {fileID: 21300000, guid: c44a4d0e7d2e12a4b861d75f7d0969e2, type: 3}
   - {fileID: 21300000, guid: 5996dd209545c1244b7d5b01041a9da7, type: 3}
-  - {fileID: 21300000, guid: 218d5f202a6737c4b94d775df55bca16, type: 3}
-  - {fileID: 21300000, guid: f96827242de2d434b828f3a6a3f65e9b, type: 3}
-  - {fileID: 21300000, guid: 7e5a3ca783ca00b45be5792408f7580e, type: 3}
-  - {fileID: 21300000, guid: 12373ab130267d347949d1fd576df957, type: 3}
-  - {fileID: 21300000, guid: e7fda8d58046df04fa7224a5a8ca4e4a, type: 3}
-  - {fileID: 21300000, guid: 6fbc6e432e699c44683bfcfab63b1f11, type: 3}
-  - {fileID: 21300000, guid: 502d6ccffac387e498284cbf7fbfe651, type: 3}
-  - {fileID: 21300000, guid: ea6ae2e0877538148950681435d488f4, type: 3}
-  - {fileID: 21300000, guid: 98a0c81ad603fc54fb25a13665075999, type: 3}
-  - {fileID: 21300000, guid: 18df220f62b07974dbc9c5dd78abb2eb, type: 3}
-  - {fileID: 21300000, guid: 4b80f1a808b50254b8346549617a8498, type: 3}
-  - {fileID: 21300000, guid: efac7330ccd4d0c47a816577e6b5dcd4, type: 3}
-  - {fileID: 21300000, guid: 13c1fa3bebda909459429869c2901fb2, type: 3}
-  - {fileID: 21300000, guid: 16df47dd8370efe429631b1ef1ef3bd3, type: 3}
-  - {fileID: 21300000, guid: fe3062635bb63fb4b83d64684b2ae802, type: 3}
   m_PackedSpriteNamesToIndex:
   - Skill1_02
-  - Skill1_18
-  - Skill1_03
   - Skill1_00
   - Skill1_01
-  - Skill1_15
-  - Skill1_06
-  - Skill1_14
-  - Skill1_07
-  - Skill1_17
-  - Skill1_04
-  - Skill1_16
-  - Skill1_05
-  - Skill1_11
-  - Skill1_10
-  - Skill1_13
-  - Skill1_12
-  - Skill1_08
-  - Skill1_09
-  - Skill1_19
   m_Tag: Skill1Atlas
   m_IsVariant: 0

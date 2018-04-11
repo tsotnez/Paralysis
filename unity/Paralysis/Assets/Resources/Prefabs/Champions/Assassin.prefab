@@ -892,7 +892,6 @@ MonoBehaviour:
   inputSkill4: 0
   inputTrinket1: 0
   inputTrinket2: 0
-  waitTime: 0
 --- !u!114 &114625500605877628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -984,6 +983,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f344711e9b9503459d89adac9bdb9a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  updateRate: 1
 --- !u!114 &114688328039277770
 MonoBehaviour:
   m_ObjectHideFlags: 1
