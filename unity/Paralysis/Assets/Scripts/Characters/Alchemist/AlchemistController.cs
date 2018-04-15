@@ -55,14 +55,15 @@ public class AlchemistController : ChampionClassController
         if (CanPerformAction(false) && CanPerformAttack() && skill2.notOnCooldown && stats.LoseStamina(skill2.staminaCost))
         {
             // Get the direction first --> save the effects on skill enter
+            UserControl uc = GetComponent<UserControl>();
             TeleportDirection direction = TeleportDirection.forward;
             // If ducking, teleports on lower platform.
-            if (animCon.statBlock)
+            if (uc.XYAxis.y < 0)
             {
                 direction = TeleportDirection.down;
             }
             // If jumping, teleports on top platform.
-            else if (!animCon.propGrounded && animCon.propSpeed == 0)
+            else if (uc.XYAxis.y > 0 && uc.XYAxis.x == 0)
             {
                 direction = TeleportDirection.up;
             }
@@ -135,11 +136,12 @@ public class AlchemistController : ChampionClassController
         // Build an layermask for finding Walls and Ground
         LayerMask layWallGround = (1 << LayerMask.NameToLayer("Walls"));
         layWallGround |= (1 << LayerMask.NameToLayer("Ground"));
+        layWallGround |= (1 << LayerMask.NameToLayer("Through"));
 
         Vector2 newPos = transform.position;
         if (direction == TeleportDirection.forward)
         {
-            // Check if an wall is to near for a ful range teleport
+            // Check if an wall is too near for a ful range teleport
             RaycastHit2D hit;
             if (FacingRight)
                 hit = Physics2D.Raycast(transform.position, Vector2.right, skill2.range, layWallGround);

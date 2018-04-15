@@ -42,6 +42,7 @@ public abstract class ChampionAnimationController : AnimationController
     private int RevertIdleNeededFrames = 3;
     private int RevertIdleActualFrames = 0;
 
+
     protected virtual void Update()
     {
         if (!statDead || CurrentAnimation != AnimationTypes.Die)
@@ -210,6 +211,11 @@ public abstract class ChampionAnimationController : AnimationController
                 }
             }
         }
+    }
+
+    public void RevertAnimation()
+    {
+        StartAnimation(AnimationTypes.Idle);
     }
 
     protected abstract bool AdditionalNotInterruptCondition(AnimationTypes activeAnimation);

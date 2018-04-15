@@ -98,7 +98,7 @@ public class ArcherController : ChampionClassController
 
     public override void Skill4()
     {
-        RangedSkill skill4 = GetRangeSkillByType(Skill.SkillType.Skill4);
+        MeleeSkill skill4 = GetMeleeSkillByType(Skill.SkillType.Skill4);
         if (CanPerformAction(true) && CanPerformAttack() && skill4.notOnCooldown && stats.LoseStamina(skill4.staminaCost))
         {
             hotbar.StartCoroutine(hotbar.flashBlack(skill4.type));
@@ -142,7 +142,7 @@ public class ArcherController : ChampionClassController
         stats.invincible = false;
         disengaging = false;
         stats.immovable = false;
-        StartCoroutine(SetSkillOnCooldown(GetRangeSkillByType(Skill.SkillType.Skill4)));
+        StartCoroutine(SetSkillOnCooldown(GetMeleeSkillByType(Skill.SkillType.Skill4)));
     }
 
     #endregion

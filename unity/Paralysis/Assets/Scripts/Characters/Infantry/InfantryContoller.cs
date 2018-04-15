@@ -71,6 +71,10 @@ public class InfantryContoller : ChampionClassController
     {
         RangedSkill skill1 = GetRangeSkillByType(Skill.SkillType.Skill1);
         stats.immovable = true;
+        m_Rigidbody2D.velocity = Vector2.zero;
+
+        // start animation
+        animCon.trigSkill1 = true;
 
         // calculate direction
         int direction;
@@ -118,13 +122,12 @@ public class InfantryContoller : ChampionClassController
 
             // Add a vertical force to the player.
             skill1_hook = true;
-            animCon.trigSkill1 = true;
 
             if (DistanceToTarget > 1)
             {
                 m_Rigidbody2D.velocity = Vector2.zero;
                 m_Rigidbody2D.AddForce(new Vector2(0, (68 * DistanceToTarget))); // Distance 5.8f --> AddForce 400f --> 68 * Distance
-
+                ((InfantryAnimationController)animCon).trigSkill1End = true;
                 // Wait until force is applied
                 yield return new WaitUntil(() => !animCon.propGrounded);
                 // Wait while not on ground
@@ -137,6 +140,10 @@ public class InfantryContoller : ChampionClassController
             // Do melee hit after landing and remove stuneffect
             stats.DealDamage(target, skill1.damage, true);
             target.StopStunned();
+        }
+        else
+        {
+            animCon.RevertAnimation();
         }
 
         // start cooldown and let the method end

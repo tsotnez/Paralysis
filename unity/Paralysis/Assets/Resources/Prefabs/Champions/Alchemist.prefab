@@ -782,6 +782,20 @@ MonoBehaviour:
     notOnCooldown: 1
     skillDescription: "Alchemist uses his alchemy to explode and \nreconstruct himself.
       As he explodes, any enemy \nwithin the radius will receive a knockback."
+  - type: 3
+    skillName: Jump Attack
+    effect: 0
+    effectDuration: 0
+    effectValue: 0
+    damage: 10
+    staminaCost: 10
+    cooldown: 0
+    targetType: 1
+    range: 1.5
+    needsToBeGrounded: 0
+    delay: 0
+    notOnCooldown: 1
+    skillDescription: 
   RangeSkills:
   - type: 0
     skillName: Basic Attack

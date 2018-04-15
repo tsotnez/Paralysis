@@ -92,9 +92,9 @@ MonoBehaviour:
   creator: {fileID: 0}
   whatToHit:
     serializedVersion: 2
-    m_Bits: 2066432
+    m_Bits: 2068480
   explosionPrefab: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 2}
-  direction: -1
+  direction: 1
   SkillValues:
     type: 0
     skillName: 
@@ -109,6 +109,7 @@ MonoBehaviour:
     needsToBeGrounded: 0
     delay: 0
     notOnCooldown: 0
+    skillDescription: 
     onHitEffect: 0
     prefab: {fileID: 0}
     speed: {x: 0, y: 0}
@@ -150,7 +151,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1fe6fd82baac7e248bd66c83a4b0dd6a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.23529412, y: 0.24705882}
