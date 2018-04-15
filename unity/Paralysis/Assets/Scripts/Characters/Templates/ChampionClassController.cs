@@ -96,7 +96,6 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     private bool applyDashingForce = false;                     // true while force for dashing shall be applieds
     private bool m_canDoubleJump = true;                        // true if the player can double jump
     private bool m_canJump = true;                              // true when the player can start a new jump
-    private float m_jumpStartTime = 0f;                         // time of the player leaving the ground
     private float m_allowAnotherJump = 0f;                      // time to wait for allowing the player to jump
     private float m_timeInAir = 0f;
     private bool m_jumpPressed = false;

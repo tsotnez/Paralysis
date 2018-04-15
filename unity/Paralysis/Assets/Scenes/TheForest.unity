@@ -339,7 +339,7 @@ MonoBehaviour:
     InstantiatedPlayer: {fileID: 0}
     playerNumber: 1
     TeamNumber: 1
-    inputDevice: 0
+    inputDevice: 2
     trinket1: 0
     trinket2: 4
   defaultPlayer2:

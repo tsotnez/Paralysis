@@ -5,27 +5,30 @@ using UnityEngine;
 public class AIAlchemistControl : AIUserControl {
     
     private float timeSinceLastDodge = 0f;
+    private float timeSinceLastTooClose = 0f;
+
     private const float DODGE_CD = 6;
     private const float DODGE_DURATION = 1.5f;
+    private const float ENEMY_TOO_CLOSE_CD = 4f;
 
-    /*protected override float enemyTooCloseDistance()
+    protected override float enemyTooCloseDistance()
     {
-        return 1.5f;
-    }*/
+        return 1f;
+    }
 
     protected override float getCloseRangeAttackDistance()
     {
-        return 6;
+        return 6.5f;
     }
 
     protected override float getMediumDistanceAttackDistance()
     {
-        return 6f;
+        return 6.5f;
     }
 
     protected override float getLongRangeAttackDistance()
     {
-        return 6f;
+        return 6.5f;
     }
 
     protected override float getMinDistanceToNode() {
@@ -107,6 +110,8 @@ public class AIAlchemistControl : AIUserControl {
 
     public override TRIGGER_GOALS lowStaminaAttacking()
     {
+        if(targetStunned) return TRIGGER_GOALS.CONTINUE;
+
         if (currentHealth <= targetStats.CurrentHealth)
         {
             return retreatUntilStamina(50);
@@ -123,7 +128,15 @@ public class AIAlchemistControl : AIUserControl {
 
     public override TRIGGER_GOALS enemyTooCloseAttacking()
     {
-        return retreatForDuration(2);
+        if (Time.time > timeSinceLastTooClose + ENEMY_TOO_CLOSE_CD)
+        {
+            timeSinceLastTooClose = Time.time;
+            return retreatForDuration(2);
+        }
+        else
+        {
+            return TRIGGER_GOALS.CONTINUE;
+        }
     }
 
     #endregion
@@ -196,12 +209,12 @@ public class AIAlchemistControl : AIUserControl {
 
     public bool checkDodgeOrTeleport()
     {
-        if (canPerformAttack(true) && targetDistance <= 3)
+        if (canPerformAttack(true) && targetDistance <= 3 && !targetStunned)
         {
             MeleeSkill teleport = champClassCon.GetMeleeSkillByType(Skill.SkillType.Skill2);
             if (teleport.notOnCooldown && teleport.staminaCost <= charStats.CurrentStamina)
             {
-                DODGE_DIR dodge = getDodgeDirection(15);
+                DODGE_DIR dodge = getDodgeDirection();
 
                 inputSkill2 = true;
                 if (dodge.goRight)
@@ -217,7 +230,7 @@ public class AIAlchemistControl : AIUserControl {
             } 
             else if (Time.time - timeSinceLastDodge > DODGE_CD && currentStamina >= champClassCon.m_dashStaminaCost)
             {
-                DODGE_DIR dodge = getDodgeDirection(15);
+                DODGE_DIR dodge = getDodgeDirection();
                 inputDash(dodge.goRight, dodge.goRight);
                 timeSinceLastDodge = Time.time;
                 triggerWait = DODGE_DURATION;

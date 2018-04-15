@@ -57,12 +57,12 @@ public abstract class AIUserControl : MonoBehaviour {
     protected float yDiff = 0;
     protected bool isGrounded;
     protected bool facingTarget = false;
+    protected bool targetStunned = false;
 
     protected bool isRetreating = false;
 
     private float retreatWaitStamina = 50f;
     private float retreatDuration = 0f;
-    private float initialRetreatTime = 0f;
 
     protected Section mySection;
     protected Section targetSection;
@@ -164,10 +164,6 @@ public abstract class AIUserControl : MonoBehaviour {
             fallThrough();
             break;
         case AI_GOALS.STAND_BY:
-            if (isRetreating && checkStopRetreating())
-            {
-                isRetreating = false;
-            }
             setCurrentGoal();
             break;
         default:
@@ -180,12 +176,10 @@ public abstract class AIUserControl : MonoBehaviour {
         //TODO remove, this is for testing...
         if (Input.GetKey(KeyCode.L))
         {
-            retreatDuration = 9999;
-            retreatWaitStamina = 90;
-            isRetreating = true;
+            retreatUntilStamina(90);
         }
 
-        print("current goal: " + currentGoal + " retreating:" + isRetreating);
+        //print("current goal: " + currentGoal + " retreating:" + isRetreating);
     }
 
     private bool handleTriggerAndContinue(TRIGGER_GOALS triggerGoal)
@@ -196,7 +190,6 @@ public abstract class AIUserControl : MonoBehaviour {
         {
         case TRIGGER_GOALS.RETREAT:
             continueAfter = false;
-            isRetreating = true;
             break;
         case TRIGGER_GOALS.WAIT_FOR_INPUT:
             setGoalWait(triggerWait);
@@ -237,6 +230,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
             targetDirectionX = Mathf.Sign(targetPosition.x - myTransform.position.x); 
             targetDistance = distanceToTargetPlayer();
+            targetStunned = targetStats.stunned;
 
             yDiff = targetPosition.y - myTransform.position.y;
 
@@ -273,6 +267,8 @@ public abstract class AIUserControl : MonoBehaviour {
     #region SetGoals
     protected virtual void setCurrentGoal()
     {
+        checkStopRetreating();
+   
         if (targetPlayer != null)
         {
             if (!checkHealthTriggerContinue())
@@ -306,13 +302,17 @@ public abstract class AIUserControl : MonoBehaviour {
             return;
         }
 
-        if (mySection != targetSection && !mySection.nonTargetable)
+
+        if (!mySection.nonTargetable && !targetSection.nonTargetable)
         {
-            changeGoal(AI_GOALS.MOVE_THROUGH_NODES);
-        }
-        else if (mySection == targetSection && !mySection.nonTargetable)
-        {
-            changeGoal(AI_GOALS.MOVE_TO_LOCATION);
+            if (mySection != targetSection)
+            {
+                changeGoal(AI_GOALS.MOVE_THROUGH_NODES);
+            }
+            else if (mySection == targetSection)
+            {
+                changeGoal(AI_GOALS.MOVE_TO_LOCATION);
+            }
         }
         else
         {
@@ -393,7 +393,7 @@ public abstract class AIUserControl : MonoBehaviour {
         }
 
         //If we are retreating and we should stop
-        if (isRetreating && checkStopRetreating())
+        if (checkStopRetreating())
         {
             changeGoal(AI_GOALS.STAND_BY);
             return;
@@ -496,8 +496,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected virtual void moveTowardsPosition(Vector2 position)
     {
-        float xDiff = position.x - myTransform.position.x;
-        if (xDiff > .5f)
+        if (distanceToPosition(position) > getMinDistanceToNode())
         {
             inputMove = Mathf.Sign(position.x - myTransform.position.x);
         }
@@ -771,7 +770,22 @@ public abstract class AIUserControl : MonoBehaviour {
 
     private bool checkStopRetreating()
     {
-        return currentStamina >= retreatWaitStamina || Time.time > initialRetreatTime + retreatDuration;
+        if (isRetreating)
+        {
+            if (currentStamina >= retreatWaitStamina || Time.time > retreatDuration)
+            {
+                isRetreating = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
 
     protected bool canPerformAttack(bool grounded)
@@ -824,6 +838,11 @@ public abstract class AIUserControl : MonoBehaviour {
         return Mathf.Abs(node.transform.position.x - myTransform.position.x);
     }
 
+    private float distanceToPosition(Vector2 position)
+    {
+        return Mathf.Abs(Vector2.Distance(position, myTransform.position));
+    }
+
     private float distanceToTargetPlayer()
     {
         return Mathf.Abs(Vector2.Distance(targetPosition, myTransform.position));
@@ -861,18 +880,18 @@ public abstract class AIUserControl : MonoBehaviour {
     public TRIGGER_GOALS retreatForDuration(float duration)
     {
         if (isRetreating) return TRIGGER_GOALS.CONTINUE;
-        retreatWaitStamina = 90;
-        retreatDuration = 9000;
-        initialRetreatTime = Time.time;
+        isRetreating = true;
+        retreatWaitStamina = 999999;
+        retreatDuration = Time.time + duration;
         return TRIGGER_GOALS.RETREAT;
     }
 
     public TRIGGER_GOALS retreatUntilStamina(int stamina)
     {
         if (isRetreating) return TRIGGER_GOALS.CONTINUE;
+        isRetreating = true;
         retreatWaitStamina = stamina;
         retreatDuration = 999999;
-        initialRetreatTime = Time.time;
         return TRIGGER_GOALS.RETREAT;
     }
 
@@ -892,15 +911,17 @@ public abstract class AIUserControl : MonoBehaviour {
         return rayCasts;
     }
 
-    public DODGE_DIR getDodgeDirection(float maxWallDistance)
+    public DODGE_DIR getDodgeDirection(float maxWallDistance = 15)
     {
         RaycastHit2D[] rayCasts = getRightLeftWallRays();
 
         float rightWall = rayCasts [0].distance;
         float leftWall = rayCasts[1].distance;
+        float absWallDiff = Mathf.Abs(rightWall - leftWall);
 
         if (rightWall > maxWallDistance) rightWall = maxWallDistance;
         if (leftWall > maxWallDistance) leftWall = maxWallDistance;
+
 
         bool targetOnRight = false;
         bool goLeft = false;
@@ -912,14 +933,19 @@ public abstract class AIUserControl : MonoBehaviour {
             targetOnRight = true;
         }
 
-        if (leftWall > rightWall && targetOnRight)
+        //go left since we have more space, targets too close
+        if (absWallDiff > 3 && leftWall > rightWall && targetDistance <= 2)
             goLeft = true;
+        //go right since we have more space there, targets too close
+        else if (absWallDiff > 3 && rightWall > leftWall && targetDistance <= 2)
+            goRight = true;
+        //go left we have more space and target is to our right
+        else if (leftWall > rightWall && targetOnRight)
+            goLeft = true;
+        //go right we have more space and target is to our left
         else if (rightWall > leftWall && !targetOnRight)
             goRight = true;
-        else if (leftWall > rightWall && targetDistance <= 2)
-            goLeft = true;
-        else if (rightWall > leftWall && targetDistance <= 2)
-            goRight = true;
+        //If we have equal amount of space go whichever way the target isnt
         else if (rightWall == leftWall)
         {
             if (targetOnRight)
@@ -933,6 +959,7 @@ public abstract class AIUserControl : MonoBehaviour {
         }
         else
         {
+            //otherwise just go the opposite dir of target
             goRight = !targetOnRight;
             goLeft = targetOnRight;
         }
