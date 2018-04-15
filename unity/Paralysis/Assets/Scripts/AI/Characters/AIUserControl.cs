@@ -42,17 +42,27 @@ public abstract class AIUserControl : MonoBehaviour {
     protected int currentStamina;
     protected int previousStamina;
 
+    /// <summary>
+    /// The targets direction relative to you, -1 left 1 right
+    /// </summary>
     protected float targetDirectionX = 0;
+    /// <summary>
+    /// Never negative
+    /// </summary>
     protected float targetDistance = 0f;
     protected float facingDirection = 1;
+    /// <summary>
+    /// The difference in y between the target and you
+    /// </summary>
     protected float yDiff = 0;
     protected bool isGrounded;
     protected bool facingTarget = false;
 
     protected bool isRetreating = false;
-    protected float retreatUntilStamina = 50f;
-    protected float retreatDuration = 0f;
-    protected float initialRetreatTime = 0f;
+
+    private float retreatWaitStamina = 50f;
+    private float retreatDuration = 0f;
+    private float initialRetreatTime = 0f;
 
     protected Section mySection;
     protected Section targetSection;
@@ -67,7 +77,8 @@ public abstract class AIUserControl : MonoBehaviour {
     public enum TRIGGER_GOALS { MOVE_CLOSER, WAIT_FOR_INPUT, RETREAT, CONTINUE }
 
     protected AI_GOALS distRetNewGoal;
-    protected float triggerWait = 0f;
+
+    protected float triggerWait { get; set; }
 
     protected AI_GOALS currentGoal = AI_GOALS.STAND_BY;
     protected AI_GOALS previousGoal = AI_GOALS.STAND_BY;
@@ -82,8 +93,11 @@ public abstract class AIUserControl : MonoBehaviour {
     private float jumpDuration = 0f;
     private float initialJumpTime = 0f;
 
+    //Overrides
+    protected virtual float enemyTooCloseDistance(){return float.MinValue;}
     protected virtual float getMinDistanceToNode() {return .115f;}
-    protected virtual int getLowStamiaTrigger(){return 10;}
+    protected virtual int getLowStamiaTrigger(){return champClassCon.stamina_Jump + 5;}
+    protected virtual int getMediumStamiaTrigger(){return 50;}
     protected virtual float getLongRangeAttackDistance(){return 1.5f;}
     protected virtual float getMediumDistanceAttackDistance(){return 5f;}
     protected virtual float getCloseRangeAttackDistance(){return 7f;}
@@ -167,11 +181,11 @@ public abstract class AIUserControl : MonoBehaviour {
         if (Input.GetKey(KeyCode.L))
         {
             retreatDuration = 9999;
-            retreatUntilStamina = 90;
+            retreatWaitStamina = 90;
             isRetreating = true;
         }
 
-        //print("current goal: " + currentGoal);
+        print("current goal: " + currentGoal + " retreating:" + isRetreating);
     }
 
     private bool handleTriggerAndContinue(TRIGGER_GOALS triggerGoal)
@@ -236,7 +250,8 @@ public abstract class AIUserControl : MonoBehaviour {
             }
 
             facingTarget = false;
-            if ((facingDirection == 1 && targetPosition.x > myTransform.position.x) || (facingDirection == -1 && targetPosition.x < myTransform.position.x))
+            if ((facingDirection == 1 && targetPosition.x > myTransform.position.x) ||
+                (facingDirection == -1 && targetPosition.x < myTransform.position.x))
             {
                 facingTarget = true;
             }
@@ -307,14 +322,9 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected virtual void setAttackingGoals()
     {
-        //Look to see if we have low stamina
-        if (/*currentStamina < previousStamina &&*/ currentStamina < getLowStamiaTrigger())
+        if (handleAttackingTriggers())
         {
-            TRIGGER_GOALS triggerGoal = lowStamina(currentStamina);
-            if(!handleTriggerAndContinue(triggerGoal))
-            {
-                return;
-            }
+            return;
         }
 
         if (mySection == null || targetSection == null)
@@ -336,6 +346,38 @@ public abstract class AIUserControl : MonoBehaviour {
         {
             changeGoal(AI_GOALS.STAND_BY);
         }
+    }
+
+    public bool handleAttackingTriggers()
+    {
+        //Look to see if we have low stamina
+        if (currentStamina < getLowStamiaTrigger())
+        {
+            TRIGGER_GOALS triggerGoal = lowStaminaAttacking();
+            if (!handleTriggerAndContinue(triggerGoal))
+            {
+                return true;
+            }
+        }
+        else if (currentStamina < getMediumStamiaTrigger())
+        {
+            TRIGGER_GOALS triggerGoal = mediumStaminaAttacking();
+            if (!handleTriggerAndContinue(triggerGoal))
+            {
+                return true;
+            }
+        }
+
+        if (targetDistance <= enemyTooCloseDistance())
+        {
+            TRIGGER_GOALS triggerGoal = enemyTooCloseAttacking();
+            if (!handleTriggerAndContinue(triggerGoal))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     #endregion
@@ -382,10 +424,6 @@ public abstract class AIUserControl : MonoBehaviour {
                 {
                     return;
                 }
-            }
-            else
-            {
-                initialRetreatTime = Time.time;
             }
         }
 
@@ -468,7 +506,7 @@ public abstract class AIUserControl : MonoBehaviour {
     protected virtual void moveTowardsTargetPlayer()
     {
         //Move closert to the target, or if we are close enough but not facing the target...
-        if (targetDistance >= getCloseRangeAttackDistance() || ( !facingTarget && Mathf.Abs(yDiff) < 1f) )
+        if (targetDistance >= getCloseRangeAttackDistance() || ( !facingTarget && Mathf.Abs(yDiff) < 1f ) )
         {
             inputMove = Mathf.Sign(targetDirectionX);
         }
@@ -531,7 +569,15 @@ public abstract class AIUserControl : MonoBehaviour {
         return TRIGGER_GOALS.CONTINUE;
     }
 
-    public virtual TRIGGER_GOALS lowStamina(int currentStamina){
+    public virtual TRIGGER_GOALS enemyTooCloseAttacking(){
+        return TRIGGER_GOALS.CONTINUE;
+    }
+
+    public virtual TRIGGER_GOALS lowStaminaAttacking(){
+        return TRIGGER_GOALS.CONTINUE;
+    }
+
+    public virtual TRIGGER_GOALS mediumStaminaAttacking(){
         return TRIGGER_GOALS.CONTINUE;
     }
 
@@ -725,7 +771,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
     private bool checkStopRetreating()
     {
-        return currentStamina >= retreatUntilStamina || Time.time > initialRetreatTime + retreatDuration;
+        return currentStamina >= retreatWaitStamina || Time.time > initialRetreatTime + retreatDuration;
     }
 
     protected bool canPerformAttack(bool grounded)
@@ -810,6 +856,24 @@ public abstract class AIUserControl : MonoBehaviour {
         inputSkill4 = false;
         inputTrinket1 = false;
         inputTrinket2 = false;
+    }
+
+    public TRIGGER_GOALS retreatForDuration(float duration)
+    {
+        if (isRetreating) return TRIGGER_GOALS.CONTINUE;
+        retreatWaitStamina = 90;
+        retreatDuration = 9000;
+        initialRetreatTime = Time.time;
+        return TRIGGER_GOALS.RETREAT;
+    }
+
+    public TRIGGER_GOALS retreatUntilStamina(int stamina)
+    {
+        if (isRetreating) return TRIGGER_GOALS.CONTINUE;
+        retreatWaitStamina = stamina;
+        retreatDuration = 999999;
+        initialRetreatTime = Time.time;
+        return TRIGGER_GOALS.RETREAT;
     }
 
     public RaycastHit2D[] getRightLeftWallRays()

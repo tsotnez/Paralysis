@@ -8,11 +8,10 @@ public class AIAlchemistControl : AIUserControl {
     private const float DODGE_CD = 6;
     private const float DODGE_DURATION = 1.5f;
 
-    protected override int getLowStamiaTrigger()
+    /*protected override float enemyTooCloseDistance()
     {
-        //Just enough stamina to do a jump
-        return champClassCon.stamina_Jump + 5;
-    }
+        return 1.5f;
+    }*/
 
     protected override float getCloseRangeAttackDistance()
     {
@@ -93,14 +92,12 @@ public class AIAlchemistControl : AIUserControl {
             if (targetDistance < 3 && checkDodgeOrTeleport())
             {
                 return TRIGGER_GOALS.WAIT_FOR_INPUT;
-            } else
+            } 
+            else
             {
-                retreatDuration = 5;
-                retreatUntilStamina = 99999;
-                return TRIGGER_GOALS.RETREAT;
+                return retreatForDuration(5);
             }
         }
-        //return TRIGGER_GOALS.CONTINUE;
     }
 
     protected override TRIGGER_GOALS lockedOnToTarget()
@@ -108,18 +105,25 @@ public class AIAlchemistControl : AIUserControl {
         return TRIGGER_GOALS.CONTINUE;
     }
 
-    public override TRIGGER_GOALS lowStamina(int currentStamina)
+    public override TRIGGER_GOALS lowStaminaAttacking()
     {
-        if (charStats.CurrentHealth < targetStats.CurrentHealth)
+        if (currentHealth <= targetStats.CurrentHealth)
         {
-            retreatDuration = 9999;
-            retreatUntilStamina = 50;
-            return TRIGGER_GOALS.RETREAT;
+            return retreatUntilStamina(50);
+        }
+        else if (currentStamina < targetStats.CurrentStamina)
+        {
+            return retreatUntilStamina(50);
         }
         else
         {
             return TRIGGER_GOALS.CONTINUE;
         }
+    }
+
+    public override TRIGGER_GOALS enemyTooCloseAttacking()
+    {
+        return retreatForDuration(2);
     }
 
     #endregion

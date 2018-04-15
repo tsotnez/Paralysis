@@ -6,12 +6,6 @@ public class AIAssassinControl : AIUserControl {
 
     private bool canShadowStep = true;
 
-    protected override int getLowStamiaTrigger()
-    {
-        //Just enough stamina to do a jump
-        return champClassCon.stamina_Jump + 5;
-    }
-
     protected override float getCloseRangeAttackDistance()
     {
         return 1.5f;
@@ -94,13 +88,11 @@ public class AIAssassinControl : AIUserControl {
         return TRIGGER_GOALS.CONTINUE;
     }
 
-    public override TRIGGER_GOALS lowStamina(int currentStamina){
-
+    public override TRIGGER_GOALS lowStaminaAttacking()
+    {
         if (charStats.CurrentHealth < targetStats.CurrentHealth)
         {
-            retreatDuration = 9999;
-            retreatUntilStamina = 50;
-            return TRIGGER_GOALS.RETREAT;
+            return retreatUntilStamina(50);
         }
         else
         {

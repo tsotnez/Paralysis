@@ -41,7 +41,7 @@ public abstract class ChampionSelectionManager : UIManager
         Destroy(newPreview.transform.Find("Canvas").gameObject);
         Destroy(newPreview.transform.Find("stunnedSymbol").gameObject);
         Destroy(graphics.GetComponent<GraphicsNetwork>());
-        Destroy(newPreview.GetComponent<NetworkCharacter>());
+        Destroy(newPreview.GetComponent<CharacterNetwork>());
 
 
         //flip sprite if necessary
