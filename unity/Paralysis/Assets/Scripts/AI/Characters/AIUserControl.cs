@@ -119,7 +119,7 @@ public abstract class AIUserControl : MonoBehaviour {
         }
     }
 
-    protected void LateUpdate()
+    protected void FixedUpdate()
     {
         AI_GOALS goalBefore = currentGoal;
         previousHealth = currentHealth;
@@ -133,7 +133,6 @@ public abstract class AIUserControl : MonoBehaviour {
         }
 
         resetInputs();
-        setCurrentState();
 
         switch (currentGoal)
         {
@@ -178,8 +177,11 @@ public abstract class AIUserControl : MonoBehaviour {
         {
             retreatUntilStamina(90);
         }
+    }
 
-        //print("current goal: " + currentGoal + " retreating:" + isRetreating);
+    protected void Update()
+    {
+        setCurrentState();
     }
 
     private bool handleTriggerAndContinue(TRIGGER_GOALS triggerGoal)
@@ -830,7 +832,14 @@ public abstract class AIUserControl : MonoBehaviour {
 
     private float distanceFromNode(SectionPathNode node)
     {
-        return Mathf.Abs(Vector2.Distance(node.transform.position, myTransform.position));
+        if (isGrounded)
+        {
+            return distanceXFromNode(node);
+        }
+        else
+        {
+            return Mathf.Abs(Vector2.Distance(node.transform.position, myTransform.position));
+        }
     }
 
     private float distanceXFromNode(SectionPathNode node)

@@ -59,7 +59,11 @@ public class Section : MonoBehaviour {
         List<SectionPath> paths = new List<SectionPath>();
         foreach(SectionPath sectionP in sectionPaths)
         {
-            if(sectionP.TargetSection == targetSection)
+            if (sectionP.TargetSection == null)
+            {
+                Debug.LogError("Section path target section was null:" + sectionP.name);
+            }
+            else if(sectionP.TargetSection == targetSection)
             {
                 paths.Add(sectionP);
             }
