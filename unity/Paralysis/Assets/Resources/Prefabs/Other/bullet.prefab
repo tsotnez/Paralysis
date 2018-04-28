@@ -92,7 +92,7 @@ MonoBehaviour:
   creator: {fileID: 0}
   whatToHit:
     serializedVersion: 2
-    m_Bits: 2068480
+    m_Bits: 2066432
   explosionPrefab: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 2}
   direction: 1
   SkillValues:
@@ -109,6 +109,7 @@ MonoBehaviour:
     needsToBeGrounded: 0
     delay: 0
     notOnCooldown: 0
+    lastTimeUsed: 0
     skillDescription: 
     onHitEffect: 0
     prefab: {fileID: 0}

@@ -36,6 +36,7 @@ public class Skill
     public bool needsToBeGrounded = true;
     public float delay = 0;
     public bool notOnCooldown = true;
+    public float lastTimeUsed = 0f;
     [UnityEngine.Multiline(4)]
     public string skillDescription = "";
 

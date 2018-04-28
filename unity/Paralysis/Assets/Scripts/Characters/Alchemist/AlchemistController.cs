@@ -22,8 +22,8 @@ public class AlchemistController : ChampionClassController
     /// </summary>
     public override void BasicAttack()
     {
-        if (animCon.propGrounded) // Basic Attack
-            DoRangeSkill(ref animCon.trigBasicAttack1, Skill.SkillType.BasicAttack1);
+        //if (animCon.propGrounded) // Basic Attack
+         DoRangeSkill(ref animCon.trigBasicAttack1, Skill.SkillType.BasicAttack1);
     }
 
     /// <summary>
