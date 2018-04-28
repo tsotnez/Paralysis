@@ -799,16 +799,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             hotbar.setOnCooldown(skillToPerform.type, skillToPerform.cooldown);
 
             skillToPerform.notOnCooldown = false;
-            skillToPerform.lastTimeUsed = Time.time;
             yield return new WaitForSeconds(skillToPerform.cooldown);
-
-            // Sometimes coroutines can get out of sync if you get stunned while casting etc..
-            // make sure the last time we used the skill is greater than or equal to the CD
-            // to set it not on CD
-            if (Time.time + skillToPerform.lastTimeUsed >= skillToPerform.cooldown - .01f)
-            {
-                skillToPerform.notOnCooldown = true;
-            }
+            skillToPerform.notOnCooldown = true;
         }
     }
 
@@ -901,6 +893,8 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
             case AnimationController.AnimationTypes.Skill2:
             case AnimationController.AnimationTypes.Skill3:
             case AnimationController.AnimationTypes.Skill4:
+            case AnimationController.AnimationTypes.KnockedBack:
+            case AnimationController.AnimationTypes.Stunned:
                 return false;
         }
         if (casting)

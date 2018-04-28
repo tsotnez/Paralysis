@@ -98,7 +98,7 @@ public class AIAlchemistControl : AIUserControl {
             } 
             else
             {
-                return retreatForDuration(5);
+                return retreatForDuration(5, true);
             }
         }
     }
@@ -131,7 +131,7 @@ public class AIAlchemistControl : AIUserControl {
         if (Time.time > timeSinceLastTooClose + ENEMY_TOO_CLOSE_CD)
         {
             timeSinceLastTooClose = Time.time;
-            return retreatForDuration(2);
+            return retreatForDuration(2, false);
         }
         else
         {

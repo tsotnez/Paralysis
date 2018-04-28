@@ -16,11 +16,7 @@ public class AIGetClosetEnemy : MonoBehaviour {
 
     private void Start()
     {
-        if(GetComponent<UserControl>().inputDevice != UserControl.InputDevice.AI)
-        {
-            enabled = false;
-        }
-        else 
+        if(GetComponent<UserControl>().inputDevice == UserControl.InputDevice.AI)
         {
             enemyPlayers = new List<CharacterStats>();
             InvokeRepeating("UpdateInfo", 0, updateRate);
@@ -55,7 +51,10 @@ public class AIGetClosetEnemy : MonoBehaviour {
 
         if (enemyPlayers.Count == 1) 
         {
-            targetPlayer = enemyPlayers [0];
+            if (!enemyPlayers [0].invisible)
+            {
+                targetPlayer = enemyPlayers[0];
+            }
             return; 
         }
 
@@ -63,6 +62,11 @@ public class AIGetClosetEnemy : MonoBehaviour {
         targetPlayer = null;
         foreach (CharacterStats enemyPlayer in enemyPlayers)
         {
+            if (enemyPlayer.invisible)
+            {
+                continue;
+            }
+
             float distance = Mathf.Abs(Vector2.Distance(enemyPlayer.transform.position, transform.position));
             if (distance < actDistance && !enemyPlayer.CharacterDied)
             {

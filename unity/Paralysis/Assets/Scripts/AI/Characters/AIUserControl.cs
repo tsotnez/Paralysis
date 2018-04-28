@@ -60,19 +60,18 @@ public abstract class AIUserControl : MonoBehaviour {
     protected bool targetStunned = false;
 
     protected bool isRetreating = false;
-
+    private bool retreatIgnoreJumpC = false;
     private float retreatWaitStamina = 50f;
     private float retreatDuration = 0f;
 
-    protected Section mySection;
-    protected Section targetSection;
-
-    protected SectionPathNode[] currentNodes;
-    protected SectionPathNode currentNode;
-    protected int currentNodeIndex = 0;
+    private Section mySection;
+    private Section targetSection;
+    private SectionPathNode[] currentNodes;
+    private SectionPathNode currentNode;
+    private int currentNodeIndex = 0;
 
     public enum AI_GOALS { MOVE_TO_LOCATION, MOVE_THROUGH_NODES, JUMP1, JUMP2, FALL_THROUGH, STAND_BY, WAIT };
-    protected float waitTime;
+    private float waitTime;
 
     public enum TRIGGER_GOALS { MOVE_CLOSER, WAIT_FOR_INPUT, RETREAT, CONTINUE }
 
@@ -242,7 +241,7 @@ public abstract class AIUserControl : MonoBehaviour {
             }
             else
             {
-                targetSection = AISectionManager.Instance.getRetreatSection(myTransform.position, targetPosition);
+                targetSection = AISectionManager.Instance.getRetreatSection(myTransform.position, targetPosition, retreatIgnoreJumpC);
             }
 
             facingTarget = false;
@@ -802,7 +801,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
     private bool inSameSectionAsTargetSection()
     {
-        return targetPlayer != null && mySection == targetSection && !mySection.nonTargetable;
+        return !isRetreating && targetPlayer != null && mySection == targetSection && !mySection.nonTargetable;
     }
 
     private void changeGoal(AI_GOALS newGoal)
@@ -886,21 +885,23 @@ public abstract class AIUserControl : MonoBehaviour {
         inputTrinket2 = false;
     }
 
-    public TRIGGER_GOALS retreatForDuration(float duration)
+    public TRIGGER_GOALS retreatForDuration(float duration, bool ignoreJumpCost = false)
     {
         if (isRetreating) return TRIGGER_GOALS.CONTINUE;
         isRetreating = true;
         retreatWaitStamina = 999999;
         retreatDuration = Time.time + duration;
+        retreatIgnoreJumpC = ignoreJumpCost;
         return TRIGGER_GOALS.RETREAT;
     }
 
-    public TRIGGER_GOALS retreatUntilStamina(int stamina)
+    public TRIGGER_GOALS retreatUntilStamina(int stamina, bool ignoreJumpCost = false)
     {
         if (isRetreating) return TRIGGER_GOALS.CONTINUE;
         isRetreating = true;
         retreatWaitStamina = stamina;
         retreatDuration = 999999;
+        retreatIgnoreJumpC = ignoreJumpCost;
         return TRIGGER_GOALS.RETREAT;
     }
 
