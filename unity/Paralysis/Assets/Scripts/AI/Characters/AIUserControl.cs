@@ -89,8 +89,8 @@ public abstract class AIUserControl : MonoBehaviour {
     // Projectile stuff
     private float timeLastRaycastProjectile = 0f;
     private float raycastProjectileRange = 7;
-    private int horizontalRayCountProjectile = 3;
-    private float horizontalRaySpacingProjectile = 0f;
+    private int verticalRayCountProjectile = 6;
+    private float verticalRaySpacingProjectile = 0f;
     private float hitBoxY = 0f;
 
     //Overrides
@@ -101,7 +101,7 @@ public abstract class AIUserControl : MonoBehaviour {
     protected virtual float getLongRangeAttackDistance(){return 1.5f;}
     protected virtual float getMediumDistanceAttackDistance(){return 5f;}
     protected virtual float getCloseRangeAttackDistance(){return 7f;}
-    protected virtual float getRaycastProjectileRate(){return 1;}
+    protected virtual float getRaycastProjectileRate(){return .5f;}
 
     protected void Start()
     {
@@ -118,9 +118,9 @@ public abstract class AIUserControl : MonoBehaviour {
             myTransform = transform.Find(GameConstants.EFFECT_OVERLAY).transform;
 
             //Get the hitbox y of the player
-            hitBoxY = (GetComponent<BoxCollider2D>().size.y + GetComponent<CircleCollider2D>().radius * 2) / 1.5f;
-            horizontalRayCountProjectile = Mathf.Clamp(horizontalRayCountProjectile, 2, int.MaxValue);
-            horizontalRaySpacingProjectile = hitBoxY / (horizontalRayCountProjectile - 1);
+            hitBoxY = (GetComponent<BoxCollider2D>().size.y + GetComponent<CircleCollider2D>().radius * 2);
+            verticalRayCountProjectile = Mathf.Clamp(verticalRayCountProjectile, 2, int.MaxValue);
+            verticalRaySpacingProjectile = raycastProjectileRange / (verticalRayCountProjectile - 1);
         }
     }
 
@@ -358,12 +358,13 @@ public abstract class AIUserControl : MonoBehaviour {
     public bool handleAttackingTriggers()
     {
         //Check to see if a projectile is comming at us
-        if (timeLastRaycastProjectile + getRaycastProjectileRate() < Time.time)
+        //expensive opperation, don't do it a lot
+        if (isGrounded && timeLastRaycastProjectile + getRaycastProjectileRate() < Time.time)
         {
             timeLastRaycastProjectile = Time.time;
             float distanceR = checkRaycastProjectile(1, raycastProjectileRange);
             float distanceL = checkRaycastProjectile(-1, raycastProjectileRange);
-            if (distanceR != 0 || distanceL != 0)
+            if (distanceR != float.MaxValue || distanceL != float.MaxValue)
             {
                 TRIGGER_GOALS triggerGoal = IncommingProjectile(distanceR, distanceL);
                 if (!handleTriggerAndContinue(triggerGoal))
@@ -783,14 +784,17 @@ public abstract class AIUserControl : MonoBehaviour {
         RaycastHit2D hit;
         Vector2 offset;
         float minDistance = float.MaxValue;
-        float startOffset = -(hitBoxY / 2);
+        float startYOffset = hitBoxY / 1.75f;
 
-        for (int i = 0; i < horizontalRayCountProjectile; i++)
+        // Cast rays down out in front of us or behind us to find any projectiles that might
+        // hit us
+        for (int i = 1; i < verticalRayCountProjectile + 1; i++)
         {
             Vector2 rayOrigin = myTransform.position;
-            rayOrigin.y += startOffset;
-            rayOrigin += Vector2.up * (horizontalRaySpacingProjectile * i);
-            hit = Physics2D.Raycast(rayOrigin, transform.right * direction, raycastRange, GameConstants.PROJECTILE_LAYER);
+            rayOrigin.y += startYOffset;
+            rayOrigin += Vector2.right * direction * (verticalRaySpacingProjectile * i);
+            hit = Physics2D.Raycast(rayOrigin, transform.up * -1, hitBoxY, 1 << GameConstants.PROJECTILE_LAYER);
+            //Debug.DrawRay(rayOrigin, transform.up * -1 * hitBoxY, Color.red);
 
             if (hit)
             {
@@ -798,22 +802,32 @@ public abstract class AIUserControl : MonoBehaviour {
                 //It can hit my layer...
                 if (pBehaviour.whatToHit == (pBehaviour.whatToHit | (1 << gameObject.layer)))
                 {
-                    float distance = 0;
-                    distance = Mathf.Abs(hit.distance);
-                    if (distance < minDistance)
+                    float velocityX = pBehaviour.GetComponent<Rigidbody2D>().velocity.x;
+                    float dirOfProjectile = Mathf.Sign(velocityX);
+                    // If projectile is going right and its to our left or its going left and its to our right
+                    // it could hit us
+                    if (velocityX != 0 && 
+                        (dirOfProjectile == 1 && hit.collider.transform.position.x < myTransform.position.x
+                        || dirOfProjectile == -1 && hit.collider.transform.position.x > myTransform.position.x)
+                    )
                     {
-                        minDistance = distance;
+                        float distance = 0;
+                        distance = Mathf.Abs(Vector2.Distance(hit.collider.transform.position, myTransform.position));
+                        if (distance < minDistance)
+                        {
+                            minDistance = distance;
+                        }
                     }
                 }
             }
         }
 
-        if (minDistance == float.MaxValue) return 0;
-        else return minDistance;
+        return minDistance;
     }
 
     // Do something if a projectile is comming at you
-    public virtual TRIGGER_GOALS IncommingProjectile(float distanceR, float distLeft){
+    // If distance is 0 then there is nothing there
+    public virtual TRIGGER_GOALS IncommingProjectile(float distRight, float distLeft){
         return TRIGGER_GOALS.CONTINUE;
     }
 
@@ -979,16 +993,16 @@ public abstract class AIUserControl : MonoBehaviour {
     public RaycastHit2D[] getRightLeftWallRays()
     {
         RaycastHit2D[] rayCasts = new RaycastHit2D[2];
-        rayCasts[0] = Physics2D.Raycast(myTransform.position, transform.right, 999f, GameConstants.WALL_LAYER);
-        rayCasts[1] = Physics2D.Raycast(myTransform.position, transform.right * -1, 999f, GameConstants.WALL_LAYER);
+        rayCasts[0] = Physics2D.Raycast(myTransform.position, transform.right, 999f, 1 << GameConstants.WALL_LAYER);
+        rayCasts[1] = Physics2D.Raycast(myTransform.position, transform.right * -1, 999f, 1 << GameConstants.WALL_LAYER);
         return rayCasts;
     }
 
     public RaycastHit2D[] getTopBottomWallRays()
     {
         RaycastHit2D[] rayCasts = new RaycastHit2D[2];
-        rayCasts[0] = Physics2D.Raycast(myTransform.position, transform.up, 999f, GameConstants.WALL_LAYER);
-        rayCasts[1] = Physics2D.Raycast(myTransform.position, transform.up * -1, 999f, GameConstants.WALL_LAYER);
+        rayCasts[0] = Physics2D.Raycast(myTransform.position, transform.up, 999f, 1 << GameConstants.WALL_LAYER);
+        rayCasts[1] = Physics2D.Raycast(myTransform.position, transform.up * -1, 999f, 1 << GameConstants.WALL_LAYER);
         return rayCasts;
     }
 
@@ -998,6 +1012,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
         float rightWall = rayCasts [0].distance;
         float leftWall = rayCasts[1].distance;
+        print(rightWall + ":" + leftWall);
         float absWallDiff = Mathf.Abs(rightWall - leftWall);
 
         if (rightWall > maxWallDistance) rightWall = maxWallDistance;
