@@ -14,6 +14,7 @@ public static class GameConstants
     // Layers
     public static int[] TEAMLAYERS = { 11, 12, 15, 16, 17, 18, 19, 20 };
     public static int WALL_LAYER = 10;
+    public static int PROJECTILE_LAYER = 13;
 
     // Scenes
     public static string MAIN_MENU_SCENE = "MainMenu";
@@ -26,6 +27,7 @@ public static class GameConstants
     // Tags
     public static string MAIN_PLAYER_TAG = "MainPlayer";
     public static string SPAWN_POINT_TAG = "SpawnPoint";
+    public static string CAST_BAR_TAG = "CastBar";
 
 
     // Controller

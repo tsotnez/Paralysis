@@ -71,18 +71,12 @@ public abstract class AIUserControl : MonoBehaviour {
     private int currentNodeIndex = 0;
 
     public enum AI_GOALS { MOVE_TO_LOCATION, MOVE_THROUGH_NODES, JUMP1, JUMP2, FALL_THROUGH, STAND_BY, WAIT };
-    private float waitTime;
-
+    private float waitTimeGoal;
     public enum TRIGGER_GOALS { MOVE_CLOSER, WAIT_FOR_INPUT, RETREAT, CONTINUE }
-
-    protected AI_GOALS distRetNewGoal;
-
     protected float triggerWait { get; set; }
 
     protected AI_GOALS currentGoal = AI_GOALS.STAND_BY;
     protected AI_GOALS previousGoal = AI_GOALS.STAND_BY;
-    protected AI_GOALS newTriggerGoal = AI_GOALS.STAND_BY;
-
     private AI_GOALS stuckGoal = AI_GOALS.STAND_BY;
 
     private float timeToUnstuck;
@@ -92,6 +86,13 @@ public abstract class AIUserControl : MonoBehaviour {
     private float jumpDuration = 0f;
     private float initialJumpTime = 0f;
 
+    // Projectile stuff
+    private float timeLastRaycastProjectile = 0f;
+    private float raycastProjectileRange = 7;
+    private int horizontalRayCountProjectile = 3;
+    private float horizontalRaySpacingProjectile = 0f;
+    private float hitBoxY = 0f;
+
     //Overrides
     protected virtual float enemyTooCloseDistance(){return float.MinValue;}
     protected virtual float getMinDistanceToNode() {return .115f;}
@@ -100,6 +101,7 @@ public abstract class AIUserControl : MonoBehaviour {
     protected virtual float getLongRangeAttackDistance(){return 1.5f;}
     protected virtual float getMediumDistanceAttackDistance(){return 5f;}
     protected virtual float getCloseRangeAttackDistance(){return 7f;}
+    protected virtual float getRaycastProjectileRate(){return 1;}
 
     protected void Start()
     {
@@ -113,8 +115,12 @@ public abstract class AIUserControl : MonoBehaviour {
             animCon = GetComponentInChildren<ChampionAnimationController>();
             charStats = GetComponentInChildren<CharacterStats>();
             champClassCon = GetComponent<ChampionClassController>();
-
             myTransform = transform.Find(GameConstants.EFFECT_OVERLAY).transform;
+
+            //Get the hitbox y of the player
+            hitBoxY = (GetComponent<BoxCollider2D>().size.y + GetComponent<CircleCollider2D>().radius * 2) / 1.5f;
+            horizontalRayCountProjectile = Mathf.Clamp(horizontalRayCountProjectile, 2, int.MaxValue);
+            horizontalRaySpacingProjectile = hitBoxY / (horizontalRayCountProjectile - 1);
         }
     }
 
@@ -136,7 +142,7 @@ public abstract class AIUserControl : MonoBehaviour {
         switch (currentGoal)
         {
         case AI_GOALS.WAIT:
-            if (Time.time > waitTime)setCurrentGoal();
+            if (Time.time > waitTimeGoal)setCurrentGoal();
             break;
         case AI_GOALS.MOVE_TO_LOCATION:
             setCurrentGoal();
@@ -351,6 +357,22 @@ public abstract class AIUserControl : MonoBehaviour {
 
     public bool handleAttackingTriggers()
     {
+        //Check to see if a projectile is comming at us
+        if (timeLastRaycastProjectile + getRaycastProjectileRate() < Time.time)
+        {
+            timeLastRaycastProjectile = Time.time;
+            float distanceR = checkRaycastProjectile(1, raycastProjectileRange);
+            float distanceL = checkRaycastProjectile(-1, raycastProjectileRange);
+            if (distanceR != 0 || distanceL != 0)
+            {
+                TRIGGER_GOALS triggerGoal = IncommingProjectile(distanceR, distanceL);
+                if (!handleTriggerAndContinue(triggerGoal))
+                {
+                    return true;
+                }
+            }
+        }
+
         //Look to see if we have low stamina
         if (currentStamina < getLowStamiaTrigger())
         {
@@ -377,6 +399,8 @@ public abstract class AIUserControl : MonoBehaviour {
                 return true;
             }
         }
+
+
 
         return false;
     }
@@ -748,6 +772,53 @@ public abstract class AIUserControl : MonoBehaviour {
 
     #endregion
 
+    #region IncomminProjectiles
+
+    /// <summary>
+    /// Checks for a projectile comming from a direction, return 0 if it doesn't
+    /// see anything
+    /// </summary>
+    private float checkRaycastProjectile(int direction, float raycastRange)
+    {
+        RaycastHit2D hit;
+        Vector2 offset;
+        float minDistance = float.MaxValue;
+        float startOffset = -(hitBoxY / 2);
+
+        for (int i = 0; i < horizontalRayCountProjectile; i++)
+        {
+            Vector2 rayOrigin = myTransform.position;
+            rayOrigin.y += startOffset;
+            rayOrigin += Vector2.up * (horizontalRaySpacingProjectile * i);
+            hit = Physics2D.Raycast(rayOrigin, transform.right * direction, raycastRange, GameConstants.PROJECTILE_LAYER);
+
+            if (hit)
+            {
+                ProjectileBehaviour pBehaviour = hit.collider.GetComponent<ProjectileBehaviour>();
+                //It can hit my layer...
+                if (pBehaviour.whatToHit == (pBehaviour.whatToHit | (1 << gameObject.layer)))
+                {
+                    float distance = 0;
+                    distance = Mathf.Abs(hit.distance);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                    }
+                }
+            }
+        }
+
+        if (minDistance == float.MaxValue) return 0;
+        else return minDistance;
+    }
+
+    // Do something if a projectile is comming at you
+    public virtual TRIGGER_GOALS IncommingProjectile(float distanceR, float distLeft){
+        return TRIGGER_GOALS.CONTINUE;
+    }
+
+    #endregion
+
     #region Helper Methods
     /// <summary>
     /// Call this method in certain goals if you feel like they might not succeed etc.
@@ -858,7 +929,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
     private void setGoalWait(float timeToWait)
     {
-        waitTime = Time.time + timeToWait;
+        waitTimeGoal = Time.time + timeToWait;
         changeGoal(AI_GOALS.WAIT);
     }
 

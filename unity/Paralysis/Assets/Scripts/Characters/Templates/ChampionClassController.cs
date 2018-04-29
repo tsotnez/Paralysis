@@ -756,12 +756,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
         goProjectile = Instantiate(goProjectile, ProjectilePosition.position,
             new Quaternion(goProjectile.transform.rotation.x, goProjectile.transform.rotation.y,
                 goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));
-
-        /*
-        goProjectile = Instantiate(goProjectile, ProjectilePosition.position,
-            new Quaternion(goProjectile.transform.rotation.x, goProjectile.transform.rotation.y,
-                goProjectile.transform.rotation.z * direction, goProjectile.transform.rotation.w));        
-        */
+        goProjectile.layer = GameConstants.PROJECTILE_LAYER;
 
         // Apply skill to projectile
         projectile = goProjectile.GetComponent<ProjectileBehaviour>();
