@@ -70,10 +70,11 @@ public abstract class AIUserControl : MonoBehaviour {
     private SectionPathNode currentNode;
     private int currentNodeIndex = 0;
 
-    public enum AI_GOALS { MOVE_TO_LOCATION, MOVE_THROUGH_NODES, JUMP1, JUMP2, FALL_THROUGH, STAND_BY, WAIT };
+    public enum AI_GOALS { MOVE_TO_LOCATION, MOVE_THROUGH_NODES, JUMP1, JUMP2, FALL_THROUGH, STAND_BY, WAIT, BLOCK };
     private float waitTimeGoal;
-    public enum TRIGGER_GOALS { MOVE_CLOSER, WAIT_FOR_INPUT, RETREAT, CONTINUE }
-    protected float triggerWait { get; set; }
+    private float blockTimeGoal;
+    public enum TRIGGER_GOALS { MOVE_CLOSER, WAIT_FOR_INPUT, RETREAT, CONTINUE, BLOCK }
+    private float triggerWait { get; set; }
 
     protected AI_GOALS currentGoal = AI_GOALS.STAND_BY;
     protected AI_GOALS previousGoal = AI_GOALS.STAND_BY;
@@ -87,21 +88,22 @@ public abstract class AIUserControl : MonoBehaviour {
     private float initialJumpTime = 0f;
 
     // Projectile stuff
-    private float timeLastRaycastProjectile = 0f;
-    private float raycastProjectileRange = 7;
+    private const float raycastProjectileRange = 2f;
     private int verticalRayCountProjectile = 6;
+    private float timeLastRaycastProjectile = 0f;
     private float verticalRaySpacingProjectile = 0f;
     private float hitBoxY = 0f;
 
     //Overrides
-    protected virtual float enemyTooCloseDistance(){return float.MinValue;}
     protected virtual float getMinDistanceToNode() {return .115f;}
-    protected virtual int getLowStamiaTrigger(){return champClassCon.stamina_Jump + 5;}
-    protected virtual int getMediumStamiaTrigger(){return 50;}
-    protected virtual float getLongRangeAttackDistance(){return 1.5f;}
-    protected virtual float getMediumDistanceAttackDistance(){return 5f;}
-    protected virtual float getCloseRangeAttackDistance(){return 7f;}
-    protected virtual float getRaycastProjectileRate(){return .5f;}
+    protected virtual float enemyTooCloseDistance(){return float.MinValue;} //will trigger event if enemy is too close used for ranged champions
+    protected virtual int getLowStamiaTrigger(){return champClassCon.stamina_Jump + 5;} //Will trigger low stamina event
+    protected virtual int getMediumStamiaTrigger(){return 50;} //Will trigger medium stamina event
+    protected virtual float getRaycastProjectileRate(){return .1f;}  //How often we should check for incomming projectiles
+
+    protected virtual float getLongRangeAttackDistance(){return 7f;} //Triggered when target is long range, medium, or close and we can attack them
+    protected virtual float getMediumDistanceAttackDistance(){return 4f;}
+    protected virtual float getCloseRangeAttackDistance(){return 1.5f;}
 
     protected void Start()
     {
@@ -143,6 +145,10 @@ public abstract class AIUserControl : MonoBehaviour {
         {
         case AI_GOALS.WAIT:
             if (Time.time > waitTimeGoal)setCurrentGoal();
+            break;
+        case AI_GOALS.BLOCK:
+            inputDown = true;
+            if (Time.time > blockTimeGoal)setCurrentGoal();
             break;
         case AI_GOALS.MOVE_TO_LOCATION:
             setCurrentGoal();
@@ -205,6 +211,10 @@ public abstract class AIUserControl : MonoBehaviour {
         case TRIGGER_GOALS.MOVE_CLOSER:
             //Move closert ot he target
             moveTowardsTargetPlayer();
+            continueAfter = false;
+            break;
+        case TRIGGER_GOALS.BLOCK:
+            setGoalBlock(triggerWait);
             continueAfter = false;
             break;
         case TRIGGER_GOALS.CONTINUE:
@@ -303,12 +313,16 @@ public abstract class AIUserControl : MonoBehaviour {
 
     protected virtual void setRetreatingGoals()
     {
+        if (handleAttackingTriggers())
+        {
+            return;
+        }
+
         if (mySection == null || targetSection == null)
         {
             changeGoal(AI_GOALS.STAND_BY);
             return;
         }
-
 
         if (!mySection.nonTargetable && !targetSection.nonTargetable)
         {
@@ -355,15 +369,73 @@ public abstract class AIUserControl : MonoBehaviour {
         }
     }
 
+    private void changeGoal(AI_GOALS newGoal)
+    {
+        this.previousGoal = currentGoal;
+        this.currentGoal = newGoal;
+    }
+
+    private void changeCurrentAndPreviousGoal(AI_GOALS currentGoal, AI_GOALS previousGoal)
+    {
+        this.currentGoal = currentGoal;
+        this.previousGoal = previousGoal;
+    }
+
+    private void setGoalWait(float timeToWait)
+    {
+        waitTimeGoal = Time.time + timeToWait;
+        changeGoal(AI_GOALS.WAIT);
+    }
+
+    private void setGoalBlock(float timeToWait)
+    {
+        blockTimeGoal = Time.time + timeToWait;
+        changeGoal(AI_GOALS.BLOCK);
+    }
+
+    protected TRIGGER_GOALS setTriggerWait(float duration)
+    {
+        triggerWait = duration;
+        return TRIGGER_GOALS.WAIT_FOR_INPUT;
+    }
+
+    protected TRIGGER_GOALS setTriggerBlock(float duration)
+    {
+        triggerWait = duration;
+        return TRIGGER_GOALS.BLOCK;
+    }
+
+    #endregion
+
+    #region handleTriggers
+
+    public bool handleRetreatingTriggers()
+    {
+        float distanceR = float.MaxValue;
+        float distanceL = float.MaxValue;
+        if (checkIncomingProjectile(ref distanceR, ref distanceL))
+        {
+            if (distanceR != float.MaxValue || distanceL != float.MaxValue)
+            {
+                TRIGGER_GOALS triggerGoal = IncommingProjectile(distanceR, distanceL);
+                if (!handleTriggerAndContinue(triggerGoal))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public bool handleAttackingTriggers()
     {
         //Check to see if a projectile is comming at us
         //expensive opperation, don't do it a lot
-        if (isGrounded && timeLastRaycastProjectile + getRaycastProjectileRate() < Time.time)
+        float distanceR = float.MaxValue;
+        float distanceL = float.MaxValue;
+        if (checkIncomingProjectile(ref distanceR, ref distanceL))
         {
-            timeLastRaycastProjectile = Time.time;
-            float distanceR = checkRaycastProjectile(1, raycastProjectileRange);
-            float distanceL = checkRaycastProjectile(-1, raycastProjectileRange);
             if (distanceR != float.MaxValue || distanceL != float.MaxValue)
             {
                 TRIGGER_GOALS triggerGoal = IncommingProjectile(distanceR, distanceL);
@@ -400,8 +472,6 @@ public abstract class AIUserControl : MonoBehaviour {
                 return true;
             }
         }
-
-
 
         return false;
     }
@@ -773,7 +843,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
     #endregion
 
-    #region IncomminProjectiles
+    #region IncommingProjectiles
 
     /// <summary>
     /// Checks for a projectile comming from a direction, return 0 if it doesn't
@@ -785,6 +855,7 @@ public abstract class AIUserControl : MonoBehaviour {
         Vector2 offset;
         float minDistance = float.MaxValue;
         float startYOffset = hitBoxY / 1.75f;
+        float rayDistance = hitBoxY / 1.5f;
 
         // Cast rays down out in front of us or behind us to find any projectiles that might
         // hit us
@@ -793,8 +864,8 @@ public abstract class AIUserControl : MonoBehaviour {
             Vector2 rayOrigin = myTransform.position;
             rayOrigin.y += startYOffset;
             rayOrigin += Vector2.right * direction * (verticalRaySpacingProjectile * i);
-            hit = Physics2D.Raycast(rayOrigin, transform.up * -1, hitBoxY, 1 << GameConstants.PROJECTILE_LAYER);
-            //Debug.DrawRay(rayOrigin, transform.up * -1 * hitBoxY, Color.red);
+            hit = Physics2D.Raycast(rayOrigin, transform.up * -1, rayDistance, 1 << GameConstants.PROJECTILE_LAYER);
+            //Debug.DrawRay(rayOrigin, transform.up * -1 * rayDistance, Color.red);
 
             if (hit)
             {
@@ -854,6 +925,18 @@ public abstract class AIUserControl : MonoBehaviour {
         }
     }
 
+    private bool checkIncomingProjectile(ref float distanceR, ref float distanceL)
+    {
+        if (isGrounded && timeLastRaycastProjectile + getRaycastProjectileRate() < Time.time)
+        {
+            timeLastRaycastProjectile = Time.time;
+            distanceR = checkRaycastProjectile(1, raycastProjectileRange);
+            distanceL = checkRaycastProjectile(-1, raycastProjectileRange);
+            return true;
+        }
+        return false;
+    }
+
     private bool checkStopRetreating()
     {
         if (isRetreating)
@@ -887,18 +970,6 @@ public abstract class AIUserControl : MonoBehaviour {
     private bool inSameSectionAsTargetSection()
     {
         return !isRetreating && targetPlayer != null && mySection == targetSection && !mySection.nonTargetable;
-    }
-
-    private void changeGoal(AI_GOALS newGoal)
-    {
-        this.previousGoal = currentGoal;
-        this.currentGoal = newGoal;
-    }
-
-    private void changeCurrentAndPreviousGoal(AI_GOALS currentGoal, AI_GOALS previousGoal)
-    {
-        this.currentGoal = currentGoal;
-        this.previousGoal = previousGoal;
     }
 
     private void incrementNodeIndex()
@@ -941,17 +1012,16 @@ public abstract class AIUserControl : MonoBehaviour {
         return Mathf.Abs(Vector2.Distance(targetPosition, myTransform.position));
     }
 
-    private void setGoalWait(float timeToWait)
-    {
-        waitTimeGoal = Time.time + timeToWait;
-        changeGoal(AI_GOALS.WAIT);
-    }
-
     private void resetInputs()
     {
         if(currentGoal != AI_GOALS.FALL_THROUGH)
         {
             inputDashDirection = 0;
+            inputDown = false;
+        }
+
+        if(currentGoal != AI_GOALS.BLOCK)
+        {
             inputDown = false;
         }
 
@@ -1012,7 +1082,6 @@ public abstract class AIUserControl : MonoBehaviour {
 
         float rightWall = rayCasts [0].distance;
         float leftWall = rayCasts[1].distance;
-        print(rightWall + ":" + leftWall);
         float absWallDiff = Mathf.Abs(rightWall - leftWall);
 
         if (rightWall > maxWallDistance) rightWall = maxWallDistance;

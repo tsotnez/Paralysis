@@ -81,8 +81,7 @@ public class AIAssassinControl : AIUserControl {
         if (vanish.notOnCooldown && vanish.staminaCost <= charStats.CurrentStamina)
         {
             inputSkill2 = true;
-            triggerWait = vanish.delay;
-            return TRIGGER_GOALS.WAIT_FOR_INPUT;
+            return setTriggerWait(vanish.delay);
         }
 
         return TRIGGER_GOALS.CONTINUE;
@@ -100,6 +99,26 @@ public class AIAssassinControl : AIUserControl {
         }
     }
 
+    public override TRIGGER_GOALS IncommingProjectile(float distRight, float distLeft) {
+        //66% chance
+        if (Random.Range(0, 3) < 2)
+        {
+            if (distLeft < .5f || distRight < .5f)
+            {
+                return TRIGGER_GOALS.CONTINUE;
+            }
+            if (distLeft < 1.5f || distRight < 1.5f)
+            {
+                return setTriggerBlock(.75f);
+            }
+            else 
+            {
+                return setTriggerBlock(1f);
+            }
+        }
+        return TRIGGER_GOALS.CONTINUE;
+    }
+
     #endregion
 
     #region CheckAndPerformSkills
@@ -113,7 +132,7 @@ public class AIAssassinControl : AIUserControl {
             if (shadowStep.notOnCooldown && shadowStep.staminaCost <= charStats.CurrentStamina && canShadowStep)
             {
                 inputSkill3 = true;
-                triggerWait = shadowStep.delay;
+                setTriggerWait(shadowStep.delay);
                 return true;
             }
         }
@@ -129,8 +148,7 @@ public class AIAssassinControl : AIUserControl {
             if (gunSkill.notOnCooldown && gunSkill.staminaCost <= charStats.CurrentStamina)
             {
                 inputSkill4 = true;
-                triggerWait = gunSkill.delay;
-
+                setTriggerWait(gunSkill.delay);
                 //Don't dash right after shooting
                 canShadowStep = false;
                 Invoke("setCanDash", 3f);
@@ -148,7 +166,7 @@ public class AIAssassinControl : AIUserControl {
         if (basicAttack.notOnCooldown && basicAttack.staminaCost <= charStats.CurrentStamina)
         {
             inputAttack = true;
-            triggerWait = basicAttack.delay;
+            setTriggerWait(basicAttack.delay);
             return true;
         }
         return false;

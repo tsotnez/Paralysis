@@ -139,6 +139,27 @@ public class AIAlchemistControl : AIUserControl {
         }
     }
 
+    public override TRIGGER_GOALS IncommingProjectile(float distRight, float distLeft)
+    {
+        //66% chance
+        if (Random.Range(0, 3) < 2)
+        {
+            if (distLeft < .5f || distRight < .5f)
+            {
+                return TRIGGER_GOALS.CONTINUE;
+            }
+            if (distLeft < 1.5f || distRight < 1.5f)
+            {
+                return setTriggerBlock(.75f);
+            }
+            else 
+            {
+                return setTriggerBlock(1f);
+            }
+        }
+        return TRIGGER_GOALS.CONTINUE;
+    }
+
     #endregion
 
     #region CheckAndPerformSkills
@@ -152,7 +173,7 @@ public class AIAlchemistControl : AIUserControl {
             if (closeRangeAOE.notOnCooldown && closeRangeAOE.staminaCost <= charStats.CurrentStamina)
             {
                 inputSkill4 = true;
-                triggerWait = closeRangeAOE.delay;
+                setTriggerWait(closeRangeAOE.delay);
                 return true;
             }
         }
@@ -168,7 +189,7 @@ public class AIAlchemistControl : AIUserControl {
             if (basicAttack.notOnCooldown && basicAttack.staminaCost <= charStats.CurrentStamina)
             {
                 inputAttack = true;
-                triggerWait = basicAttack.delay;
+                setTriggerWait(basicAttack.delay);
                 return true;
             }
         }
@@ -184,7 +205,7 @@ public class AIAlchemistControl : AIUserControl {
             if (basicAttack.notOnCooldown && basicAttack.staminaCost <= charStats.CurrentStamina)
             {
                 inputSkill1 = true;
-                triggerWait = basicAttack.delay;
+                setTriggerWait(basicAttack.delay);
                 return true;
             }
         }
@@ -200,7 +221,7 @@ public class AIAlchemistControl : AIUserControl {
             if (meltedStone.notOnCooldown && meltedStone.staminaCost <= charStats.CurrentStamina)
             {
                 inputSkill3 = true;
-                triggerWait = meltedStone.delay;
+                setTriggerWait(meltedStone.delay);
                 return true;
             }
         }
@@ -224,8 +245,7 @@ public class AIAlchemistControl : AIUserControl {
                 {
                     inputMove = -1;
                 }
-                triggerWait = teleport.delay;
-
+                setTriggerWait(teleport.delay);
                 return true;
             } 
             else if (Time.time - timeSinceLastDodge > DODGE_CD && currentStamina >= champClassCon.m_dashStaminaCost)
@@ -233,7 +253,7 @@ public class AIAlchemistControl : AIUserControl {
                 DODGE_DIR dodge = getDodgeDirection();
                 inputDash(dodge.goRight, dodge.goRight);
                 timeSinceLastDodge = Time.time;
-                triggerWait = DODGE_DURATION;
+                setTriggerWait(DODGE_DURATION);
                 return true;
             }
             else
