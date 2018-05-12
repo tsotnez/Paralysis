@@ -59,13 +59,14 @@ public class LocalChampionSelectionButtonChampion : ChampionSelectionButtonChamp
 
     public override void Deselecting()
     {
+        currentlySelected = false;
+
         if (!isSelectedByOtherPlayer()) //Only transition to shadow if no other player is selecting this button
             base.Deselecting();
 
         if(!currentlySelected)
             manager.setChampion(TargetPlayerNumber, null); //Resetting selected champion when transferring to different button
 
-        currentlySelected = false;
         text.enabled = false;
         highlighted = false;
         popup.gameObject.SetActive(false);

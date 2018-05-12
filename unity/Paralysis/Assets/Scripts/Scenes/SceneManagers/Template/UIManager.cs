@@ -32,7 +32,7 @@ public abstract class UIManager : MonoBehaviour {
         module = FindObjectOfType<MyStandaloneInputModule>();
 
         //Switch to controller Controls if a controller is connected
-        if (Array.Exists(Input.GetJoystickNames(), x => x == "Controller (XBOX 360 For Windows)"))
+        if (Array.Exists(Input.GetJoystickNames(), x => x == GameConstants.NAME_OF_XBOX360CONTROLLER_IN_ARRAY))
         {
             module.SetControllingPlayerInputDevice(UserControl.InputDevice.XboxController);
             Cursor.visible = false;
@@ -50,7 +50,7 @@ public abstract class UIManager : MonoBehaviour {
             return;
 
         //Switch input method depending on whether a controller is connected
-        if (Array.Exists(Input.GetJoystickNames(), x => x == "Controller (XBOX 360 For Windows)"))
+        if (Array.Exists(Input.GetJoystickNames(), x => x == GameConstants.NAME_OF_XBOX360CONTROLLER_IN_ARRAY))
         {
             if (MyStandaloneInputModule.ControllingPlayerInputDevice == UserControl.InputDevice.KeyboardMouse)
             {

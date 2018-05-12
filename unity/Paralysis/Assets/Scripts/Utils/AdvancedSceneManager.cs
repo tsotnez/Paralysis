@@ -38,7 +38,6 @@ public class AdvancedSceneManager : MonoBehaviour {
 
         while (operation.progress < 0.9f)
         {
-            Debug.Log(operation.progress);
             yield return null;
         }
 

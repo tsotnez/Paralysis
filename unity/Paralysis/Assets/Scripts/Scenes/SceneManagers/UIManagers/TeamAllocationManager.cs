@@ -8,97 +8,66 @@ using System;
 public class TeamAllocationManager : UIManager {
 
     private int maxPlayers = 4; //Is 4 because everything is optimized to handle 4 players
-    
+
     public GameObject playerPrefab;
-    public Sprite keyboard;
+    public GameObject AIPrefab;
+    public Sprite keyboardSprite;
     public Transform neutral;
+    public float GapBetweenPlayers = -1.2f;
 
-    string[] connectedControllers;
+    /// <summary>
+    /// Amount of added players
+    /// </summary>
+    private int PlayerCount = 0;
 
+
+    string[] connectedControllers = new string[0];
+
+    /// <summary>
+    /// Represantation of rows where a player can move to the lef tor right
+    /// </summary>
+    private GameObject[] Slots;
 
 	// Use this for initialization
 	protected override void Start () {
-        base.Start();
-    
-        connectedControllers = Input.GetJoystickNames();
 
-        float yOffset = 0;
-        int playerNumber = 1;
+        base.Start();
+
+        Slots = new GameObject[maxPlayers];
+        MyStandaloneInputModule eventSystem = FindObjectOfType<MyStandaloneInputModule>();
 
         //Switch to controller Controls if a controller is connected
         if (Array.Exists(Input.GetJoystickNames(), x => x == GameConstants.NAME_OF_XBOX360CONTROLLER_IN_ARRAY))
         {
-            MyStandaloneInputModule eventSystem = FindObjectOfType<MyStandaloneInputModule>();
             eventSystem.verticalAxis = "Vertical_XboxPlayer1";
             eventSystem.horizontalAxis = "Horizontal_XboxPlayer1";
             eventSystem.submitButton = "Skill4_XboxPlayer1";
         }
+        else
+        {
+            //To avoid changing focussed Button when using A and D keys to switch teams
+            eventSystem.verticalAxis = "Vertical_XboxPlayer1";
+            eventSystem.horizontalAxis = "Horizontal_XboxPlayer1";
+        }
+
         //Adding players for every controller connected
         foreach (string controller in connectedControllers.ToList())
         {
-            if (!string.IsNullOrEmpty(controller) && playerNumber <= maxPlayers)
+            if (!string.IsNullOrEmpty(controller))
             {
-                GameObject player = Instantiate(playerPrefab, neutral, false);
-                player.transform.position = new Vector3(0, player.transform.position.y + yOffset);
-
-                //Setting player number
-                switch (playerNumber)
-                {
-                    case 1:
-                        player.GetComponent<TeamAllocationPlayer>().playerNumber = UserControl.PlayerNumbers.Player1;
-                        break;
-                    case 2:
-                        player.GetComponent<TeamAllocationPlayer>().playerNumber = UserControl.PlayerNumbers.Player2;
-                        break;
-                    case 3:
-                        player.GetComponent<TeamAllocationPlayer>().playerNumber = UserControl.PlayerNumbers.Player3;
-                        break;
-                    case 4:
-                        player.GetComponent<TeamAllocationPlayer>().playerNumber = UserControl.PlayerNumbers.Player4;
-                        break;
-                }
-
-                player.GetComponentInChildren<Text>().text = "Player " + playerNumber.ToString();
-
-                yOffset -= 1.2f;
-                playerNumber++;
+                AddNewPlayer(UserControl.InputDevice.XboxController);
             }
         }
 
-        if (playerNumber <= maxPlayers)
-        {
-            //Adding a keyboard player, if running on pc and below 4 players
-            if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
-            {
-                GameObject player = Instantiate(playerPrefab, neutral, false);
-                player.transform.position = new Vector3(0, player.transform.position.y + yOffset, 0);
-                player.GetComponent<Image>().sprite = keyboard;
-
-                player.GetComponent<TeamAllocationPlayer>().inputDevice = UserControl.InputDevice.KeyboardMouse;
-
-                switch (playerNumber)
-                {
-                    case 1:
-                        player.GetComponent<TeamAllocationPlayer>().playerNumber = UserControl.PlayerNumbers.Player1;
-                        break;
-                    case 2:
-                        player.GetComponent<TeamAllocationPlayer>().playerNumber = UserControl.PlayerNumbers.Player2;
-                        break;
-                    case 3:
-                        player.GetComponent<TeamAllocationPlayer>().playerNumber = UserControl.PlayerNumbers.Player3;
-                        break;
-                }
-                player.GetComponentInChildren<Text>().text = "Player " + playerNumber.ToString();
-
-            }
-        }
+        //try to add keyboard player
+        AddNewPlayer(UserControl.InputDevice.KeyboardMouse);
 	}
 	
 	// Update is called once per frame
 	protected override void Update () {
         base.Update();
 
-        //Reload scene if any controller are diconnected or connected
+        //Reload scene if any controllers are diconnected or connected
         string[] newConnected = Input.GetJoystickNames();
 
         if (newConnected.Length != connectedControllers.Length)
@@ -112,6 +81,7 @@ public class TeamAllocationManager : UIManager {
             }
         }
 
+        connectedControllers = newConnected;
     }
 
     public void finished()
@@ -131,5 +101,65 @@ public class TeamAllocationManager : UIManager {
         {
             StartCoroutine(UIManager.showMessageBox(GameObject.FindObjectOfType<Canvas>(), "Allocate at least one player"));
         }
+    }
+
+
+    private GameObject AddNewPlayer(UserControl.InputDevice inputDevice)
+    {
+        if (PlayerCount >= maxPlayers) //Only add when max players not reched yet
+            return null;
+
+        GameObject prefab;
+
+        if (inputDevice == UserControl.InputDevice.AI)
+            prefab = AIPrefab;
+        else
+            prefab = playerPrefab;
+
+
+        GameObject player = Instantiate(prefab, neutral, false);
+
+        //Place new Player in the first free slot
+        int index = Array.IndexOf(Slots, Slots.First(x => x == null));
+        Slots[index] = player;
+
+        //Position player according to slot used
+        player.transform.position = new Vector3(0, player.transform.position.y + index * GapBetweenPlayers);
+        if(inputDevice == UserControl.InputDevice.KeyboardMouse)
+            player.GetComponent<Image>().sprite = keyboardSprite;
+
+        player.GetComponent<TeamAllocationPlayer>().inputDevice = inputDevice;
+
+        //Setting player number
+        player.GetComponent<TeamAllocationPlayer>().playerNumber = (UserControl.PlayerNumbers) Enum.Parse(typeof(UserControl.PlayerNumbers), "Player" + (PlayerCount + 1), true);
+
+        if (inputDevice != UserControl.InputDevice.AI)
+            player.GetComponentInChildren<Text>().text = "Player " + (PlayerCount + 1);
+
+        PlayerCount++;
+        return player;
+    }
+
+    public void AddAiPlayerToTeam(int Team)
+    {
+        GameObject newAI = AddNewPlayer(UserControl.InputDevice.AI);
+
+        if(newAI != null)
+            newAI.GetComponent<TeamAllocationPlayer>().switchToTeam(Team);
+    }
+
+    public void RemoveAiFromTeam(int Team)
+    {
+        TeamAllocationPlayer toRemove = GameObject.FindObjectsOfType<TeamAllocationPlayer>().FirstOrDefault(x => x.inputDevice == UserControl.InputDevice.AI && x.teamNumber == Team);
+
+        if (toRemove != null)
+        {
+            int index = Array.IndexOf(Slots, toRemove.gameObject);
+            Slots[index] = null; //Clear out slot of deleted AI
+
+            Destroy(toRemove.gameObject);
+            PlayerCount--;
+        }
+
     }
 }

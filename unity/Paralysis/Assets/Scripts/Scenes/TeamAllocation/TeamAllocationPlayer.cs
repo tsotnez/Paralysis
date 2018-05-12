@@ -56,7 +56,7 @@ public class TeamAllocationPlayer : MonoBehaviour {
     }
 
     //Switches player to given team
-    void switchToTeam(int team)
+    public void switchToTeam(int team)
     {
         teamNumber += team;
         if (teamNumber < -1)

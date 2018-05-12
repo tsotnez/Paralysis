@@ -47,6 +47,8 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     /// All players
     /// </summary>
     private Player[] players;
+    private Player[] playersNoAI;
+    private Player[] playersNoHumans;
     private EventSystem[] eventSystemInstances = new EventSystem[4];
     private int controllersConnected = 0;
 
@@ -78,19 +80,27 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         if (team1 == null && team2 == null)
         {
             team1 = new Player[1];
-            team2 = new Player[1];
+            team2 = new Player[2];
 
-            team1[0] = new Player(UserControl.PlayerNumbers.Player2, UserControl.InputDevice.KeyboardMouse, 1);
-            team2[0] = new Player(UserControl.PlayerNumbers.Player1, UserControl.InputDevice.XboxController, 2);
+            team1[0] = new Player(UserControl.PlayerNumbers.Player1, UserControl.InputDevice.KeyboardMouse, 1);
+            team2[0] = new Player(UserControl.PlayerNumbers.Player2, UserControl.InputDevice.AI, 2);
+            team2[1] = new Player(UserControl.PlayerNumbers.Player3, UserControl.InputDevice.AI, 2);
         }
 
-        //All players are the sum of both teams
+        //All players are the sum of both teams without AI Players
         players = team1.Concat(team2).ToArray();
+        playersNoAI = players.Where(x => x.inputDevice != UserControl.InputDevice.AI).ToArray();
+        playersNoHumans = players.Where(x => x.inputDevice == UserControl.InputDevice.AI).ToArray();
 
         //Show Team signs
         foreach (Player item in players)
         {
-            Areas[(int)item.playerNumber - 1].transform.Find("team" + item.TeamNumber + "Symbol").gameObject.SetActive(true);
+            GameObject area = Areas[(int)item.playerNumber - 1];
+
+            area.transform.Find("team" + item.TeamNumber + "Symbol").gameObject.SetActive(true);
+
+            if (item.inputDevice == UserControl.InputDevice.AI) //Show selection arrows when player is AI
+                area.transform.Find("Switching Arrows").gameObject.SetActive(true);
         }
 
         //Hide all unused areas
@@ -301,7 +311,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     }
 
     /// <summary>
-    /// Shows information of passed trinket in passed slot of passed player
+    /// Clears passed trinket preview slot for passed player
     /// </summary>
     public void removeTrinketPreview(UserControl.PlayerNumbers targetPlayer, int slot, bool removeInfo = true)
     {
@@ -411,7 +421,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     /// </summary>
     private void setUpEventSystems()
     {
-        foreach (Player player in players)
+        foreach (Player player in playersNoAI)
         {
             switch (player.playerNumber)
             {
