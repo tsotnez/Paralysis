@@ -1409,22 +1409,22 @@ Prefab:
     - target: {fileID: 114059082667448794, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114875582625728484, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114405804352789222, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114707826916183964, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114578269760872268, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
@@ -2688,6 +2688,7 @@ GameObject:
   - component: {fileID: 115663024}
   - component: {fileID: 115663026}
   - component: {fileID: 115663029}
+  - component: {fileID: 115663030}
   m_Layer: 5
   m_Name: Right
   m_TagString: Untagged
@@ -2812,6 +2813,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frame: {fileID: 0}
+--- !u!114 &115663030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 115663023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acae3e904e9dec4439b9ece7a7edf0d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Direction: 1
+  IndexOfCurrentChamp: -1
+  targetPlayer: 0
+  Opposite: {fileID: 0}
 --- !u!1 &116315811
 GameObject:
   m_ObjectHideFlags: 0
@@ -6925,6 +6941,7 @@ GameObject:
   - component: {fileID: 371780001}
   - component: {fileID: 371780000}
   - component: {fileID: 371780004}
+  - component: {fileID: 371780005}
   m_Layer: 5
   m_Name: Left
   m_TagString: Untagged
@@ -7049,6 +7066,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frame: {fileID: 0}
+--- !u!114 &371780005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 371779998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acae3e904e9dec4439b9ece7a7edf0d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Direction: -1
+  IndexOfCurrentChamp: -1
+  targetPlayer: 0
+  Opposite: {fileID: 0}
 --- !u!1 &382516339
 GameObject:
   m_ObjectHideFlags: 0
@@ -8551,22 +8583,22 @@ Prefab:
     - target: {fileID: 114707826916183964, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114059082667448794, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114405804352789222, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114875582625728484, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114578269760872268, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
@@ -9310,22 +9342,22 @@ Prefab:
     - target: {fileID: 114405804352789222, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114875582625728484, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114059082667448794, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114707826916183964, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114147389675896698, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
@@ -11989,6 +12021,7 @@ GameObject:
   - component: {fileID: 604295998}
   - component: {fileID: 604295997}
   - component: {fileID: 604296001}
+  - component: {fileID: 604296002}
   m_Layer: 5
   m_Name: Left
   m_TagString: Untagged
@@ -12113,6 +12146,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frame: {fileID: 0}
+--- !u!114 &604296002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 604295995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acae3e904e9dec4439b9ece7a7edf0d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Direction: -1
+  IndexOfCurrentChamp: -1
+  targetPlayer: 0
+  Opposite: {fileID: 0}
 --- !u!1 &617557918
 GameObject:
   m_ObjectHideFlags: 0
@@ -18045,6 +18093,7 @@ GameObject:
   - component: {fileID: 961276952}
   - component: {fileID: 961276951}
   - component: {fileID: 961276955}
+  - component: {fileID: 961276956}
   m_Layer: 5
   m_Name: Left
   m_TagString: Untagged
@@ -18169,6 +18218,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frame: {fileID: 0}
+--- !u!114 &961276956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 961276949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acae3e904e9dec4439b9ece7a7edf0d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Direction: -1
+  IndexOfCurrentChamp: -1
+  targetPlayer: 0
+  Opposite: {fileID: 0}
 --- !u!1 &963185621
 GameObject:
   m_ObjectHideFlags: 0
@@ -19706,6 +19770,7 @@ GameObject:
   - component: {fileID: 1072422575}
   - component: {fileID: 1072422577}
   - component: {fileID: 1072422580}
+  - component: {fileID: 1072422581}
   m_Layer: 5
   m_Name: Right
   m_TagString: Untagged
@@ -19830,6 +19895,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frame: {fileID: 0}
+--- !u!114 &1072422581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1072422574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acae3e904e9dec4439b9ece7a7edf0d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Direction: 1
+  IndexOfCurrentChamp: -1
+  targetPlayer: 0
+  Opposite: {fileID: 0}
 --- !u!1 &1081555533
 GameObject:
   m_ObjectHideFlags: 0
@@ -23846,6 +23926,7 @@ GameObject:
   - component: {fileID: 1372736166}
   - component: {fileID: 1372736165}
   - component: {fileID: 1372736169}
+  - component: {fileID: 1372736170}
   m_Layer: 5
   m_Name: Left
   m_TagString: Untagged
@@ -23970,6 +24051,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frame: {fileID: 0}
+--- !u!114 &1372736170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1372736163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acae3e904e9dec4439b9ece7a7edf0d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Direction: -1
+  IndexOfCurrentChamp: -1
+  targetPlayer: 0
+  Opposite: {fileID: 0}
 --- !u!1 &1376346181
 GameObject:
   m_ObjectHideFlags: 0
@@ -27153,22 +27249,22 @@ Prefab:
     - target: {fileID: 114875582625728484, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114405804352789222, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114059082667448794, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114707826916183964, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114147389675896698, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
@@ -28277,6 +28373,7 @@ GameObject:
   - component: {fileID: 1559588643}
   - component: {fileID: 1559588645}
   - component: {fileID: 1559588648}
+  - component: {fileID: 1559588649}
   m_Layer: 5
   m_Name: Right
   m_TagString: Untagged
@@ -28401,6 +28498,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frame: {fileID: 0}
+--- !u!114 &1559588649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1559588642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acae3e904e9dec4439b9ece7a7edf0d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Direction: 1
+  IndexOfCurrentChamp: -1
+  targetPlayer: 0
+  Opposite: {fileID: 0}
 --- !u!1 &1560389759
 GameObject:
   m_ObjectHideFlags: 0
@@ -30370,22 +30482,22 @@ Prefab:
     - target: {fileID: 114707826916183964, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114875582625728484, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114059082667448794, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114405804352789222, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
       propertyPath: Champion
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114147389675896698, guid: bdff9659529891f48bd860e302b714a7,
         type: 2}
@@ -31668,6 +31780,7 @@ GameObject:
   - component: {fileID: 1765234584}
   - component: {fileID: 1765234586}
   - component: {fileID: 1765234589}
+  - component: {fileID: 1765234590}
   m_Layer: 5
   m_Name: Right
   m_TagString: Untagged
@@ -31792,6 +31905,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frame: {fileID: 0}
+--- !u!114 &1765234590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1765234583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acae3e904e9dec4439b9ece7a7edf0d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Direction: 1
+  IndexOfCurrentChamp: -1
+  targetPlayer: 0
+  Opposite: {fileID: 0}
 --- !u!1 &1766281048 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1333631248511022, guid: bdff9659529891f48bd860e302b714a7,

@@ -10,6 +10,15 @@ public class ChampionDatabase
 {
     public enum Champions
     {
-        Assassin, Archer, Knight, Infantry, Alchemist
+        Archer, Knight, Infantry, Alchemist, Assassin
+    }
+
+    /// <summary>
+    /// Returns an Array with all possible Champions according to the enum.
+    /// </summary>
+    /// <returns></returns>
+    public static Champions[] GetAllChampions()
+    {
+        return (Champions[]) Enum.GetValues(typeof(Champions));
     }
 }

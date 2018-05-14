@@ -18,8 +18,9 @@ public class LocalChampionSelectionButtonTrinket : ChampionSelectionButtonTrinke
 
     private void Awake()
     {
-        manager = FindObjectOfType<LocalChampionSelectionManager>();
+        manager = LocalChampionSelectionManager.instance;
         picture = transform.parent.Find("portrait").gameObject.GetComponent<Image>().sprite;
+        text = GetComponentInChildren<Text>();
     }
 
     public override void onClick()

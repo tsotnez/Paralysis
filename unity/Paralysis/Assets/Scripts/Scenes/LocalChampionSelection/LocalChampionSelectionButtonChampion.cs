@@ -17,7 +17,7 @@ public class LocalChampionSelectionButtonChampion : ChampionSelectionButtonChamp
     {
         base.Start();
 
-        manager = FindObjectOfType<LocalChampionSelectionManager>();
+        manager = LocalChampionSelectionManager.instance;
         
         if(skills == null)
             skills = manager.popUps[(int)TargetPlayerNumber - 1].transform;

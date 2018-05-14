@@ -12,6 +12,11 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     public static Player[] team2;
     public static Player[] team1;
 
+    /// <summary>
+    /// Contains this scenes manager
+    /// </summary>
+    public static LocalChampionSelectionManager instance;
+
     public Transform EventSystemsParent;
     public GameObject[] eventSystemPrefabs;
 
@@ -67,6 +72,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     protected override void Awake()
     {
         base.Awake();
+        instance = this;
         Cursor.visible = false;
         PhotonNetwork.offlineMode = true;
     }
@@ -80,11 +86,10 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         if (team1 == null && team2 == null)
         {
             team1 = new Player[1];
-            team2 = new Player[2];
+            team2 = new Player[1];
 
             team1[0] = new Player(UserControl.PlayerNumbers.Player1, UserControl.InputDevice.KeyboardMouse, 1);
             team2[0] = new Player(UserControl.PlayerNumbers.Player2, UserControl.InputDevice.AI, 2);
-            team2[1] = new Player(UserControl.PlayerNumbers.Player3, UserControl.InputDevice.AI, 2);
         }
 
         //All players are the sum of both teams without AI Players
@@ -92,7 +97,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         playersNoAI = players.Where(x => x.inputDevice != UserControl.InputDevice.AI).ToArray();
         playersNoHumans = players.Where(x => x.inputDevice == UserControl.InputDevice.AI).ToArray();
 
-        //Show Team signs
+        //Show Team signs and show selection arrows if player is AI
         foreach (Player item in players)
         {
             GameObject area = Areas[(int)item.playerNumber - 1];
@@ -100,7 +105,18 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
             area.transform.Find("team" + item.TeamNumber + "Symbol").gameObject.SetActive(true);
 
             if (item.inputDevice == UserControl.InputDevice.AI) //Show selection arrows when player is AI
-                area.transform.Find("Switching Arrows").gameObject.SetActive(true);
+            {
+                GameObject arrows = area.transform.Find("Switching Arrows").gameObject;
+                arrows.SetActive(true);
+
+                //Setting target players for arrow buttons so they know for which player to set champion
+                SwitchingChampionForAILocal arrow1 = arrows.transform.GetChild(0).gameObject.GetComponent<SwitchingChampionForAILocal>();
+                SwitchingChampionForAILocal arrow2 = arrows.transform.GetChild(1).gameObject.GetComponent<SwitchingChampionForAILocal>();
+                arrow1.Opposite = arrow2;
+                arrow2.Opposite = arrow1;
+                arrow1.targetPlayer = item.playerNumber;
+                arrow2.targetPlayer = item.playerNumber;
+            }
         }
 
         //Hide all unused areas
@@ -129,6 +145,14 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
             removeTrinketPreview(player.playerNumber, 1);
             removeTrinketPreview(player.playerNumber, 2);
         }
+
+        //Set default trinkets for AI Players
+        foreach (Player player in playersNoHumans)
+        {
+            player.trinket1 = Trinket.Trinkets.UseTrinket_HealingOverTime;
+            player.trinket2 = Trinket.Trinkets.UseTrinket_GetImmun;
+        }
+
 
         setUpEventSystems();
     }
@@ -217,7 +241,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
     }
 
     /// <summary>
-    /// Showeing preview of champion
+    /// Showing preview of champion
     /// </summary>
     /// <param name="targetPlayer"></param>
     /// <param name="Champion"></param>
@@ -565,9 +589,9 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
 
     public void GoToTrinketSelection()
     {
-        deselectAll();
         killCooldowns();
         ChampionSelect.SetActive(false);
+        deselectAll();
         TrinketSelect.SetActive(true);
         MapSelect.SetActive(false);
         popUps[0].transform.parent.gameObject.SetActive(false);
@@ -575,7 +599,7 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         //Re select selected trinkets if existant
         if(AllTrinketsSelected())
         {
-            foreach (Player player in players)
+            foreach (Player player in playersNoAI)
             {
                 Trinket.Trinkets trinket1 = player.trinket1;
                 Trinket.Trinkets trinket2 = player.trinket2;
@@ -590,6 +614,25 @@ public class LocalChampionSelectionManager : ChampionSelectionManager
         }
         else
             setSelectedGameObjectsForPage(TrinketSelectionFirstSelecteds);
+
+        //Select default trinkets for AI
+        foreach (Player AI in playersNoHumans)
+        {
+            Trinket.Trinkets trinket1 = AI.trinket1;
+            Trinket.Trinkets trinket2 = AI.trinket2;
+
+            //Get buttons for player holding the two trinkets
+            LocalChampionSelectionButtonTrinket buttonT1 = GameObject.FindObjectsOfType<LocalChampionSelectionButtonTrinket>().First(x => x.TargetPlayerNumber == AI.playerNumber && x.trinket == trinket1);
+            LocalChampionSelectionButtonTrinket buttonT2 = GameObject.FindObjectsOfType<LocalChampionSelectionButtonTrinket>().First(x => x.TargetPlayerNumber == AI.playerNumber && x.trinket == trinket2);
+
+            players.First(x => x.playerNumber == AI.playerNumber).trinket1 = Trinket.Trinkets.None;
+            players.First(x => x.playerNumber == AI.playerNumber).trinket2 = Trinket.Trinkets.None;
+
+            buttonT1.Selecting();
+            buttonT1.onClick();
+            buttonT2.Selecting();
+            buttonT2.onClick();
+        }
     }
 
     private void deselectAll() {

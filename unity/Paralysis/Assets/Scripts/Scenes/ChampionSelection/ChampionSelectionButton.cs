@@ -22,6 +22,7 @@ public class ChampionSelectionButton : MonoBehaviour, ISelectHandler, IDeselectH
     {
         img = GetComponent<Image>();
         portrait = transform.parent.Find("portrait").gameObject.GetComponent<LocalChampionSelectionPortrait>();
+
         text = GetComponentInChildren<Text>();
     }
 

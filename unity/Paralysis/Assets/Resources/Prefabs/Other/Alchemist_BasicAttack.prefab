@@ -110,9 +110,9 @@ MonoBehaviour:
   creator: {fileID: 0}
   whatToHit:
     serializedVersion: 2
-    m_Bits: 2068480
+    m_Bits: 2066432
   explosionPrefab: {fileID: 0}
-  direction: -1
+  direction: 1
   SkillValues:
     type: 0
     skillName: 
@@ -169,7 +169,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c3fe2c60d9f660a4fbdc5255672667df, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 13.653334, y: 13.653334}
