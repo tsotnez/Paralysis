@@ -66,6 +66,7 @@ public abstract class AIUserControl : MonoBehaviour {
 
     private Section mySection;
     private Section targetSection;
+    private Section originalMoveToSection;
     private SectionPathNode[] currentNodes;
     private SectionPathNode currentNode;
     private int currentNodeIndex = 0;
@@ -495,31 +496,28 @@ public abstract class AIUserControl : MonoBehaviour {
             return;
         }
 
-        //This is only called the first timet his goal happens
-        if(targetPlayer != null && previousGoal != AI_GOALS.MOVE_THROUGH_NODES)
+        if (targetPlayer != null)
         {
-            SectionPath path = mySection.getOptimalPathForSection(moveToSection, myTransform.position, moveToPosition);
-            if (path == null || path.Nodes == null)
+            //This is only called the first time this goal happens
+            if (previousGoal != AI_GOALS.MOVE_THROUGH_NODES)
             {
-                Debug.LogError("path was null no nodes...");
-                changeGoal(AI_GOALS.STAND_BY);
-                return;
-            }
-            currentNodes = path.Nodes;
-
-            currentNodeIndex = 0;
-            currentNode = currentNodes[currentNodeIndex];
-
-            //since we care about previous goal make sure to set it here
-            previousGoal = AI_GOALS.MOVE_THROUGH_NODES;
-
-            if (!isRetreating)
-            {
-                TRIGGER_GOALS triggerGoal = lockedOnToTarget();
-                if (!handleTriggerAndContinue(triggerGoal))
+                if (!calculateAndSetPath(moveToSection, moveToPosition))return;
+                //since we care about previous goal make sure to set it here
+                previousGoal = AI_GOALS.MOVE_THROUGH_NODES;
+                if (!isRetreating)
                 {
-                    return;
+                    TRIGGER_GOALS triggerGoal = lockedOnToTarget();
+                    if (!handleTriggerAndContinue(triggerGoal))
+                    {
+                        return;
+                    }
                 }
+            }
+            //Called when we a moving to a specific position and that position changed,
+            //and the target player changes section
+            else if (moveToSection != originalMoveToSection)
+            {
+                if (!calculateAndSetPath(moveToSection, moveToPosition))return;
             }
         }
 
@@ -923,6 +921,22 @@ public abstract class AIUserControl : MonoBehaviour {
             stuckGoal = AI_GOALS.STAND_BY;
             currentGoal = AI_GOALS.STAND_BY;
         }
+    }
+
+    private bool calculateAndSetPath(Section moveToSection, Vector2 moveToPosition)
+    {
+        originalMoveToSection = moveToSection;
+        SectionPath path = mySection.getOptimalPathForSection(moveToSection, myTransform.position, moveToPosition);
+        if (path == null || path.Nodes == null)
+        {
+            Debug.LogError("path was null no nodes...");
+            changeGoal(AI_GOALS.STAND_BY);
+            return false;
+        }
+        currentNodes = path.Nodes;
+        currentNodeIndex = 0;
+        currentNode = currentNodes [currentNodeIndex];
+        return true;
     }
 
     private bool checkIncomingProjectile(ref float distanceR, ref float distanceL)
