@@ -296,9 +296,9 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
 
     private void OnDestroy()
     {
-        GameNetwork.Instance.OnGameStateUpdate -= OnGameStateUpdated;
-        GameNetworkChampSelect.Instance.OnPlayerSelectedChamp -= OnPlayerSelectedChamp;
-        GameNetworkChampSelect.Instance.OnPlayerReady -= OnPlayerReady;
-        GameNetworkChampSelect.Instance.OnAllReady -= OnAllReady;
+        //GameNetwork.Instance.OnGameStateUpdate -= OnGameStateUpdated;
+        //GameNetworkChampSelect.Instance.OnPlayerSelectedChamp -= OnPlayerSelectedChamp;
+        //GameNetworkChampSelect.Instance.OnPlayerReady -= OnPlayerReady;
+        //GameNetworkChampSelect.Instance.OnAllReady -= OnAllReady;
     }
 }

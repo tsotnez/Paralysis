@@ -353,6 +353,13 @@ namespace UnityEngine.EventSystems
             return data.used;
         }
 
+        public PointerEventData GetPointerData()
+        {
+            if (m_PointerData.ContainsKey(kMouseLeftId))
+                return m_PointerData[kMouseLeftId];
+            else
+                return null;
+        }
         /// <summary>
         /// Process the current mouse press.
         /// </summary>
