@@ -1595,6 +1595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CenterSlotSizeMultiplier: 1.4
+  content: []
   slots:
   - {fileID: 841232516}
   - {fileID: 449423479}

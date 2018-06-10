@@ -10,12 +10,14 @@ using UnityEngine.UI;
 /// </summary>
 public class SlideSelection : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler  {
 
+    public event EventHandler SelectedGOChangedHandler;
+
     public float CenterSlotSizeMultiplier = 1.4f;
 
     /// <summary>
     /// Stores the content of this control which is defines as the children of the content GO
     /// </summary>
-    private RectTransform[] content;
+    public RectTransform[] content;
     /// <summary>
     /// Transforms of all slots
     /// </summary>
@@ -64,7 +66,6 @@ public class SlideSelection : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         i = 0;
         foreach (RectTransform t in content)
         {
-            t.gameObject.SetActive(true);
             MoveToSlot(i, i);
             i++;
         }
@@ -80,37 +81,44 @@ public class SlideSelection : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private void MoveToSlot(int contentIndex, int slotIndex)
     {
         //If we are dealing with a content which doesnt fit into our slots anymore...
-        if(contentIndex >= slots.Length && !initialized)
+        if (contentIndex >= slots.Length && !initialized)
         {
+            content[contentIndex].gameObject.SetActive(false);
             offScreenContent.Add(contentIndex);
+            SlotsOfContent.Add(contentIndex, -1);
             return;
         }
 
         if (slotIndex >= slots.Length)
         {
-            //Overflow on the right
+            //Overflow after clicked left arrow
             slotIndex = 0;
-            if(content.Length > slots.Length)
+            if (content.Length > slots.Length)
             {
                 //If there is more content than slots, move content to offScreen List and move last offScreenContent entry to first slot
                 offScreenContent.Insert(0, contentIndex);
-                SlotsOfContent[contentIndex] = -1;
+                content[contentIndex].gameObject.SetActive(false); //Hide element which is now off Screen
+                SlotsOfContent[contentIndex] = -1; //Set index -1 for now off screen content
                 contentIndex = offScreenContent[offScreenContent.Count - 1];
+                offScreenContent.RemoveAt(offScreenContent.Count - 1);
             }
         }
         else if (slotIndex < 0)
         {
-            //Overflow on the left
+            //Overflow after clicked right arrow
             slotIndex = slots.Length - 1;
             if (content.Length > slots.Length)
             {
                 //If there is more content than slots, move content to offScreen List and move first offScreenContent entry to last slot
                 offScreenContent.Add(contentIndex);
+                content[contentIndex].gameObject.SetActive(false);
                 SlotsOfContent[contentIndex] = -1;
                 contentIndex = offScreenContent[0];
+                offScreenContent.RemoveAt(0);
             }
         }
 
+        content[contentIndex].gameObject.SetActive(true);
         RectTransform targetSlot = slots[slotIndex];
         RectTransform targetContent = content[contentIndex];
 
@@ -123,13 +131,22 @@ public class SlideSelection : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
         //Update currently selected GO
         if (slotIndex == centerIndex)
+        {
             SelectedGO = targetContent.gameObject;
+            OnSelectedGOChanged();
+        }
 
         //Manage dictionary
         if (!SlotsOfContent.ContainsKey(contentIndex))
             SlotsOfContent.Add(contentIndex, slotIndex);
         else
             SlotsOfContent[contentIndex] = slotIndex;
+    }
+
+    protected virtual void OnSelectedGOChanged()
+    {
+        if (SelectedGOChangedHandler != null)
+            SelectedGOChangedHandler(this, new EventArgs());
     }
 
 	// Update is called once per frame
@@ -179,13 +196,17 @@ public class SlideSelection : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     /// <param name="direction">The direction to scroll in, positive being to the right, negative to the left</param>
     public void Scroll(int direction)
     {
+        List<int> blackList = new List<int>();
+        blackList.AddRange(offScreenContent);
+
+        direction = -direction; //Moving the elements to the left is actually scrolling to the right and vice versa -> Brainfuck 
         int i = 0;
         foreach (RectTransform t in content)
         {
             int contentIndex = Array.IndexOf(content, t);
             int currentSlot = SlotsOfContent[contentIndex];
 
-            if (currentSlot == -1) //when content is off Screen ignore it
+            if (blackList.Contains(contentIndex) || contentIndex == -1) //when content is off Screen ignore it
                 continue;
 
             MoveToSlot(contentIndex, currentSlot + direction);

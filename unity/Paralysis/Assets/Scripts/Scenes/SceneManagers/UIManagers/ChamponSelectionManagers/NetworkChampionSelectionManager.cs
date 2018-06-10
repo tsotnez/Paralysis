@@ -55,6 +55,7 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     protected override void Start()
     {
         allChamps = ChampionDatabase.GetAllChampions();
+        championSelectionBar.SelectedGOChangedHandler += ChampionSelectionBar_SelectedGOChangedHandler;
         //KYLE: Player label texts need to be set beforehand
 
         Transform targetTeamParent = localPlayer.TeamNumber == 1 ? slotsTeam1 : slotsTeam2;
@@ -68,6 +69,17 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
                 localPlayerChampionNameText = item.Find("Labels").Find("ChampionName").GetComponent<Text>();
             }
         }
+
+        ChampionSelectionBar_SelectedGOChangedHandler(null, null);
+    }
+
+    private void ChampionSelectionBar_SelectedGOChangedHandler(object sender, EventArgs e)
+    {
+        ChampionDatabase.Champions newChamp = championSelectionBar.SelectedGO.GetComponent<ChampionVariable>().content;
+        Sprite portrait = championPortraitsShadow[Array.IndexOf(allChamps, newChamp)];
+
+        localPlayerTeamSlot.transform.Find("Portrait").GetComponent<Image>().sprite = portrait;
+        localPlayer.ChampionPrefab = ChampionPrefabs[newChamp];
     }
 
     #region Old Stuff
