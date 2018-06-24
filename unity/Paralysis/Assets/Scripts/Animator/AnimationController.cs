@@ -149,10 +149,13 @@ public abstract class AnimationController : MonoBehaviour
     {
         if (CurrentAnimation != Anim || forceRestart)
         {
-            if(!PhotonNetwork.offlineMode && GameNetwork.Instance.InGame)
+            if(!PhotonNetwork.offlineMode && GameNetwork.Instance != null)
             {
-                photonView.RPC("RPC_StartAnimation", PhotonTargets.Others, (byte)Anim);
-                RPC_StartAnimation((byte)Anim);
+                if (GameNetwork.Instance.InGame)
+                {
+                    photonView.RPC("RPC_StartAnimation", PhotonTargets.Others, (byte)Anim);
+                    RPC_StartAnimation((byte)Anim);
+                }
             }
             else
             {

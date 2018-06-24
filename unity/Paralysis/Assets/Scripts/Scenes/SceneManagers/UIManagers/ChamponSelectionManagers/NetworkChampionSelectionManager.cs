@@ -19,6 +19,7 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     /// Parent GO of all slots containing the portrtaits of each champion picked for team 1
     /// </summary>
     public Transform slotsTeam1;
+
     /// <summary>
     /// Parent GO of all slots containing the portrtaits of each champion picked for team 2
     /// </summary>
@@ -31,6 +32,10 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     /// Contains all image files of champion portraits Lit
     /// </summary>
     public Sprite[] championPortraitsLit;
+    /// <summary>
+    /// Platform on which animated preview will be shown
+    /// </summary>
+    public GameObject platform;
     public SlideSelection championSelectionBar;
     /// <summary>
     /// Nickname of local Player. i don't know where you get this from...
@@ -73,6 +78,14 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
         ChampionSelectionBar_SelectedGOChangedHandler(null, null);
     }
 
+    internal void setTrinket(Trinket.Trinkets trinket, int trinketId)
+    {
+        if (trinketId == 1)
+            localPlayer.trinket1 = trinket;
+        else if (trinketId == 2)
+            localPlayer.trinket2 = trinket;
+    }
+
     private void ChampionSelectionBar_SelectedGOChangedHandler(object sender, EventArgs e)
     {
         ChampionDatabase.Champions newChamp = championSelectionBar.SelectedGO.GetComponent<ChampionVariable>().content;
@@ -80,6 +93,9 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
 
         localPlayerTeamSlot.transform.Find("Portrait").GetComponent<Image>().sprite = portrait;
         localPlayer.ChampionPrefab = ChampionPrefabs[newChamp];
+
+        DestroyExistingPreview(platform.transform);
+        ShowPrefab(ChampionPrefabs[newChamp], platform.transform, false);
     }
 
     #region Old Stuff

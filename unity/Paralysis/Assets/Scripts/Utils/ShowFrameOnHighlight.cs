@@ -7,7 +7,20 @@ using UnityEngine.UI;
 
 public class ShowFrameOnHighlight : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    private bool lockFrameVisible = false;
 
+    public bool LockFrameVisible //When true, frame will be always visible
+    {
+        get { return lockFrameVisible; }
+        set
+        {
+            lockFrameVisible = value;
+            if (value)
+                onEnter();
+            else
+                onExit();
+        }
+    }
     public GameObject frame;
 
     void Start()
@@ -16,7 +29,7 @@ public class ShowFrameOnHighlight : MonoBehaviour, ISelectHandler, IDeselectHand
             frame = transform.Find("Frame").gameObject;
     }
 
-    private void onEnter()
+    public void onEnter()
     {
         try
         {
@@ -28,9 +41,10 @@ public class ShowFrameOnHighlight : MonoBehaviour, ISelectHandler, IDeselectHand
         }
     }
 
-    private void onExit()
+    public void onExit()
     {
-        frame.SetActive(false);
+        if(!lockFrameVisible)
+            frame.SetActive(false);
     }
 
     #region Interface Implementations
