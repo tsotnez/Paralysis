@@ -55,6 +55,11 @@ public class SlideSelection : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
         slots[centerIndex].sizeDelta = new Vector2(slots[centerIndex].sizeDelta.x * CenterSlotSizeMultiplier, slots[centerIndex].sizeDelta.y * CenterSlotSizeMultiplier);
 
+        foreach (RectTransform slot in slots)
+        {
+            slot.GetComponent<Image>().enabled = false;
+        }
+
         //Get all children and save them in Array
         int i = 0;
         foreach (RectTransform t in contentTrans)
@@ -122,7 +127,7 @@ public class SlideSelection : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         RectTransform targetSlot = slots[slotIndex];
         RectTransform targetContent = content[contentIndex];
 
-        targetContent.SetParent(targetSlot);
+        targetContent.SetParent(targetSlot.Find("Content"));
         targetContent.anchorMax = new Vector2(1f, 1f);
         targetContent.anchorMin = new Vector2(0f, 0f);
         targetContent.anchoredPosition = Vector2.zero;
@@ -196,11 +201,38 @@ public class SlideSelection : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     /// <param name="direction">The direction to scroll in, positive being to the right, negative to the left</param>
     public void Scroll(int direction)
     {
+        StartCoroutine(ScrollRoutine(direction));
+    }
+
+    IEnumerator ScrollRoutine(int direction)
+    {
         List<int> blackList = new List<int>();
         blackList.AddRange(offScreenContent);
 
         direction = -direction; //Moving the elements to the left is actually scrolling to the right and vice versa -> Brainfuck 
         int i = 0;
+
+
+        foreach (RectTransform t in content)
+        {
+            int contentIndex = Array.IndexOf(content, t);
+            int currentSlot = SlotsOfContent[contentIndex];
+
+            if (blackList.Contains(contentIndex) || contentIndex == -1) //when content is off Screen ignore it
+                continue;
+
+            if (direction > 0)
+                //Play right anim
+                slots[currentSlot].Find("Content").GetComponent<Animator>().SetTrigger("playRight");
+            else
+                //Play left anim
+                slots[currentSlot].Find("Content").GetComponent<Animator>().SetTrigger("playLeft");
+            i++;
+        }
+
+        yield return new WaitForSeconds(0.16f);
+
+        i = 0;
         foreach (RectTransform t in content)
         {
             int contentIndex = Array.IndexOf(content, t);

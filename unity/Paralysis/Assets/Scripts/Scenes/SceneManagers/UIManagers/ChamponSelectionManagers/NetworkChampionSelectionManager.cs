@@ -44,12 +44,14 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
     private Text localPlayerChampionNameText;
     private GameObject localPlayerTeamSlot;
     private ChampionDatabase.Champions[] allChamps;
+    private GameObject OnClickAnimation;
 
     /// <summary>
     /// Called when player locked in his champion or time's up
     /// </summary>
     public void ReadyClickHandler()
     {
+        StartCoroutine(handleOnclickAnimation(localPlayerTeamSlot.transform));
         ChampionDatabase.Champions newChamp = championSelectionBar.SelectedGO.GetComponent<ChampionVariable>().content;
         Sprite portrait = championPortraitsLit[Array.IndexOf(allChamps, newChamp)];
 
@@ -59,6 +61,7 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
 
     protected override void Start()
     {
+        OnClickAnimation = Resources.Load<GameObject>("Prefabs/UI/LocalChampionSelection/ClickAnimation");
         allChamps = ChampionDatabase.GetAllChampions();
         championSelectionBar.SelectedGOChangedHandler += ChampionSelectionBar_SelectedGOChangedHandler;
         //KYLE: Player label texts need to be set beforehand
@@ -97,6 +100,18 @@ public class NetworkChampionSelectionManager : ChampionSelectionManager {
         DestroyExistingPreview(platform.transform);
         ShowPrefab(ChampionPrefabs[newChamp], platform.transform, false);
     }
+
+    /// <summary>
+    /// Instantiates Object which plays the on click animation and destroys it after animation has finished
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator handleOnclickAnimation(Transform parent)
+    {
+        GameObject anim = Instantiate(OnClickAnimation, parent, false);
+        yield return new WaitForSeconds(.333f);
+        Destroy(anim);
+    }
+
 
     #region Old Stuff
     //public static Player localPlayer = new Player(UserControl.PlayerNumbers.Player1, UserControl.InputDevice.KeyboardMouse, 1); //Object that stores all date about local player, set externally

@@ -5,8 +5,6 @@ using UnityEngine.EventSystems;
 
 public class NetworkHostGameManager : UIManager {
 
-    public GameObject firstSelected;
-
     protected override void Start()
     {
         base.Start();
