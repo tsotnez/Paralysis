@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LocalChampionSelection.unity
     guid: ab64ab27a4ef575449d85d37227ce41f
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/NetworkScenes/Network test.unity
     guid: 58686bd5c4cd6e64ea39a3d1085c20b9
   - enabled: 1
@@ -35,9 +35,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NetworkScenes/NetworkChampionSelection.unity
     guid: ddfb61d2fb8bf3841accac46acd6155b
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/MultiplayerLoadingScreen.unity
     guid: 8dd6b52d9f9cb8043bdb5afea9e6ed9b

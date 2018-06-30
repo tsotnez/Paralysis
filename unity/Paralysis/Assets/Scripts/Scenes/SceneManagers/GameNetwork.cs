@@ -224,6 +224,20 @@ public class GameNetwork : MonoBehaviour {
         print("photon player name set to: " + playerName);
     }
 
+    public string getPlayerNameForID(int photonID) {
+        PhotonPlayer[] players = getPlayerList();
+        foreach (PhotonPlayer player in players)
+        {
+            if (photonID == player.ID)
+            {
+                return player.NickName;
+            }
+        }
+
+        Debug.LogError("Couldn't find player name for id:" + photonID);
+        return "Player";
+    }
+
     public bool createRoom(string roomName, byte maxPlayers, bool isVisible, bool isOpen = true)
     {
         RoomOptions roomOptions = new RoomOptions() {
@@ -501,6 +515,11 @@ public class GameNetwork : MonoBehaviour {
         }
     }
 
+    public GameObject getChampionforID(int id)
+    {
+        return champHolder.getChampionForID(id);
+    }
+
     public void setPlayerChampForId(int photonId, int champ)
     {
         if(players.ContainsKey(photonId))
@@ -576,11 +595,17 @@ public class GameNetwork : MonoBehaviour {
     //Photon Callback
     private void OnMasterClientSwitched(PhotonPlayer newMasterClient)
     {
-        if(inGame)
+        if (InGame)
         {
-            //TODO...
             quitGame();
         }
+    }
+
+    public IEnumerator waitForGameNetworkDestroyed()
+    {
+        Destroy(GameNetwork.Instance.gameObject);
+        yield return new WaitWhile( ()=> GameNetwork.Instance == null);
+        SceneManager.LoadScene(GameConstants.MAIN_MENU_SCENE);
     }
 
     //Photon Callback
@@ -651,9 +676,15 @@ public class GameNetwork : MonoBehaviour {
 
             if(manager != null)
             {
-                photonV.RPC("RPC_SpawnPlayer", PhotonTargets.All);
+                StartCoroutine(spawnPlayers());
             }
         }
+    }
+
+    private IEnumerator spawnPlayers()
+    {
+        yield return new WaitForSeconds (2);
+        photonV.RPC("RPC_SpawnPlayer", PhotonTargets.All);
     }
 
     [PunRPC]

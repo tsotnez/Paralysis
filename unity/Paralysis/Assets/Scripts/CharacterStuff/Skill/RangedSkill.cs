@@ -20,15 +20,18 @@ public class RangedSkill : Skill
         prefab = projectilePrefab;
         speed = projectileSpeed;
         this.castTime = castTime;
+    }
 
+    public void addSkillToDB()
+    {
         //set an id of the ranged skill to be used for networking
-        int rangedSkillHash = projectilePrefab.name.GetHashCode();
-        rangedSkillHash = rangedSkillHash ^ skillDamage.GetHashCode();
-        rangedSkillHash = rangedSkillHash ^ projectileSpeed.x.GetHashCode();
-        rangedSkillHash = rangedSkillHash ^ skillSpecialEffectTime.GetHashCode();
+        int rangedSkillHash = skillName.GetHashCode();
+        if(prefab != null) 
+        {
+            rangedSkillHash = rangedSkillHash ^ prefab.name.GetHashCode();
+        }
 
         rangedSkillId = CRCCalculator.CRCFromInt(rangedSkillHash);
-
         if(!rangedSkillDict.ContainsKey(rangedSkillId))
         {
             rangedSkillDict.Add(rangedSkillId, this);

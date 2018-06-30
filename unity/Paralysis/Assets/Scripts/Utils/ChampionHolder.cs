@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class ChampionHolder : MonoBehaviour {
 
-    public enum Champions { ARCHER = 0, KNIGHT = 1, INFANTRY = 2, ALCHEMIST = 3, ASSASSIN = 4 };
     public GameObject[] champions;
 
     public GameObject getChampionForID(int id)
     {
         switch(id)
         {
-        case (int)Champions.ARCHER:
+        case (int)ChampionDatabase.Champions.Archer:
             return champions[0];
-        case (int)Champions.KNIGHT:
+        case (int)ChampionDatabase.Champions.Knight:
             return champions[1];
-        case (int)Champions.INFANTRY:
+        case (int)ChampionDatabase.Champions.Infantry:
             return champions[2];
-        case (int)Champions.ALCHEMIST:
+        case (int)ChampionDatabase.Champions.Alchemist:
             return champions[3];
-        case (int)Champions.ASSASSIN:
+        case (int)ChampionDatabase.Champions.Assassin:
             return champions[4];
         default:
+            Debug.LogError("Couldn't find champion game object for id: " + id);
             return null;
         }
     }

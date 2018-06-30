@@ -103,9 +103,14 @@ public class InRoomManager : UIManager {
         PhotonNetwork.LoadLevel(GameConstants.NETWORK_CHAMP_SELECT);
     }
 
+    private void OnMasterClientSwitched(PhotonPlayer newMasterClient) 
+    {
+        StartCoroutine(GameNetwork.Instance.waitForGameNetworkDestroyed());
+    }
+
     private void backPressed()
     {
-        StartCoroutine(waitForGameNetworkDestroyed());
+        StartCoroutine(GameNetwork.Instance.waitForGameNetworkDestroyed());
     }
 
     private void switchTeamsPressed()
@@ -120,22 +125,6 @@ public class InRoomManager : UIManager {
         yield return new WaitForSecondsRealtime(2f);
         switchTeamButton.interactable = true;
     }
-
-    private IEnumerator waitForGameNetworkDestroyed ()
-    {
-        Destroy(GameNetwork.Instance.gameObject);
-        yield return new WaitWhile( ()=> GameNetwork.Instance == null);
-        SceneManager.LoadScene(GameConstants.MAIN_MENU_SCENE);
-    }
-
-    #region PhotonCallbacks
-
-    private void OnMasterClientSwitched(PhotonPlayer newMasterClient)
-    {
-        backPressed();
-    }
-
-    #endregion
 
     private void OnGameStateUpdated()
     {

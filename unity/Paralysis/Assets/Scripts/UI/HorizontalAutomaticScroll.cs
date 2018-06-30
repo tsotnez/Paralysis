@@ -41,6 +41,7 @@ public class HorizontalAutomaticScroll : MonoBehaviour {
         if (es == null)
         {
             Debug.LogError("Target Event System of Horizontal scroll script is null!");
+            this.enabled = false;
             return;
         }
 

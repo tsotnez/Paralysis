@@ -106,6 +106,14 @@ public abstract class AIUserControl : MonoBehaviour {
     protected virtual float getMediumDistanceAttackDistance(){return 4f;}
     protected virtual float getCloseRangeAttackDistance(){return 1.5f;}
 
+    protected void Awake()
+    {
+        if (GetComponent<UserControl>().inputDevice != UserControl.InputDevice.AI)
+        {
+            enabled = false;
+        }
+    }
+
     protected void Start()
     {
         if(GetComponent<UserControl>().inputDevice != UserControl.InputDevice.AI)

@@ -131,6 +131,11 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 enabled = false;
                 m_Rigidbody2D.isKinematic = true;
             }
+
+            foreach (RangedSkill skill in RangeSkills)
+            {
+                skill.addSkillToDB();
+            }
         }
     }
 
@@ -722,7 +727,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
 
         if (PhotonNetwork.offlineMode)
         {
-            StartCoroutine(RangedSkill(skillToPerform, direction));
+            StartCoroutine(RangedSkillRoutine(skillToPerform, direction));
         }
         else
         {
@@ -733,11 +738,18 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
     [PunRPC]
     public void RPC_SpawnRangedSkill(short rangedSkillId, short direction)
     {
-        RangedSkill skillToPerform = global::RangedSkill.rangedSkillDict[rangedSkillId];
-        StartCoroutine(RangedSkill(skillToPerform, direction));
+        if (RangedSkill.rangedSkillDict.ContainsKey(rangedSkillId))
+        {
+            RangedSkill skillToPerform = RangedSkill.rangedSkillDict [rangedSkillId];
+            StartCoroutine(RangedSkillRoutine(skillToPerform, direction));
+        }
+        else
+        {
+            Debug.LogError("Ranged skill id not in dictionary:" + rangedSkillId);
+        }
     }
 
-    public IEnumerator RangedSkill(RangedSkill skillToPerform, int direction)
+    public IEnumerator RangedSkillRoutine(RangedSkill skillToPerform, int direction)
     {
         GameObject goProjectile;
         goProjectile = skillToPerform.prefab;

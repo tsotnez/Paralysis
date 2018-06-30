@@ -2384,7 +2384,7 @@ GameObject:
   - component: {fileID: 290735929}
   - component: {fileID: 290735930}
   m_Layer: 5
-  m_Name: Slot1Team2
+  m_Name: Slot2Team2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2507,7 +2507,7 @@ GameObject:
   - component: {fileID: 315316188}
   - component: {fileID: 315316189}
   m_Layer: 5
-  m_Name: Slot1Team1
+  m_Name: Slot2Team1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

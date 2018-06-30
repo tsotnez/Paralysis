@@ -10,7 +10,7 @@ public class GameNetworkChampSelect : MonoBehaviour {
     public delegate void otherPlayerSelectedChamp(int photonID, int chamNump);
     public event otherPlayerSelectedChamp OnPlayerSelectedChamp;
 
-    public delegate void otherPlayerReadyUp(int photonID, bool ready);
+    public delegate void otherPlayerReadyUp(int photonID, int champNum, bool ready);
     public event otherPlayerReadyUp OnPlayerReady;
 
     public delegate void allReady();
@@ -27,9 +27,9 @@ public class GameNetworkChampSelect : MonoBehaviour {
         photonV.RPC("RPC_SelectedChampion", PhotonTargets.All, (short)PhotonNetwork.player.ID, (short)champion);
     }
 
-    public void readyUp(bool ready)
+    public void readyUp(int champID, bool ready)
     {
-        photonV.RPC("RPC_PlayerReady", PhotonTargets.All, (short)PhotonNetwork.player.ID, ready);
+        photonV.RPC("RPC_PlayerReady", PhotonTargets.All, (short)PhotonNetwork.player.ID, (short)champID, ready);
     }
 
     public void setTrinket(Trinket.Trinkets trinket, byte trinketNum)
@@ -48,18 +48,19 @@ public class GameNetworkChampSelect : MonoBehaviour {
     [PunRPC]
     private void RPC_SelectedChampion(short photonId, short sChamp)
     {
+        GameNetwork.Instance.setPlayerChampForId((int)photonId, (int)sChamp);
         if(OnPlayerSelectedChamp != null)
         {
-            GameNetwork.Instance.setPlayerChampForId((int)photonId, (int)sChamp);
             OnPlayerSelectedChamp((int)photonId, (int)sChamp);
         }
     }
 
     [PunRPC]
-    private void RPC_PlayerReady(short photonId, bool ready)
+    private void RPC_PlayerReady(short photonId, short sChamp, bool ready)
     {
+        GameNetwork.Instance.setPlayerChampForId((int)photonId, (int)sChamp);
         if(OnPlayerReady != null)
-            OnPlayerReady((int)photonId, ready);
+            OnPlayerReady((int)photonId, (int)sChamp, ready);
     }
 
     [PunRPC]
