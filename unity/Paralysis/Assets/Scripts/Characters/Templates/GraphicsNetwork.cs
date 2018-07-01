@@ -10,8 +10,8 @@ public class GraphicsNetwork : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
-
-        if(!PhotonNetwork.offlineMode && GameNetwork.Instance.InGame) 
+       
+        if(!PhotonNetwork.offlineMode && GameNetwork.Instance != null && GameNetwork.Instance.InGame) 
         {
             animCon = GetComponent<ChampionAnimationController>();
             ren = GetComponent<SpriteRenderer>();

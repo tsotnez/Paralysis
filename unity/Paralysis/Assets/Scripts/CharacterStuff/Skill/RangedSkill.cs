@@ -26,14 +26,15 @@ public class RangedSkill : Skill
     {
         //set an id of the ranged skill to be used for networking
         int rangedSkillHash = skillName.GetHashCode();
-        if(prefab != null) 
-        {
-            rangedSkillHash = rangedSkillHash ^ prefab.name.GetHashCode();
-        }
+        if (prefab != null) rangedSkillHash ^= prefab.name.GetHashCode();
+        if (speed.y != 0) rangedSkillHash ^= speed.y.GetHashCode();
+        if (speed.x != 0) rangedSkillHash ^= speed.x.GetHashCode();
+        if (range != 0) rangedSkillHash ^= range.GetHashCode();
 
         rangedSkillId = CRCCalculator.CRCFromInt(rangedSkillHash);
         if(!rangedSkillDict.ContainsKey(rangedSkillId))
         {
+            Debug.Log("Adding ranged skill: " + skillName + " hash:" + rangedSkillId);
             rangedSkillDict.Add(rangedSkillId, this);
         }
         else

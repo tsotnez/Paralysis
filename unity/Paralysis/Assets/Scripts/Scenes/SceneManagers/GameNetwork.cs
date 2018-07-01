@@ -683,7 +683,8 @@ public class GameNetwork : MonoBehaviour {
 
     private IEnumerator spawnPlayers()
     {
-        yield return new WaitForSeconds (2);
+        //Don't spawn everyone at the same time
+        yield return new WaitForSeconds (PlayerNetworkNumber * .5F);
         photonV.RPC("RPC_SpawnPlayer", PhotonTargets.All);
     }
 

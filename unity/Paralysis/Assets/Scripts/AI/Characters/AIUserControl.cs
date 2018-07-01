@@ -858,7 +858,7 @@ public abstract class AIUserControl : MonoBehaviour {
     private float checkRaycastProjectile(int direction, float raycastRange)
     {
         RaycastHit2D hit;
-        Vector2 offset;
+        //Vector2 offset;
         float minDistance = float.MaxValue;
         float startYOffset = hitBoxY / 1.75f;
         float rayDistance = hitBoxY / 1.5f;

@@ -149,13 +149,10 @@ public abstract class AnimationController : MonoBehaviour
     {
         if (CurrentAnimation != Anim || forceRestart)
         {
-            if(!PhotonNetwork.offlineMode && GameNetwork.Instance != null)
+            if(!PhotonNetwork.offlineMode && GameNetwork.Instance != null && GameNetwork.Instance.InGame)
             {
-                if (GameNetwork.Instance.InGame)
-                {
-                    photonView.RPC("RPC_StartAnimation", PhotonTargets.Others, (byte)Anim);
-                    RPC_StartAnimation((byte)Anim);
-                }
+                photonView.RPC("RPC_StartAnimation", PhotonTargets.Others, (byte)Anim);
+                RPC_StartAnimation((byte)Anim);
             }
             else
             {
@@ -188,7 +185,7 @@ public abstract class AnimationController : MonoBehaviour
 
     public void StartEndAnimation(AnimationTypes Anim)
     {
-        if(!PhotonNetwork.offlineMode && GameNetwork.Instance.InGame)
+        if(!PhotonNetwork.offlineMode && GameNetwork.Instance != null && GameNetwork.Instance.InGame)
         {
             photonView.RPC("RPC_StartEndAnimation", PhotonTargets.Others, (byte)Anim);
             RPC_StartEndAnimation((byte)Anim);

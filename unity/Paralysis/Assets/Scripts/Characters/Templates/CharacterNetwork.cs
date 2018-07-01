@@ -15,11 +15,7 @@ public class CharacterNetwork : Photon.MonoBehaviour
 
     private void Awake()
     {
-        if(PhotonNetwork.offlineMode)
-        {
-            enabled = false;
-        }
-        else
+        if (!PhotonNetwork.offlineMode && GameNetwork.Instance != null && GameNetwork.Instance.InGame)
         {
             r = transform.Find("graphics").GetComponent<SpriteRenderer>();
             graphicsTransform = transform.Find("graphics");
@@ -27,6 +23,10 @@ public class CharacterNetwork : Photon.MonoBehaviour
             shadowRenderer = transform.Find("GroundCheck").GetComponent<SpriteRenderer>();
             stunnedSymbol = transform.Find("stunnedSymbol").gameObject;
             PlayerName = GameNetwork.Instance.PlayerName;
+        } 
+        else
+        {
+            enabled = false;
         }
     }
 

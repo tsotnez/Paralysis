@@ -9149,7 +9149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sibling: {fileID: 1667811042}
-  trinketId: 0
+  trinketId: 2
 --- !u!1 &1359187021
 GameObject:
   m_ObjectHideFlags: 0
@@ -11744,7 +11744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sibling: {fileID: 1357643893}
-  trinketId: 0
+  trinketId: 1
 --- !u!1 &1674216281
 GameObject:
   m_ObjectHideFlags: 0

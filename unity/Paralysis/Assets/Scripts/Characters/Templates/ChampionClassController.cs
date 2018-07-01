@@ -132,6 +132,7 @@ public abstract class ChampionClassController : Photon.MonoBehaviour
                 m_Rigidbody2D.isKinematic = true;
             }
 
+            //Add all ranged skills to the ranged skill database
             foreach (RangedSkill skill in RangeSkills)
             {
                 skill.addSkillToDB();

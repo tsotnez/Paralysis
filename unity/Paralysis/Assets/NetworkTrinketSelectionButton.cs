@@ -28,7 +28,7 @@ public class NetworkTrinketSelectionButton : MonoBehaviour {
             = transform.Find("portrait").GetComponent<Image>().sprite;
 
         int trinketId = activatedButton.trinketId;
-        FindObjectOfType<NetworkChampionSelectionManager>().setTrinket(trinket, trinketId);
+        NetworkChampionSelectionManager.Instance.setTrinket(trinket, trinketId);
 
         activatedButton.CurrentlySelected = false;
         transform.parent.parent.gameObject.SetActive(false);

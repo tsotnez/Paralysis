@@ -31,6 +31,9 @@ public abstract class ChampionSelectionManager : UIManager
         GameObject newPreview = Instantiate(Champion, parent, false);
         GameObject graphics = newPreview.transform.Find("graphics").gameObject;
 
+        Destroy(newPreview.GetComponent<PhotonTransformView>());
+        Destroy(newPreview.GetComponent<PhotonView>());
+        Destroy(graphics.GetComponent<PhotonView>());
         Destroy(newPreview.GetComponent<ChampionClassController>());
         Destroy(newPreview.GetComponent<Rigidbody2D>());
         Destroy(newPreview.GetComponent<CharacterStats>());
@@ -42,7 +45,6 @@ public abstract class ChampionSelectionManager : UIManager
         Destroy(newPreview.transform.Find("stunnedSymbol").gameObject);
         Destroy(graphics.GetComponent<GraphicsNetwork>());
         Destroy(newPreview.GetComponent<CharacterNetwork>());
-
 
         //flip sprite if necessary
         int direction = 1;
