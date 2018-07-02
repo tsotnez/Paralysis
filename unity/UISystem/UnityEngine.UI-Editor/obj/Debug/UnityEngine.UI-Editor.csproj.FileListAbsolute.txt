@@ -1,7 +1,0 @@
-C:\Users\Win7\Downloads\TobiasPott-ui-5.x-92b83a571beb\TobiasPott-ui-5.x-92b83a571beb\UnityEngine.UI-Editor\bin\Debug\UnityEngine.UI.dll
-C:\Users\Win7\Downloads\TobiasPott-ui-5.x-92b83a571beb\TobiasPott-ui-5.x-92b83a571beb\UnityEngine.UI-Editor\bin\Debug\UnityEngine.UI.pdb
-C:\Users\Win7\Downloads\TobiasPott-ui-5.x-92b83a571beb\TobiasPott-ui-5.x-92b83a571beb\UnityEngine.UI-Editor\bin\Debug\UnityEditor.dll
-C:\Users\Win7\Downloads\TobiasPott-ui-5.x-92b83a571beb\TobiasPott-ui-5.x-92b83a571beb\UnityEngine.UI-Editor\bin\Debug\UnityEngine.dll
-C:\Users\Win7\Downloads\TobiasPott-ui-5.x-92b83a571beb\TobiasPott-ui-5.x-92b83a571beb\UnityEngine.UI-Editor\obj\Debug\UnityEngine.UI-Editor.csproj.CoreCompileInputs.cache
-C:\Users\Win7\Downloads\TobiasPott-ui-5.x-92b83a571beb\TobiasPott-ui-5.x-92b83a571beb\UnityEngine.UI-Editor\obj\Debug\UnityEngine.UI.dll
-C:\Users\Win7\Downloads\TobiasPott-ui-5.x-92b83a571beb\TobiasPott-ui-5.x-92b83a571beb\UnityEngine.UI-Editor\obj\Debug\UnityEngine.UI.pdb
