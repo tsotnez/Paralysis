@@ -42,3 +42,8 @@ Icon?
 ehthumbs.db
 Thumbs.db
 ~$Roadmap.xlsx
+unity/UISystem/.vs/*
+unity/UISystem/obj/*
+unity/UISystem/UnityEditor.UI/obj/*
+unity/UISystem/UnityEngine.UI/obj/*
+unity/UISystem/UnityEngine.UI-Editor/obj/*
